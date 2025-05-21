@@ -3,77 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>メディア - ToMoreBeyond</title>
-
-  <!-- Fonts & AOS -->
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
-  <style>
-    :root {
-      --accent:#ffffff;
-      --bg-dark:#0d0d0d;
-      --bg-section:#181818;
-      --text-main:#f0eaead7;
-      --text-muted:#9c9c9c;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:'Lato',sans-serif;background:var(--bg-dark);color:var(--text-main);
-      line-height:1.7;scroll-behavior:smooth;
-    }
-    a{text-decoration:none;color:inherit;}
-    nav{
-      position:sticky;top:0;width:100%;background:rgba(13,13,13,.9);
-      backdrop-filter:blur(6px);display:flex;justify-content:space-between;
-      align-items:center;padding:.8rem 2rem;z-index:50;
-    }
-    .logo{font-size:1.6rem;font-weight:700;color:var(--accent);}
-    section{
-      /* ナビゲーションバーの高さ分を考慮 */
-      scroll-margin-top: 80px;
-      max-width:960px;margin:4rem auto;padding:3rem 2rem;background:var(--bg-section);
-      border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.6);
-    }
-    h2{font-size:2rem;color:var(--accent);margin-bottom:1rem;font-weight:700;}
-    .icons{font-size:3rem;text-align:center;margin-bottom:1rem;color:var(--accent);}
-    .sns-links a{
-      color:var(--accent);font-weight:bold;margin-right:1rem;
-    }
-    footer{text-align:center;padding:2rem;color:var(--text-muted);margin-top:4rem;}
-  </style>
+  <title>Media | ToMoreBeyond</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-950 text-gray-100 selection:bg-teal-400/50">
 
-  <!-- Navigation -->
-  <nav>
-    <div class="logo"><a href="ToMorebeyond.html">ToMoreBeyond</a></div>
+<header class="bg-gray-950/60 backdrop-blur fixed inset-x-0 top-0 z-50">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+    <a href="index.html#home" class="text-2xl font-bold hover:text-teal-400">ToMoreBeyond</a>
+    <a href="index.html" class="text-sm hover:text-teal-400">← Back to Home</a>
   </nav>
+</header>
 
-  <!-- メディア詳細 -->
-  <section data-aos="fade-up">
-    <div class="icons">📰</div>
-    <h2>メディア情報</h2>
-    <p>ToMoreBeyondの最新情報は以下の公式SNSにて随時発信しています。</p>
+<!-- Hero -->
+<section class="relative h-[60vh] w-full pt-16">
+  <img src="https://source.unsplash.com/1600x900?news,press" alt=""
+       class="absolute inset-0 h-full w-full object-cover opacity-60">
+  <div class="absolute inset-0 bg-gray-950/70"></div>
+  <div class="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Media & Press</h1>
+    <p class="max-w-2xl text-lg text-gray-200">
+      最新情報・掲載記事・登壇動画は<br class="hidden md:inline">
+      こちらのページに集約しています。
+    </p>
+  </div>
+</section>
 
-    <div class="sns-links">
-      <a href="https://twitter.com/TADATAKA_O" target="_blank">X (Twitter)</a>
-      <!-- 他にSNSがあればこちらに追加してください -->
-    </div>
+<!-- Articles -->
+<section class="py-20">
+  <div class="mx-auto max-w-4xl px-6 space-y-12">
+    <!-- article 1 -->
+    <article class="bg-gray-800 rounded-2xl p-6 shadow-lg">
+      <h2 class="text-xl font-semibold mb-2">
+        <a href="https://example.com/article1" target="_blank" class="hover:text-teal-400">
+          TechCrunch Japan — ToMoreBeyond、移動体験を再発明する3人組
+        </a>
+      </h2>
+      <p class="text-sm opacity-80">2025-05-15 | インタビュー記事</p>
+    </article>
+    <!-- article 2 -->
+    <article class="bg-gray-800 rounded-2xl p-6 shadow-lg">
+      <h2 class="text-xl font-semibold mb-2">
+        <a href="https://example.com/article2" target="_blank" class="hover:text-teal-400">
+          Nikkei Cross Tech — スタートアップ最前線
+        </a>
+      </h2>
+      <p class="text-sm opacity-80">2025-04-30 | プロダクト特集</p>
+    </article>
+  </div>
+</section>
 
-    <h2 style="margin-top:2rem;">プレスリリース</h2>
-    <p>新しいアプリのリリースや重要なお知らせなど、プレスリリース情報を随時掲載予定です。</p>
-    <p>最新情報は公式SNSをご覧いただくか、直接お問い合わせください。</p>
+<!-- SNS -->
+<section class="py-20 bg-gray-900">
+  <div class="mx-auto max-w-3xl text-center px-6">
+    <h2 class="text-3xl font-bold mb-6">Follow us</h2>
+    <p class="mb-10 opacity-90">最新リリースやイベント情報は X（Twitter）で公開しています。</p>
+    <a href="https://twitter.com/TADATAKA_O" target="_blank"
+       class="inline-block rounded-full bg-teal-500 px-8 py-3 font-semibold transition
+              hover:bg-teal-400">公式アカウント @TADATAKA_O</a>
+  </div>
+</section>
 
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 ToMoreBeyond
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
+<footer class="bg-gray-900 py-8 text-center text-sm opacity-80">
+  <p>© 2025 ToMoreBeyond</p>
+</footer>
 </body>
 </html>
