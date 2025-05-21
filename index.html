@@ -5,211 +5,225 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ToMoreBeyond</title>
 
-  <!-- Fonts & AOS -->
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <!-- ✅ Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- ✅ Swiper（カルーセル用） -->
+  <link  href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <!-- ✅ 追加スタイル -->
   <style>
-    :root{
-      --accent:#ffffff;
-      --bg-dark:#0d0d0d;
-      --bg-section:#181818;
-      --text-main:#f0eaead7;
-      --text-muted:#9c9c9c;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:'Lato',sans-serif;
-      background:var(--bg-dark);
-      color:var(--text-main);
-      line-height:1.7;
-      scroll-behavior:smooth;
-    }
-    a{text-decoration:none;color:inherit;}
-
-    /* Splash -------------------------------------------------- */
-    #splash{
-      position:fixed;inset:0;
-      display:flex;flex-direction:column;
-      justify-content:center;align-items:center;
-      background:var(--bg-dark);
-      z-index:100;transition:opacity 1s ease;
-    }
-    #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
-    #splash h1{font-size:3rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;letter-spacing:.05em;}
-    #splash p{color:var(--text-muted);font-size:1.1rem;}
-
-    /* Navigation ---------------------------------------------- */
-    nav{
-      position:sticky;top:0;width:100%;
-      background:rgba(13,13,13,.9);backdrop-filter:blur(6px);
-      box-shadow:0 2px 6px rgba(0,0,0,.4);
-      display:flex;justify-content:space-between;align-items:center;
-      padding:.8rem 2rem;z-index:50;
-    }
-    .logo{font-size:1.6rem;font-weight:700;color:var(--accent);}
-    .nav-links{display:flex;gap:1.5rem;font-weight:700;}
-    .nav-links a{color:var(--text-muted);transition:color .2s;}
-    .nav-links a:hover{color:var(--accent);}
-
-    /* Hero ---------------------------------------------------- */
-    .hero{
-      position:relative;height:60vh;
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      text-align:center;padding:0 1rem;
-      background:url('https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat;
-    }
-    .hero::after{content:\"\";position:absolute;inset:0;background:rgba(0,0,0,.6);}
-    .hero-content{position:relative;z-index:1;max-width:700px;}
-    .hero h1{font-size:3rem;color:var(--accent);margin-bottom:1rem;font-weight:700;}
-
-    /* Section Base ------------------------------------------- */
-    section{
-      /* ナビゲーションバーの高さ分を考慮 */
-      scroll-margin-top: 80px;
-      max-width:960px;margin:4rem auto;padding:3rem 2rem;
-      background:var(--bg-section);border-radius:12px;
-      box-shadow:0 4px 16px rgba(0,0,0,.6);
-    }
-    h2{font-size:2rem;color:var(--accent);margin-bottom:1rem;text-align:center;font-weight:700;}
-    .icons{font-size:3rem;text-align:center;margin-bottom:1rem;color:var(--accent);}
-    p{color:var(--text-main);}
-
-    /* Clickable cards ---------------------------------------- */
-    .app-card{cursor:pointer;transition:background .2s;}
-    .app-card:hover{background:#222;}
-
-    /* Mission list */
-    .principles-list{
-      list-style:none;display:grid;gap:.6rem;margin-top:1.5rem;padding:0;
-    }
-    .principles-list li{background:#222;padding:.8rem 1rem;border-radius:8px;}
-
-    /* Contact Form ------------------------------------------- */
-    form{display:flex;flex-direction:column;gap:1rem;max-width:480px;margin:0 auto;}
-    input,textarea,button{font:inherit;padding:.9rem 1rem;border:none;border-radius:8px;}
-    input,textarea{background:#222;color:var(--text-main);}
-    textarea{resize:vertical;min-height:140px;}
-    button{background:var(--accent);color:#0d0d0d;font-weight:700;cursor:pointer;transition:opacity .2s;}
-    button:hover{opacity:.9;}
-
-    /* Footer -------------------------------------------------- */
-    footer{background:#0b0b0b;text-align:center;padding:2rem;font-size:.9rem;color:var(--text-muted);margin-top:4rem;}
-    .footer-links a{margin:0 .5rem;color:var(--text-muted);}
-    .footer-links a:hover{color:var(--accent);}
-
-    @media(max-width:768px){
-      .nav-links{display:none;}
-      .hero h1{font-size:2.4rem;}
-      section{margin:2rem 1rem;padding:2rem 1.2rem;}
-    }
+    .snap-target { scroll-margin-top: 80px; }          /* 中央スナップ補正 */
+    .swiper-button-next,
+    .swiper-button-prev { color: #2dd4bf; }            /* ナビ矢印色 (teal-400) */
+    .swiper-pagination-bullet-active { background:#2dd4bf; }
   </style>
 </head>
-<body>
-  <!-- Splash -->
-  <div id="splash">
-    <h1>ToMoreBeyond</h1>
-    <p>Beyond Limits, Together</p>
-  </div>
+<body class="bg-gray-950 text-gray-100 scroll-smooth selection:bg-teal-400/50">
 
-  <!-- Navigation -->
-  <nav>
-    <div class="logo"><a href="index.html">ToMoreBeyond</a></div>
-    <div class="nav-links">
-      <a href="#mission">Mission</a>
-      <a href="#diary">TADATAKA</a>
-      <a href="#meeting">中間地点</a>
-      <a href="#company">会社</a>
-      <a href="#media">メディア</a>
-      <a href="#contact">お問い合わせ</a>
-    </div>
+<!-- ====== Header (Navbar) ====== -->
+<header class="fixed inset-x-0 top-0 z-50 bg-gray-950/60 backdrop-blur">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+    <a href="#home" class="text-2xl font-bold tracking-wide hover:text-teal-400">ToMoreBeyond</a>
+
+    <!-- Hamburger -->
+    <button id="menu-toggle" class="lg:hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Desktop nav -->
+    <ul id="nav-links" class="hidden lg:flex gap-8 text-sm font-medium">
+      <li><a href="#apps"    class="hover:text-teal-400">Apps</a></li>
+      <li><a href="#about"   class="hover:text-teal-400">About</a></li>
+      <li><a href="#contact" class="hover:text-teal-400">Contact</a></li>
+    </ul>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content" data-aos="fade-up">
-      <h1>The road not taken</h1>
-      <p>最適な集合地点提案と移動ログで、あなたの日常に新しい選択肢を。</p>
-    </div>
-  </section>
+  <!-- Mobile menu -->
+  <div id="mobile-menu"
+       class="fixed inset-0 bg-gray-950/90 backdrop-blur flex-col items-center justify-center gap-10 text-xl font-medium transform translate-x-full transition-transform duration-300">
+    <a href="#apps"    class="mobile-link">Apps</a>
+    <a href="#about"   class="mobile-link">About</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </div>
+</header>
 
-  <!-- Mission -->
-  <section id="mission" data-aos="fade-up" onclick="location.href='mission.html'">
-    <div class="icons">🚀</div>
-    <h2>The road not taken</h2>
-    <p>私たちは常に未知の道を選び、新しい価値を創造します。</p>
-    <ul class="principles-list">
-      <li>ボーダーレスな社会</li>
-      <li>日常を冒険に</li>
-      <li>自分たちが面白いと思うものだけを作る</li>
-      <li>一人の力は小さいが、協力で大きな壁を越える</li>
-    </ul>
-  </section>
+<!-- ====== Hero ====== -->
+<section id="home" class="relative h-screen w-full snap-target">
+  <video src="assets/video/hero.mp4" autoplay muted loop playsinline
+         class="absolute inset-0 h-full w-full object-cover"></video>
+  <div class="absolute inset-0 bg-gray-950/60"></div>
 
-  <!-- TADATAKA Card -->
-  <section id="diary" class="app-card" data-aos="fade-up" onclick="location.href='tadataka.html'">
-    <div class="icons">🗺️</div>
-    <h2>TADATAKA</h2>
-    <p>日々の移動と滞在を自動で記録。<br>位置情報日記として振り返りや共有が簡単に。</p>
-  </section>
-
-  <!-- Midpoint Card -->
-  <section id="meeting" class="app-card" data-aos="fade-up" onclick="location.href='midpoint.html'">
-    <div class="icons">📍</div>
-    <h2>中間地点提案</h2>
-    <p>複数の出発地から、目的に合わせた最適な集合駅を瞬時に提案。<br>地図表示と比重スライダーで、直感的に調整できます。</p>
-  </section>
-
-  <!-- Company Card -->
-  <section id="company" class="app-card" data-aos="fade-up" onclick="location.href='company.html'">
-    <div class="icons">🏢</div>
-    <h2>会社概要</h2>
-    <p>設立 2025年｜ メンバー 3名｜ ミッション: 一人の力は小さいが、協力で大きな壁を越える</p>
-  </section>
-
-  <!-- Media -->
-  <section id="media" data-aos="fade-up" onclick="location.href='media.html'">
-    <div class="icons">📰</div>
-    <h2>メディア</h2>
-    <p>
-      最新情報は X (Twitter) 公式アカウント
-      <a href="https://twitter.com/TADATAKA_O" target="_blank" style="color:var(--accent);">@TADATAKA_O</a>
-      をご覧ください。
+  <div class="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
+    <h1 class="text-4xl md:text-6xl font-bold leading-tight">Go Beyond as One.</h1>
+    <p class="mt-6 max-w-2xl text-lg text-gray-200">
+      私たちは <span class="font-semibold text-teal-400">“移動×体験”</span>
+      をテクノロジーで再発明するスタートアップです。
     </p>
-  </section>
+    <a href="#apps"
+       class="mt-10 inline-block rounded-full bg-teal-500 px-6 py-3 font-semibold
+              transition hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
+      私たちのアプリを見る
+    </a>
+  </div>
+</section>
 
-  <!-- Contact -->
-  <section id="contact" data-aos="fade-up">
-    <h2>お問い合わせ</h2>
-    <form>
-      <input type="text" placeholder="お名前" required />
-      <input type="email" placeholder="メールアドレス" required />
-      <textarea placeholder="メッセージ" required></textarea>
-      <button type="submit">送信</button>
-    </form>
-  </section>
+<!-- ====== Apps (Swiper Carousel) ====== -->
+<section id="apps" class="snap-target py-20">
+  <h2 class="mb-10 text-center text-3xl font-bold">Our Apps</h2>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="#">利用規約</a> | <a href="#">プライバシーポリシー</a>
+  <div class="swiper max-w-7xl px-6 mx-auto">
+    <div class="swiper-wrapper">
+
+      <!-- Slide 1 -->
+      <div class="swiper-slide">
+        <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
+          <h3 class="text-xl font-semibold mb-3">Meet in the Middle</h3>
+          <p class="text-sm opacity-80 mb-6">
+            複数人の出発地から最適な集合駅を AI が提案。
+          </p>
+          <a href="#"
+             class="mt-auto inline-block self-start rounded-md bg-teal-500 px-4 py-2 text-sm
+                    transition hover:bg-teal-400">詳しく</a>
+        </article>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="swiper-slide">
+        <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
+          <h3 class="text-xl font-semibold mb-3">Morning Insight</h3>
+          <p class="text-sm opacity-80 mb-6">
+            天気 × ライフハックを “朝 1 通” でお届け。
+          </p>
+          <a href="#"
+             class="mt-auto inline-block self-start rounded-md bg-teal-500 px-4 py-2 text-sm
+                    transition hover:bg-teal-400">詳しく</a>
+        </article>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="swiper-slide">
+        <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
+          <h3 class="text-xl font-semibold mb-3">Life Map Diary</h3>
+          <p class="text-sm opacity-80 mb-6">
+            位置情報とメモを地図上で連携、ライフログを可視化。
+          </p>
+          <a href="#"
+             class="mt-auto inline-block self-start rounded-md bg-teal-500 px-4 py-2 text-sm
+                    transition hover:bg-teal-400">詳しく</a>
+        </article>
+      </div>
+
     </div>
-    <p>&copy; 2025 TADATAKA</p>
-  </footer>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-    document.addEventListener('DOMContentLoaded', () => {
-      const splash = document.getElementById('splash');
-      const hideSplash = () => {
-        splash.classList.add('hide');
-        window.removeEventListener('scroll', hideSplash);
-      };
-      setTimeout(hideSplash, 1000);          // 1 秒後フェードアウト
-      window.addEventListener('scroll', hideSplash); // 保険
+    <!-- Dots & Arrows -->
+    <div class="swiper-pagination !static mt-8"></div>
+    <div class="swiper-button-prev hidden lg:block"></div>
+    <div class="swiper-button-next hidden lg:block"></div>
+  </div>
+</section>
+
+<!-- ====== About (alternating layout) ====== -->
+<section id="about" class="snap-target bg-gray-900 py-24">
+  <div class="mx-auto max-w-7xl space-y-24 px-6">
+
+    <!-- Row 1 -->
+    <div class="grid lg:grid-cols-2 lg:items-center gap-12">
+      <img src="https://source.unsplash.com/800x600?map" alt="" class="rounded-2xl shadow-lg">
+      <div>
+        <h2 class="text-3xl font-bold mb-6">移動をもっとスマートに</h2>
+        <p class="leading-relaxed opacity-90">
+          私たちのプロダクトは、移動計画を AI がサポートし、
+          手間を最小限に抑えながら最高の体験を提供します。
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 2 (order reversed on large screens) -->
+    <div class="grid lg:grid-cols-2 lg:items-center gap-12">
+      <div class="lg:order-last">
+        <h2 class="text-3xl font-bold mb-6">日常を豊かにする情報設計</h2>
+        <p class="leading-relaxed opacity-90">
+          通知一つ、マップ一枚にも、ユーザーの“いま欲しい”を先読みする
+          情報設計を取り入れています。
+        </p>
+      </div>
+      <img src="https://source.unsplash.com/800x600?phone" alt="" class="rounded-2xl shadow-lg lg:order-first">
+    </div>
+
+  </div>
+</section>
+
+<!-- ====== Contact ====== -->
+<section id="contact" class="snap-target py-24">
+  <h2 class="mb-8 text-center text-3xl font-bold">Contact Us</h2>
+
+  <form name="contact" method="POST" data-netlify="true"
+        class="mx-auto flex max-w-lg flex-col gap-6 px-6">
+    <input type="hidden" name="form-name" value="contact">
+    <input type="text" name="name" required placeholder="Name"
+           class="rounded-md border border-gray-700 bg-gray-800 p-3 outline-none focus:border-teal-500">
+    <input type="email" name="email" required placeholder="Email"
+           class="rounded-md border border-gray-700 bg-gray-800 p-3 outline-none focus:border-teal-500">
+    <textarea name="message" rows="5" required placeholder="Message"
+              class="rounded-md border border-gray-700 bg-gray-800 p-3 outline-none focus:border-teal-500"></textarea>
+    <button type="submit"
+            class="rounded-md bg-teal-500 py-3 font-semibold transition
+                   hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
+      送信
+    </button>
+  </form>
+</section>
+
+<!-- ====== Footer ====== -->
+<footer class="bg-gray-900 py-8 text-center text-sm opacity-80">
+  <p>© 2025 ToMoreBeyond</p>
+  <div class="mt-2 flex justify-center gap-4">
+    <a href="privacy.html" class="hover:text-teal-400">プライバシーポリシー</a>
+    <a href="terms.html"    class="hover:text-teal-400">利用規約</a>
+  </div>
+</footer>
+
+<!-- ====== JS ====== -->
+<script>
+  /* Hamburger */
+  const toggle = document.getElementById('menu-toggle');
+  const mobile = document.getElementById('mobile-menu');
+  toggle.addEventListener('click', () => mobile.classList.toggle('translate-x-full'));
+  document.querySelectorAll('.mobile-link').forEach(l =>
+    l.addEventListener('click', () => mobile.classList.add('translate-x-full'))
+  );
+
+  /* Section scroll to center */
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id=a.getAttribute('href'); if(id.length===1) return;
+      e.preventDefault();
+      const t=document.querySelector(id);
+      const header=80;
+      const y=t.getBoundingClientRect().top + window.pageYOffset
+             - (window.innerHeight/2) + (t.offsetHeight/2) - header;
+      window.scrollTo({top:y, behavior:'smooth'});
     });
-  </script>
+  });
+
+  /* Swiper init */
+  const swiper = new Swiper('.swiper',{
+    loop:true,
+    spaceBetween:24,
+    slidesPerView:1,
+    pagination:{ el:'.swiper-pagination', clickable:true },
+    navigation:{ nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev' },
+    breakpoints:{
+      768:{ slidesPerView:2 },
+      1024:{ slidesPerView:3 }
+    }
+  });
+</script>
 </body>
 </html>
