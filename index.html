@@ -5,41 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ToMoreBeyond</title>
 
-  <!-- ✅ Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ✅ Swiper（カルーセル用） -->
-  <link  href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
+  <!-- Swiper (Apps カルーセル) -->
+  <link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-  <!-- ✅ 追加スタイル -->
   <style>
-    .snap-target { scroll-margin-top: 80px; }          /* 中央スナップ補正 */
-    .swiper-button-next,
-    .swiper-button-prev { color: #2dd4bf; }            /* ナビ矢印色 (teal-400) */
-    .swiper-pagination-bullet-active { background:#2dd4bf; }
+    /* セクション中央吸着用 */
+    .snap-target{scroll-margin-top:80px}
+    /* Swiper ナビ色 */
+    .swiper-button-prev,.swiper-button-next{color:#2dd4bf}
+    .swiper-pagination-bullet-active{background:#2dd4bf}
   </style>
 </head>
 <body class="bg-gray-950 text-gray-100 scroll-smooth selection:bg-teal-400/50">
 
-<!-- ====== Header (Navbar) ====== -->
+<!-- ===== Header ===== -->
 <header class="fixed inset-x-0 top-0 z-50 bg-gray-950/60 backdrop-blur">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
     <a href="#home" class="text-2xl font-bold tracking-wide hover:text-teal-400">ToMoreBeyond</a>
 
     <!-- Hamburger -->
     <button id="menu-toggle" class="lg:hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
-           stroke="currentColor" stroke-width="2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round"
               d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
 
     <!-- Desktop nav -->
-    <ul id="nav-links" class="hidden lg:flex gap-8 text-sm font-medium">
+    <ul class="hidden lg:flex gap-8 text-sm font-medium">
+      <li><a href="#mission" class="hover:text-teal-400">Mission</a></li>
       <li><a href="#apps"    class="hover:text-teal-400">Apps</a></li>
-      <li><a href="#about"   class="hover:text-teal-400">About</a></li>
+      <li><a href="#company" class="hover:text-teal-400">Company</a></li>
+      <li><a href="#media"   class="hover:text-teal-400">Media</a></li>
       <li><a href="#contact" class="hover:text-teal-400">Contact</a></li>
     </ul>
   </nav>
@@ -47,73 +49,87 @@
   <!-- Mobile menu -->
   <div id="mobile-menu"
        class="fixed inset-0 bg-gray-950/90 backdrop-blur flex-col items-center justify-center gap-10 text-xl font-medium transform translate-x-full transition-transform duration-300">
+    <a href="#mission" class="mobile-link">Mission</a>
     <a href="#apps"    class="mobile-link">Apps</a>
-    <a href="#about"   class="mobile-link">About</a>
+    <a href="#company" class="mobile-link">Company</a>
+    <a href="#media"   class="mobile-link">Media</a>
     <a href="#contact" class="mobile-link">Contact</a>
   </div>
 </header>
 
-<!-- ====== Hero ====== -->
+<!-- ===== Hero ===== -->
 <section id="home" class="relative h-screen w-full snap-target">
   <video src="assets/video/hero.mp4" autoplay muted loop playsinline
          class="absolute inset-0 h-full w-full object-cover"></video>
   <div class="absolute inset-0 bg-gray-950/60"></div>
 
   <div class="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
-    <h1 class="text-4xl md:text-6xl font-bold leading-tight">Go Beyond as One.</h1>
+    <h1 class="text-4xl md:text-6xl font-bold leading-tight">The road not taken</h1>
     <p class="mt-6 max-w-2xl text-lg text-gray-200">
-      私たちは <span class="font-semibold text-teal-400">“移動×体験”</span>
-      をテクノロジーで再発明するスタートアップです。
+      私たちは <span class="font-semibold text-teal-400">「共に創る」「友と創る」</span>
+      ─ 人と違う道をただただ楽しみ、面白い物を
+      <span class="font-semibold text-teal-400">“ともに”</span>越える会社です。
     </p>
     <a href="#apps"
        class="mt-10 inline-block rounded-full bg-teal-500 px-6 py-3 font-semibold
               transition hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
-      私たちのアプリを見る
+      アプリを見る
     </a>
   </div>
 </section>
 
-<!-- ====== Apps (Swiper Carousel) ====== -->
+<!-- ===== Mission (概要リンク) ===== -->
+<section id="mission" class="snap-target py-20" onclick="location.href='mission.html'">
+  <div class="mx-auto max-w-4xl text-center px-6">
+    <div class="text-4xl mb-4">🚀</div>
+    <h2 class="text-3xl font-bold mb-4">Our Mission</h2>
+    <p>
+      一人の力は小さいが、協力で大きな壁を越える。<br>
+      境界を越え、日常を冒険に変えるプロダクトを創ります。 :contentReference[oaicite:0]{index=0}
+    </p>
+  </div>
+</section>
+
+<!-- ===== Apps (Swiper Carousel) ===== -->
 <section id="apps" class="snap-target py-20">
-  <h2 class="mb-10 text-center text-3xl font-bold">Our Apps</h2>
+  <h2 class="mb-10 text-center text-3xl font-bold">Apps</h2>
 
   <div class="swiper max-w-7xl px-6 mx-auto">
     <div class="swiper-wrapper">
 
-      <!-- Slide 1 -->
+      <!-- TADATAKA -->
+      <div class="swiper-slide">
+        <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
+          <h3 class="text-xl font-semibold mb-3">TADATAKA</h3>
+          <p class="text-sm opacity-80 mb-6">
+            位置情報日記アプリ。<br>移動経路・滞在地点を自動記録し、写真やメモで振り返りをサポート。 :contentReference[oaicite:1]{index=1}
+          </p>
+          <a href="tadataka.html"
+             class="mt-auto inline-block self-start rounded-md bg-teal-500 px-4 py-2 text-sm
+                    transition hover:bg-teal-400">詳しく</a>
+        </article>
+      </div>
+
+      <!-- ToiRun -->
+      <div class="swiper-slide">
+        <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
+          <h3 class="text-xl font-semibold mb-3">ToiRun</h3>
+          <p class="text-sm opacity-80 mb-6">
+            商業施設のフロアマップを学習し、<br>最短ルートでトイレを案内する AI ナビゲーション。<br>入口が複数でも矢印で誘導。
+          </p>
+          <!-- 詳細ページは今後作成 -->
+        </article>
+      </div>
+
+      <!-- Meet in the Middle -->
       <div class="swiper-slide">
         <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
           <h3 class="text-xl font-semibold mb-3">Meet in the Middle</h3>
           <p class="text-sm opacity-80 mb-6">
-            複数人の出発地から最適な集合駅を AI が提案。
+            複数人の出発地から最適な集合駅を提案。<br>
+            キーワード＆比重スライダーでカスタマイズ。 :contentReference[oaicite:2]{index=2}
           </p>
-          <a href="#"
-             class="mt-auto inline-block self-start rounded-md bg-teal-500 px-4 py-2 text-sm
-                    transition hover:bg-teal-400">詳しく</a>
-        </article>
-      </div>
-
-      <!-- Slide 2 -->
-      <div class="swiper-slide">
-        <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
-          <h3 class="text-xl font-semibold mb-3">Morning Insight</h3>
-          <p class="text-sm opacity-80 mb-6">
-            天気 × ライフハックを “朝 1 通” でお届け。
-          </p>
-          <a href="#"
-             class="mt-auto inline-block self-start rounded-md bg-teal-500 px-4 py-2 text-sm
-                    transition hover:bg-teal-400">詳しく</a>
-        </article>
-      </div>
-
-      <!-- Slide 3 -->
-      <div class="swiper-slide">
-        <article class="h-full rounded-2xl bg-gray-800 p-8 shadow-lg flex flex-col">
-          <h3 class="text-xl font-semibold mb-3">Life Map Diary</h3>
-          <p class="text-sm opacity-80 mb-6">
-            位置情報とメモを地図上で連携、ライフログを可視化。
-          </p>
-          <a href="#"
+          <a href="midpoint.html"
              class="mt-auto inline-block self-start rounded-md bg-teal-500 px-4 py-2 text-sm
                     transition hover:bg-teal-400">詳しく</a>
         </article>
@@ -121,45 +137,37 @@
 
     </div>
 
-    <!-- Dots & Arrows -->
     <div class="swiper-pagination !static mt-8"></div>
     <div class="swiper-button-prev hidden lg:block"></div>
     <div class="swiper-button-next hidden lg:block"></div>
   </div>
 </section>
 
-<!-- ====== About (alternating layout) ====== -->
-<section id="about" class="snap-target bg-gray-900 py-24">
-  <div class="mx-auto max-w-7xl space-y-24 px-6">
-
-    <!-- Row 1 -->
-    <div class="grid lg:grid-cols-2 lg:items-center gap-12">
-      <img src="https://source.unsplash.com/800x600?map" alt="" class="rounded-2xl shadow-lg">
-      <div>
-        <h2 class="text-3xl font-bold mb-6">移動をもっとスマートに</h2>
-        <p class="leading-relaxed opacity-90">
-          私たちのプロダクトは、移動計画を AI がサポートし、
-          手間を最小限に抑えながら最高の体験を提供します。
-        </p>
-      </div>
-    </div>
-
-    <!-- Row 2 (order reversed on large screens) -->
-    <div class="grid lg:grid-cols-2 lg:items-center gap-12">
-      <div class="lg:order-last">
-        <h2 class="text-3xl font-bold mb-6">日常を豊かにする情報設計</h2>
-        <p class="leading-relaxed opacity-90">
-          通知一つ、マップ一枚にも、ユーザーの“いま欲しい”を先読みする
-          情報設計を取り入れています。
-        </p>
-      </div>
-      <img src="https://source.unsplash.com/800x600?phone" alt="" class="rounded-2xl shadow-lg lg:order-first">
-    </div>
-
+<!-- ===== Company (概要リンク) ===== -->
+<section id="company" class="snap-target py-20 bg-gray-900" onclick="location.href='company.html'">
+  <div class="mx-auto max-w-4xl text-center px-6">
+    <div class="text-4xl mb-4">🏢</div>
+    <h2 class="text-3xl font-bold mb-4">Company</h2>
+    <p>
+      2025年設立・メンバー3名。<br>
+      「The road not taken」をスローガンに、自由な発想でアプリ開発に挑戦。 :contentReference[oaicite:3]{index=3}
+    </p>
   </div>
 </section>
 
-<!-- ====== Contact ====== -->
+<!-- ===== Media (概要リンク) ===== -->
+<section id="media" class="snap-target py-20" onclick="location.href='media.html'">
+  <div class="mx-auto max-w-4xl text-center px-6">
+    <div class="text-4xl mb-4">📰</div>
+    <h2 class="text-3xl font-bold mb-4">Media</h2>
+    <p>
+      最新情報は&nbsp;<a href="https://twitter.com/TADATAKA_O" target="_blank"
+      class="text-teal-400 font-semibold">@TADATAKA_O</a>&nbsp;で発信中。 :contentReference[oaicite:4]{index=4}
+    </p>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
 <section id="contact" class="snap-target py-24">
   <h2 class="mb-8 text-center text-3xl font-bold">Contact Us</h2>
 
@@ -180,7 +188,7 @@
   </form>
 </section>
 
-<!-- ====== Footer ====== -->
+<!-- ===== Footer ===== -->
 <footer class="bg-gray-900 py-8 text-center text-sm opacity-80">
   <p>© 2025 ToMoreBeyond</p>
   <div class="mt-2 flex justify-center gap-4">
@@ -189,40 +197,37 @@
   </div>
 </footer>
 
-<!-- ====== JS ====== -->
+<!-- ===== JS ===== -->
 <script>
   /* Hamburger */
-  const toggle = document.getElementById('menu-toggle');
-  const mobile = document.getElementById('mobile-menu');
-  toggle.addEventListener('click', () => mobile.classList.toggle('translate-x-full'));
-  document.querySelectorAll('.mobile-link').forEach(l =>
-    l.addEventListener('click', () => mobile.classList.add('translate-x-full'))
+  const toggle=document.getElementById('menu-toggle');
+  const mobile=document.getElementById('mobile-menu');
+  toggle.addEventListener('click',()=>mobile.classList.toggle('translate-x-full'));
+  document.querySelectorAll('.mobile-link').forEach(l=>
+    l.addEventListener('click',()=>mobile.classList.add('translate-x-full'))
   );
 
   /* Section scroll to center */
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', e=>{
-      const id=a.getAttribute('href'); if(id.length===1) return;
+    a.addEventListener('click',e=>{
+      const id=a.getAttribute('href');if(id.length===1)return;
       e.preventDefault();
       const t=document.querySelector(id);
       const header=80;
-      const y=t.getBoundingClientRect().top + window.pageYOffset
-             - (window.innerHeight/2) + (t.offsetHeight/2) - header;
-      window.scrollTo({top:y, behavior:'smooth'});
+      const y=t.getBoundingClientRect().top+window.pageYOffset
+              - (window.innerHeight/2)+(t.offsetHeight/2)-header;
+      window.scrollTo({top:y,behavior:'smooth'});
     });
   });
 
-  /* Swiper init */
-  const swiper = new Swiper('.swiper',{
+  /* Swiper */
+  new Swiper('.swiper',{
     loop:true,
     spaceBetween:24,
     slidesPerView:1,
-    pagination:{ el:'.swiper-pagination', clickable:true },
-    navigation:{ nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev' },
-    breakpoints:{
-      768:{ slidesPerView:2 },
-      1024:{ slidesPerView:3 }
-    }
+    pagination:{el:'.swiper-pagination',clickable:true},
+    navigation:{nextEl:'.swiper-button-next',prevEl:'.swiper-button-prev'},
+    breakpoints:{768:{slidesPerView:2},1024:{slidesPerView:3}}
   });
 </script>
 </body>
