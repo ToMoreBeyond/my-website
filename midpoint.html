@@ -6,25 +6,24 @@
   <title>Meet in the Middle | ToMoreBeyond</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-950 text-gray-100 selection:bg-teal-400/50">
+<body class="bg-stone-50 text-stone-800 selection:bg-amber-200/50">
 
-<header class="bg-gray-950/60 backdrop-blur fixed inset-x-0 top-0 z-50">
+<header class="bg-stone-50/60 backdrop-blur fixed inset-x-0 top-0 z-50 border-b border-stone-200">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-    <a href="index.html#home" class="text-2xl font-bold hover:text-teal-400">ToMoreBeyond</a>
-    <a href="index.html" class="text-sm hover:text-teal-400">← Back to Home</a>
+    <a href="index.html#home" class="text-2xl font-bold hover:text-amber-600">ToMoreBeyond</a>
+    <a href="index.html" class="text-sm hover:text-amber-600">← Back to Home</a>
   </nav>
 </header>
 
 <!-- Hero -->
 <section class="relative h-[60vh] w-full pt-16">
   <img src="https://source.unsplash.com/1600x900?map,meeting" alt=""
-       class="absolute inset-0 h-full w-full object-cover opacity-60">
-  <div class="absolute inset-0 bg-gray-950/70"></div>
+       class="absolute inset-0 h-full w-full object-cover opacity-15">
+  <div class="absolute inset-0 bg-stone-50/80"></div>
   <div class="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
     <h1 class="text-4xl md:text-5xl font-bold mb-4">Meet in the Middle</h1>
-    <p class="max-w-2xl text-lg text-gray-200">
-      “友達とどこで会う？” を一瞬で解決。<br class="hidden md:inline">
-      出発駅を入れるだけで最適な集合地点を提案します。
+    <p class="max-w-2xl text-lg text-stone-700">
+      出発駅を入れるだけで、最適な集合地点を提案します。
     </p>
   </div>
 </section>
@@ -33,60 +32,53 @@
 <section class="py-20">
   <div class="mx-auto max-w-5xl px-6 grid gap-16 md:grid-cols-2">
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">01. 比重スライダー</h2>
-      <p class="leading-relaxed opacity-90">
-        “今日は相手寄りに” など<br>
-        スライダーで簡単に重み付け。
+      <h2 class="text-2xl font-semibold text-amber-600">01. 比重スライダー</h2>
+      <p class="leading-relaxed">
+        “今日は相手寄りに” などスライダーで簡単に重み付け。
       </p>
     </div>
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">02. キーワード検索</h2>
-      <p class="leading-relaxed opacity-90">
-        「カフェ」「カラオケ」など<br>
-        目的に合わせた駅と POI を表示。
+      <h2 class="text-2xl font-semibold text-amber-600">02. キーワード検索</h2>
+      <p class="leading-relaxed">
+        「カフェ」「カラオケ」など目的に合わせた駅と POI を表示。
       </p>
     </div>
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">03. URL シェア</h2>
-      <p class="leading-relaxed opacity-90">
-        LINE で URL を共有すれば<br>
-        参加者が増えてもリアルタイム更新。
+      <h2 class="text-2xl font-semibold text-amber-600">03. URL シェア</h2>
+      <p class="leading-relaxed">
+        LINE で共有すれば、参加者が増えてもリアルタイム更新。
       </p>
     </div>
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">04. 交通時間考慮</h2>
-      <p class="leading-relaxed opacity-90">
-        Google Maps API と時刻表 API で<br>
-        所要時間ベースの提案を実装予定。
+      <h2 class="text-2xl font-semibold text-amber-600">04. 交通時間考慮</h2>
+      <p class="leading-relaxed">
+        所要時間ベースの提案を開発中。
       </p>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="py-20 bg-gray-900">
+<section class="py-20 bg-stone-100">
   <div class="mx-auto max-w-3xl text-center px-6">
     <h2 class="text-3xl font-bold mb-6">Coming Soon</h2>
-    <p class="mb-10 opacity-90">
-      Web 版は 2025Q3 リリース予定。<br>
-      ベータ案内を受け取りたい方はメール登録をどうぞ。
+    <p class="mb-10">
+      Web 版は 2025Q3 リリース予定。<br>ベータ案内を受け取りたい方はメール登録をどうぞ。
     </p>
-    <form name="mid-contact" method="POST" data-netlify="true"
-          class="flex flex-col gap-6">
+    <form name="mid-contact" method="POST" data-netlify="true" class="flex flex-col gap-6">
       <input type="hidden" name="form-name" value="mid-contact">
       <input type="email" name="email" required placeholder="Email"
-             class="rounded-md border border-gray-700 bg-gray-800 p-3 outline-none focus:border-teal-500">
+             class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
       <button type="submit"
-              class="rounded-md bg-teal-500 py-3 font-semibold transition
-                     hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
+              class="rounded-md bg-amber-500 py-3 font-semibold text-white transition hover:bg-amber-400">
         登録
       </button>
     </form>
   </div>
 </section>
 
-<footer class="bg-gray-900 py-8 text-center text-sm opacity-80">
-  <p>© 2025 ToMoreBeyond</p>
+<footer class="bg-stone-100 py-8 text-center text-sm text-stone-500">
+  © 2025 ToMoreBeyond
 </footer>
 </body>
 </html>

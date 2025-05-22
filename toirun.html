@@ -4,104 +4,63 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ToiRun | ToMoreBeyond</title>
-
-  <!-- Tailwind CDN（共通） -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-950 text-gray-100 scroll-smooth selection:bg-teal-400/50">
+<body class="bg-stone-50 text-stone-800 selection:bg-amber-200/50">
 
-<!-- ===== Header（シンプル版） ===== -->
-<header class="bg-gray-950/60 backdrop-blur fixed inset-x-0 top-0 z-50">
+<header class="bg-stone-50/60 backdrop-blur fixed inset-x-0 top-0 z-50 border-b border-stone-200">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-    <a href="index.html#home" class="text-2xl font-bold hover:text-teal-400">ToMoreBeyond</a>
-    <a href="index.html" class="text-sm hover:text-teal-400">← Back to Home</a>
+    <a href="index.html#home" class="text-2xl font-bold hover:text-amber-600">ToMoreBeyond</a>
+    <a href="index.html" class="text-sm hover:text-amber-600">← Back to Home</a>
   </nav>
 </header>
 
-<!-- ===== Hero ===== -->
+<!-- Hero -->
 <section class="relative h-[60vh] w-full pt-16">
-  <img src="https://source.unsplash.com/1600x900?restroom,sign"
-       alt="" class="absolute inset-0 h-full w-full object-cover opacity-60">
-  <div class="absolute inset-0 bg-gray-950/70"></div>
-
+  <img src="https://source.unsplash.com/1600x900?restroom,sign" alt=""
+       class="absolute inset-0 h-full w-full object-cover opacity-15">
+  <div class="absolute inset-0 bg-stone-50/80"></div>
   <div class="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
     <h1 class="text-4xl md:text-5xl font-bold mb-4">ToiRun</h1>
-    <p class="max-w-2xl text-lg text-gray-200">
-      商業施設のフロアマップを AI が学習し、<br class="hidden md:inline">
-      いちばん近いトイレまで最短ルートでナビゲーション。
+    <p class="max-w-2xl text-lg text-stone-700">
+      商業施設のフロアマップを AI が学習し、最寄りトイレへ最短ルートで案内。
     </p>
   </div>
 </section>
 
-<!-- ===== Features ===== -->
+<!-- Features -->
 <section class="py-20">
   <div class="mx-auto max-w-5xl px-6 grid gap-16 md:grid-cols-2">
-    <!-- Card 1 -->
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">01. 入口ごとに最適化</h2>
-      <p class="opacity-90 leading-relaxed">
-        施設に複数の入口があっても大丈夫。<br>
-        AI が現在地を推定し、最寄りのトイレをリアルタイム計算します。
-      </p>
+      <h2 class="text-2xl font-semibold text-amber-600">01. 入口ごとに最適化</h2>
+      <p class="leading-relaxed">現在地を推定し、最寄りトイレをリアルタイム計算。</p>
     </div>
-    <!-- Card 2 -->
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">02. シンプルな矢印 UI</h2>
-      <p class="opacity-90 leading-relaxed">
-        画面を見続ける必要はありません。<br>
-        曲がり角ごとに<strong>左右矢印</strong>のみ表示する
-        ミニマルなナビで迷わない。
-      </p>
+      <h2 class="text-2xl font-semibold text-amber-600">02. シンプルな矢印 UI</h2>
+      <p class="leading-relaxed">曲がり角ごとに左右矢印のみ表示するミニマルナビ。</p>
     </div>
-    <!-- Card 3 -->
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">03. オフライン対応</h2>
-      <p class="opacity-90 leading-relaxed">
-        地下フロアや電波の届きにくい場所でも安心。<br>
-        事前にキャッシュしたマップで案内を継続します。
-      </p>
+      <h2 class="text-2xl font-semibold text-amber-600">03. オフライン対応</h2>
+      <p class="leading-relaxed">地下フロアや電波の届きにくい場所でも案内を継続。</p>
     </div>
-    <!-- Card 4 -->
     <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-teal-400">04. 多言語サインとの連携</h2>
-      <p class="opacity-90 leading-relaxed">
-        館内サイネージの QR コードを読み取ると<br>
-        自動でルートを再計算する仕組みを検証中です。
-      </p>
+      <h2 class="text-2xl font-semibold text-amber-600">04. 多言語サイネージ連携</h2>
+      <p class="leading-relaxed">館内サイネージの QR でルートを再計算（検証中）。</p>
     </div>
   </div>
 </section>
 
-<!-- ===== CTA ===== -->
-<section class="py-20 bg-gray-900">
+<!-- CTA -->
+<section class="py-20 bg-stone-100">
   <div class="mx-auto max-w-3xl text-center px-6">
     <h2 class="text-3xl font-bold mb-6">Get Early Access</h2>
-    <p class="mb-10 opacity-90">
-      ToiRun は現在クローズド β テスト中です。<br>
-      先行体験をご希望の施設ご担当者さまは、以下フォームよりご連絡ください。
-    </p>
+    <p class="mb-10">ToiRun は現在クローズド β テスト中。先行体験をご希望の方はご連絡ください。</p>
 
-    <form name="toirun-contact" method="POST" data-netlify="true"
-          class="flex flex-col gap-6">
+    <form name="toirun-contact" method="POST" data-netlify="true" class="flex flex-col gap-6">
       <input type="hidden" name="form-name" value="toirun-contact">
-      <input type="text" name="name" required placeholder="Name"
-             class="rounded-md border border-gray-700 bg-gray-800 p-3 outline-none focus:border-teal-500">
+      <input type="text"  name="name"  required placeholder="Name"
+             class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
       <input type="email" name="email" required placeholder="Work Email"
-             class="rounded-md border border-gray-700 bg-gray-800 p-3 outline-none focus:border-teal-500">
+             class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
       <textarea name="message" rows="4" required placeholder="Message"
-                class="rounded-md border border-gray-700 bg-gray-800 p-3 outline-none focus:border-teal-500"></textarea>
-      <button type="submit"
-              class="rounded-md bg-teal-500 py-3 font-semibold transition
-                     hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
-        送信
-      </button>
-    </form>
-  </div>
-</section>
-
-<!-- ===== Footer ===== -->
-<footer class="bg-gray-900 py-8 text-center text-sm opacity-80">
-  <p>© 2025 ToMoreBeyond</p>
-</footer>
-</body>
-</html>
+                class="rounded-md border border-stone-300 bg-white p-3 outline-
