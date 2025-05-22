@@ -9,23 +9,34 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Swiper -->
-  <link  href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
   <style>
     /* Swiper ドットを内側に固定 & Warm カラー */
-    .swiper-pagination{
-      position:absolute;bottom:8px;left:0;right:0;text-align:center;
+    .swiper-pagination {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
     }
-    .swiper-pagination-bullet{
-      width:8px;height:8px;background:#fbbf24;opacity:.5;   /* Amber-400 */
+    .swiper-pagination-bullet {
+      width: 8px;
+      height: 8px;
+      background: #fbbf24; /* Amber-400 */
+      opacity: .5;
     }
-    .swiper-pagination-bullet-active{
-      transform:scale(1.4);background:#f59e0b;             /* Amber-500 */
+    .swiper-pagination-bullet-active {
+      transform: scale(1.4);
+      background: #f59e0b; /* Amber-500 */
     }
-    @media(min-width:768px){ .swiper-pagination{position:static;margin-top:2rem;} }
+    @media (min-width: 768px) {
+      .swiper-pagination { position: static; margin-top: 2rem; }
+    }
   </style>
 </head>
+
 <body class="bg-stone-50 text-stone-800 scroll-smooth selection:bg-amber-200/50">
 
 <!-- ===== Header ===== -->
@@ -82,7 +93,7 @@
   </div>
 </section>
 
-<!-- ===== Apps (Warm Paper style) ===== -->
+<!-- ===== Apps ===== -->
 <section id="apps" class="snap-target py-20">
   <h2 class="mb-10 text-center text-3xl font-bold">Apps</h2>
 
@@ -108,7 +119,8 @@
                   hover:ring-amber-300 transition">
           <h3 class="text-xl font-semibold mb-3">ToiRun</h3>
           <p class="text-sm opacity-80">
-            商業施設のフロアマップを学習し、<br>最短ルートでトイレを案内する AI ナビゲーション。<br>入口が複数でも矢印で誘導。
+            商業施設のフロアマップを学習し、最短ルートでトイレを案内する AI ナビゲーション。<br>
+            入口が複数でも矢印で誘導。
           </p>
         </a>
       </div>
@@ -132,42 +144,88 @@
   </div>
 </section>
 
-<!-- ===== Company / Media / Contact / Footer =====
-     *構造は前回と同じ → bg を stone-50 / text を stone-800 /
-      ボタン・リンクを Amber-系へ変更しています（省略）* -->
+<!-- ===== Company (概要リンク) ===== -->
+<section id="company" class="snap-target py-20 bg-stone-100" onclick="location.href='company.html'">
+  <div class="mx-auto max-w-4xl text-center px-6">
+    <div class="text-4xl mb-4">🏢</div>
+    <h2 class="text-3xl font-bold mb-4">Company</h2>
+    <p class="text-stone-700">
+      2025年設立・メンバー3名。<br>
+      “The road not taken” をスローガンに、自由な発想でアプリ開発に挑戦。
+    </p>
+  </div>
+</section>
+
+<!-- ===== Media (概要リンク) ===== -->
+<section id="media" class="snap-target py-20" onclick="location.href='media.html'">
+  <div class="mx-auto max-w-4xl text-center px-6">
+    <div class="text-4xl mb-4">📰</div>
+    <h2 class="text-3xl font-bold mb-4">Media & Press</h2>
+    <p class="text-stone-700">
+      最新情報は&nbsp;<a href="https://twitter.com/TADATAKA_O" target="_blank"
+      class="text-amber-600 font-semibold underline underline-offset-4">X(@TADATAKA_O)</a>&nbsp;で配信中。
+    </p>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section id="contact" class="snap-target py-24">
+  <h2 class="mb-8 text-center text-3xl font-bold">Contact Us</h2>
+
+  <form name="contact" method="POST" data-netlify="true"
+        class="mx-auto flex max-w-lg flex-col gap-6 px-6">
+    <input type="hidden" name="form-name" value="contact">
+    <input type="text" name="name" required placeholder="Name"
+           class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
+    <input type="email" name="email" required placeholder="Email"
+           class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
+    <textarea name="message" rows="5" required placeholder="Message"
+              class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500"></textarea>
+    <button type="submit"
+            class="rounded-md bg-amber-500 py-3 font-semibold text-white transition hover:bg-amber-400">
+      送信
+    </button>
+  </form>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="bg-stone-100 py-8 text-center text-sm text-stone-500">
+  © 2025 ToMoreBeyond
+</footer>
 
 <!-- ===== JS ===== -->
 <script>
   /* Hamburger */
-  const toggle=document.getElementById('menu-toggle');
-  const mobile=document.getElementById('mobile-menu');
-  toggle.addEventListener('click',()=>mobile.classList.toggle('translate-x-full'));
-  document.querySelectorAll('.mobile-link').forEach(l=>
-    l.addEventListener('click',()=>mobile.classList.add('translate-x-full'))
+  const toggle = document.getElementById('menu-toggle');
+  const mobile = document.getElementById('mobile-menu');
+  toggle.addEventListener('click', () => mobile.classList.toggle('translate-x-full'));
+  document.querySelectorAll('.mobile-link').forEach(link =>
+    link.addEventListener('click', () => mobile.classList.add('translate-x-full'))
   );
 
-  /* Section scroll to center */
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{
-      const id=a.getAttribute('href');if(id.length===1)return;
+  /* Section scroll-to-center */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const id = anchor.getAttribute('href');
+      if (id.length === 1) return;
       e.preventDefault();
-      const t=document.querySelector(id);
-      const header=80;
-      const y=t.getBoundingClientRect().top+window.pageYOffset
-              - (window.innerHeight/2)+(t.offsetHeight/2)-header;
-      window.scrollTo({top:y,behavior:'smooth'});
+      const target = document.querySelector(id);
+      const header = 80;
+      const y = target.getBoundingClientRect().top + window.pageYOffset
+              - (window.innerHeight / 2) + (target.offsetHeight / 2) - header;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     });
   });
 
   /* Swiper */
-  new Swiper('.swiper',{
-    loop:true,
-    spaceBetween:24,
-    slidesPerView:1,
-    grabCursor:true,
-    pagination:{el:'.swiper-pagination',clickable:true},
-    navigation:{nextEl:'.swiper-button-next',prevEl:'.swiper-button-prev'},
-    breakpoints:{768:{slidesPerView:2},1024:{slidesPerView:3}}
+  new Swiper('.swiper', {
+    loop: true,
+    spaceBetween: 24,
+    slidesPerView: 1,
+    grabCursor: true,
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
   });
 </script>
 </body>
