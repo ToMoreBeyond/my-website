@@ -7,7 +7,7 @@
   <meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
   <meta property="og:image" content="assets/ogp.jpg">
 
-  <!-- Google Fonts + Tailwind 2.2.19（ローカルビルド） -->
+  <!-- Google Fonts + Tailwind 2.2.19（ローカル）-->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/tailwind.min.css">
 
@@ -31,7 +31,7 @@
   .bg-accent{background:var(--accent)}
   .bg-accent-hover:hover{background:var(--accent-hov)}
 
-  /* ナビ Hover Ripple + Underline */
+  /* ナビ Ripple + Underline */
   .nav-link{position:relative;overflow:hidden}
   .nav-link::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:var(--accent);opacity:.15;
     transform:translate(-50%,-50%);border-radius:50%;transition:width .4s,height .4s}
@@ -65,10 +65,17 @@
   /* Apps 背景フェード */
   #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
 
-  /* Apps タイトルを確実に前面へ */
+  /* Apps カード */
   .card-title{z-index:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.7))}
   .card-img  {transition:transform .7s;object-fit:cover}
   .app-card:hover .card-img{transform:scale(1.08)}
+
+  /* ==== wipe board ================================= */
+  .wipe{height:0;position:relative}
+  .wipe::before{
+    content:'';position:fixed;inset:0;z-index:120;background:#FFB300;
+    transform-origin:left;transform:scaleX(0);pointer-events:none;
+  }
   </style>
 </head>
 <body>
@@ -91,7 +98,7 @@
   </button>
 </header>
 
-<!-- ===== Mobile Full-screen Menu ===== -->
+<!-- ===== Mobile Menu ===== -->
 <div id="menu">
   <a class="menu-link" href="#apps">Apps</a>
   <a class="menu-link" href="#company">Company</a>
@@ -126,6 +133,9 @@
   </div>
 </section>
 
+<!-- ===== wipe board (Hero -> Apps) ===== -->
+<div class="wipe wipe-hero"></div>
+
 <!-- ===== Apps ===== -->
 <section id="apps">
   <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
@@ -136,17 +146,14 @@
       <img src="https://source.unsplash.com/1280x1280?journal" class="card-img absolute inset-0 w-full h-full" alt="">
       <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">TADATAKA</h3>
     </a>
-
     <a href="toirun.html" class="app-card relative overflow-hidden rounded-3xl">
       <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img absolute inset-0 w-full h-full" alt="">
       <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">ToiRun</h3>
     </a>
-
     <a href="midpoint.html" class="app-card row-span-2 relative overflow-hidden rounded-3xl">
       <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img absolute inset-0 w-full h-full" alt="">
       <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
     </a>
-
     <a href="#" class="app-card relative overflow-hidden rounded-3xl flex items-center justify-center bg-stone-200 text-2xl font-bold">
       Coming&nbsp;Soon
     </a>
@@ -219,8 +226,8 @@
 <!-- ===== JS ===== -->
 <script>
 /* burger */
-const burger=document.getElementById('burger');
-const menu  =document.getElementById('menu');
+const burger = document.getElementById('burger');
+const menu   = document.getElementById('menu');
 burger.addEventListener('click',()=>{
   burger.classList.toggle('burger-open');
   menu.classList.toggle('open');
@@ -232,7 +239,7 @@ document.querySelectorAll('.menu-link').forEach(l=>{
   });
 });
 
-/* Swiper (mobile only) */
+/* Swiper (mobile) */
 if(innerWidth<1024){
   new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
     pagination:{el:'.swiper-pagination',clickable:true}});
@@ -254,9 +261,27 @@ ScrollTrigger.create({
   }
 });
 
-/* Hero drop */
+/* Hero word drop */
 gsap.from('#home h1 span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,
   duration:1.2,stagger:{each:.15,from:'random'}});
+
+/* ===== LEOLEO style wipe ========= */
+function addWipe(wipeElem){
+  const tl=gsap.timeline({
+    scrollTrigger:{
+      trigger: wipeElem,
+      start: "top bottom",
+      end:   "top top",
+      scrub:true,
+      invalidateOnRefresh:true
+    }
+  });
+  tl.to(wipeElem, {duration:0}); // プレースホルダ（必要なため空）
+  tl.fromTo(wipeElem, {scaleX:0},
+    {scaleX:1,duration:0.25,ease:"power2.in"},0)
+    .to(wipeElem, {scaleX:0,duration:0.25,ease:"power2.out",delay:0.05});
+}
+addWipe(document.querySelector('.wipe-hero'));
 </script>
 </body>
 </html>
