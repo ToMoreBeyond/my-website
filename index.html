@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ToMoreBeyond | The road not taken</title>
 <meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
-<meta property="og:image" content="assets/ogp.jpg">
-
-<!-- Google Fonts + Tailwind 2.2.19 -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tailwind.min.css">
 
@@ -24,20 +21,19 @@ body{background:#FDFCFB;color:#312E2B;font-family:'Inter',sans-serif}
 @media(min-width:1024px){body{scroll-snap-type:y mandatory}}
 section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidden}
 
-/* ――― 共通ユーティリティ ――― */
+/* ── utilities ── */
 .glass{background:rgba(255,255,255,.7);backdrop-filter:blur(14px)}
-.text-accent         {color:var(--accent)}
-.hover\:text-accent:hover{color:var(--accent)}
-.bg-accent           {background:var(--accent)}
+.text-accent{color:var(--accent)}
+.bg-accent{background:var(--accent)}
 .bg-accent-hover:hover{background:var(--accent-hov)}
 
-/* Ripple + underline (nav) */
+/* nav underline + ripple */
 .nav-link{position:relative;overflow:hidden}
 .nav-link::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:var(--accent);opacity:.15;
   transform:translate(-50%,-50%);border-radius:50%;transition:width .4s,height .4s}
 .nav-link:hover::after{width:160px;height:160px}
-.nav-link span{background-image:linear-gradient(currentColor,currentColor);
-  background-size:0 2px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .3s}
+.nav-link span{background-image:linear-gradient(currentColor,currentColor);background-size:0 2px;background-repeat:no-repeat;
+  background-position:0 100%;transition:background-size .3s}
 .nav-link:hover span{background-size:100% 2px}
 
 /* Swiper dots */
@@ -51,43 +47,36 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 .burger-open .line:nth-child(1){transform:translateY(4px) rotate(45deg)}
 .burger-open .line:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
 
-/* full screen menu */
+/* full-screen menu */
 #menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;
   gap:2.5rem;font-size:1.875rem;font-weight:600;background:#fff;transform:translateX(100%);
   transition:transform .45s cubic-bezier(.77,0,.18,1)}
 #menu.open{transform:translateX(0)}
-#close-menu{position:absolute;top:24px;right:24px;font-size:2rem;font-weight:800;line-height:1;color:#312E2B}
+#close-menu{position:absolute;top:24px;right:24px;font-size:2rem;font-weight:800;line-height:1}
 
-/* Scroll arrow */
+/* scroll arrow */
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 .scroll-arrow{animation:bounce 2s infinite}
 
-/* Apps 背景フェード */
-#apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
+/* wipe board */
+.page-wipe{position:fixed;inset:0;z-index:120;background:var(--accent);transform-origin:left;transform:scaleX(0);pointer-events:none}
 
-/* Apps カード */
+/* apps cards */
 .app-card{position:relative;overflow:hidden;border-radius:24px}
-.card-img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
-.app-card::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.25)} /* ←文字読みやすく */
+.app-card::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.28)}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
 .app-card:hover .card-img{transform:scale(1.08)}
-.card-title{position:absolute;bottom:20px;left:24px;z-index:1;
-  font-size:1.6rem;font-weight:700;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6)}
-
-/* ----- wipe board (LEOLEO風) ----- */
-.page-wipe{position:fixed;inset:0;z-index:120;background:var(--accent);
-  transform-origin:left;transform:scaleX(0);pointer-events:none}
+.card-title{position:absolute;bottom:20px;left:24px;font-size:1.6rem;font-weight:700;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6)}
 </style>
 </head>
 <body>
 
 <!-- ===== Header ===== -->
-<header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between
-               w-[92%] max-w-6xl px-6 py-3 glass rounded-full shadow-md">
-  <a href="#home" class="font-bold text-xl tracking-tight hover:text-accent"
-     style="font-family:'Poppins',sans-serif;">ToMoreBeyond</a>
+<header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center w-[92%] max-w-6xl px-6 py-3 glass rounded-full shadow-md">
+  <a href="#home" class="flex-shrink-0 font-bold text-xl tracking-tight hover:text-accent" style="font-family:'Poppins',sans-serif;">ToMoreBeyond</a>
 
-  <!-- PC ナビ -->
-  <nav class="hidden md:flex gap-14 text-lg font-medium">
+  <!-- PC nav -->
+  <nav class="hidden md:flex gap-14 text-lg font-medium ml-auto">
     <a href="#apps"    class="nav-link hover:text-accent"><span>Apps</span></a>
     <a href="#company" class="nav-link hover:text-accent"><span>Company</span></a>
     <a href="#media"   class="nav-link hover:text-accent"><span>Media</span></a>
@@ -95,7 +84,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </nav>
 
   <!-- burger -->
-  <button id="burger" class="md:hidden w-8 h-8 relative">
+  <button id="burger" class="md:hidden w-8 h-8 relative ml-auto">
     <span class="line"></span><span class="line"></span>
   </button>
 </header>
@@ -111,23 +100,19 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 <!-- ===== Hero ===== -->
 <section id="home" class="flex flex-col items-center justify-center">
-  <video src="assets/hero.mp4" autoplay muted loop playsinline
-         class="absolute inset-0 w-full h-full object-cover"></video>
+  <video src="assets/hero.mp4" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video>
   <div class="absolute inset-0 bg-white/60"></div>
 
-  <h1 class="relative z-10 font-extrabold text-5xl md:text-7xl mb-8 tracking-tight flex flex-wrap justify-center"
-      style="font-family:'Poppins',sans-serif;">
+  <h1 class="relative z-10 font-extrabold text-5xl md:text-7xl mb-8 tracking-tight flex flex-wrap justify-center" style="font-family:'Poppins',sans-serif;">
     <span class="mx-2">The</span><span class="mx-2">road</span><span class="mx-2">not</span><span class="mx-2">taken</span>
   </h1>
 
   <p class="relative z-10 text-xl md:text-2xl mb-14 text-center px-6">
-    私たちは <span class="font-bold text-accent">共に創る</span>・
-    <span class="font-bold text-accent">友と創る</span>。<br>
+    私たちは <span class="font-bold text-accent">共に創る</span>・<span class="font-bold text-accent">友と創る</span>。<br>
     面白いものを <span class="font-bold text-accent">“ともに”</span> 越える会社です。
   </p>
 
-  <a href="#apps" class="relative z-10 rounded-full bg-accent bg-accent-hover
-     px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
+  <a href="#apps" class="relative z-10 rounded-full bg-accent bg-accent-hover px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
 
   <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-accent scroll-arrow">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
@@ -136,7 +121,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </div>
 </section>
 
-<!-- === wipe overlay === -->
+<!-- ワイプ -->
 <div class="page-wipe wipe-hero"></div>
 
 <!-- ===== Apps ===== -->
@@ -145,82 +130,55 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
   <!-- Desktop Grid -->
   <div class="hidden lg:grid grid-cols-3 gap-10 px-12 py-32 w-full" style="grid-auto-rows:34vh;">
-    <!-- cards -->
     <a href="tadataka.html" class="app-card col-span-2 row-span-2">
-      <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt="">
-      <h3 class="card-title">TADATAKA</h3>
+      <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt=""><h3 class="card-title">TADATAKA</h3>
     </a>
-
-    <a href="toirun.html" class="app-card">
-      <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt="">
-      <h3 class="card-title">ToiRun</h3>
-    </a>
-
-    <a href="midpoint.html" class="app-card row-span-2">
-      <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt="">
-      <h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
-    </a>
-
-    <a href="#" class="app-card flex items-center justify-center bg-stone-200 text-2xl font-bold">
-      Coming&nbsp;Soon
-    </a>
+    <a href="toirun.html" class="app-card"><img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt="">
+      <h3 class="card-title">ToiRun</h3></a>
+    <a href="midpoint.html" class="app-card row-span-2"><img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt="">
+      <h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3></a>
+    <a href="#" class="app-card flex items-center justify-center bg-stone-200 text-2xl font-bold">Coming&nbsp;Soon</a>
   </div>
 
   <!-- Mobile Swiper -->
   <div class="lg:hidden swiper h-[82vh]">
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <a href="tadataka.html" class="app-card block mx-6 h-full">
-          <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt="">
-          <h3 class="card-title">TADATAKA</h3>
-        </a>
-      </div>
-      <div class="swiper-slide">
-        <a href="toirun.html" class="app-card block mx-6 h-full">
-          <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt="">
-          <h3 class="card-title">ToiRun</h3>
-        </a>
-      </div>
-      <div class="swiper-slide">
-        <a href="midpoint.html" class="app-card block mx-6 h-full">
-          <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt="">
-          <h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
-        </a>
-      </div>
+      <div class="swiper-slide"><a href="tadataka.html" class="app-card block mx-6 h-full">
+        <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt=""><h3 class="card-title">TADATAKA</h3></a></div>
+      <div class="swiper-slide"><a href="toirun.html" class="app-card block mx-6 h-full">
+        <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt=""><h3 class="card-title">ToiRun</h3></a></div>
+      <div class="swiper-slide"><a href="midpoint.html" class="app-card block mx-6 h-full">
+        <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt=""><h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3></a></div>
     </div>
     <div class="swiper-pagination !bottom-10"></div>
   </div>
 </section>
 
 <!-- ===== Company ===== -->
-<section id="company" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB]">
+<section id="company" class="flex items-center justify-center bg-[#111] text-[#FDFCFB]">
   <div class="w-full max-w-7xl px-12 py-32 md:py-40">
     <h2 class="text-5xl md:text-7xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Company</h2>
-    <p class="text-xl md:text-2xl leading-relaxed mb-10">
-      2025 年設立。面白いことだけを追い、疑問や不安を解消するプロダクトを創ります。
-    </p>
+    <p class="text-xl md:text-2xl leading-relaxed mb-10">2025 年設立。面白いことだけを追い、疑問や不安を解消するプロダクトを創ります。</p>
     <a href="company.html" class="font-semibold underline underline-offset-4">会社詳細を見る</a>
   </div>
 </section>
 
 <!-- ===== Media ===== -->
-<section id="media" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB]">
+<section id="media" class="flex items-center justify-center bg-[#111] text-[#FDFCFB]">
   <div class="w-full max-w-7xl px-12 py-32 md:py-40">
     <h2 class="text-5xl md:text-7xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
-    <p class="text-xl md:text-2xl leading-relaxed mb-10">
-      最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold underline">X (@TADATAKA_O)</a> にて発信中。
-    </p>
+    <p class="text-xl md:text-2xl leading-relaxed mb-10">最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold underline">X (@TADATAKA_O)</a> にて発信中。</p>
     <a href="media.html" class="font-semibold underline underline-offset-4">掲載実績を見る</a>
   </div>
 </section>
 
 <!-- ===== Contact ===== -->
-<section id="contact" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB]">
+<section id="contact" class="flex items-center justify-center bg-[#111] text-[#FDFCFB]">
   <div class="w-full max-w-7xl px-12 py-32 md:py-40">
     <h2 class="text-5xl md:text-7xl font-extrabold mb-12" style="font-family:'Poppins',sans-serif;">Contact</h2>
     <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-6 max-w-3xl">
       <input type="hidden" name="form-name" value="contact">
-      <input name="name"  placeholder="Name"  required class="rounded-md bg-transparent border border-stone-600 p-4">
+      <input name="name" placeholder="Name" required class="rounded-md bg-transparent border border-stone-600 p-4">
       <input name="email" type="email" placeholder="Email" required class="rounded-md bg-transparent border border-stone-600 p-4">
       <textarea name="msg" rows="5" placeholder="Message" required class="rounded-md bg-transparent border border-stone-600 p-4"></textarea>
       <button class="rounded-md bg-accent bg-accent-hover py-4 font-semibold text-lg text-white">送信</button>
@@ -228,63 +186,33 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </div>
 </section>
 
-<footer class="bg-[#111111] text-[#FDFCFB] text-center py-8 text-sm">© 2025 ToMoreBeyond</footer>
+<footer class="bg-[#111] text-[#FDFCFB] text-center py-8 text-sm">© 2025 ToMoreBeyond</footer>
 
 <!-- ===== JS ===== -->
 <script>
 /* burger / close */
-const burger=document.getElementById('burger');
-const menu=document.getElementById('menu');
-const closeBtn=document.getElementById('close-menu');
+const burger=document.getElementById('burger'),menu=document.getElementById('menu'),closeBtn=document.getElementById('close-menu');
 [burger,closeBtn].forEach(btn=>btn.addEventListener('click',()=>{
-  burger.classList.toggle('burger-open');
-  menu.classList.toggle('open');
+  burger.classList.toggle('burger-open');menu.classList.toggle('open');
 }));
-document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>{
-  menu.classList.remove('open');burger.classList.remove('burger-open');
-}));
+document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('burger-open');}));
 
-/* Swiper */
-if(innerWidth<1024){
-  new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
-    pagination:{el:'.swiper-pagination',clickable:true}});
-}
+/* swiper */
+if(innerWidth<1024){new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
+  pagination:{el:'.swiper-pagination',clickable:true}});}
 
-/* Nav hide */
+/* nav hide */
 gsap.registerPlugin(ScrollTrigger);
 let last=0,timer;
-ScrollTrigger.create({
-  onUpdate:self=>{
-    clearTimeout(timer);
-    timer=setTimeout(()=>{
-      const cur=self.scroll();
-      (cur>last&&cur>120)
-        ?gsap.to('#navbar',{y:-120,opacity:0,duration:.4,overwrite:true})
-        :gsap.to('#navbar',{y:0,opacity:1,duration:.4,overwrite:true});
-      last=cur;
-    },100);
-  }
-});
+ScrollTrigger.create({onUpdate:s=>{clearTimeout(timer);timer=setTimeout(()=>{const c=s.scroll();(c>last&&c>120)?gsap.to('#navbar',{y:-120,opacity:0,duration:.4,overwrite:true}):gsap.to('#navbar',{y:0,opacity:1,duration:.4,overwrite:true});last=c;},100);}});
 
-/* Hero word drop */
-gsap.from('#home h1 span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,
-  duration:1.2,stagger:{each:.15,from:'random'}});
+/* hero word drop */
+gsap.from('#home h1 span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,duration:1.2,stagger:{each:.15,from:'random'}});
 
-/* LEOLEO 風ワイプ   -------------------------------- */
-gsap.fromTo('.wipe-hero',
-  {scaleX:0,transformOrigin:'left'},
-  {scaleX:1,ease:'power2.in',scrollTrigger:{
-      trigger:'#apps',
-      start:'top 85%',
-      end:'top 60%',
-      scrub:true
-    }})
-.to('.wipe-hero',{scaleX:0,transformOrigin:'right',ease:'power2.out',scrollTrigger:{
-      trigger:'#apps',
-      start:'top 59%',
-      end:'top 30%',
-      scrub:true
-    }});
+/* wipe (hero→apps) */
+gsap.timeline({scrollTrigger:{trigger:'#apps',start:'top 80%',end:'top top',scrub:true}})
+  .fromTo('.wipe-hero',{scaleX:0,transformOrigin:'left'},{scaleX:1,ease:'power2.in'})
+  .to('.wipe-hero',{scaleX:0,transformOrigin:'right',ease:'power2.out'});
 </script>
 </body>
 </html>
