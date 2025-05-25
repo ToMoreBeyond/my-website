@@ -125,18 +125,19 @@
 <section id="apps">
   <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
 
-  <!-- PC Grid -->
-  <div class="hidden lg:grid grid-cols-3 auto-rows-[minmax(33vh,1fr)] gap-8 max-w-7xl mx-auto py-32 px-10">
+  <!-- PC グリッド -->
+  <div class="hidden lg:grid grid-cols-3 gap-8 max-w-7xl mx-auto py-32 px-10"
+       style="grid-auto-rows:33vh">
     <a href="tadataka.html" class="col-span-2 row-span-2 relative overflow-hidden rounded-2xl">
-      <img src="https://source.unsplash.com/1200x1200?journal" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <img src="https://source.unsplash.com/1200x1200?journal" class="absolute inset-0 w-full h-full object-cover" alt="">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">TADATAKA</h3>
     </a>
     <a href="toirun.html" class="relative overflow-hidden rounded-2xl">
-      <img src="https://source.unsplash.com/1200x1200?restroom" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <img src="https://source.unsplash.com/1200x1200?restroom" class="absolute inset-0 w-full h-full object-cover" alt="">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">ToiRun</h3>
     </a>
     <a href="midpoint.html" class="row-span-2 relative overflow-hidden rounded-2xl">
-      <img src="https://source.unsplash.com/1200x1600?meeting" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <img src="https://source.unsplash.com/1200x1600?meeting" class="absolute inset-0 w-full h-full object-cover" alt="">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
     </a>
     <a href="#" class="relative overflow-hidden rounded-2xl flex items-center justify-center bg-stone-200 text-xl font-bold">
@@ -144,8 +145,9 @@
     </a>
   </div>
 
-  <!-- Mobile Swiper -->
-  <div class="lg:hidden swiper h-[80vh]">
+  <!-- モバイル Swiper -->
+  <div class="lg:hidden swiper" style="height:80vh">
+    <div class="swiper-wrapper">
     <div class="swiper-wrapper">
       <div class="swiper-slide">
         <a href="tadataka.html" class="block mx-6 rounded-2xl overflow-hidden relative">
@@ -165,10 +167,9 @@
           <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
         </a>
       </div>
+      <div class="swiper-pagination !bottom-10"></div>
     </div>
-    <div class="swiper-pagination !bottom-10"></div>
-  </div>
-</section>
+  </section>
 
 <!-- ===== Company ===== -->
 <section id="company" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
