@@ -7,25 +7,16 @@
 <meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
 <meta property="og:image" content="assets/ogp.jpg">
 
-<!-- Google Fonts -->
+<!-- Fonts / Tailwind / Swiper / GSAP -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
-
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Swiper -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<!-- GSAP -->
 <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
 <style>
-:root{
-  --accent:#FFB300;
-  --accent-hov:#FF9E00;
-}
+:root{ --accent:#FFB300; --accent-hov:#FF9E00; }
 html,body{height:100%;scroll-behavior:smooth;}
 body{scroll-snap-type:y mandatory;background:#FDFCFB;color:#312E2B;font-family:'Inter',sans-serif;}
 section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidden}
@@ -33,7 +24,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 /* glass card */
 .glass{background:rgba(255,255,255,.7);backdrop-filter:blur(14px);}
 
-/* Nav ripple & underline */
+/* Nav ripple + underline */
 .nav-link{position:relative;overflow:hidden}
 .nav-link::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;
   background:var(--accent);opacity:.15;transform:translate(-50%,-50%);
@@ -56,7 +47,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 .scroll-arrow{animation:bounce 2s infinite}
 
-/* Apps 背景カラー用レイヤー */
+/* Apps 背景カラー */
 #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
 </style>
 </head>
@@ -64,25 +55,25 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 <!-- ===== Nav ===== -->
 <header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between
-               w-[92%] max-w-5xl px-6 py-3 glass rounded-full shadow-md ease-smooth">
-  <a href="#home" class="font-bold text-xl tracking-tight hover:text-[var(--accent)] ease-smooth"
+               w-[92%] max-w-5xl px-6 py-3 glass rounded-full shadow-md">
+  <a href="#home" class="font-bold text-xl tracking-tight hover:text-[var(--accent)]"
      style="font-family:'Poppins',sans-serif;">ToMoreBeyond</a>
 
   <nav class="hidden md:flex gap-10 text-lg font-medium">
-    <a href="#apps"    class="nav-link hover:text-[var(--accent)] ease-smooth"><span>Apps</span></a>
-    <a href="#company" class="nav-link hover:text-[var(--accent)] ease-smooth"><span>Company</span></a>
-    <a href="#media"   class="nav-link hover:text-[var(--accent)] ease-smooth"><span>Media</span></a>
-    <a href="#contact" class="nav-link hover:text-[var(--accent)] ease-smooth"><span>Contact</span></a>
+    <a href="#apps"    class="nav-link hover:text-[var(--accent)]"><span>Apps</span></a>
+    <a href="#company" class="nav-link hover:text-[var(--accent)]"><span>Company</span></a>
+    <a href="#media"   class="nav-link hover:text-[var(--accent)]"><span>Media</span></a>
+    <a href="#contact" class="nav-link hover:text-[var(--accent)]"><span>Contact</span></a>
   </nav>
 
   <button id="burger" class="md:hidden w-8 h-8 relative">
-    <span class="absolute inset-0 m-auto h-[2px] w-5 bg-current transition duration-300"></span>
-    <span class="absolute inset-0 m-auto h-[2px] w-5 bg-current translate-y-2 transition duration-300"></span>
+    <span class="absolute inset-0 m-auto h-[2px] w-5 bg-current transition"></span>
+    <span class="absolute inset-0 m-auto h-[2px] w-5 bg-current translate-y-2 transition"></span>
   </button>
 </header>
 
-<!-- full menu -->
-<div id="menu" class="fixed inset-0 bg-white/90 backdrop-blur flex flex-col items-center justify-center gap-10 text-3xl font-semibold closed">
+<!-- ===== Full-screen Menu ( z-[60] > header ) ===== -->
+<div id="menu" class="fixed inset-0 z-[60] bg-white/90 backdrop-blur flex flex-col items-center justify-center gap-10 text-3xl font-semibold closed">
   <a class="menu-link" href="#apps">Apps</a>
   <a class="menu-link" href="#company">Company</a>
   <a class="menu-link" href="#media">Media</a>
@@ -92,8 +83,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 <!-- ===== Hero ===== -->
 <section id="home" class="flex flex-col items-center justify-center">
   <video src="https://assets.mixkit.co/videos/preview/mixkit-aerial-shot-of-a-forest-at-sunset-1637-large.mp4"
-         autoplay muted loop playsinline
-         class="absolute inset-0 w-full h-full object-cover"></video>
+         autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video>
   <div class="absolute inset-0 bg-white/60"></div>
 
   <h1 id="hero-title" class="relative z-10 font-extrabold text-5xl md:text-7xl mb-8 tracking-tight flex flex-wrap justify-center"
@@ -117,50 +107,37 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </div>
 </section>
 
-<!-- ===== Apps ===== -->
+<!-- ===== Apps (斜めイン + 背景色連動) ===== -->
 <section id="apps">
-  <!-- 背景カラー層 -->
   <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
 
   <div class="swiper h-full">
     <div class="swiper-wrapper">
 
-      <!-- slide 1 -->
       <div class="swiper-slide flex items-center justify-center" data-color="#FFC107">
         <img class="absolute inset-0 w-full h-full object-cover opacity-40" src="https://source.unsplash.com/1600x900?journal,city">
         <div class="relative glass rounded-3xl p-12 max-w-xl mx-auto text-center slide-card">
           <h2 class="text-4xl font-extrabold mb-4 tracking-tight" style="font-family:'Poppins',sans-serif;">TADATAKA</h2>
           <p class="text-lg mb-8">移動を自動記録するライフログ×日記アプリ。</p>
-          <a href="tadataka.html"
-             class="inline-block rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hov)] px-8 py-3 text-white font-semibold">
-            詳しく見る
-          </a>
+          <a href="tadataka.html" class="inline-block rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hov)] px-8 py-3 text-white font-semibold">詳しく見る</a>
         </div>
       </div>
 
-      <!-- slide 2 -->
       <div class="swiper-slide flex items-center justify-center" data-color="#FF7043">
         <img class="absolute inset-0 w-full h-full object-cover opacity-40" src="https://source.unsplash.com/1600x900?restroom,sign">
         <div class="relative glass rounded-3xl p-12 max-w-xl mx-auto text-center slide-card">
           <h2 class="text-4xl font-extrabold mb-4 tracking-tight" style="font-family:'Poppins',sans-serif;">ToiRun</h2>
           <p class="text-lg mb-8">施設内フロアマップをAIが学習、最短ルートでトイレへ案内。</p>
-          <a href="toirun.html"
-             class="inline-block rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hov)] px-8 py-3 text-white font-semibold">
-            詳しく見る
-          </a>
+          <a href="toirun.html" class="inline-block rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hov)] px-8 py-3 text-white font-semibold">詳しく見る</a>
         </div>
       </div>
 
-      <!-- slide 3 -->
       <div class="swiper-slide flex items-center justify-center" data-color="#8BC34A">
         <img class="absolute inset-0 w-full h-full object-cover opacity-40" src="https://source.unsplash.com/1600x900?meeting,station">
         <div class="relative glass rounded-3xl p-12 max-w-xl mx-auto text-center slide-card">
           <h2 class="text-4xl font-extrabold mb-4 tracking-tight" style="font-family:'Poppins',sans-serif;">Meet in the Middle</h2>
           <p class="text-lg mb-8">複数出発地から最適な集合駅を提案。</p>
-          <a href="midpoint.html"
-             class="inline-block rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hov)] px-8 py-3 text-white font-semibold">
-            詳しく見る
-          </a>
+          <a href="midpoint.html" class="inline-block rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hov)] px-8 py-3 text-white font-semibold">詳しく見る</a>
         </div>
       </div>
     </div>
@@ -168,25 +145,19 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </div>
 </section>
 
-<!-- ===== Company ===== -->
+<!-- ===== Company / Media / Contact (省略: 前回と同じ) ===== -->
 <section id="company" class="flex items-center justify-center bg-[#FFF9F3]">
   <div class="glass rounded-3xl p-14 mx-auto max-w-3xl text-center">
     <h2 class="text-3xl md:text-5xl font-extrabold mb-6" style="font-family:'Poppins',sans-serif;">Company</h2>
-    <p class="text-lg md:text-xl mb-6">
-      2025 年設立。面白いことだけを追い、<br>疑問や不安を解消するプロダクトを創ります。
-    </p>
+    <p class="text-lg md:text-xl mb-6">2025 年設立。面白いことだけを追い、<br>疑問や不安を解消するプロダクトを創ります。</p>
     <a href="company.html" class="text-[var(--accent)] font-semibold underline underline-offset-4">会社詳細を見る</a>
   </div>
 </section>
 
-<!-- ===== Media / Contact (省略…前バージョンと同) ===== -->
 <section id="media" class="flex items-center justify-center">
   <div class="glass rounded-3xl p-14 mx-auto max-w-3xl text-center">
     <h2 class="text-3xl md:text-5xl font-extrabold mb-6" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
-    <p class="text-lg md:text-xl mb-6">
-      最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank"
-      class="font-bold text-[var(--accent)] underline">X(@TADATAKA_O)</a> にて発信中。
-    </p>
+    <p class="text-lg md:text-xl mb-6">最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold text-[var(--accent)] underline">X(@TADATAKA_O)</a> にて発信中。</p>
     <a href="media.html" class="text-[var(--accent)] font-semibold underline underline-offset-4">掲載実績を見る</a>
   </div>
 </section>
@@ -213,49 +184,33 @@ const burger=document.getElementById('burger'),menu=document.getElementById('men
 burger.addEventListener('click',()=>menu.classList.toggle('closed'));
 document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>menu.classList.add('closed')));
 
-/* Swiper 初期化 */
-const swiper=new Swiper('.swiper',{
-  loop:true,speed:800,slidesPerView:1,grabCursor:true,
-  pagination:{el:'.swiper-pagination',clickable:true}
-});
+/* Swiper */
+const swiper=new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
+  pagination:{el:'.swiper-pagination',clickable:true}});
 
-/* Nav show/hide */
+/* Nav hide / show */
 gsap.registerPlugin(ScrollTrigger);
-const nav=document.getElementById('navbar');
-let last=0;
-ScrollTrigger.create({
-  onUpdate:self=>{
-    const cur=self.scroll();
-    if(cur>last && cur>100){
-      gsap.to(nav,{y:-120,opacity:0,duration:.5,ease:"power2.out"});
-    }else{ gsap.to(nav,{y:0,opacity:1,duration:.5,ease:"power2.out"}); }
-    last=cur;
-  }
-});
+const nav=document.getElementById('navbar');let last=0;
+ScrollTrigger.create({onUpdate:self=>{
+  const cur=self.scroll();
+  if(cur>last && cur>100){ gsap.to(nav,{y:-120,opacity:0,duration:.5,ease:"power2.out"});}
+  else{ gsap.to(nav,{y:0,opacity:1,duration:.5,ease:"power2.out"});}
+  last=cur;
+}});
 
 /* Hero title stagger */
-gsap.from('#hero-title span',{
-  y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,duration:1.2,
-  ease:'power4.out',stagger:{each:0.15,from:'random'}
-});
+gsap.from('#hero-title span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),
+  opacity:0,duration:1.2,ease:'power4.out',stagger:{each:0.15,from:'random'}});
 
-/* --- Apps slide animations --- */
+/* Apps slide anim */
 const appsBg=document.getElementById('apps-bg');
 function animateSlide(idx){
-  const slide=swiper.slides[idx];
-  const card=slide.querySelector('.slide-card');
-  const color=slide.dataset.color||'#FFC107';
-
-  /* 背景カラー */
+  const slide=swiper.slides[idx],card=slide.querySelector('.slide-card'),
+        color=slide.dataset.color||'#FFC107';
   gsap.to(appsBg,{backgroundColor:color,duration:.8,ease:'power2.out'});
-
-  /* カード斜めイン */
-  gsap.fromTo(card,
-    {x:100,y:60,rotate:6,opacity:0},
-    {x:0,y:0,rotate:0,opacity:1,duration:.8,ease:'power3.out'});
+  gsap.fromTo(card,{x:100,y:60,rotate:6,opacity:0},{
+    x:0,y:0,rotate:0,opacity:1,duration:.8,ease:'power3.out'});
 }
-
-/* 初回 & 以降の slideChange */
 swiper.on('init',()=>animateSlide(swiper.realIndex));
 swiper.on('slideChangeTransitionStart',()=>animateSlide(swiper.realIndex));
 swiper.init();
