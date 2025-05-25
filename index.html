@@ -7,7 +7,7 @@
   <meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
   <meta property="og:image" content="assets/ogp.jpg">
 
-  <!-- Google Fonts + Tailwind 2.2.19（ローカル） -->
+  <!-- Google Fonts + Tailwind 2.2.19（ローカルビルド） -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/tailwind.min.css">
 
@@ -24,21 +24,26 @@
   @media(min-width:1024px){body{scroll-snap-type:y mandatory}}
   section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidden}
 
-  /* glass card */
+  /* ===== 共通ユーティリティ ===== */
   .glass{background:rgba(255,255,255,.7);backdrop-filter:blur(14px)}
+  .text-accent{color:var(--accent)}
+  .hover\:text-accent:hover{color:var(--accent)}
+  .bg-accent{background:var(--accent)}
+  .bg-accent-hover:hover{background:var(--accent-hov)}
 
-  /* ripple + underline nav */
+  /* ナビ Hover Ripple + Underline */
   .nav-link{position:relative;overflow:hidden}
   .nav-link::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:var(--accent);opacity:.15;
     transform:translate(-50%,-50%);border-radius:50%;transition:width .4s,height .4s}
   .nav-link:hover::after{width:160px;height:160px}
-  .nav-link span{background-image:linear-gradient(currentColor,currentColor);background-size:0 2px;background-repeat:no-repeat;
-    background-position:0 100%;transition:background-size .3s}
+  .nav-link span{background-image:linear-gradient(currentColor,currentColor);
+    background-size:0 2px;background-position:0 100%;background-repeat:no-repeat;
+    transition:background-size .3s}
   .nav-link:hover span{background-size:100% 2px}
 
   /* Swiper dots */
   .swiper-pagination-bullet{background:var(--accent);opacity:.4}
-  .swiper-pagination-bullet-active{opacity:1;transform:scale(1.3)}
+  .swiper-pagination-bullet-active{opacity:1;transform:scale(1.25)}
 
   /* full-screen menu */
   #menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -47,34 +52,34 @@
   #menu.open{transform:translateX(0)}
 
   /* burger lines */
-  .line-1,.line-2{position:absolute;left:0;right:0;margin:auto;height:2px;width:20px;background:currentColor;transition:transform .4s,opacity .3s}
-  .line-2{transform:translateY(8px)}
-  .burger-open .line-1{transform:rotate(45deg)}
-  .burger-open .line-2{transform:rotate(-45deg)}
+  .line{position:absolute;left:0;right:0;margin:auto;height:2px;width:20px;background:currentColor;transition:transform .4s}
+  .line:nth-child(1){top:3px}
+  .line:nth-child(2){bottom:3px}
+  .burger-open .line:nth-child(1){transform:translateY(5px) rotate(45deg)}
+  .burger-open .line:nth-child(2){transform:translateY(-5px) rotate(-45deg)}
 
-  /* scroll arrow */
+  /* Scroll arrow (Hero) */
   @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
   .scroll-arrow{animation:bounce 2s infinite}
 
-  /* Apps 背景色フェード */
+  /* Apps 背景フェード */
   #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
 
-  /* ---------- accent utilities ---------- */
-  .text-accent         {color:var(--accent);}
-  .bg-accent           {background:var(--accent);}
-  .bg-accent-hover:hover{background:var(--accent-hov);}
-  .border-accent       {border-color:var(--accent);}
+  /* Apps タイトルを確実に前面へ */
+  .card-title{z-index:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.7))}
+  .card-img  {transition:transform .7s;object-fit:cover}
+  .app-card:hover .card-img{transform:scale(1.08)}
   </style>
 </head>
 <body>
 
 <!-- ===== Header ===== -->
 <header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between
-               w-[92%] max-w-5xl px-6 py-3 glass rounded-full shadow-md">
+               w-[92%] max-w-6xl px-6 py-3 glass rounded-full shadow-md">
   <a href="#home" class="font-bold text-xl tracking-tight hover:text-accent"
      style="font-family:'Poppins',sans-serif;">ToMoreBeyond</a>
 
-  <nav class="hidden md:flex ml-10 gap-12 text-lg font-medium">
+  <nav class="hidden md:flex ml-14 gap-14 text-lg font-medium">
     <a href="#apps"    class="nav-link hover:text-accent"><span>Apps</span></a>
     <a href="#company" class="nav-link hover:text-accent"><span>Company</span></a>
     <a href="#media"   class="nav-link hover:text-accent"><span>Media</span></a>
@@ -82,11 +87,11 @@
   </nav>
 
   <button id="burger" class="md:hidden w-8 h-8 relative">
-    <span class="line-1"></span><span class="line-2"></span>
+    <span class="line"></span><span class="line"></span>
   </button>
 </header>
 
-<!-- Full-screen menu -->
+<!-- ===== Mobile Full-screen Menu ===== -->
 <div id="menu">
   <a class="menu-link" href="#apps">Apps</a>
   <a class="menu-link" href="#company">Company</a>
@@ -125,66 +130,70 @@
 <section id="apps">
   <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
 
-  <!-- PC グリッド -->
-  <div class="hidden lg:grid grid-cols-3 gap-8 max-w-7xl mx-auto py-32 px-10"
-       style="grid-auto-rows:33vh">
-    <a href="tadataka.html" class="col-span-2 row-span-2 relative overflow-hidden rounded-2xl">
-      <img src="https://source.unsplash.com/1200x1200?journal" class="absolute inset-0 w-full h-full object-cover" alt="">
-      <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">TADATAKA</h3>
+  <!-- Desktop Grid -->
+  <div class="hidden lg:grid grid-cols-3 gap-10 w-full px-12 py-32" style="grid-auto-rows:34vh;">
+    <a href="tadataka.html" class="app-card col-span-2 row-span-2 relative overflow-hidden rounded-3xl">
+      <img src="https://source.unsplash.com/1280x1280?journal" class="card-img absolute inset-0 w-full h-full" alt="">
+      <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">TADATAKA</h3>
     </a>
-    <a href="toirun.html" class="relative overflow-hidden rounded-2xl">
-      <img src="https://source.unsplash.com/1200x1200?restroom" class="absolute inset-0 w-full h-full object-cover" alt="">
-      <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">ToiRun</h3>
+
+    <a href="toirun.html" class="app-card relative overflow-hidden rounded-3xl">
+      <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img absolute inset-0 w-full h-full" alt="">
+      <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">ToiRun</h3>
     </a>
-    <a href="midpoint.html" class="row-span-2 relative overflow-hidden rounded-2xl">
-      <img src="https://source.unsplash.com/1200x1600?meeting" class="absolute inset-0 w-full h-full object-cover" alt="">
-      <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
+
+    <a href="midpoint.html" class="app-card row-span-2 relative overflow-hidden rounded-3xl">
+      <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img absolute inset-0 w-full h-full" alt="">
+      <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
     </a>
-    <a href="#" class="relative overflow-hidden rounded-2xl flex items-center justify-center bg-stone-200 text-xl font-bold">
+
+    <a href="#" class="app-card relative overflow-hidden rounded-3xl flex items-center justify-center bg-stone-200 text-2xl font-bold">
       Coming&nbsp;Soon
     </a>
   </div>
 
-  <!-- モバイル Swiper -->
-  <div class="lg:hidden swiper" style="height:80vh">
+  <!-- Mobile Swiper -->
+  <div class="lg:hidden swiper h-[82vh]">
     <div class="swiper-wrapper">
-    <div class="swiper-wrapper">
       <div class="swiper-slide">
-        <a href="tadataka.html" class="block mx-6 rounded-2xl overflow-hidden relative">
-          <img src="https://source.unsplash.com/1200x1200?journal" class="absolute inset-0 w-full h-full object-cover" alt="">
-          <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">TADATAKA</h3>
+        <a href="tadataka.html" class="app-card block mx-6 rounded-3xl overflow-hidden relative h-full">
+          <img src="https://source.unsplash.com/1280x1280?journal" class="card-img absolute inset-0 w-full h-full" alt="">
+          <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">TADATAKA</h3>
         </a>
       </div>
       <div class="swiper-slide">
-        <a href="toirun.html" class="block mx-6 rounded-2xl overflow-hidden relative">
-          <img src="https://source.unsplash.com/1200x1200?restroom" class="absolute inset-0 w-full h-full object-cover" alt="">
-          <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">ToiRun</h3>
+        <a href="toirun.html" class="app-card block mx-6 rounded-3xl overflow-hidden relative h-full">
+          <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img absolute inset-0 w-full h-full" alt="">
+          <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">ToiRun</h3>
         </a>
       </div>
       <div class="swiper-slide">
-        <a href="midpoint.html" class="block mx-6 rounded-2xl overflow-hidden relative">
-          <img src="https://source.unsplash.com/1200x1600?meeting" class="absolute inset-0 w-full h-full object-cover" alt="">
-          <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
+        <a href="midpoint.html" class="app-card block mx-6 rounded-3xl overflow-hidden relative h-full">
+          <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img absolute inset-0 w-full h-full" alt="">
+          <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
         </a>
       </div>
-      <div class="swiper-pagination !bottom-10"></div>
     </div>
-  </section>
+    <div class="swiper-pagination !bottom-10"></div>
+  </div>
+</section>
 
 <!-- ===== Company ===== -->
-<section id="company" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="w-[90%] max-w-6xl mx-auto py-20 md:py-28 px-6 md:px-12 text-left">
-    <h2 class="text-4xl md:text-6xl font-extrabold mb-8" style="font-family:'Poppins',sans-serif;">Company</h2>
-    <p class="text-lg md:text-2xl leading-relaxed mb-8">2025 年設立。面白いことだけを追い、疑問や不安を解消するプロダクトを創ります。</p>
+<section id="company" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB]">
+  <div class="w-full max-w-7xl px-12 py-32 md:py-40">
+    <h2 class="text-5xl md:text-7xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Company</h2>
+    <p class="text-xl md:text-2xl leading-relaxed mb-10">
+      2025 年設立。面白いことだけを追い、疑問や不安を解消するプロダクトを創ります。
+    </p>
     <a href="company.html" class="font-semibold underline underline-offset-4">会社詳細を見る</a>
   </div>
 </section>
 
 <!-- ===== Media ===== -->
-<section id="media" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="w-[90%] max-w-6xl mx-auto py-20 md:py-28 px-6 md:px-12 text-left">
-    <h2 class="text-4xl md:text-6xl font-extrabold mb-8" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
-    <p class="text-lg md:text-2xl leading-relaxed mb-8">
+<section id="media" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB]">
+  <div class="w-full max-w-7xl px-12 py-32 md:py-40">
+    <h2 class="text-5xl md:text-7xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
+    <p class="text-xl md:text-2xl leading-relaxed mb-10">
       最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold underline">X (@TADATAKA_O)</a> にて発信中。
     </p>
     <a href="media.html" class="font-semibold underline underline-offset-4">掲載実績を見る</a>
@@ -192,23 +201,24 @@
 </section>
 
 <!-- ===== Contact ===== -->
-<section id="contact" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="w-[90%] max-w-6xl mx-auto py-20 md:py-28 px-6 md:px-12 text-left">
-    <h2 class="text-4xl md:text-6xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Contact</h2>
-    <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-6 max-w-2xl">
+<section id="contact" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB]">
+  <div class="w-full max-w-7xl px-12 py-32 md:py-40">
+    <h2 class="text-5xl md:text-7xl font-extrabold mb-12" style="font-family:'Poppins',sans-serif;">Contact</h2>
+    <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-6 max-w-3xl">
       <input type="hidden" name="form-name" value="contact">
-      <input name="name"  placeholder="Name"  required class="rounded-md bg-transparent border border-stone-600 p-3">
-      <input name="email" type="email" placeholder="Email" required class="rounded-md bg-transparent border border-stone-600 p-3">
-      <textarea name="msg" rows="5" placeholder="Message" required class="rounded-md bg-transparent border border-stone-600 p-3"></textarea>
-      <button class="rounded-md bg-accent bg-accent-hover py-3 font-semibold text-white">送信</button>
+      <input name="name"  placeholder="Name"  required class="rounded-md bg-transparent border border-stone-600 p-4">
+      <input name="email" type="email" placeholder="Email" required class="rounded-md bg-transparent border border-stone-600 p-4">
+      <textarea name="msg" rows="5" placeholder="Message" required class="rounded-md bg-transparent border border-stone-600 p-4"></textarea>
+      <button class="rounded-md bg-accent bg-accent-hover py-4 font-semibold text-lg text-white">送信</button>
     </form>
   </div>
 </section>
 
-<footer class="bg-[#111111] text-[#FDFCFB] text-center py-6 text-sm">© 2025 ToMoreBeyond</footer>
+<footer class="bg-[#111111] text-[#FDFCFB] text-center py-8 text-sm">© 2025 ToMoreBeyond</footer>
 
 <!-- ===== JS ===== -->
 <script>
+/* burger */
 const burger=document.getElementById('burger');
 const menu  =document.getElementById('menu');
 burger.addEventListener('click',()=>{
@@ -222,11 +232,13 @@ document.querySelectorAll('.menu-link').forEach(l=>{
   });
 });
 
+/* Swiper (mobile only) */
 if(innerWidth<1024){
   new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
     pagination:{el:'.swiper-pagination',clickable:true}});
 }
 
+/* Nav hide on scroll */
 gsap.registerPlugin(ScrollTrigger);
 let last=0,timer;
 ScrollTrigger.create({
@@ -242,6 +254,7 @@ ScrollTrigger.create({
   }
 });
 
+/* Hero drop */
 gsap.from('#home h1 span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,
   duration:1.2,stagger:{each:.15,from:'random'}});
 </script>
