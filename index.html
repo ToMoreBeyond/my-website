@@ -3,186 +3,148 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ToMoreBeyond – Scroll Mock</title>
+  <title>ToMoreBeyond</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* ===== Scroll-Wall animation (3 列, 30 s / 周) ===== */
-    @keyframes scroll-wall { to { transform: translateX(-50%); } }
-    .wall-track {
-      display: flex;
-      width: 200%;                   /* 画像 2 セット並べて無限ループ */
-      animation: scroll-wall 30s linear infinite;
-    }
-    /* prefers-reduced-motion: 動かさない */
-    @media (prefers-reduced-motion: reduce) {
-      .wall-track { animation: none; }
-    }
-    /* モバイルは 1 列・速度 20 s */
-    @media (max-width: 767px) {
-      .wall { height: 160px; }
-      .wall-track { animation-duration: 20s; }
-    }
+    /* ===== 基本レイアウト ===== */
+    html,body{height:100%;scroll-behavior:smooth;}
+    body{scroll-snap-type:y mandatory;overflow-y:scroll;}
+    section{scroll-snap-align:start;min-height:100vh;position:relative;}
+
+    /* ===== 流れる壁 (Apps 背景) ===== */
+    @keyframes scroll-wall{to{transform:translateX(-50%);} }
+    .wall-track{display:flex;width:200%;animation:scroll-wall 30s linear infinite;}
+    @media(max-width:767px){.wall{height:160px}.wall-track{animation-duration:20s}}
+    @media(prefers-reduced-motion:reduce){.wall-track{animation:none}}
+
+    /* ===== ガラスカード ===== */
+    .glass{background:rgba(255,255,255,.6);backdrop-filter:blur(8px)}
   </style>
 </head>
-
 <body class="bg-stone-50 text-stone-800 selection:bg-amber-200/50">
 
-<!-- ===== Header ===== -->
-<header class="fixed inset-x-0 top-0 z-50 bg-stone-50/60 backdrop-blur border-b border-stone-200">
-  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-    <a href="#home" class="text-2xl font-bold hover:text-amber-600">ToMoreBeyond</a>
+<!-- ===== Header (固定) ===== -->
+<header class="fixed inset-x-0 top-0 z-50 flex justify-between items-center px-6 py-3
+              bg-stone-50/40 backdrop-blur border-b border-stone-200">
+  <a href="#home" class="text-xl font-bold hover:text-amber-600">ToMoreBeyond</a>
+  <nav class="hidden md:flex gap-6 text-sm font-medium">
+    <a href="#apps"    class="hover:text-amber-600">Apps</a>
+    <a href="#company" class="hover:text-amber-600">Company</a>
+    <a href="#media"   class="hover:text-amber-600">Media</a>
+    <a href="#contact" class="hover:text-amber-600">Contact</a>
+  </nav>
+</header>
 
- <!-- ===== Apps + 流れる壁 ===== -->
-<section id="apps" class="relative py-24 overflow-hidden">
-  <!-- ☆ 背景スクロール壁 ☆ -->
-  <div class="absolute inset-0 -z-10 flex flex-col gap-6 opacity-70 wall pointer-events-none">
-    <!-- 列 1 -->
-    <div class="wall-track">
-      <img src="https://source.unsplash.com/640x360?city" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?notebook" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?subway" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?map" class="h-48 w-auto object-cover">
-      <!-- duplicate -->
-      <img src="https://source.unsplash.com/640x360?city" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?notebook" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?subway" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?map" class="h-48 w-auto object-cover">
-    </div>
-    <!-- 列 2 (反転) -->
-    <div class="wall-track -translate-x-1/4">
-      <img src="https://source.unsplash.com/640x360?write" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?navigation" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?friends" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?coffee" class="h-48 w-auto object-cover">
-      <!-- duplicate -->
-      <img src="https://source.unsplash.com/640x360?write" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?navigation" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?friends" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?coffee" class="h-48 w-auto object-cover">
-    </div>
-    <!-- 列 3 -->
-    <div class="wall-track translate-x-1/4">
-      <img src="https://source.unsplash.com/640x360?meeting" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?journal" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?travel" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?station" class="h-48 w-auto object-cover">
-      <!-- duplicate -->
-      <img src="https://source.unsplash.com/640x360?meeting" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?journal" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?travel" class="h-48 w-auto object-cover">
-      <img src="https://source.unsplash.com/640x360?station" class="h-48 w-auto object-cover">
-    </div>
-  </div>
+<!-- ===== Hero (動画背景) ===== -->
+<section id="home">
+  <video src="assets/video/hero-placeholder.mp4" autoplay muted loop playsinline
+         class="absolute inset-0 w-full h-full object-cover"></video>
+  <div class="absolute inset-0 bg-stone-50/70"></div>
 
-  <!-- カード 3 枚（中央 = TADATAKA） -->
-  <h2 class="mb-12 text-center text-3xl font-bold relative">Apps</h2>
-  <div class="flex flex-col md:flex-row justify-center gap-8 px-6 max-w-7xl mx-auto">
-    <a href="tadataka.html"
-       class="basis-64 shrink-0 rounded-2xl bg-white/70 ring-1 ring-stone-200 p-6 backdrop-blur
-              hover:ring-amber-300 transition">
-      <h3 class="text-xl font-semibold mb-2">TADATAKA</h3>
-      <p class="text-sm opacity-80">移動を自動記録するライフログ×日記。</p>
-    </a>
-    <a href="toirun.html"
-       class="basis-64 shrink-0 rounded-2xl bg-white/70 ring-1 ring-stone-200 p-6 backdrop-blur
-              hover:ring-amber-300 transition">
-      <h3 class="text-xl font-semibold mb-2">ToiRun</h3>
-      <p class="text-sm opacity-80">施設内最短トイレナビゲーション。</p>
-    </a>
-    <a href="meetinthemiddle.html"
-       class="basis-64 shrink-0 rounded-2xl bg-white/70 ring-1 ring-stone-200 p-6 backdrop-blur
-              hover:ring-amber-300 transition">
-      <h3 class="text-xl font-semibold mb-2">Meet in the Middle</h3>
-      <p class="text-sm opacity-80">複数出発地からベスト集合地点を提案。</p>
-    </a>
-  </div>
-</section>
-
-<!-- ===== Company (概要リンク) ===== -->
-<section id="company" class="snap-target py-20 bg-stone-100" onclick="location.href='company.html'">
-  <div class="mx-auto max-w-4xl text-center px-6">
-    <div class="text-4xl mb-4">🏢</div>
-    <h2 class="text-3xl font-bold mb-4">Company</h2>
-    <p class="text-stone-700">
-      2025年設立・メンバー3名。<br>
-      “The road not taken” をスローガンに、自由な発想でアプリ開発に挑戦。
+  <div class="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
+    <h1 class="text-4xl md:text-6xl font-bold">The road not taken</h1>
+    <p class="mt-6 max-w-2xl text-lg">
+      私たちは <span class="font-semibold text-amber-600">「共に創る」「友と創る」</span>
+      ─ 人と違う道を楽しみ、面白い物を <span class="font-semibold text-amber-600">“ともに”</span> 越える会社です。
     </p>
   </div>
 </section>
 
-<!-- ===== Media (概要リンク) ===== -->
-<section id="media" class="snap-target py-20" onclick="location.href='media.html'">
+<!-- ===== Apps (流れる壁 + カード3枚) ===== -->
+<section id="apps" class="overflow-hidden">
+  <!-- 背景壁 -->
+  <div class="absolute inset-0 -z-10 flex flex-col gap-8 opacity-70 wall pointer-events-none">
+    <!-- 列 1 -->
+    <div class="wall-track"><img src="https://source.unsplash.com/640x360?city">
+      <img src="https://source.unsplash.com/640x360?journal">
+      <img src="https://source.unsplash.com/640x360?subway">
+      <img src="https://source.unsplash.com/640x360?map">
+      <img src="https://source.unsplash.com/640x360?city">
+      <img src="https://source.unsplash.com/640x360?journal">
+      <img src="https://source.unsplash.com/640x360?subway">
+      <img src="https://source.unsplash.com/640x360?map"></div>
+    <!-- 列 2 -->
+    <div class="wall-track -translate-x-1/4"><img src="https://source.unsplash.com/640x360?write">
+      <img src="https://source.unsplash.com/640x360?navigation">
+      <img src="https://source.unsplash.com/640x360?friends">
+      <img src="https://source.unsplash.com/640x360?coffee">
+      <img src="https://source.unsplash.com/640x360?write">
+      <img src="https://source.unsplash.com/640x360?navigation">
+      <img src="https://source.unsplash.com/640x360?friends">
+      <img src="https://source.unsplash.com/640x360?coffee"></div>
+    <!-- 列 3 -->
+    <div class="wall-track translate-x-1/4"><img src="https://source.unsplash.com/640x360?meeting">
+      <img src="https://source.unsplash.com/640x360?travel">
+      <img src="https://source.unsplash.com/640x360?station">
+      <img src="https://source.unsplash.com/640x360?phone">
+      <img src="https://source.unsplash.com/640x360?meeting">
+      <img src="https://source.unsplash.com/640x360?travel">
+      <img src="https://source.unsplash.com/640x360?station">
+      <img src="https://source.unsplash.com/640x360?phone"></div>
+  </div>
+
+  <h2 class="text-center text-3xl font-bold pt-32 pb-12">Apps</h2>
+  <div class="flex flex-col md:flex-row justify-center gap-8 px-6">
+    <a href="tadataka.html" class="glass backdrop-blur rounded-2xl p-6 ring-1 ring-stone-200 w-64 hover:ring-amber-300">
+      <h3 class="text-xl font-semibold mb-2">TADATAKA</h3>
+      <p class="text-sm">移動を自動記録するライフログ×日記。</p>
+    </a>
+    <a href="toirun.html" class="glass backdrop-blur rounded-2xl p-6 ring-1 ring-stone-200 w-64 hover:ring-amber-300">
+      <h3 class="text-xl font-semibold mb-2">ToiRun</h3>
+      <p class="text-sm">施設内最短トイレナビゲーション。</p>
+    </a>
+    <a href="midpoint.html" class="glass backdrop-blur rounded-2xl p-6 ring-1 ring-stone-200 w-64 hover:ring-amber-300">
+      <h3 class="text-xl font-semibold mb-2">Meet in the Middle</h3>
+      <p class="text-sm">複数出発地からベスト集合地点を提案。</p>
+    </a>
+  </div>
+</section>
+
+<!-- ===== Company ===== -->
+<section id="company" class="bg-stone-100 flex items-center">
   <div class="mx-auto max-w-4xl text-center px-6">
-    <div class="text-4xl mb-4">📰</div>
-    <h2 class="text-3xl font-bold mb-4">Media & Press</h2>
-    <p class="text-stone-700">
-      最新情報は&nbsp;<a href="https://twitter.com/TADATAKA_O" target="_blank"
-      class="text-amber-600 font-semibold underline underline-offset-4">X(@TADATAKA_O)</a>&nbsp;で配信中。
+    <h2 class="text-3xl font-bold mb-6">Company</h2>
+    <p class="text-lg">
+      2025 年設立・メンバー 3 名。自由な発想でアプリ開発に挑戦しています。
+    </p>
+  </div>
+</section>
+
+<!-- ===== Media ===== -->
+<section id="media" class="flex items-center">
+  <div class="mx-auto max-w-4xl text-center px-6">
+    <h2 class="text-3xl font-bold mb-6">Media & Press</h2>
+    <p>
+      最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank"
+       class="text-amber-600 underline underline-offset-4">@TADATAKA_O</a> で配信中。
     </p>
   </div>
 </section>
 
 <!-- ===== Contact ===== -->
-<section id="contact" class="snap-target py-24">
-  <h2 class="mb-8 text-center text-3xl font-bold">Contact Us</h2>
-
-  <form name="contact" method="POST" data-netlify="true"
-        class="mx-auto flex max-w-lg flex-col gap-6 px-6">
-    <input type="hidden" name="form-name" value="contact">
-    <input type="text" name="name" required placeholder="Name"
-           class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
-    <input type="email" name="email" required placeholder="Email"
-           class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
-    <textarea name="message" rows="5" required placeholder="Message"
-              class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500"></textarea>
-    <button type="submit"
-            class="rounded-md bg-amber-500 py-3 font-semibold text-white transition hover:bg-amber-400">
-      送信
-    </button>
-  </form>
+<section id="contact" class="bg-stone-100 flex items-center">
+  <div class="mx-auto max-w-lg text-center px-6">
+    <h2 class="text-3xl font-bold mb-6">Contact</h2>
+    <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-4">
+      <input type="hidden" name="form-name" value="contact">
+      <input name="name"   placeholder="Name"  required
+             class="rounded-md border border-stone-300 bg-white p-3">
+      <input name="email"  placeholder="Email" type="email" required
+             class="rounded-md border border-stone-300 bg-white p-3">
+      <textarea name="msg" placeholder="Message" rows="5" required
+                class="rounded-md border border-stone-300 bg-white p-3"></textarea>
+      <button class="rounded-md bg-amber-500 py-3 font-semibold text-white hover:bg-amber-400">
+        送信
+      </button>
+    </form>
+  </div>
 </section>
 
 <!-- ===== Footer ===== -->
-<footer class="bg-stone-100 py-8 text-center text-sm text-stone-500">
+<footer class="text-center py-6 text-sm text-stone-500">
   © 2025 ToMoreBeyond
 </footer>
 
-<!-- ===== JS ===== -->
-<script>
-  /* Hamburger */
-  const toggle = document.getElementById('menu-toggle');
-  const mobile = document.getElementById('mobile-menu');
-  toggle.addEventListener('click', () => mobile.classList.toggle('translate-x-full'));
-  document.querySelectorAll('.mobile-link').forEach(link =>
-    link.addEventListener('click', () => mobile.classList.add('translate-x-full'))
-  );
-
-  /* Section scroll-to-center */
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', e => {
-      const id = anchor.getAttribute('href');
-      if (id.length === 1) return;
-      e.preventDefault();
-      const target = document.querySelector(id);
-      const header = 80;
-      const y = target.getBoundingClientRect().top + window.pageYOffset
-              - (window.innerHeight / 2) + (target.offsetHeight / 2) - header;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    });
-  });
-
-  /* Swiper */
-  new Swiper('.swiper', {
-    loop: true,
-    spaceBetween: 24,
-    slidesPerView: 1,
-    grabCursor: true,
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
-  });
-</script>
 </body>
 </html>
-
