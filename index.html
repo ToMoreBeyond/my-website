@@ -32,12 +32,12 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   background-size:0 2px;background-repeat:no-repeat;background-position:0 100%;
   transition:background-size .3s}
 .nav-link:hover span{background-size:100% 2px}
+
 .swiper-pagination-bullet{background:var(--accent);opacity:.4}
 .swiper-pagination-bullet-active{opacity:1;transform:scale(1.3)}
 
-#menu{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;
-  justify-content:center;align-items:center;gap:2.5rem;font-size:1.875rem;font-weight:600;
-  background:#fff;transition:transform .5s cubic-bezier(.77,0,.18,1);pointer-events:auto}
+#menu{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:2.5rem;font-size:1.875rem;font-weight:600;background:#fff;transition:transform .5s cubic-bezier(.77,0,.18,1);pointer-events:auto}
 #menu.closed{transform:translateX(100%);pointer-events:none}
 
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
@@ -45,16 +45,22 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
 
-/* ───────── Grid 用スタイル ───────── */
-.grid-apps a{position:relative;overflow:hidden;border-radius:1rem}
-.grid-apps img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  transition:transform .6s}
+/* ── Grid タイル ── */
+.grid-apps a{position:relative;overflow:hidden;border-radius:1rem;will-change:transform}
+.grid-apps img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}
 .grid-apps a:hover img{transform:scale(1.05)}
-.grid-apps h3{position:absolute;bottom:1rem;left:1rem;color:#fff;
-  font-size:1.35rem;font-weight:700;text-shadow:0 2px 5px rgba(0,0,0,.35)}
+.grid-apps h3{position:absolute;bottom:1rem;left:1rem;color:#fff;font-size:1.35rem;font-weight:700;text-shadow:0 2px 5px rgba(0,0,0,.35)}
+
+/* ── Custom Cursor (デスクトップのみ表示) ── */
+#cursor{position:fixed;left:0;top:0;width:36px;height:36px;border:2px solid #fff;border-radius:50%;
+  pointer-events:none;z-index:100;opacity:0;transition:opacity .3s}
+@media (hover:none){#cursor{display:none}}     /* タッチ端末では非表示 */
 </style>
 </head>
 <body>
+
+<!-- カスタムカーソル -->
+<div id="cursor"></div>
 
 <!-- ===== Header ===== -->
 <header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between
@@ -83,7 +89,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   <a class="menu-link" href="#contact">Contact</a>
 </div>
 
-<!-- ===== Hero (既存と同) ===== -->
+<!-- ===== Hero (省略: 前バージョンと同) ===== -->
 <section id="home" class="flex flex-col items-center justify-center">
   <video src="https://assets.mixkit.co/videos/preview/mixkit-aerial-shot-of-a-forest-at-sunset-1637-large.mp4"
          autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video>
@@ -114,31 +120,27 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 <section id="apps">
   <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
 
-  <!-- ── ① PC (lg 以上) : Bento/Grid ── -->
+  <!-- PC (Grid) -->
   <div class="hidden lg:grid grid-cols-3 auto-rows-[220px] gap-6 h-full max-w-6xl mx-auto py-28 px-8 grid-apps">
-    <!-- Tile 1 (2×2) -->
     <a href="tadataka.html" class="col-span-2 row-span-2">
       <img src="https://source.unsplash.com/700x700?journal" alt="">
       <h3>TADATAKA</h3>
     </a>
-    <!-- Tile 2 (1×1) -->
-    <a href="toirun.html" class="">
+    <a href="toirun.html">
       <img src="https://source.unsplash.com/700x700?restroom" alt="">
       <h3>ToiRun</h3>
     </a>
-    <!-- Tile 3 (1×2) -->
     <a href="midpoint.html" class="row-span-2">
       <img src="https://source.unsplash.com/700x1400?meeting" alt="">
       <h3>Meet in the Middle</h3>
     </a>
-    <!-- 空きスペース用ダミー画像（同じリンクでも可）-->
-    <a href="tadataka.html" class="">
+    <a href="tadataka.html">
       <img src="https://source.unsplash.com/700x700?map" alt="">
       <h3>TADATAKA</h3>
     </a>
   </div>
 
-  <!-- ── ② モバイル (lg 未満) : Swiper ── -->
+  <!-- Mobile (Swiper) -->
   <div class="lg:hidden swiper h-full">
     <div class="swiper-wrapper">
       <div class="swiper-slide flex items-center justify-center" data-color="#FFC107">
@@ -170,7 +172,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </div>
 </section>
 
-<!-- ===== Company / Media / Contact（前回と同） ===== -->
+<!-- ===== Company / Media / Contact (前回と同) ===== -->
 <section id="company" class="flex items-center justify-center bg-[#FFF9F3]">
   <div class="glass rounded-3xl p-14 mx-auto max-w-3xl text-center">
     <h2 class="text-3xl md:text-5xl font-extrabold mb-6" style="font-family:'Poppins',sans-serif;">Company</h2>
@@ -204,14 +206,14 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 <!-- ===== JS ===== -->
 <script>
-/* hamburger */
+/* Hamburger */
 const burger=document.getElementById('burger'),menu=document.getElementById('menu');
 burger.addEventListener('click',()=>menu.classList.toggle('closed'));
 document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>menu.classList.add('closed')));
 
-/* Swiper (モバイルのみ初期化) */
-if(window.innerWidth<1024){
-  const swiper=new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
+/* Swiper (mobile only) */
+if(innerWidth<1024){
+  new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
     pagination:{el:'.swiper-pagination',clickable:true}});
 }
 
@@ -220,14 +222,47 @@ gsap.registerPlugin(ScrollTrigger);
 const nav=document.getElementById('navbar');let last=0;
 ScrollTrigger.create({onUpdate:self=>{
   const cur=self.scroll();
-  if(cur>last && cur>100){ gsap.to(nav,{y:-120,opacity:0,duration:.5,ease:'power2.out'});}
-  else{ gsap.to(nav,{y:0,opacity:1,duration:.5,ease:'power2.out'});}
-  last=cur;
+  if(cur>last&&cur>100){gsap.to(nav,{y:-120,opacity:0,duration:.5,ease:'power2.out'});}
+  else{gsap.to(nav,{y:0,opacity:1,duration:.5,ease:'power2.out'});}last=cur;
 }});
 
 /* Hero title drop */
 gsap.from('#hero-title span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),
-  opacity:0,duration:1.2,ease:'power4.out',stagger:{each:0.15,from:'random'}});
+  opacity:0,duration:1.2,ease:'power4.out',stagger:{each:.15,from:'random'}});
+
+/* ───── Tilt hover & custom cursor (desktop) ───── */
+if(innerWidth>=1024){
+  /* cursor */
+  const cur=document.getElementById('cursor');
+  gsap.set(cur,{opacity:1});
+  window.addEventListener('pointermove',e=>{
+    gsap.to(cur,{x:e.clientX-18,y:e.clientY-18,duration:.15,ease:'power2.out'});
+  });
+
+  /* cursor enlarge on link / tile */
+  const hoverEls=[...document.querySelectorAll('a,button')];
+  hoverEls.forEach(el=>{
+    el.addEventListener('pointerenter',()=>gsap.to(cur,{scale:2,background:'rgba(255,179,0,.15)',borderColor:'var(--accent)',duration:.25}));
+    el.addEventListener('pointerleave',()=>gsap.to(cur,{scale:1,background:'transparent',borderColor:'#fff',duration:.25}));
+  });
+
+  /* tilt */
+  const cards=document.querySelectorAll('.grid-apps a');
+  cards.forEach(card=>{
+    const qsX=gsap.quickSetter(card,'rotateY','deg'),
+          qsY=gsap.quickSetter(card,'rotateX','deg'),
+          qsT=gsap.quickSetter(card,'transformPerspective','px');
+    qsT(800); // add perspective
+    card.addEventListener('pointermove',e=>{
+      const b=card.getBoundingClientRect(),
+            relX=e.clientX-b.left,bx=b.width/2,
+            relY=e.clientY-b.top ,by=b.height/2,
+            rotY=(relX-bx)/-12,rotX=(relY-by)/12;
+      qsX(rotY);qsY(rotX);
+    });
+    card.addEventListener('pointerleave',()=>{qsX(0);qsY(0);});
+  });
+}
 </script>
 </body>
 </html>
