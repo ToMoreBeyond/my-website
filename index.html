@@ -7,7 +7,7 @@
   <meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
   <meta property="og:image" content="assets/ogp.jpg">
 
-  <!-- Fonts & Tailwind (ローカル 2.2.19) -->
+  <!-- Google Fonts + Tailwind 2.2.19（ローカル） -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/tailwind.min.css">
 
@@ -59,9 +59,9 @@
   /* Apps 背景色フェード */
   #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
 
+  /* ---------- utility for accent ---------- */
   .text-accent         {color:var(--accent);}
   .bg-accent           {background:var(--accent);}
-  .bg-accent-hover     {background:var(--accent);}
   .bg-accent-hover:hover{background:var(--accent-hov);}
   .border-accent       {border-color:var(--accent);}
   </style>
@@ -112,9 +112,9 @@
   </p>
 
   <a href="#apps" class="relative z-10 rounded-full bg-accent bg-accent-hover
-    px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
+     px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
 
-  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-[var(--accent)] scroll-arrow">
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-accent scroll-arrow">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
       <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -127,22 +127,18 @@
 
   <!-- PC Grid -->
   <div class="hidden lg:grid grid-cols-3 auto-rows-[minmax(260px,1fr)] gap-6 max-w-6xl mx-auto py-28 px-8">
-    <!-- TADATAKA -->
     <a href="tadataka.html" class="col-span-2 row-span-2 relative overflow-hidden rounded-2xl">
       <img src="assets/tadataka.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">TADATAKA</h3>
     </a>
-    <!-- ToiRun -->
     <a href="toirun.html" class="relative overflow-hidden rounded-2xl">
       <img src="assets/toirun.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">ToiRun</h3>
     </a>
-    <!-- Meet in the Middle -->
     <a href="midpoint.html" class="row-span-2 relative overflow-hidden rounded-2xl">
       <img src="assets/midpoint.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
     </a>
-    <!-- Coming soon -->
     <a href="#" class="relative overflow-hidden rounded-2xl flex items-center justify-center bg-stone-200 text-xl font-bold">
       Coming&nbsp;Soon
     </a>
@@ -151,21 +147,18 @@
   <!-- Mobile Swiper -->
   <div class="lg:hidden swiper h-[80vh]">
     <div class="swiper-wrapper">
-      <!-- TADATAKA -->
       <div class="swiper-slide">
         <a href="tadataka.html" class="block mx-6 rounded-2xl overflow-hidden relative">
           <img src="assets/tadataka.jpg" class="absolute inset-0 w-full h-full object-cover" alt="">
           <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">TADATAKA</h3>
         </a>
       </div>
-      <!-- ToiRun -->
       <div class="swiper-slide">
         <a href="toirun.html" class="block mx-6 rounded-2xl overflow-hidden relative">
           <img src="assets/toirun.jpg" class="absolute inset-0 w-full h-full object-cover" alt="">
           <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">ToiRun</h3>
         </a>
       </div>
-      <!-- Meet in the Middle -->
       <div class="swiper-slide">
         <a href="midpoint.html" class="block mx-6 rounded-2xl overflow-hidden relative">
           <img src="assets/midpoint.jpg" class="absolute inset-0 w-full h-full object-cover" alt="">
@@ -204,7 +197,7 @@
       <input name="name"  placeholder="Name"  required class="rounded-md bg-transparent border border-stone-600 p-3">
       <input name="email" type="email" placeholder="Email" required class="rounded-md bg-transparent border border-stone-600 p-3">
       <textarea name="msg" rows="5" placeholder="Message" required class="rounded-md bg-transparent border border-stone-600 p-3"></textarea>
-      <button class="rounded-md bg-[var(--accent)] hover:bg-[var(--accent-hov)] py-3 font-semibold text-white">送信</button>
+      <button class="rounded-md bg-accent bg-accent-hover py-3 font-semibold text-white">送信</button>
     </form>
   </div>
 </section>
@@ -213,9 +206,8 @@
 
 <!-- ===== JS ===== -->
 <script>
-/* burger toggle */
-const burger = document.getElementById('burger');
-const menu   = document.getElementById('menu');
+const burger=document.getElementById('burger');
+const menu  =document.getElementById('menu');
 burger.addEventListener('click',()=>{
   burger.classList.toggle('burger-open');
   menu.classList.toggle('open');
@@ -227,13 +219,11 @@ document.querySelectorAll('.menu-link').forEach(l=>{
   });
 });
 
-/* swiper (mobile only) */
 if(innerWidth<1024){
   new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
     pagination:{el:'.swiper-pagination',clickable:true}});
 }
 
-/* nav hide (debounce 100 ms) */
 gsap.registerPlugin(ScrollTrigger);
 let last=0,timer;
 ScrollTrigger.create({
@@ -249,7 +239,6 @@ ScrollTrigger.create({
   }
 });
 
-/* hero word drop */
 gsap.from('#home h1 span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,
   duration:1.2,stagger:{each:.15,from:'random'}});
 </script>
