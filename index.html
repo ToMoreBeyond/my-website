@@ -1,82 +1,82 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>ToMoreBeyond | The road not taken</title>
-  <meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
-  <meta property="og:image" content="assets/ogp.jpg">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>ToMoreBeyond | The road not taken</title>
+<meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
+<meta property="og:image" content="assets/ogp.jpg">
 
-  <!-- Google Fonts + Tailwind 2.2.19（ローカル）-->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tailwind.min.css">
+<!-- Google Fonts + Tailwind 2.2.19 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tailwind.min.css">
 
-  <!-- Swiper & GSAP -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<!-- Swiper / GSAP -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
-  <style>
-  :root{--accent:#FFB300;--accent-hov:#FF9E00}
-  html,body{height:100%}
-  body{background:#FDFCFB;color:#312E2B;font-family:'Inter',sans-serif}
-  @media(min-width:1024px){body{scroll-snap-type:y mandatory}}
-  section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidden}
+<style>
+:root{--accent:#FFB300;--accent-hov:#FF9E00}
+html,body{height:100%}
+body{background:#FDFCFB;color:#312E2B;font-family:'Inter',sans-serif}
+@media(min-width:1024px){body{scroll-snap-type:y mandatory}}
+section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidden}
 
-  /* ===== 共通ユーティリティ ===== */
-  .glass{background:rgba(255,255,255,.7);backdrop-filter:blur(14px)}
-  .text-accent{color:var(--accent)}
-  .hover\:text-accent:hover{color:var(--accent)}
-  .bg-accent{background:var(--accent)}
-  .bg-accent-hover:hover{background:var(--accent-hov)}
+/* ――― 共通ユーティリティ ――― */
+.glass{background:rgba(255,255,255,.7);backdrop-filter:blur(14px)}
+.text-accent         {color:var(--accent)}
+.hover\:text-accent:hover{color:var(--accent)}
+.bg-accent           {background:var(--accent)}
+.bg-accent-hover:hover{background:var(--accent-hov)}
 
-  /* ナビ Ripple + Underline */
-  .nav-link{position:relative;overflow:hidden}
-  .nav-link::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:var(--accent);opacity:.15;
-    transform:translate(-50%,-50%);border-radius:50%;transition:width .4s,height .4s}
-  .nav-link:hover::after{width:160px;height:160px}
-  .nav-link span{background-image:linear-gradient(currentColor,currentColor);
-    background-size:0 2px;background-position:0 100%;background-repeat:no-repeat;
-    transition:background-size .3s}
-  .nav-link:hover span{background-size:100% 2px}
+/* Ripple + underline (nav) */
+.nav-link{position:relative;overflow:hidden}
+.nav-link::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:var(--accent);opacity:.15;
+  transform:translate(-50%,-50%);border-radius:50%;transition:width .4s,height .4s}
+.nav-link:hover::after{width:160px;height:160px}
+.nav-link span{background-image:linear-gradient(currentColor,currentColor);
+  background-size:0 2px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .3s}
+.nav-link:hover span{background-size:100% 2px}
 
-  /* Swiper dots */
-  .swiper-pagination-bullet{background:var(--accent);opacity:.4}
-  .swiper-pagination-bullet-active{opacity:1;transform:scale(1.25)}
+/* Swiper dots */
+.swiper-pagination-bullet{background:var(--accent);opacity:.4}
+.swiper-pagination-bullet-active{opacity:1;transform:scale(1.25)}
 
-  /* full-screen menu */
-  #menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;
-    gap:2.5rem;font-size:1.875rem;font-weight:600;background:#fff;transform:translateX(100%);
-    transition:transform .45s cubic-bezier(.77,0,.18,1)}
-  #menu.open{transform:translateX(0)}
+/* burger lines */
+.line{position:absolute;left:0;right:0;margin:auto;height:2px;width:22px;background:currentColor;transition:transform .35s}
+.line:nth-child(1){top:4px}
+.line:nth-child(2){bottom:4px}
+.burger-open .line:nth-child(1){transform:translateY(4px) rotate(45deg)}
+.burger-open .line:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
 
-  /* burger lines */
-  .line{position:absolute;left:0;right:0;margin:auto;height:2px;width:20px;background:currentColor;transition:transform .4s}
-  .line:nth-child(1){top:3px}
-  .line:nth-child(2){bottom:3px}
-  .burger-open .line:nth-child(1){transform:translateY(5px) rotate(45deg)}
-  .burger-open .line:nth-child(2){transform:translateY(-5px) rotate(-45deg)}
+/* full screen menu */
+#menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:2.5rem;font-size:1.875rem;font-weight:600;background:#fff;transform:translateX(100%);
+  transition:transform .45s cubic-bezier(.77,0,.18,1)}
+#menu.open{transform:translateX(0)}
+#close-menu{position:absolute;top:24px;right:24px;font-size:2rem;font-weight:800;line-height:1;color:#312E2B}
 
-  /* Scroll arrow (Hero) */
-  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-  .scroll-arrow{animation:bounce 2s infinite}
+/* Scroll arrow */
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.scroll-arrow{animation:bounce 2s infinite}
 
-  /* Apps 背景フェード */
-  #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
+/* Apps 背景フェード */
+#apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
 
-  /* Apps カード */
-  .card-title{z-index:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.7))}
-  .card-img  {transition:transform .7s;object-fit:cover}
-  .app-card:hover .card-img{transform:scale(1.08)}
+/* Apps カード */
+.app-card{position:relative;overflow:hidden;border-radius:24px}
+.card-img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.app-card::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.25)} /* ←文字読みやすく */
+.app-card:hover .card-img{transform:scale(1.08)}
+.card-title{position:absolute;bottom:20px;left:24px;z-index:1;
+  font-size:1.6rem;font-weight:700;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6)}
 
-  /* ==== wipe board ================================= */
-  .wipe{height:0;position:relative}
-  .wipe::before{
-    content:'';position:fixed;inset:0;z-index:120;background:#FFB300;
-    transform-origin:left;transform:scaleX(0);pointer-events:none;
-  }
-  </style>
+/* ----- wipe board (LEOLEO風) ----- */
+.page-wipe{position:fixed;inset:0;z-index:120;background:var(--accent);
+  transform-origin:left;transform:scaleX(0);pointer-events:none}
+</style>
 </head>
 <body>
 
@@ -86,13 +86,15 @@
   <a href="#home" class="font-bold text-xl tracking-tight hover:text-accent"
      style="font-family:'Poppins',sans-serif;">ToMoreBeyond</a>
 
-  <nav class="hidden md:flex ml-14 gap-14 text-lg font-medium">
+  <!-- PC ナビ -->
+  <nav class="hidden md:flex gap-14 text-lg font-medium">
     <a href="#apps"    class="nav-link hover:text-accent"><span>Apps</span></a>
     <a href="#company" class="nav-link hover:text-accent"><span>Company</span></a>
     <a href="#media"   class="nav-link hover:text-accent"><span>Media</span></a>
     <a href="#contact" class="nav-link hover:text-accent"><span>Contact</span></a>
   </nav>
 
+  <!-- burger -->
   <button id="burger" class="md:hidden w-8 h-8 relative">
     <span class="line"></span><span class="line"></span>
   </button>
@@ -100,6 +102,7 @@
 
 <!-- ===== Mobile Menu ===== -->
 <div id="menu">
+  <button id="close-menu" aria-label="close">×</button>
   <a class="menu-link" href="#apps">Apps</a>
   <a class="menu-link" href="#company">Company</a>
   <a class="menu-link" href="#media">Media</a>
@@ -133,28 +136,32 @@
   </div>
 </section>
 
-<!-- ===== wipe board (Hero -> Apps) ===== -->
-<div class="wipe wipe-hero"></div>
+<!-- === wipe overlay === -->
+<div class="page-wipe wipe-hero"></div>
 
 <!-- ===== Apps ===== -->
 <section id="apps">
   <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
 
   <!-- Desktop Grid -->
-  <div class="hidden lg:grid grid-cols-3 gap-10 w-full px-12 py-32" style="grid-auto-rows:34vh;">
-    <a href="tadataka.html" class="app-card col-span-2 row-span-2 relative overflow-hidden rounded-3xl">
-      <img src="https://source.unsplash.com/1280x1280?journal" class="card-img absolute inset-0 w-full h-full" alt="">
-      <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">TADATAKA</h3>
+  <div class="hidden lg:grid grid-cols-3 gap-10 px-12 py-32 w-full" style="grid-auto-rows:34vh;">
+    <!-- cards -->
+    <a href="tadataka.html" class="app-card col-span-2 row-span-2">
+      <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt="">
+      <h3 class="card-title">TADATAKA</h3>
     </a>
-    <a href="toirun.html" class="app-card relative overflow-hidden rounded-3xl">
-      <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img absolute inset-0 w-full h-full" alt="">
-      <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">ToiRun</h3>
+
+    <a href="toirun.html" class="app-card">
+      <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt="">
+      <h3 class="card-title">ToiRun</h3>
     </a>
-    <a href="midpoint.html" class="app-card row-span-2 relative overflow-hidden rounded-3xl">
-      <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img absolute inset-0 w-full h-full" alt="">
-      <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
+
+    <a href="midpoint.html" class="app-card row-span-2">
+      <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt="">
+      <h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
     </a>
-    <a href="#" class="app-card relative overflow-hidden rounded-3xl flex items-center justify-center bg-stone-200 text-2xl font-bold">
+
+    <a href="#" class="app-card flex items-center justify-center bg-stone-200 text-2xl font-bold">
       Coming&nbsp;Soon
     </a>
   </div>
@@ -163,21 +170,21 @@
   <div class="lg:hidden swiper h-[82vh]">
     <div class="swiper-wrapper">
       <div class="swiper-slide">
-        <a href="tadataka.html" class="app-card block mx-6 rounded-3xl overflow-hidden relative h-full">
-          <img src="https://source.unsplash.com/1280x1280?journal" class="card-img absolute inset-0 w-full h-full" alt="">
-          <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">TADATAKA</h3>
+        <a href="tadataka.html" class="app-card block mx-6 h-full">
+          <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt="">
+          <h3 class="card-title">TADATAKA</h3>
         </a>
       </div>
       <div class="swiper-slide">
-        <a href="toirun.html" class="app-card block mx-6 rounded-3xl overflow-hidden relative h-full">
-          <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img absolute inset-0 w-full h-full" alt="">
-          <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">ToiRun</h3>
+        <a href="toirun.html" class="app-card block mx-6 h-full">
+          <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt="">
+          <h3 class="card-title">ToiRun</h3>
         </a>
       </div>
       <div class="swiper-slide">
-        <a href="midpoint.html" class="app-card block mx-6 rounded-3xl overflow-hidden relative h-full">
-          <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img absolute inset-0 w-full h-full" alt="">
-          <h3 class="card-title absolute bottom-5 left-6 text-white text-2xl font-bold">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
+        <a href="midpoint.html" class="app-card block mx-6 h-full">
+          <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt="">
+          <h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
         </a>
       </div>
     </div>
@@ -225,27 +232,25 @@
 
 <!-- ===== JS ===== -->
 <script>
-/* burger */
-const burger = document.getElementById('burger');
-const menu   = document.getElementById('menu');
-burger.addEventListener('click',()=>{
+/* burger / close */
+const burger=document.getElementById('burger');
+const menu=document.getElementById('menu');
+const closeBtn=document.getElementById('close-menu');
+[burger,closeBtn].forEach(btn=>btn.addEventListener('click',()=>{
   burger.classList.toggle('burger-open');
   menu.classList.toggle('open');
-});
-document.querySelectorAll('.menu-link').forEach(l=>{
-  l.addEventListener('click',()=>{
-    menu.classList.remove('open');
-    burger.classList.remove('burger-open');
-  });
-});
+}));
+document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>{
+  menu.classList.remove('open');burger.classList.remove('burger-open');
+}));
 
-/* Swiper (mobile) */
+/* Swiper */
 if(innerWidth<1024){
   new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
     pagination:{el:'.swiper-pagination',clickable:true}});
 }
 
-/* Nav hide on scroll */
+/* Nav hide */
 gsap.registerPlugin(ScrollTrigger);
 let last=0,timer;
 ScrollTrigger.create({
@@ -265,23 +270,21 @@ ScrollTrigger.create({
 gsap.from('#home h1 span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,
   duration:1.2,stagger:{each:.15,from:'random'}});
 
-/* ===== LEOLEO style wipe ========= */
-function addWipe(wipeElem){
-  const tl=gsap.timeline({
-    scrollTrigger:{
-      trigger: wipeElem,
-      start: "top bottom",
-      end:   "top top",
-      scrub:true,
-      invalidateOnRefresh:true
-    }
-  });
-  tl.to(wipeElem, {duration:0}); // プレースホルダ（必要なため空）
-  tl.fromTo(wipeElem, {scaleX:0},
-    {scaleX:1,duration:0.25,ease:"power2.in"},0)
-    .to(wipeElem, {scaleX:0,duration:0.25,ease:"power2.out",delay:0.05});
-}
-addWipe(document.querySelector('.wipe-hero'));
+/* LEOLEO 風ワイプ   -------------------------------- */
+gsap.fromTo('.wipe-hero',
+  {scaleX:0,transformOrigin:'left'},
+  {scaleX:1,ease:'power2.in',scrollTrigger:{
+      trigger:'#apps',
+      start:'top 85%',
+      end:'top 60%',
+      scrub:true
+    }})
+.to('.wipe-hero',{scaleX:0,transformOrigin:'right',ease:'power2.out',scrollTrigger:{
+      trigger:'#apps',
+      start:'top 59%',
+      end:'top 30%',
+      scrub:true
+    }});
 </script>
 </body>
 </html>
