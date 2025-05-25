@@ -59,7 +59,7 @@
   /* Apps 背景色フェード */
   #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
 
-  /* ---------- utility for accent ---------- */
+  /* ---------- accent utilities ---------- */
   .text-accent         {color:var(--accent);}
   .bg-accent           {background:var(--accent);}
   .bg-accent-hover:hover{background:var(--accent-hov);}
@@ -126,17 +126,17 @@
   <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
 
   <!-- PC Grid -->
-  <div class="hidden lg:grid grid-cols-3 auto-rows-[minmax(260px,1fr)] gap-6 max-w-6xl mx-auto py-28 px-8">
+  <div class="hidden lg:grid grid-cols-3 auto-rows-[minmax(33vh,1fr)] gap-8 max-w-7xl mx-auto py-32 px-10">
     <a href="tadataka.html" class="col-span-2 row-span-2 relative overflow-hidden rounded-2xl">
-      <img src="assets/tadataka.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <img src="https://source.unsplash.com/1200x1200?journal" alt="" class="absolute inset-0 w-full h-full object-cover">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">TADATAKA</h3>
     </a>
     <a href="toirun.html" class="relative overflow-hidden rounded-2xl">
-      <img src="assets/toirun.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <img src="https://source.unsplash.com/1200x1200?restroom" alt="" class="absolute inset-0 w-full h-full object-cover">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">ToiRun</h3>
     </a>
     <a href="midpoint.html" class="row-span-2 relative overflow-hidden rounded-2xl">
-      <img src="assets/midpoint.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+      <img src="https://source.unsplash.com/1200x1600?meeting" alt="" class="absolute inset-0 w-full h-full object-cover">
       <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
     </a>
     <a href="#" class="relative overflow-hidden rounded-2xl flex items-center justify-center bg-stone-200 text-xl font-bold">
@@ -149,19 +149,19 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide">
         <a href="tadataka.html" class="block mx-6 rounded-2xl overflow-hidden relative">
-          <img src="assets/tadataka.jpg" class="absolute inset-0 w-full h-full object-cover" alt="">
+          <img src="https://source.unsplash.com/1200x1200?journal" class="absolute inset-0 w-full h-full object-cover" alt="">
           <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">TADATAKA</h3>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="toirun.html" class="block mx-6 rounded-2xl overflow-hidden relative">
-          <img src="assets/toirun.jpg" class="absolute inset-0 w-full h-full object-cover" alt="">
+          <img src="https://source.unsplash.com/1200x1200?restroom" class="absolute inset-0 w-full h-full object-cover" alt="">
           <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">ToiRun</h3>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="midpoint.html" class="block mx-6 rounded-2xl overflow-hidden relative">
-          <img src="assets/midpoint.jpg" class="absolute inset-0 w-full h-full object-cover" alt="">
+          <img src="https://source.unsplash.com/1200x1600?meeting" class="absolute inset-0 w-full h-full object-cover" alt="">
           <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3>
         </a>
       </div>
@@ -172,27 +172,29 @@
 
 <!-- ===== Company ===== -->
 <section id="company" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="rounded-3xl p-10 md:p-14 w-[90%] max-w-5xl mx-auto text-center glass">
-    <h2 class="text-3xl md:text-5xl font-extrabold mb-6" style="font-family:'Poppins',sans-serif;">Company</h2>
-    <p class="text-lg md:text-xl mb-6">2025 年設立。面白いことだけを追い、<br>疑問や不安を解消するプロダクトを創ります。</p>
+  <div class="w-[90%] max-w-6xl mx-auto py-20 md:py-28 px-6 md:px-12 text-left">
+    <h2 class="text-4xl md:text-6xl font-extrabold mb-8" style="font-family:'Poppins',sans-serif;">Company</h2>
+    <p class="text-lg md:text-2xl leading-relaxed mb-8">2025 年設立。面白いことだけを追い、疑問や不安を解消するプロダクトを創ります。</p>
     <a href="company.html" class="font-semibold underline underline-offset-4">会社詳細を見る</a>
   </div>
 </section>
 
 <!-- ===== Media ===== -->
 <section id="media" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="rounded-3xl p-10 md:p-14 w-[90%] max-w-5xl mx-auto text-center glass">
-    <h2 class="text-3xl md:text-5xl font-extrabold mb-6" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
-    <p class="text-lg md:text-xl mb-6">最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold underline">X(@TADATAKA_O)</a> にて発信中。</p>
+  <div class="w-[90%] max-w-6xl mx-auto py-20 md:py-28 px-6 md:px-12 text-left">
+    <h2 class="text-4xl md:text-6xl font-extrabold mb-8" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
+    <p class="text-lg md:text-2xl leading-relaxed mb-8">
+      最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold underline">X (@TADATAKA_O)</a> にて発信中。
+    </p>
     <a href="media.html" class="font-semibold underline underline-offset-4">掲載実績を見る</a>
   </div>
 </section>
 
 <!-- ===== Contact ===== -->
 <section id="contact" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="rounded-3xl p-10 md:p-14 w-[90%] max-w-5xl mx-auto text-center glass">
-    <h2 class="text-3xl md:text-5xl font-extrabold mb-8" style="font-family:'Poppins',sans-serif;">Contact</h2>
-    <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-6">
+  <div class="w-[90%] max-w-6xl mx-auto py-20 md:py-28 px-6 md:px-12 text-left">
+    <h2 class="text-4xl md:text-6xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Contact</h2>
+    <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-6 max-w-2xl">
       <input type="hidden" name="form-name" value="contact">
       <input name="name"  placeholder="Name"  required class="rounded-md bg-transparent border border-stone-600 p-3">
       <input name="email" type="email" placeholder="Email" required class="rounded-md bg-transparent border border-stone-600 p-3">
