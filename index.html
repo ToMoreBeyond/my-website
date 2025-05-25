@@ -58,6 +58,12 @@
 
   /* Apps 背景色フェード */
   #apps-bg{transition:background-color .8s cubic-bezier(.77,0,.18,1)}
+
+  .text-accent         {color:var(--accent);}
+  .bg-accent           {background:var(--accent);}
+  .bg-accent-hover     {background:var(--accent);}
+  .bg-accent-hover:hover{background:var(--accent-hov);}
+  .border-accent       {border-color:var(--accent);}
   </style>
 </head>
 <body>
@@ -65,14 +71,14 @@
 <!-- ===== Header ===== -->
 <header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between
                w-[92%] max-w-5xl px-6 py-3 glass rounded-full shadow-md">
-  <a href="#home" class="font-bold text-xl tracking-tight hover:text-[var(--accent)]"
+  <a href="#home" class="font-bold text-xl tracking-tight hover:text-accent"
      style="font-family:'Poppins',sans-serif;">ToMoreBeyond</a>
 
-  <nav class="hidden md:flex gap-10 text-lg font-medium">
-    <a href="#apps"    class="nav-link hover:text-[var(--accent)]"><span>Apps</span></a>
-    <a href="#company" class="nav-link hover:text-[var(--accent)]"><span>Company</span></a>
-    <a href="#media"   class="nav-link hover:text-[var(--accent)]"><span>Media</span></a>
-    <a href="#contact" class="nav-link hover:text-[var(--accent)]"><span>Contact</span></a>
+  <nav class="hidden md:flex ml-10 gap-12 text-lg font-medium">
+    <a href="#apps"    class="nav-link hover:text-accent"><span>Apps</span></a>
+    <a href="#company" class="nav-link hover:text-accent"><span>Company</span></a>
+    <a href="#media"   class="nav-link hover:text-accent"><span>Media</span></a>
+    <a href="#contact" class="nav-link hover:text-accent"><span>Contact</span></a>
   </nav>
 
   <button id="burger" class="md:hidden w-8 h-8 relative">
@@ -100,13 +106,13 @@
   </h1>
 
   <p class="relative z-10 text-xl md:text-2xl mb-14 text-center px-6">
-    私たちは <span class="font-bold text-[var(--accent)]">共に創る</span>・
-    <span class="font-bold text-[var(--accent)]">友と創る</span>。<br>
-    面白いものを <span class="font-bold text-[var(--accent)]">“ともに”</span> 越える会社です。
+    私たちは <span class="font-bold text-accent">共に創る</span>・
+    <span class="font-bold text-accent">友と創る</span>。<br>
+    面白いものを <span class="font-bold text-accent">“ともに”</span> 越える会社です。
   </p>
 
-  <a href="#apps" class="relative z-10 rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hov)]
-     px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
+  <a href="#apps" class="relative z-10 rounded-full bg-accent bg-accent-hover
+    px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
 
   <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-[var(--accent)] scroll-arrow">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
@@ -173,7 +179,7 @@
 
 <!-- ===== Company ===== -->
 <section id="company" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="rounded-3xl p-10 md:p-14 mx-auto max-w-3xl text-center glass">
+  <div class="rounded-3xl p-10 md:p-14 w-[90%] max-w-5xl mx-auto text-center glass">
     <h2 class="text-3xl md:text-5xl font-extrabold mb-6" style="font-family:'Poppins',sans-serif;">Company</h2>
     <p class="text-lg md:text-xl mb-6">2025 年設立。面白いことだけを追い、<br>疑問や不安を解消するプロダクトを創ります。</p>
     <a href="company.html" class="font-semibold underline underline-offset-4">会社詳細を見る</a>
@@ -182,7 +188,7 @@
 
 <!-- ===== Media ===== -->
 <section id="media" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="rounded-3xl p-10 md:p-14 mx-auto max-w-3xl text-center glass">
+  <div class="rounded-3xl p-10 md:p-14 w-[90%] max-w-5xl mx-auto text-center glass">
     <h2 class="text-3xl md:text-5xl font-extrabold mb-6" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
     <p class="text-lg md:text-xl mb-6">最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold underline">X(@TADATAKA_O)</a> にて発信中。</p>
     <a href="media.html" class="font-semibold underline underline-offset-4">掲載実績を見る</a>
@@ -191,7 +197,7 @@
 
 <!-- ===== Contact ===== -->
 <section id="contact" class="flex items-center justify-center bg-[#111111] text-[#FDFCFB] py-24 md:py-40">
-  <div class="rounded-3xl p-10 md:p-14 mx-auto max-w-xl w-full text-center glass">
+  <div class="rounded-3xl p-10 md:p-14 w-[90%] max-w-5xl mx-auto text-center glass">
     <h2 class="text-3xl md:text-5xl font-extrabold mb-8" style="font-family:'Poppins',sans-serif;">Contact</h2>
     <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-6">
       <input type="hidden" name="form-name" value="contact">
