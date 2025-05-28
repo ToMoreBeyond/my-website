@@ -4,28 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ToMoreBeyond | The road not taken</title>
-<meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は“道なき道”を越えるクリエイティブカンパニーです。">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&display=swap" rel="stylesheet">
+<meta name="description" content="面白いことだけをする。友と共に。ToMoreBeyond は"道なき道"を越えるクリエイティブカンパニーです。">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tailwind.min.css">
 
-<!-- Swiper / GSAP -->
+<!-- Swiper / GSAP / Three.js -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
-:root{--accent:#FFB300;--accent-hov:#FF9E00}
+:root{
+  --accent: #FFB300;
+  --accent-hov: #FF9E00;
+  --accent-grad: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%);
+  --dark: #111111;
+  --light: #FDFCFB;
+}
+
 html,body{height:100%}
-body{background:#FDFCFB;color:#312E2B;font-family:'Inter',sans-serif}
+body{background:var(--light);color:var(--dark);font-family:'Inter',sans-serif}
 @media(min-width:1024px){body{scroll-snap-type:y mandatory}}
 section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidden}
 
 /* ── utilities ── */
 .glass{background:rgba(255,255,255,.7);backdrop-filter:blur(14px)}
 .text-accent{color:var(--accent)}
-.bg-accent{background:var(--accent)}
+.bg-accent{background:var(--accent-grad)}
 .bg-accent-hover:hover{background:var(--accent-hov)}
+
+/* Custom cursor */
+.cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999}
+.cursor-outline{width:40px;height:40px;border:2px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all .15s ease-out}
 
 /* nav underline + ripple */
 .nav-link{position:relative;overflow:hidden}
@@ -35,6 +47,24 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 .nav-link span{background-image:linear-gradient(currentColor,currentColor);background-size:0 2px;background-repeat:no-repeat;
   background-position:0 100%;transition:background-size .3s}
 .nav-link:hover span{background-size:100% 2px}
+
+/* 3D text effect */
+.text-3d{transform-style:preserve-3d;perspective:1000px}
+.text-3d span{display:inline-block;transform:translateZ(20px);transition:transform .3s}
+.text-3d:hover span{transform:translateZ(40px) rotateX(10deg)}
+
+/* Enhanced card hover */
+.app-card{position:relative;overflow:hidden;border-radius:24px;transform-style:preserve-3d;perspective:1000px}
+.app-card::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.28);transition:opacity .3s}
+.app-card:hover::after{opacity:.4}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.app-card:hover .card-img{transform:scale(1.08) translateZ(20px)}
+.card-title{position:absolute;bottom:20px;left:24px;font-size:1.6rem;font-weight:700;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6);
+  transform:translateZ(30px);transition:transform .3s}
+.app-card:hover .card-title{transform:translateZ(50px)}
+
+/* Scroll progress */
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;background:var(--accent-grad);transform-origin:0 50%;z-index:1000}
 
 /* Swiper dots */
 .swiper-pagination-bullet{background:var(--accent);opacity:.4}
@@ -60,16 +90,16 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 /* wipe board */
 .page-wipe{position:fixed;inset:0;z-index:120;background:var(--accent);transform-origin:left;transform:scaleX(0);pointer-events:none}
-
-/* apps cards */
-.app-card{position:relative;overflow:hidden;border-radius:24px}
-.app-card::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.28)}
-.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
-.app-card:hover .card-img{transform:scale(1.08)}
-.card-title{position:absolute;bottom:20px;left:24px;font-size:1.6rem;font-weight:700;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6)}
 </style>
 </head>
 <body>
+
+<!-- Custom cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress"></div>
 
 <!-- ===== Header ===== -->
 <header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center w-[92%] max-w-6xl px-6 py-3 glass rounded-full shadow-md">
@@ -109,7 +139,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
   <p class="relative z-10 text-xl md:text-2xl mb-14 text-center px-6">
     私たちは <span class="font-bold text-accent">共に創る</span>・<span class="font-bold text-accent">友と創る</span>。<br>
-    面白いものを <span class="font-bold text-accent">“ともに”</span> 越える会社です。
+    面白いものを <span class="font-bold text-accent">"ともに"</span> 越える会社です。
   </p>
 
   <a href="#apps" class="relative z-10 rounded-full bg-accent bg-accent-hover px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
@@ -207,12 +237,87 @@ let last=0,timer;
 ScrollTrigger.create({onUpdate:s=>{clearTimeout(timer);timer=setTimeout(()=>{const c=s.scroll();(c>last&&c>120)?gsap.to('#navbar',{y:-120,opacity:0,duration:.4,overwrite:true}):gsap.to('#navbar',{y:0,opacity:1,duration:.4,overwrite:true});last=c;},100);}});
 
 /* hero word drop */
-gsap.from('#home h1 span',{y:'80vh',rotation:gsap.utils.random(-45,45,true),opacity:0,duration:1.2,stagger:{each:.15,from:'random'}});
+gsap.from('#home h1 span', {
+  y: '80vh',
+  rotation: gsap.utils.random(-45, 45, true),
+  opacity: 0,
+  duration: 1.2,
+  stagger: {
+    each: 0.15,
+    from: 'random'
+  },
+  ease: 'power4.out'
+});
 
 /* wipe (hero→apps) */
 gsap.timeline({scrollTrigger:{trigger:'#apps',start:'top 80%',end:'top top',scrub:true}})
   .fromTo('.wipe-hero',{scaleX:0,transformOrigin:'left'},{scaleX:1,ease:'power2.in'})
   .to('.wipe-hero',{scaleX:0,transformOrigin:'right',ease:'power2.out'});
+
+// Custom cursor
+const cursor = {
+  dot: document.querySelector('.cursor-dot'),
+  outline: document.querySelector('.cursor-outline'),
+  init() {
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(this.dot, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.1
+      });
+      gsap.to(this.outline, {
+        x: e.clientX - 16,
+        y: e.clientY - 16,
+        duration: 0.3
+      });
+    });
+  }
+};
+cursor.init();
+
+// Scroll progress
+gsap.to('.scroll-progress', {
+  scaleX: 1,
+  transformOrigin: 'left',
+  ease: 'none',
+  scrollTrigger: {
+    trigger: 'body',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1
+  }
+});
+
+// 3D tilt effect for cards
+document.querySelectorAll('.app-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (y - centerY) / 10;
+    const rotateY = (centerX - x) / 10;
+    
+    gsap.to(card, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      duration: 0.5,
+      ease: 'power2.out'
+    });
+  });
+  
+  card.addEventListener('mouseleave', () => {
+    gsap.to(card, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.5,
+      ease: 'power2.out'
+    });
+  });
+});
 </script>
 </body>
 </html>
