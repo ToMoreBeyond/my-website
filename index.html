@@ -685,29 +685,6 @@ gsap.registerPlugin(ScrollTrigger);
 let last=0,timer;
 ScrollTrigger.create({onUpdate:s=>{clearTimeout(timer);timer=setTimeout(()=>{const c=s.scroll();(c>last&&c>120)?gsap.to('#navbar',{y:-120,opacity:0,duration:.4,overwrite:true}):gsap.to('#navbar',{y:0,opacity:1,duration:.4,overwrite:true});last=c;},100);}});
 
-/* hero word drop */
-gsap.from('.hero-title span', {
-  y: 60,
-  opacity: 0,
-  duration: 1.2,
-  stagger: 0.15,
-  ease: 'power3.out'
-});
-gsap.from('.hero-sub', {
-  y: 30,
-  opacity: 0,
-  duration: 1,
-  delay: 0.6,
-  ease: 'power2.out'
-});
-gsap.from('.hero-cta', {
-  scale: 0.8,
-  opacity: 0,
-  duration: 0.8,
-  delay: 1.0,
-  ease: 'back.out(1.7)'
-});
-
 /* wipe (hero→apps) */
 gsap.timeline({scrollTrigger:{trigger:'#apps',start:'top 80%',end:'top top',scrub:true}})
   .fromTo('.wipe-hero',{scaleX:0,transformOrigin:'left'},{scaleX:1,ease:'power2.in'})
