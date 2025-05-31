@@ -355,70 +355,97 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   transform: translateY(-9px) rotate(-45deg);
 }
 
-/* Infinite Scroll Apps Section */
+/* --- e-t.studio風 Appsセクション --- */
 .apps-container {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 4rem 0;
+  padding: 6rem 0 6rem 0;
+  background: #faf8f6;
 }
-
 .apps-track {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   animation: scroll 30s linear infinite;
   width: max-content;
+  align-items: stretch;
 }
-
 .apps-track:hover {
   animation-play-state: paused;
 }
-
 @keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-100% - 2rem));
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - 2.5rem)); }
 }
-
 .app-item {
   position: relative;
-  width: 400px;
+  width: 420px;
+  min-width: 320px;
+  max-width: 90vw;
   aspect-ratio: 4/3;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: 2rem;
+  background: #fff;
+  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.07);
   cursor: pointer;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: box-shadow 0.3s cubic-bezier(.77,0,.18,1), transform 0.3s cubic-bezier(.77,0,.18,1);
 }
-
+.app-item:hover {
+  box-shadow: 0 12px 40px 0 rgba(255,179,0,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+  transform: translateY(-6px) scale(1.03);
+}
 .app-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+  border-radius: 2rem 2rem 0 0;
+  transition: transform 0.7s cubic-bezier(.77,0,.18,1), filter 0.3s cubic-bezier(.77,0,.18,1);
 }
-
 .app-item:hover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  filter: brightness(0.96) saturate(1.1);
 }
-
 .app-item-content {
   position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 2rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  color: white;
-  opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+  left: 0; right: 0; bottom: 0;
+  padding: 2.2rem 2rem 1.6rem 2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.60) 60%, rgba(0,0,0,0.0) 100%);
+  color: #fff;
+  border-radius: 0 0 2rem 2rem;
+  transition: background 0.3s cubic-bezier(.77,0,.18,1);
+  z-index: 2;
 }
-
 .app-item:hover .app-item-content {
-  opacity: 1;
+  background: linear-gradient(to top, rgba(255,179,0,0.18) 60%, rgba(0,0,0,0.0) 100%);
+  color: var(--accent);
+}
+.app-item-content h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+  transition: color 0.3s cubic-bezier(.77,0,.18,1);
+}
+.app-item-content p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.92;
+  margin: 0;
+  transition: color 0.3s cubic-bezier(.77,0,.18,1);
+}
+@media (max-width: 900px) {
+  .apps-container { padding: 3rem 0; }
+  .app-item { width: 80vw; min-width: 220px; }
+}
+@media (max-width: 600px) {
+  .apps-container { padding: 2rem 0; }
+  .app-item { width: 92vw; min-width: 160px; border-radius: 1.2rem; }
+  .app-item-content { padding: 1.2rem 1rem 1rem 1rem; border-radius: 0 0 1.2rem 1.2rem; }
 }
 
 /* --- e-t.studio風 Heroセクション（再リファクタリング）--- */
