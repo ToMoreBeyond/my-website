@@ -849,17 +849,23 @@ revealTexts.forEach(text => {
   text.innerHTML = words.map(word => `<span>${word}</span>`).join(' ');
 });
 
-// Heroセクションのアニメーション（IntersectionObserver + CSS）
+// Heroセクションのアニメーション（IntersectionObserver + CSS + フォールバック）
 (function(){
   const hero = document.querySelector('.hero-section');
+  function showHero() {
+    hero.classList.add('hero-animate');
+  }
+  // IntersectionObserver: 画面に1%でも入ったら発火
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        hero.classList.add('hero-animate');
+        showHero();
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.01 });
   observer.observe(hero);
+  // フォールバック: DOMContentLoaded時にも必ず表示
+  document.addEventListener('DOMContentLoaded', showHero);
 })();
 </script>
 </body>
