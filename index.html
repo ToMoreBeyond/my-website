@@ -653,6 +653,78 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   .media-desc { font-size: 1.05rem; }
   .media-card { padding: 1.2rem 1rem 1rem 1rem; }
 }
+
+/* --- e-t.studio風 Contactセクション --- */
+.contact-section {
+  background: #fff;
+  padding: 7rem 0 7rem 0;
+  text-align: center;
+  position: relative;
+}
+.contact-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.contact-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.7rem;
+  font-weight: 700;
+  margin-bottom: 2.2rem;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+.contact-desc {
+  font-size: 1.15rem;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  margin: 0 auto;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 1.1rem 1rem;
+  border-radius: 0.9rem;
+  border: 1.5px solid #ececec;
+  background: #fafafa;
+  font-size: 1.05rem;
+  color: #222;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  resize: none;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255,179,0,0.10);
+}
+.contact-form button {
+  background: var(--accent-grad);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 1rem 0;
+  border-radius: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 12px 0 rgba(255,179,0,0.08);
+}
+.contact-form button:hover {
+  background: var(--accent-hov);
+  transform: translateY(-2px) scale(1.03);
+}
+@media (max-width: 700px) {
+  .contact-section { padding: 4rem 0; }
+  .contact-title { font-size: 1.5rem; }
+  .contact-desc { font-size: 0.98rem; }
+}
 </style>
 </head>
 <body>
@@ -790,12 +862,12 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </div>
   <div class="media-list">
     <div class="media-card">
-      <div class="media-card-title">TechCrunch Japan — ToMoreBeyond、移動体験を再発明する3人組</div>
+      <div class="media-card-title">TechCrunch Japan — ToMoreBeyond、移動体験を再発明する3人組</div>
       <div class="media-card-meta">2025-05-15 | インタビュー記事</div>
       <a href="https://example.com/article1" target="_blank" class="media-card-link">記事を読む</a>
     </div>
     <div class="media-card">
-      <div class="media-card-title">Nikkei Cross Tech — スタートアップ最前線</div>
+      <div class="media-card-title">Nikkei Cross Tech — スタートアップ最前線</div>
       <div class="media-card-meta">2025-04-30 | プロダクト特集</div>
       <a href="https://example.com/article2" target="_blank" class="media-card-link">記事を読む</a>
     </div>
@@ -803,15 +875,16 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 </section>
 
 <!-- ===== Contact ===== -->
-<section id="contact" class="flex items-center justify-center bg-[#111] text-[#FDFCFB]">
-  <div class="w-full max-w-7xl px-12 py-32 md:py-40">
-    <h2 class="text-5xl md:text-7xl font-extrabold mb-12" style="font-family:'Poppins',sans-serif;">Contact</h2>
-    <form name="contact" method="POST" data-netlify="true" class="flex flex-col gap-6 max-w-3xl">
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <h2 class="contact-title">Contact</h2>
+    <p class="contact-desc">ご質問・ご相談・お仕事のご依頼など、お気軽にご連絡ください。</p>
+    <form name="contact" method="POST" data-netlify="true" class="contact-form">
       <input type="hidden" name="form-name" value="contact">
-      <input name="name" placeholder="Name" required class="rounded-md bg-transparent border border-stone-600 p-4">
-      <input name="email" type="email" placeholder="Email" required class="rounded-md bg-transparent border border-stone-600 p-4">
-      <textarea name="msg" rows="5" placeholder="Message" required class="rounded-md bg-transparent border border-stone-600 p-4"></textarea>
-      <button class="rounded-md bg-accent bg-accent-hover py-4 font-semibold text-lg text-white">送信</button>
+      <input name="name" placeholder="お名前" required>
+      <input name="email" type="email" placeholder="メールアドレス" required>
+      <textarea name="msg" rows="5" placeholder="メッセージ" required></textarea>
+      <button type="submit">送信</button>
     </form>
   </div>
 </section>
