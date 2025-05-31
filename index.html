@@ -36,13 +36,12 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 .bg-accent-hover:hover{background:var(--accent-hov)}
 
 /* Custom cursor */
-.cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform 0.15s ease-out}
-.cursor-outline{width:40px;height:40px;border:2px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all 0.15s ease-out}
-.cursor-dot.active,
-.cursor-outline.active {
-  transform: scale(1.5);
-  opacity: 0.5;
-}
+.cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform 0.15s ease-out;mix-blend-mode:difference}
+.cursor-outline{width:40px;height:40px;border:2px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all 0.15s ease-out;mix-blend-mode:difference}
+.cursor-dot.active{width:12px;height:12px;background:var(--accent)}
+.cursor-outline.active{transform:scale(1.5);border-color:var(--accent);opacity:0.5}
+.cursor-dot.click{transform:scale(0.5);opacity:0.5}
+.cursor-outline.click{transform:scale(1.5);border-color:var(--accent);opacity:0.3}
 
 /* nav underline + ripple */
 .nav-link{position:relative;overflow:hidden}
@@ -621,27 +620,30 @@ gsap.timeline({scrollTrigger:{trigger:'#apps',start:'top 80%',end:'top top',scru
   .fromTo('.wipe-hero',{scaleX:0,transformOrigin:'left'},{scaleX:1,ease:'power2.in'})
   .to('.wipe-hero',{scaleX:0,transformOrigin:'right',ease:'power2.out'});
 
-// Custom cursor
+// Enhanced Custom Cursor
 const cursor = {
   dot: document.querySelector('.cursor-dot'),
   outline: document.querySelector('.cursor-outline'),
   
   init() {
+    // Mouse move
     document.addEventListener('mousemove', (e) => {
       gsap.to(this.dot, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1
+        x: e.clientX - 4,
+        y: e.clientY - 4,
+        duration: 0.1,
+        ease: 'power2.out'
       });
       gsap.to(this.outline, {
-        x: e.clientX - 16,
-        y: e.clientY - 16,
-        duration: 0.3
+        x: e.clientX - 20,
+        y: e.clientY - 20,
+        duration: 0.3,
+        ease: 'power2.out'
       });
     });
 
-    // Add hover effect for interactive elements
-    const links = document.querySelectorAll('a, button, .app-item');
+    // Mouse enter/leave for interactive elements
+    const links = document.querySelectorAll('a, button, .app-item, .nav-link');
     links.forEach(link => {
       link.addEventListener('mouseenter', () => {
         this.dot.classList.add('active');
@@ -652,8 +654,34 @@ const cursor = {
         this.outline.classList.remove('active');
       });
     });
+
+    // Click effect
+    document.addEventListener('mousedown', () => {
+      this.dot.classList.add('click');
+      this.outline.classList.add('click');
+    });
+    document.addEventListener('mouseup', () => {
+      this.dot.classList.remove('click');
+      this.outline.classList.remove('click');
+    });
+
+    // Hide cursor when leaving window
+    document.addEventListener('mouseleave', () => {
+      gsap.to([this.dot, this.outline], {
+        opacity: 0,
+        duration: 0.3
+      });
+    });
+    document.addEventListener('mouseenter', () => {
+      gsap.to([this.dot, this.outline], {
+        opacity: 1,
+        duration: 0.3
+      });
+    });
   }
 };
+
+// Initialize cursor
 cursor.init();
 
 // Mobile navigation
