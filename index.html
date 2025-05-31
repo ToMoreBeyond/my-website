@@ -580,6 +580,79 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   .company-title .sans { font-size: 1.3rem; }
   .company-desc { font-size: 1.05rem; }
 }
+
+/* --- e-t.studio風 Mediaセクション --- */
+.media-section {
+  background: #f8f8fa;
+  padding: 7rem 0 7rem 0;
+  text-align: center;
+  position: relative;
+}
+.media-inner {
+  max-width: 700px;
+  margin: 0 auto 3.5rem auto;
+  padding: 0 2rem;
+}
+.media-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 2.2rem;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+.media-desc {
+  font-size: 1.25rem;
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 2.8rem;
+}
+.media-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.media-card {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
+  padding: 2rem 2rem 1.5rem 2rem;
+  text-align: left;
+  transition: box-shadow 0.2s;
+}
+.media-card:hover {
+  box-shadow: 0 6px 24px 0 rgba(255,179,0,0.10), 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+.media-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+.media-card-meta {
+  font-size: 0.98rem;
+  color: #888;
+  margin-bottom: 0.7rem;
+}
+.media-card-link {
+  color: #222;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.media-card-link:hover {
+  color: var(--accent);
+}
+@media (max-width: 700px) {
+  .media-section { padding: 4rem 0; }
+  .media-title { font-size: 2.1rem; }
+  .media-desc { font-size: 1.05rem; }
+  .media-card { padding: 1.2rem 1rem 1rem 1rem; }
+}
 </style>
 </head>
 <body>
@@ -707,11 +780,25 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 </section>
 
 <!-- ===== Media ===== -->
-<section id="media" class="flex items-center justify-center bg-[#111] text-[#FDFCFB]">
-  <div class="w-full max-w-7xl px-12 py-32 md:py-40">
-    <h2 class="text-5xl md:text-7xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Media & Press</h2>
-    <p class="text-xl md:text-2xl leading-relaxed mb-10">最新情報は <a href="https://twitter.com/TADATAKA_O" target="_blank" class="font-bold underline">X (@TADATAKA_O)</a> にて発信中。</p>
-    <a href="media.html" class="font-semibold underline underline-offset-4">掲載実績を見る</a>
+<section id="media" class="media-section">
+  <div class="media-inner">
+    <h2 class="media-title">Media & Press</h2>
+    <p class="media-desc">
+      最新情報や掲載実績は下記よりご覧いただけます。<br>
+      <a href="https://twitter.com/TADATAKA_O" target="_blank" class="media-card-link">公式X（@TADATAKA_O）</a> でも随時発信中。
+    </p>
+  </div>
+  <div class="media-list">
+    <div class="media-card">
+      <div class="media-card-title">TechCrunch Japan — ToMoreBeyond、移動体験を再発明する3人組</div>
+      <div class="media-card-meta">2025-05-15 | インタビュー記事</div>
+      <a href="https://example.com/article1" target="_blank" class="media-card-link">記事を読む</a>
+    </div>
+    <div class="media-card">
+      <div class="media-card-title">Nikkei Cross Tech — スタートアップ最前線</div>
+      <div class="media-card-meta">2025-04-30 | プロダクト特集</div>
+      <a href="https://example.com/article2" target="_blank" class="media-card-link">記事を読む</a>
+    </div>
   </div>
 </section>
 
