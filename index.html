@@ -442,9 +442,6 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   font-weight: 700;
   margin-bottom: 2rem;
   line-height: 1.1;
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.8s cubic-bezier(.77,0,.18,1), transform 0.8s cubic-bezier(.77,0,.18,1);
 }
 .hero-title .sans {
   font-family: 'Poppins', sans-serif;
@@ -456,9 +453,6 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   margin-bottom: 2.5rem;
   color: #444;
   line-height: 1.7;
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.8s cubic-bezier(.77,0,.18,1) 0.2s, transform 0.8s cubic-bezier(.77,0,.18,1) 0.2s;
 }
 .hero-sub .accent {
   color: var(--accent);
@@ -473,9 +467,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   padding: 1rem 2.5rem;
   border-radius: 999px;
   box-shadow: 0 4px 24px rgba(255,179,0,0.08);
-  transition: background 0.2s, transform 0.2s, opacity 0.8s cubic-bezier(.77,0,.18,1) 0.4s, transform 0.8s cubic-bezier(.77,0,.18,1) 0.4s;
-  opacity: 0;
-  transform: translateY(32px);
+  transition: background 0.2s, transform 0.2s;
 }
 .hero-cta:hover {
   background: var(--accent-hov);
@@ -506,21 +498,6 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 @keyframes scroll-bounce {
   0%, 100% { transform: translateY(0);}
   50% { transform: translateY(8px);}
-}
-.hero-animate .hero-title {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.1s;
-}
-.hero-animate .hero-sub {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.3s;
-}
-.hero-animate .hero-cta {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.5s;
 }
 </style>
 </head>
@@ -825,25 +802,6 @@ revealTexts.forEach(text => {
   const words = text.textContent.split(' ');
   text.innerHTML = words.map(word => `<span>${word}</span>`).join(' ');
 });
-
-// Heroセクションのアニメーション（IntersectionObserver + CSS + フォールバック）
-(function(){
-  const hero = document.querySelector('.hero-section');
-  function showHero() {
-    hero.classList.add('hero-animate');
-  }
-  // IntersectionObserver: 画面に1%でも入ったら発火
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        showHero();
-      }
-    });
-  }, { threshold: 0.01 });
-  observer.observe(hero);
-  // フォールバック: DOMContentLoaded時にも必ず表示
-  document.addEventListener('DOMContentLoaded', showHero);
-})();
 </script>
 </body>
 </html>
