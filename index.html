@@ -36,8 +36,13 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 .bg-accent-hover:hover{background:var(--accent-hov)}
 
 /* Custom cursor */
-.cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999}
-.cursor-outline{width:40px;height:40px;border:2px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all .15s ease-out}
+.cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform 0.15s ease-out}
+.cursor-outline{width:40px;height:40px;border:2px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all 0.15s ease-out}
+.cursor-dot.active,
+.cursor-outline.active {
+  transform: scale(1.5);
+  opacity: 0.5;
+}
 
 /* nav underline + ripple */
 .nav-link{position:relative;overflow:hidden}
@@ -189,6 +194,29 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   transition: all 0.4s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
+@media (max-width: 768px) {
+  #navbar {
+    padding: 1.5rem;
+  }
+  
+  .nav-right {
+    display: none;
+  }
+  
+  .nav-right.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--light);
+    padding: 6rem 2rem 2rem;
+    z-index: 100;
+  }
+}
+
 .nav-left {
   display: flex;
   align-items: center;
@@ -295,6 +323,112 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 .app-item:hover .app-item-content {
   opacity: 1;
 }
+
+/* Burger Menu */
+.burger {
+  display: none;
+  width: 30px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  z-index: 101;
+}
+
+@media (max-width: 768px) {
+  .burger {
+    display: block;
+  }
+}
+
+.burger-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--dark);
+  transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.burger-line:nth-child(1) { top: 0; }
+.burger-line:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.burger-line:nth-child(3) { bottom: 0; }
+
+.burger.active .burger-line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.burger.active .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.active .burger-line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Infinite Scroll Apps Section */
+.apps-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 4rem 0;
+}
+
+.apps-track {
+  display: flex;
+  gap: 2rem;
+  animation: scroll 30s linear infinite;
+  width: max-content;
+}
+
+.apps-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 2rem));
+  }
+}
+
+.app-item {
+  position: relative;
+  width: 400px;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.app-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.app-item:hover img {
+  transform: scale(1.05);
+}
+
+.app-item-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.app-item:hover .app-item-content {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -323,6 +457,12 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
     <a href="#media" class="nav-link hover:text-accent">Media</a>
     <a href="#contact" class="nav-link hover:text-accent">Contact</a>
   </nav>
+
+  <div class="burger">
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+  </div>
 </header>
 
 <!-- ===== Mobile Menu ===== -->
@@ -362,28 +502,52 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 <!-- ===== Apps ===== -->
 <section id="apps" class="section-wrapper">
-  <div class="apps-grid">
-    <a href="tadataka.html" class="app-item large">
-      <img src="https://source.unsplash.com/1280x1280?journal" alt="TADATAKA">
-      <div class="app-item-content">
-        <h3 class="text-3xl font-bold mb-2">TADATAKA</h3>
-        <p class="text-lg">Journal your journey</p>
-      </div>
-    </a>
-    <a href="toirun.html" class="app-item">
-      <img src="https://source.unsplash.com/1280x1280?restroom" alt="ToiRun">
-      <div class="app-item-content">
-        <h3 class="text-2xl font-bold mb-2">ToiRun</h3>
-        <p>Find your way</p>
-      </div>
-    </a>
-    <a href="midpoint.html" class="app-item">
-      <img src="https://source.unsplash.com/1280x1920?meeting" alt="Meet in the Middle">
-      <div class="app-item-content">
-        <h3 class="text-2xl font-bold mb-2">Meet in the Middle</h3>
-        <p>Connect & meet</p>
-      </div>
-    </a>
+  <div class="apps-container">
+    <div class="apps-track">
+      <a href="tadataka.html" class="app-item">
+        <img src="https://source.unsplash.com/1280x1280?journal" alt="TADATAKA">
+        <div class="app-item-content">
+          <h3 class="text-3xl font-bold mb-2">TADATAKA</h3>
+          <p class="text-lg">Journal your journey</p>
+        </div>
+      </a>
+      <a href="toirun.html" class="app-item">
+        <img src="https://source.unsplash.com/1280x1280?restroom" alt="ToiRun">
+        <div class="app-item-content">
+          <h3 class="text-2xl font-bold mb-2">ToiRun</h3>
+          <p>Find your way</p>
+        </div>
+      </a>
+      <a href="midpoint.html" class="app-item">
+        <img src="https://source.unsplash.com/1280x1920?meeting" alt="Meet in the Middle">
+        <div class="app-item-content">
+          <h3 class="text-2xl font-bold mb-2">Meet in the Middle</h3>
+          <p>Connect & meet</p>
+        </div>
+      </a>
+      <!-- Duplicate items for infinite scroll -->
+      <a href="tadataka.html" class="app-item">
+        <img src="https://source.unsplash.com/1280x1280?journal" alt="TADATAKA">
+        <div class="app-item-content">
+          <h3 class="text-3xl font-bold mb-2">TADATAKA</h3>
+          <p class="text-lg">Journal your journey</p>
+        </div>
+      </a>
+      <a href="toirun.html" class="app-item">
+        <img src="https://source.unsplash.com/1280x1280?restroom" alt="ToiRun">
+        <div class="app-item-content">
+          <h3 class="text-2xl font-bold mb-2">ToiRun</h3>
+          <p>Find your way</p>
+        </div>
+      </a>
+      <a href="midpoint.html" class="app-item">
+        <img src="https://source.unsplash.com/1280x1920?meeting" alt="Meet in the Middle">
+        <div class="app-item-content">
+          <h3 class="text-2xl font-bold mb-2">Meet in the Middle</h3>
+          <p>Connect & meet</p>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -426,9 +590,9 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 /* burger / close */
 const burger=document.getElementById('burger'),menu=document.getElementById('menu'),closeBtn=document.getElementById('close-menu');
 [burger,closeBtn].forEach(btn=>btn.addEventListener('click',()=>{
-  burger.classList.toggle('burger-open');menu.classList.toggle('open');
+  burger.classList.toggle('active');menu.classList.toggle('open');
 }));
-document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('burger-open');}));
+document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('active');}));
 
 /* swiper */
 if(innerWidth<1024){new Swiper('.swiper',{loop:true,speed:800,slidesPerView:1,grabCursor:true,
@@ -461,6 +625,7 @@ gsap.timeline({scrollTrigger:{trigger:'#apps',start:'top 80%',end:'top top',scru
 const cursor = {
   dot: document.querySelector('.cursor-dot'),
   outline: document.querySelector('.cursor-outline'),
+  
   init() {
     document.addEventListener('mousemove', (e) => {
       gsap.to(this.dot, {
@@ -474,9 +639,39 @@ const cursor = {
         duration: 0.3
       });
     });
+
+    // Add hover effect for interactive elements
+    const links = document.querySelectorAll('a, button, .app-item');
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        this.dot.classList.add('active');
+        this.outline.classList.add('active');
+      });
+      link.addEventListener('mouseleave', () => {
+        this.dot.classList.remove('active');
+        this.outline.classList.remove('active');
+      });
+    });
   }
 };
 cursor.init();
+
+// Mobile navigation
+const burgerMenu = document.querySelector('.burger');
+const nav = document.querySelector('.nav-right');
+
+burgerMenu.addEventListener('click', () => {
+  burgerMenu.classList.toggle('active');
+  nav.classList.toggle('mobile-open');
+});
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('.nav-right a').forEach(link => {
+  link.addEventListener('click', () => {
+    burgerMenu.classList.remove('active');
+    nav.classList.remove('mobile-open');
+  });
+});
 
 // Enhanced scroll animations
 const sections = document.querySelectorAll('section');
