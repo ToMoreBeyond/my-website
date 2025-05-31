@@ -179,6 +179,122 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   z-index: 100;
   pointer-events: none;
 }
+
+/* Enhanced Navigation */
+#navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+  transition: all 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.nav-link {
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Section Animations */
+.section-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-content {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.section-content.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Apps Grid */
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  padding: 4rem;
+}
+
+.app-item {
+  position: relative;
+  grid-column: span 4;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.app-item.large {
+  grid-column: span 8;
+  grid-row: span 2;
+}
+
+.app-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.app-item:hover img {
+  transform: scale(1.05);
+}
+
+.app-item-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.app-item:hover .app-item-content {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -194,21 +310,19 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 <div class="scroll-progress"></div>
 
 <!-- ===== Header ===== -->
-<header id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center w-[92%] max-w-6xl px-6 py-3 glass rounded-full shadow-md">
-  <a href="#home" class="flex-shrink-0 font-bold text-xl tracking-tight hover:text-accent" style="font-family:'Poppins',sans-serif;">ToMoreBeyond</a>
-
-  <!-- PC nav -->
-  <nav class="hidden md:flex gap-14 text-lg font-medium ml-auto">
-    <a href="#apps"    class="nav-link hover:text-accent"><span>Apps</span></a>
-    <a href="#company" class="nav-link hover:text-accent"><span>Company</span></a>
-    <a href="#media"   class="nav-link hover:text-accent"><span>Media</span></a>
-    <a href="#contact" class="nav-link hover:text-accent"><span>Contact</span></a>
+<header id="navbar" class="fixed top-0 left-0 w-full z-50 glass">
+  <div class="nav-left">
+    <a href="#home" class="text-2xl font-bold tracking-tight hover:text-accent" style="font-family:'Poppins',sans-serif;">
+      ToMoreBeyond
+    </a>
+  </div>
+  
+  <nav class="nav-right">
+    <a href="#apps" class="nav-link hover:text-accent">Apps</a>
+    <a href="#company" class="nav-link hover:text-accent">Company</a>
+    <a href="#media" class="nav-link hover:text-accent">Media</a>
+    <a href="#contact" class="nav-link hover:text-accent">Contact</a>
   </nav>
-
-  <!-- burger -->
-  <button id="burger" class="md:hidden w-8 h-8 relative ml-auto">
-    <span class="line"></span><span class="line"></span>
-  </button>
 </header>
 
 <!-- ===== Mobile Menu ===== -->
@@ -247,32 +361,29 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 <div class="page-wipe wipe-hero"></div>
 
 <!-- ===== Apps ===== -->
-<section id="apps">
-  <div id="apps-bg" class="absolute inset-0 -z-10 bg-[#FFC107]"></div>
-
-  <!-- Desktop Grid -->
-  <div class="hidden lg:grid grid-cols-3 gap-10 px-12 py-32 w-full" style="grid-auto-rows:34vh;">
-    <a href="tadataka.html" class="app-card col-span-2 row-span-2">
-      <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt=""><h3 class="card-title">TADATAKA</h3>
+<section id="apps" class="section-wrapper">
+  <div class="apps-grid">
+    <a href="tadataka.html" class="app-item large">
+      <img src="https://source.unsplash.com/1280x1280?journal" alt="TADATAKA">
+      <div class="app-item-content">
+        <h3 class="text-3xl font-bold mb-2">TADATAKA</h3>
+        <p class="text-lg">Journal your journey</p>
+      </div>
     </a>
-    <a href="toirun.html" class="app-card"><img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt="">
-      <h3 class="card-title">ToiRun</h3></a>
-    <a href="midpoint.html" class="app-card row-span-2"><img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt="">
-      <h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3></a>
-    <a href="#" class="app-card flex items-center justify-center bg-stone-200 text-2xl font-bold">Coming&nbsp;Soon</a>
-  </div>
-
-  <!-- Mobile Swiper -->
-  <div class="lg:hidden swiper h-[82vh]">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><a href="tadataka.html" class="app-card block mx-6 h-full">
-        <img src="https://source.unsplash.com/1280x1280?journal" class="card-img" alt=""><h3 class="card-title">TADATAKA</h3></a></div>
-      <div class="swiper-slide"><a href="toirun.html" class="app-card block mx-6 h-full">
-        <img src="https://source.unsplash.com/1280x1280?restroom" class="card-img" alt=""><h3 class="card-title">ToiRun</h3></a></div>
-      <div class="swiper-slide"><a href="midpoint.html" class="app-card block mx-6 h-full">
-        <img src="https://source.unsplash.com/1280x1920?meeting" class="card-img" alt=""><h3 class="card-title">Meet&nbsp;in&nbsp;the&nbsp;Middle</h3></a></div>
-    </div>
-    <div class="swiper-pagination !bottom-10"></div>
+    <a href="toirun.html" class="app-item">
+      <img src="https://source.unsplash.com/1280x1280?restroom" alt="ToiRun">
+      <div class="app-item-content">
+        <h3 class="text-2xl font-bold mb-2">ToiRun</h3>
+        <p>Find your way</p>
+      </div>
+    </a>
+    <a href="midpoint.html" class="app-item">
+      <img src="https://source.unsplash.com/1280x1920?meeting" alt="Meet in the Middle">
+      <div class="app-item-content">
+        <h3 class="text-2xl font-bold mb-2">Meet in the Middle</h3>
+        <p>Connect & meet</p>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -375,51 +486,52 @@ const sectionTransition = document.querySelector('.section-transition');
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-      
-      // Animate text elements
-      const texts = entry.target.querySelectorAll('.reveal-text');
-      texts.forEach((text, index) => {
-        setTimeout(() => {
-          text.classList.add('active');
-        }, index * 200);
-      });
+      const content = entry.target.querySelector('.section-content');
+      if (content) {
+        content.classList.add('active');
+      }
     }
   });
 }, {
-  threshold: 0.2
+  threshold: 0.2,
+  rootMargin: '0px'
 });
 
 sections.forEach(section => {
   sectionObserver.observe(section);
 });
 
-// Smooth scroll with transition
+// Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
     
-    // Trigger transition
-    gsap.to(sectionTransition, {
-      scaleY: 1,
-      duration: 0.5,
-      ease: 'power2.inOut',
-      onComplete: () => {
-        window.scrollTo({
-          top: target.offsetTop,
-          behavior: 'smooth'
-        });
-        
-        gsap.to(sectionTransition, {
-          scaleY: 0,
-          duration: 0.5,
-          delay: 0.2,
-          ease: 'power2.inOut'
-        });
-      }
+    window.scrollTo({
+      top: target.offsetTop,
+      behavior: 'smooth'
     });
   });
+});
+
+// Navbar scroll effect
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+  const navbar = document.getElementById('navbar');
+  
+  if (currentScroll <= 0) {
+    navbar.style.transform = 'translateY(0)';
+    return;
+  }
+  
+  if (currentScroll > lastScroll) {
+    navbar.style.transform = 'translateY(-100%)';
+  } else {
+    navbar.style.transform = 'translateY(0)';
+  }
+  
+  lastScroll = currentScroll;
 });
 
 // Enhanced scroll progress
