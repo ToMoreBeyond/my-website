@@ -37,11 +37,11 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 /* Custom cursor */
 .cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform 0.15s ease-out;mix-blend-mode:difference;top:0;left:0;}
-.cursor-outline{width:40px;height:40px;border:2px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all 0.15s ease-out;mix-blend-mode:difference;top:0;left:0;}
-.cursor-dot.active{width:12px;height:12px;background:var(--accent)}
-.cursor-outline.active{transform:scale(1.5);border-color:var(--accent);opacity:0.5}
-.cursor-dot.click{transform:scale(0.5);opacity:0.5}
-.cursor-outline.click{transform:scale(1.5);border-color:var(--accent);opacity:0.3}
+.cursor-outline{width:48px;height:48px;border:2px solid var(--accent);background:rgba(255,179,0,0.12);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:border-color 0.2s,background 0.2s,transform 0.2s;mix-blend-mode:difference;top:0;left:0;}
+.cursor-dot.active{background:var(--accent);transform:scale(1.5)}
+.cursor-outline.active{transform:scale(1.4);border-color:#fff;background:rgba(255,255,255,0.18)}
+.cursor-dot.click{transform:scale(0.8)}
+.cursor-outline.click{transform:scale(0.8)}
 
 /* nav underline + ripple */
 .nav-link{position:relative;overflow:hidden}
@@ -624,44 +624,24 @@ gsap.timeline({scrollTrigger:{trigger:'#apps',start:'top 80%',end:'top top',scru
 const cursor = {
   dot: document.querySelector('.cursor-dot'),
   outline: document.querySelector('.cursor-outline'),
-  
   init() {
-    // Set initial position to center of screen
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    gsap.set(this.dot, {x: centerX, y: centerY});
-    gsap.set(this.outline, {x: centerX, y: centerY});
-
-    // Mouse move
+    // 追従
     document.addEventListener('mousemove', (e) => {
-      gsap.to(this.dot, {
-        x: e.clientX - 4,
-        y: e.clientY - 4,
-        duration: 0.1,
-        ease: 'power2.out'
-      });
-      gsap.to(this.outline, {
-        x: e.clientX - 20,
-        y: e.clientY - 20,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
+      gsap.to(this.dot, { x: e.clientX - 4, y: e.clientY - 4, duration: 0.15, ease: 'power2.out' });
+      gsap.to(this.outline, { x: e.clientX - 24, y: e.clientY - 24, duration: 0.25, ease: 'power2.out' });
     });
-
-    // Mouse enter/leave for interactive elements
-    const links = document.querySelectorAll('a, button, .app-item, .nav-link');
-    links.forEach(link => {
-      link.addEventListener('mouseenter', () => {
+    // ホバー
+    document.querySelectorAll('a, button, .app-item, .nav-link').forEach(el => {
+      el.addEventListener('mouseenter', () => {
         this.dot.classList.add('active');
         this.outline.classList.add('active');
       });
-      link.addEventListener('mouseleave', () => {
+      el.addEventListener('mouseleave', () => {
         this.dot.classList.remove('active');
         this.outline.classList.remove('active');
       });
     });
-
-    // Click effect
+    // クリック
     document.addEventListener('mousedown', () => {
       this.dot.classList.add('click');
       this.outline.classList.add('click');
@@ -670,24 +650,15 @@ const cursor = {
       this.dot.classList.remove('click');
       this.outline.classList.remove('click');
     });
-
-    // Hide cursor when leaving window
+    // ウィンドウ外
     document.addEventListener('mouseleave', () => {
-      gsap.to([this.dot, this.outline], {
-        opacity: 0,
-        duration: 0.3
-      });
+      gsap.to([this.dot, this.outline], { opacity: 0, duration: 0.3 });
     });
     document.addEventListener('mouseenter', () => {
-      gsap.to([this.dot, this.outline], {
-        opacity: 1,
-        duration: 0.3
-      });
+      gsap.to([this.dot, this.outline], { opacity: 1, duration: 0.3 });
     });
   }
 };
-
-// Initialize cursor
 cursor.init();
 
 // Mobile navigation
