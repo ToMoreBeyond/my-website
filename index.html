@@ -421,7 +421,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   opacity: 1;
 }
 
-/* --- e-t.studio風 Heroセクション --- */
+/* --- e-t.studio風 Heroセクション（再リファクタリング）--- */
 .hero-section {
   min-height: 100vh;
   background: #fff;
@@ -429,6 +429,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   align-items: center;
   justify-content: center;
   padding: 0 2rem;
+  position: relative;
 }
 .hero-inner {
   text-align: center;
@@ -441,6 +442,9 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   font-weight: 700;
   margin-bottom: 2rem;
   line-height: 1.1;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(.77,0,.18,1), transform 0.8s cubic-bezier(.77,0,.18,1);
 }
 .hero-title .sans {
   font-family: 'Poppins', sans-serif;
@@ -452,6 +456,9 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   margin-bottom: 2.5rem;
   color: #444;
   line-height: 1.7;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(.77,0,.18,1) 0.2s, transform 0.8s cubic-bezier(.77,0,.18,1) 0.2s;
 }
 .hero-sub .accent {
   color: var(--accent);
@@ -466,33 +473,54 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   padding: 1rem 2.5rem;
   border-radius: 999px;
   box-shadow: 0 4px 24px rgba(255,179,0,0.08);
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s, transform 0.2s, opacity 0.8s cubic-bezier(.77,0,.18,1) 0.4s, transform 0.8s cubic-bezier(.77,0,.18,1) 0.4s;
+  opacity: 0;
+  transform: translateY(32px);
 }
 .hero-cta:hover {
   background: var(--accent-hov);
   transform: translateY(-2px) scale(1.04);
 }
-.scroll-down-indicator {
-  margin: 3rem auto 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  position: relative;
-  animation: bounce 2s infinite;
-}
-.scroll-down-indicator::after {
-  content: '';
+.scroll-indicator {
   position: absolute;
-  left: 50%; top: 60%;
-  width: 8px; height: 8px;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 36px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.scroll-indicator-dot {
+  width: 8px;
+  height: 8px;
   background: var(--accent);
   border-radius: 50%;
-  transform: translate(-50%, 0);
+  margin-bottom: -4px;
+  animation: scroll-bounce 1.6s infinite cubic-bezier(.77,0,.18,1);
 }
-@keyframes bounce {
+@keyframes scroll-bounce {
   0%, 100% { transform: translateY(0);}
-  50% { transform: translateY(12px);}
+  50% { transform: translateY(8px);}
+}
+.hero-animate .hero-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+.hero-animate .hero-sub {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+.hero-animate .hero-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
 }
 </style>
 </head>
@@ -547,8 +575,8 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
       面白いものを <span class="accent">"ともに"</span> 越える会社です。
     </p>
     <a href="#apps" class="hero-cta">アプリを見る</a>
-    <div class="scroll-down-indicator"></div>
   </div>
+  <div class="scroll-indicator"><div class="scroll-indicator-dot"></div></div>
 </section>
 
 <!-- ワイプ -->
@@ -820,6 +848,19 @@ revealTexts.forEach(text => {
   const words = text.textContent.split(' ');
   text.innerHTML = words.map(word => `<span>${word}</span>`).join(' ');
 });
+
+// Heroセクションのアニメーション（IntersectionObserver + CSS）
+(function(){
+  const hero = document.querySelector('.hero-section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        hero.classList.add('hero-animate');
+      }
+    });
+  }, { threshold: 0.5 });
+  observer.observe(hero);
+})();
 </script>
 </body>
 </html>
