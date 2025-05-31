@@ -420,6 +420,80 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 .app-item:hover .app-item-content {
   opacity: 1;
 }
+
+/* --- e-t.studio風 Heroセクション --- */
+.hero-section {
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+}
+.hero-inner {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.hero-title {
+  font-size: 4rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+}
+.hero-title .sans {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  display: block;
+}
+.hero-sub {
+  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+  color: #444;
+  line-height: 1.7;
+}
+.hero-sub .accent {
+  color: var(--accent);
+  font-weight: bold;
+}
+.hero-cta {
+  display: inline-block;
+  background: var(--accent-grad);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(255,179,0,0.08);
+  transition: background 0.2s, transform 0.2s;
+}
+.hero-cta:hover {
+  background: var(--accent-hov);
+  transform: translateY(-2px) scale(1.04);
+}
+.scroll-down-indicator {
+  margin: 3rem auto 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  position: relative;
+  animation: bounce 2s infinite;
+}
+.scroll-down-indicator::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 60%;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, 0);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(12px);}
+}
 </style>
 </head>
 <body>
@@ -462,25 +536,18 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 </div>
 
 <!-- ===== Hero ===== -->
-<section id="home" class="flex flex-col items-center justify-center">
-  <video src="assets/hero.mp4" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video>
-  <div class="absolute inset-0 bg-white/60"></div>
-
-  <h1 class="relative z-10 font-extrabold text-5xl md:text-7xl mb-8 tracking-tight flex flex-wrap justify-center" style="font-family:'Poppins',sans-serif;">
-    <span class="mx-2">The</span><span class="mx-2">road</span><span class="mx-2">not</span><span class="mx-2">taken</span>
-  </h1>
-
-  <p class="relative z-10 text-xl md:text-2xl mb-14 text-center px-6">
-    私たちは <span class="font-bold text-accent">共に創る</span>・<span class="font-bold text-accent">友と創る</span>。<br>
-    面白いものを <span class="font-bold text-accent">"ともに"</span> 越える会社です。
-  </p>
-
-  <a href="#apps" class="relative z-10 rounded-full bg-accent bg-accent-hover px-10 py-4 text-lg font-bold text-white shadow-lg">アプリを見る</a>
-
-  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-accent scroll-arrow">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+<section id="home" class="hero-section">
+  <div class="hero-inner">
+    <h1 class="hero-title">
+      <span class="serif">The road</span>
+      <span class="sans">not taken</span>
+    </h1>
+    <p class="hero-sub">
+      私たちは <span class="accent">共に創る</span>・<span class="accent">友と創る</span>。<br>
+      面白いものを <span class="accent">"ともに"</span> 越える会社です。
+    </p>
+    <a href="#apps" class="hero-cta">アプリを見る</a>
+    <div class="scroll-down-indicator"></div>
   </div>
 </section>
 
@@ -591,16 +658,26 @@ let last=0,timer;
 ScrollTrigger.create({onUpdate:s=>{clearTimeout(timer);timer=setTimeout(()=>{const c=s.scroll();(c>last&&c>120)?gsap.to('#navbar',{y:-120,opacity:0,duration:.4,overwrite:true}):gsap.to('#navbar',{y:0,opacity:1,duration:.4,overwrite:true});last=c;},100);}});
 
 /* hero word drop */
-gsap.from('#home h1 span', {
-  y: '80vh',
-  rotation: gsap.utils.random(-45, 45, true),
+gsap.from('.hero-title span', {
+  y: 60,
   opacity: 0,
   duration: 1.2,
-  stagger: {
-    each: 0.15,
-    from: 'random'
-  },
-  ease: 'power4.out'
+  stagger: 0.15,
+  ease: 'power3.out'
+});
+gsap.from('.hero-sub', {
+  y: 30,
+  opacity: 0,
+  duration: 1,
+  delay: 0.6,
+  ease: 'power2.out'
+});
+gsap.from('.hero-cta', {
+  scale: 0.8,
+  opacity: 0,
+  duration: 0.8,
+  delay: 1.0,
+  ease: 'back.out(1.7)'
 });
 
 /* wipe (hero→apps) */
