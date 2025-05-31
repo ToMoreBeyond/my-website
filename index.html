@@ -90,6 +90,95 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 
 /* wipe board */
 .page-wipe{position:fixed;inset:0;z-index:120;background:var(--accent);transform-origin:left;transform:scaleX(0);pointer-events:none}
+
+/* Enhanced scroll animations */
+.scroll-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-content {
+  position: relative;
+  z-index: 1;
+}
+
+.scroll-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.scroll-section.active .scroll-bg {
+  transform: scaleY(1);
+}
+
+/* Text reveal animation */
+.reveal-text {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal-text span {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.18, 1),
+              opacity 0.8s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.reveal-text.active span {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Enhanced card animations */
+.app-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.app-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-grad);
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+  z-index: 1;
+}
+
+.app-card:hover::before {
+  opacity: 0.2;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(30px);
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.app-card:hover .card-content {
+  transform: translateZ(50px);
+}
+
+/* Section transitions */
+.section-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  z-index: 100;
+  pointer-events: none;
+}
 </style>
 </head>
 <body>
@@ -97,6 +186,9 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 <!-- Custom cursor -->
 <div class="cursor-dot"></div>
 <div class="cursor-outline"></div>
+
+<!-- Section transition overlay -->
+<div class="section-transition"></div>
 
 <!-- Scroll progress -->
 <div class="scroll-progress"></div>
@@ -275,7 +367,62 @@ const cursor = {
 };
 cursor.init();
 
-// Scroll progress
+// Enhanced scroll animations
+const sections = document.querySelectorAll('section');
+const sectionTransition = document.querySelector('.section-transition');
+
+// Intersection Observer for section animations
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      
+      // Animate text elements
+      const texts = entry.target.querySelectorAll('.reveal-text');
+      texts.forEach((text, index) => {
+        setTimeout(() => {
+          text.classList.add('active');
+        }, index * 200);
+      });
+    }
+  });
+}, {
+  threshold: 0.2
+});
+
+sections.forEach(section => {
+  sectionObserver.observe(section);
+});
+
+// Smooth scroll with transition
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    
+    // Trigger transition
+    gsap.to(sectionTransition, {
+      scaleY: 1,
+      duration: 0.5,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        window.scrollTo({
+          top: target.offsetTop,
+          behavior: 'smooth'
+        });
+        
+        gsap.to(sectionTransition, {
+          scaleY: 0,
+          duration: 0.5,
+          delay: 0.2,
+          ease: 'power2.inOut'
+        });
+      }
+    });
+  });
+});
+
+// Enhanced scroll progress
 gsap.to('.scroll-progress', {
   scaleX: 1,
   transformOrigin: 'left',
@@ -288,7 +435,19 @@ gsap.to('.scroll-progress', {
   }
 });
 
-// 3D tilt effect for cards
+// Parallax effect for hero section
+gsap.to('#home video', {
+  yPercent: 30,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '#home',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: true
+  }
+});
+
+// Enhanced card animations
 document.querySelectorAll('.app-card').forEach(card => {
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
@@ -298,8 +457,8 @@ document.querySelectorAll('.app-card').forEach(card => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
+    const rotateX = (y - centerY) / 20;
+    const rotateY = (centerX - x) / 20;
     
     gsap.to(card, {
       rotateX: rotateX,
@@ -317,6 +476,13 @@ document.querySelectorAll('.app-card').forEach(card => {
       ease: 'power2.out'
     });
   });
+});
+
+// Text reveal animation
+const revealTexts = document.querySelectorAll('.reveal-text');
+revealTexts.forEach(text => {
+  const words = text.textContent.split(' ');
+  text.innerHTML = words.map(word => `<span>${word}</span>`).join(' ');
 });
 </script>
 </body>
