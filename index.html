@@ -526,6 +526,60 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   0%, 100% { transform: translateY(0);}
   50% { transform: translateY(8px);}
 }
+
+/* --- e-t.studio風 Companyセクション --- */
+.company-section {
+  background: #fffbe9;
+  padding: 7rem 0 7rem 0;
+  text-align: center;
+  position: relative;
+}
+.company-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.company-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 2.2rem;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+.company-title .sans {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  color: var(--accent);
+  display: block;
+  font-size: 2.2rem;
+  margin-top: 0.2em;
+}
+.company-desc {
+  font-size: 1.35rem;
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 2.8rem;
+}
+.company-link {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
+  font-size: 1.1rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+.company-link:hover {
+  color: var(--accent-hov);
+  border-color: var(--accent-hov);
+}
+@media (max-width: 700px) {
+  .company-section { padding: 4rem 0; }
+  .company-title { font-size: 2.1rem; }
+  .company-title .sans { font-size: 1.3rem; }
+  .company-desc { font-size: 1.05rem; }
+}
 </style>
 </head>
 <body>
@@ -638,11 +692,17 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 </section>
 
 <!-- ===== Company ===== -->
-<section id="company" class="flex items-center justify-center bg-[#111] text-[#FDFCFB]">
-  <div class="w-full max-w-7xl px-12 py-32 md:py-40">
-    <h2 class="text-5xl md:text-7xl font-extrabold mb-10" style="font-family:'Poppins',sans-serif;">Company</h2>
-    <p class="text-xl md:text-2xl leading-relaxed mb-10">2025 年設立。面白いことだけを追い、疑問や不安を解消するプロダクトを創ります。</p>
-    <a href="company.html" class="font-semibold underline underline-offset-4">会社詳細を見る</a>
+<section id="company" class="company-section">
+  <div class="company-inner">
+    <h2 class="company-title">
+      Company
+      <span class="sans">ToMoreBeyond</span>
+    </h2>
+    <p class="company-desc">
+      2025 年設立。面白いことだけを追い、疑問や不安を解消するプロダクトを創ります。<br>
+      "The road not taken" を掲げ、<span style="color:var(--accent);font-weight:bold;">ともに</span>新しい道を切り拓くクリエイティブカンパニーです。
+    </p>
+    <a href="company.html" class="company-link">会社詳細を見る</a>
   </div>
 </section>
 
