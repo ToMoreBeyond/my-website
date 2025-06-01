@@ -4,63 +4,179 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ToiRun | ToMoreBeyond</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #FFB300;
+      --accent-hov: #FF9E00;
+      --accent-grad: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%);
+      --dark: #111111;
+      --light: #FDFCFB;
+    }
+    body {
+      background: var(--light);
+      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .hero-section {
+      min-height: 60vh;
+      background: url('https://source.unsplash.com/1600x900?restroom,sign') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2rem;
+      text-align: center;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.82);
+      z-index: 1;
+    }
+    .hero-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-title {
+      font-size: 3rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      margin-bottom: 1.3rem;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+    .hero-title .sans {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+      font-size: 2rem;
+      margin-top: 0.2em;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 2.2rem;
+    }
+    .features-section {
+      background: #fff;
+      padding: 5rem 0;
+      text-align: center;
+    }
+    .features-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .feature-card {
+      background: #faf8f6;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
+      padding: 2rem 2rem 1.5rem 2rem;
+      min-width: 220px;
+      max-width: 320px;
+      flex: 1 1 220px;
+      text-align: left;
+    }
+    .feature-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    .feature-desc {
+      font-size: 1.05rem;
+      color: #444;
+      line-height: 1.6;
+    }
+    .cta-section {
+      text-align: center;
+      padding: 3rem 0 2rem 0;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent-grad);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 1rem 2.5rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 12px 0 rgba(255,179,0,0.08);
+      text-decoration: none;
+    }
+    .cta-btn:hover {
+      background: var(--accent-hov);
+      transform: translateY(-2px) scale(1.03);
+    }
+    footer {
+      background: #faf8f6;
+      color: #888;
+      text-align: center;
+      padding: 2rem 0 1rem 0;
+      font-size: 0.98rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 700px) {
+      .hero-title { font-size: 1.5rem; }
+      .hero-title .sans { font-size: 1.1rem; }
+      .hero-desc { font-size: 0.98rem; }
+      .features-list { flex-direction: column; gap: 1.5rem; }
+      .feature-card { min-width: 0; max-width: 100%; }
+    }
+  </style>
 </head>
-<body class="bg-stone-50 text-stone-800 selection:bg-amber-200/50">
-
-<header class="bg-stone-50/60 backdrop-blur fixed inset-x-0 top-0 z-50 border-b border-stone-200">
-  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-    <a href="index.html#home" class="text-2xl font-bold hover:text-amber-600">ToMoreBeyond</a>
-    <a href="index.html" class="text-sm hover:text-amber-600">← Back to Home</a>
-  </nav>
-</header>
-
-<!-- Hero -->
-<section class="relative h-[60vh] w-full pt-16">
-  <img src="https://source.unsplash.com/1600x900?restroom,sign" alt=""
-       class="absolute inset-0 h-full w-full object-cover opacity-15">
-  <div class="absolute inset-0 bg-stone-50/80"></div>
-  <div class="relative z-10 flex h-full flex-col items-center justify-center text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">ToiRun</h1>
-    <p class="max-w-2xl text-lg text-stone-700">
-      商業施設のフロアマップを AI が学習し、最寄りトイレへ最短ルートで案内。
-    </p>
-  </div>
-</section>
-
-<!-- Features -->
-<section class="py-20">
-  <div class="mx-auto max-w-5xl px-6 grid gap-16 md:grid-cols-2">
-    <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-amber-600">01. 入口ごとに最適化</h2>
-      <p class="leading-relaxed">現在地を推定し、最寄りトイレをリアルタイム計算。</p>
+<body>
+  <section class="hero-section">
+    <div class="hero-inner">
+      <h1 class="hero-title">
+        ToiRun
+        <span class="sans">AI × トイレナビ</span>
+      </h1>
+      <p class="hero-desc">
+        商業施設のフロアマップを AI が学習し、最寄りトイレへ最短ルートで案内。
+      </p>
     </div>
-    <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-amber-600">02. シンプルな矢印 UI</h2>
-      <p class="leading-relaxed">曲がり角ごとに左右矢印のみ表示するミニマルナビ。</p>
+  </section>
+  <section class="features-section">
+    <div class="features-list">
+      <div class="feature-card">
+        <div class="feature-title">01. 入口ごとに最適化</div>
+        <div class="feature-desc">現在地を推定し、最寄りトイレをリアルタイム計算。</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">02. シンプルな矢印 UI</div>
+        <div class="feature-desc">曲がり角ごとに左右矢印のみ表示するミニマルナビ。</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">03. オフライン対応</div>
+        <div class="feature-desc">地下フロアや電波の届きにくい場所でも案内を継続。</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-title">04. 多言語サイネージ連携</div>
+        <div class="feature-desc">館内サイネージの QR でルートを再計算（検証中）。</div>
+      </div>
     </div>
-    <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-amber-600">03. オフライン対応</h2>
-      <p class="leading-relaxed">地下フロアや電波の届きにくい場所でも案内を継続。</p>
-    </div>
-    <div class="flex flex-col gap-4">
-      <h2 class="text-2xl font-semibold text-amber-600">04. 多言語サイネージ連携</h2>
-      <p class="leading-relaxed">館内サイネージの QR でルートを再計算（検証中）。</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="py-20 bg-stone-100">
-  <div class="mx-auto max-w-3xl text-center px-6">
-    <h2 class="text-3xl font-bold mb-6">Get Early Access</h2>
-    <p class="mb-10">ToiRun は現在クローズド β テスト中。先行体験をご希望の方はご連絡ください。</p>
-
-    <form name="toirun-contact" method="POST" data-netlify="true" class="flex flex-col gap-6">
-      <input type="hidden" name="form-name" value="toirun-contact">
-      <input type="text"  name="name"  required placeholder="Name"
-             class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
-      <input type="email" name="email" required placeholder="Work Email"
-             class="rounded-md border border-stone-300 bg-white p-3 outline-none focus:border-amber-500">
-      <textarea name="message" rows="4" required placeholder="Message"
-                class="rounded-md border border-stone-300 bg-white p-3 outline-
+  </section>
+  <section class="cta-section">
+    <a href="index.html#contact" class="cta-btn">先行体験リクエストはこちら</a>
+  </section>
+  <footer>
+    © 2025 ToMoreBeyond
+  </footer>
+</body>
+</html>
