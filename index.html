@@ -11,8 +11,9 @@
 <!-- Swiper / GSAP / Three.js -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@barba/core"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
@@ -725,6 +726,50 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   .contact-title { font-size: 1.5rem; }
   .contact-desc { font-size: 0.98rem; }
 }
+
+/* ページ遷移用のスタイル */
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 9999;
+  transform: translateY(100%);
+}
+
+/* ローディング画面用のスタイル */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.loading-logo {
+  color: #fff;
+  font-size: 2rem;
+  opacity: 0;
+}
+
+/* セクションアニメーション用のスタイル */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-in.active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
 </style>
 </head>
 <body>
@@ -1049,6 +1094,85 @@ revealTexts.forEach(text => {
   const words = text.textContent.split(' ');
   text.innerHTML = words.map(word => `<span>${word}</span>`).join(' ');
 });
+
+// GSAPの初期化
+gsap.registerPlugin(ScrollTrigger);
+
+// ローディング画面のアニメーション
+window.addEventListener('load', () => {
+  const loadingScreen = document.querySelector('.loading-screen');
+  const loadingLogo = document.querySelector('.loading-logo');
+
+  gsap.to(loadingLogo, {
+    opacity: 1,
+    duration: 1,
+    onComplete: () => {
+      gsap.to(loadingLogo, {
+        opacity: 0,
+        duration: 0.5,
+        delay: 0.5,
+        onComplete: () => {
+          gsap.to(loadingScreen, {
+            y: '100%',
+            duration: 0.8,
+            ease: 'power4.inOut'
+          });
+        }
+      });
+    }
+  });
+});
+
+// セクションのフェードインアニメーション
+const animatedSections = document.querySelectorAll('section');
+animatedSections.forEach(section => {
+  section.classList.add('fade-in');
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 80%',
+    onEnter: () => section.classList.add('active')
+  });
+});
+
+// Barba.jsの初期化
+barba.init({
+  transitions: [{
+    name: 'default-transition',
+    leave: (data) => {
+      return gsap.to(data.current.container, {
+        y: '-100%',
+        duration: 0.8,
+        ease: 'power4.inOut'
+      });
+    },
+    enter: (data) => {
+      return gsap.from(data.next.container, {
+        y: '100%',
+        duration: 0.8,
+        ease: 'power4.inOut'
+      });
+    }
+  }]
+});
+
+// 戻るボタンのアニメーション
+const backButton = document.querySelector('.back-button');
+if (backButton) {
+  backButton.addEventListener('mouseenter', () => {
+    gsap.to(backButton, {
+      x: -10,
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+  });
+  backButton.addEventListener('mouseleave', () => {
+    gsap.to(backButton, {
+      x: 0,
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+  });
+}
 </script>
 </body>
 </html>
