@@ -28,6 +28,9 @@
     .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; }
     .center-infinite-scroll { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fff; position: relative; z-index: 10; }
     .infinite-scroll-track { display: flex; gap: 3vw; align-items: center; animation: scroll-x 32s linear infinite; }
+    .infinite-scroll-track:hover {
+      animation-play-state: paused;
+    }
     .infinite-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); overflow: hidden; width: 480px; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
     .infinite-card:hover { box-shadow: 0 8px 40px 0 rgba(255,179,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.10); transform: translateY(-8px) scale(1.03); }
     .infinite-card img { width: 100%; height: 78%; object-fit: cover; border-radius: 2rem 2rem 0 0; }
@@ -118,33 +121,33 @@
     <section class="center-infinite-scroll">
       <div class="infinite-scroll-track">
         <div class="infinite-card" data-link="press1.html">
-          <img src="../assets/press1.jpg" alt="TechCrunch Japan" />
+          <img src="/assets/press1.jpg" alt="TechCrunch Japan" onerror="this.onerror=null;this.src='/assets/noimage.png';" />
           <div class="card-title">TechCrunch Japan</div>
           <div class="card-desc">2025-05-15 | インタビュー記事</div>
         </div>
         <div class="infinite-card" data-link="press2.html">
-          <img src="../assets/press2.jpg" alt="Nikkei Cross Tech" />
+          <img src="/assets/press2.jpg" alt="Nikkei Cross Tech" onerror="this.onerror=null;this.src='/assets/noimage.png';" />
           <div class="card-title">Nikkei Cross Tech</div>
           <div class="card-desc">2025-04-30 | プロダクト特集</div>
         </div>
         <div class="infinite-card" data-link="press3.html">
-          <img src="../assets/press3.jpg" alt="日経産業新聞" />
+          <img src="/assets/press3.jpg" alt="日経産業新聞" onerror="this.onerror=null;this.src='/assets/noimage.png';" />
           <div class="card-title">日経産業新聞</div>
           <div class="card-desc">2025-04-20 | 新サービス発表</div>
         </div>
         <!-- repeat for seamless loop -->
         <div class="infinite-card" data-link="press1.html">
-          <img src="../assets/press1.jpg" alt="TechCrunch Japan" />
+          <img src="/assets/press1.jpg" alt="TechCrunch Japan" onerror="this.onerror=null;this.src='/assets/noimage.png';" />
           <div class="card-title">TechCrunch Japan</div>
           <div class="card-desc">2025-05-15 | インタビュー記事</div>
         </div>
         <div class="infinite-card" data-link="press2.html">
-          <img src="../assets/press2.jpg" alt="Nikkei Cross Tech" />
+          <img src="/assets/press2.jpg" alt="Nikkei Cross Tech" onerror="this.onerror=null;this.src='/assets/noimage.png';" />
           <div class="card-title">Nikkei Cross Tech</div>
           <div class="card-desc">2025-04-30 | プロダクト特集</div>
         </div>
         <div class="infinite-card" data-link="press3.html">
-          <img src="../assets/press3.jpg" alt="日経産業新聞" />
+          <img src="/assets/press3.jpg" alt="日経産業新聞" onerror="this.onerror=null;this.src='/assets/noimage.png';" />
           <div class="card-title">日経産業新聞</div>
           <div class="card-desc">2025-04-20 | 新サービス発表</div>
         </div>
