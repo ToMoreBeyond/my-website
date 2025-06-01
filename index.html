@@ -770,6 +770,61 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   transform: translateY(0);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
+
+/* ヒーローセクションのアニメーション強化 */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  z-index: 1;
+}
+
+.text-reveal {
+  overflow: hidden;
+  position: relative;
+}
+
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.hero-title .text-reveal {
+  margin-bottom: 0.5rem;
+}
+
+.hero-sub .text-reveal {
+  margin-bottom: 1rem;
+}
+
+.scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 36px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 1px;
+  opacity: 0;
+}
+
+.scroll-indicator-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-bottom: -4px;
+  transform: translateY(0);
+}
 </style>
 </head>
 <body>
@@ -815,16 +870,28 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 <section id="home" class="hero-section">
   <div class="hero-inner">
     <h1 class="hero-title">
-      <span class="serif">The road</span>
-      <span class="sans">not taken</span>
+      <div class="text-reveal">
+        <span class="serif">The road</span>
+      </div>
+      <div class="text-reveal">
+        <span class="sans">not taken</span>
+      </div>
     </h1>
     <p class="hero-sub">
-      私たちは <span class="accent">共に創る</span>・<span class="accent">友と創る</span>。<br>
-      面白いものを <span class="accent">"ともに"</span> 越える会社です。
+      <div class="text-reveal">
+        <span>私たちは <span class="accent">共に創る</span>・<span class="accent">友と創る</span>。</span>
+      </div>
+      <div class="text-reveal">
+        <span>面白いものを <span class="accent">"ともに"</span> 越える会社です。</span>
+      </div>
     </p>
-    <a href="#apps" class="hero-cta">アプリを見る</a>
+    <div class="text-reveal">
+      <a href="#apps" class="hero-cta">アプリを見る</a>
+    </div>
   </div>
-  <div class="scroll-indicator"><div class="scroll-indicator-dot"></div></div>
+  <div class="scroll-indicator">
+    <div class="scroll-indicator-dot"></div>
+  </div>
 </section>
 
 <!-- ワイプ -->
@@ -1173,6 +1240,51 @@ if (backButton) {
     });
   });
 }
+
+// ヒーローセクションのアニメーション
+gsap.timeline()
+  .to('.hero-section::before', {
+    opacity: 0.8,
+    duration: 1,
+    ease: 'power2.inOut'
+  })
+  .to('.hero-section::before', {
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.inOut'
+  })
+  .from('.hero-title .text-reveal span', {
+    y: 100,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.2,
+    ease: 'power4.out'
+  })
+  .from('.hero-sub .text-reveal span', {
+    y: 100,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.2,
+    ease: 'power4.out'
+  }, '-=0.5')
+  .from('.hero-cta', {
+    y: 20,
+    opacity: 0,
+    duration: 1,
+    ease: 'power4.out'
+  }, '-=0.5')
+  .to('.scroll-indicator', {
+    opacity: 1,
+    duration: 0.5,
+    ease: 'power2.out'
+  })
+  .to('.scroll-indicator-dot', {
+    y: 8,
+    duration: 1.6,
+    repeat: -1,
+    yoyo: true,
+    ease: 'power2.inOut'
+  }, '-=0.5');
 </script>
 </body>
 </html>
