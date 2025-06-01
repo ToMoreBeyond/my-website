@@ -1,0 +1,195 @@
+/* Text Reveal Animation */
+.text-reveal {
+  overflow: hidden;
+  position: relative;
+}
+
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 36px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 1px;
+  opacity: 0;
+}
+
+.scroll-indicator-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-bottom: -4px;
+  transform: translateY(0);
+}
+
+/* Hero Section Animations */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Card Hover Effects */
+.app-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.app-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.28);
+  transition: opacity 0.3s;
+}
+
+.app-card:hover::after {
+  opacity: 0.4;
+}
+
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+
+.app-card:hover .card-img {
+  transform: scale(1.08) translateZ(20px);
+}
+
+.card-title {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  transform: translateZ(30px);
+  transition: transform 0.3s;
+}
+
+.app-card:hover .card-title {
+  transform: translateZ(50px);
+}
+
+/* Section Transitions */
+.section-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.loading-logo {
+  color: #fff;
+  font-size: 2rem;
+  opacity: 0;
+}
+
+/* Page Wipe */
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* Fade In Animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-in.active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Scroll Progress */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent-grad);
+  transform-origin: 0 50%;
+  z-index: 1000;
+}
+
+/* Burger Menu Animation */
+.burger {
+  display: none;
+  width: 30px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.burger-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--dark);
+  transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.burger-line:nth-child(1) { top: 0; }
+.burger-line:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.burger-line:nth-child(3) { bottom: 0; }
+
+.burger.active .burger-line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.burger.active .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.active .burger-line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+} 

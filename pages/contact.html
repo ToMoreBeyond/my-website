@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | ToMoreBeyond</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@barba/core"></script>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="loading-logo">ToMoreBeyond</div>
+  </div>
+  <!-- Page Transition Overlay -->
+  <div class="page-transition-overlay"></div>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
+      <div class="nav-links">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="apps.html" class="nav-link">Apps</a>
+        <a href="company.html" class="nav-link">Company</a>
+        <a href="media.html" class="nav-link">Media</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </div>
+      <button class="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="../index.html" class="mobile-menu-link">Home</a>
+    <a href="apps.html" class="mobile-menu-link">Apps</a>
+    <a href="company.html" class="mobile-menu-link">Company</a>
+    <a href="media.html" class="mobile-menu-link">Media</a>
+    <a href="contact.html" class="mobile-menu-link active">Contact</a>
+  </div>
+  <!-- Scroll Progress -->
+  <div class="scroll-progress"></div>
+  <!-- Main Content -->
+  <main data-barba="container" data-barba-namespace="contact">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="text-reveal">Contact</h1>
+        <p class="text-reveal">ご質問・ご相談・お仕事のご依頼など、お気軽にご連絡ください。</p>
+      </div>
+    </section>
+    <!-- Contact Form Section -->
+    <section class="contact">
+      <div class="section-header">
+        <h2 class="text-reveal">お問い合わせフォーム</h2>
+        <p class="text-reveal">Let's create something amazing together</p>
+      </div>
+      <div class="contact-content">
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">ToMoreBeyond</div>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" class="social-link">Twitter</a>
+        <a href="#" class="social-link">Instagram</a>
+        <a href="#" class="social-link">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 ToMoreBeyond. All rights reserved.</p>
+    </div>
+  </footer>
+  <!-- Back Button -->
+  <button class="back-button">
+    <svg viewBox="0 0 24 24">
+      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </svg>
+  </button>
+  <!-- Scripts -->
+  <script src="../js/main.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../js/transitions.js"></script>
+</body>
+</html> 
