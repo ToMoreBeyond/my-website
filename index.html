@@ -843,21 +843,13 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
 <div class="page-transition-overlay"></div>
 
 <!-- Navigation -->
-<nav class="nav">
-  <div class="nav-container">
-    <a href="/" class="nav-logo">ToMoreBeyond</a>
-    <div class="nav-links">
-      <a href="/" class="nav-link active">Home</a>
-      <a href="/pages/apps.html" class="nav-link">Apps</a>
-      <a href="/pages/company.html" class="nav-link">Company</a>
-      <a href="/pages/media.html" class="nav-link">Media</a>
-      <a href="/pages/contact.html" class="nav-link">Contact</a>
-    </div>
-    <button class="burger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+<nav class="nav et-nav">
+  <div class="nav-logo">ToMoreBeyond</div>
+  <div class="nav-links">
+    <a href="pages/apps.html">Apps</a>
+    <a href="pages/company.html">Company</a>
+    <a href="pages/media.html">Media</a>
+    <a href="pages/contact.html">Contact</a>
   </div>
 </nav>
 
@@ -868,7 +860,7 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   <a href="/pages/company.html" class="mobile-menu-link">Company</a>
   <a href="/pages/media.html" class="mobile-menu-link">Media</a>
   <a href="/pages/contact.html" class="mobile-menu-link">Contact</a>
-</div>
+  </div>
 
 <!-- Scroll Progress -->
 <div class="scroll-progress"></div>
@@ -878,9 +870,8 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <h1 class="text-reveal">ToMoreBeyond</h1>
-      <p class="text-reveal">Creating the future of digital experiences</p>
-      <a href="/pages/apps.html" class="btn-primary">View Our Work</a>
+      <h1 class="text-reveal">We are ToMoreBeyond</h1>
+      <p class="text-reveal">Award-winning creative studio driven by beauty and meaning.</p>
     </div>
     <div class="scroll-indicator">
       <span>Scroll</span>
@@ -889,35 +880,33 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
   </section>
 
   <!-- Apps Section -->
-  <section class="apps">
-    <div class="section-header">
-      <h2 class="text-reveal">Our Apps</h2>
-      <p class="text-reveal">Discover our innovative solutions</p>
-    </div>
-    <div class="apps-grid">
-      <a href="/pages/tadataka.html" class="app-card">
-        <div class="app-image parallax-image">
-          <img src="assets/tadataka.jpg" alt="Tadataka">
+  <section class="apps-section">
+    <div class="infinite-scroll-container">
+      <div class="infinite-scroll-track">
+        <div class="infinite-scroll-item" data-link="pages/apps/tadataka.html">
+          <img src="assets/images/tadataka.jpg" alt="Tadataka">
+          <div class="item-content">
+            <h3>Tadataka</h3>
+            <p>Location-based social platform</p>
+          </div>
         </div>
-        <h3>Tadataka</h3>
-        <p>Location-based social platform</p>
-      </a>
-      <a href="/pages/toirun.html" class="app-card">
-        <div class="app-image parallax-image">
-          <img src="assets/toirun.jpg" alt="ToiRun">
+        <div class="infinite-scroll-item" data-link="pages/apps/toirun.html">
+          <img src="assets/images/toirun.jpg" alt="Toirun">
+          <div class="item-content">
+            <h3>Toirun</h3>
+            <p>Running companion app</p>
+          </div>
         </div>
-        <h3>ToiRun</h3>
-        <p>Running companion app</p>
-      </a>
-      <a href="/pages/midpoint.html" class="app-card">
-        <div class="app-image parallax-image">
-          <img src="assets/midpoint.jpg" alt="Midpoint">
+        <div class="infinite-scroll-item" data-link="pages/apps/midpoint.html">
+          <img src="assets/images/midpoint.jpg" alt="Midpoint">
+          <div class="item-content">
+            <h3>Midpoint</h3>
+            <p>Meeting point finder</p>
+          </div>
         </div>
-        <h3>Midpoint</h3>
-        <p>Meeting point finder</p>
-      </a>
-    </div>
-  </section>
+      </div>
+  </div>
+</section>
 
   <!-- Company Section -->
   <section class="company">
@@ -933,8 +922,8 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
       <div class="company-image parallax-image">
         <img src="assets/company.jpg" alt="Our Team">
       </div>
-    </div>
-  </section>
+  </div>
+</section>
 
   <!-- Media Section -->
   <section class="media">
@@ -963,8 +952,8 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
           <a href="/pages/media.html" class="btn-text">Read More</a>
         </div>
       </article>
-    </div>
-  </section>
+  </div>
+</section>
 
   <!-- Contact Section -->
   <section class="contact">
@@ -987,9 +976,9 @@ section{scroll-snap-align:start;min-height:100vh;position:relative;overflow:hidd
           <textarea id="message" name="message" required></textarea>
         </div>
         <button type="submit" class="btn-primary">Send Message</button>
-      </form>
-    </div>
-  </section>
+    </form>
+  </div>
+</section>
 </main>
 
 <!-- Footer -->

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Media | ToMoreBeyond</title>
+  <title>Media - ToMoreBeyond</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/animations.css">
@@ -79,6 +79,34 @@
     <section class="cta-section" style="text-align:center; padding:3rem 0 2rem 0;">
       <a href="../index.html#contact" class="btn-primary">お問い合わせはこちら</a>
     </section>
+    <!-- プレスリリース無限スクロール -->
+    <section class="media-section">
+      <div class="infinite-scroll-container">
+        <div class="infinite-scroll-track">
+          <div class="infinite-scroll-item" data-link="media/press1.html">
+            <img src="../assets/images/press1.jpg" alt="Press Release 1">
+            <div class="item-content">
+              <h3>New App Launch</h3>
+              <p>Introducing our latest innovation</p>
+            </div>
+          </div>
+          <div class="infinite-scroll-item" data-link="media/press2.html">
+            <img src="../assets/images/press2.jpg" alt="Press Release 2">
+            <div class="item-content">
+              <h3>Company Update</h3>
+              <p>Our journey and future plans</p>
+            </div>
+          </div>
+          <div class="infinite-scroll-item" data-link="media/press3.html">
+            <img src="../assets/images/press3.jpg" alt="Press Release 3">
+            <div class="item-content">
+              <h3>Partnership Announcement</h3>
+              <p>Strategic collaboration with industry leaders</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <!-- Footer -->
   <footer class="footer">
@@ -108,5 +136,7 @@
   <script src="../js/main.js"></script>
   <script src="../js/animations.js"></script>
   <script src="../js/transitions.js"></script>
+  <script src="../js/backgroundAnimation.js"></script>
+  <script src="../js/infiniteScroll.js"></script>
 </body>
 </html> 
