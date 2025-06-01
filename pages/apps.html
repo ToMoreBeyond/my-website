@@ -14,41 +14,43 @@
   <style>
     html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
     body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
-    .et-nav { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 4rem 1.5rem 4rem; font-size: 1.2rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; }
-    .et-nav .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
-    .et-nav .nav-links { display: flex; gap: 3.5rem; }
-    .et-nav .nav-links a { color: #111; text-decoration: none; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; }
-    .et-nav .nav-links a:hover { opacity: 0.6; }
-    .et-hero { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 7rem; margin-bottom: 2rem; padding: 0 4rem; }
-    .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
+    .et-nav { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2.5rem 0 1.5rem 0; font-size: 1.2rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; box-sizing: border-box; }
+    .et-nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
+    .nav-links { display: flex; gap: 3.5rem; }
+    .nav-links a { color: #111; text-decoration: none; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; white-space: nowrap; }
+    .nav-links a:hover { opacity: 0.6; }
+    .et-hero { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 0 4rem; gap: 4vw; }
     .et-hero-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .et-hero-catch, .et-hero-desc { text-align: center; }
+    .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
     .et-hero-catch { font-size: 2.6rem; font-family: 'Poppins', sans-serif; font-weight: 800; margin: 0.7rem 0; color: #111; letter-spacing: -0.01em; }
-    .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; text-align: center; }
-    .center-infinite-scroll { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fafafa; }
+    .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; }
+    .center-infinite-scroll { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fff; position: relative; z-index: 10; }
     .infinite-scroll-track { display: flex; gap: 3vw; align-items: center; animation: scroll-x 32s linear infinite; }
     .infinite-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); overflow: hidden; width: 480px; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
     .infinite-card:hover { box-shadow: 0 8px 40px 0 rgba(255,179,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.10); transform: translateY(-8px) scale(1.03); }
     .infinite-card img { width: 100%; height: 78%; object-fit: cover; border-radius: 2rem 2rem 0 0; }
     .card-title { font-family: 'Poppins', sans-serif; font-size: 1.7rem; font-weight: 700; margin: 1.2rem 0; color: #111; }
+    .card-desc { font-size: 1rem; margin-top: 0.5rem; color: #111; }
     @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     @media (max-width: 900px) {
       html, body { width: 100vw; overflow-x: hidden; }
-      .et-nav { padding: 1.2rem 1.5rem; font-size: 1rem; background: #fafafa; box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03); }
-      .nav-logo, .et-nav .nav-logo { font-size: 1.6rem; }
-      .nav-links, .et-nav .nav-links { display: none; }
-      .et-hero { flex-direction: column; align-items: center; justify-content: flex-start; padding: 0 1.5rem; min-height: calc(100vh - 100px); margin-top: 100px; gap: 2vw; }
-      .et-hero-big { font-size: 13vw; }
-      .et-hero-catch { font-size: 1.15rem; margin: 0.4rem 0; }
-      .et-hero-desc { font-size: 0.98rem; padding: 0 0.5rem; max-width: 95vw; }
-      .center-infinite-scroll { min-height: 180px; padding: 0 1.5rem; }
+      .et-nav { padding: 1.2rem 0; font-size: 1rem; }
+      .et-nav-inner { flex-direction: column; gap: 1.2rem; padding: 0 1.2rem; }
+      .nav-logo { font-size: 2rem; }
+      .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+      .nav-links a { font-size: 1rem; }
+      .et-hero { flex-direction: column; align-items: center; padding: 0 1.2rem; min-height: calc(100vh - 120px); margin-top: 120px; }
+      .et-hero-big { font-size: 12vw; }
+      .et-hero-catch { font-size: 1.5rem; }
+      .et-hero-desc { font-size: 1rem; padding: 0 1rem; }
+      .center-infinite-scroll { min-height: 180px; padding: 0 1.2rem; }
       .infinite-scroll-track { gap: 2vw; }
       .infinite-card { width: 92vw !important; max-width: 420px; min-width: 220px; height: auto !important; min-height: 140px; border-radius: 1.1rem; padding-bottom: 1.2rem !important; }
       .infinite-card img { height: 110px !important; border-radius: 1.1rem 1.1rem 0 0 !important; }
       .card-title { font-size: 1.15rem; margin: 0.7rem 0 0.3rem 0; }
-      .infinite-card ul, .infinite-card li { font-size: 0.92rem !important; }
-      .infinite-card div, .infinite-card ul { max-width: 95%; word-break: break-word; }
-      .infinite-card > div, .infinite-card > ul { margin-bottom: 0.5rem; }
-      .infinite-card li { line-height: 1.5; }
+      .card-desc { font-size: 0.92rem; }
     }
   </style>
 </head>
@@ -61,12 +63,14 @@
   <div class="page-transition-overlay"></div>
   <!-- Navigation -->
   <nav class="et-nav">
-    <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
-    <div class="nav-links">
-      <a href="apps.html">Apps</a>
-      <a href="company.html">Company</a>
-      <a href="media.html">Media</a>
-      <a href="contact.html">Contact</a>
+    <div class="et-nav-inner">
+      <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
+      <div class="nav-links">
+        <a href="apps.html">Apps</a>
+        <a href="company.html">Company</a>
+        <a href="media.html">Media</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
   </nav>
   <!-- Mobile Menu -->
@@ -93,21 +97,40 @@
     </section>
     <!-- Apps List -->
     <section class="center-infinite-scroll">
-      <div class="infinite-scroll-track" style="gap:3vw;">
+      <div class="infinite-scroll-track">
         <!-- TADATAKA Card -->
         <div class="infinite-card" data-link="tadataka.html">
           <img src="../assets/tadataka.jpg" alt="TADATAKA" />
           <div class="card-title">TADATAKA</div>
+          <div class="card-desc">移動がそのまま日記になる。<br>日々の移動や思い出を地図で振り返る。</div>
         </div>
         <!-- Meet in the Middle Card -->
         <div class="infinite-card" data-link="midpoint.html">
           <img src="../assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
           <div class="card-title">Meet in the Middle</div>
+          <div class="card-desc">みんなの出発地から最適集合駅を提案。<br>公平で便利な待ち合わせ体験。</div>
         </div>
         <!-- ToiRun Card -->
         <div class="infinite-card" data-link="toirun.html">
           <img src="../assets/toirun.jpg" alt="ToiRun" />
           <div class="card-title">ToiRun</div>
+          <div class="card-desc">"今すぐトイレ"を最短で案内。<br>誰にでもやさしいAIナビ。</div>
+        </div>
+        <!-- Duplicate cards for infinite scroll -->
+        <div class="infinite-card" data-link="tadataka.html">
+          <img src="../assets/tadataka.jpg" alt="TADATAKA" />
+          <div class="card-title">TADATAKA</div>
+          <div class="card-desc">移動がそのまま日記になる。<br>日々の移動や思い出を地図で振り返る。</div>
+        </div>
+        <div class="infinite-card" data-link="midpoint.html">
+          <img src="../assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
+          <div class="card-title">Meet in the Middle</div>
+          <div class="card-desc">みんなの出発地から最適集合駅を提案。<br>公平で便利な待ち合わせ体験。</div>
+        </div>
+        <div class="infinite-card" data-link="toirun.html">
+          <img src="../assets/toirun.jpg" alt="ToiRun" />
+          <div class="card-title">ToiRun</div>
+          <div class="card-desc">"今すぐトイレ"を最短で案内。<br>誰にでもやさしいAIナビ。</div>
         </div>
       </div>
     </section>
