@@ -11,6 +11,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@barba/core"></script>
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
+    body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
+    .et-nav { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 4rem 1.5rem 4rem; font-size: 1.2rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; }
+    .et-nav .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
+    .et-nav .nav-links { display: flex; gap: 3.5rem; }
+    .et-nav .nav-links a { color: #111; text-decoration: none; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; }
+    .et-nav .nav-links a:hover { opacity: 0.6; }
+    .et-hero { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 7rem; margin-bottom: 2rem; padding: 0 4rem; }
+    .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
+    .et-hero-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .et-hero-catch { font-size: 2.6rem; font-family: 'Poppins', sans-serif; font-weight: 800; margin: 0.7rem 0; color: #111; letter-spacing: -0.01em; }
+    .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; text-align: center; }
+    .center-infinite-scroll { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fafafa; }
+    .infinite-scroll-track { display: flex; gap: 3vw; align-items: center; animation: scroll-x 32s linear infinite; }
+    .infinite-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); overflow: hidden; width: 480px; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
+    .infinite-card:hover { box-shadow: 0 8px 40px 0 rgba(255,179,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.10); transform: translateY(-8px) scale(1.03); }
+    .infinite-card img { width: 100%; height: 78%; object-fit: cover; border-radius: 2rem 2rem 0 0; }
+    .card-title { font-family: 'Poppins', sans-serif; font-size: 1.7rem; font-weight: 700; margin: 1.2rem 0; color: #111; }
+    @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @media (max-width: 900px) { .et-nav { padding: 1.2rem 1.2rem 0.8rem 1.2rem; font-size: 1rem; } .et-hero { flex-direction: column; align-items: flex-start; padding: 0 1.2rem; } .et-hero-big { font-size: 12vw; } .center-infinite-scroll { min-height: 220px; } .infinite-card { width: 90vw; height: 160px; border-radius: 1.2rem; } .infinite-card img { border-radius: 1.2rem 1.2rem 0 0; } .et-hero-catch { font-size: 1.5rem; } }
+  </style>
 </head>
 <body>
   <!-- Loading Screen -->
@@ -20,21 +42,13 @@
   <!-- Page Transition Overlay -->
   <div class="page-transition-overlay"></div>
   <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
-      <div class="nav-links">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="apps.html" class="nav-link">Apps</a>
-        <a href="company.html" class="nav-link">Company</a>
-        <a href="media.html" class="nav-link active">Media</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </div>
-      <button class="burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+  <nav class="et-nav">
+    <div class="nav-logo">ToMoreBeyond</div>
+    <div class="nav-links">
+      <a href="apps.html">Apps</a>
+      <a href="company.html">Company</a>
+      <a href="media.html">Media</a>
+      <a href="contact.html">Contact</a>
     </div>
   </nav>
   <!-- Mobile Menu -->
@@ -50,11 +64,14 @@
   <!-- Main Content -->
   <main data-barba="container" data-barba-namespace="media">
     <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="text-reveal">Media & Press</h1>
-        <p class="text-reveal">最新情報や掲載実績は下記よりご覧いただけます。<br><a href="https://twitter.com/TADATAKA_O" target="_blank" class="btn-text">公式X（@TADATAKA_O）</a> でも随時発信中。</p>
+    <section class="et-hero">
+      <span class="et-hero-big">ME</span>
+      <div class="et-hero-center">
+        <div class="et-hero-catch">最新のニュースとプレスリリース</div>
+        <div class="et-hero-catch">ToMoreBeyondのメディア掲載</div>
+        <div class="et-hero-desc">私たちの活動やプロダクトが、さまざまなメディアで紹介されています。</div>
       </div>
+      <span class="et-hero-big">DIA</span>
     </section>
     <!-- Media List -->
     <section class="apps">
@@ -80,30 +97,31 @@
       <a href="../index.html#contact" class="btn-primary">お問い合わせはこちら</a>
     </section>
     <!-- プレスリリース無限スクロール -->
-    <section class="media-section">
-      <div class="infinite-scroll-container">
-        <div class="infinite-scroll-track">
-          <div class="infinite-scroll-item" data-link="media/press1.html">
-            <img src="../assets/images/press1.jpg" alt="Press Release 1">
-            <div class="item-content">
-              <h3>New App Launch</h3>
-              <p>Introducing our latest innovation</p>
-            </div>
-          </div>
-          <div class="infinite-scroll-item" data-link="media/press2.html">
-            <img src="../assets/images/press2.jpg" alt="Press Release 2">
-            <div class="item-content">
-              <h3>Company Update</h3>
-              <p>Our journey and future plans</p>
-            </div>
-          </div>
-          <div class="infinite-scroll-item" data-link="media/press3.html">
-            <img src="../assets/images/press3.jpg" alt="Press Release 3">
-            <div class="item-content">
-              <h3>Partnership Announcement</h3>
-              <p>Strategic collaboration with industry leaders</p>
-            </div>
-          </div>
+    <section class="center-infinite-scroll">
+      <div class="infinite-scroll-track">
+        <div class="infinite-card" data-link="press1.html">
+          <img src="../assets/tadataka.jpg" alt="Tadataka" />
+          <div class="card-title">Tadataka</div>
+        </div>
+        <div class="infinite-card" data-link="press2.html">
+          <img src="../assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
+          <div class="card-title">Meet in the Middle</div>
+        </div>
+        <div class="infinite-card" data-link="press3.html">
+          <img src="../assets/toirun.jpg" alt="Toirun" />
+          <div class="card-title">Toirun</div>
+        </div>
+        <div class="infinite-card" data-link="press1.html">
+          <img src="../assets/tadataka.jpg" alt="Tadataka" />
+          <div class="card-title">Tadataka</div>
+        </div>
+        <div class="infinite-card" data-link="press2.html">
+          <img src="../assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
+          <div class="card-title">Meet in the Middle</div>
+        </div>
+        <div class="infinite-card" data-link="press3.html">
+          <img src="../assets/toirun.jpg" alt="Toirun" />
+          <div class="card-title">Toirun</div>
         </div>
       </div>
     </section>
@@ -138,5 +156,13 @@
   <script src="../js/transitions.js"></script>
   <script src="../js/backgroundAnimation.js"></script>
   <script src="../js/infiniteScroll.js"></script>
+  <script>
+    document.querySelectorAll('.infinite-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const link = card.getAttribute('data-link');
+        if (link) window.location.href = link;
+      });
+    });
+  </script>
 </body>
 </html> 
