@@ -185,7 +185,6 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   gap: 3vw;
   align-items: center;
-  animation: scroll-x 32s linear infinite;
   will-change: transform;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
@@ -241,11 +240,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
   margin-top: 0.5rem;
   color: #111;
-}
-
-@keyframes scroll-x {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 
 /* Apps Section */
@@ -307,12 +301,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive */
 @media (max-width: 900px) {
-  .et-nav { padding: 1.2rem 2vw 0.8rem 2vw; font-size: 1rem; }
-  .et-nav .nav-links { gap: 1.2rem; }
+  .et-nav { padding: 1.2rem 0; font-size: 1rem; }
+  .et-nav-inner { flex-direction: column; gap: 1.2rem; padding: 0 1.2rem; }
+  .nav-logo { font-size: 2rem; }
+  .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+  .nav-links a { font-size: 1rem; }
   .et-hero { flex-direction: column; align-items: center; padding: 0 1.2rem; min-height: calc(100vh - 120px); margin-top: 120px; }
   .et-hero-big { font-size: 12vw; }
+  .et-hero-catch { font-size: 1.5rem; }
+  .et-hero-desc { font-size: 1rem; padding: 0 1rem; }
   .center-infinite-scroll { min-height: 180px; padding: 0 1.2rem; }
-  .infinite-scroll-track { gap: 2vw; }
   .infinite-card {
     width: 92vw;
     max-width: 420px;
