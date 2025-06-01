@@ -188,6 +188,10 @@ h1, h2, h3, h4, h5, h6 {
   animation: scroll-x 32s linear infinite;
 }
 
+.infinite-scroll-track:hover {
+  animation-play-state: paused;
+}
+
 .infinite-card {
   background: #fff;
   border-radius: 2rem;
@@ -220,6 +224,12 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.7rem;
   font-weight: 700;
   margin: 1.2rem 0;
+  color: #111;
+}
+
+.card-desc {
+  font-size: 1rem;
+  margin-top: 0.5rem;
   color: #111;
 }
 
