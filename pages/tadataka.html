@@ -15,12 +15,12 @@
     html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
     body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
     .et-nav { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2.5rem 0 1.5rem 0; font-size: 1.2rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; box-sizing: border-box; }
-    .et-nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
+    .et-nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
     .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
     .nav-links { display: flex; gap: 3.5rem; }
     .nav-links a { color: #111; text-decoration: none; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; white-space: nowrap; }
     .nav-links a:hover { opacity: 0.6; }
-    .et-hero { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 0 4rem; gap: 4vw; }
+    .et-hero { display: flex; justify-content: center; align-items: flex-end; margin-top: 7rem; margin-bottom: 2rem; padding: 0 4rem; gap: 4vw; }
     .et-hero-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .et-hero-catch, .et-hero-desc { text-align: center; }
     .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
@@ -28,27 +28,22 @@
     .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; text-align: center; }
     .feature-section { padding: 4rem 6vw; }
     .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4rem; margin-top: 4rem; }
-    .feature-card { background: #fff; border-radius: 2rem; padding: 3rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; }
+    .feature-card { background: #fff; border-radius: 2rem; padding: 3rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
     .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 40px 0 rgba(0,0,0,0.12); }
     .feature-number { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #FFB300; margin-bottom: 1rem; }
     .feature-title { font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
     .feature-desc { font-size: 1.1rem; line-height: 1.6; color: #444; }
+    .center-infinite-scroll { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fff; position: relative; z-index: 10; }
+    .infinite-scroll-track { display: flex; gap: 3vw; align-items: center; animation: scroll-x 32s linear infinite; }
+    .infinite-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); overflow: hidden; width: 480px; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
+    .infinite-card:hover { box-shadow: 0 8px 40px 0 rgba(255,179,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.10); transform: translateY(-8px) scale(1.03); }
+    .infinite-card img { width: 100%; height: 78%; object-fit: cover; border-radius: 2rem 2rem 0 0; }
+    .card-title { font-family: 'Poppins', sans-serif; font-size: 1.7rem; font-weight: 700; margin: 1.2rem 0; color: #111; }
     .cta-section { text-align: center; padding: 6rem 0; }
     .btn-primary { display: inline-block; background: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%); color: #fff; font-weight: 700; font-size: 1.15rem; padding: 1.2rem 3rem; border-radius: 0.9rem; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 2px 12px 0 rgba(255,179,0,0.08); }
     .btn-primary:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 20px 0 rgba(255,179,0,0.15); }
-    @media (max-width: 900px) {
-      .et-nav { padding: 1.2rem 0; font-size: 1rem; }
-      .et-nav-inner { flex-direction: column; gap: 1.2rem; padding: 0 1.2rem; }
-      .nav-logo { font-size: 2rem; }
-      .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
-      .nav-links a { font-size: 1rem; }
-      .et-hero { flex-direction: column; align-items: center; padding: 0 1.2rem; min-height: calc(100vh - 120px); margin-top: 120px; }
-      .et-hero-big { font-size: 12vw; }
-      .et-hero-catch { font-size: 1.5rem; }
-      .et-hero-desc { font-size: 1rem; padding: 0 1rem; }
-      .feature-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .feature-card { padding: 2rem; }
-    }
+    @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @media (max-width: 900px) { .et-nav { padding: 1.2rem 0 0.8rem 0; font-size: 1rem; } .et-nav-inner { flex-direction: column; gap: 1.2rem; } .nav-logo { font-size: 2rem; } .nav-links { gap: 1.2rem; } .et-hero { flex-direction: column; align-items: center; padding: 0 1.2rem; } .et-hero-big { font-size: 12vw; } .feature-grid { grid-template-columns: 1fr; gap: 2rem; } .feature-card { padding: 2rem; } .center-infinite-scroll { min-height: 220px; } .infinite-card { width: 90vw; height: 160px; border-radius: 1.2rem; } .infinite-card img { border-radius: 1.2rem 1.2rem 0 0; } .et-hero-catch { font-size: 1.5rem; } }
   </style>
 </head>
 <body>
@@ -82,36 +77,6 @@
       </div>
       <span class="et-hero-big">DATAKA</span>
     </section>
-    <!-- Features Section -->
-    <section class="feature-section">
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-number">01</div>
-          <h3 class="feature-title">自動トラック</h3>
-          <p class="feature-desc">バックグラウンドで移動経路を自動保存。プライバシー重視でローカル暗号化。電池消費も最小限に抑えています。</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-number">02</div>
-          <h3 class="feature-title">写真 & メモ連携</h3>
-          <p class="feature-desc">日付を選ぶと、その日の写真とGPSデータが自動でタイムラインに。思い出を時系列で振り返れます。</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-number">03</div>
-          <h3 class="feature-title">プライベート共有</h3>
-          <p class="feature-desc">招待リンクで家族や友人だけに今日の軌跡を共有。大切な人との思い出を、より深く残せます。</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-number">04</div>
-          <h3 class="feature-title">ウィジェット</h3>
-          <p class="feature-desc">ホーム画面に「昨日の歩数」や「今月の訪問都市数」を表示。日常の小さな達成感を可視化します。</p>
-        </div>
-      </div>
-    </section>
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <a href="../index.html#contact" class="btn-primary">参加リクエストはこちら</a>
-    </section>
-    <!-- App Detail Section -->
     <section class="app-detail-section" style="max-width:900px;margin:0 auto 4rem auto;padding:3rem 2rem 2rem 2rem;background:#fff;border-radius:2rem;box-shadow:0 4px 32px 0 rgba(0,0,0,0.07);">
       <h2 style="font-family:'Poppins',sans-serif;font-size:2.2rem;font-weight:700;margin-bottom:1.2rem;color:#111;text-align:center;">TADATAKAとは？</h2>
       <p style="font-size:1.15rem;line-height:1.8;color:#222;text-align:center;margin-bottom:2.2rem;">移動がそのまま日記になる、ライフログアプリ。<br>日々の移動や行動を地図で記録し、あなたの"人生の地図"をつくります。Googleマップにはない"思い出"や"記憶"を、あなたらしく残せる新しい日記体験。</p>
@@ -139,6 +104,56 @@
             <li>日常の移動や思い出が宝物になる体験</li>
             <li>シェア・バイラル設計で友達とも楽しめる</li>
           </ul>
+        </div>
+      </div>
+    </section>
+    <section class="feature-section">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-number">01</div>
+          <h3 class="feature-title">"記録欲"や"振り返り欲"に応える</h3>
+          <p class="feature-desc">SNSや日記アプリのように、日々の行動や思い出を地図で振り返る文化に最適化。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-number">02</div>
+          <h3 class="feature-title">予定に追われない癒しの体験</h3>
+          <p class="feature-desc">ToDoやスケジュール管理ではなく、"過去の自分"に会いに行く癒しのUX。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-number">03</div>
+          <h3 class="feature-title">"自分だけの地図"という新しい自己表現</h3>
+          <p class="feature-desc">歩いた道、行った店、会った人の場所が"人生の地図"として蓄積される。</p>
+        </div>
+      </div>
+    </section>
+    <section class="cta-section">
+      <a href="../index.html#contact" class="btn-primary">参加リクエストはこちら</a>
+    </section>
+    <section class="center-infinite-scroll">
+      <div class="infinite-scroll-track">
+        <div class="infinite-card" data-link="../assets/tadataka_feature1.jpg">
+          <img src="../assets/tadataka.jpg" alt="Tadataka Feature 1" />
+          <div class="card-title">GPS自動経路記録</div>
+        </div>
+        <div class="infinite-card" data-link="../assets/tadataka_feature2.jpg">
+          <img src="../assets/meet_in_the_middle.jpg" alt="Tadataka Feature 2" />
+          <div class="card-title">写真・メモ追加</div>
+        </div>
+        <div class="infinite-card" data-link="../assets/tadataka_feature3.jpg">
+          <img src="../assets/toirun.jpg" alt="Tadataka Feature 3" />
+          <div class="card-title">独自UIで振り返り</div>
+        </div>
+        <div class="infinite-card" data-link="../assets/tadataka_feature1.jpg">
+          <img src="../assets/tadataka.jpg" alt="Tadataka Feature 1" />
+          <div class="card-title">GPS自動経路記録</div>
+        </div>
+        <div class="infinite-card" data-link="../assets/tadataka_feature2.jpg">
+          <img src="../assets/meet_in_the_middle.jpg" alt="Tadataka Feature 2" />
+          <div class="card-title">写真・メモ追加</div>
+        </div>
+        <div class="infinite-card" data-link="../assets/tadataka_feature3.jpg">
+          <img src="../assets/toirun.jpg" alt="Tadataka Feature 3" />
+          <div class="card-title">独自UIで振り返り</div>
         </div>
       </div>
     </section>
