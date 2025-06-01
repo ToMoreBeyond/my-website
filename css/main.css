@@ -186,6 +186,11 @@ h1, h2, h3, h4, h5, h6 {
   gap: 3vw;
   align-items: center;
   animation: scroll-x 32s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .infinite-scroll-track:hover {
@@ -205,6 +210,11 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: flex-end;
   transition: box-shadow 0.3s, transform 0.3s;
   cursor: pointer;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .infinite-card:hover {

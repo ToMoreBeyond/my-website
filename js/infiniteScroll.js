@@ -1,6 +1,6 @@
 class InfiniteScroll {
     constructor() {
-        this.containers = document.querySelectorAll('.infinite-scroll-container');
+        this.containers = document.querySelectorAll('.center-infinite-scroll');
         this.init();
     }
 
@@ -12,39 +12,39 @@ class InfiniteScroll {
 
     setupContainer(container) {
         const track = container.querySelector('.infinite-scroll-track');
-        const items = track.querySelectorAll('.infinite-scroll-item');
-        
-        // アイテムを複製して無限ループを実現
-        items.forEach(item => {
-            const clone = item.cloneNode(true);
-            track.appendChild(clone);
-        });
+        if (!track) return;
 
-        // GSAPでアニメーション
+        // 既存のアニメーションをクリア
+        gsap.killTweensOf(track);
+
+        // 新しいアニメーション設定
         gsap.to(track, {
             x: () => -(track.scrollWidth / 2),
             ease: 'none',
-            duration: 20,
-            repeat: -1
+            duration: 32,
+            repeat: -1,
+            onRepeat: () => {
+                // アニメーションのリセット
+                gsap.set(track, { x: 0 });
+            }
         });
 
         // ホバー時のアニメーション停止
         container.addEventListener('mouseenter', () => {
-            gsap.to(track, { timeScale: 0 });
+            gsap.to(track, { timeScale: 0, duration: 0.3 });
         });
 
         container.addEventListener('mouseleave', () => {
-            gsap.to(track, { timeScale: 1 });
+            gsap.to(track, { timeScale: 1, duration: 0.3 });
         });
 
-        // クリックイベントの設定
-        items.forEach(item => {
-            item.addEventListener('click', () => {
-                const link = item.dataset.link;
-                if (link) {
-                    window.location.href = link;
-                }
-            });
+        // タッチデバイス対応
+        container.addEventListener('touchstart', () => {
+            gsap.to(track, { timeScale: 0, duration: 0.3 });
+        });
+
+        container.addEventListener('touchend', () => {
+            gsap.to(track, { timeScale: 1, duration: 0.3 });
         });
     }
 }
