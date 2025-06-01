@@ -1,113 +1,74 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - ToMoreBeyond</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/animations.css">
-  <link rel="stylesheet" href="../css/transitions.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@barba/core"></script>
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
+    body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
+    .et-nav { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 6vw 1.5rem 4vw; font-size: 1.1rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; box-sizing: border-box; }
+    .et-nav .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
+    .et-nav .nav-links { display: flex; gap: 2.2rem; flex-wrap: wrap; }
+    .et-nav .nav-links a { color: #111; text-decoration: none; font-size: 1.1rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; white-space: nowrap; }
+    .et-nav .nav-links a:hover { opacity: 0.6; }
+    .et-hero { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 7rem; margin-bottom: 2rem; padding: 0 4rem; }
+    .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
+    .et-hero-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .et-hero-catch { font-size: 2.6rem; font-family: 'Poppins', sans-serif; font-weight: 800; margin: 0.7rem 0; color: #111; letter-spacing: -0.01em; }
+    .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; text-align: center; }
+    .contact-form-section { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fff; position: relative; z-index: 10; }
+    .contact-form-container { background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); padding: 3rem 2.5rem; width: 420px; max-width: 95vw; display: flex; flex-direction: column; align-items: center; }
+    .contact-form-container h2 { font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; color: #111; }
+    .contact-form { width: 100%; display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-form label { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; color: #222; }
+    .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; border-radius: 0.8rem; border: 1.5px solid #ececec; background: #fafafa; font-size: 1.05rem; color: #222; transition: border-color 0.2s, box-shadow 0.2s; outline: none; resize: none; }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: #FFB300; box-shadow: 0 0 0 2px rgba(255,179,0,0.10); }
+    .contact-form button { background: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%); color: #fff; font-weight: 700; font-size: 1.15rem; padding: 1rem 0; border-radius: 0.9rem; border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; box-shadow: 0 2px 12px 0 rgba(255,179,0,0.08); }
+    .contact-form button:hover { background: #FF9E00; transform: translateY(-2px) scale(1.03); }
+    @media (max-width: 900px) { .et-nav { padding: 1.2rem 2vw 0.8rem 2vw; font-size: 1rem; } .et-nav .nav-links { gap: 1.2rem; } .et-hero { flex-direction: column; align-items: flex-start; padding: 0 1.2rem; } .et-hero-big { font-size: 12vw; } .contact-form-section { min-height: 220px; } .contact-form-container { padding: 2rem 0.5rem; width: 98vw; } .et-hero-catch { font-size: 1.5rem; } }
+  </style>
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div class="loading-screen">
-    <div class="loading-logo">ToMoreBeyond</div>
-  </div>
-  <!-- Page Transition Overlay -->
-  <div class="page-transition-overlay"></div>
-  <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
-      <div class="nav-links">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="apps.html" class="nav-link">Apps</a>
-        <a href="company.html" class="nav-link">Company</a>
-        <a href="media.html" class="nav-link">Media</a>
-        <a href="contact.html" class="nav-link active">Contact</a>
-      </div>
-      <button class="burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+  <nav class="et-nav">
+    <div class="nav-logo">ToMoreBeyond</div>
+    <div class="nav-links">
+      <a href="apps.html">Apps</a>
+      <a href="company.html">Company</a>
+      <a href="media.html">Media</a>
+      <a href="contact.html">Contact</a>
     </div>
   </nav>
-  <!-- Mobile Menu -->
-  <div class="mobile-menu">
-    <a href="../index.html" class="mobile-menu-link">Home</a>
-    <a href="apps.html" class="mobile-menu-link">Apps</a>
-    <a href="company.html" class="mobile-menu-link">Company</a>
-    <a href="media.html" class="mobile-menu-link">Media</a>
-    <a href="contact.html" class="mobile-menu-link active">Contact</a>
+  <div class="et-hero">
+    <span class="et-hero-big">CO</span>
+    <div class="et-hero-center">
+      <div class="et-hero-catch">お気軽にご連絡ください</div>
+      <div class="et-hero-catch">Let's create something amazing together</div>
+      <div class="et-hero-desc">ご質問・ご相談・お仕事のご依頼など、下記フォームよりご連絡ください。</div>
+    </div>
+    <span class="et-hero-big">NTACT</span>
   </div>
-  <!-- Scroll Progress -->
-  <div class="scroll-progress"></div>
-  <!-- Main Content -->
-  <main data-barba="container" data-barba-namespace="contact">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="text-reveal">Contact</h1>
-        <p class="text-reveal">ご質問・ご相談・お仕事のご依頼など、お気軽にご連絡ください。</p>
-      </div>
-    </section>
-    <!-- Contact Form Section -->
-    <section class="contact">
-      <div class="section-header">
-        <h2 class="text-reveal">お問い合わせフォーム</h2>
-        <p class="text-reveal">Let's create something amazing together</p>
-      </div>
-      <div class="contact-content">
-        <form class="contact-form">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required></textarea>
-          </div>
-          <button type="submit" class="btn-primary">Send Message</button>
-        </form>
-      </div>
-    </section>
-  </main>
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-logo">ToMoreBeyond</div>
-      <div class="footer-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-      </div>
-      <div class="footer-social">
-        <a href="#" class="social-link">Twitter</a>
-        <a href="#" class="social-link">Instagram</a>
-        <a href="#" class="social-link">LinkedIn</a>
-      </div>
+  <section class="contact-form-section">
+    <div class="contact-form-container">
+      <h2>Contact Form</h2>
+      <form class="contact-form">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024 ToMoreBeyond. All rights reserved.</p>
-    </div>
-  </footer>
-  <!-- Back Button -->
-  <button class="back-button">
-    <svg viewBox="0 0 24 24">
-      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-    </svg>
-  </button>
-  <!-- Scripts -->
-  <script src="../js/main.js"></script>
-  <script src="../js/animations.js"></script>
-  <script src="../js/transitions.js"></script>
+  </section>
 </body>
 </html> 

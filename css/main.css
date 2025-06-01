@@ -38,12 +38,17 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Navigation */
 .et-nav {
-  position: fixed;
-  top: 0; left: 0; width: 100%;
-  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 6vw 1.5rem 4vw;
+  font-size: 1.1rem;
   background: transparent;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 2.5rem 4rem 1.5rem 4rem;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 1000;
+  box-sizing: border-box;
 }
 
 .et-nav .nav-logo {
@@ -56,16 +61,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .et-nav .nav-links {
   display: flex;
-  gap: 3.5rem;
+  gap: 2.2rem;
+  flex-wrap: wrap;
 }
 
 .et-nav .nav-links a {
   color: #111;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   transition: opacity 0.3s;
+  white-space: nowrap;
 }
 
 .et-nav .nav-links a:hover {
@@ -163,16 +170,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .center-infinite-scroll {
-  position: absolute;
-  left: 50%;
-  top: 60%;
-  transform: translate(-50%, -50%);
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 340px;
-  background: #fafafa;
+  min-height: 420px;
+  margin-top: 2rem;
+  background: #fff;
+  position: relative;
+  z-index: 10;
 }
 
 .infinite-scroll-track {
@@ -281,7 +287,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive */
 @media (max-width: 900px) {
-  .et-nav { padding: 1.2rem 1.2rem 0.8rem 1.2rem; font-size: 1rem; }
+  .et-nav { padding: 1.2rem 2vw 0.8rem 2vw; font-size: 1rem; }
+  .et-nav .nav-links { gap: 1.2rem; }
   .et-hero { flex-direction: column; align-items: flex-start; padding: 0 1.2rem; }
   .et-hero-big { font-size: 12vw; }
   .center-infinite-scroll { min-height: 220px; }
