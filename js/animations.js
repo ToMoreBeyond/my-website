@@ -136,8 +136,25 @@ class CardHover {
   }
 }
 
+// Intersection Observer for fade-in and text-reveal
+function observeFadeIn() {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.fade-in, .text-reveal').forEach(el => {
+    observer.observe(el);
+  });
+}
+
 // Initialize Animations
 document.addEventListener('DOMContentLoaded', () => {
+  observeFadeIn();
   // Text Animations
   document.querySelectorAll('.text-reveal').forEach(element => {
     new TextAnimation(element);
