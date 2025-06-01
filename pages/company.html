@@ -32,6 +32,7 @@
     .infinite-card:hover { box-shadow: 0 8px 40px 0 rgba(255,179,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.10); transform: translateY(-8px) scale(1.03); }
     .infinite-card img { width: 100%; height: 78%; object-fit: cover; border-radius: 2rem 2rem 0 0; }
     .card-title { font-family: 'Poppins', sans-serif; font-size: 1.7rem; font-weight: 700; margin: 1.2rem 0; color: #111; }
+    .card-desc { font-size: 1.2rem; color: #111; margin-top: 0.5rem; }
     @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     @media (max-width: 900px) {
       .et-nav { padding: 1.2rem 0; font-size: 1rem; }
@@ -134,29 +135,36 @@
     <!-- 社員カード無限スクロール -->
     <section class="center-infinite-scroll">
       <div class="infinite-scroll-track">
-        <div class="infinite-card" data-link="member1.html">
-          <img src="../assets/tadataka.jpg" alt="Yamada Jundai" />
-          <div class="card-title">Yamada Jundai</div>
+        <div class="infinite-card" data-link="member_yamada.html">
+          <img src="../assets/member_yamada.jpg" alt="山田（Yamada）" />
+          <div class="card-title">山田（Yamada）</div>
+          <div class="card-desc">CDO / プロダクトデザイン</div>
         </div>
-        <div class="infinite-card" data-link="member2.html">
-          <img src="../assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
-          <div class="card-title">Meet in the Middle</div>
+        <div class="infinite-card" data-link="member_masadome.html">
+          <img src="../assets/member_masadome.jpg" alt="正留（Masadome）" />
+          <div class="card-title">正留（Masadome）</div>
+          <div class="card-desc">CEO / フルスタックエンジニア & AIアーキテクト</div>
         </div>
-        <div class="infinite-card" data-link="member3.html">
-          <img src="../assets/toirun.jpg" alt="Toirun" />
-          <div class="card-title">Toirun</div>
+        <div class="infinite-card" data-link="member_ando.html">
+          <img src="../assets/member_ando.jpg" alt="安藤（Ando）" />
+          <div class="card-title">安藤（Ando）</div>
+          <div class="card-desc">デジタルアート・アニメーション</div>
         </div>
-        <div class="infinite-card" data-link="member1.html">
-          <img src="../assets/tadataka.jpg" alt="Yamada Jundai" />
-          <div class="card-title">Yamada Jundai</div>
+        <!-- repeat for seamless loop -->
+        <div class="infinite-card" data-link="member_yamada.html">
+          <img src="../assets/member_yamada.jpg" alt="山田（Yamada）" />
+          <div class="card-title">山田（Yamada）</div>
+          <div class="card-desc">CDO / プロダクトデザイン</div>
         </div>
-        <div class="infinite-card" data-link="member2.html">
-          <img src="../assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
-          <div class="card-title">Meet in the Middle</div>
+        <div class="infinite-card" data-link="member_masadome.html">
+          <img src="../assets/member_masadome.jpg" alt="正留（Masadome）" />
+          <div class="card-title">正留（Masadome）</div>
+          <div class="card-desc">CEO / フルスタックエンジニア & AIアーキテクト</div>
         </div>
-        <div class="infinite-card" data-link="member3.html">
-          <img src="../assets/toirun.jpg" alt="Toirun" />
-          <div class="card-title">Toirun</div>
+        <div class="infinite-card" data-link="member_ando.html">
+          <img src="../assets/member_ando.jpg" alt="安藤（Ando）" />
+          <div class="card-title">安藤（Ando）</div>
+          <div class="card-desc">デジタルアート・アニメーション</div>
         </div>
       </div>
     </section>
