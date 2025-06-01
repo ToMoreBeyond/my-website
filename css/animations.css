@@ -192,4 +192,56 @@
 
 .burger.active .burger-line:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Background Animation */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.background-animation video,
+.background-animation img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Infinite Scroll */
+.infinite-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.infinite-scroll-track {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.infinite-scroll-item {
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.infinite-scroll-item:hover {
+    transform: scale(1.05);
+}
+
+/* アニメーションの最適化 */
+@media (prefers-reduced-motion: reduce) {
+    .infinite-scroll-track {
+        animation: none;
+    }
+    
+    .background-animation video {
+        animation: none;
+    }
 } 
