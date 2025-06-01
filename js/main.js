@@ -33,24 +33,50 @@ window.addEventListener('load', () => {
     });
 });
 
-// Navigation Scroll Effect
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  const currentScroll = window.pageYOffset;
-  
-  if (currentScroll <= 0) {
-    nav.classList.remove('hidden');
-    return;
-  }
-  
-  if (currentScroll > lastScroll && currentScroll > 100) {
-    nav.classList.add('hidden');
-  } else {
-    nav.classList.remove('hidden');
-  }
-  
-  lastScroll = currentScroll;
+// Navigation Animation Logic
+function setNavActive() {
+  const currentPath = window.location.pathname.replace(/\/index\.html$/, '/');
+  document.querySelectorAll('.nav-link').forEach(link => {
+    if (link.getAttribute('href').replace(/\/index\.html$/, '/') === currentPath) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+function navScrollHandler() {
+  let lastScroll = 0;
+  const nav = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll <= 0) {
+      gsap.to(nav, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+      return;
+    }
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      gsap.to(nav, { y: -100, opacity: 0, duration: 0.4, ease: 'power2.in' });
+    } else {
+      gsap.to(nav, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+    }
+    lastScroll = currentScroll;
+  });
+}
+
+function initNav() {
+  setNavActive();
+  navScrollHandler();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initNav();
 });
+
+if (window.barba) {
+  barba.hooks.after(() => {
+    initNav();
+  });
+}
 
 // Mobile Menu Toggle
 burger.addEventListener('click', () => {
