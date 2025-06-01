@@ -11,6 +11,39 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@barba/core"></script>
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
+    body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
+    .et-nav { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 6vw 1.5rem 4vw; font-size: 1.1rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; box-sizing: border-box; }
+    .et-nav .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
+    .et-nav .nav-links { display: flex; gap: 2.2rem; flex-wrap: wrap; }
+    .et-nav .nav-links a { color: #111; text-decoration: none; font-size: 1.1rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; white-space: nowrap; }
+    .et-nav .nav-links a:hover { opacity: 0.6; }
+    .et-hero { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 7rem; margin-bottom: 2rem; padding: 0 4rem; }
+    .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
+    .et-hero-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .et-hero-catch { font-size: 2.6rem; font-family: 'Poppins', sans-serif; font-weight: 800; margin: 0.7rem 0; color: #111; letter-spacing: -0.01em; }
+    .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; text-align: center; }
+    .feature-section { padding: 4rem 6vw; }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4rem; margin-top: 4rem; }
+    .feature-card { background: #fff; border-radius: 2rem; padding: 3rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; }
+    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 40px 0 rgba(0,0,0,0.12); }
+    .feature-number { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #FFB300; margin-bottom: 1rem; }
+    .feature-title { font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
+    .feature-desc { font-size: 1.1rem; line-height: 1.6; color: #444; }
+    .cta-section { text-align: center; padding: 6rem 0; }
+    .btn-primary { display: inline-block; background: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%); color: #fff; font-weight: 700; font-size: 1.15rem; padding: 1.2rem 3rem; border-radius: 0.9rem; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 2px 12px 0 rgba(255,179,0,0.08); }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 20px 0 rgba(255,179,0,0.15); }
+    @media (max-width: 900px) { 
+      .et-nav { padding: 1.2rem 2vw 0.8rem 2vw; font-size: 1rem; } 
+      .et-nav .nav-links { gap: 1.2rem; } 
+      .et-hero { flex-direction: column; align-items: flex-start; padding: 0 1.2rem; } 
+      .et-hero-big { font-size: 12vw; } 
+      .feature-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .feature-card { padding: 2rem; }
+      .et-hero-catch { font-size: 1.5rem; } 
+    }
+  </style>
 </head>
 <body>
   <!-- Loading Screen -->
@@ -20,69 +53,54 @@
   <!-- Page Transition Overlay -->
   <div class="page-transition-overlay"></div>
   <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
-      <div class="nav-links">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="apps.html" class="nav-link">Apps</a>
-        <a href="company.html" class="nav-link">Company</a>
-        <a href="media.html" class="nav-link">Media</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </div>
-      <button class="burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+  <nav class="et-nav">
+    <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
+    <div class="nav-links">
+      <a href="apps.html">Apps</a>
+      <a href="company.html">Company</a>
+      <a href="media.html">Media</a>
+      <a href="contact.html">Contact</a>
     </div>
   </nav>
-  <!-- Mobile Menu -->
-  <div class="mobile-menu">
-    <a href="../index.html" class="mobile-menu-link">Home</a>
-    <a href="apps.html" class="mobile-menu-link">Apps</a>
-    <a href="company.html" class="mobile-menu-link">Company</a>
-    <a href="media.html" class="mobile-menu-link">Media</a>
-    <a href="contact.html" class="mobile-menu-link">Contact</a>
-  </div>
-  <!-- Scroll Progress -->
-  <div class="scroll-progress"></div>
   <!-- Main Content -->
   <main data-barba="container" data-barba-namespace="tadataka">
     <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="text-reveal">TADATAKA</h1>
-        <p class="text-reveal">移動経路とメモを地図上で同期する、"ライフログ × ダイアリー" アプリ。</p>
+    <section class="et-hero">
+      <span class="et-hero-big">TA</span>
+      <div class="et-hero-center">
+        <div class="et-hero-catch">移動経路とメモを地図上で同期</div>
+        <div class="et-hero-catch">ライフログ × ダイアリー</div>
+        <div class="et-hero-desc">あなたの日常を、より豊かな記録に。TADATAKAは、移動と記憶をシームレスに結びつける新しいライフログアプリです。</div>
       </div>
+      <span class="et-hero-big">DATAKA</span>
     </section>
     <!-- Features Section -->
-    <section class="apps">
-      <div class="section-header">
-        <h2 class="text-reveal">Features</h2>
-        <p class="text-reveal">TADATAKAの主な機能</p>
-      </div>
-      <div class="apps-grid">
-        <div class="app-card">
-          <h3>01. 自動トラック</h3>
-          <p>バックグラウンドで移動経路を自動保存。プライバシー重視でローカル暗号化。</p>
+    <section class="feature-section">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-number">01</div>
+          <h3 class="feature-title">自動トラック</h3>
+          <p class="feature-desc">バックグラウンドで移動経路を自動保存。プライバシー重視でローカル暗号化。電池消費も最小限に抑えています。</p>
         </div>
-        <div class="app-card">
-          <h3>02. 写真 & メモ連携</h3>
-          <p>日付を選ぶと、その日の写真と GPS データが自動でタイムラインに。</p>
+        <div class="feature-card">
+          <div class="feature-number">02</div>
+          <h3 class="feature-title">写真 & メモ連携</h3>
+          <p class="feature-desc">日付を選ぶと、その日の写真とGPSデータが自動でタイムラインに。思い出を時系列で振り返れます。</p>
         </div>
-        <div class="app-card">
-          <h3>03. プライベート共有</h3>
-          <p>招待リンクで家族や友人だけに今日の軌跡を共有できます。</p>
+        <div class="feature-card">
+          <div class="feature-number">03</div>
+          <h3 class="feature-title">プライベート共有</h3>
+          <p class="feature-desc">招待リンクで家族や友人だけに今日の軌跡を共有。大切な人との思い出を、より深く残せます。</p>
         </div>
-        <div class="app-card">
-          <h3>04. ウィジェット</h3>
-          <p>ホーム画面に「昨日の歩数」や「今月の訪問都市数」を表示。</p>
+        <div class="feature-card">
+          <div class="feature-number">04</div>
+          <h3 class="feature-title">ウィジェット</h3>
+          <p class="feature-desc">ホーム画面に「昨日の歩数」や「今月の訪問都市数」を表示。日常の小さな達成感を可視化します。</p>
         </div>
       </div>
     </section>
     <!-- CTA Section -->
-    <section class="cta-section" style="text-align:center; padding:3rem 0 2rem 0;">
+    <section class="cta-section">
       <a href="../index.html#contact" class="btn-primary">参加リクエストはこちら</a>
     </section>
   </main>
@@ -104,15 +122,25 @@
       <p>&copy; 2024 ToMoreBeyond. All rights reserved.</p>
     </div>
   </footer>
-  <!-- Back Button -->
-  <button class="back-button">
-    <svg viewBox="0 0 24 24">
-      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-    </svg>
-  </button>
   <!-- Scripts -->
   <script src="../js/main.js"></script>
   <script src="../js/animations.js"></script>
   <script src="../js/transitions.js"></script>
+  <script>
+    // Feature cards animation
+    gsap.utils.toArray('.feature-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top bottom-=100",
+          toggleActions: "play none none reverse"
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        delay: i * 0.2
+      });
+    });
+  </script>
 </body>
 </html> 
