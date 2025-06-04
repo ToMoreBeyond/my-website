@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToMoreBeyond - 革新的なテクノロジーで未来を創造</title>
+  <meta name="description" content="ToMoreBeyondは最先端のAI技術とイノベーションで、より良い未来を創造するテクノロジーカンパニーです。">
+  <meta name="keywords" content="AI, テクノロジー, イノベーション, アプリ開発, デジタル変革">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Enhanced CSS -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/modern-design.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/loading.css">
+  <link rel="stylesheet" href="/css/unified-cards.css">
+  
+  <style>
+    /* Page-specific enhanced styles */
+    body {
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+    }
+    
+    /* Enhanced Hero Section */
+    .hero-enhanced {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 179, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 179, 0, 0.05) 0%, transparent 50%);
+      padding: var(--space-20) 0;
+    }
+    
+    .hero-content-enhanced {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-title-enhanced {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      background: linear-gradient(135deg, #1a1a1a 0%, #333333 50%, #FFB300 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+    
+    .hero-subtitle-enhanced {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--neutral-600);
+      margin-bottom: var(--space-10);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero-stat {
+      text-align: center;
+      padding: var(--space-4);
+    }
+    
+    .hero-stat-number {
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--primary-orange);
+      display: block;
+      margin-bottom: var(--space-2);
+    }
+    
+    .hero-stat-label {
+      font-size: var(--text-sm);
+      color: var(--neutral-500);
+      font-weight: 500;
+    }
+    
+    /* Floating Elements */
+    .floating-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .floating-shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: floatMove 20s infinite linear;
+    }
+    
+    @keyframes floatMove {
+      0% { transform: translateX(-100px) rotate(0deg); }
+      100% { transform: translateX(calc(100vw + 100px)) rotate(360deg); }
+    }
+    
+    /* Enhanced Infinite Scroll Section */
+    .apps-section-enhanced {
+      padding: var(--space-20) 0;
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .apps-section-enhanced::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neutral-200), transparent);
+    }
+    
+    .section-intro {
+      text-align: center;
+      margin-bottom: var(--space-16);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .section-title-enhanced {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      margin-bottom: var(--space-4);
+      position: relative;
+    }
+    
+    .section-subtitle-enhanced {
+      font-size: var(--text-xl);
+      color: var(--neutral-600);
+      line-height: 1.6;
+    }
+    
+    /* Enhanced Card Container */
+    .infinite-scroll-enhanced {
+      width: 100%;
+      padding: var(--space-8) 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      border-radius: var(--radius-2xl);
+      position: relative;
+      overflow: hidden;
+      margin: var(--space-8) 0;
+    }
+    
+    .infinite-scroll-track-enhanced {
+      display: flex;
+      gap: var(--space-6);
+      padding: 0 var(--space-6);
+      will-change: transform;
+    }
+    
+    .app-card-enhanced {
+      min-width: 350px;
+      background: white;
+      border-radius: var(--radius-2xl);
+      padding: 0;
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--neutral-200);
+    }
+    
+    .app-card-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    
+    .app-card-content {
+      padding: var(--space-6);
+    }
+    
+    .app-card-title {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-3);
+    }
+    
+    .app-card-description {
+      font-size: var(--text-base);
+      color: var(--neutral-600);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+    
+    .app-card-tags {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    
+    .app-card-tag {
+      background: var(--neutral-100);
+      color: var(--neutral-600);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 500;
+    }
+    
+    .app-card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--primary-orange);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-fast);
+    }
+    
+    .app-card-action:hover {
+      gap: var(--space-3);
+      color: var(--primary-orange-dark);
+    }
+    
+    /* Features Section */
+    .features-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+    
+    .feature-card-enhanced {
+      background: white;
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      border: 1px solid var(--neutral-200);
+    }
+    
+    .feature-card-enhanced:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .feature-icon-enhanced {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-light));
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto var(--space-6);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-icon-enhanced::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left var(--transition-slow);
+    }
+    
+    .feature-card-enhanced:hover .feature-icon-enhanced::before {
+      left: 100%;
+    }
+    
+    .feature-title-enhanced {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-4);
+    }
+    
+    .feature-description-enhanced {
+      color: var(--neutral-600);
+      line-height: 1.6;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .cta-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      margin-bottom: var(--space-6);
+    }
+    
+    .cta-subtitle {
+      font-size: var(--text-xl);
+      opacity: 0.9;
+      margin-bottom: var(--space-8);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .cta-button-primary {
+      background: var(--primary-orange);
+      color: white;
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-medium);
+    }
+    
+    .cta-button-primary:hover {
+      background: var(--primary-orange-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .cta-button-secondary {
+      background: transparent;
+      color: white;
+      padding: var(--space-4) var(--space-8);
+      border: 2px solid white;
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-base);
+    }
+    
+    .cta-button-secondary:hover {
+      background: white;
+      color: var(--neutral-900);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+      
+      .app-card-enhanced {
+        min-width: 280px;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Enhanced Navigation -->
+  <nav class="navbar-modern">
+    <div class="container-fluid">
+      <div class="navbar-content">
+        <a href="#" class="navbar-brand-modern text-reveal">ToMoreBeyond</a>
+        <div class="navbar-links-modern">
+          <a href="#apps" class="navbar-link-modern">アプリ</a>
+          <a href="#features" class="navbar-link-modern">特徴</a>
+          <a href="#about" class="navbar-link-modern">会社概要</a>
+          <a href="/pages/contact.html" class="btn-modern btn-primary-modern">お問い合わせ</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Enhanced Hero Section -->
+  <section class="hero-enhanced">
+    <div class="floating-elements">
+      <div class="floating-shape" style="top: 20%; font-size: 60px; animation-delay: 0s;">🚀</div>
+      <div class="floating-shape" style="top: 60%; font-size: 40px; animation-delay: 5s;">⚡</div>
+      <div class="floating-shape" style="top: 40%; font-size: 50px; animation-delay: 10s;">💡</div>
+      <div class="floating-shape" style="top: 80%; font-size: 35px; animation-delay: 15s;">🎯</div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="hero-content-enhanced stagger-children">
+        <h1 class="hero-title-enhanced text-split" data-split="chars">
+          To More Beyond
+        </h1>
+        <p class="hero-subtitle-enhanced text-reveal">
+          最先端のAI技術とイノベーションで、<br>
+          より良い未来を創造するテクノロジーカンパニー
+        </p>
+        
+        <div class="hero-stats stagger-children">
+          <div class="hero-stat text-bounce-in">
+            <span class="hero-stat-number typewriter" data-speed="80" data-delay="1000">5+</span>
+            <span class="hero-stat-label">革新的なアプリ</span>
+          </div>
+          <div class="hero-stat text-bounce-in">
+            <span class="hero-stat-number typewriter" data-speed="80" data-delay="1500">10K+</span>
+            <span class="hero-stat-label">ユーザー</span>
+          </div>
+          <div class="hero-stat text-bounce-in">
+            <span class="hero-stat-number typewriter" data-speed="80" data-delay="2000">∞</span>
+            <span class="hero-stat-label">可能性</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced Apps Section -->
+  <section id="apps" class="apps-section-enhanced">
+    <div class="container-fluid">
+      <div class="section-intro stagger-children">
+        <h2 class="section-title-enhanced text-split" data-split="words">
+          Our Applications
+        </h2>
+        <p class="section-subtitle-enhanced text-reveal">
+          日常の課題を解決し、生活を豊かにする革新的なアプリケーション
+        </p>
+      </div>
+      
+      <div class="infinite-scroll-enhanced infinite-scroll-container">
+        <div class="infinite-scroll-track-enhanced infinite-scroll-track">
+          <div class="app-card-enhanced infinite-card unified-card-interactive" data-link="pages/tadataka.html">
+            <div class="app-card-image">🗺️</div>
+            <div class="app-card-content">
+              <h3 class="app-card-title">Tadataka</h3>
+              <p class="app-card-description">
+                最短経路で目的地へ案内する<br>
+                スマートナビゲーションアプリ
+              </p>
+              <div class="app-card-tags">
+                <span class="app-card-tag">ナビ</span>
+                <span class="app-card-tag">AI</span>
+                <span class="app-card-tag">効率化</span>
+              </div>
+              <a href="pages/tadataka.html" class="app-card-action">
+                詳しく見る →
+              </a>
+            </div>
+          </div>
+          
+          <div class="app-card-enhanced infinite-card unified-card-interactive" data-link="pages/midpoint.html">
+            <div class="app-card-image">📍</div>
+            <div class="app-card-content">
+              <h3 class="app-card-title">Midpoint</h3>
+              <p class="app-card-description">
+                みんなの出発地から最適な<br>
+                待ち合わせ場所を提案
+              </p>
+              <div class="app-card-tags">
+                <span class="app-card-tag">待ち合わせ</span>
+                <span class="app-card-tag">最適化</span>
+                <span class="app-card-tag">便利</span>
+              </div>
+              <a href="pages/midpoint.html" class="app-card-action">
+                詳しく見る →
+              </a>
+            </div>
+          </div>
+          
+          <div class="app-card-enhanced infinite-card unified-card-interactive" data-link="pages/toirun.html">
+            <div class="app-card-image">🚽</div>
+            <div class="app-card-content">
+              <h3 class="app-card-title">ToiRun</h3>
+              <p class="app-card-description">
+                「今すぐトイレ」を最短で案内<br>
+                誰にでもやさしいAIナビ
+              </p>
+              <div class="app-card-tags">
+                <span class="app-card-tag">緊急</span>
+                <span class="app-card-tag">アクセシビリティ</span>
+                <span class="app-card-tag">AI</span>
+              </div>
+              <a href="pages/toirun.html" class="app-card-action">
+                詳しく見る →
+              </a>
+            </div>
+          </div>
+          
+          <div class="app-card-enhanced infinite-card unified-card-interactive">
+            <div class="app-card-image">🔮</div>
+            <div class="app-card-content">
+              <h3 class="app-card-title">Next Innovation</h3>
+              <p class="app-card-description">
+                次世代のソリューションを<br>
+                開発中です。お楽しみに！
+              </p>
+              <div class="app-card-tags">
+                <span class="app-card-tag">開発中</span>
+                <span class="app-card-tag">未来</span>
+                <span class="app-card-tag">革新</span>
+              </div>
+              <a href="#" class="app-card-action">
+                Coming Soon...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced Features Section -->
+  <section id="features" class="features-section">
+    <div class="container-fluid">
+      <div class="section-intro stagger-children">
+        <h2 class="section-title-enhanced text-gradient-animate">
+          Why ToMoreBeyond?
+        </h2>
+        <p class="section-subtitle-enhanced text-reveal">
+          私たちが選ばれる理由
+        </p>
+      </div>
+      
+      <div class="features-grid stagger-children">
+        <div class="feature-card-enhanced text-bounce-in">
+          <div class="feature-icon-enhanced">🎨</div>
+          <h3 class="feature-title-enhanced">ユーザー中心設計</h3>
+          <p class="feature-description-enhanced">
+            ユーザビリティを最優先に考えた直感的で使いやすいインターフェースデザイン
+          </p>
+        </div>
+        
+        <div class="feature-card-enhanced text-bounce-in">
+          <div class="feature-icon-enhanced">⚡</div>
+          <h3 class="feature-title-enhanced">高速パフォーマンス</h3>
+          <p class="feature-description-enhanced">
+            最新技術による高速処理で、ストレスフリーなユーザー体験を実現
+          </p>
+        </div>
+        
+        <div class="feature-card-enhanced text-bounce-in">
+          <div class="feature-icon-enhanced">🔒</div>
+          <h3 class="feature-title-enhanced">セキュリティ重視</h3>
+          <p class="feature-description-enhanced">
+            プライバシー保護と情報セキュリティを最優先に設計された安全なシステム
+          </p>
+        </div>
+        
+        <div class="feature-card-enhanced text-bounce-in">
+          <div class="feature-icon-enhanced">🌍</div>
+          <h3 class="feature-title-enhanced">グローバル対応</h3>
+          <p class="feature-description-enhanced">
+            多言語・多地域対応で、世界中のユーザーに最適なサービスを提供
+          </p>
+        </div>
+        
+        <div class="feature-card-enhanced text-bounce-in">
+          <div class="feature-icon-enhanced">🤖</div>
+          <h3 class="feature-title-enhanced">AI技術活用</h3>
+          <p class="feature-description-enhanced">
+            機械学習とAIを活用した賢いアルゴリズムで、より良い体験を創造
+          </p>
+        </div>
+        
+        <div class="feature-card-enhanced text-bounce-in">
+          <div class="feature-icon-enhanced">♿</div>
+          <h3 class="feature-title-enhanced">アクセシビリティ</h3>
+          <p class="feature-description-enhanced">
+            すべての人が使いやすいインクルーシブなデザインと機能を実装
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced CTA Section -->
+  <section class="cta-section">
+    <div class="container-fluid">
+      <div class="cta-content stagger-children">
+        <h2 class="cta-title text-split" data-split="chars">
+          未来を一緒に創造しませんか？
+        </h2>
+        <p class="cta-subtitle text-reveal">
+          ToMoreBeyondと共に、テクノロジーの力で世界をより良い場所に
+        </p>
+        <div class="cta-buttons stagger-children">
+          <a href="/pages/contact.html" class="cta-button-primary">
+            お問い合わせ
+          </a>
+          <a href="/pages/company.html" class="cta-button-secondary">
+            会社について
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced JavaScript -->
+  <script src="/js/components/loading.js"></script>
+  <script src="/js/components/page-transition.js"></script>
+  <script src="/js/components/text-animations.js"></script>
+  <script src="/js/components/scroll-responsive-cards.js"></script>
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/theme.js"></script>
+  <script src="/js/components/smooth-scroll.js"></script>
+  
+  <script>
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize scroll-responsive cards
+      const scrollContainer = document.querySelector('.infinite-scroll-enhanced');
+      if (scrollContainer) {
+        new ScrollResponsiveCards(scrollContainer, {
+          baseSpeed: 2,
+          scrollMultiplier: 0.1,
+          maxSpeed: 8,
+          minSpeed: 0.3,
+          smoothness: 0.15,
+          hoverSlowdown: 0.2
+        });
+      }
+      
+      // Add parallax effect to floating elements
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        
+        document.querySelectorAll('.floating-shape').forEach((shape, index) => {
+          const speed = (index + 1) * 0.3;
+          shape.style.transform += ` translateY(${rate * speed}px)`;
+        });
+      }, { passive: true });
+      
+      // Add interactive hover effects to feature cards
+      document.querySelectorAll('.feature-card-enhanced').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transform += ' rotateY(5deg)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = card.style.transform.replace(' rotateY(5deg)', '');
+        });
+      });
+      
+      // Add click handlers for app cards
+      document.querySelectorAll('.app-card-enhanced').forEach(card => {
+        card.addEventListener('click', (e) => {
+          const link = card.getAttribute('data-link');
+          if (link && !e.target.closest('a')) {
+            window.location.href = link;
+          }
+        });
+      });
+    });
+    
+    // Add smooth reveal on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '-10% 0px -10% 0px'
+    };
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    // Apply to all sections
+    document.querySelectorAll('section').forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(30px)';
+      section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+      revealObserver.observe(section);
+    });
+  </script>
+</body>
+</html>

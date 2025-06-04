@@ -48,18 +48,21 @@ class LoadingScreen {
     // Create particles when トモビ bounces
     setTimeout(() => {
       this.createParticles(textContainer);
-    }, 800);
+    }, 1000);
     
-    // Start morphing animation
+    // Start morphing animation with improved timing
     setTimeout(() => {
       tomobiWrapper.classList.add('tomobi-fadeout');
-      tomorebeyondText.classList.add('morph-to-tomorebeyond');
-    }, 1400);
+    }, 1600);
     
-    // Add bounce effect on ToMoreBeyond appearance
     setTimeout(() => {
-      this.addBounceEffect(tomorebeyondText);
-    }, 3000);
+      tomorebeyondText.classList.add('morph-to-tomorebeyond');
+    }, 1800);
+    
+    // Add final flourish effect
+    setTimeout(() => {
+      this.addFinalFlourish(tomorebeyondText);
+    }, 3800);
   }
   
   createParticles(container) {
@@ -95,23 +98,65 @@ class LoadingScreen {
     }
   }
   
-  addBounceEffect(element) {
-    element.style.animation = 'none';
-    void element.offsetHeight; // Trigger reflow
-    element.style.animation = 'subtleBounce 0.6s ease-out';
+  addFinalFlourish(element) {
+    // Create final particle burst
+    this.createFinalBurst(element);
     
-    // Add subtle bounce keyframes
-    if (!document.querySelector('#subtleBounceKeyframes')) {
+    // Add subtle glow pulse
+    element.style.animation += ', finalGlow 1s ease-out';
+    
+    // Add final flourish keyframes
+    if (!document.querySelector('#finalFlowKeyframes')) {
       const style = document.createElement('style');
-      style.id = 'subtleBounceKeyframes';
+      style.id = 'finalFlowKeyframes';
       style.textContent = `
-        @keyframes subtleBounce {
-          0%, 100% { transform: translate(-50%, -50%) scale(1); }
-          30% { transform: translate(-50%, -50%) scale(1.1); }
-          60% { transform: translate(-50%, -50%) scale(0.95); }
+        @keyframes finalGlow {
+          0%, 100% { 
+            text-shadow: 0 0 10px rgba(255, 179, 0, 0.3);
+          }
+          50% { 
+            text-shadow: 0 0 20px rgba(255, 179, 0, 0.6), 0 0 30px rgba(255, 179, 0, 0.4);
+          }
         }
       `;
       document.head.appendChild(style);
+    }
+  }
+  
+  createFinalBurst(element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    for (let i = 0; i < 12; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'final-burst-particle';
+      particle.style.cssText = `
+        position: fixed;
+        left: ${centerX}px;
+        top: ${centerY}px;
+        width: 3px;
+        height: 3px;
+        background: #FFB300;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10001;
+      `;
+      
+      document.body.appendChild(particle);
+      
+      const angle = (Math.PI * 2 * i) / 12;
+      const distance = 100 + Math.random() * 50;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+      
+      particle.animate([
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        { transform: `translate(${x}px, ${y}px) scale(0)`, opacity: 0 }
+      ], {
+        duration: 800,
+        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+      }).onfinish = () => particle.remove();
     }
   }
   
