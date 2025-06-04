@@ -3,110 +3,598 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToMoreBeyond</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/loading.css">
+  <title>ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える</title>
+  <meta name="description" content="ToMoreBeyondは最先端のAI技術とイノベーションで、より良い未来を創造するテクノロジーカンパニーです。">
+  <meta name="keywords" content="AI, テクノロジー, イノベーション, アプリ開発, デジタル変革, TADATAKA, ToiRun, Meet in the Middle">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/modern-design.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/unified-cards.css">
+  
   <style>
-    html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
-    body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
-    .et-nav { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2.5rem 0 1.5rem 0; font-size: 1.2rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; box-sizing: border-box; }
-    .et-nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
-    .nav-links { display: flex; gap: 3.5rem; }
-    .nav-links a { color: #111; text-decoration: none; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; white-space: nowrap; }
-    .nav-links a:hover { opacity: 0.6; }
-    .et-hero { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 0 4rem; gap: 4vw; }
-    .et-hero-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .et-hero-catch, .et-hero-desc { text-align: center; }
-    .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
-    .et-hero-catch { font-size: 2.6rem; font-family: 'Poppins', sans-serif; font-weight: 800; margin: 0.7rem 0; color: #111; letter-spacing: -0.01em; }
-    .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; }
-    .center-infinite-scroll { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fff; position: relative; z-index: 10; }
-    .infinite-scroll-track { display: flex; gap: 3vw; align-items: center; animation: scroll-x 32s linear infinite; }
-    .infinite-scroll-track:hover {
-      animation-play-state: paused;
+    /* Page-specific enhanced styles */
+    body {
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
     }
-    .infinite-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); overflow: hidden; width: 480px; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
-    .infinite-card:hover { box-shadow: 0 8px 40px 0 rgba(255,179,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.10); transform: translateY(-8px) scale(1.03); }
-    .infinite-card img { width: 100%; height: 78%; object-fit: cover; border-radius: 2rem 2rem 0 0; }
-    .card-title { font-family: 'Poppins', sans-serif; font-size: 1.7rem; font-weight: 700; margin: 1.2rem 0; color: #111; }
-    .card-desc { font-size: 1rem; margin-top: 0.5rem; color: #111; }
-    @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    @media (max-width: 900px) {
-      .et-nav { padding: 1.2rem 0; font-size: 1rem; }
-      .et-nav-inner { flex-direction: column; gap: 1.2rem; padding: 0 1.2rem; }
-      .nav-logo { font-size: 2rem; }
-      .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
-      .nav-links a { font-size: 1rem; }
-      .et-hero { flex-direction: column; align-items: center; padding: 0 1.2rem; min-height: calc(100vh - 120px); margin-top: 120px; }
-      .et-hero-big { font-size: 12vw; }
-      .et-hero-catch { font-size: 1.5rem; }
-      .et-hero-desc { font-size: 1rem; padding: 0 1rem; }
+    
+    /* Enhanced Hero Section */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 179, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 179, 0, 0.04) 0%, transparent 50%);
+      padding: var(--space-20) 0;
+    }
+    
+    .hero-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      background: linear-gradient(135deg, #1a1a1a 0%, #333333 50%, #FFB300 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--neutral-600);
+      margin-bottom: var(--space-4);
+      line-height: 1.6;
+    }
+    
+    .hero-mission {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--neutral-800);
+      margin-bottom: var(--space-10);
+      line-height: 1.4;
+    }
+    
+    .hero-description {
+      font-size: var(--text-lg);
+      color: var(--neutral-600);
+      max-width: 700px;
+      margin: 0 auto var(--space-10);
+      line-height: 1.7;
+    }
+    
+    /* Company Values Section */
+    .values-section {
+      padding: var(--space-20) 0;
+      background: white;
+    }
+    
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+    
+    .value-card {
+      background: white;
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      border: 1px solid var(--neutral-200);
+      overflow: hidden;
+    }
+    
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-base);
+    }
+    
+    .value-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .value-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .value-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-light));
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto var(--space-6);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .value-title {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-4);
+    }
+    
+    .value-description {
+      color: var(--neutral-600);
+      line-height: 1.6;
+    }
+    
+    /* Apps Section */
+    .apps-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-16);
+    }
+    
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      margin-bottom: var(--space-4);
+      color: var(--neutral-900);
+    }
+    
+    .section-subtitle {
+      font-size: var(--text-xl);
+      color: var(--neutral-600);
+      line-height: 1.6;
+    }
+    
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+    
+    .app-card {
+      background: white;
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      border: 1px solid var(--neutral-200);
+      cursor: pointer;
+    }
+    
+    .app-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .app-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .app-content {
+      padding: var(--space-6);
+    }
+    
+    .app-title {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-3);
+    }
+    
+    .app-description {
+      font-size: var(--text-base);
+      color: var(--neutral-600);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+    
+    .app-tags {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .app-tag {
+      background: var(--neutral-100);
+      color: var(--neutral-600);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 500;
+    }
+    
+    .app-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--primary-orange);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-fast);
+    }
+    
+    .app-link:hover {
+      gap: var(--space-3);
+      color: var(--primary-orange-dark);
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      margin-bottom: var(--space-6);
+    }
+    
+    .cta-subtitle {
+      font-size: var(--text-xl);
+      opacity: 0.9;
+      margin-bottom: var(--space-8);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .cta-button-primary {
+      background: var(--primary-orange);
+      color: white;
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-medium);
+    }
+    
+    .cta-button-primary:hover {
+      background: var(--primary-orange-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .cta-button-secondary {
+      background: transparent;
+      color: white;
+      padding: var(--space-4) var(--space-8);
+      border: 2px solid white;
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-base);
+    }
+    
+    .cta-button-secondary:hover {
+      background: white;
+      color: var(--neutral-900);
+    }
+    
+    /* Floating Elements */
+    .floating-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .floating-shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: floatMove 25s infinite linear;
+    }
+    
+    @keyframes floatMove {
+      0% { transform: translateX(-100px) rotate(0deg); }
+      100% { transform: translateX(calc(100vw + 100px)) rotate(360deg); }
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .apps-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+      
+      .values-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .hero-mission {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+      }
     }
   </style>
 </head>
 <body>
-  <nav class="et-nav">
-    <div class="et-nav-inner">
-      <a href="index.html" class="nav-logo">ToMoreBeyond</a>
-      <div class="nav-links">
-        <a href="pages/apps.html">Apps</a>
-        <a href="pages/company.html">Company</a>
-        <a href="pages/media.html">Media</a>
-        <a href="pages/contact.html">Contact</a>
+  <!-- Modern Navigation -->
+  <nav class="navbar-modern">
+    <div class="container-fluid">
+      <div class="navbar-content">
+        <a href="#" class="navbar-brand-modern">ToMoreBeyond</a>
+        <div class="navbar-links-modern">
+          <a href="#apps" class="navbar-link-modern">アプリ</a>
+          <a href="#about" class="navbar-link-modern">会社概要</a>
+          <a href="#team" class="navbar-link-modern">チーム</a>
+          <a href="#contact" class="btn-modern btn-primary-modern">お問い合わせ</a>
+        </div>
       </div>
     </div>
   </nav>
-  <div class="et-hero">
-    <span class="et-hero-big">TO</span>
-    <div class="et-hero-center">
-      <div class="et-hero-catch">面白いことだけをする。</div>
-      <div class="et-hero-catch">友と共に "道なき道" を越える。</div>
-      <div class="et-hero-desc">疑問や不安を"楽しさ"で解消し、人々の行動半径を広げるプロダクトを連続創出するチーム。<br>モバイルアプリ・位置情報AI・SaaSで、日常に冒険と遊び心を。</div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="floating-elements">
+      <div class="floating-shape" style="top: 20%; font-size: 60px; animation-delay: 0s;">🚀</div>
+      <div class="floating-shape" style="top: 60%; font-size: 40px; animation-delay: 8s;">⚡</div>
+      <div class="floating-shape" style="top: 40%; font-size: 50px; animation-delay: 16s;">💡</div>
+      <div class="floating-shape" style="top: 80%; font-size: 35px; animation-delay: 24s;">🎯</div>
     </div>
-    <span class="et-hero-big">MORE</span>
-  </div>
-  <section class="center-infinite-scroll">
-    <div class="infinite-scroll-track">
-      <div class="infinite-card" data-link="pages/tadataka.html">
-        <img src="assets/tadataka.jpg" alt="TADATAKA" />
-        <div class="card-title">TADATAKA</div>
-        <div class="card-desc">移動がそのまま日記になる。<br>日々の移動や思い出を地図で振り返る。</div>
-      </div>
-      <div class="infinite-card" data-link="pages/midpoint.html">
-        <img src="assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
-        <div class="card-title">Meet in the Middle</div>
-        <div class="card-desc">みんなの出発地から最適集合駅を提案。<br>公平で便利な待ち合わせ体験。</div>
-      </div>
-      <div class="infinite-card" data-link="pages/toirun.html">
-        <img src="assets/toirun.jpg" alt="ToiRun" />
-        <div class="card-title">ToiRun</div>
-        <div class="card-desc">"今すぐトイレ"を最短で案内。<br>誰にでもやさしいAIナビ。</div>
-      </div>
-      <div class="infinite-card" data-link="pages/tadataka.html">
-        <img src="assets/tadataka.jpg" alt="TADATAKA" />
-        <div class="card-title">TADATAKA</div>
-        <div class="card-desc">移動がそのまま日記になる。<br>日々の移動や思い出を地図で振り返る。</div>
-      </div>
-      <div class="infinite-card" data-link="pages/midpoint.html">
-        <img src="assets/meet_in_the_middle.jpg" alt="Meet in the Middle" />
-        <div class="card-title">Meet in the Middle</div>
-        <div class="card-desc">みんなの出発地から最適集合駅を提案。<br>公平で便利な待ち合わせ体験。</div>
-      </div>
-      <div class="infinite-card" data-link="pages/toirun.html">
-        <img src="assets/toirun.jpg" alt="ToiRun" />
-        <div class="card-title">ToiRun</div>
-        <div class="card-desc">"今すぐトイレ"を最短で案内。<br>誰にでもやさしいAIナビ。</div>
+    
+    <div class="container-fluid">
+      <div class="hero-content">
+        <h1 class="hero-title">ToMoreBeyond</h1>
+        <p class="hero-mission">面白いことだけをする。<br>友と共に "道なき道" を越える。</p>
+        <p class="hero-description">
+          疑問や不安を"楽しさ"で解消し、人々の行動半径を広げるプロダクトを連続創出するチーム。<br>
+          モバイルアプリ・位置情報AI・SaaSで、日常に冒険と遊び心を。
+        </p>
       </div>
     </div>
   </section>
-  <script src="/js/components/loading.js"></script>
+
+  <!-- Company Values Section -->
+  <section class="values-section" id="about">
+    <div class="container-fluid">
+      <div class="section-header">
+        <h2 class="section-title">私たちのバリュー</h2>
+        <p class="section-subtitle">ToMoreBeyondが大切にする3つの価値観</p>
+      </div>
+      
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">🤝</div>
+          <h3 class="value-title">共創</h3>
+          <p class="value-description">
+            常に"友と共に"作る。多様な視点を持つメンバーが協力し、一人では生み出せない価値を創造します。
+          </p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">🗺️</div>
+          <h3 class="value-title">冒険</h3>
+          <p class="value-description">
+            人と違う道を選ぶ。既存の枠にとらわれず、新しい可能性を追求し続けます。
+          </p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">🎮</div>
+          <h3 class="value-title">遊び心</h3>
+          <p class="value-description">
+            楽しませるUI/UXを最優先。ユーザーが思わず笑顔になるような体験をデザインします。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Apps Section -->
+  <section class="apps-section" id="apps">
+    <div class="container-fluid">
+      <div class="section-header">
+        <h2 class="section-title">私たちのアプリ</h2>
+        <p class="section-subtitle">日常の課題を解決し、生活を豊かにする革新的なアプリケーション</p>
+      </div>
+      
+      <div class="apps-grid">
+        <div class="app-card" onclick="window.location.href='pages/tadataka.html'">
+          <div class="app-image">🗺️</div>
+          <div class="app-content">
+            <h3 class="app-title">TADATAKA</h3>
+            <p class="app-description">
+              移動がそのまま日記になる、ライフログアプリ。GPS/BLEによる自動経路記録で、今日の足あとを地図表示。
+            </p>
+            <div class="app-tags">
+              <span class="app-tag">ライフログ</span>
+              <span class="app-tag">地図</span>
+              <span class="app-tag">AI</span>
+              <span class="app-tag">プライバシー保護</span>
+            </div>
+            <a href="pages/tadataka.html" class="app-link">
+              詳しく見る →
+            </a>
+          </div>
+        </div>
+        
+        <div class="app-card" onclick="window.location.href='pages/toirun.html'">
+          <div class="app-image">🚽</div>
+          <div class="app-content">
+            <h3 class="app-title">ToiRun</h3>
+            <p class="app-description">
+              "今すぐトイレ"を最短で案内するAIナビ。商業施設のフロアマップを自動学習し、AR矢印で誘導。
+            </p>
+            <div class="app-tags">
+              <span class="app-tag">緊急時対応</span>
+              <span class="app-tag">AR</span>
+              <span class="app-tag">多言語</span>
+              <span class="app-tag">アクセシビリティ</span>
+            </div>
+            <a href="pages/toirun.html" class="app-link">
+              詳しく見る →
+            </a>
+          </div>
+        </div>
+        
+        <div class="app-card" onclick="window.location.href='pages/midpoint.html'">
+          <div class="app-image">📍</div>
+          <div class="app-content">
+            <h3 class="app-title">Meet in the Middle</h3>
+            <p class="app-description">
+              みんなの出発地を入力するだけ。最適集合駅を提案し、目的に合うお店も同時レコメンド。
+            </p>
+            <div class="app-tags">
+              <span class="app-tag">待ち合わせ</span>
+              <span class="app-tag">最適化</span>
+              <span class="app-tag">レコメンド</span>
+              <span class="app-tag">便利</span>
+            </div>
+            <a href="pages/midpoint.html" class="app-link">
+              詳しく見る →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="contact">
+    <div class="container-fluid">
+      <div class="cta-content">
+        <h2 class="cta-title">未来を一緒に創造しませんか？</h2>
+        <p class="cta-subtitle">
+          ToMoreBeyondと共に、テクノロジーの力で世界をより良い場所に
+        </p>
+        <div class="cta-buttons">
+          <a href="pages/contact.html" class="cta-button-primary">
+            お問い合わせ
+          </a>
+          <a href="pages/company.html" class="cta-button-secondary">
+            会社について
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/text-animations.js"></script>
+  <script src="/js/components/smooth-scroll.js"></script>
+  
   <script>
-    document.querySelectorAll('.infinite-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const link = card.getAttribute('data-link');
-        if (link) window.location.href = link;
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add parallax effect to floating elements
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        
+        document.querySelectorAll('.floating-shape').forEach((shape, index) => {
+          const speed = (index + 1) * 0.3;
+          shape.style.transform += ` translateY(${rate * speed}px)`;
+        });
+      }, { passive: true });
+      
+      // Add smooth reveal on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+      };
+      
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Apply to all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealObserver.observe(section);
+      });
+      
+      // Smooth scroll for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
       });
     });
   </script>
