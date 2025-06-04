@@ -3,213 +3,663 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MIDPOINT | ToMoreBeyond</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/animations.css">
-  <link rel="stylesheet" href="../css/transitions.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@barba/core"></script>
+  <title>Meet in the Middle - みんなで集まる最適な場所を提案 | ToMoreBeyond</title>
+  <meta name="description" content="Meet in the Middleは最大10名の出発地から公平な中間点を自動計算。カフェ・居酒屋・コワーキングスペースまで目的に合わせて同時提案する、新時代の待ち合わせアプリ。">
+  <meta name="keywords" content="Meet in the Middle, 待ち合わせ, 中間点, 最適化, AI提案, 公平性, ToMoreBeyond">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/modern-design.css">
+  <link rel="stylesheet" href="/css/components.css">
+  
   <style>
-    html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
-    body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
-    .et-nav { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2.5rem 0 1.5rem 0; font-size: 1.2rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; box-sizing: border-box; }
-    .et-nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
-    .nav-links { display: flex; gap: 3.5rem; }
-    .nav-links a { color: #111; text-decoration: none; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; white-space: nowrap; }
-    .nav-links a:hover { opacity: 0.6; }
-    .et-hero { display: flex; justify-content: center; align-items: flex-end; margin-top: 7rem; margin-bottom: 2rem; padding: 0 4rem; gap: 4vw; }
-    .et-hero-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .et-hero-catch, .et-hero-desc { text-align: center; }
-    .et-hero-big { font-family: 'Playfair Display', serif; font-size: 8vw; font-weight: 700; color: #111; line-height: 1; letter-spacing: -0.04em; }
-    .et-hero-catch { font-size: 2.6rem; font-family: 'Poppins', sans-serif; font-weight: 800; margin: 0.7rem 0; color: #111; letter-spacing: -0.01em; }
-    .et-hero-desc { margin-top: 2rem; font-size: 1.2rem; max-width: 420px; color: #111; text-align: center; }
-    .feature-section { padding: 4rem 6vw; }
-    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4rem; margin-top: 4rem; }
-    .feature-card { background: #fff; border-radius: 2rem; padding: 3rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
-    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 40px 0 rgba(0,0,0,0.12); }
-    .feature-number { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #FFB300; margin-bottom: 1rem; }
-    .feature-title { font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
-    .feature-desc { font-size: 1.1rem; line-height: 1.6; color: #444; }
-    .center-infinite-scroll { width: 100vw; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-top: 2rem; background: #fff; position: relative; z-index: 10; }
-    .infinite-scroll-track { display: flex; gap: 3vw; align-items: center; animation: scroll-x 32s linear infinite; }
-    .infinite-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); overflow: hidden; width: 480px; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer; }
-    .infinite-card:hover { box-shadow: 0 8px 40px 0 rgba(255,179,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.10); transform: translateY(-8px) scale(1.03); }
-    .infinite-card img { width: 100%; height: 78%; object-fit: cover; border-radius: 2rem 2rem 0 0; }
-    .card-title { font-family: 'Poppins', sans-serif; font-size: 1.7rem; font-weight: 700; margin: 1.2rem 0; color: #111; }
-    .cta-section { text-align: center; padding: 6rem 0; }
-    .btn-primary { display: inline-block; background: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%); color: #fff; font-weight: 700; font-size: 1.15rem; padding: 1.2rem 3rem; border-radius: 0.9rem; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 2px 12px 0 rgba(255,179,0,0.08); }
-    .btn-primary:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 20px 0 rgba(255,179,0,0.15); }
-    @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    @media (max-width: 900px) { .et-nav { padding: 1.2rem 0 0.8rem 0; font-size: 1rem; } .et-nav-inner { flex-direction: column; gap: 1.2rem; } .nav-logo { font-size: 2rem; } .nav-links { gap: 1.2rem; } .et-hero { flex-direction: column; align-items: center; padding: 0 1.2rem; } .et-hero-big { font-size: 12vw; } .feature-grid { grid-template-columns: 1fr; gap: 2rem; } .feature-card { padding: 2rem; } .center-infinite-scroll { min-height: 220px; } .infinite-card { width: 90vw; height: 160px; border-radius: 1.2rem; } .infinite-card img { border-radius: 1.2rem 1.2rem 0 0; } .et-hero-catch { font-size: 1.5rem; } }
+    /* App-specific enhanced styles */
+    body {
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+    }
+    
+    /* Enhanced Hero Section */
+    .app-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(255, 179, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
+      padding: calc(var(--space-20) + 80px) 0 var(--space-20);
+    }
+    
+    .app-hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .app-hero-text {
+      padding-right: var(--space-8);
+    }
+    
+    .app-title-large {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .app-tagline {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: var(--neutral-700);
+      margin-bottom: var(--space-6);
+      line-height: 1.4;
+    }
+    
+    .app-description-hero {
+      font-size: var(--text-lg);
+      color: var(--neutral-600);
+      line-height: 1.7;
+      margin-bottom: var(--space-8);
+    }
+    
+    .app-hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .app-mockup {
+      width: 300px;
+      height: 600px;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border-radius: 2rem;
+      box-shadow: var(--shadow-large);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+      border: 8px solid #1f2937;
+    }
+    
+    .mockup-screen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%);
+      border-radius: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+    
+    /* Features Section */
+    .features-section {
+      padding: var(--space-20) 0;
+      background: white;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+    
+    .feature-card-detailed {
+      background: white;
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      border: 1px solid var(--neutral-200);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card-detailed::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFB300, #22C55E);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-base);
+    }
+    
+    .feature-card-detailed:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .feature-card-detailed:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .feature-icon-large {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #FFB300, #22C55E);
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: var(--space-6);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-title-large {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-4);
+    }
+    
+    .feature-description-large {
+      color: var(--neutral-600);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+    
+    .feature-benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .feature-benefits li {
+      padding: var(--space-2) 0;
+      padding-left: var(--space-6);
+      position: relative;
+      color: var(--neutral-600);
+    }
+    
+    .feature-benefits li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #FFB300;
+      font-weight: bold;
+    }
+    
+    /* Technology Section */
+    .tech-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+    
+    .tech-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      border: 1px solid var(--neutral-200);
+    }
+    
+    .tech-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-medium);
+    }
+    
+    .tech-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-4);
+    }
+    
+    .tech-title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-2);
+    }
+    
+    .tech-description {
+      font-size: var(--text-sm);
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+    
+    /* Benefits Section */
+    .benefits-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+    
+    .benefit-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      border: 1px solid var(--neutral-200);
+    }
+    
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-medium);
+    }
+    
+    .benefit-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-4);
+    }
+    
+    .benefit-title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-2);
+    }
+    
+    .benefit-description {
+      font-size: var(--text-sm);
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+    
+    /* CTA Section */
+    .cta-section-app {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-content-app {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .cta-title-app {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: var(--space-6);
+    }
+    
+    .cta-subtitle-app {
+      font-size: var(--text-lg);
+      opacity: 0.9;
+      margin-bottom: var(--space-8);
+      line-height: 1.6;
+    }
+    
+    .download-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .download-button {
+      background: #FFB300;
+      color: white;
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-medium);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    
+    .download-button:hover {
+      background: #FF9E00;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .app-hero-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+        text-align: center;
+      }
+      
+      .app-hero-text {
+        padding-right: 0;
+      }
+      
+      .app-mockup {
+        width: 250px;
+        height: 500px;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+      
+      .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .download-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .tech-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div class="loading-screen">
-    <div class="loading-logo">ToMoreBeyond</div>
-  </div>
-  <!-- Page Transition Overlay -->
-  <div class="page-transition-overlay"></div>
-  <!-- Navigation -->
-  <nav class="et-nav">
-    <div class="et-nav-inner">
-      <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
-      <div class="nav-links">
-        <a href="apps.html">Apps</a>
-        <a href="company.html">Company</a>
-        <a href="media.html">Media</a>
-        <a href="contact.html">Contact</a>
+  <!-- Modern Navigation -->
+  <nav class="navbar-modern">
+    <div class="container-fluid">
+      <div class="navbar-content">
+        <a href="/" class="navbar-brand-modern">ToMoreBeyond</a>
+        <div class="navbar-links-modern">
+          <a href="/#apps" class="navbar-link-modern">アプリ</a>
+          <a href="/#about" class="navbar-link-modern">会社概要</a>
+          <a href="/pages/contact.html" class="btn-modern btn-primary-modern">お問い合わせ</a>
+        </div>
       </div>
     </div>
   </nav>
-  <!-- Main Content -->
-  <main data-barba="container" data-barba-namespace="midpoint">
-    <!-- Hero Section -->
-    <section class="et-hero">
-      <span class="et-hero-big">MID</span>
-      <div class="et-hero-center">
-        <div class="et-hero-catch">みんなの出発地から最適集合駅を提案</div>
-        <div class="et-hero-catch">公平で便利な待ち合わせ体験</div>
-        <div class="et-hero-desc">最大10名までの出発地を入力するだけで、全員にとって"ちょうどいい"集合駅とおすすめスポットをAIが提案。友人グループやハイブリッド勤務チームのための新しい集合体験。</div>
-      </div>
-      <span class="et-hero-big">POINT</span>
-    </section>
-    <section class="app-detail-section" style="max-width:900px;margin:0 auto 4rem auto;padding:3rem 2rem 2rem 2rem;background:#fff;border-radius:2rem;box-shadow:0 4px 32px 0 rgba(0,0,0,0.07);">
-      <h2 style="font-family:'Poppins',sans-serif;font-size:2.2rem;font-weight:700;margin-bottom:1.2rem;color:#111;text-align:center;">Meet in the Middleとは？</h2>
-      <p style="font-size:1.15rem;line-height:1.8;color:#222;text-align:center;margin-bottom:2.2rem;">みんなの出発地を入力するだけで、最適な集合駅とおすすめスポットを提案するアプリ。<br>公平な中間点をAIが算出し、カフェや居酒屋など目的に合ったお店も同時にレコメンドします。</p>
-      <div style="display:flex;flex-wrap:wrap;gap:2.5rem;justify-content:center;align-items:stretch;">
-        <div style="flex:1 1 260px;min-width:220px;background:#fafafa;border-radius:1.2rem;padding:1.5rem 1.2rem;box-shadow:0 2px 12px 0 rgba(255,179,0,0.07);">
-          <h3 style="font-size:1.1rem;color:#FFB300;margin-bottom:0.7rem;">特徴</h3>
-          <ul style="padding-left:1.2rem;font-size:1rem;color:#222;line-height:1.7;">
-            <li>最大10名までの出発地・駅入力</li>
-            <li>重み付けした"公平な中間点"を自動計算</li>
-            <li>カフェ/居酒屋/コワーキングスペース候補をAPI連携で表示</li>
-          </ul>
+
+  <!-- App Hero Section -->
+  <section class="app-hero">
+    <div class="container-fluid">
+      <div class="app-hero-content">
+        <div class="app-hero-text">
+          <h1 class="app-title-large">Meet in the Middle</h1>
+          <p class="app-tagline">みんなで集まる最適な場所を提案</p>
+          <p class="app-description-hero">
+            最大10名の出発地から公平な中間点を自動計算。カフェ・居酒屋・コワーキングスペースまで
+            目的に合わせて同時提案する、新時代の待ち合わせアプリです。
+          </p>
+          <div class="download-buttons">
+            <a href="#" class="download-button">
+              <span>📱</span>
+              App Store
+            </a>
+            <a href="#" class="download-button">
+              <span>🤖</span>
+              Google Play
+            </a>
+          </div>
         </div>
-        <div style="flex:1 1 260px;min-width:220px;background:#fafafa;border-radius:1.2rem;padding:1.5rem 1.2rem;box-shadow:0 2px 12px 0 rgba(255,179,0,0.07);">
-          <h3 style="font-size:1.1rem;color:#FFB300;margin-bottom:0.7rem;">ターゲット</h3>
-          <ul style="padding-left:1.2rem;font-size:1rem;color:#222;line-height:1.7;">
-            <li>友人グループ</li>
-            <li>地方×都市ハイブリッド勤務チーム</li>
-            <li>公平な待ち合わせをしたい全ての人</li>
-          </ul>
+        <div class="app-hero-visual">
+          <div class="app-mockup">
+            <div class="mockup-screen">📍</div>
+          </div>
         </div>
-        <div style="flex:1 1 260px;min-width:220px;background:#fafafa;border-radius:1.2rem;padding:1.5rem 1.2rem;box-shadow:0 2px 12px 0 rgba(255,179,0,0.07);">
-          <h3 style="font-size:1.1rem;color:#FFB300;margin-bottom:0.7rem;">技術ポイント</h3>
-          <ul style="padding-left:1.2rem;font-size:1rem;color:#222;line-height:1.7;">
-            <li>グラフ探索（Dijkstra）で最適経路を算出</li>
-            <li>GPTベクトル検索で"目的に合う店"を同時提案</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    <!-- Features Section -->
-    <section class="feature-section">
-      <div class="feature-grid">
-        <div class="feature-card" data-link="../assets/midpoint_feature1.jpg">
-          <div class="feature-number">01</div>
-          <h3 class="feature-title">リアルタイム中間点計算</h3>
-          <p class="feature-desc">全員の現在地をもとに、最適な集合場所を瞬時に算出。地図上で直感的に確認できます。</p>
-        </div>
-        <div class="feature-card" data-link="../assets/midpoint_feature2.jpg">
-          <div class="feature-number">02</div>
-          <h3 class="feature-title">おすすめスポット提案</h3>
-          <p class="feature-desc">カフェ・レストラン・公園など、用途に合わせたスポットを自動でピックアップ。</p>
-        </div>
-        <div class="feature-card" data-link="../assets/midpoint_feature3.jpg">
-          <div class="feature-number">03</div>
-          <h3 class="feature-title">リンクで簡単シェア</h3>
-          <p class="feature-desc">計算結果はURLでシェア可能。誰でもワンタップで集合場所を確認できます。</p>
-        </div>
-        <div class="feature-card" data-link="../assets/midpoint_feature4.jpg">
-          <div class="feature-number">04</div>
-          <h3 class="feature-title">プライバシー配慮</h3>
-          <p class="feature-desc">位置情報は暗号化して一時的に利用。個人情報の安全を最優先に設計しています。</p>
-        </div>
-      </div>
-    </section>
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <a href="../index.html#contact" class="btn-primary">参加リクエストはこちら</a>
-    </section>
-    <!-- Infinite Scroll Section -->
-    <section class="center-infinite-scroll">
-      <div class="infinite-scroll-track">
-        <div class="infinite-card" data-link="../assets/midpoint_feature1.jpg">
-          <img src="../assets/meet_in_the_middle.jpg" alt="リアルタイム中間点計算" />
-          <div class="card-title">リアルタイム中間点計算</div>
-        </div>
-        <div class="infinite-card" data-link="../assets/midpoint_feature2.jpg">
-          <img src="../assets/tadataka.jpg" alt="おすすめスポット提案" />
-          <div class="card-title">おすすめスポット提案</div>
-        </div>
-        <div class="infinite-card" data-link="../assets/midpoint_feature3.jpg">
-          <img src="../assets/toirun.jpg" alt="リンクで簡単シェア" />
-          <div class="card-title">リンクで簡単シェア</div>
-        </div>
-        <!-- repeat for seamless loop -->
-        <div class="infinite-card" data-link="../assets/midpoint_feature1.jpg">
-          <img src="../assets/meet_in_the_middle.jpg" alt="リアルタイム中間点計算" />
-          <div class="card-title">リアルタイム中間点計算</div>
-        </div>
-        <div class="infinite-card" data-link="../assets/midpoint_feature2.jpg">
-          <img src="../assets/tadataka.jpg" alt="おすすめスポット提案" />
-          <div class="card-title">おすすめスポット提案</div>
-        </div>
-        <div class="infinite-card" data-link="../assets/midpoint_feature3.jpg">
-          <img src="../assets/toirun.jpg" alt="リンクで簡単シェア" />
-          <div class="card-title">リンクで簡単シェア</div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-logo">ToMoreBeyond</div>
-      <div class="footer-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-      </div>
-      <div class="footer-social">
-        <a href="#" class="social-link">Twitter</a>
-        <a href="#" class="social-link">Instagram</a>
-        <a href="#" class="social-link">LinkedIn</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024 ToMoreBeyond. All rights reserved.</p>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container-fluid">
+      <div class="section-header">
+        <h2 class="section-title">主な機能</h2>
+        <p class="section-subtitle">Meet in the Middleが公平な待ち合わせを実現する理由</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">📍</div>
+          <h3 class="feature-title-large">リアルタイム中間点計算</h3>
+          <p class="feature-description-large">
+            全員の出発地を入力するだけで、最適な集合場所を瞬時に算出。地図上で直感的に確認できます。
+          </p>
+          <ul class="feature-benefits">
+            <li>最大10名まで同時計算</li>
+            <li>公平性を重視した重み付け</li>
+            <li>リアルタイム位置更新</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🏪</div>
+          <h3 class="feature-title-large">おすすめスポット提案</h3>
+          <p class="feature-description-large">
+            カフェ・レストラン・コワーキングスペースなど、用途に合わせたスポットを自動でピックアップ。
+          </p>
+          <ul class="feature-benefits">
+            <li>GPTベクトル検索で精度向上</li>
+            <li>目的別カテゴリ対応</li>
+            <li>評価・レビュー情報付き</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🔗</div>
+          <h3 class="feature-title-large">リンクで簡単シェア</h3>
+          <p class="feature-description-large">
+            計算結果はURLでシェア可能。誰でもワンタップで集合場所を確認できます。
+          </p>
+          <ul class="feature-benefits">
+            <li>一意URLの自動生成</li>
+            <li>SNS・メッセージアプリ対応</li>
+            <li>QRコードでの共有</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🔒</div>
+          <h3 class="feature-title-large">プライバシー配慮</h3>
+          <p class="feature-description-large">
+            位置情報は暗号化して一時的に利用。個人情報の安全を最優先に設計しています。
+          </p>
+          <ul class="feature-benefits">
+            <li>一時的な位置情報利用</li>
+            <li>エンドツーエンド暗号化</li>
+            <li>データ自動削除機能</li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </footer>
-  <!-- Scripts -->
-  <script src="../js/main.js"></script>
-  <script src="../js/animations.js"></script>
-  <script src="../js/transitions.js"></script>
+  </section>
+
+  <!-- Technology Section -->
+  <section class="tech-section">
+    <div class="container-fluid">
+      <div class="section-header">
+        <h2 class="section-title">技術的特徴</h2>
+        <p class="section-subtitle">最先端アルゴリズムで公平性と利便性を両立</p>
+      </div>
+      
+      <div class="tech-grid">
+        <div class="tech-card">
+          <div class="tech-icon">🎯</div>
+          <h3 class="tech-title">グラフ探索（Dijkstra）</h3>
+          <p class="tech-description">
+            最短経路アルゴリズムで全員にとって最適な集合駅を算出
+          </p>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">🧠</div>
+          <h3 class="tech-title">GPTベクトル検索</h3>
+          <p class="tech-description">
+            目的に合う店舗をAIが理解し、最適なスポットを提案
+          </p>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">⚖️</div>
+          <h3 class="tech-title">公平性重み付け</h3>
+          <p class="tech-description">
+            移動時間・費用・乗り換え回数を総合的に評価し最適化
+          </p>
+        </div>
+        
+        <div class="tech-card">
+          <div class="tech-icon">🔐</div>
+          <h3 class="tech-title">セキュリティ設計</h3>
+          <p class="tech-description">
+            位置情報は計算時のみ利用し、完了後は自動削除
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="container-fluid">
+      <div class="section-header">
+        <h2 class="section-title">誰のためのアプリ？</h2>
+        <p class="section-subtitle">Meet in the Middleが支援するシーン</p>
+      </div>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">👥</div>
+          <h3 class="benefit-title">友人グループ</h3>
+          <p class="benefit-description">
+            みんなが納得できる公平な待ち合わせ場所を瞬時に決定
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">💼</div>
+          <h3 class="benefit-title">ハイブリッド勤務チーム</h3>
+          <p class="benefit-description">
+            地方×都市メンバーの最適な集合場所を効率的に計算
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">🎉</div>
+          <h3 class="benefit-title">イベント企画者</h3>
+          <p class="benefit-description">
+            参加者全員が集まりやすい会場選びをサポート
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">🏠</div>
+          <h3 class="benefit-title">多拠点生活者</h3>
+          <p class="benefit-description">
+            複数の拠点を持つ人同士の効率的な待ち合わせを実現
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section-app">
+    <div class="container-fluid">
+      <div class="cta-content-app">
+        <h2 class="cta-title-app">公平で便利な<br>待ち合わせ体験</h2>
+        <p class="cta-subtitle-app">
+          Meet in the Middleで、みんなが納得できる集合場所を見つけましょう。<br>
+          今すぐダウンロードして、新しい待ち合わせ体験を始めてください。
+        </p>
+        <div class="download-buttons">
+          <a href="#" class="download-button">
+            <span>📱</span>
+            App Store
+          </a>
+          <a href="#" class="download-button">
+            <span>🤖</span>
+            Google Play
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/smooth-scroll.js"></script>
+  
   <script>
-    // Feature cards animation
-    gsap.utils.toArray('.feature-card').forEach((card, i) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: "top bottom-=100",
-          toggleActions: "play none none reverse"
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        delay: i * 0.2
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add smooth reveal on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+      };
+      
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Apply to all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealObserver.observe(section);
       });
-    });
-    // Both feature-card and infinite-card click
-    document.querySelectorAll('.feature-card, .infinite-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const link = card.getAttribute('data-link');
-        if (link) window.open(link, '_blank');
+      
+      // Smooth scroll for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
       });
     });
   </script>
 </body>
-</html> 
+</html>
