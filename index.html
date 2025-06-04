@@ -262,29 +262,116 @@
       color: var(--primary-orange-dark);
     }
     
-    /* CTA Section */
-    .cta-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
-      color: white;
-      text-align: center;
+    /* Team Section */
+    .team-section {
+      padding: var(--space-20) 0 var(--space-16) 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    .infinite-scroll-container {
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      overflow: hidden;
+      background: white;
+      padding: var(--space-12) 0;
+    }
+    
+    .infinite-scroll-track {
+      display: flex;
+      gap: var(--space-6);
+      align-items: center;
+      animation: scroll-x 40s linear infinite;
+      width: calc(100% * 2);
+    }
+    
+    .member-card {
+      background: white;
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      width: 320px;
+      height: 240px;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-base);
+      cursor: pointer;
+      flex-shrink: 0;
+      border: 1px solid var(--neutral-200);
+    }
+    
+    .member-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .member-image {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
       position: relative;
       overflow: hidden;
     }
     
-    .cta-content {
-      position: relative;
-      z-index: 2;
+    .member-info {
+      padding: var(--space-4);
+      text-align: center;
     }
     
-    .cta-title {
+    .member-name {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-1);
+    }
+    
+    .member-role {
+      font-size: var(--text-sm);
+      color: var(--neutral-600);
+      line-height: 1.4;
+    }
+    
+    @keyframes scroll-x {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .contact-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .contact-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+    
+    .contact-title {
       font-family: var(--font-display);
       font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 800;
       margin-bottom: var(--space-6);
     }
     
-    .cta-subtitle {
+    .contact-subtitle {
       font-size: var(--text-xl);
       opacity: 0.9;
       margin-bottom: var(--space-8);
@@ -294,44 +381,110 @@
       line-height: 1.6;
     }
     
-    .cta-buttons {
-      display: flex;
-      gap: var(--space-4);
-      justify-content: center;
-      flex-wrap: wrap;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: start;
     }
     
-    .cta-button-primary {
-      background: var(--primary-orange);
-      color: white;
-      padding: var(--space-4) var(--space-8);
+    .contact-info {
+      background: rgba(255, 255, 255, 0.05);
+      padding: var(--space-8);
+      border-radius: var(--radius-2xl);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .contact-info h3 {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-6);
+      color: var(--primary-orange);
+    }
+    
+    .contact-item {
+      margin-bottom: var(--space-4);
+      padding: var(--space-3);
+      background: rgba(255, 255, 255, 0.02);
       border-radius: var(--radius-lg);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all var(--transition-base);
-      box-shadow: var(--shadow-medium);
     }
     
-    .cta-button-primary:hover {
-      background: var(--primary-orange-hover);
-      transform: translateY(-2px);
+    .contact-item h4 {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+    
+    .contact-item p {
+      opacity: 0.8;
+      margin: 0;
+    }
+    
+    .contact-form-container {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--neutral-900);
+      padding: var(--space-8);
+      border-radius: var(--radius-2xl);
+      backdrop-filter: blur(10px);
       box-shadow: var(--shadow-large);
     }
     
-    .cta-button-secondary {
-      background: transparent;
-      color: white;
-      padding: var(--space-4) var(--space-8);
-      border: 2px solid white;
-      border-radius: var(--radius-lg);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all var(--transition-base);
+    .contact-form h3 {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-6);
+      color: var(--neutral-900);
     }
     
-    .cta-button-secondary:hover {
+    .form-group {
+      margin-bottom: var(--space-4);
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--neutral-700);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: var(--space-3);
+      border: 2px solid var(--neutral-200);
+      border-radius: var(--radius-lg);
       background: white;
-      color: var(--neutral-900);
+      font-size: var(--text-base);
+      transition: all var(--transition-base);
+      resize: vertical;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(255, 179, 0, 0.1);
+    }
+    
+    .submit-button {
+      background: var(--primary-orange);
+      color: white;
+      padding: var(--space-4) var(--space-8);
+      border: none;
+      border-radius: var(--radius-lg);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-medium);
+      width: 100%;
+    }
+    
+    .submit-button:hover {
+      background: var(--primary-orange-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-large);
     }
     
     /* Floating Elements */
@@ -368,9 +521,19 @@
         gap: var(--space-6);
       }
       
-      .cta-buttons {
-        flex-direction: column;
-        align-items: center;
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+      
+      .member-card {
+        width: 280px;
+        height: 200px;
+      }
+      
+      .member-image {
+        height: 130px;
+        font-size: 3rem;
       }
       
       .hero-mission {
@@ -504,13 +667,18 @@
           <div class="app-content">
             <h3 class="app-title">Meet in the Middle</h3>
             <p class="app-description">
-              みんなの出発地を入力するだけ。最適集合駅を提案し、目的に合うお店も同時レコメンド。
+              最大10名の出発地から公平な中間点を自動計算。カフェ・居酒屋・コワーキングスペースまで目的に合わせて同時提案する、新時代の待ち合わせアプリ。
             </p>
+            <div class="app-features" style="margin-bottom: var(--space-4); font-size: var(--text-sm); color: var(--neutral-700);">
+              <div style="margin-bottom: var(--space-2);">✓ グラフ探索（Dijkstra）で最適経路算出</div>
+              <div style="margin-bottom: var(--space-2);">✓ GPTベクトル検索でスポット提案</div>
+              <div>✓ ハイブリッド勤務チーム・友人グループに最適</div>
+            </div>
             <div class="app-tags">
               <span class="app-tag">待ち合わせ</span>
               <span class="app-tag">最適化</span>
-              <span class="app-tag">レコメンド</span>
-              <span class="app-tag">便利</span>
+              <span class="app-tag">AI提案</span>
+              <span class="app-tag">公平性</span>
             </div>
             <a href="pages/midpoint.html" class="app-link">
               詳しく見る →
@@ -521,21 +689,145 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section" id="contact">
+  <!-- Team Section -->
+  <section class="team-section" id="team">
     <div class="container-fluid">
-      <div class="cta-content">
-        <h2 class="cta-title">未来を一緒に創造しませんか？</h2>
-        <p class="cta-subtitle">
-          ToMoreBeyondと共に、テクノロジーの力で世界をより良い場所に
-        </p>
-        <div class="cta-buttons">
-          <a href="pages/contact.html" class="cta-button-primary">
-            お問い合わせ
-          </a>
-          <a href="pages/company.html" class="cta-button-secondary">
-            会社について
-          </a>
+      <div class="section-header">
+        <h2 class="section-title">私たちのチーム</h2>
+        <p class="section-subtitle">多様な個性が集うクリエイティブチーム</p>
+      </div>
+    </div>
+    
+    <div class="infinite-scroll-container">
+      <div class="infinite-scroll-track">
+        <div class="member-card" onclick="window.location.href='pages/member_yamada.html'">
+          <div class="member-image">👨‍💻</div>
+          <div class="member-info">
+            <div class="member-name">山田（Yamada）</div>
+            <div class="member-role">CDO / プロダクトデザイン</div>
+          </div>
+        </div>
+        
+        <div class="member-card" onclick="window.location.href='pages/member_masadome.html'">
+          <div class="member-image">🚀</div>
+          <div class="member-info">
+            <div class="member-name">正留（Masadome）</div>
+            <div class="member-role">CEO / フルスタックエンジニア & AIアーキテクト</div>
+          </div>
+        </div>
+        
+        <div class="member-card" onclick="window.location.href='pages/member_ando.html'">
+          <div class="member-image">🎨</div>
+          <div class="member-info">
+            <div class="member-name">安藤（Ando）</div>
+            <div class="member-role">デジタルアート・アニメーション</div>
+          </div>
+        </div>
+        
+        <!-- Duplicate cards for seamless scrolling -->
+        <div class="member-card" onclick="window.location.href='pages/member_yamada.html'">
+          <div class="member-image">👨‍💻</div>
+          <div class="member-info">
+            <div class="member-name">山田（Yamada）</div>
+            <div class="member-role">CDO / プロダクトデザイン</div>
+          </div>
+        </div>
+        
+        <div class="member-card" onclick="window.location.href='pages/member_masadome.html'">
+          <div class="member-image">🚀</div>
+          <div class="member-info">
+            <div class="member-name">正留（Masadome）</div>
+            <div class="member-role">CEO / フルスタックエンジニア & AIアーキテクト</div>
+          </div>
+        </div>
+        
+        <div class="member-card" onclick="window.location.href='pages/member_ando.html'">
+          <div class="member-image">🎨</div>
+          <div class="member-info">
+            <div class="member-name">安藤（Ando）</div>
+            <div class="member-role">デジタルアート・アニメーション</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="container-fluid">
+      <div class="contact-content">
+        <div class="contact-header">
+          <h2 class="contact-title">未来を一緒に創造しませんか？</h2>
+          <p class="contact-subtitle">
+            ToMoreBeyondと共に、テクノロジーの力で世界をより良い場所に
+          </p>
+        </div>
+        
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h3>お気軽にご連絡ください</h3>
+            
+            <div class="contact-item">
+              <h4>💬 一般的なお問い合わせ</h4>
+              <p>サービスに関するご質問、ご相談など</p>
+            </div>
+            
+            <div class="contact-item">
+              <h4>🤝 事業提携・協業</h4>
+              <p>パートナーシップやジョイントベンチャーのご提案</p>
+            </div>
+            
+            <div class="contact-item">
+              <h4>💼 採用・転職</h4>
+              <p>エンジニア、デザイナー、事業開発メンバー募集中</p>
+            </div>
+            
+            <div class="contact-item">
+              <h4>📱 アプリ体験・フィードバック</h4>
+              <p>TADATAKA、ToiRun、Meet in the Middleのテスト参加</p>
+            </div>
+            
+            <div class="contact-item">
+              <h4>🏢 会社概要</h4>
+              <p>東京都（リモートワーク中心）<br>設立: 2025年4月</p>
+            </div>
+          </div>
+          
+          <div class="contact-form-container">
+            <div class="contact-form">
+              <h3>メッセージを送る</h3>
+              <form action="#" method="POST">
+                <div class="form-group">
+                  <label for="name">お名前 *</label>
+                  <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">メールアドレス *</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="company">会社名・組織名</label>
+                  <input type="text" id="company" name="company">
+                </div>
+                
+                <div class="form-group">
+                  <label for="subject">件名 *</label>
+                  <input type="text" id="subject" name="subject" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="message">メッセージ *</label>
+                  <textarea id="message" name="message" rows="5" required placeholder="お問い合わせ内容をお聞かせください..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">
+                  送信する
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
