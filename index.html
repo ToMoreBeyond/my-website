@@ -11,182 +11,125 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/professional-path-design.css">
+  <link rel="stylesheet" href="/css/nature-trail-design.css">
   
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div class="loading-screen" id="loadingScreen">
-    <div class="loading-logo">ToMoreBeyond</div>
+  <!-- 自然な背景レイヤー -->
+  <div class="nature-background">
+    <div class="mountain-layer"></div>
+    <div class="forest-layer"></div>
+    <div class="trail-layer">
+      <svg class="trail-path" viewBox="0 0 1200 800">
+        <path d="M0,600 Q200,550 400,580 T800,520 Q1000,500 1200,480" 
+              class="trail-line trail-animated"/>
+        <!-- 道の石 -->
+        <circle cx="150" cy="570" r="4" class="trail-stones"/>
+        <circle cx="180" cy="575" r="3" class="trail-stones"/>
+        <circle cx="350" cy="580" r="5" class="trail-stones"/>
+        <circle cx="520" cy="560" r="4" class="trail-stones"/>
+        <circle cx="750" cy="525" r="3" class="trail-stones"/>
+        <circle cx="920" cy="510" r="4" class="trail-stones"/>
+      </svg>
+    </div>
   </div>
   
   <!-- Scroll Progress Indicator -->
-  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="scroll-progress" id="scrollProgress" style="background: var(--trail-grass); height: 4px; position: fixed; top: 0; left: 0; z-index: 1001; transition: width 0.1s ease;"></div>
   
-  <!-- Professional Navigation -->
-  <nav class="navbar">
+  <!-- 自然なナビゲーション -->
+  <nav class="nature-nav">
     <div class="container">
-      <div class="navbar-content">
-        <a href="#" class="navbar-brand">ToMoreBeyond</a>
-        <ul class="navbar-nav">
-          <li><a href="#about" class="navbar-link">ビジョン</a></li>
-          <li><a href="#apps" class="navbar-link">プロダクト</a></li>
-          <li><a href="#team" class="navbar-link">チーム</a></li>
-          <li><a href="#contact" class="btn btn-primary">お問い合わせ</a></li>
+      <div class="nav-content">
+        <a href="#" class="nav-brand">ToMoreBeyond</a>
+        <ul class="nav-links">
+          <li><a href="#about" class="nav-link">私たちのビジョン</a></li>
+          <li><a href="#apps" class="nav-link">プロダクト</a></li>
+          <li><a href="#team" class="nav-link">チーム</a></li>
+          <li><a href="#contact" class="trail-button">お問い合わせ</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Professional Hero Section -->
-  <section class="hero">
-    <!-- Professional Path Visualization -->
-    <div class="path-visual">
-      <div class="path-steps">
-        <div class="path-step">
-          <svg class="icon icon-lg" viewBox="0 0 24 24">
-            <path d="M12 2L13.09 5.26L16 6L13.09 6.74L12 10L10.91 6.74L8 6L10.91 5.26L12 2Z" fill="currentColor"/>
-          </svg>
-        </div>
-        <div class="path-step">
-          <svg class="icon icon-lg" viewBox="0 0 24 24">
-            <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 4L13.5 7.5C13.1 8.4 12.2 9 11.2 9H7V11H11.2C12.8 11 14.2 9.8 14.7 8.2L15.5 6L19 7.3V9H21ZM13.5 11.5C13.1 10.6 12.2 10 11.2 10H7V12H11.2C11.7 12 12.2 12.3 12.4 12.7L14 16H16L13.5 11.5ZM5 12V22H7V12H5ZM11 14V22H13V14H11Z" fill="currentColor"/>
-          </svg>
-        </div>
-        <div class="path-step">
-          <svg class="icon icon-lg" viewBox="0 0 24 24">
-            <path d="M16 6L18.29 8.29L13.41 13.17L9.41 9.17L2 16.59L3.41 18L9.41 12L13.41 16L19.71 9.71L22 12V6H16Z" fill="currentColor"/>
-          </svg>
-        </div>
-        <div class="path-step">
-          <svg class="icon icon-lg" viewBox="0 0 24 24">
-            <path d="M12 2L15.5 8.5L22 9L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9L8.5 8.5L12 2Z" fill="currentColor"/>
-          </svg>
-        </div>
-      </div>
-      
-      <!-- Connecting Path Lines -->
-      <svg class="path-svg">
-        <path d="M30,30 Q150,120 120,180 Q90,240 180,240 Q270,240 240,300 Q210,360 300,360" 
-              class="path-line path-line-animated"/>
-      </svg>
-    </div>
-    
+  <!-- 自然なヒーローセクション -->
+  <section class="nature-hero">
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-eyebrow">Innovation Journey</div>
-        
-        <h1 class="hero-title">ToMoreBeyond</h1>
-        
-        <p class="hero-subtitle">
-          未踏の道を歩み、革新的なプロダクトで世界を変える。<br>
-          面白いことだけをする。友と共に "道なき道" を越える。
-        </p>
-        
-        <div class="hero-actions">
-          <a href="#apps" class="btn btn-primary">
-            <svg class="icon" viewBox="0 0 24 24">
-              <path d="M8 5V3C8 2.45 8.45 2 9 2H15C15.55 2 16 2.45 16 3V5H19C19.55 5 20 5.45 20 6S19.55 7 19 7H18V19C18 20.1 17.1 21 16 21H8C6.9 21 6 20.1 6 19V7H5C4.45 7 4 6.55 4 6S4.45 5 5 5H8ZM10 4V5H14V4H10ZM8 7V19H16V7H8Z" fill="currentColor"/>
-            </svg>
-            プロダクトを見る
-          </a>
-          <a href="#team" class="btn btn-secondary">
-            <svg class="icon" viewBox="0 0 24 24">
-              <path d="M16 4C18.2 4 20 5.8 20 8S18.2 12 16 12S12 10.2 12 8S13.8 4 16 4ZM16 6C14.9 6 14 6.9 14 8S14.9 10 16 10S18 9.1 18 8S17.1 6 16 6ZM16 13C18.67 13 22 14.33 22 17V20H10V17C10 14.33 13.33 13 16 13ZM8 12C10.21 12 12 10.21 12 8S10.21 4 8 4S4 5.79 4 8S5.79 12 8 12ZM8 6C9.1 6 10 6.9 10 8S9.1 10 8 10S6 9.1 6 8S6.9 6 8 6ZM8 13C5.33 13 0 14.33 0 17V20H8V17C8 15.9 8.29 14.9 8.8 14.07C7.61 13.4 6.81 13 8 13Z" fill="currentColor"/>
-            </svg>
-            チームに会う
-          </a>
-        </div>
-        
-        <!-- Professional Footprint Trail -->
-        <div class="footprint-trail" style="margin-top: 3rem; opacity: 0.6;">
-          <div class="footprint"></div>
-          <div class="footprint"></div>
-          <div class="footprint"></div>
-          <div class="footprint"></div>
-          <div class="footprint"></div>
+      <div class="hero-signpost">
+        <div class="hero-wooden-sign animate-float">
+          <h1 class="hero-title">ToMoreBeyond</h1>
+          <p class="hero-subtitle">
+            面白いことだけをする。<br>
+            友と共に "道なき道" を越える。
+          </p>
+          
+          <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="#apps" class="trail-button">
+              📱 プロダクトを見る
+            </a>
+            <a href="#team" class="trail-button">
+              👥 チームに会う
+            </a>
+          </div>
+          
+          <!-- 木の看板の下部に道の案内 -->
+          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px dashed var(--wood-cream); opacity: 0.8;">
+            <p style="font-family: var(--font-sign); font-size: 0.9rem; margin: 0;">
+              ↓ この道を進むと、私たちのビジョンとプロダクトが見えてきます
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Professional Values Section -->
-  <section class="section" id="about">
+  <!-- 価値観の看板エリア -->
+  <section class="nature-section" id="about">
     <div class="container">
       <div class="section-header">
-        <div class="section-eyebrow">Our Philosophy</div>
         <h2 class="section-title">道を歩む上での価値観</h2>
         <p class="section-subtitle">
-          ToMoreBeyondが大切にする3つの価値観。これらの指針が、私たちの歩む道を照らし続けています。
+          ToMoreBeyondが大切にする3つの価値観。この道標が、私たちの歩む道を照らし続けています。
         </p>
       </div>
       
-      <!-- Professional Path Connection -->
-      <svg class="path-svg" style="height: 200px; margin-bottom: 3rem;">
-        <path d="M100,100 Q300,50 500,80 T900,70" 
-              class="path-line path-line-animated"/>
-        <circle cx="200" cy="75" r="6" fill="var(--accent-gold)" opacity="0.8"/>
-        <circle cx="500" cy="80" r="6" fill="var(--accent-gold)" opacity="0.8"/>
-        <circle cx="800" cy="72" r="6" fill="var(--accent-gold)" opacity="0.8"/>
+      <!-- 山道のパス -->
+      <svg style="width: 100%; height: 150px; margin-bottom: 2rem;">
+        <path d="M0,100 Q200,80 400,90 T800,75 Q1000,70 1200,65" 
+              class="trail-line trail-animated"/>
+        <!-- 道標の位置 -->
+        <circle cx="200" cy="85" r="5" fill="var(--wood-dark)" opacity="0.8"/>
+        <circle cx="600" cy="80" r="5" fill="var(--wood-dark)" opacity="0.8"/>
+        <circle cx="1000" cy="70" r="5" fill="var(--wood-dark)" opacity="0.8"/>
       </svg>
       
-      <div class="grid grid-cols-3">
-        <div class="card">
-          <div class="card-header">
-            <div style="width: 60px; height: 60px; background: var(--gradient-accent); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <svg class="icon icon-xl text-white" viewBox="0 0 24 24">
-                <path d="M16 4C18.2 4 20 5.8 20 8S18.2 12 16 12S12 10.2 12 8S13.8 4 16 4ZM16 6C14.9 6 14 6.9 14 8S14.9 10 16 10S18 9.1 18 8S17.1 6 16 6ZM16 13C18.67 13 22 14.33 22 17V20H10V17C10 14.33 13.33 13 16 13ZM8 12C10.21 12 12 10.21 12 8S10.21 4 8 4S4 5.79 4 8S5.79 12 8 12ZM8 6C9.1 6 10 6.9 10 8S9.1 10 8 10S6 9.1 6 8S6.9 6 8 6ZM8 13C5.33 13 0 14.33 0 17V20H8V17C8 15.9 8.29 14.9 8.8 14.07C7.61 13.4 6.81 13 8 13Z" fill="currentColor"/>
-              </svg>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--primary-slate); margin-bottom: 0.5rem;">共創</h3>
-          </div>
-          <div class="card-body">
-            <p style="color: var(--gray-600); line-height: 1.6;">
-              常に"友と共に"歩む。多様な仲間と手を取り合い、一人では見つけられない景色を発見します。
-            </p>
-            <div class="footprint-trail" style="margin-top: 1rem; opacity: 0.6;">
-              <div class="footprint"></div>
-              <div class="footprint"></div>
+      <div class="trail-grid trail-grid-3">
+        <div class="trail-card animate-sway">
+          <div class="sign-title">🤝 共創の道</div>
+          <div class="sign-content">
+            <p>常に"友と共に"歩む。多様な仲間と手を取り合い、一人では見つけられない景色を発見します。</p>
+            <div style="margin-top: 1rem; text-align: center; opacity: 0.7;">
+              <small>「一人で行けば早く行ける、みんなで行けば遠くまで行ける」</small>
             </div>
           </div>
         </div>
         
-        <div class="card">
-          <div class="card-header">
-            <div style="width: 60px; height: 60px; background: var(--gradient-accent); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <svg class="icon icon-xl text-white" viewBox="0 0 24 24">
-                <path d="M14.19 14.19L6 18L9.81 9.81L18 6L14.19 14.19ZM12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 8C13.1 8 14 8.9 14 10C14 11.1 13.1 12 12 12C10.9 12 10 11.1 10 10C10 8.9 10.9 8 12 8Z" fill="currentColor"/>
-              </svg>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--primary-slate); margin-bottom: 0.5rem;">冒険</h3>
-          </div>
-          <div class="card-body">
-            <p style="color: var(--gray-600); line-height: 1.6;">
-              人が歩まない道を選ぶ。地図にない道を歩き、新しい可能性の扉を開き続けます。
-            </p>
-            <div class="footprint-trail" style="margin-top: 1rem; opacity: 0.6;">
-              <div class="footprint"></div>
-              <div class="footprint"></div>
+        <div class="trail-card animate-sway" style="animation-delay: 0.5s;">
+          <div class="sign-title">🗺️ 冒険の道</div>
+          <div class="sign-content">
+            <p>人が歩まない道を選ぶ。地図にない道を歩き、新しい可能性の扉を開き続けます。</p>
+            <div style="margin-top: 1rem; text-align: center; opacity: 0.7;">
+              <small>「未知の道こそが、最も美しい景色へと導く」</small>
             </div>
           </div>
         </div>
         
-        <div class="card">
-          <div class="card-header">
-            <div style="width: 60px; height: 60px; background: var(--gradient-accent); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <svg class="icon icon-xl text-white" viewBox="0 0 24 24">
-                <path d="M12 2L15.5 8.5L22 9L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9L8.5 8.5L12 2Z" fill="currentColor"/>
-              </svg>
-            </div>
-            <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--primary-slate); margin-bottom: 0.5rem;">楽しさ</h3>
-          </div>
-          <div class="card-body">
-            <p style="color: var(--gray-600); line-height: 1.6;">
-              歩くこと自体を楽しむ。使う人が思わず笑顔になる、心躍る体験をつくります。
-            </p>
-            <div class="footprint-trail" style="margin-top: 1rem; opacity: 0.6;">
-              <div class="footprint"></div>
-              <div class="footprint"></div>
+        <div class="trail-card animate-sway" style="animation-delay: 1s;">
+          <div class="sign-title">⭐ 楽しさの道</div>
+          <div class="sign-content">
+            <p>歩くこと自体を楽しむ。使う人が思わず笑顔になる、心躍る体験をつくります。</p>
+            <div style="margin-top: 1rem; text-align: center; opacity: 0.7;">
+              <small>「道のりが楽しければ、目的地はもっと素晴らしい」</small>
             </div>
           </div>
         </div>
