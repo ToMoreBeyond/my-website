@@ -12,6 +12,7 @@
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/nature-trail-design.css">
+  <link rel="stylesheet" href="/css/walking-hero-system.css">
   
 </head>
 <body>
@@ -53,7 +54,7 @@
   </nav>
 
   <!-- 自然なヒーローセクション -->
-  <section class="nature-hero">
+  <section class="nature-hero" id="hero" data-section="hero">
     <div class="container">
       <div class="hero-signpost">
         <div class="hero-wooden-sign wooden-sign-weathered wooden-sign-worn animate-float">
@@ -84,7 +85,7 @@
   </section>
 
   <!-- 価値観の看板エリア -->
-  <section class="nature-section" id="about">
+  <section class="nature-section" id="about" data-section="about">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">道を歩む上での価値観</h2>
@@ -138,7 +139,7 @@
   </section>
 
   <!-- Apps Section - 道の目的地 -->
-  <section class="path-section path-destinations" id="apps">
+  <section class="path-section path-destinations" id="apps" data-section="apps">
     <div class="container">
       <div class="path-section-header">
         <h2 class="path-section-title">道の途中の目的地</h2>
@@ -262,8 +263,67 @@
     </div>
   </section>
 
+  <!-- Company Section - 会社について -->
+  <section class="path-section path-company" id="company" data-section="company">
+    <div class="container">
+      <div class="path-section-header">
+        <h2 class="path-section-title">私たちの組織</h2>
+        <p class="path-section-subtitle">ToMoreBeyondという道のりを歩む組織</p>
+      </div>
+      
+      <div class="trail-grid trail-grid-2">
+        <div class="trail-card wooden-sign-weathered animate-sway">
+          <div class="sign-title">🏢 会社概要</div>
+          <div class="sign-content">
+            <p>2025年4月設立。東京を拠点とするテクノロジー企業として、面白いことだけを追求し、道なき道を切り開いています。</p>
+          </div>
+        </div>
+        
+        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.3s;">
+          <div class="sign-title">🎯 ミッション</div>
+          <div class="sign-content">
+            <p>テクノロジーの力で人々の日常に新しい価値を創造し、誰もが自分だけの道を歩めるようサポートすること。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Media Section - メディア・発信 -->
+  <section class="path-section path-media" id="media" data-section="media">
+    <div class="container">
+      <div class="path-section-header">
+        <h2 class="path-section-title">私たちの発信</h2>
+        <p class="path-section-subtitle">道のりで見つけた学びや発見を共有</p>
+      </div>
+      
+      <div class="trail-grid trail-grid-3">
+        <div class="trail-card wooden-sign-weathered animate-sway">
+          <div class="sign-title">📰 ブログ</div>
+          <div class="sign-content">
+            <p>開発の裏話、技術的な学び、チームの日常など、リアルな声をお届けします。</p>
+          </div>
+        </div>
+        
+        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.3s;">
+          <div class="sign-title">🎥 動画</div>
+          <div class="sign-content">
+            <p>プロダクト紹介、開発プロセス、メンバーインタビューなどをビジュアルで。</p>
+          </div>
+        </div>
+        
+        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.6s;">
+          <div class="sign-title">📱 SNS</div>
+          <div class="sign-content">
+            <p>日々の気づきや最新情報をタイムリーに発信。フォローお待ちしています。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Team Section - 道を歩む仲間たち -->
-  <section class="path-section path-companions" id="team">
+  <section class="path-section path-companions" id="team" data-section="team">
     <div class="container">
       <div class="path-section-header">
         <h2 class="path-section-title">道を歩む仲間たち</h2>
@@ -506,7 +566,7 @@
   </section>
 
   <!-- Contact Section - 道の終点での出会い -->
-  <section class="path-section path-contact" id="contact">
+  <section class="path-section path-contact" id="contact" data-section="contact">
     <div class="container">
       <div class="path-section-header">
         <h2 class="path-section-title">道の先で待つ出会い</h2>
@@ -638,6 +698,8 @@
   <script src="/js/components/navbar.js"></script>
   <script src="/js/components/text-animations.js"></script>
   <script src="/js/components/smooth-scroll.js"></script>
+  <script src="/js/components/performance-manager.js"></script>
+  <script src="/js/components/walking-hero-system.js"></script>
   
   <script>
     // Advanced Animation System inspired by allies.studio
