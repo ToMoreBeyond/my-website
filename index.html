@@ -509,6 +509,95 @@
       100% { transform: translateX(calc(100vw + 100px)) rotate(360deg); }
     }
     
+    /* Marquee Text Effect */
+    .marquee-section {
+      background: var(--neutral-900);
+      color: white;
+      padding: var(--space-6) 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .marquee-content {
+      display: flex;
+      white-space: nowrap;
+      animation: marqueeScroll 30s linear infinite;
+    }
+    
+    .marquee-text {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 800;
+      padding-right: var(--space-16);
+      color: transparent;
+      -webkit-text-stroke: 2px white;
+      text-stroke: 2px white;
+    }
+    
+    .marquee-text:nth-child(odd) {
+      color: var(--primary-orange);
+      -webkit-text-stroke: none;
+      text-stroke: none;
+    }
+    
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    /* Interactive Cursor Effects */
+    .cursor-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,179,0,0.8) 0%, rgba(255,179,0,0) 70%);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease;
+    }
+    
+    /* Scroll Progress Indicator */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-orange), #FF6B35);
+      z-index: 1000;
+      transition: width 0.1s ease;
+    }
+    
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--neutral-900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      transition: opacity 0.5s ease;
+    }
+    
+    .loading-logo {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary-orange);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+    
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .apps-grid {
@@ -539,10 +628,22 @@
       .hero-mission {
         font-size: clamp(1.2rem, 5vw, 1.8rem);
       }
+      
+      .marquee-text {
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-logo">ToMoreBeyond</div>
+  </div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+  
   <!-- Modern Navigation -->
   <nav class="navbar-modern">
     <div class="container-fluid">
@@ -747,6 +848,25 @@
     </div>
   </section>
 
+  <!-- Marquee Section -->
+  <section class="marquee-section">
+    <div class="marquee-content" id="marqueeContent">
+      <span class="marquee-text">面白いことだけをする</span>
+      <span class="marquee-text">INNOVATION</span>
+      <span class="marquee-text">道なき道を越える</span>
+      <span class="marquee-text">BEYOND</span>
+      <span class="marquee-text">友と共に</span>
+      <span class="marquee-text">TECHNOLOGY</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-text">面白いことだけをする</span>
+      <span class="marquee-text">INNOVATION</span>
+      <span class="marquee-text">道なき道を越える</span>
+      <span class="marquee-text">BEYOND</span>
+      <span class="marquee-text">友と共に</span>
+      <span class="marquee-text">TECHNOLOGY</span>
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section class="contact-section" id="contact">
     <div class="container-fluid">
@@ -828,61 +948,388 @@
     </div>
   </section>
 
+  <!-- Advanced Animation Libraries -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.27/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
   <!-- JavaScript -->
   <script src="/js/components/navbar.js"></script>
   <script src="/js/components/text-animations.js"></script>
   <script src="/js/components/smooth-scroll.js"></script>
   
   <script>
-    // Enhanced initialization
+    // Advanced Animation System inspired by allies.studio
     document.addEventListener('DOMContentLoaded', () => {
-      // Add parallax effect to floating elements
-      window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        
-        document.querySelectorAll('.floating-shape').forEach((shape, index) => {
-          const speed = (index + 1) * 0.3;
-          shape.style.transform += ` translateY(${rate * speed}px)`;
-        });
-      }, { passive: true });
+      // Loading Screen
+      const loadingScreen = document.getElementById('loadingScreen');
+      const scrollProgress = document.getElementById('scrollProgress');
       
-      // Add smooth reveal on scroll
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '-10% 0px -10% 0px'
-      };
-      
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, observerOptions);
-      
-      // Apply to all sections
-      document.querySelectorAll('section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-        revealObserver.observe(section);
+      // Hide loading screen after page load
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          loadingScreen.style.opacity = '0';
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        }, 1500);
       });
       
-      // Smooth scroll for navigation links
+      // Scroll Progress Indicator
+      function updateScrollProgress() {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        scrollProgress.style.width = scrollPercent + '%';
+      }
+      
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+      // Initialize Lenis Smooth Scroll
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Register GSAP ScrollTrigger with Lenis
+      gsap.registerPlugin(ScrollTrigger);
+      
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.lagSmoothing(0);
+
+      // Hero Title Split Text Animation
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) {
+        const text = heroTitle.textContent;
+        heroTitle.innerHTML = '';
+        
+        [...text].forEach((char, i) => {
+          const span = document.createElement('span');
+          span.textContent = char === ' ' ? '\u00A0' : char;
+          span.style.display = 'inline-block';
+          span.style.opacity = '0';
+          span.style.transform = 'translateY(100px) rotateX(-90deg)';
+          heroTitle.appendChild(span);
+          
+          gsap.to(span, {
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            duration: 0.8,
+            delay: i * 0.05,
+            ease: "back.out(1.7)"
+          });
+        });
+      }
+
+      // Card Stagger Animation
+      gsap.set('.value-card, .app-card, .member-card', {
+        y: 100,
+        opacity: 0,
+        scale: 0.8,
+        rotateX: -15
+      });
+
+      ScrollTrigger.batch('.value-card, .app-card, .member-card', {
+        onEnter: (elements) => {
+          gsap.to(elements, {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotateX: 0,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: "elastic.out(1, 0.75)",
+            overwrite: true
+          });
+        },
+        onLeave: (elements) => {
+          gsap.to(elements, {
+            y: -50,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.in"
+          });
+        },
+        onEnterBack: (elements) => {
+          gsap.to(elements, {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)"
+          });
+        }
+      });
+
+      // Parallax Floating Elements
+      gsap.utils.toArray('.floating-shape').forEach((shape, i) => {
+        gsap.to(shape, {
+          y: '-50vh',
+          rotation: 360,
+          scale: 1.5,
+          opacity: 0,
+          scrollTrigger: {
+            trigger: 'body',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1 + i * 0.5,
+          }
+        });
+      });
+
+      // Section Slide-in Animations
+      gsap.utils.toArray('section').forEach((section, i) => {
+        const direction = i % 2 === 0 ? -100 : 100;
+        
+        gsap.set(section, {
+          x: direction,
+          opacity: 0
+        });
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          animation: gsap.to(section, {
+            x: 0,
+            opacity: 1,
+            duration: 1.5,
+            ease: "expo.out"
+          }),
+          toggleActions: "play reverse play reverse"
+        });
+      });
+
+      // Team Member Card Hover Effects
+      gsap.utils.toArray('.member-card').forEach(card => {
+        const hoverTl = gsap.timeline({ paused: true });
+        
+        hoverTl.to(card, {
+          scale: 1.1,
+          y: -20,
+          rotateY: 10,
+          boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+          duration: 0.4,
+          ease: "power2.out"
+        });
+
+        card.addEventListener('mouseenter', () => hoverTl.play());
+        card.addEventListener('mouseleave', () => hoverTl.reverse());
+      });
+
+      // Infinite Scroll Track Enhanced Animation
+      const scrollTrack = document.querySelector('.infinite-scroll-track');
+      if (scrollTrack) {
+        gsap.set(scrollTrack, { x: 0 });
+        
+        gsap.to(scrollTrack, {
+          x: '-50%',
+          duration: 30,
+          ease: 'none',
+          repeat: -1
+        });
+
+        // Pause on hover
+        scrollTrack.addEventListener('mouseenter', () => {
+          gsap.globalTimeline.timeScale(0.1);
+        });
+        
+        scrollTrack.addEventListener('mouseleave', () => {
+          gsap.globalTimeline.timeScale(1);
+        });
+      }
+
+      // Contact Form Slide-in
+      const contactForm = document.querySelector('.contact-form-container');
+      if (contactForm) {
+        gsap.set(contactForm, {
+          x: 300,
+          opacity: 0,
+          rotateY: -45
+        });
+
+        ScrollTrigger.create({
+          trigger: contactForm,
+          start: 'top 80%',
+          animation: gsap.to(contactForm, {
+            x: 0,
+            opacity: 1,
+            rotateY: 0,
+            duration: 1.5,
+            ease: "expo.out"
+          })
+        });
+      }
+
+      // Magnetic Button Effect
+      gsap.utils.toArray('.cta-button-primary, .submit-button').forEach(button => {
+        button.addEventListener('mousemove', (e) => {
+          const rect = button.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          
+          gsap.to(button, {
+            x: x * 0.3,
+            y: y * 0.3,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+
+        button.addEventListener('mouseleave', () => {
+          gsap.to(button, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)"
+          });
+        });
+      });
+
+      // Navigation Links Smooth Scroll with Lenis
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
           e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
+          const targetId = this.getAttribute('href').substring(1);
+          const target = document.getElementById(targetId);
+          
           if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
+            lenis.scrollTo(target, {
+              duration: 2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
             });
           }
         });
       });
+
+      // Advanced Text Reveal Animation
+      gsap.utils.toArray('.section-title, .section-subtitle').forEach(text => {
+        const words = text.textContent.split(' ');
+        text.innerHTML = '';
+        
+        words.forEach((word, i) => {
+          const span = document.createElement('span');
+          span.innerHTML = word + '&nbsp;';
+          span.style.display = 'inline-block';
+          span.style.opacity = '0';
+          span.style.transform = 'translateY(50px)';
+          text.appendChild(span);
+        });
+
+        ScrollTrigger.create({
+          trigger: text,
+          start: 'top 85%',
+          animation: gsap.to(text.children, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)"
+          })
+        });
+      });
+
+      // Page Load Animation
+      const pageLoadTl = gsap.timeline();
+      
+      pageLoadTl
+        .from('.navbar-modern', {
+          y: -100,
+          opacity: 0,
+          duration: 1,
+          ease: "expo.out"
+        })
+        .from('.hero-content', {
+          scale: 0.8,
+          opacity: 0,
+          duration: 1.5,
+          ease: "expo.out"
+        }, "-=0.5")
+        .from('.floating-shape', {
+          scale: 0,
+          rotation: -180,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.1,
+          ease: "back.out(1.7)"
+        }, "-=1");
+
+      // Cursor Trail Effect
+      const cursor = document.createElement('div');
+      cursor.className = 'cursor-trail';
+      cursor.style.cssText = `
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,179,0,0.8) 0%, rgba(255,179,0,0) 70%);
+        pointer-events: none;
+        z-index: 9999;
+        mix-blend-mode: difference;
+        transition: transform 0.1s ease;
+      `;
+      document.body.appendChild(cursor);
+
+      document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, {
+          x: e.clientX - 10,
+          y: e.clientY - 10,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+
+      // Login Button in Navigation
+      const loginBtn = document.createElement('a');
+      loginBtn.href = 'pages/login.html';
+      loginBtn.textContent = 'Login';
+      loginBtn.className = 'navbar-link-modern';
+      loginBtn.style.cssText = `
+        background: linear-gradient(135deg, #FFB300, #FF6B35);
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        color: white !important;
+        transition: all 0.3s ease;
+      `;
+      
+      loginBtn.addEventListener('mouseenter', () => {
+        gsap.to(loginBtn, {
+          scale: 1.05,
+          boxShadow: '0 5px 15px rgba(255,179,0,0.4)',
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+      
+      loginBtn.addEventListener('mouseleave', () => {
+        gsap.to(loginBtn, {
+          scale: 1,
+          boxShadow: '0 0 0px rgba(255,179,0,0)',
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+      
+      const navLinks = document.querySelector('.navbar-links-modern');
+      if (navLinks) {
+        navLinks.insertBefore(loginBtn, navLinks.lastElementChild);
+      }
     });
   </script>
 </body>
