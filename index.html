@@ -12,897 +12,79 @@
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/path-design-system.css">
   <link rel="stylesheet" href="/css/modern-design.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/unified-cards.css">
   
   <style>
-    /* Page-specific enhanced styles */
+    /* Path-themed unified styles */
     body {
-      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      background: var(--gradient-sky-path);
       overflow-x: hidden;
+      font-family: var(--font-path);
+      color: var(--text-path-primary);
     }
     
-    /* Enhanced Hero Section - The Road Not Taken */
-    .hero-section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      background: #000;
-    }
-    
-    /* Video Background Container */
-    .hero-video-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      opacity: 0.7;
-    }
-    
-    .hero-video-bg video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    
-    /* Road Path Animation */
-    .road-path {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 100%;
-      z-index: 2;
-      overflow: hidden;
-    }
-    
-    .road-line {
-      position: absolute;
-      width: 4px;
-      height: 200px;
-      background: linear-gradient(to bottom, transparent, #FFB300, transparent);
-      left: 50%;
-      transform: translateX(-50%);
-      animation: roadMove 3s linear infinite;
-    }
-    
-    @keyframes roadMove {
-      0% { transform: translateX(-50%) translateY(-200px); }
-      100% { transform: translateX(-50%) translateY(100vh); }
-    }
-    
-    .hero-content {
-      text-align: center;
-      position: relative;
-      z-index: 3;
-      max-width: 1000px;
-      margin: 0 auto;
-      perspective: 1000px;
-    }
-    
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 900;
-      line-height: 1.1;
-      margin-bottom: var(--space-6);
-      color: white;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: titleFloat 6s ease-in-out infinite;
-    }
-    
-    @keyframes titleFloat {
-      0%, 100% { transform: rotateY(0deg) translateY(0); }
-      25% { transform: rotateY(5deg) translateY(-10px); }
-      50% { transform: rotateY(0deg) translateY(-20px); }
-      75% { transform: rotateY(-5deg) translateY(-10px); }
-    }
-    
-    .hero-title span {
-      display: inline-block;
-      animation: glitch 2s infinite;
-      position: relative;
-    }
-    
-    @keyframes glitch {
-      0%, 100% { text-shadow: 2px 2px 0 #FFB300, -2px -2px 0 #FF6B35; }
-      25% { text-shadow: -2px 2px 0 #FF6B35, 2px -2px 0 #FFB300; }
-      50% { text-shadow: 2px -2px 0 #FFB300, -2px 2px 0 #FF6B35; }
-      75% { text-shadow: -2px -2px 0 #FF6B35, 2px 2px 0 #FFB300; }
-    }
-    
-    .hero-subtitle {
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: var(--space-4);
-      line-height: 1.6;
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 0.5s forwards;
-    }
-    
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .hero-mission {
-      font-size: clamp(1.5rem, 4vw, 2.2rem);
-      font-weight: 700;
-      color: white;
-      margin-bottom: var(--space-10);
-      line-height: 1.4;
-      position: relative;
-    }
-    
-    .hero-mission::before,
-    .hero-mission::after {
-      content: '"';
-      font-size: 3rem;
-      color: #FFB300;
-      position: absolute;
-      opacity: 0.3;
-    }
-    
-    .hero-mission::before {
-      left: -30px;
-      top: -10px;
-    }
-    
-    .hero-mission::after {
-      right: -30px;
-      bottom: -10px;
-    }
-    
-    .hero-description {
-      font-size: var(--text-lg);
-      color: rgba(255, 255, 255, 0.7);
-      max-width: 700px;
-      margin: 0 auto var(--space-10);
-      line-height: 1.7;
-    }
-    
-    /* Interactive Path Choice */
-    .path-choice {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 4;
-      display: flex;
-      gap: var(--space-8);
-    }
-    
-    .path-btn {
-      padding: var(--space-3) var(--space-6);
-      background: rgba(255, 255, 255, 0.1);
+    /* Navigation unified with path theme */
+    .navbar-modern {
+      background: rgba(245, 245, 220, 0.95);
       backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: var(--radius-full);
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      border-bottom: 1px solid var(--path-secondary);
     }
     
-    .path-btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: radial-gradient(circle, #FFB300 0%, transparent 70%);
-      transition: all 0.5s ease;
-      transform: translate(-50%, -50%);
-    }
-    
-    .path-btn:hover::before {
-      width: 200px;
-      height: 200px;
-    }
-    
-    .path-btn:hover {
-      border-color: #FFB300;
-      transform: scale(1.1);
-    }
-    
-    /* Company Values Section */
-    .values-section {
-      padding: var(--space-20) 0;
-      background: white;
-    }
-    
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-8);
-      margin-top: var(--space-12);
-    }
-    
-    .value-card {
-      background: white;
-      border-radius: var(--radius-2xl);
-      padding: var(--space-8);
-      text-align: center;
-      position: relative;
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
-      overflow: hidden;
-    }
-    
-    .value-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--primary-orange);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform var(--transition-base);
-    }
-    
-    .value-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-large);
-    }
-    
-    .value-card:hover::before {
-      transform: scaleX(1);
-    }
-    
-    .value-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-light));
-      border-radius: var(--radius-2xl);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      margin: 0 auto var(--space-6);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .value-title {
-      font-size: var(--text-2xl);
-      font-weight: 700;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-4);
-    }
-    
-    .value-description {
-      color: var(--neutral-600);
-      line-height: 1.6;
-    }
-    
-    /* Apps Section - Journey Cards */
-    .apps-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    /* Animated Background Paths */
-    .apps-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 200%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 100px,
-        rgba(255, 179, 0, 0.05) 100px,
-        rgba(255, 179, 0, 0.05) 102px
-      );
-      animation: pathScroll 20s linear infinite;
-    }
-    
-    @keyframes pathScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(50%); }
-    }
-    
-    .section-header {
-      text-align: center;
-      margin-bottom: var(--space-16);
-      position: relative;
-      z-index: 2;
-    }
-    
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6vw, 4rem);
+    .navbar-brand-modern {
+      font-family: var(--font-map) !important;
+      color: var(--text-path-primary) !important;
       font-weight: 800;
-      margin-bottom: var(--space-4);
-      color: white;
-      position: relative;
     }
     
-    .section-subtitle {
-      font-size: var(--text-xl);
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.6;
+    .navbar-link-modern {
+      color: var(--text-path-secondary) !important;
+      font-family: var(--font-path) !important;
+      transition: color var(--walk-normal);
     }
     
-    .apps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: var(--space-12);
-      margin-top: var(--space-12);
-      perspective: 1000px;
-      position: relative;
-      z-index: 2;
+    .navbar-link-modern:hover {
+      color: var(--path-accent) !important;
     }
     
-    /* 3D Card with Journey Metaphor */
-    .app-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
-      border-radius: var(--radius-2xl);
-      overflow: hidden;
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        inset 0 0 40px rgba(255, 179, 0, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    .btn-modern.btn-primary-modern {
+      background: var(--gradient-path) !important;
+      border: none !important;
+      color: var(--text-path-inverse) !important;
     }
     
-    .app-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(
-        from 0deg at 50% 50%,
-        transparent,
-        rgba(255, 179, 0, 0.3),
-        transparent
-      );
-      animation: cardGlow 4s linear infinite;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    @keyframes cardGlow {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .app-card:hover::before {
-      opacity: 1;
-    }
-    
-    .app-card:hover {
-      transform: rotateY(10deg) rotateX(5deg) translateZ(50px);
-      box-shadow: 
-        0 30px 60px rgba(255, 179, 0, 0.3),
-        inset 0 0 60px rgba(255, 179, 0, 0.2);
-    }
-    
-    /* Animated App Image */
-    .app-image {
-      width: 100%;
-      height: 200px;
-      background: rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .app-image::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-      );
-      transition: left 0.5s ease;
-    }
-    
-    .app-card:hover .app-image::after {
-      left: 100%;
-    }
-    
-    /* Floating App Icon */
-    .app-image span {
-      animation: iconFloat 3s ease-in-out infinite;
-      display: inline-block;
-    }
-    
-    @keyframes iconFloat {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-20px) scale(1.1); }
-    }
-    
-    .app-content {
-      padding: var(--space-6);
-      position: relative;
-      z-index: 2;
-    }
-    
-    /* Typewriter Effect for Title */
-    .app-title {
-      font-size: var(--text-2xl);
-      font-weight: 700;
-      color: white;
-      margin-bottom: var(--space-3);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .app-title::after {
-      content: '|';
-      position: absolute;
-      right: -10px;
-      animation: blink 1s step-end infinite;
-      color: #FFB300;
-    }
-    
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      50.01%, 100% { opacity: 0; }
-    }
-    
-    .app-description {
-      font-size: var(--text-base);
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
-      margin-bottom: var(--space-4);
-    }
-    
-    /* Animated Tags */
-    .app-tags {
-      display: flex;
-      gap: var(--space-2);
-      margin-bottom: var(--space-4);
-      flex-wrap: wrap;
-    }
-    
-    .app-tag {
-      background: rgba(255, 179, 0, 0.2);
-      color: #FFB300;
-      padding: var(--space-1) var(--space-3);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: 500;
-      border: 1px solid rgba(255, 179, 0, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .app-tag:hover {
-      background: rgba(255, 179, 0, 0.4);
-      transform: translateY(-2px);
-    }
-    
-    /* Interactive Link with Path Arrow */
-    .app-link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      color: #FFB300;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all var(--transition-fast);
-      position: relative;
-    }
-    
-    .app-link::after {
-      content: '→';
-      display: inline-block;
-      transition: all 0.3s ease;
-      font-size: 1.2em;
-    }
-    
-    .app-link:hover {
-      gap: var(--space-4);
-      color: #FF6B35;
-    }
-    
-    .app-link:hover::after {
-      transform: translateX(5px) scale(1.5);
-    }
-    
-    /* Team Section */
-    .team-section {
-      padding: var(--space-20) 0 var(--space-16) 0;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    }
-    
-    .infinite-scroll-container {
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      overflow: hidden;
-      background: white;
-      padding: var(--space-12) 0;
-    }
-    
-    .infinite-scroll-track {
-      display: flex;
-      gap: var(--space-6);
-      align-items: center;
-      animation: scroll-x 40s linear infinite;
-      width: calc(100% * 2);
-    }
-    
-    .member-card {
-      background: white;
-      border-radius: var(--radius-2xl);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      width: 320px;
-      height: 240px;
-      display: flex;
-      flex-direction: column;
-      transition: all var(--transition-base);
-      cursor: pointer;
-      flex-shrink: 0;
-      border: 1px solid var(--neutral-200);
-    }
-    
-    .member-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: var(--shadow-large);
-    }
-    
-    .member-image {
-      width: 100%;
-      height: 160px;
-      background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .member-info {
-      padding: var(--space-4);
-      text-align: center;
-    }
-    
-    .member-name {
-      font-size: var(--text-lg);
-      font-weight: 700;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-1);
-    }
-    
-    .member-role {
-      font-size: var(--text-sm);
-      color: var(--neutral-600);
-      line-height: 1.4;
-    }
-    
-    @keyframes scroll-x {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* Contact Section */
-    .contact-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .contact-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .contact-header {
-      text-align: center;
-      margin-bottom: var(--space-12);
-    }
-    
-    .contact-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 800;
-      margin-bottom: var(--space-6);
-    }
-    
-    .contact-subtitle {
-      font-size: var(--text-xl);
-      opacity: 0.9;
-      margin-bottom: var(--space-8);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-    }
-    
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-12);
-      align-items: start;
-    }
-    
-    .contact-info {
-      background: rgba(255, 255, 255, 0.05);
-      padding: var(--space-8);
-      border-radius: var(--radius-2xl);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .contact-info h3 {
-      font-size: var(--text-2xl);
-      font-weight: 700;
-      margin-bottom: var(--space-6);
-      color: var(--primary-orange);
-    }
-    
-    .contact-item {
-      margin-bottom: var(--space-4);
-      padding: var(--space-3);
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: var(--radius-lg);
-    }
-    
-    .contact-item h4 {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      margin-bottom: var(--space-2);
-    }
-    
-    .contact-item p {
-      opacity: 0.8;
-      margin: 0;
-    }
-    
-    .contact-form-container {
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--neutral-900);
-      padding: var(--space-8);
-      border-radius: var(--radius-2xl);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow-large);
-    }
-    
-    .contact-form h3 {
-      font-size: var(--text-2xl);
-      font-weight: 700;
-      margin-bottom: var(--space-6);
-      color: var(--neutral-900);
-    }
-    
-    .form-group {
-      margin-bottom: var(--space-4);
-    }
-    
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: var(--space-2);
-      color: var(--neutral-700);
-    }
-    
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: var(--space-3);
-      border: 2px solid var(--neutral-200);
-      border-radius: var(--radius-lg);
-      background: white;
-      font-size: var(--text-base);
-      transition: all var(--transition-base);
-      resize: vertical;
-    }
-    
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary-orange);
-      box-shadow: 0 0 0 3px rgba(255, 179, 0, 0.1);
-    }
-    
-    .submit-button {
-      background: var(--primary-orange);
-      color: white;
-      padding: var(--space-4) var(--space-8);
-      border: none;
-      border-radius: var(--radius-lg);
-      font-size: var(--text-lg);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--transition-base);
-      box-shadow: var(--shadow-medium);
-      width: 100%;
-    }
-    
-    .submit-button:hover {
-      background: var(--primary-orange-hover);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-large);
-    }
-    
-    /* Floating Elements */
-    .floating-elements {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    
-    .floating-shape {
-      position: absolute;
-      opacity: 0.1;
-      animation: floatMove 25s infinite linear;
-    }
-    
-    @keyframes floatMove {
-      0% { transform: translateX(-100px) rotate(0deg); }
-      100% { transform: translateX(calc(100vw + 100px)) rotate(360deg); }
-    }
-    
-    /* Marquee Text Effect */
-    .marquee-section {
-      background: var(--neutral-900);
-      color: white;
-      padding: var(--space-6) 0;
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .marquee-content {
-      display: flex;
-      white-space: nowrap;
-      animation: marqueeScroll 30s linear infinite;
-    }
-    
-    .marquee-text {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 800;
-      padding-right: var(--space-16);
-      color: transparent;
-      -webkit-text-stroke: 2px white;
-      text-stroke: 2px white;
-    }
-    
-    .marquee-text:nth-child(odd) {
-      color: var(--primary-orange);
-      -webkit-text-stroke: none;
-      text-stroke: none;
-    }
-    
-    @keyframes marqueeScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    
-    /* Interactive Cursor Effects */
-    .cursor-trail {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,179,0,0.8) 0%, rgba(255,179,0,0) 70%);
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: difference;
-      transition: transform 0.1s ease;
-    }
-    
-    /* Scroll Progress Indicator */
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-orange), #FF6B35);
-      z-index: 1000;
-      transition: width 0.1s ease;
-    }
-    
-    /* Loading Screen */
+    /* Loading screen customization */
     .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--neutral-900);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      transition: opacity 0.5s ease;
+      background: var(--bg-path-primary);
     }
     
     .loading-logo {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      font-weight: 800;
-      color: var(--primary-orange);
-      animation: pulse 2s ease-in-out infinite;
+      font-family: var(--font-map);
+      color: var(--path-accent);
     }
     
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.1); }
+    /* Scroll progress with path theme */
+    .scroll-progress {
+      background: var(--gradient-path);
     }
     
-    /* Responsive Adjustments */
+    /* Unified container styles */
+    .container-fluid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--step-md);
+    }
+    
+    /* Responsive adjustments for path design */
     @media (max-width: 768px) {
-      .apps-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-6);
+      .container-fluid {
+        padding: 0 var(--step-sm);
       }
       
-      .values-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-6);
-      }
-      
-      .contact-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-8);
-      }
-      
-      .member-card {
-        width: 280px;
-        height: 200px;
-      }
-      
-      .member-image {
-        height: 130px;
-        font-size: 3rem;
-      }
-      
-      .hero-mission {
-        font-size: clamp(1.2rem, 5vw, 1.8rem);
-      }
-      
-      .marquee-text {
-        font-size: clamp(1.5rem, 8vw, 2.5rem);
+      .path-hero-content {
+        padding: var(--step-lg);
       }
     }
   </style>
@@ -931,305 +113,662 @@
     </div>
   </nav>
 
-  <!-- Hero Section - The Road Not Taken -->
-  <section class="hero-section">
-    <!-- Video Background (placeholder for future video) -->
-    <div class="hero-video-bg">
-      <!-- Video will be added here -->
-      <div style="width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(255,179,0,0.1), transparent), linear-gradient(135deg, #0a0a0a, #1a1a1a);"></div>
+  <!-- Hero Section - 道の始まり -->
+  <section class="path-hero">
+    <!-- 地図の背景 -->
+    <div class="path-hero-map">
+      <svg width="100%" height="100%" viewBox="0 0 1200 800" style="position: absolute; top: 0; left: 0; opacity: 0.1;">
+        <!-- 古い地図風の装飾線 -->
+        <defs>
+          <pattern id="mapGrid" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#8B4513" stroke-width="0.5" opacity="0.3"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#mapGrid)" />
+        
+        <!-- 道のパス -->
+        <path d="M 100,700 Q 300,600 500,650 T 900,580 Q 1000,570 1100,500" 
+              fill="none" stroke="#D2B48C" stroke-width="8" opacity="0.6" stroke-dasharray="20,10" />
+        
+        <!-- 足跡 -->
+        <circle cx="200" cy="650" r="3" fill="#8B4513" opacity="0.4" />
+        <circle cx="220" cy="640" r="3" fill="#8B4513" opacity="0.4" />
+        <circle cx="240" cy="635" r="3" fill="#8B4513" opacity="0.4" />
+        <circle cx="260" cy="630" r="3" fill="#8B4513" opacity="0.4" />
+      </svg>
     </div>
     
-    <!-- Animated Road Path -->
-    <div class="road-path">
-      <div class="road-line"></div>
-      <div class="road-line" style="animation-delay: 1s;"></div>
-      <div class="road-line" style="animation-delay: 2s;"></div>
+    <!-- 雲の背景 -->
+    <div class="path-clouds">
+      <div class="cloud cloud-1">☁️</div>
+      <div class="cloud cloud-2">☁️</div>
+      <div class="cloud cloud-3">☁️</div>
     </div>
     
-    <div class="container-fluid">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <span>T</span><span>o</span><span>M</span><span>o</span><span>r</span><span>e</span><span>B</span><span>e</span><span>y</span><span>o</span><span>n</span><span>d</span>
-        </h1>
-        <p class="hero-subtitle">Two roads diverged in a wood, and I—</p>
-        <p class="hero-mission">面白いことだけをする。<br>友と共に "道なき道" を越える。</p>
-        <p class="hero-description">
-          疑問や不安を"楽しさ"で解消し、人々の行動半径を広げるプロダクトを連続創出するチーム。<br>
-          モバイルアプリ・位置情報AI・SaaSで、日常に冒険と遊び心を。
-        </p>
+    <div class="container">
+      <div class="path-hero-content">
+        <div class="path-hero-quote">
+          <span class="quote-mark">"</span>
+          <p>二つの道が森の中で分かれていた、そして私は—</p>
+          <p class="quote-author">— ロバート・フロスト</p>
+        </div>
+        
+        <h1 class="path-title">ToMoreBeyond</h1>
+        
+        <p class="path-subtitle">面白いことだけをする。友と共に "道なき道" を越える。</p>
+        
+        <div class="path-description">
+          <p>伊能忠敬が日本中を歩いて日本地図を作ったように、<br>
+          他の人が進まない道を進んだからこそ、道は開ける。</p>
+          <p>目の前に道が広がっていたら、人が選んでない方の道をあえて選ぼう。<br>
+          それが楽しく、面白い未来へのスタートだ。</p>
+        </div>
+        
+        <div class="path-mission">
+          <span class="mission-icon">🗺️</span>
+          <p>道は続き続ける。そしてトモビは道を進み続ける。</p>
+        </div>
+        
+        <div class="path-hero-buttons">
+          <a href="#apps" class="path-button primary">
+            <span class="button-icon">🚶‍♂️</span>
+            道を歩き始める
+          </a>
+          <a href="#team" class="path-button secondary">
+            <span class="button-icon">👥</span>
+            仲間を見つける
+          </a>
+        </div>
       </div>
     </div>
     
-    <!-- Interactive Path Choice -->
-    <div class="path-choice">
-      <a href="#apps" class="path-btn">道を選ぶ</a>
-      <a href="#team" class="path-btn">仲間を見る</a>
+    <!-- スクロール指示 -->
+    <div class="scroll-indicator">
+      <div class="scroll-text">スクロールして道を進む</div>
+      <div class="scroll-arrow">⬇️</div>
+    </div>
+    
+    <!-- 浮遊する要素 -->
+    <div class="floating-elements">
+      <div class="floating-leaf">🍃</div>
+      <div class="floating-leaf">🍂</div>
+      <div class="floating-bird">🐦</div>
     </div>
   </section>
 
-  <!-- Company Values Section -->
-  <section class="values-section" id="about">
-    <div class="container-fluid">
-      <div class="section-header">
-        <h2 class="section-title">私たちのバリュー</h2>
-        <p class="section-subtitle">ToMoreBeyondが大切にする3つの価値観</p>
+  <!-- Values Section - 道の価値観 -->
+  <section class="path-section path-values" id="about">
+    <div class="container">
+      <div class="path-section-header">
+        <h2 class="path-section-title">道を歩む上での価値観</h2>
+        <p class="path-section-subtitle">ToMoreBeyondが大切にする3つの道標</p>
       </div>
       
-      <div class="values-grid">
-        <div class="value-card">
-          <div class="value-icon">🤝</div>
-          <h3 class="value-title">共創</h3>
-          <p class="value-description">
-            常に"友と共に"作る。多様な視点を持つメンバーが協力し、一人では生み出せない価値を創造します。
-          </p>
-        </div>
-        
-        <div class="value-card">
-          <div class="value-icon">🗺️</div>
-          <h3 class="value-title">冒険</h3>
-          <p class="value-description">
-            人と違う道を選ぶ。既存の枠にとらわれず、新しい可能性を追求し続けます。
-          </p>
-        </div>
-        
-        <div class="value-card">
-          <div class="value-icon">🎮</div>
-          <h3 class="value-title">遊び心</h3>
-          <p class="value-description">
-            楽しませるUI/UXを最優先。ユーザーが思わず笑顔になるような体験をデザインします。
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Apps Section -->
-  <section class="apps-section" id="apps">
-    <div class="container-fluid">
-      <div class="section-header">
-        <h2 class="section-title">私たちのアプリ</h2>
-        <p class="section-subtitle">日常の課題を解決し、生活を豊かにする革新的なアプリケーション</p>
+      <!-- 道標のパス -->
+      <div class="path-trail">
+        <svg width="100%" height="200" viewBox="0 0 800 200" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.3;">
+          <path d="M 100,150 Q 250,100 400,120 T 700,140" 
+                fill="none" stroke="#D2B48C" stroke-width="4" stroke-dasharray="10,5" />
+          <!-- 道標の位置 -->
+          <circle cx="200" cy="125" r="8" fill="#DAA520" />
+          <circle cx="400" cy="120" r="8" fill="#DAA520" />
+          <circle cx="600" cy="135" r="8" fill="#DAA520" />
+        </svg>
       </div>
       
-      <div class="apps-grid">
-        <div class="app-card" onclick="window.location.href='pages/tadataka.html'">
-          <div class="app-image"><span>🗺️</span></div>
-          <div class="app-content">
-            <h3 class="app-title">TADATAKA</h3>
-            <p class="app-description">
-              移動がそのまま日記になる、ライフログアプリ。GPS/BLEによる自動経路記録で、今日の足あとを地図表示。
+      <div class="path-grid path-milestones">
+        <div class="path-milestone">
+          <div class="milestone-marker">
+            <span class="milestone-number">1</span>
+          </div>
+          <div class="milestone-signpost">
+            <div class="signpost-icon">🤝</div>
+            <h3 class="signpost-title">共創の道</h3>
+            <p class="signpost-description">
+              常に"友と共に"歩む。多様な仲間と手を取り合い、一人では見つけられない景色を発見します。
             </p>
-            <div class="app-tags">
-              <span class="app-tag">ライフログ</span>
-              <span class="app-tag">地図</span>
-              <span class="app-tag">AI</span>
-              <span class="app-tag">プライバシー保護</span>
+            <div class="milestone-footprints">
+              <span class="footprint">👣</span>
+              <span class="footprint">👣</span>
             </div>
-            <a href="pages/tadataka.html" class="app-link">
-              詳しく見る →
-            </a>
           </div>
         </div>
         
-        <div class="app-card" onclick="window.location.href='pages/toirun.html'">
-          <div class="app-image"><span>🚽</span></div>
-          <div class="app-content">
-            <h3 class="app-title">ToiRun</h3>
-            <p class="app-description">
-              "今すぐトイレ"を最短で案内するAIナビ。商業施設のフロアマップを自動学習し、AR矢印で誘導。
+        <div class="path-milestone">
+          <div class="milestone-marker">
+            <span class="milestone-number">2</span>
+          </div>
+          <div class="milestone-signpost">
+            <div class="signpost-icon">🗺️</div>
+            <h3 class="signpost-title">冒険の道</h3>
+            <p class="signpost-description">
+              人が歩まない道を選ぶ。地図にない道を歩き、新しい可能性の扉を開き続けます。
             </p>
-            <div class="app-tags">
-              <span class="app-tag">緊急時対応</span>
-              <span class="app-tag">AR</span>
-              <span class="app-tag">多言語</span>
-              <span class="app-tag">アクセシビリティ</span>
+            <div class="milestone-footprints">
+              <span class="footprint">👣</span>
+              <span class="footprint">👣</span>
             </div>
-            <a href="pages/toirun.html" class="app-link">
-              詳しく見る →
-            </a>
           </div>
         </div>
         
-        <div class="app-card" onclick="window.location.href='pages/midpoint.html'">
-          <div class="app-image"><span>📍</span></div>
-          <div class="app-content">
-            <h3 class="app-title">Meet in the Middle</h3>
-            <p class="app-description">
-              みんなの出発地を入力するだけ。最適集合駅を提案し、目的に合うお店も同時レコメンド。
-            </p>
-            <div class="app-tags">
-              <span class="app-tag">待ち合わせ</span>
-              <span class="app-tag">最適化</span>
-              <span class="app-tag">レコメンド</span>
-              <span class="app-tag">便利</span>
-            </div>
-            <a href="pages/midpoint.html" class="app-link">
-              詳しく見る →
-            </a>
+        <div class="path-milestone">
+          <div class="milestone-marker">
+            <span class="milestone-number">3</span>
           </div>
+          <div class="milestone-signpost">
+            <div class="signpost-icon">🎮</div>
+            <h3 class="signpost-title">楽しさの道</h3>
+            <p class="signpost-description">
+              歩くこと自体を楽しむ。使う人が思わず笑顔になる、心躍る体験をつくります。
+            </p>
+            <div class="milestone-footprints">
+              <span class="footprint">👣</span>
+              <span class="footprint">👣</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 道しるべの詩 -->
+      <div class="path-poetry">
+        <div class="poetry-scroll">
+          <p class="poetry-text">
+            "道に迷ったときは、仲間と笑い合え。<br>
+            新しい景色を求め、楽しみながら歩け。<br>
+            それがトモビの道である。"
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Team Section -->
-  <section class="team-section" id="team">
-    <div class="container-fluid">
-      <div class="section-header">
-        <h2 class="section-title">私たちのチーム</h2>
-        <p class="section-subtitle">多様な個性が集うクリエイティブチーム</p>
+  <!-- Apps Section - 道の目的地 -->
+  <section class="path-section path-destinations" id="apps">
+    <div class="container">
+      <div class="path-section-header">
+        <h2 class="path-section-title">道の途中の目的地</h2>
+        <p class="path-section-subtitle">私たちが歩きながら創り出したアプリケーション</p>
+      </div>
+      
+      <!-- 目的地への道のり -->
+      <div class="destinations-path">
+        <svg width="100%" height="300" viewBox="0 0 1000 300" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.2;">
+          <!-- メインの道 -->
+          <path d="M 0,200 Q 200,150 400,180 T 800,160 Q 900,155 1000,150" 
+                fill="none" stroke="#D2B48C" stroke-width="6" stroke-dasharray="15,10" />
+          
+          <!-- 目的地への分岐道 -->
+          <path d="M 250,165 Q 280,120 320,100" fill="none" stroke="#8B4513" stroke-width="4" />
+          <path d="M 500,175 Q 530,130 570,110" fill="none" stroke="#8B4513" stroke-width="4" />
+          <path d="M 750,160 Q 780,115 820,95" fill="none" stroke="#8B4513" stroke-width="4" />
+          
+          <!-- 目的地マーカー -->
+          <circle cx="320" cy="100" r="12" fill="#DAA520" />
+          <circle cx="570" cy="110" r="12" fill="#DAA520" />
+          <circle cx="820" cy="95" r="12" fill="#DAA520" />
+        </svg>
+      </div>
+      
+      <div class="path-grid path-destinations-grid">
+        <div class="destination-card" onclick="window.location.href='pages/tadataka.html'">
+          <div class="destination-header">
+            <div class="destination-landmark">🗺️</div>
+            <div class="destination-distance">0.5km</div>
+          </div>
+          <div class="destination-content">
+            <h3 class="destination-title">TADATAKA</h3>
+            <p class="destination-subtitle">足跡を残す道</p>
+            <p class="destination-description">
+              伊能忠敬のように、歩いた道のりがそのまま人生の記録になる。
+              GPS/BLEで自動記録し、今日の足あとを美しい地図で振り返る。
+            </p>
+            <div class="destination-features">
+              <span class="feature-tag">🦶 足跡記録</span>
+              <span class="feature-tag">🗺️ 地図日記</span>
+              <span class="feature-tag">🤖 AI分析</span>
+            </div>
+            <a href="pages/tadataka.html" class="destination-link">
+              <span class="link-text">この道を歩く</span>
+              <span class="link-arrow">→</span>
+            </a>
+          </div>
+          <div class="destination-footprints">
+            <div class="footprint-trail">
+              <span>👣</span><span>👣</span><span>👣</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='pages/toirun.html'">
+          <div class="destination-header">
+            <div class="destination-landmark">🚽</div>
+            <div class="destination-distance">緊急</div>
+          </div>
+          <div class="destination-content">
+            <h3 class="destination-title">ToiRun</h3>
+            <p class="destination-subtitle">救いの道</p>
+            <p class="destination-description">
+              困ったときの道案内。"今すぐトイレ"という緊急時に、
+              最短ルートでARナビゲーションが救いの手を差し伸べる。
+            </p>
+            <div class="destination-features">
+              <span class="feature-tag">🚀 緊急対応</span>
+              <span class="feature-tag">🥽 AR誘導</span>
+              <span class="feature-tag">🌍 多言語</span>
+            </div>
+            <a href="pages/toirun.html" class="destination-link">
+              <span class="link-text">緊急の道へ</span>
+              <span class="link-arrow">→</span>
+            </a>
+          </div>
+          <div class="destination-footprints">
+            <div class="footprint-trail urgent">
+              <span>🏃‍♂️</span><span>💨</span><span>🚽</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='pages/midpoint.html'">
+          <div class="destination-header">
+            <div class="destination-landmark">📍</div>
+            <div class="destination-distance">中間</div>
+          </div>
+          <div class="destination-content">
+            <h3 class="destination-title">Meet in the Middle</h3>
+            <p class="destination-subtitle">合流の道</p>
+            <p class="destination-description">
+              離れた場所から友と合流する道。みんなの出発地から最適な
+              集合場所を見つけ、楽しい時間への架け橋となる。
+            </p>
+            <div class="destination-features">
+              <span class="feature-tag">🤝 合流点</span>
+              <span class="feature-tag">⚡ 最適化</span>
+              <span class="feature-tag">🎯 レコメンド</span>
+            </div>
+            <a href="pages/midpoint.html" class="destination-link">
+              <span class="link-text">合流の道へ</span>
+              <span class="link-arrow">→</span>
+            </a>
+          </div>
+          <div class="destination-footprints">
+            <div class="footprint-trail meeting">
+              <span>👥</span><span>➡️</span><span>📍</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 道案内の石 -->
+      <div class="path-guide-stone">
+        <div class="stone-text">
+          <p>"どの道を選んでも、歩き続ければ必ず新しい景色に出会える"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section - 道を歩む仲間たち -->
+  <section class="path-section path-companions" id="team">
+    <div class="container">
+      <div class="path-section-header">
+        <h2 class="path-section-title">道を歩む仲間たち</h2>
+        <p class="path-section-subtitle">共に道なき道を切り開く仲間のキャラバン</p>
+      </div>
+      
+      <!-- 仲間たちの道のり -->
+      <div class="companions-journey">
+        <svg width="100%" height="150" viewBox="0 0 900 150" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.3;">
+          <!-- 三人の道 -->
+          <path d="M 50,100 Q 200,80 350,90 Q 500,100 650,85 Q 750,80 850,75" 
+                fill="none" stroke="#D2B48C" stroke-width="5" stroke-dasharray="12,8" />
+          
+          <!-- 足跡の軌跡 -->
+          <circle cx="150" cy="85" r="4" fill="#8B4513" opacity="0.6" />
+          <circle cx="170" cy="88" r="4" fill="#8B4513" opacity="0.6" />
+          <circle cx="190" cy="83" r="4" fill="#8B4513" opacity="0.6" />
+          
+          <circle cx="450" cy="95" r="4" fill="#8B4513" opacity="0.6" />
+          <circle cx="470" cy="98" r="4" fill="#8B4513" opacity="0.6" />
+          <circle cx="490" cy="93" r="4" fill="#8B4513" opacity="0.6" />
+          
+          <circle cx="750" cy="82" r="4" fill="#8B4513" opacity="0.6" />
+          <circle cx="770" cy="85" r="4" fill="#8B4513" opacity="0.6" />
+          <circle cx="790" cy="80" r="4" fill="#8B4513" opacity="0.6" />
+        </svg>
       </div>
     </div>
     
-    <div class="infinite-scroll-container">
-      <div class="infinite-scroll-track">
-        <div class="member-card" onclick="window.location.href='pages/member_yamada.html'">
-          <div class="member-image">👨‍💻</div>
-          <div class="member-info">
-            <div class="member-name">山田（Yamada）</div>
-            <div class="member-role">CDO / プロダクトデザイン</div>
+    <!-- 仲間のキャラバン（横スクロール） -->
+    <div class="path-scroll-container companions-caravan">
+      <div class="path-scroll-track companions-track">
+        <div class="companion-card" onclick="window.location.href='pages/member_yamada.html'">
+          <div class="companion-avatar">
+            <div class="avatar-frame">
+              <span class="avatar-icon">👨‍💻</span>
+              <div class="avatar-path-indicator"></div>
+            </div>
+          </div>
+          <div class="companion-info">
+            <h3 class="companion-name">山田（Yamada）</h3>
+            <p class="companion-role">道案内人</p>
+            <p class="companion-subtitle">CDO / プロダクトデザイン</p>
+            <div class="companion-journey-info">
+              <span class="journey-distance">🚶‍♂️ 500km歩行</span>
+              <span class="journey-specialty">🎨 デザインの道</span>
+            </div>
+            <p class="companion-quote">
+              "ユーザーが迷わない道をデザインしたい"
+            </p>
+            <div class="companion-footsteps">
+              👣 👣 👣
+            </div>
           </div>
         </div>
         
-        <div class="member-card" onclick="window.location.href='pages/member_masadome.html'">
-          <div class="member-image">🚀</div>
-          <div class="member-info">
-            <div class="member-name">正留（Masadome）</div>
-            <div class="member-role">CEO / フルスタックエンジニア & AIアーキテクト</div>
+        <div class="companion-card" onclick="window.location.href='pages/member_masadome.html'">
+          <div class="companion-avatar">
+            <div class="avatar-frame">
+              <span class="avatar-icon">🚀</span>
+              <div class="avatar-path-indicator"></div>
+            </div>
+          </div>
+          <div class="companion-info">
+            <h3 class="companion-name">正留（Masadome）</h3>
+            <p class="companion-role">先導者</p>
+            <p class="companion-subtitle">CEO / フルスタックエンジニア & AIアーキテクト</p>
+            <div class="companion-journey-info">
+              <span class="journey-distance">🚀 1000km開拓</span>
+              <span class="journey-specialty">⚡ テクノロジーの道</span>
+            </div>
+            <p class="companion-quote">
+              "技術で新しい道を切り開く"
+            </p>
+            <div class="companion-footsteps">
+              👣 👣 👣
+            </div>
           </div>
         </div>
         
-        <div class="member-card" onclick="window.location.href='pages/member_ando.html'">
-          <div class="member-image">🎨</div>
-          <div class="member-info">
-            <div class="member-name">安藤（Ando）</div>
-            <div class="member-role">デジタルアート・アニメーション</div>
+        <div class="companion-card" onclick="window.location.href='pages/member_ando.html'">
+          <div class="companion-avatar">
+            <div class="avatar-frame">
+              <span class="avatar-icon">🎨</span>
+              <div class="avatar-path-indicator"></div>
+            </div>
+          </div>
+          <div class="companion-info">
+            <h3 class="companion-name">安藤（Ando）</h3>
+            <p class="companion-role">表現者</p>
+            <p class="companion-subtitle">デジタルアート・アニメーション</p>
+            <div class="companion-journey-info">
+              <span class="journey-distance">🎨 300km創作</span>
+              <span class="journey-specialty">✨ アートの道</span>
+            </div>
+            <p class="companion-quote">
+              "美しい道のりを創り出したい"
+            </p>
+            <div class="companion-footsteps">
+              👣 👣 👣
+            </div>
           </div>
         </div>
         
-        <!-- Duplicate cards for seamless scrolling -->
-        <div class="member-card" onclick="window.location.href='pages/member_yamada.html'">
-          <div class="member-image">👨‍💻</div>
-          <div class="member-info">
-            <div class="member-name">山田（Yamada）</div>
-            <div class="member-role">CDO / プロダクトデザイン</div>
+        <!-- 重複カード -->
+        <div class="companion-card" onclick="window.location.href='pages/member_yamada.html'">
+          <div class="companion-avatar">
+            <div class="avatar-frame">
+              <span class="avatar-icon">👨‍💻</span>
+              <div class="avatar-path-indicator"></div>
+            </div>
+          </div>
+          <div class="companion-info">
+            <h3 class="companion-name">山田（Yamada）</h3>
+            <p class="companion-role">道案内人</p>
+            <p class="companion-subtitle">CDO / プロダクトデザイン</p>
+            <div class="companion-journey-info">
+              <span class="journey-distance">🚶‍♂️ 500km歩行</span>
+              <span class="journey-specialty">🎨 デザインの道</span>
+            </div>
+            <p class="companion-quote">
+              "ユーザーが迷わない道をデザインしたい"
+            </p>
+            <div class="companion-footsteps">
+              👣 👣 👣
+            </div>
           </div>
         </div>
         
-        <div class="member-card" onclick="window.location.href='pages/member_masadome.html'">
-          <div class="member-image">🚀</div>
-          <div class="member-info">
-            <div class="member-name">正留（Masadome）</div>
-            <div class="member-role">CEO / フルスタックエンジニア & AIアーキテクト</div>
+        <div class="companion-card" onclick="window.location.href='pages/member_masadome.html'">
+          <div class="companion-avatar">
+            <div class="avatar-frame">
+              <span class="avatar-icon">🚀</span>
+              <div class="avatar-path-indicator"></div>
+            </div>
+          </div>
+          <div class="companion-info">
+            <h3 class="companion-name">正留（Masadome）</h3>
+            <p class="companion-role">先導者</p>
+            <p class="companion-subtitle">CEO / フルスタックエンジニア & AIアーキテクト</p>
+            <div class="companion-journey-info">
+              <span class="journey-distance">🚀 1000km開拓</span>
+              <span class="journey-specialty">⚡ テクノロジーの道</span>
+            </div>
+            <p class="companion-quote">
+              "技術で新しい道を切り開く"
+            </p>
+            <div class="companion-footsteps">
+              👣 👣 👣
+            </div>
           </div>
         </div>
         
-        <div class="member-card" onclick="window.location.href='pages/member_ando.html'">
-          <div class="member-image">🎨</div>
-          <div class="member-info">
-            <div class="member-name">安藤（Ando）</div>
-            <div class="member-role">デジタルアート・アニメーション</div>
+        <div class="companion-card" onclick="window.location.href='pages/member_ando.html'">
+          <div class="companion-avatar">
+            <div class="avatar-frame">
+              <span class="avatar-icon">🎨</span>
+              <div class="avatar-path-indicator"></div>
+            </div>
+          </div>
+          <div class="companion-info">
+            <h3 class="companion-name">安藤（Ando）</h3>
+            <p class="companion-role">表現者</p>
+            <p class="companion-subtitle">デジタルアート・アニメーション</p>
+            <div class="companion-journey-info">
+              <span class="journey-distance">🎨 300km創作</span>
+              <span class="journey-specialty">✨ アートの道</span>
+            </div>
+            <p class="companion-quote">
+              "美しい道のりを創り出したい"
+            </p>
+            <div class="companion-footsteps">
+              👣 👣 👣
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <!-- 仲間募集の案内板 -->
+      <div class="companion-recruitment">
+        <div class="recruitment-board">
+          <h3>新しい仲間を探しています</h3>
+          <p>道なき道を一緒に歩む仲間を募集中。あなたの足跡を私たちの道に加えませんか？</p>
+          <div class="recruitment-paths">
+            <span class="path-tag">🛠️ エンジニアの道</span>
+            <span class="path-tag">🎨 デザイナーの道</span>
+            <span class="path-tag">📈 事業開発の道</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Marquee Section -->
-  <section class="marquee-section">
-    <div class="marquee-content" id="marqueeContent">
-      <span class="marquee-text">面白いことだけをする</span>
-      <span class="marquee-text">INNOVATION</span>
-      <span class="marquee-text">道なき道を越える</span>
-      <span class="marquee-text">BEYOND</span>
-      <span class="marquee-text">友と共に</span>
-      <span class="marquee-text">TECHNOLOGY</span>
-      <!-- Duplicate for seamless loop -->
-      <span class="marquee-text">面白いことだけをする</span>
-      <span class="marquee-text">INNOVATION</span>
-      <span class="marquee-text">道なき道を越える</span>
-      <span class="marquee-text">BEYOND</span>
-      <span class="marquee-text">友と共に</span>
-      <span class="marquee-text">TECHNOLOGY</span>
+  <!-- Path Wisdom Section - 道の教え -->
+  <section class="path-wisdom-section">
+    <div class="wisdom-background">
+      <svg width="100%" height="100%" viewBox="0 0 1200 200" style="position: absolute; top: 0; left: 0; opacity: 0.1;">
+        <!-- 古い巻物風の装飾 -->
+        <rect x="50" y="50" width="1100" height="100" fill="#D2B48C" rx="10" opacity="0.3" />
+        <line x1="100" y1="30" x2="1100" y2="30" stroke="#8B4513" stroke-width="2" opacity="0.5" />
+        <line x1="100" y1="170" x2="1100" y2="170" stroke="#8B4513" stroke-width="2" opacity="0.5" />
+      </svg>
+    </div>
+    
+    <div class="path-wisdom-scroll">
+      <div class="wisdom-content" id="wisdomContent">
+        <span class="wisdom-text">🗺️ 面白いことだけをする</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🚶‍♂️ 道なき道を越える</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🤝 友と共に歩む</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🌟 新しい景色を求めて</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🎯 楽しい未来へ</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🛤️ ToMoreBeyond</span>
+        <span class="wisdom-text separator">〜</span>
+        <!-- 重複 -->
+        <span class="wisdom-text">🗺️ 面白いことだけをする</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🚶‍♂️ 道なき道を越える</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🤝 友と共に歩む</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🌟 新しい景色を求めて</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🎯 楽しい未来へ</span>
+        <span class="wisdom-text separator">〜</span>
+        <span class="wisdom-text">🛤️ ToMoreBeyond</span>
+        <span class="wisdom-text separator">〜</span>
+      </div>
+    </div>
+    
+    <div class="wisdom-attribution">
+      <p class="attribution-text">- 道を歩む者たちの言葉 -</p>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section class="contact-section" id="contact">
-    <div class="container-fluid">
-      <div class="contact-content">
-        <div class="contact-header">
-          <h2 class="contact-title">未来を一緒に創造しませんか？</h2>
-          <p class="contact-subtitle">
-            ToMoreBeyondと共に、テクノロジーの力で世界をより良い場所に
-          </p>
-        </div>
-        
-        <div class="contact-grid">
-          <div class="contact-info">
-            <h3>お気軽にご連絡ください</h3>
-            
-            <div class="contact-item">
-              <h4>💬 一般的なお問い合わせ</h4>
-              <p>サービスに関するご質問、ご相談など</p>
-            </div>
-            
-            <div class="contact-item">
-              <h4>🤝 事業提携・協業</h4>
-              <p>パートナーシップやジョイントベンチャーのご提案</p>
-            </div>
-            
-            <div class="contact-item">
-              <h4>💼 採用・転職</h4>
-              <p>エンジニア、デザイナー、事業開発メンバー募集中</p>
-            </div>
-            
-            <div class="contact-item">
-              <h4>📱 アプリ体験・フィードバック</h4>
-              <p>TADATAKA、ToiRun、Meet in the Middleのテスト参加</p>
-            </div>
-            
-            <div class="contact-item">
-              <h4>🏢 会社概要</h4>
-              <p>東京都（リモートワーク中心）<br>設立: 2025年4月</p>
+  <!-- Contact Section - 道の終点での出会い -->
+  <section class="path-section path-contact" id="contact">
+    <div class="container">
+      <div class="path-section-header">
+        <h2 class="path-section-title">道の先で待つ出会い</h2>
+        <p class="path-section-subtitle">新しい道を一緒に歩みませんか？</p>
+      </div>
+      
+      <!-- 道の終点の風景 -->
+      <div class="contact-landscape">
+        <svg width="100%" height="200" viewBox="0 0 1000 200" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.2;">
+          <!-- 山々の風景 -->
+          <path d="M 0,120 Q 200,80 400,100 T 800,90 Q 900,85 1000,80" fill="none" stroke="#8B4513" stroke-width="3" />
+          <path d="M 0,140 Q 300,110 500,130 T 900,120 Q 950,115 1000,110" fill="none" stroke="#D2B48C" stroke-width="2" />
+          
+          <!-- 太陽 -->
+          <circle cx="850" cy="60" r="25" fill="#DAA520" opacity="0.6" />
+          
+          <!-- 道の終点 -->
+          <path d="M 400,180 Q 500,160 600,165" fill="none" stroke="#8B4513" stroke-width="6" stroke-dasharray="10,5" />
+        </svg>
+      </div>
+      
+      <div class="contact-content-grid">
+        <div class="contact-waypoints">
+          <h3 class="waypoints-title">道案内</h3>
+          <p class="waypoints-subtitle">どの道を選んでもお待ちしています</p>
+          
+          <div class="waypoint-item">
+            <div class="waypoint-icon">💬</div>
+            <div class="waypoint-content">
+              <h4>一般的なお問い合わせの道</h4>
+              <p>サービスに関するご質問やご相談の道。迷子になってもお気軽に。</p>
             </div>
           </div>
           
-          <div class="contact-form-container">
-            <div class="contact-form">
-              <h3>メッセージを送る</h3>
-              <form action="#" method="POST">
-                <div class="form-group">
-                  <label for="name">お名前 *</label>
-                  <input type="text" id="name" name="name" required>
-                </div>
-                
-                <div class="form-group">
-                  <label for="email">メールアドレス *</label>
-                  <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                  <label for="company">会社名・組織名</label>
-                  <input type="text" id="company" name="company">
-                </div>
-                
-                <div class="form-group">
-                  <label for="subject">件名 *</label>
-                  <input type="text" id="subject" name="subject" required>
-                </div>
-                
-                <div class="form-group">
-                  <label for="message">メッセージ *</label>
-                  <textarea id="message" name="message" rows="5" required placeholder="お問い合わせ内容をお聞かせください..."></textarea>
-                </div>
-                
-                <button type="submit" class="submit-button">
-                  送信する
-                </button>
-              </form>
+          <div class="waypoint-item">
+            <div class="waypoint-icon">🤝</div>
+            <div class="waypoint-content">
+              <h4>協業・パートナーシップの道</h4>
+              <p>一緒に新しい道を切り開くパートナーをお待ちしています。</p>
             </div>
           </div>
+          
+          <div class="waypoint-item">
+            <div class="waypoint-icon">👥</div>
+            <div class="waypoint-content">
+              <h4>仲間になる道</h4>
+              <p>エンジニア、デザイナー、事業開発の道を歩む仲間を募集中。</p>
+            </div>
+          </div>
+          
+          <div class="waypoint-item">
+            <div class="waypoint-icon">📱</div>
+            <div class="waypoint-content">
+              <h4>アプリ体験の道</h4>
+              <p>TADATAKA、ToiRun、Meet in the Middleのテスターとしてご参加を。</p>
+            </div>
+          </div>
+          
+          <div class="company-milestone">
+            <div class="milestone-marker-small">🏢</div>
+            <div class="company-info">
+              <h4>私たちの拠点</h4>
+              <p>東京都（リモートワーク中心の分散型チーム）<br>設立: 2025年4月</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-message-station">
+          <div class="message-station-header">
+            <h3>道中からのメッセージ</h3>
+            <p>あなたの足跡を私たちに伝えてください</p>
+          </div>
+          
+          <form action="#" method="POST" class="path-contact-form">
+            <div class="form-field">
+              <label for="name" class="field-label">🚶‍♂️ お名前 *</label>
+              <input type="text" id="name" name="name" required class="field-input" placeholder="あなたの名前">
+            </div>
+            
+            <div class="form-field">
+              <label for="email" class="field-label">📮 連絡先 *</label>
+              <input type="email" id="email" name="email" required class="field-input" placeholder="your@email.com">
+            </div>
+            
+            <div class="form-field">
+              <label for="company" class="field-label">🏢 所属・組織</label>
+              <input type="text" id="company" name="company" class="field-input" placeholder="会社名・組織名">
+            </div>
+            
+            <div class="form-field">
+              <label for="subject" class="field-label">🗺️ 用件 *</label>
+              <input type="text" id="subject" name="subject" required class="field-input" placeholder="どの道について？">
+            </div>
+            
+            <div class="form-field">
+              <label for="message" class="field-label">💭 メッセージ *</label>
+              <textarea id="message" name="message" rows="5" required class="field-textarea" placeholder="あなたの道のりや、一緒に歩みたいことをお聞かせください..."></textarea>
+            </div>
+            
+            <button type="submit" class="path-submit-button">
+              <span class="button-icon">🚀</span>
+              <span class="button-text">道を繋げる</span>
+              <span class="button-arrow">→</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- 最終的な道の詩 -->
+      <div class="final-path-poetry">
+        <div class="poetry-frame">
+          <p class="final-poetry-text">
+            "すべての道は繋がっている。<br>
+            あなたの歩む道と、私たちの道が交わるとき、<br>
+            新しい未来への扉が開かれる。"
+          </p>
+          <p class="poetry-signature">— ToMoreBeyond 一同</p>
         </div>
       </div>
     </div>
@@ -1248,7 +787,7 @@
   <script>
     // Advanced Animation System inspired by allies.studio
     document.addEventListener('DOMContentLoaded', () => {
-      // Loading Screen
+      // Loading Screen with Path Theme
       const loadingScreen = document.getElementById('loadingScreen');
       const scrollProgress = document.getElementById('scrollProgress');
       
@@ -1262,12 +801,65 @@
         }, 1500);
       });
       
-      // Scroll Progress Indicator
+      // Path Progress Indicator - 道の進捗
       function updateScrollProgress() {
         const scrollTop = window.pageYOffset;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollPercent = (scrollTop / docHeight) * 100;
         scrollProgress.style.width = scrollPercent + '%';
+        
+        // 道を歩く効果: スクロール位置に応じて足跡を表示
+        addFootstepAtScroll(scrollTop, docHeight);
+      }
+      
+      // 足跡を動的に追加
+      function addFootstepAtScroll(scrollTop, docHeight) {
+        const sections = document.querySelectorAll('.path-section');
+        sections.forEach((section, index) => {
+          const rect = section.getBoundingClientRect();
+          const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+          
+          if (isInView && !section.hasAttribute('data-footstep-added')) {
+            section.setAttribute('data-footstep-added', 'true');
+            createFloatingFootstep(section);
+          }
+        });
+      }
+      
+      // 浮遊する足跡エフェクト
+      function createFloatingFootstep(section) {
+        const footstep = document.createElement('div');
+        footstep.innerHTML = '👣';
+        footstep.style.cssText = `
+          position: absolute;
+          font-size: 1.2rem;
+          opacity: 0;
+          z-index: 1;
+          pointer-events: none;
+          left: ${Math.random() * 80 + 10}%;
+          top: ${Math.random() * 80 + 10}%;
+        `;
+        
+        section.appendChild(footstep);
+        
+        // アニメーション
+        gsap.to(footstep, {
+          opacity: 0.6,
+          scale: 1.2,
+          rotation: 15,
+          duration: 1,
+          ease: "power2.out",
+          onComplete: () => {
+            gsap.to(footstep, {
+              opacity: 0,
+              scale: 0.8,
+              y: -30,
+              duration: 2,
+              ease: "power2.in",
+              onComplete: () => footstep.remove()
+            });
+          }
+        });
       }
       
       window.addEventListener('scroll', updateScrollProgress, { passive: true });
@@ -1296,189 +888,201 @@
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.lagSmoothing(0);
 
-      // Hero Title Glitch Animation
-      const heroTitleSpans = document.querySelectorAll('.hero-title span');
-      heroTitleSpans.forEach((span, i) => {
-        gsap.set(span, {
+      // Path Hero Title Animation - 道を歩む文字
+      const pathTitle = document.querySelector('.path-title');
+      if (pathTitle) {
+        gsap.set(pathTitle, {
           opacity: 0,
-          y: 100,
-          rotateX: -90,
-          scale: 0
+          y: 50,
+          scale: 0.9
         });
         
-        gsap.to(span, {
+        gsap.to(pathTitle, {
           opacity: 1,
           y: 0,
-          rotateX: 0,
           scale: 1,
-          duration: 1,
-          delay: i * 0.1,
-          ease: "elastic.out(1, 0.5)"
+          duration: 2,
+          ease: "power3.out"
         });
-        
-        // Random glitch effect
-        setInterval(() => {
-          if (Math.random() > 0.95) {
-            gsap.to(span, {
-              x: Math.random() * 10 - 5,
-              y: Math.random() * 10 - 5,
-              duration: 0.1,
-              ease: "none",
-              onComplete: () => {
-                gsap.to(span, {
-                  x: 0,
-                  y: 0,
-                  duration: 0.1
-                });
-              }
-            });
-          }
-        }, 100);
-      });
+      }
 
-      // Journey Cards Animation - Walking the Path
-      gsap.set('.app-card', {
-        y: 200,
-        opacity: 0,
-        scale: 0.5,
-        rotateY: -90,
-        transformOrigin: "center center"
-      });
+      // Path Hero Elements Sequential Animation
+      const pathHeroElements = [
+        '.path-hero-quote',
+        '.path-subtitle',
+        '.path-description',
+        '.path-mission',
+        '.path-hero-buttons',
+        '.scroll-indicator'
+      ];
 
-      // Create a path for cards to follow
-      ScrollTrigger.batch('.app-card', {
-        onEnter: (elements) => {
-          elements.forEach((el, i) => {
-            const tl = gsap.timeline();
-            
-            // Card enters like stepping on a path
-            tl.to(el, {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              rotateY: 0,
-              duration: 1.5,
-              delay: i * 0.3,
-              ease: "power4.out"
-            })
-            .to(el, {
-              y: -20,
-              duration: 0.3,
-              ease: "power2.out"
-            }, "-=0.3")
-            .to(el, {
-              y: 0,
-              duration: 0.5,
-              ease: "bounce.out"
-            });
-            
-            // Add footstep effect
-            const footstep = document.createElement('div');
-            footstep.style.cssText = `
-              position: absolute;
-              bottom: -30px;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 30px;
-              height: 40px;
-              background: radial-gradient(ellipse at center, rgba(255,179,0,0.6) 0%, transparent 70%);
-              border-radius: 50%;
-              opacity: 0;
-              z-index: -1;
-            `;
-            el.appendChild(footstep);
-            
-            gsap.to(footstep, {
-              opacity: 1,
-              scale: 1.5,
-              duration: 0.5,
-              delay: i * 0.3,
-              ease: "power2.out",
-              onComplete: () => {
-                gsap.to(footstep, {
-                  opacity: 0,
-                  scale: 2,
-                  duration: 1,
-                  ease: "power2.out"
-                });
-              }
-            });
+      pathHeroElements.forEach((selector, i) => {
+        const element = document.querySelector(selector);
+        if (element) {
+          gsap.set(element, {
+            opacity: 0,
+            y: 30,
+            scale: 0.95
           });
-        },
-        start: "top 85%",
-        end: "bottom 15%"
-      });
-
-      // Value Cards with different animation
-      gsap.set('.value-card', {
-        y: 100,
-        opacity: 0,
-        scale: 0.8,
-        rotateX: -15
-      });
-
-      ScrollTrigger.batch('.value-card', {
-        onEnter: (elements) => {
-          gsap.to(elements, {
-            y: 0,
+          
+          gsap.to(element, {
             opacity: 1,
+            y: 0,
             scale: 1,
-            rotateX: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "back.out(1.7)"
+            duration: 1.2,
+            delay: 0.5 + (i * 0.3),
+            ease: "power2.out"
           });
         }
       });
 
-      // Parallax Floating Elements
-      gsap.utils.toArray('.floating-shape').forEach((shape, i) => {
-        gsap.to(shape, {
-          y: '-50vh',
-          rotation: 360,
-          scale: 1.5,
-          opacity: 0,
+      // Path Milestone Animation - 道標の出現
+      ScrollTrigger.batch('.path-milestone', {
+        onEnter: (elements) => {
+          elements.forEach((el, i) => {
+            const tl = gsap.timeline();
+            
+            // 道標が道に現れる
+            gsap.set(el, {
+              opacity: 0,
+              x: -100,
+              rotateY: -45
+            });
+            
+            tl.to(el, {
+              opacity: 1,
+              x: 0,
+              rotateY: 0,
+              duration: 1.2,
+              delay: i * 0.4,
+              ease: "power3.out"
+            });
+            
+            // 足跡エフェクト
+            const footprints = el.querySelector('.milestone-footprints');
+            if (footprints) {
+              gsap.set(footprints, { opacity: 0 });
+              gsap.to(footprints, {
+                opacity: 1,
+                duration: 0.8,
+                delay: 0.8 + (i * 0.4),
+                ease: "power2.out"
+              });
+            }
+          });
+        },
+        start: "top 80%"
+      });
+
+      // Destination Cards Animation - 目的地への歩み
+      ScrollTrigger.batch('.destination-card', {
+        onEnter: (elements) => {
+          elements.forEach((el, i) => {
+            const tl = gsap.timeline();
+            
+            gsap.set(el, {
+              opacity: 0,
+              y: 80,
+              scale: 0.9,
+              rotateX: 15
+            });
+            
+            // 目的地カードが道から浮かび上がる
+            tl.to(el, {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              rotateX: 0,
+              duration: 1.4,
+              delay: i * 0.2,
+              ease: "power3.out"
+            });
+            
+            // 目的地への足跡
+            const footprintTrail = el.querySelector('.footprint-trail');
+            if (footprintTrail) {
+              gsap.set(footprintTrail, { opacity: 0, scale: 0.8 });
+              gsap.to(footprintTrail, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.6,
+                delay: 0.8 + (i * 0.2),
+                ease: "back.out(1.7)"
+              });
+            }
+          });
+        },
+        start: "top 75%"
+      });
+
+      // Companion Cards Animation - 仲間との出会い
+      ScrollTrigger.batch('.companion-card', {
+        onEnter: (elements) => {
+          elements.forEach((el, i) => {
+            gsap.set(el, {
+              opacity: 0,
+              x: 100 * (i % 2 === 0 ? 1 : -1), // 左右交互
+              scale: 0.8
+            });
+            
+            gsap.to(el, {
+              opacity: 1,
+              x: 0,
+              scale: 1,
+              duration: 1.2,
+              delay: i * 0.15,
+              ease: "power2.out"
+            });
+          });
+        },
+        start: "top 80%"
+      });
+
+      // Floating Natural Elements Animation
+      gsap.utils.toArray('.floating-leaf, .floating-bird').forEach((element, i) => {
+        gsap.to(element, {
+          y: '20vh',
+          x: '10vw',
+          rotation: 15,
+          scale: 1.1,
+          opacity: 0.3,
           scrollTrigger: {
             trigger: 'body',
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 1 + i * 0.5,
+            scrub: 1 + i * 0.3,
           }
         });
       });
 
-      // Section Slide-in Animations
-      gsap.utils.toArray('section').forEach((section, i) => {
-        const direction = i % 2 === 0 ? -100 : 100;
-        
+      // Path Section Natural Slide-in
+      gsap.utils.toArray('.path-section').forEach((section, i) => {
         gsap.set(section, {
-          x: direction,
-          opacity: 0
+          opacity: 0,
+          y: 50
         });
 
         ScrollTrigger.create({
           trigger: section,
-          start: 'top 80%',
-          end: 'bottom 20%',
+          start: 'top 85%',
           animation: gsap.to(section, {
-            x: 0,
             opacity: 1,
-            duration: 1.5,
-            ease: "expo.out"
-          }),
-          toggleActions: "play reverse play reverse"
+            y: 0,
+            duration: 1.8,
+            ease: "power3.out"
+          })
         });
       });
 
-      // Team Member Card Hover Effects
-      gsap.utils.toArray('.member-card').forEach(card => {
+      // Companion Cards Hover Effects
+      gsap.utils.toArray('.companion-card').forEach(card => {
         const hoverTl = gsap.timeline({ paused: true });
         
         hoverTl.to(card, {
-          scale: 1.1,
-          y: -20,
-          rotateY: 10,
-          boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+          scale: 1.05,
+          y: -12,
+          rotateY: 5,
+          boxShadow: "0 15px 40px rgba(139, 69, 19, 0.3)",
           duration: 0.4,
           ease: "power2.out"
         });
@@ -1487,25 +1091,40 @@
         card.addEventListener('mouseleave', () => hoverTl.reverse());
       });
 
-      // Infinite Scroll Track Enhanced Animation
-      const scrollTrack = document.querySelector('.infinite-scroll-track');
-      if (scrollTrack) {
-        gsap.set(scrollTrack, { x: 0 });
+      // Path Scroll Track Animation - キャラバンの動き
+      const pathScrollTracks = document.querySelectorAll('.path-scroll-track');
+      pathScrollTracks.forEach(track => {
+        if (track) {
+          gsap.set(track, { x: 0 });
+          
+          gsap.to(track, {
+            x: '-50%',
+            duration: 35,
+            ease: 'none',
+            repeat: -1
+          });
+
+          // Pause on hover for interaction
+          track.addEventListener('mouseenter', () => {
+            gsap.globalTimeline.timeScale(0.2);
+          });
+          
+          track.addEventListener('mouseleave', () => {
+            gsap.globalTimeline.timeScale(1);
+          });
+        }
+      });
+
+      // Wisdom Text Animation
+      const wisdomContent = document.querySelector('.wisdom-content');
+      if (wisdomContent) {
+        gsap.set(wisdomContent, { x: 0 });
         
-        gsap.to(scrollTrack, {
+        gsap.to(wisdomContent, {
           x: '-50%',
-          duration: 30,
+          duration: 45,
           ease: 'none',
           repeat: -1
-        });
-
-        // Pause on hover
-        scrollTrack.addEventListener('mouseenter', () => {
-          gsap.globalTimeline.timeScale(0.1);
-        });
-        
-        scrollTrack.addEventListener('mouseleave', () => {
-          gsap.globalTimeline.timeScale(1);
         });
       }
 

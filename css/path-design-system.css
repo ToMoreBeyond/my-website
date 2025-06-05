@@ -1,0 +1,1570 @@
+/* ToMoreBeyond - Path Design System */
+/* 伊能忠敬のように道を歩むコンセプトのデザインシステム */
+
+:root {
+  /* 道のカラーパレット - 自然な色合い */
+  --path-primary: #8B4513;        /* サドルブラウン - 土の道 */
+  --path-secondary: #D2B48C;      /* タン - 砂の道 */
+  --path-accent: #DAA520;         /* ゴールデンロッド - 夕日の道 */
+  --path-forest: #228B22;         /* フォレストグリーン - 森の道 */
+  --path-sky: #87CEEB;           /* スカイブルー - 空の道 */
+  --path-stone: #696969;         /* ディムグレー - 石の道 */
+  --path-earth: #8FBC8F;         /* ダークシーグリーン - 大地 */
+  
+  /* テキストカラー */
+  --text-path-primary: #2F1B14;   /* 濃い茶色 */
+  --text-path-secondary: #5C4033; /* 中間の茶色 */
+  --text-path-light: #8B7355;     /* 明るい茶色 */
+  --text-path-inverse: #F5F5DC;   /* ベージュ */
+  
+  /* 背景カラー */
+  --bg-path-primary: #FDF5E6;     /* オールドレース - 古い地図 */
+  --bg-path-secondary: #F5F5DC;   /* ベージュ - 羊皮紙 */
+  --bg-path-forest: #F0F8FF;      /* アリスブルー - 森の空気 */
+  --bg-path-earth: #FFFAF0;       /* フローラルホワイト - 大地 */
+  
+  /* 道のグラデーション */
+  --gradient-path: linear-gradient(135deg, var(--path-secondary) 0%, var(--path-accent) 50%, var(--path-primary) 100%);
+  --gradient-sky-path: linear-gradient(0deg, var(--path-earth) 0%, var(--path-sky) 100%);
+  --gradient-forest-path: linear-gradient(135deg, var(--path-forest) 0%, var(--path-earth) 100%);
+  
+  /* タイポグラフィ - 地図や古い文書をイメージ */
+  --font-map: 'Playfair Display', 'Times New Roman', serif;
+  --font-path: 'Inter', 'Helvetica Neue', sans-serif;
+  --font-nature: 'Georgia', serif;
+  
+  /* スペーシング - 歩幅をイメージ */
+  --step-xs: 0.25rem;    /* 小さな一歩 */
+  --step-sm: 0.5rem;     /* 短い歩幅 */
+  --step-md: 1rem;       /* 普通の歩幅 */
+  --step-lg: 2rem;       /* 大きな歩幅 */
+  --step-xl: 4rem;       /* 大股 */
+  --step-2xl: 8rem;      /* 跳躍 */
+  
+  /* 道の幅 */
+  --path-narrow: 2px;
+  --path-medium: 4px;
+  --path-wide: 8px;
+  --path-highway: 16px;
+  
+  /* シャドウ - 足跡や影 */
+  --shadow-footprint: 0 2px 8px rgba(139, 69, 19, 0.2);
+  --shadow-deep-footprint: 0 4px 16px rgba(139, 69, 19, 0.3);
+  --shadow-path: 0 1px 4px rgba(139, 69, 19, 0.1);
+  --shadow-landmark: 0 8px 32px rgba(139, 69, 19, 0.15);
+  
+  /* ボーダー半径 - 自然な曲線 */
+  --radius-pebble: 4px;
+  --radius-stone: 8px;
+  --radius-boulder: 16px;
+  --radius-hill: 32px;
+  --radius-mountain: 50%;
+  
+  /* トランジション - 歩く速度 */
+  --walk-slow: 0.8s ease-out;
+  --walk-normal: 0.5s ease-in-out;
+  --walk-fast: 0.3s ease-in;
+  --run: 0.15s ease-out;
+}
+
+/* 道のアニメーション定義 */
+@keyframes walkingPath {
+  0% { 
+    transform: translateX(-100px) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0) scale(1.05);
+    opacity: 0.7;
+  }
+  100% { 
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes footstepPath {
+  0% { 
+    transform: scale(0) rotate(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: scale(1) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+@keyframes pathReveal {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes leafFalling {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pathGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--path-accent);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--path-accent), 0 0 30px var(--path-accent);
+  }
+}
+
+/* 基本のパスコンポーネント */
+.path-container {
+  background: var(--bg-path-primary);
+  color: var(--text-path-primary);
+  font-family: var(--font-path);
+  position: relative;
+  overflow: hidden;
+}
+
+.path-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--path-medium);
+  height: 100%;
+  background: var(--gradient-path);
+  transform: translateX(-50%);
+  opacity: 0.3;
+  z-index: 1;
+}
+
+/* パスヒーロー */
+.path-hero {
+  min-height: 100vh;
+  background: var(--gradient-sky-path);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.path-hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"><path d="M0,300 Q300,250 600,260 T1200,280 L1200,300 Z" fill="%23F5F5DC"/></svg>');
+  background-size: cover;
+  background-position: bottom;
+}
+
+.path-hero-content {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  max-width: 800px;
+  padding: var(--step-xl);
+}
+
+.path-title {
+  font-family: var(--font-map);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-lg);
+  text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.1);
+  animation: walkingPath 1.5s ease-out;
+}
+
+.path-subtitle {
+  font-family: var(--font-nature);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--text-path-secondary);
+  margin-bottom: var(--step-lg);
+  font-style: italic;
+  animation: walkingPath 1.5s ease-out 0.3s both;
+}
+
+.path-description {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: var(--text-path-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--step-2xl);
+  animation: walkingPath 1.5s ease-out 0.6s both;
+}
+
+/* パスボタン */
+.path-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--step-sm);
+  padding: var(--step-md) var(--step-lg);
+  background: var(--gradient-path);
+  color: var(--text-path-inverse);
+  border: none;
+  border-radius: var(--radius-boulder);
+  font-family: var(--font-path);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--walk-normal);
+  box-shadow: var(--shadow-footprint);
+  position: relative;
+  overflow: hidden;
+}
+
+.path-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left var(--walk-normal);
+}
+
+.path-button:hover::before {
+  left: 100%;
+}
+
+.path-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--shadow-deep-footprint);
+}
+
+.path-button::after {
+  content: '→';
+  margin-left: var(--step-xs);
+  transition: transform var(--walk-fast);
+}
+
+.path-button:hover::after {
+  transform: translateX(5px);
+}
+
+/* パスカード */
+.path-card {
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-stone);
+  padding: var(--step-lg);
+  box-shadow: var(--shadow-footprint);
+  transition: all var(--walk-normal);
+  position: relative;
+  border: 1px solid var(--path-secondary);
+  overflow: hidden;
+}
+
+.path-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-path);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--walk-normal);
+}
+
+.path-card:hover::before {
+  transform: scaleX(1);
+  animation: pathGlow 2s ease-in-out infinite;
+}
+
+.path-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-landmark);
+}
+
+.path-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-mountain);
+  background: var(--gradient-forest-path);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin-bottom: var(--step-md);
+  animation: footstepPath 0.8s ease-out;
+}
+
+.path-card-title {
+  font-family: var(--font-map);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-sm);
+}
+
+.path-card-description {
+  color: var(--text-path-secondary);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* パスセクション */
+.path-section {
+  padding: var(--step-2xl) var(--step-md);
+  position: relative;
+  background: var(--bg-path-primary);
+}
+
+.path-section:nth-child(even) {
+  background: var(--bg-path-forest);
+}
+
+.path-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--path-medium);
+  height: 100%;
+  background: var(--path-accent);
+  transform: translateX(-50%);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.path-section-header {
+  text-align: center;
+  margin-bottom: var(--step-2xl);
+  position: relative;
+  z-index: 2;
+}
+
+.path-section-title {
+  font-family: var(--font-map);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-md);
+  position: relative;
+}
+
+.path-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-path);
+  transform: translateX(-50%);
+  border-radius: var(--radius-pebble);
+}
+
+.path-section-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: var(--text-path-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* パスグリッド */
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--step-lg);
+  position: relative;
+  z-index: 2;
+}
+
+/* パススクロール */
+.path-scroll-container {
+  overflow: hidden;
+  padding: var(--step-lg) 0;
+  position: relative;
+}
+
+.path-scroll-track {
+  display: flex;
+  gap: var(--step-lg);
+  animation: pathScroll 40s linear infinite;
+  width: fit-content;
+}
+
+@keyframes pathScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.path-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+/* フットプリント効果 */
+.footprint {
+  position: absolute;
+  width: 20px;
+  height: 30px;
+  background: radial-gradient(ellipse at center, var(--path-primary) 0%, transparent 70%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0.3;
+  animation: footstepPath 1s ease-out;
+}
+
+.footprint:nth-child(even) {
+  transform: rotate(15deg);
+  animation-delay: 0.5s;
+}
+
+.footprint:nth-child(odd) {
+  transform: rotate(-15deg);
+}
+
+/* 道標 */
+.path-milestone {
+  position: relative;
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-boulder);
+  padding: var(--step-lg);
+  margin: var(--step-xl) 0;
+  border-left: 6px solid var(--path-accent);
+  box-shadow: var(--shadow-landmark);
+}
+
+.path-milestone::before {
+  content: '🗺️';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  background: var(--path-accent);
+  border-radius: var(--radius-mountain);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-footprint);
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .path-hero-content {
+    padding: var(--step-lg);
+  }
+  
+  .path-grid {
+    grid-template-columns: 1fr;
+    gap: var(--step-md);
+  }
+  
+  .path-section {
+    padding: var(--step-xl) var(--step-sm);
+  }
+  
+  .path-button {
+    padding: var(--step-sm) var(--step-md);
+    font-size: 1rem;
+  }
+}
+
+/* プリファードモーション設定 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ヒーロー専用スタイル */
+.path-hero-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.path-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.7;
+  animation: cloudFloat 20s ease-in-out infinite;
+}
+
+.cloud-1 {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.cloud-2 {
+  top: 20%;
+  right: 15%;
+  animation-delay: -5s;
+}
+
+.cloud-3 {
+  top: 30%;
+  left: 70%;
+  animation-delay: -10s;
+}
+
+@keyframes cloudFloat {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(20px) translateY(-10px);
+  }
+  50% {
+    transform: translateX(-10px) translateY(-20px);
+  }
+  75% {
+    transform: translateX(15px) translateY(-5px);
+  }
+}
+
+.path-hero-quote {
+  margin-bottom: var(--step-lg);
+  position: relative;
+  font-family: var(--font-nature);
+  font-style: italic;
+  color: var(--text-path-secondary);
+  text-align: center;
+  animation: walkingPath 1.5s ease-out;
+}
+
+.quote-mark {
+  font-size: 4rem;
+  color: var(--path-accent);
+  opacity: 0.5;
+  position: absolute;
+  top: -20px;
+  left: -30px;
+}
+
+.quote-author {
+  margin-top: var(--step-sm);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.path-mission {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--step-md);
+  margin: var(--step-xl) 0;
+  padding: var(--step-lg);
+  background: rgba(139, 69, 19, 0.1);
+  border-radius: var(--radius-boulder);
+  border: 2px dashed var(--path-accent);
+  animation: walkingPath 1.5s ease-out 0.9s both;
+}
+
+.mission-icon {
+  font-size: 2rem;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.path-mission p {
+  font-family: var(--font-map);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-path-primary);
+  margin: 0;
+  text-align: center;
+}
+
+.path-hero-buttons {
+  display: flex;
+  gap: var(--step-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--step-xl);
+  animation: walkingPath 1.5s ease-out 1.2s both;
+}
+
+.path-button.primary {
+  background: var(--gradient-path);
+  color: var(--text-path-inverse);
+}
+
+.path-button.secondary {
+  background: transparent;
+  color: var(--text-path-primary);
+  border: 2px solid var(--path-accent);
+}
+
+.path-button.secondary:hover {
+  background: var(--path-accent);
+  color: var(--text-path-inverse);
+}
+
+.button-icon {
+  font-size: 1.2rem;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: var(--step-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 3;
+  animation: walkingPath 1.5s ease-out 1.5s both;
+}
+
+.scroll-text {
+  font-size: 0.9rem;
+  color: var(--text-path-secondary);
+  margin-bottom: var(--step-sm);
+  font-family: var(--font-path);
+}
+
+.scroll-arrow {
+  font-size: 1.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.floating-leaf {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0.6;
+  animation: leafFalling 15s ease-in-out infinite;
+}
+
+.floating-leaf:nth-child(1) {
+  top: -5%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.floating-leaf:nth-child(2) {
+  top: -5%;
+  left: 80%;
+  animation-delay: -5s;
+}
+
+.floating-bird {
+  position: absolute;
+  top: 15%;
+  left: -5%;
+  font-size: 1.8rem;
+  animation: birdFly 25s linear infinite;
+}
+
+@keyframes birdFly {
+  0% {
+    transform: translateX(-50px) translateY(0);
+  }
+  50% {
+    transform: translateX(50vw) translateY(-30px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 50px)) translateY(0);
+  }
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+}
+
+/* 足跡アニメーション強化 */
+.path-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 30%;
+  left: 10%;
+  width: 15px;
+  height: 20px;
+  background: radial-gradient(ellipse at center, var(--path-primary) 0%, transparent 70%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0.4;
+  animation: footstepAppear 3s ease-out 2s both;
+}
+
+@keyframes footstepAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.3);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+}
+
+/* バリューセクション - 道標 */
+.path-values {
+  background: var(--bg-path-forest);
+  position: relative;
+}
+
+.path-trail {
+  position: relative;
+  height: 200px;
+  margin-bottom: var(--step-xl);
+}
+
+.path-milestones {
+  margin-top: var(--step-xl);
+}
+
+.milestone-marker {
+  position: absolute;
+  top: -20px;
+  left: var(--step-lg);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-mountain);
+  background: var(--gradient-path);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-footprint);
+  z-index: 3;
+}
+
+.milestone-number {
+  font-family: var(--font-map);
+  font-weight: 800;
+  color: var(--text-path-inverse);
+  font-size: 1.2rem;
+}
+
+.milestone-signpost {
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-stone);
+  padding: var(--step-xl) var(--step-lg) var(--step-lg);
+  margin-top: var(--step-lg);
+  border-left: 6px solid var(--path-accent);
+  position: relative;
+  box-shadow: var(--shadow-footprint);
+  transition: all var(--walk-normal);
+}
+
+.milestone-signpost:hover {
+  transform: translateX(10px);
+  box-shadow: var(--shadow-landmark);
+}
+
+.signpost-icon {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: var(--step-md);
+  animation: iconFloat 4s ease-in-out infinite;
+}
+
+.signpost-title {
+  font-family: var(--font-map);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-sm);
+  text-align: center;
+}
+
+.signpost-description {
+  color: var(--text-path-secondary);
+  line-height: 1.7;
+  text-align: center;
+  margin-bottom: var(--step-md);
+}
+
+.milestone-footprints {
+  text-align: center;
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
+
+.milestone-footprints .footprint {
+  margin: 0 var(--step-xs);
+  animation: footstepPath 1s ease-out infinite;
+}
+
+.milestone-footprints .footprint:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.path-poetry {
+  margin-top: var(--step-2xl);
+  text-align: center;
+}
+
+.poetry-scroll {
+  background: rgba(139, 69, 19, 0.1);
+  border-radius: var(--radius-boulder);
+  padding: var(--step-xl);
+  border: 2px dashed var(--path-accent);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.poetry-text {
+  font-family: var(--font-nature);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--text-path-primary);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* アプリセクション - 目的地 */
+.path-destinations {
+  background: var(--bg-path-primary);
+  position: relative;
+}
+
+.destinations-path {
+  position: relative;
+  height: 300px;
+  margin-bottom: var(--step-xl);
+}
+
+.path-destinations-grid {
+  margin-top: var(--step-xl);
+}
+
+.destination-card {
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-stone);
+  padding: var(--step-lg);
+  position: relative;
+  cursor: pointer;
+  transition: all var(--walk-normal);
+  border: 2px solid var(--path-secondary);
+  overflow: hidden;
+  box-shadow: var(--shadow-footprint);
+}
+
+.destination-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--path-accent) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--walk-normal);
+}
+
+.destination-card:hover::before {
+  opacity: 0.1;
+}
+
+.destination-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: var(--shadow-landmark);
+  border-color: var(--path-accent);
+}
+
+.destination-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--step-md);
+  position: relative;
+  z-index: 2;
+}
+
+.destination-landmark {
+  font-size: 2.5rem;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.destination-distance {
+  background: var(--path-accent);
+  color: var(--text-path-inverse);
+  padding: var(--step-xs) var(--step-sm);
+  border-radius: var(--radius-pebble);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.destination-content {
+  position: relative;
+  z-index: 2;
+}
+
+.destination-title {
+  font-family: var(--font-map);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-xs);
+}
+
+.destination-subtitle {
+  font-size: 1rem;
+  color: var(--path-accent);
+  font-weight: 600;
+  margin-bottom: var(--step-sm);
+}
+
+.destination-description {
+  color: var(--text-path-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--step-md);
+}
+
+.destination-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--step-xs);
+  margin-bottom: var(--step-md);
+}
+
+.feature-tag {
+  background: rgba(139, 69, 19, 0.1);
+  color: var(--text-path-primary);
+  padding: var(--step-xs) var(--step-sm);
+  border-radius: var(--radius-pebble);
+  font-size: 0.85rem;
+  border: 1px solid var(--path-secondary);
+}
+
+.destination-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--step-sm);
+  color: var(--path-accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--walk-fast);
+}
+
+.destination-link:hover {
+  gap: var(--step-md);
+  color: var(--path-primary);
+}
+
+.link-arrow {
+  transition: transform var(--walk-fast);
+}
+
+.destination-link:hover .link-arrow {
+  transform: translateX(5px);
+}
+
+.destination-footprints {
+  margin-top: var(--step-md);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.footprint-trail {
+  display: flex;
+  justify-content: center;
+  gap: var(--step-sm);
+  font-size: 1.1rem;
+}
+
+.footprint-trail.urgent span {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.footprint-trail.meeting span {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.path-guide-stone {
+  margin-top: var(--step-2xl);
+  text-align: center;
+}
+
+.stone-text {
+  background: var(--path-stone);
+  color: var(--text-path-inverse);
+  padding: var(--step-lg);
+  border-radius: var(--radius-boulder);
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-deep-footprint);
+  font-family: var(--font-nature);
+  font-style: italic;
+}
+
+/* チームセクション - 仲間たち */
+.path-companions {
+  background: var(--bg-path-forest);
+  position: relative;
+}
+
+.companions-journey {
+  position: relative;
+  height: 150px;
+  margin-bottom: var(--step-xl);
+}
+
+.companions-caravan {
+  margin: var(--step-xl) 0;
+  background: var(--bg-path-primary);
+  padding: var(--step-lg) 0;
+  border-radius: var(--radius-stone);
+}
+
+.companions-track {
+  padding: var(--step-md) 0;
+}
+
+.companion-card {
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-stone);
+  padding: var(--step-lg);
+  min-width: 350px;
+  cursor: pointer;
+  transition: all var(--walk-normal);
+  border: 2px solid var(--path-secondary);
+  box-shadow: var(--shadow-footprint);
+  flex-shrink: 0;
+}
+
+.companion-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-landmark);
+  border-color: var(--path-accent);
+}
+
+.companion-avatar {
+  text-align: center;
+  margin-bottom: var(--step-md);
+}
+
+.avatar-frame {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--step-sm);
+  animation: iconFloat 4s ease-in-out infinite;
+}
+
+.avatar-path-indicator {
+  width: 30px;
+  height: 4px;
+  background: var(--gradient-path);
+  border-radius: var(--radius-pebble);
+  margin: 0 auto;
+}
+
+.companion-info {
+  text-align: center;
+}
+
+.companion-name {
+  font-family: var(--font-map);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-xs);
+}
+
+.companion-role {
+  color: var(--path-accent);
+  font-weight: 600;
+  margin-bottom: var(--step-xs);
+}
+
+.companion-subtitle {
+  color: var(--text-path-secondary);
+  font-size: 0.9rem;
+  margin-bottom: var(--step-md);
+}
+
+.companion-journey-info {
+  display: flex;
+  justify-content: center;
+  gap: var(--step-md);
+  margin-bottom: var(--step-md);
+  flex-wrap: wrap;
+}
+
+.journey-distance,
+.journey-specialty {
+  background: rgba(139, 69, 19, 0.1);
+  padding: var(--step-xs) var(--step-sm);
+  border-radius: var(--radius-pebble);
+  font-size: 0.8rem;
+  border: 1px solid var(--path-secondary);
+}
+
+.companion-quote {
+  font-family: var(--font-nature);
+  font-style: italic;
+  color: var(--text-path-secondary);
+  margin-bottom: var(--step-md);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.companion-footsteps {
+  font-size: 1.1rem;
+  opacity: 0.6;
+  letter-spacing: var(--step-xs);
+}
+
+.companion-recruitment {
+  margin-top: var(--step-2xl);
+}
+
+.recruitment-board {
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-stone);
+  padding: var(--step-xl);
+  text-align: center;
+  border: 2px dashed var(--path-accent);
+  box-shadow: var(--shadow-footprint);
+}
+
+.recruitment-board h3 {
+  font-family: var(--font-map);
+  font-size: 1.8rem;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-md);
+}
+
+.recruitment-board p {
+  color: var(--text-path-secondary);
+  margin-bottom: var(--step-lg);
+  line-height: 1.6;
+}
+
+.recruitment-paths {
+  display: flex;
+  justify-content: center;
+  gap: var(--step-md);
+  flex-wrap: wrap;
+}
+
+.path-tag {
+  background: var(--gradient-path);
+  color: var(--text-path-inverse);
+  padding: var(--step-sm) var(--step-md);
+  border-radius: var(--radius-pebble);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all var(--walk-normal);
+  cursor: pointer;
+}
+
+.path-tag:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-footprint);
+}
+
+/* 道の教えセクション */
+.path-wisdom-section {
+  background: var(--bg-path-earth);
+  padding: var(--step-xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.wisdom-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.path-wisdom-scroll {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  padding: var(--step-lg) 0;
+}
+
+.wisdom-content {
+  display: flex;
+  white-space: nowrap;
+  animation: pathScroll 40s linear infinite;
+  gap: var(--step-2xl);
+}
+
+.wisdom-text {
+  font-family: var(--font-map);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-path-primary);
+  text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.3);
+}
+
+.wisdom-text.separator {
+  color: var(--path-accent);
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+.wisdom-attribution {
+  text-align: center;
+  margin-top: var(--step-lg);
+  position: relative;
+  z-index: 2;
+}
+
+.attribution-text {
+  font-family: var(--font-nature);
+  font-style: italic;
+  color: var(--text-path-secondary);
+  font-size: 1.1rem;
+}
+
+/* コンタクトセクション - 道の終点 */
+.path-contact {
+  background: var(--gradient-sky-path);
+  position: relative;
+}
+
+.contact-landscape {
+  position: relative;
+  height: 200px;
+  margin-bottom: var(--step-xl);
+}
+
+.contact-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--step-2xl);
+  align-items: start;
+}
+
+.contact-waypoints {
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-stone);
+  padding: var(--step-xl);
+  box-shadow: var(--shadow-footprint);
+  border: 1px solid var(--path-secondary);
+}
+
+.waypoints-title {
+  font-family: var(--font-map);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-sm);
+}
+
+.waypoints-subtitle {
+  color: var(--text-path-secondary);
+  margin-bottom: var(--step-lg);
+  line-height: 1.6;
+}
+
+.waypoint-item {
+  display: flex;
+  gap: var(--step-md);
+  margin-bottom: var(--step-lg);
+  padding: var(--step-md);
+  background: rgba(139, 69, 19, 0.05);
+  border-radius: var(--radius-stone);
+  transition: all var(--walk-normal);
+}
+
+.waypoint-item:hover {
+  background: rgba(139, 69, 19, 0.1);
+  transform: translateX(5px);
+}
+
+.waypoint-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.waypoint-content h4 {
+  font-family: var(--font-path);
+  font-weight: 600;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-xs);
+  font-size: 1.1rem;
+}
+
+.waypoint-content p {
+  color: var(--text-path-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.company-milestone {
+  margin-top: var(--step-xl);
+  padding: var(--step-lg);
+  background: rgba(218, 165, 32, 0.1);
+  border-radius: var(--radius-stone);
+  border: 2px dashed var(--path-accent);
+  display: flex;
+  gap: var(--step-md);
+  align-items: center;
+}
+
+.milestone-marker-small {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.company-info h4 {
+  font-family: var(--font-map);
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-xs);
+  font-size: 1.1rem;
+}
+
+.company-info p {
+  color: var(--text-path-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.contact-message-station {
+  background: var(--bg-path-secondary);
+  border-radius: var(--radius-stone);
+  padding: var(--step-xl);
+  box-shadow: var(--shadow-footprint);
+  border: 1px solid var(--path-secondary);
+}
+
+.message-station-header {
+  text-align: center;
+  margin-bottom: var(--step-xl);
+}
+
+.message-station-header h3 {
+  font-family: var(--font-map);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-path-primary);
+  margin-bottom: var(--step-sm);
+}
+
+.message-station-header p {
+  color: var(--text-path-secondary);
+  line-height: 1.6;
+}
+
+.path-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--step-lg);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--step-sm);
+}
+
+.field-label {
+  font-weight: 600;
+  color: var(--text-path-primary);
+  font-size: 1rem;
+}
+
+.field-input,
+.field-textarea {
+  padding: var(--step-md);
+  border: 2px solid var(--path-secondary);
+  border-radius: var(--radius-stone);
+  background: var(--bg-path-primary);
+  color: var(--text-path-primary);
+  font-family: var(--font-path);
+  font-size: 1rem;
+  transition: all var(--walk-normal);
+}
+
+.field-input:focus,
+.field-textarea:focus {
+  outline: none;
+  border-color: var(--path-accent);
+  box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
+}
+
+.field-textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.path-submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--step-sm);
+  padding: var(--step-lg) var(--step-xl);
+  background: var(--gradient-path);
+  color: var(--text-path-inverse);
+  border: none;
+  border-radius: var(--radius-boulder);
+  font-family: var(--font-path);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--walk-normal);
+  box-shadow: var(--shadow-footprint);
+}
+
+.path-submit-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--shadow-deep-footprint);
+  gap: var(--step-md);
+}
+
+.button-arrow {
+  transition: transform var(--walk-fast);
+}
+
+.path-submit-button:hover .button-arrow {
+  transform: translateX(5px);
+}
+
+.final-path-poetry {
+  margin-top: var(--step-2xl);
+  text-align: center;
+}
+
+.poetry-frame {
+  background: rgba(139, 69, 19, 0.1);
+  border-radius: var(--radius-boulder);
+  padding: var(--step-xl);
+  border: 3px solid var(--path-accent);
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-landmark);
+}
+
+.final-poetry-text {
+  font-family: var(--font-nature);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--text-path-primary);
+  line-height: 1.8;
+  margin-bottom: var(--step-lg);
+}
+
+.poetry-signature {
+  font-family: var(--font-path);
+  font-weight: 600;
+  color: var(--path-accent);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 768px) {
+  .contact-content-grid {
+    grid-template-columns: 1fr;
+    gap: var(--step-xl);
+  }
+  
+  .companion-card {
+    min-width: 280px;
+  }
+  
+  .companion-journey-info {
+    flex-direction: column;
+    gap: var(--step-sm);
+  }
+  
+  .recruitment-paths {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .wisdom-text {
+    font-size: clamp(1.2rem, 6vw, 2rem);
+  }
+  
+  .milestone-signpost {
+    padding: var(--step-lg) var(--step-md) var(--step-md);
+  }
+  
+  .destination-features {
+    flex-direction: column;
+    gap: var(--step-sm);
+  }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-path-primary: #2F1B14;
+    --bg-path-secondary: #3C2415;
+    --bg-path-forest: #1F2F1F;
+    --text-path-primary: #F5F5DC;
+    --text-path-secondary: #D2B48C;
+    --text-path-light: #BFA76F;
+  }
+}
