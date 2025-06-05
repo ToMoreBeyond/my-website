@@ -23,24 +23,67 @@
       overflow-x: hidden;
     }
     
-    /* Enhanced Hero Section */
+    /* Enhanced Hero Section - The Road Not Taken */
     .hero-section {
       min-height: 100vh;
       display: flex;
       align-items: center;
       position: relative;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(255, 179, 0, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 179, 0, 0.04) 0%, transparent 50%);
-      padding: var(--space-20) 0;
+      overflow: hidden;
+      background: #000;
+    }
+    
+    /* Video Background Container */
+    .hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.7;
+    }
+    
+    .hero-video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Road Path Animation */
+    .road-path {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 100%;
+      z-index: 2;
+      overflow: hidden;
+    }
+    
+    .road-line {
+      position: absolute;
+      width: 4px;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, #FFB300, transparent);
+      left: 50%;
+      transform: translateX(-50%);
+      animation: roadMove 3s linear infinite;
+    }
+    
+    @keyframes roadMove {
+      0% { transform: translateX(-50%) translateY(-200px); }
+      100% { transform: translateX(-50%) translateY(100vh); }
     }
     
     .hero-content {
       text-align: center;
       position: relative;
-      z-index: 2;
+      z-index: 3;
       max-width: 1000px;
       margin: 0 auto;
+      perspective: 1000px;
     }
     
     .hero-title {
@@ -49,34 +92,126 @@
       font-weight: 900;
       line-height: 1.1;
       margin-bottom: var(--space-6);
-      background: linear-gradient(135deg, #1a1a1a 0%, #333333 50%, #FFB300 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: white;
       position: relative;
+      transform-style: preserve-3d;
+      animation: titleFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes titleFloat {
+      0%, 100% { transform: rotateY(0deg) translateY(0); }
+      25% { transform: rotateY(5deg) translateY(-10px); }
+      50% { transform: rotateY(0deg) translateY(-20px); }
+      75% { transform: rotateY(-5deg) translateY(-10px); }
+    }
+    
+    .hero-title span {
+      display: inline-block;
+      animation: glitch 2s infinite;
+      position: relative;
+    }
+    
+    @keyframes glitch {
+      0%, 100% { text-shadow: 2px 2px 0 #FFB300, -2px -2px 0 #FF6B35; }
+      25% { text-shadow: -2px 2px 0 #FF6B35, 2px -2px 0 #FFB300; }
+      50% { text-shadow: 2px -2px 0 #FFB300, -2px 2px 0 #FF6B35; }
+      75% { text-shadow: -2px -2px 0 #FF6B35, 2px 2px 0 #FFB300; }
     }
     
     .hero-subtitle {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
-      color: var(--neutral-600);
+      color: rgba(255, 255, 255, 0.8);
       margin-bottom: var(--space-4);
       line-height: 1.6;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s forwards;
+    }
+    
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .hero-mission {
       font-size: clamp(1.5rem, 4vw, 2.2rem);
       font-weight: 700;
-      color: var(--neutral-800);
+      color: white;
       margin-bottom: var(--space-10);
       line-height: 1.4;
+      position: relative;
+    }
+    
+    .hero-mission::before,
+    .hero-mission::after {
+      content: '"';
+      font-size: 3rem;
+      color: #FFB300;
+      position: absolute;
+      opacity: 0.3;
+    }
+    
+    .hero-mission::before {
+      left: -30px;
+      top: -10px;
+    }
+    
+    .hero-mission::after {
+      right: -30px;
+      bottom: -10px;
     }
     
     .hero-description {
       font-size: var(--text-lg);
-      color: var(--neutral-600);
+      color: rgba(255, 255, 255, 0.7);
       max-width: 700px;
       margin: 0 auto var(--space-10);
       line-height: 1.7;
+    }
+    
+    /* Interactive Path Choice */
+    .path-choice {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      gap: var(--space-8);
+    }
+    
+    .path-btn {
+      padding: var(--space-3) var(--space-6);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-full);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .path-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, #FFB300 0%, transparent 70%);
+      transition: all 0.5s ease;
+      transform: translate(-50%, -50%);
+    }
+    
+    .path-btn:hover::before {
+      width: 200px;
+      height: 200px;
+    }
+    
+    .path-btn:hover {
+      border-color: #FFB300;
+      transform: scale(1.1);
     }
     
     /* Company Values Section */
@@ -152,17 +287,42 @@
       line-height: 1.6;
     }
     
-    /* Apps Section */
+    /* Apps Section - Journey Cards */
     .apps-section {
       padding: var(--space-20) 0;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
       position: relative;
       overflow: hidden;
+    }
+    
+    /* Animated Background Paths */
+    .apps-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 100px,
+        rgba(255, 179, 0, 0.05) 100px,
+        rgba(255, 179, 0, 0.05) 102px
+      );
+      animation: pathScroll 20s linear infinite;
+    }
+    
+    @keyframes pathScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(50%); }
     }
     
     .section-header {
       text-align: center;
       margin-bottom: var(--space-16);
+      position: relative;
+      z-index: 2;
     }
     
     .section-title {
@@ -170,41 +330,81 @@
       font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 800;
       margin-bottom: var(--space-4);
-      color: var(--neutral-900);
+      color: white;
+      position: relative;
     }
     
     .section-subtitle {
       font-size: var(--text-xl);
-      color: var(--neutral-600);
+      color: rgba(255, 255, 255, 0.7);
       line-height: 1.6;
     }
     
     .apps-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: var(--space-8);
+      gap: var(--space-12);
       margin-top: var(--space-12);
+      perspective: 1000px;
+      position: relative;
+      z-index: 2;
     }
     
+    /* 3D Card with Journey Metaphor */
     .app-card {
-      background: white;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
       border-radius: var(--radius-2xl);
       overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0 40px rgba(255, 179, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       cursor: pointer;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent,
+        rgba(255, 179, 0, 0.3),
+        transparent
+      );
+      animation: cardGlow 4s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    @keyframes cardGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .app-card:hover::before {
+      opacity: 1;
     }
     
     .app-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-large);
+      transform: rotateY(10deg) rotateX(5deg) translateZ(50px);
+      box-shadow: 
+        0 30px 60px rgba(255, 179, 0, 0.3),
+        inset 0 0 60px rgba(255, 179, 0, 0.2);
     }
     
+    /* Animated App Image */
     .app-image {
       width: 100%;
       height: 200px;
-      background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+      background: rgba(0, 0, 0, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -213,24 +413,74 @@
       overflow: hidden;
     }
     
-    .app-content {
-      padding: var(--space-6);
+    .app-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: left 0.5s ease;
     }
     
+    .app-card:hover .app-image::after {
+      left: 100%;
+    }
+    
+    /* Floating App Icon */
+    .app-image span {
+      animation: iconFloat 3s ease-in-out infinite;
+      display: inline-block;
+    }
+    
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+    }
+    
+    .app-content {
+      padding: var(--space-6);
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Typewriter Effect for Title */
     .app-title {
       font-size: var(--text-2xl);
       font-weight: 700;
-      color: var(--neutral-900);
+      color: white;
       margin-bottom: var(--space-3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .app-title::after {
+      content: '|';
+      position: absolute;
+      right: -10px;
+      animation: blink 1s step-end infinite;
+      color: #FFB300;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
     }
     
     .app-description {
       font-size: var(--text-base);
-      color: var(--neutral-600);
+      color: rgba(255, 255, 255, 0.8);
       line-height: 1.6;
       margin-bottom: var(--space-4);
     }
     
+    /* Animated Tags */
     .app-tags {
       display: flex;
       gap: var(--space-2);
@@ -239,27 +489,49 @@
     }
     
     .app-tag {
-      background: var(--neutral-100);
-      color: var(--neutral-600);
+      background: rgba(255, 179, 0, 0.2);
+      color: #FFB300;
       padding: var(--space-1) var(--space-3);
       border-radius: var(--radius-full);
       font-size: var(--text-xs);
       font-weight: 500;
+      border: 1px solid rgba(255, 179, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
+    .app-tag:hover {
+      background: rgba(255, 179, 0, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    /* Interactive Link with Path Arrow */
     .app-link {
       display: inline-flex;
       align-items: center;
       gap: var(--space-2);
-      color: var(--primary-orange);
+      color: #FFB300;
       text-decoration: none;
       font-weight: 600;
       transition: all var(--transition-fast);
+      position: relative;
+    }
+    
+    .app-link::after {
+      content: '→';
+      display: inline-block;
+      transition: all 0.3s ease;
+      font-size: 1.2em;
     }
     
     .app-link:hover {
-      gap: var(--space-3);
-      color: var(--primary-orange-dark);
+      gap: var(--space-4);
+      color: #FF6B35;
+    }
+    
+    .app-link:hover::after {
+      transform: translateX(5px) scale(1.5);
     }
     
     /* Team Section */
@@ -659,24 +931,39 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero Section - The Road Not Taken -->
   <section class="hero-section">
-    <div class="floating-elements">
-      <div class="floating-shape" style="top: 20%; font-size: 60px; animation-delay: 0s;">🚀</div>
-      <div class="floating-shape" style="top: 60%; font-size: 40px; animation-delay: 8s;">⚡</div>
-      <div class="floating-shape" style="top: 40%; font-size: 50px; animation-delay: 16s;">💡</div>
-      <div class="floating-shape" style="top: 80%; font-size: 35px; animation-delay: 24s;">🎯</div>
+    <!-- Video Background (placeholder for future video) -->
+    <div class="hero-video-bg">
+      <!-- Video will be added here -->
+      <div style="width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(255,179,0,0.1), transparent), linear-gradient(135deg, #0a0a0a, #1a1a1a);"></div>
+    </div>
+    
+    <!-- Animated Road Path -->
+    <div class="road-path">
+      <div class="road-line"></div>
+      <div class="road-line" style="animation-delay: 1s;"></div>
+      <div class="road-line" style="animation-delay: 2s;"></div>
     </div>
     
     <div class="container-fluid">
       <div class="hero-content">
-        <h1 class="hero-title">ToMoreBeyond</h1>
+        <h1 class="hero-title">
+          <span>T</span><span>o</span><span>M</span><span>o</span><span>r</span><span>e</span><span>B</span><span>e</span><span>y</span><span>o</span><span>n</span><span>d</span>
+        </h1>
+        <p class="hero-subtitle">Two roads diverged in a wood, and I—</p>
         <p class="hero-mission">面白いことだけをする。<br>友と共に "道なき道" を越える。</p>
         <p class="hero-description">
           疑問や不安を"楽しさ"で解消し、人々の行動半径を広げるプロダクトを連続創出するチーム。<br>
           モバイルアプリ・位置情報AI・SaaSで、日常に冒険と遊び心を。
         </p>
       </div>
+    </div>
+    
+    <!-- Interactive Path Choice -->
+    <div class="path-choice">
+      <a href="#apps" class="path-btn">道を選ぶ</a>
+      <a href="#team" class="path-btn">仲間を見る</a>
     </div>
   </section>
 
@@ -726,7 +1013,7 @@
       
       <div class="apps-grid">
         <div class="app-card" onclick="window.location.href='pages/tadataka.html'">
-          <div class="app-image">🗺️</div>
+          <div class="app-image"><span>🗺️</span></div>
           <div class="app-content">
             <h3 class="app-title">TADATAKA</h3>
             <p class="app-description">
@@ -745,7 +1032,7 @@
         </div>
         
         <div class="app-card" onclick="window.location.href='pages/toirun.html'">
-          <div class="app-image">🚽</div>
+          <div class="app-image"><span>🚽</span></div>
           <div class="app-content">
             <h3 class="app-title">ToiRun</h3>
             <p class="app-description">
@@ -764,7 +1051,7 @@
         </div>
         
         <div class="app-card" onclick="window.location.href='pages/midpoint.html'">
-          <div class="app-image">📍</div>
+          <div class="app-image"><span>📍</span></div>
           <div class="app-content">
             <h3 class="app-title">Meet in the Middle</h3>
             <p class="app-description">
@@ -1009,69 +1296,136 @@
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.lagSmoothing(0);
 
-      // Hero Title Split Text Animation
-      const heroTitle = document.querySelector('.hero-title');
-      if (heroTitle) {
-        const text = heroTitle.textContent;
-        heroTitle.innerHTML = '';
-        
-        [...text].forEach((char, i) => {
-          const span = document.createElement('span');
-          span.textContent = char === ' ' ? '\u00A0' : char;
-          span.style.display = 'inline-block';
-          span.style.opacity = '0';
-          span.style.transform = 'translateY(100px) rotateX(-90deg)';
-          heroTitle.appendChild(span);
-          
-          gsap.to(span, {
-            opacity: 1,
-            y: 0,
-            rotateX: 0,
-            duration: 0.8,
-            delay: i * 0.05,
-            ease: "back.out(1.7)"
-          });
+      // Hero Title Glitch Animation
+      const heroTitleSpans = document.querySelectorAll('.hero-title span');
+      heroTitleSpans.forEach((span, i) => {
+        gsap.set(span, {
+          opacity: 0,
+          y: 100,
+          rotateX: -90,
+          scale: 0
         });
-      }
+        
+        gsap.to(span, {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          scale: 1,
+          duration: 1,
+          delay: i * 0.1,
+          ease: "elastic.out(1, 0.5)"
+        });
+        
+        // Random glitch effect
+        setInterval(() => {
+          if (Math.random() > 0.95) {
+            gsap.to(span, {
+              x: Math.random() * 10 - 5,
+              y: Math.random() * 10 - 5,
+              duration: 0.1,
+              ease: "none",
+              onComplete: () => {
+                gsap.to(span, {
+                  x: 0,
+                  y: 0,
+                  duration: 0.1
+                });
+              }
+            });
+          }
+        }, 100);
+      });
 
-      // Card Stagger Animation
-      gsap.set('.value-card, .app-card, .member-card', {
+      // Journey Cards Animation - Walking the Path
+      gsap.set('.app-card', {
+        y: 200,
+        opacity: 0,
+        scale: 0.5,
+        rotateY: -90,
+        transformOrigin: "center center"
+      });
+
+      // Create a path for cards to follow
+      ScrollTrigger.batch('.app-card', {
+        onEnter: (elements) => {
+          elements.forEach((el, i) => {
+            const tl = gsap.timeline();
+            
+            // Card enters like stepping on a path
+            tl.to(el, {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              rotateY: 0,
+              duration: 1.5,
+              delay: i * 0.3,
+              ease: "power4.out"
+            })
+            .to(el, {
+              y: -20,
+              duration: 0.3,
+              ease: "power2.out"
+            }, "-=0.3")
+            .to(el, {
+              y: 0,
+              duration: 0.5,
+              ease: "bounce.out"
+            });
+            
+            // Add footstep effect
+            const footstep = document.createElement('div');
+            footstep.style.cssText = `
+              position: absolute;
+              bottom: -30px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 30px;
+              height: 40px;
+              background: radial-gradient(ellipse at center, rgba(255,179,0,0.6) 0%, transparent 70%);
+              border-radius: 50%;
+              opacity: 0;
+              z-index: -1;
+            `;
+            el.appendChild(footstep);
+            
+            gsap.to(footstep, {
+              opacity: 1,
+              scale: 1.5,
+              duration: 0.5,
+              delay: i * 0.3,
+              ease: "power2.out",
+              onComplete: () => {
+                gsap.to(footstep, {
+                  opacity: 0,
+                  scale: 2,
+                  duration: 1,
+                  ease: "power2.out"
+                });
+              }
+            });
+          });
+        },
+        start: "top 85%",
+        end: "bottom 15%"
+      });
+
+      // Value Cards with different animation
+      gsap.set('.value-card', {
         y: 100,
         opacity: 0,
         scale: 0.8,
         rotateX: -15
       });
 
-      ScrollTrigger.batch('.value-card, .app-card, .member-card', {
+      ScrollTrigger.batch('.value-card', {
         onEnter: (elements) => {
           gsap.to(elements, {
             y: 0,
             opacity: 1,
             scale: 1,
             rotateX: 0,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "elastic.out(1, 0.75)",
-            overwrite: true
-          });
-        },
-        onLeave: (elements) => {
-          gsap.to(elements, {
-            y: -50,
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: "power2.in"
-          });
-        },
-        onEnterBack: (elements) => {
-          gsap.to(elements, {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.1,
+            duration: 1,
+            stagger: 0.2,
             ease: "back.out(1.7)"
           });
         }
