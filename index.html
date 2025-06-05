@@ -56,7 +56,7 @@
   <section class="nature-hero">
     <div class="container">
       <div class="hero-signpost">
-        <div class="hero-wooden-sign animate-float">
+        <div class="hero-wooden-sign wooden-sign-weathered wooden-sign-worn animate-float">
           <h1 class="hero-title">ToMoreBeyond</h1>
           <p class="hero-subtitle">
             面白いことだけをする。<br>
@@ -104,7 +104,7 @@
       </svg>
       
       <div class="trail-grid trail-grid-3">
-        <div class="trail-card animate-sway">
+        <div class="trail-card wooden-sign-weathered animate-sway">
           <div class="sign-title">🤝 共創の道</div>
           <div class="sign-content">
             <p>常に"友と共に"歩む。多様な仲間と手を取り合い、一人では見つけられない景色を発見します。</p>
@@ -114,7 +114,7 @@
           </div>
         </div>
         
-        <div class="trail-card animate-sway" style="animation-delay: 0.5s;">
+        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.5s;">
           <div class="sign-title">🗺️ 冒険の道</div>
           <div class="sign-content">
             <p>人が歩まない道を選ぶ。地図にない道を歩き、新しい可能性の扉を開き続けます。</p>
@@ -124,7 +124,7 @@
           </div>
         </div>
         
-        <div class="trail-card animate-sway" style="animation-delay: 1s;">
+        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 1s;">
           <div class="sign-title">⭐ 楽しさの道</div>
           <div class="sign-content">
             <p>歩くこと自体を楽しむ。使う人が思わず笑顔になる、心躍る体験をつくります。</p>
@@ -446,7 +446,7 @@
     <div class="container">
       <!-- 仲間募集の案内板 -->
       <div class="companion-recruitment">
-        <div class="recruitment-board">
+        <div class="recruitment-board wooden-sign-weathered">
           <h3>新しい仲間を探しています</h3>
           <p>道なき道を一緒に歩む仲間を募集中。あなたの足跡を私たちの道に加えませんか？</p>
           <div class="recruitment-paths">
@@ -529,7 +529,7 @@
       </div>
       
       <div class="contact-content-grid">
-        <div class="contact-waypoints">
+        <div class="contact-waypoints wooden-sign-weathered">
           <h3 class="waypoints-title">道案内</h3>
           <p class="waypoints-subtitle">どの道を選んでもお待ちしています</p>
           
@@ -574,7 +574,7 @@
           </div>
         </div>
         
-        <div class="contact-message-station">
+        <div class="contact-message-station wooden-sign-weathered">
           <div class="message-station-header">
             <h3>道中からのメッセージ</h3>
             <p>あなたの足跡を私たちに伝えてください</p>
@@ -617,7 +617,7 @@
       
       <!-- 最終的な道の詩 -->
       <div class="final-path-poetry">
-        <div class="poetry-frame">
+        <div class="poetry-frame wooden-sign-weathered">
           <p class="final-poetry-text">
             "すべての道は繋がっている。<br>
             あなたの歩む道と、私たちの道が交わるとき、<br>
@@ -1122,6 +1122,55 @@
           ease: "power2.out"
         });
       });
+
+      // Enhanced Signboard Bolts - 4つ角のボルトを動的に追加
+      function addSignboardBolts() {
+        const signboards = document.querySelectorAll('.wooden-sign, .trail-card, .hero-wooden-sign');
+        signboards.forEach(signboard => {
+          // 下の2つのボルトを追加
+          const bottomLeftBolt = document.createElement('div');
+          bottomLeftBolt.style.cssText = `
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #888 0%, #666 50%, #444 100%);
+            border-radius: 50%;
+            box-shadow: 
+              inset 0 1px 1px rgba(255, 255, 255, 0.4),
+              inset 0 -1px 1px rgba(0, 0, 0, 0.3),
+              0 1px 3px rgba(0, 0, 0, 0.4);
+            z-index: 3;
+            border: 1px solid #333;
+            pointer-events: none;
+          `;
+          
+          const bottomRightBolt = document.createElement('div');
+          bottomRightBolt.style.cssText = `
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #888 0%, #666 50%, #444 100%);
+            border-radius: 50%;
+            box-shadow: 
+              inset 0 1px 1px rgba(255, 255, 255, 0.4),
+              inset 0 -1px 1px rgba(0, 0, 0, 0.3),
+              0 1px 3px rgba(0, 0, 0, 0.4);
+            z-index: 3;
+            border: 1px solid #333;
+            pointer-events: none;
+          `;
+          
+          signboard.appendChild(bottomLeftBolt);
+          signboard.appendChild(bottomRightBolt);
+        });
+      }
+      
+      // ページ読み込み時にボルトを追加
+      addSignboardBolts();
 
       // Login Button in Navigation
       const loginBtn = document.createElement('a');
