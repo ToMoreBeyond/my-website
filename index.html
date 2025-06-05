@@ -11,83 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/design-system.css">
-  <link rel="stylesheet" href="/css/path-design-system.css">
-  <link rel="stylesheet" href="/css/modern-design.css">
-  <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/unified-cards.css">
+  <link rel="stylesheet" href="/css/professional-path-design.css">
   
-  <style>
-    /* Path-themed unified styles */
-    body {
-      background: var(--gradient-sky-path);
-      overflow-x: hidden;
-      font-family: var(--font-path);
-      color: var(--text-path-primary);
-    }
-    
-    /* Navigation unified with path theme */
-    .navbar-modern {
-      background: rgba(245, 245, 220, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--path-secondary);
-    }
-    
-    .navbar-brand-modern {
-      font-family: var(--font-map) !important;
-      color: var(--text-path-primary) !important;
-      font-weight: 800;
-    }
-    
-    .navbar-link-modern {
-      color: var(--text-path-secondary) !important;
-      font-family: var(--font-path) !important;
-      transition: color var(--walk-normal);
-    }
-    
-    .navbar-link-modern:hover {
-      color: var(--path-accent) !important;
-    }
-    
-    .btn-modern.btn-primary-modern {
-      background: var(--gradient-path) !important;
-      border: none !important;
-      color: var(--text-path-inverse) !important;
-    }
-    
-    /* Loading screen customization */
-    .loading-screen {
-      background: var(--bg-path-primary);
-    }
-    
-    .loading-logo {
-      font-family: var(--font-map);
-      color: var(--path-accent);
-    }
-    
-    /* Scroll progress with path theme */
-    .scroll-progress {
-      background: var(--gradient-path);
-    }
-    
-    /* Unified container styles */
-    .container-fluid {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--step-md);
-    }
-    
-    /* Responsive adjustments for path design */
-    @media (max-width: 768px) {
-      .container-fluid {
-        padding: 0 var(--step-sm);
-      }
-      
-      .path-hero-content {
-        padding: var(--step-lg);
-      }
-    }
-  </style>
 </head>
 <body>
   <!-- Loading Screen -->
@@ -98,185 +23,172 @@
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" id="scrollProgress"></div>
   
-  <!-- Modern Navigation -->
-  <nav class="navbar-modern">
-    <div class="container-fluid">
+  <!-- Professional Navigation -->
+  <nav class="navbar">
+    <div class="container">
       <div class="navbar-content">
-        <a href="#" class="navbar-brand-modern">ToMoreBeyond</a>
-        <div class="navbar-links-modern">
-          <a href="#apps" class="navbar-link-modern">アプリ</a>
-          <a href="#about" class="navbar-link-modern">会社概要</a>
-          <a href="#team" class="navbar-link-modern">チーム</a>
-          <a href="#contact" class="btn-modern btn-primary-modern">お問い合わせ</a>
-        </div>
+        <a href="#" class="navbar-brand">ToMoreBeyond</a>
+        <ul class="navbar-nav">
+          <li><a href="#about" class="navbar-link">ビジョン</a></li>
+          <li><a href="#apps" class="navbar-link">プロダクト</a></li>
+          <li><a href="#team" class="navbar-link">チーム</a></li>
+          <li><a href="#contact" class="btn btn-primary">お問い合わせ</a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section - 道の始まり -->
-  <section class="path-hero">
-    <!-- 地図の背景 -->
-    <div class="path-hero-map">
-      <svg width="100%" height="100%" viewBox="0 0 1200 800" style="position: absolute; top: 0; left: 0; opacity: 0.1;">
-        <!-- 古い地図風の装飾線 -->
-        <defs>
-          <pattern id="mapGrid" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
-            <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#8B4513" stroke-width="0.5" opacity="0.3"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#mapGrid)" />
-        
-        <!-- 道のパス -->
-        <path d="M 100,700 Q 300,600 500,650 T 900,580 Q 1000,570 1100,500" 
-              fill="none" stroke="#D2B48C" stroke-width="8" opacity="0.6" stroke-dasharray="20,10" />
-        
-        <!-- 足跡 -->
-        <circle cx="200" cy="650" r="3" fill="#8B4513" opacity="0.4" />
-        <circle cx="220" cy="640" r="3" fill="#8B4513" opacity="0.4" />
-        <circle cx="240" cy="635" r="3" fill="#8B4513" opacity="0.4" />
-        <circle cx="260" cy="630" r="3" fill="#8B4513" opacity="0.4" />
+  <!-- Professional Hero Section -->
+  <section class="hero">
+    <!-- Professional Path Visualization -->
+    <div class="path-visual">
+      <div class="path-steps">
+        <div class="path-step">
+          <svg class="icon icon-lg" viewBox="0 0 24 24">
+            <path d="M12 2L13.09 5.26L16 6L13.09 6.74L12 10L10.91 6.74L8 6L10.91 5.26L12 2Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="path-step">
+          <svg class="icon icon-lg" viewBox="0 0 24 24">
+            <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 4L13.5 7.5C13.1 8.4 12.2 9 11.2 9H7V11H11.2C12.8 11 14.2 9.8 14.7 8.2L15.5 6L19 7.3V9H21ZM13.5 11.5C13.1 10.6 12.2 10 11.2 10H7V12H11.2C11.7 12 12.2 12.3 12.4 12.7L14 16H16L13.5 11.5ZM5 12V22H7V12H5ZM11 14V22H13V14H11Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="path-step">
+          <svg class="icon icon-lg" viewBox="0 0 24 24">
+            <path d="M16 6L18.29 8.29L13.41 13.17L9.41 9.17L2 16.59L3.41 18L9.41 12L13.41 16L19.71 9.71L22 12V6H16Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="path-step">
+          <svg class="icon icon-lg" viewBox="0 0 24 24">
+            <path d="M12 2L15.5 8.5L22 9L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9L8.5 8.5L12 2Z" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Connecting Path Lines -->
+      <svg class="path-svg">
+        <path d="M30,30 Q150,120 120,180 Q90,240 180,240 Q270,240 240,300 Q210,360 300,360" 
+              class="path-line path-line-animated"/>
       </svg>
     </div>
     
-    <!-- 雲の背景 -->
-    <div class="path-clouds">
-      <div class="cloud cloud-1">☁️</div>
-      <div class="cloud cloud-2">☁️</div>
-      <div class="cloud cloud-3">☁️</div>
-    </div>
-    
     <div class="container">
-      <div class="path-hero-content">
-        <div class="path-hero-quote">
-          <span class="quote-mark">"</span>
-          <p>二つの道が森の中で分かれていた、そして私は—</p>
-          <p class="quote-author">— ロバート・フロスト</p>
-        </div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">Innovation Journey</div>
         
-        <h1 class="path-title">ToMoreBeyond</h1>
+        <h1 class="hero-title">ToMoreBeyond</h1>
         
-        <p class="path-subtitle">面白いことだけをする。友と共に "道なき道" を越える。</p>
+        <p class="hero-subtitle">
+          未踏の道を歩み、革新的なプロダクトで世界を変える。<br>
+          面白いことだけをする。友と共に "道なき道" を越える。
+        </p>
         
-        <div class="path-description">
-          <p>伊能忠敬が日本中を歩いて日本地図を作ったように、<br>
-          他の人が進まない道を進んだからこそ、道は開ける。</p>
-          <p>目の前に道が広がっていたら、人が選んでない方の道をあえて選ぼう。<br>
-          それが楽しく、面白い未来へのスタートだ。</p>
-        </div>
-        
-        <div class="path-mission">
-          <span class="mission-icon">🗺️</span>
-          <p>道は続き続ける。そしてトモビは道を進み続ける。</p>
-        </div>
-        
-        <div class="path-hero-buttons">
-          <a href="#apps" class="path-button primary">
-            <span class="button-icon">🚶‍♂️</span>
-            道を歩き始める
+        <div class="hero-actions">
+          <a href="#apps" class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M8 5V3C8 2.45 8.45 2 9 2H15C15.55 2 16 2.45 16 3V5H19C19.55 5 20 5.45 20 6S19.55 7 19 7H18V19C18 20.1 17.1 21 16 21H8C6.9 21 6 20.1 6 19V7H5C4.45 7 4 6.55 4 6S4.45 5 5 5H8ZM10 4V5H14V4H10ZM8 7V19H16V7H8Z" fill="currentColor"/>
+            </svg>
+            プロダクトを見る
           </a>
-          <a href="#team" class="path-button secondary">
-            <span class="button-icon">👥</span>
-            仲間を見つける
+          <a href="#team" class="btn btn-secondary">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M16 4C18.2 4 20 5.8 20 8S18.2 12 16 12S12 10.2 12 8S13.8 4 16 4ZM16 6C14.9 6 14 6.9 14 8S14.9 10 16 10S18 9.1 18 8S17.1 6 16 6ZM16 13C18.67 13 22 14.33 22 17V20H10V17C10 14.33 13.33 13 16 13ZM8 12C10.21 12 12 10.21 12 8S10.21 4 8 4S4 5.79 4 8S5.79 12 8 12ZM8 6C9.1 6 10 6.9 10 8S9.1 10 8 10S6 9.1 6 8S6.9 6 8 6ZM8 13C5.33 13 0 14.33 0 17V20H8V17C8 15.9 8.29 14.9 8.8 14.07C7.61 13.4 6.81 13 8 13Z" fill="currentColor"/>
+            </svg>
+            チームに会う
           </a>
+        </div>
+        
+        <!-- Professional Footprint Trail -->
+        <div class="footprint-trail" style="margin-top: 3rem; opacity: 0.6;">
+          <div class="footprint"></div>
+          <div class="footprint"></div>
+          <div class="footprint"></div>
+          <div class="footprint"></div>
+          <div class="footprint"></div>
         </div>
       </div>
-    </div>
-    
-    <!-- スクロール指示 -->
-    <div class="scroll-indicator">
-      <div class="scroll-text">スクロールして道を進む</div>
-      <div class="scroll-arrow">⬇️</div>
-    </div>
-    
-    <!-- 浮遊する要素 -->
-    <div class="floating-elements">
-      <div class="floating-leaf">🍃</div>
-      <div class="floating-leaf">🍂</div>
-      <div class="floating-bird">🐦</div>
     </div>
   </section>
 
-  <!-- Values Section - 道の価値観 -->
-  <section class="path-section path-values" id="about">
+  <!-- Professional Values Section -->
+  <section class="section" id="about">
     <div class="container">
-      <div class="path-section-header">
-        <h2 class="path-section-title">道を歩む上での価値観</h2>
-        <p class="path-section-subtitle">ToMoreBeyondが大切にする3つの道標</p>
+      <div class="section-header">
+        <div class="section-eyebrow">Our Philosophy</div>
+        <h2 class="section-title">道を歩む上での価値観</h2>
+        <p class="section-subtitle">
+          ToMoreBeyondが大切にする3つの価値観。これらの指針が、私たちの歩む道を照らし続けています。
+        </p>
       </div>
       
-      <!-- 道標のパス -->
-      <div class="path-trail">
-        <svg width="100%" height="200" viewBox="0 0 800 200" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.3;">
-          <path d="M 100,150 Q 250,100 400,120 T 700,140" 
-                fill="none" stroke="#D2B48C" stroke-width="4" stroke-dasharray="10,5" />
-          <!-- 道標の位置 -->
-          <circle cx="200" cy="125" r="8" fill="#DAA520" />
-          <circle cx="400" cy="120" r="8" fill="#DAA520" />
-          <circle cx="600" cy="135" r="8" fill="#DAA520" />
-        </svg>
-      </div>
+      <!-- Professional Path Connection -->
+      <svg class="path-svg" style="height: 200px; margin-bottom: 3rem;">
+        <path d="M100,100 Q300,50 500,80 T900,70" 
+              class="path-line path-line-animated"/>
+        <circle cx="200" cy="75" r="6" fill="var(--accent-gold)" opacity="0.8"/>
+        <circle cx="500" cy="80" r="6" fill="var(--accent-gold)" opacity="0.8"/>
+        <circle cx="800" cy="72" r="6" fill="var(--accent-gold)" opacity="0.8"/>
+      </svg>
       
-      <div class="path-grid path-milestones">
-        <div class="path-milestone">
-          <div class="milestone-marker">
-            <span class="milestone-number">1</span>
+      <div class="grid grid-cols-3">
+        <div class="card">
+          <div class="card-header">
+            <div style="width: 60px; height: 60px; background: var(--gradient-accent); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <svg class="icon icon-xl text-white" viewBox="0 0 24 24">
+                <path d="M16 4C18.2 4 20 5.8 20 8S18.2 12 16 12S12 10.2 12 8S13.8 4 16 4ZM16 6C14.9 6 14 6.9 14 8S14.9 10 16 10S18 9.1 18 8S17.1 6 16 6ZM16 13C18.67 13 22 14.33 22 17V20H10V17C10 14.33 13.33 13 16 13ZM8 12C10.21 12 12 10.21 12 8S10.21 4 8 4S4 5.79 4 8S5.79 12 8 12ZM8 6C9.1 6 10 6.9 10 8S9.1 10 8 10S6 9.1 6 8S6.9 6 8 6ZM8 13C5.33 13 0 14.33 0 17V20H8V17C8 15.9 8.29 14.9 8.8 14.07C7.61 13.4 6.81 13 8 13Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--primary-slate); margin-bottom: 0.5rem;">共創</h3>
           </div>
-          <div class="milestone-signpost">
-            <div class="signpost-icon">🤝</div>
-            <h3 class="signpost-title">共創の道</h3>
-            <p class="signpost-description">
+          <div class="card-body">
+            <p style="color: var(--gray-600); line-height: 1.6;">
               常に"友と共に"歩む。多様な仲間と手を取り合い、一人では見つけられない景色を発見します。
             </p>
-            <div class="milestone-footprints">
-              <span class="footprint">👣</span>
-              <span class="footprint">👣</span>
+            <div class="footprint-trail" style="margin-top: 1rem; opacity: 0.6;">
+              <div class="footprint"></div>
+              <div class="footprint"></div>
             </div>
           </div>
         </div>
         
-        <div class="path-milestone">
-          <div class="milestone-marker">
-            <span class="milestone-number">2</span>
+        <div class="card">
+          <div class="card-header">
+            <div style="width: 60px; height: 60px; background: var(--gradient-accent); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <svg class="icon icon-xl text-white" viewBox="0 0 24 24">
+                <path d="M14.19 14.19L6 18L9.81 9.81L18 6L14.19 14.19ZM12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 8C13.1 8 14 8.9 14 10C14 11.1 13.1 12 12 12C10.9 12 10 11.1 10 10C10 8.9 10.9 8 12 8Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--primary-slate); margin-bottom: 0.5rem;">冒険</h3>
           </div>
-          <div class="milestone-signpost">
-            <div class="signpost-icon">🗺️</div>
-            <h3 class="signpost-title">冒険の道</h3>
-            <p class="signpost-description">
+          <div class="card-body">
+            <p style="color: var(--gray-600); line-height: 1.6;">
               人が歩まない道を選ぶ。地図にない道を歩き、新しい可能性の扉を開き続けます。
             </p>
-            <div class="milestone-footprints">
-              <span class="footprint">👣</span>
-              <span class="footprint">👣</span>
+            <div class="footprint-trail" style="margin-top: 1rem; opacity: 0.6;">
+              <div class="footprint"></div>
+              <div class="footprint"></div>
             </div>
           </div>
         </div>
         
-        <div class="path-milestone">
-          <div class="milestone-marker">
-            <span class="milestone-number">3</span>
+        <div class="card">
+          <div class="card-header">
+            <div style="width: 60px; height: 60px; background: var(--gradient-accent); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <svg class="icon icon-xl text-white" viewBox="0 0 24 24">
+                <path d="M12 2L15.5 8.5L22 9L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9L8.5 8.5L12 2Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--primary-slate); margin-bottom: 0.5rem;">楽しさ</h3>
           </div>
-          <div class="milestone-signpost">
-            <div class="signpost-icon">🎮</div>
-            <h3 class="signpost-title">楽しさの道</h3>
-            <p class="signpost-description">
+          <div class="card-body">
+            <p style="color: var(--gray-600); line-height: 1.6;">
               歩くこと自体を楽しむ。使う人が思わず笑顔になる、心躍る体験をつくります。
             </p>
-            <div class="milestone-footprints">
-              <span class="footprint">👣</span>
-              <span class="footprint">👣</span>
+            <div class="footprint-trail" style="margin-top: 1rem; opacity: 0.6;">
+              <div class="footprint"></div>
+              <div class="footprint"></div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <!-- 道しるべの詩 -->
-      <div class="path-poetry">
-        <div class="poetry-scroll">
-          <p class="poetry-text">
-            "道に迷ったときは、仲間と笑い合え。<br>
-            新しい景色を求め、楽しみながら歩け。<br>
-            それがトモビの道である。"
-          </p>
         </div>
       </div>
     </div>
