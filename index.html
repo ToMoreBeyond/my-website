@@ -205,11 +205,14 @@
       position: fixed;
       bottom: 8px;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateZ(0);
       width: 100px;
       height: 100px;
       z-index: 150;
       filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+      contain: layout style paint;
+      will-change: transform;
+      backface-visibility: hidden;
     }
     
     .stick-figure {
@@ -220,62 +223,88 @@
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
+      shape-rendering: optimizeSpeed;
+      contain: layout style;
+      will-change: transform;
     }
     
     .stick-figure circle {
       fill: #333;
+      contain: layout style paint;
     }
     
-    /* シンプルで自然な歩行アニメーション */
+    /* 3フレーム歩行サイクル - メモリ効率重視 */
     .stick-figure {
-      animation: simpleWalk 1.5s infinite ease-in-out;
+      animation: walkCycle 0.9s infinite ease-in-out;
+      will-change: transform;
+      contain: layout style;
     }
     
-    @keyframes simpleWalk {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-2px); }
+    @keyframes walkCycle {
+      0% { transform: translateY(0px); }     /* フレーム1: 右足前 */
+      33% { transform: translateY(-2px); }   /* フレーム2: 中間（上昇） */
+      66% { transform: translateY(0px); }    /* フレーム3: 左足前 */
+      100% { transform: translateY(0px); }   /* 戻り */
     }
     
-    /* 腕のシンプルな振り */
+    /* 左腕 - より自然な3フレーム動作 */
     .left-arm {
-      animation: simpleLeftArm 1.5s infinite ease-in-out;
+      animation: leftArmCycle 0.9s infinite ease-in-out;
       transform-origin: 50px 25px;
+      will-change: transform;
+      contain: layout;
     }
     
+    @keyframes leftArmCycle {
+      0% { transform: rotate(25deg); }      /* フレーム1: 左腕前（右足前時） */
+      33% { transform: rotate(5deg); }      /* フレーム2: わずかに前 */
+      66% { transform: rotate(-20deg); }    /* フレーム3: 左腕後ろ（左足前時） */
+      100% { transform: rotate(25deg); }    /* 戻り */
+    }
+    
+    /* 右腕 - 左腕と逆位相 */
     .right-arm {
-      animation: simpleRightArm 1.5s infinite ease-in-out;
+      animation: rightArmCycle 0.9s infinite ease-in-out;
       transform-origin: 50px 25px;
+      will-change: transform;
+      contain: layout;
     }
     
-    @keyframes simpleLeftArm {
-      0%, 100% { transform: rotate(-15deg); }
-      50% { transform: rotate(15deg); }
+    @keyframes rightArmCycle {
+      0% { transform: rotate(-20deg); }     /* フレーム1: 右腕後ろ（右足前時） */
+      33% { transform: rotate(5deg); }      /* フレーム2: わずかに前 */
+      66% { transform: rotate(25deg); }     /* フレーム3: 右腕前（左足前時） */
+      100% { transform: rotate(-20deg); }   /* 戻り */
     }
     
-    @keyframes simpleRightArm {
-      0%, 100% { transform: rotate(15deg); }
-      50% { transform: rotate(-15deg); }
-    }
-    
-    /* 脚のシンプルな動き */
+    /* 左脚 - 3フレーム歩行動作 */
     .left-leg {
-      animation: simpleLeftLeg 1.5s infinite ease-in-out;
+      animation: leftLegCycle 0.9s infinite ease-in-out;
       transform-origin: 50px 65px;
+      will-change: transform;
+      contain: layout;
     }
     
+    @keyframes leftLegCycle {
+      0% { transform: rotate(-12deg); }     /* フレーム1: 左足後ろ */
+      33% { transform: rotate(3deg); }      /* フレーム2: 中間（わずかに前） */
+      66% { transform: rotate(22deg); }     /* フレーム3: 左足前 */
+      100% { transform: rotate(-12deg); }   /* 戻り */
+    }
+    
+    /* 右脚 - 左脚と逆位相 */
     .right-leg {
-      animation: simpleRightLeg 1.5s infinite ease-in-out;
+      animation: rightLegCycle 0.9s infinite ease-in-out;
       transform-origin: 50px 65px;
+      will-change: transform;
+      contain: layout;
     }
     
-    @keyframes simpleLeftLeg {
-      0%, 100% { transform: rotate(-10deg); }
-      50% { transform: rotate(20deg); }
-    }
-    
-    @keyframes simpleRightLeg {
-      0%, 100% { transform: rotate(20deg); }
-      50% { transform: rotate(-10deg); }
+    @keyframes rightLegCycle {
+      0% { transform: rotate(22deg); }      /* フレーム1: 右足前 */
+      33% { transform: rotate(3deg); }      /* フレーム2: 中間（わずかに前） */
+      66% { transform: rotate(-12deg); }    /* フレーム3: 右足後ろ */
+      100% { transform: rotate(22deg); }    /* 戻り */
     }
     
     /* セクション別道の色 */
@@ -291,18 +320,47 @@
     .section-media .path-line { background: #2196F3; }
     .section-contact .path-line { background: #FF5722; }
     
-    /* 高速歩行モード */
-    .fast-walking .tiny-stick-figure {
-      animation-duration: 0.3s !important;
-    }
-    
+    /* 高速歩行モード - 3フレーム対応 */
+    .fast-walking .stick-figure,
     .fast-walking .left-arm,
     .fast-walking .right-arm,
-    .fast-walking .left-upper-leg,
-    .fast-walking .left-lower-leg,
-    .fast-walking .right-upper-leg,
-    .fast-walking .right-lower-leg {
-      animation-duration: 0.3s !important;
+    .fast-walking .left-leg,
+    .fast-walking .right-leg {
+      animation-duration: 0.5s !important;
+      animation-timing-function: linear !important;
+    }
+    
+    /* スクロール時の軽量化 */
+    .scrolling .stick-figure {
+      contain: strict;
+      transform: translateZ(0);
+    }
+    
+    /* 低性能デバイス向け最適化 */
+    .low-performance-mode .stick-figure {
+      animation-duration: 1.2s !important;
+      will-change: auto;
+    }
+    
+    .low-performance-mode .left-arm,
+    .low-performance-mode .right-arm,
+    .low-performance-mode .left-leg,
+    .low-performance-mode .right-leg {
+      animation-duration: 1.2s !important;
+      will-change: auto;
+    }
+    
+    .low-performance-mode .tiny-character {
+      filter: none;
+      contain: layout;
+    }
+    
+    .low-performance-mode .weed {
+      animation: none !important;
+    }
+    
+    .low-performance-mode .cards-track {
+      transition-duration: 0.1s !important;
     }
     
     /* damso.com風のクリーンなエフェクト */
@@ -508,11 +566,51 @@
       }
       
       optimizePerformance() {
+        // デバイス能力を検出
+        this.detectDeviceCapability();
+        
         // メモリ効率のためのRAF最適化
         this.startRAFLoop();
         
         // 不要なイベントを削除するデバウンス機能
         this.debounceCleanup();
+        
+        // GPU最適化
+        this.enableGPUOptimizations();
+      }
+      
+      detectDeviceCapability() {
+        // 低性能デバイスを検出
+        this.isLowEndDevice = (
+          (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+          /Android.*Chrome\/[0-6]/.test(navigator.userAgent) ||
+          /iPhone.*OS [1-1][0-2]/.test(navigator.userAgent)
+        );
+        
+        if (this.isLowEndDevice) {
+          document.body.classList.add('low-performance-mode');
+          console.log('低性能デバイスを検出：軽量化モードを有効化');
+        }
+      }
+      
+      enableGPUOptimizations() {
+        // 重要な要素にGPU最適化を適用
+        const criticalElements = [
+          '.tiny-character',
+          '.stick-figure',
+          '.cards-track',
+          '.path-area'
+        ];
+        
+        criticalElements.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(el => {
+            el.style.transform = el.style.transform || 'translateZ(0)';
+            el.style.willChange = 'transform';
+            el.style.backfaceVisibility = 'hidden';
+          });
+        });
       }
       
       startRAFLoop() {
@@ -727,7 +825,11 @@
       startRunning() {
         this.isScrolling = true;
         const figure = document.getElementById('stickFigure');
+        const container = document.querySelector('.tiny-character');
+        
+        // 高速歩行と軽量化を適用
         figure.classList.add('running');
+        container.classList.add('fast-walking', 'scrolling');
         
         // 雑草の揺れ効果
         this.animateWeedsOnRun();
@@ -736,7 +838,11 @@
       stopRunning() {
         this.isScrolling = false;
         const figure = document.getElementById('stickFigure');
+        const container = document.querySelector('.tiny-character');
+        
+        // 通常歩行に戻す
         figure.classList.remove('running');
+        container.classList.remove('fast-walking', 'scrolling');
       }
       
       animateWeedsOnRun() {
