@@ -113,10 +113,11 @@ class ScrollResponsiveCards {
         // Prioritize horizontal movement
         if (Math.abs(deltaX) > Math.abs(deltaY) * 0.5) {
           e.preventDefault();
-          handleMovement(-deltaX, 0, true);
+          // Natural direction: swipe right moves cards right, swipe left moves cards left
+          handleMovement(deltaX, 0, true);
         } else {
-          // For vertical scrolling, sync with page scroll
-          handleMovement(0, deltaY, true);
+          // For vertical scrolling, disable horizontal movement
+          // This prevents interference with page scroll
         }
         
         this.state.lastTouchX = touch.clientX;
@@ -141,19 +142,22 @@ class ScrollResponsiveCards {
       }
     });
     
-    // Page scroll sync (for desktop)
-    let lastScrollY = window.pageYOffset;
-    window.addEventListener('scroll', () => {
-      if (scrollRaf) cancelAnimationFrame(scrollRaf);
-      scrollRaf = requestAnimationFrame(() => {
-        const deltaY = window.pageYOffset - lastScrollY;
-        lastScrollY = window.pageYOffset;
-        
-        if (!this.state.isTouching) {
-          handleMovement(0, deltaY, false);
-        }
-      });
-    }, { passive: true });
+    // Page scroll sync (desktop only - disabled on mobile for natural touch behavior)
+    const isMobile = 'ontouchstart' in window;
+    if (!isMobile) {
+      let lastScrollY = window.pageYOffset;
+      window.addEventListener('scroll', () => {
+        if (scrollRaf) cancelAnimationFrame(scrollRaf);
+        scrollRaf = requestAnimationFrame(() => {
+          const deltaY = window.pageYOffset - lastScrollY;
+          lastScrollY = window.pageYOffset;
+          
+          if (!this.state.isTouching) {
+            handleMovement(0, deltaY, false);
+          }
+        });
+      }, { passive: true });
+    }
   }
   
   setupHoverEffects() {
@@ -344,8 +348,10 @@ class ScrollResponsiveCards {
 // Enhanced CSS for scroll-responsive cards
 const scrollResponsiveStyles = `
   .center-infinite-scroll {
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom;
     -webkit-overflow-scrolling: touch;
+    user-select: none;
+    -webkit-user-select: none;
   }
   
   .infinite-scroll-track {
@@ -443,13 +449,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollResponsiveCards = new ScrollResponsiveCards(scrollContainer, {
       baseSpeed: 0.5,
       scrollMultiplier: 0.15,
-      touchMultiplier: 1.2,
-      maxSpeed: 8,
+      touchMultiplier: 1.5,
+      maxSpeed: 10,
       minSpeed: 0,
       smoothness: 0.08,
-      friction: 0.92,
+      friction: 0.95,
       hoverSlowdown: 0.3,
-      responsiveness: 0.15
+      responsiveness: 0.25
     });
     
     // Optimize for mobile
