@@ -5,1270 +5,458 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える</title>
   <meta name="description" content="ToMoreBeyondは最先端のAI技術とイノベーションで、より良い未来を創造するテクノロジーカンパニーです。">
-  <meta name="keywords" content="AI, テクノロジー, イノベーション, アプリ開発, デジタル変革, TADATAKA, ToiRun, Meet in the Middle">
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/nature-trail-design.css">
-  <link rel="stylesheet" href="/css/walking-hero-system.css">
-  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* 左上ロゴ */
+    .logo {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      z-index: 1000;
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      text-decoration: none;
+    }
+    
+    /* 右上ナビゲーション */
+    .nav {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      z-index: 1000;
+      display: flex;
+      gap: 24px;
+    }
+    
+    .nav-item {
+      font-size: 16px;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    .nav-item:hover,
+    .nav-item.active {
+      color: #333;
+    }
+    
+    /* メインコンテンツ */
+    .main-content {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 50px;
+    }
+    
+    /* カードコンテナ */
+    .cards-container {
+      width: 100%;
+      max-width: 1400px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cards-track {
+      display: flex;
+      gap: 30px;
+      height: 100%;
+      animation: autoScroll var(--scroll-speed, 60s) linear infinite;
+      will-change: transform;
+    }
+    
+    @keyframes autoScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    /* カードデザイン - damso.com風 */
+    .card {
+      min-width: 300px;
+      height: 360px;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 40px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border-color: #ccc;
+    }
+    
+    .card-icon {
+      font-size: 48px;
+      margin-bottom: 24px;
+    }
+    
+    .card-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    
+    .card-description {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.5;
+    }
+    
+    /* 3px芝生線 */
+    .grass-line {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #4CAF50;
+      z-index: 100;
+      transition: background-color 0.8s ease;
+    }
+    
+    /* 小さな棒人間（20px height） */
+    .tiny-character {
+      position: fixed;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      z-index: 150;
+    }
+    
+    .tiny-stick-figure {
+      width: 100%;
+      height: 100%;
+      stroke: #333;
+      stroke-width: 1;
+      fill: none;
+      stroke-linecap: round;
+    }
+    
+    .tiny-stick-figure circle {
+      fill: #333;
+    }
+    
+    /* 歩行アニメーション */
+    .walking .tiny-stick-figure {
+      animation: tinyWalk 0.6s infinite ease-in-out;
+    }
+    
+    @keyframes tinyWalk {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-1px); }
+    }
+    
+    .walking .left-arm {
+      animation: tinyLeftArm 0.6s infinite ease-in-out;
+      transform-origin: 10px 6px;
+    }
+    
+    .walking .right-arm {
+      animation: tinyRightArm 0.6s infinite ease-in-out;
+      transform-origin: 10px 6px;
+    }
+    
+    .walking .left-leg {
+      animation: tinyLeftLeg 0.6s infinite ease-in-out;
+      transform-origin: 10px 12px;
+    }
+    
+    .walking .right-leg {
+      animation: tinyRightLeg 0.6s infinite ease-in-out;
+      transform-origin: 10px 12px;
+    }
+    
+    @keyframes tinyLeftArm {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+    
+    @keyframes tinyRightArm {
+      0%, 100% { transform: rotate(10deg); }
+      50% { transform: rotate(-10deg); }
+    }
+    
+    @keyframes tinyLeftLeg {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(15deg); }
+    }
+    
+    @keyframes tinyRightLeg {
+      0%, 100% { transform: rotate(15deg); }
+      50% { transform: rotate(-5deg); }
+    }
+    
+    /* アイドル状態 */
+    .idle .tiny-stick-figure {
+      animation: tinyIdle 3s infinite ease-in-out;
+    }
+    
+    @keyframes tinyIdle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-0.5px); }
+    }
+    
+    /* セクション別芝生色 */
+    .section-apps .grass-line { background: #4CAF50; }
+    .section-company .grass-line { background: #FFB300; }
+    .section-members .grass-line { background: #9C27B0; }
+    .section-media .grass-line { background: #2196F3; }
+    .section-contact .grass-line { background: #FF5722; }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .logo { font-size: 20px; top: 20px; left: 20px; }
+      .nav { top: 20px; right: 20px; gap: 16px; }
+      .nav-item { font-size: 14px; }
+      .main-content { padding: 0 20px; }
+      .card { min-width: 280px; height: 320px; padding: 30px; }
+      .card-icon { font-size: 40px; }
+      .card-title { font-size: 20px; }
+      .card-description { font-size: 14px; }
+      .tiny-character { width: 16px; height: 16px; }
+    }
+  </style>
 </head>
-<body>
-  <!-- 自然な背景レイヤー -->
-  <div class="nature-background">
-    <div class="mountain-layer"></div>
-    <div class="forest-layer"></div>
-    <div class="trail-layer">
-      <svg class="trail-path" viewBox="0 0 1200 800">
-        <path d="M0,600 Q200,550 400,580 T800,520 Q1000,500 1200,480" 
-              class="trail-line trail-animated"/>
-        <!-- 道の石 -->
-        <circle cx="150" cy="570" r="4" class="trail-stones"/>
-        <circle cx="180" cy="575" r="3" class="trail-stones"/>
-        <circle cx="350" cy="580" r="5" class="trail-stones"/>
-        <circle cx="520" cy="560" r="4" class="trail-stones"/>
-        <circle cx="750" cy="525" r="3" class="trail-stones"/>
-        <circle cx="920" cy="510" r="4" class="trail-stones"/>
-      </svg>
+<body class="section-apps">
+  <!-- 左上ロゴ -->
+  <a href="#" class="logo">ToMoreBeyond</a>
+  
+  <!-- 右上ナビゲーション -->
+  <nav class="nav">
+    <a href="#" class="nav-item active" data-section="apps">Apps</a>
+    <a href="#" class="nav-item" data-section="company">Company</a>
+    <a href="#" class="nav-item" data-section="members">Members</a>
+    <a href="#" class="nav-item" data-section="media">Media</a>
+    <a href="#" class="nav-item" data-section="contact">Contact</a>
+  </nav>
+  
+  <!-- メインコンテンツ -->
+  <main class="main-content">
+    <div class="cards-container">
+      <div class="cards-track" id="cardsTrack">
+        <!-- カードはJavaScriptで生成 -->
+      </div>
     </div>
+  </main>
+  
+  <!-- 3px芝生線 -->
+  <div class="grass-line"></div>
+  
+  <!-- 小さな棒人間（20px） -->
+  <div class="tiny-character">
+    <svg class="tiny-stick-figure idle" id="tinyFigure" viewBox="0 0 20 20">
+      <circle cx="10" cy="3" r="2"/>
+      <line x1="10" y1="5" x2="10" y2="12"/>
+      <line x1="10" y1="6" x2="7" y2="9" class="left-arm"/>
+      <line x1="10" y1="6" x2="13" y2="9" class="right-arm"/>
+      <line x1="10" y1="12" x2="7" y2="18" class="left-leg"/>
+      <line x1="10" y1="12" x2="13" y2="18" class="right-leg"/>
+    </svg>
   </div>
   
-  <!-- Scroll Progress Indicator -->
-  <div class="scroll-progress" id="scrollProgress" style="background: var(--trail-grass); height: 4px; position: fixed; top: 0; left: 0; z-index: 1001; transition: width 0.1s ease;"></div>
-  
-  <!-- 自然なナビゲーション -->
-  <nav class="nature-nav">
-    <div class="container">
-      <div class="nav-content">
-        <a href="#" class="nav-brand">ToMoreBeyond</a>
-        <ul class="nav-links">
-          <li><a href="#about" class="nav-link">私たちのビジョン</a></li>
-          <li><a href="#apps" class="nav-link">プロダクト</a></li>
-          <li><a href="#team" class="nav-link">チーム</a></li>
-          <li><a href="#contact" class="trail-button">お問い合わせ</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- 自然なヒーローセクション -->
-  <section class="nature-hero" id="hero" data-section="hero">
-    <div class="container">
-      <div class="hero-signpost">
-        <div class="hero-wooden-sign wooden-sign-weathered wooden-sign-worn animate-float">
-          <h1 class="hero-title">ToMoreBeyond</h1>
-          <p class="hero-subtitle">
-            面白いことだけをする。<br>
-            友と共に "道なき道" を越える。
-          </p>
-          
-          <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="#apps" class="trail-button">
-              📱 プロダクトを見る
-            </a>
-            <a href="#team" class="trail-button">
-              👥 チームに会う
-            </a>
-          </div>
-          
-          <!-- 木の看板の下部に道の案内 -->
-          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px dashed var(--wood-cream); opacity: 0.8;">
-            <p style="font-family: var(--font-sign); font-size: 0.9rem; margin: 0;">
-              ↓ この道を進むと、私たちのビジョンとプロダクトが見えてきます
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 価値観の看板エリア -->
-  <section class="nature-section" id="about" data-section="about">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">道を歩む上での価値観</h2>
-        <p class="section-subtitle">
-          ToMoreBeyondが大切にする3つの価値観。この道標が、私たちの歩む道を照らし続けています。
-        </p>
-      </div>
-      
-      <!-- 山道のパス -->
-      <svg style="width: 100%; height: 150px; margin-bottom: 2rem;">
-        <path d="M0,100 Q200,80 400,90 T800,75 Q1000,70 1200,65" 
-              class="trail-line trail-animated"/>
-        <!-- 道標の位置 -->
-        <circle cx="200" cy="85" r="5" fill="var(--wood-dark)" opacity="0.8"/>
-        <circle cx="600" cy="80" r="5" fill="var(--wood-dark)" opacity="0.8"/>
-        <circle cx="1000" cy="70" r="5" fill="var(--wood-dark)" opacity="0.8"/>
-      </svg>
-      
-      <div class="trail-grid trail-grid-3">
-        <div class="trail-card wooden-sign-weathered animate-sway">
-          <div class="sign-title">🤝 共創の道</div>
-          <div class="sign-content">
-            <p>常に"友と共に"歩む。多様な仲間と手を取り合い、一人では見つけられない景色を発見します。</p>
-            <div style="margin-top: 1rem; text-align: center; opacity: 0.7;">
-              <small>「一人で行けば早く行ける、みんなで行けば遠くまで行ける」</small>
-            </div>
-          </div>
-        </div>
-        
-        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.5s;">
-          <div class="sign-title">🗺️ 冒険の道</div>
-          <div class="sign-content">
-            <p>人が歩まない道を選ぶ。地図にない道を歩き、新しい可能性の扉を開き続けます。</p>
-            <div style="margin-top: 1rem; text-align: center; opacity: 0.7;">
-              <small>「未知の道こそが、最も美しい景色へと導く」</small>
-            </div>
-          </div>
-        </div>
-        
-        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 1s;">
-          <div class="sign-title">⭐ 楽しさの道</div>
-          <div class="sign-content">
-            <p>歩くこと自体を楽しむ。使う人が思わず笑顔になる、心躍る体験をつくります。</p>
-            <div style="margin-top: 1rem; text-align: center; opacity: 0.7;">
-              <small>「道のりが楽しければ、目的地はもっと素晴らしい」</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Apps Section - 道の目的地 -->
-  <section class="path-section path-destinations" id="apps" data-section="apps">
-    <div class="container">
-      <div class="path-section-header">
-        <h2 class="path-section-title">道の途中の目的地</h2>
-        <p class="path-section-subtitle">私たちが歩きながら創り出したアプリケーション</p>
-      </div>
-      
-      <!-- 目的地への道のり -->
-      <div class="destinations-path">
-        <svg width="100%" height="300" viewBox="0 0 1000 300" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.2;">
-          <!-- メインの道 -->
-          <path d="M 0,200 Q 200,150 400,180 T 800,160 Q 900,155 1000,150" 
-                fill="none" stroke="#D2B48C" stroke-width="6" stroke-dasharray="15,10" />
-          
-          <!-- 目的地への分岐道 -->
-          <path d="M 250,165 Q 280,120 320,100" fill="none" stroke="#8B4513" stroke-width="4" />
-          <path d="M 500,175 Q 530,130 570,110" fill="none" stroke="#8B4513" stroke-width="4" />
-          <path d="M 750,160 Q 780,115 820,95" fill="none" stroke="#8B4513" stroke-width="4" />
-          
-          <!-- 目的地マーカー -->
-          <circle cx="320" cy="100" r="12" fill="#DAA520" />
-          <circle cx="570" cy="110" r="12" fill="#DAA520" />
-          <circle cx="820" cy="95" r="12" fill="#DAA520" />
-        </svg>
-      </div>
-      
-      <div class="path-grid path-destinations-grid">
-        <div class="destination-card" onclick="window.location.href='pages/tadataka.html'">
-          <div class="destination-header">
-            <div class="destination-landmark">🗺️</div>
-            <div class="destination-distance">0.5km</div>
-          </div>
-          <div class="destination-content">
-            <h3 class="destination-title">TADATAKA</h3>
-            <p class="destination-subtitle">足跡を残す道</p>
-            <p class="destination-description">
-              伊能忠敬のように、歩いた道のりがそのまま人生の記録になる。
-              GPS/BLEで自動記録し、今日の足あとを美しい地図で振り返る。
-            </p>
-            <div class="destination-features">
-              <span class="feature-tag">🦶 足跡記録</span>
-              <span class="feature-tag">🗺️ 地図日記</span>
-              <span class="feature-tag">🤖 AI分析</span>
-            </div>
-            <a href="pages/tadataka.html" class="destination-link">
-              <span class="link-text">この道を歩く</span>
-              <span class="link-arrow">→</span>
-            </a>
-          </div>
-          <div class="destination-footprints">
-            <div class="footprint-trail">
-              <span>👣</span><span>👣</span><span>👣</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="destination-card" onclick="window.location.href='pages/toirun.html'">
-          <div class="destination-header">
-            <div class="destination-landmark">🚽</div>
-            <div class="destination-distance">緊急</div>
-          </div>
-          <div class="destination-content">
-            <h3 class="destination-title">ToiRun</h3>
-            <p class="destination-subtitle">救いの道</p>
-            <p class="destination-description">
-              困ったときの道案内。"今すぐトイレ"という緊急時に、
-              最短ルートでARナビゲーションが救いの手を差し伸べる。
-            </p>
-            <div class="destination-features">
-              <span class="feature-tag">🚀 緊急対応</span>
-              <span class="feature-tag">🥽 AR誘導</span>
-              <span class="feature-tag">🌍 多言語</span>
-            </div>
-            <a href="pages/toirun.html" class="destination-link">
-              <span class="link-text">緊急の道へ</span>
-              <span class="link-arrow">→</span>
-            </a>
-          </div>
-          <div class="destination-footprints">
-            <div class="footprint-trail urgent">
-              <span>🏃‍♂️</span><span>💨</span><span>🚽</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="destination-card" onclick="window.location.href='pages/midpoint.html'">
-          <div class="destination-header">
-            <div class="destination-landmark">📍</div>
-            <div class="destination-distance">中間</div>
-          </div>
-          <div class="destination-content">
-            <h3 class="destination-title">Meet in the Middle</h3>
-            <p class="destination-subtitle">合流の道</p>
-            <p class="destination-description">
-              離れた場所から友と合流する道。みんなの出発地から最適な
-              集合場所を見つけ、楽しい時間への架け橋となる。
-            </p>
-            <div class="destination-features">
-              <span class="feature-tag">🤝 合流点</span>
-              <span class="feature-tag">⚡ 最適化</span>
-              <span class="feature-tag">🎯 レコメンド</span>
-            </div>
-            <a href="pages/midpoint.html" class="destination-link">
-              <span class="link-text">合流の道へ</span>
-              <span class="link-arrow">→</span>
-            </a>
-          </div>
-          <div class="destination-footprints">
-            <div class="footprint-trail meeting">
-              <span>👥</span><span>➡️</span><span>📍</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 道案内の石 -->
-      <div class="path-guide-stone">
-        <div class="stone-text">
-          <p>"どの道を選んでも、歩き続ければ必ず新しい景色に出会える"</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Company Section - 会社について -->
-  <section class="path-section path-company" id="company" data-section="company">
-    <div class="container">
-      <div class="path-section-header">
-        <h2 class="path-section-title">私たちの組織</h2>
-        <p class="path-section-subtitle">ToMoreBeyondという道のりを歩む組織</p>
-      </div>
-      
-      <div class="trail-grid trail-grid-2">
-        <div class="trail-card wooden-sign-weathered animate-sway">
-          <div class="sign-title">🏢 会社概要</div>
-          <div class="sign-content">
-            <p>2025年4月設立。東京を拠点とするテクノロジー企業として、面白いことだけを追求し、道なき道を切り開いています。</p>
-          </div>
-        </div>
-        
-        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.3s;">
-          <div class="sign-title">🎯 ミッション</div>
-          <div class="sign-content">
-            <p>テクノロジーの力で人々の日常に新しい価値を創造し、誰もが自分だけの道を歩めるようサポートすること。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Media Section - メディア・発信 -->
-  <section class="path-section path-media" id="media" data-section="media">
-    <div class="container">
-      <div class="path-section-header">
-        <h2 class="path-section-title">私たちの発信</h2>
-        <p class="path-section-subtitle">道のりで見つけた学びや発見を共有</p>
-      </div>
-      
-      <div class="trail-grid trail-grid-3">
-        <div class="trail-card wooden-sign-weathered animate-sway">
-          <div class="sign-title">📰 ブログ</div>
-          <div class="sign-content">
-            <p>開発の裏話、技術的な学び、チームの日常など、リアルな声をお届けします。</p>
-          </div>
-        </div>
-        
-        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.3s;">
-          <div class="sign-title">🎥 動画</div>
-          <div class="sign-content">
-            <p>プロダクト紹介、開発プロセス、メンバーインタビューなどをビジュアルで。</p>
-          </div>
-        </div>
-        
-        <div class="trail-card wooden-sign-weathered animate-sway" style="animation-delay: 0.6s;">
-          <div class="sign-title">📱 SNS</div>
-          <div class="sign-content">
-            <p>日々の気づきや最新情報をタイムリーに発信。フォローお待ちしています。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Team Section - 道を歩む仲間たち -->
-  <section class="path-section path-companions" id="team" data-section="team">
-    <div class="container">
-      <div class="path-section-header">
-        <h2 class="path-section-title">道を歩む仲間たち</h2>
-        <p class="path-section-subtitle">共に道なき道を切り開く仲間のキャラバン</p>
-      </div>
-      
-      <!-- 仲間たちの道のり -->
-      <div class="companions-journey">
-        <svg width="100%" height="150" viewBox="0 0 900 150" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.3;">
-          <!-- 三人の道 -->
-          <path d="M 50,100 Q 200,80 350,90 Q 500,100 650,85 Q 750,80 850,75" 
-                fill="none" stroke="#D2B48C" stroke-width="5" stroke-dasharray="12,8" />
-          
-          <!-- 足跡の軌跡 -->
-          <circle cx="150" cy="85" r="4" fill="#8B4513" opacity="0.6" />
-          <circle cx="170" cy="88" r="4" fill="#8B4513" opacity="0.6" />
-          <circle cx="190" cy="83" r="4" fill="#8B4513" opacity="0.6" />
-          
-          <circle cx="450" cy="95" r="4" fill="#8B4513" opacity="0.6" />
-          <circle cx="470" cy="98" r="4" fill="#8B4513" opacity="0.6" />
-          <circle cx="490" cy="93" r="4" fill="#8B4513" opacity="0.6" />
-          
-          <circle cx="750" cy="82" r="4" fill="#8B4513" opacity="0.6" />
-          <circle cx="770" cy="85" r="4" fill="#8B4513" opacity="0.6" />
-          <circle cx="790" cy="80" r="4" fill="#8B4513" opacity="0.6" />
-        </svg>
-      </div>
-    </div>
-    
-    <!-- 仲間のキャラバン（横スクロール） -->
-    <div class="path-scroll-container companions-caravan">
-      <div class="path-scroll-track companions-track">
-        <div class="companion-card" onclick="window.location.href='pages/member_yamada.html'">
-          <div class="companion-avatar">
-            <div class="avatar-frame">
-              <span class="avatar-icon">👨‍💻</span>
-              <div class="avatar-path-indicator"></div>
-            </div>
-          </div>
-          <div class="companion-info">
-            <h3 class="companion-name">山田（Yamada）</h3>
-            <p class="companion-role">道案内人</p>
-            <p class="companion-subtitle">CDO / プロダクトデザイン</p>
-            <div class="companion-journey-info">
-              <span class="journey-distance">🚶‍♂️ 500km歩行</span>
-              <span class="journey-specialty">🎨 デザインの道</span>
-            </div>
-            <p class="companion-quote">
-              "ユーザーが迷わない道をデザインしたい"
-            </p>
-            <div class="companion-footsteps">
-              👣 👣 👣
-            </div>
-          </div>
-        </div>
-        
-        <div class="companion-card" onclick="window.location.href='pages/member_masadome.html'">
-          <div class="companion-avatar">
-            <div class="avatar-frame">
-              <span class="avatar-icon">🚀</span>
-              <div class="avatar-path-indicator"></div>
-            </div>
-          </div>
-          <div class="companion-info">
-            <h3 class="companion-name">正留（Masadome）</h3>
-            <p class="companion-role">先導者</p>
-            <p class="companion-subtitle">CEO / フルスタックエンジニア & AIアーキテクト</p>
-            <div class="companion-journey-info">
-              <span class="journey-distance">🚀 1000km開拓</span>
-              <span class="journey-specialty">⚡ テクノロジーの道</span>
-            </div>
-            <p class="companion-quote">
-              "技術で新しい道を切り開く"
-            </p>
-            <div class="companion-footsteps">
-              👣 👣 👣
-            </div>
-          </div>
-        </div>
-        
-        <div class="companion-card" onclick="window.location.href='pages/member_ando.html'">
-          <div class="companion-avatar">
-            <div class="avatar-frame">
-              <span class="avatar-icon">🎨</span>
-              <div class="avatar-path-indicator"></div>
-            </div>
-          </div>
-          <div class="companion-info">
-            <h3 class="companion-name">安藤（Ando）</h3>
-            <p class="companion-role">表現者</p>
-            <p class="companion-subtitle">デジタルアート・アニメーション</p>
-            <div class="companion-journey-info">
-              <span class="journey-distance">🎨 300km創作</span>
-              <span class="journey-specialty">✨ アートの道</span>
-            </div>
-            <p class="companion-quote">
-              "美しい道のりを創り出したい"
-            </p>
-            <div class="companion-footsteps">
-              👣 👣 👣
-            </div>
-          </div>
-        </div>
-        
-        <!-- 重複カード -->
-        <div class="companion-card" onclick="window.location.href='pages/member_yamada.html'">
-          <div class="companion-avatar">
-            <div class="avatar-frame">
-              <span class="avatar-icon">👨‍💻</span>
-              <div class="avatar-path-indicator"></div>
-            </div>
-          </div>
-          <div class="companion-info">
-            <h3 class="companion-name">山田（Yamada）</h3>
-            <p class="companion-role">道案内人</p>
-            <p class="companion-subtitle">CDO / プロダクトデザイン</p>
-            <div class="companion-journey-info">
-              <span class="journey-distance">🚶‍♂️ 500km歩行</span>
-              <span class="journey-specialty">🎨 デザインの道</span>
-            </div>
-            <p class="companion-quote">
-              "ユーザーが迷わない道をデザインしたい"
-            </p>
-            <div class="companion-footsteps">
-              👣 👣 👣
-            </div>
-          </div>
-        </div>
-        
-        <div class="companion-card" onclick="window.location.href='pages/member_masadome.html'">
-          <div class="companion-avatar">
-            <div class="avatar-frame">
-              <span class="avatar-icon">🚀</span>
-              <div class="avatar-path-indicator"></div>
-            </div>
-          </div>
-          <div class="companion-info">
-            <h3 class="companion-name">正留（Masadome）</h3>
-            <p class="companion-role">先導者</p>
-            <p class="companion-subtitle">CEO / フルスタックエンジニア & AIアーキテクト</p>
-            <div class="companion-journey-info">
-              <span class="journey-distance">🚀 1000km開拓</span>
-              <span class="journey-specialty">⚡ テクノロジーの道</span>
-            </div>
-            <p class="companion-quote">
-              "技術で新しい道を切り開く"
-            </p>
-            <div class="companion-footsteps">
-              👣 👣 👣
-            </div>
-          </div>
-        </div>
-        
-        <div class="companion-card" onclick="window.location.href='pages/member_ando.html'">
-          <div class="companion-avatar">
-            <div class="avatar-frame">
-              <span class="avatar-icon">🎨</span>
-              <div class="avatar-path-indicator"></div>
-            </div>
-          </div>
-          <div class="companion-info">
-            <h3 class="companion-name">安藤（Ando）</h3>
-            <p class="companion-role">表現者</p>
-            <p class="companion-subtitle">デジタルアート・アニメーション</p>
-            <div class="companion-journey-info">
-              <span class="journey-distance">🎨 300km創作</span>
-              <span class="journey-specialty">✨ アートの道</span>
-            </div>
-            <p class="companion-quote">
-              "美しい道のりを創り出したい"
-            </p>
-            <div class="companion-footsteps">
-              👣 👣 👣
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="container">
-      <!-- 仲間募集の案内板 -->
-      <div class="companion-recruitment">
-        <div class="recruitment-board wooden-sign-weathered">
-          <h3>新しい仲間を探しています</h3>
-          <p>道なき道を一緒に歩む仲間を募集中。あなたの足跡を私たちの道に加えませんか？</p>
-          <div class="recruitment-paths">
-            <span class="path-tag">🛠️ エンジニアの道</span>
-            <span class="path-tag">🎨 デザイナーの道</span>
-            <span class="path-tag">📈 事業開発の道</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Path Wisdom Section - 道の教え -->
-  <section class="path-wisdom-section">
-    <div class="wisdom-background">
-      <svg width="100%" height="100%" viewBox="0 0 1200 200" style="position: absolute; top: 0; left: 0; opacity: 0.1;">
-        <!-- 古い巻物風の装飾 -->
-        <rect x="50" y="50" width="1100" height="100" fill="#D2B48C" rx="10" opacity="0.3" />
-        <line x1="100" y1="30" x2="1100" y2="30" stroke="#8B4513" stroke-width="2" opacity="0.5" />
-        <line x1="100" y1="170" x2="1100" y2="170" stroke="#8B4513" stroke-width="2" opacity="0.5" />
-      </svg>
-    </div>
-    
-    <div class="path-wisdom-scroll">
-      <div class="wisdom-content" id="wisdomContent">
-        <span class="wisdom-text">🗺️ 面白いことだけをする</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🚶‍♂️ 道なき道を越える</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🤝 友と共に歩む</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🌟 新しい景色を求めて</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🎯 楽しい未来へ</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🛤️ ToMoreBeyond</span>
-        <span class="wisdom-text separator">〜</span>
-        <!-- 重複 -->
-        <span class="wisdom-text">🗺️ 面白いことだけをする</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🚶‍♂️ 道なき道を越える</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🤝 友と共に歩む</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🌟 新しい景色を求めて</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🎯 楽しい未来へ</span>
-        <span class="wisdom-text separator">〜</span>
-        <span class="wisdom-text">🛤️ ToMoreBeyond</span>
-        <span class="wisdom-text separator">〜</span>
-      </div>
-    </div>
-    
-    <div class="wisdom-attribution">
-      <p class="attribution-text">- 道を歩む者たちの言葉 -</p>
-    </div>
-  </section>
-
-  <!-- Contact Section - 道の終点での出会い -->
-  <section class="path-section path-contact" id="contact" data-section="contact">
-    <div class="container">
-      <div class="path-section-header">
-        <h2 class="path-section-title">道の先で待つ出会い</h2>
-        <p class="path-section-subtitle">新しい道を一緒に歩みませんか？</p>
-      </div>
-      
-      <!-- 道の終点の風景 -->
-      <div class="contact-landscape">
-        <svg width="100%" height="200" viewBox="0 0 1000 200" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0.2;">
-          <!-- 山々の風景 -->
-          <path d="M 0,120 Q 200,80 400,100 T 800,90 Q 900,85 1000,80" fill="none" stroke="#8B4513" stroke-width="3" />
-          <path d="M 0,140 Q 300,110 500,130 T 900,120 Q 950,115 1000,110" fill="none" stroke="#D2B48C" stroke-width="2" />
-          
-          <!-- 太陽 -->
-          <circle cx="850" cy="60" r="25" fill="#DAA520" opacity="0.6" />
-          
-          <!-- 道の終点 -->
-          <path d="M 400,180 Q 500,160 600,165" fill="none" stroke="#8B4513" stroke-width="6" stroke-dasharray="10,5" />
-        </svg>
-      </div>
-      
-      <div class="contact-content-grid">
-        <div class="contact-waypoints wooden-sign-weathered">
-          <h3 class="waypoints-title">道案内</h3>
-          <p class="waypoints-subtitle">どの道を選んでもお待ちしています</p>
-          
-          <div class="waypoint-item">
-            <div class="waypoint-icon">💬</div>
-            <div class="waypoint-content">
-              <h4>一般的なお問い合わせの道</h4>
-              <p>サービスに関するご質問やご相談の道。迷子になってもお気軽に。</p>
-            </div>
-          </div>
-          
-          <div class="waypoint-item">
-            <div class="waypoint-icon">🤝</div>
-            <div class="waypoint-content">
-              <h4>協業・パートナーシップの道</h4>
-              <p>一緒に新しい道を切り開くパートナーをお待ちしています。</p>
-            </div>
-          </div>
-          
-          <div class="waypoint-item">
-            <div class="waypoint-icon">👥</div>
-            <div class="waypoint-content">
-              <h4>仲間になる道</h4>
-              <p>エンジニア、デザイナー、事業開発の道を歩む仲間を募集中。</p>
-            </div>
-          </div>
-          
-          <div class="waypoint-item">
-            <div class="waypoint-icon">📱</div>
-            <div class="waypoint-content">
-              <h4>アプリ体験の道</h4>
-              <p>TADATAKA、ToiRun、Meet in the Middleのテスターとしてご参加を。</p>
-            </div>
-          </div>
-          
-          <div class="company-milestone">
-            <div class="milestone-marker-small">🏢</div>
-            <div class="company-info">
-              <h4>私たちの拠点</h4>
-              <p>東京都（リモートワーク中心の分散型チーム）<br>設立: 2025年4月</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="contact-message-station wooden-sign-weathered">
-          <div class="message-station-header">
-            <h3>道中からのメッセージ</h3>
-            <p>あなたの足跡を私たちに伝えてください</p>
-          </div>
-          
-          <form action="#" method="POST" class="path-contact-form">
-            <div class="form-field">
-              <label for="name" class="field-label">🚶‍♂️ お名前 *</label>
-              <input type="text" id="name" name="name" required class="field-input" placeholder="あなたの名前">
-            </div>
-            
-            <div class="form-field">
-              <label for="email" class="field-label">📮 連絡先 *</label>
-              <input type="email" id="email" name="email" required class="field-input" placeholder="your@email.com">
-            </div>
-            
-            <div class="form-field">
-              <label for="company" class="field-label">🏢 所属・組織</label>
-              <input type="text" id="company" name="company" class="field-input" placeholder="会社名・組織名">
-            </div>
-            
-            <div class="form-field">
-              <label for="subject" class="field-label">🗺️ 用件 *</label>
-              <input type="text" id="subject" name="subject" required class="field-input" placeholder="どの道について？">
-            </div>
-            
-            <div class="form-field">
-              <label for="message" class="field-label">💭 メッセージ *</label>
-              <textarea id="message" name="message" rows="5" required class="field-textarea" placeholder="あなたの道のりや、一緒に歩みたいことをお聞かせください..."></textarea>
-            </div>
-            
-            <button type="submit" class="path-submit-button">
-              <span class="button-icon">🚀</span>
-              <span class="button-text">道を繋げる</span>
-              <span class="button-arrow">→</span>
-            </button>
-          </form>
-        </div>
-      </div>
-      
-      <!-- 最終的な道の詩 -->
-      <div class="final-path-poetry">
-        <div class="poetry-frame wooden-sign-weathered">
-          <p class="final-poetry-text">
-            "すべての道は繋がっている。<br>
-            あなたの歩む道と、私たちの道が交わるとき、<br>
-            新しい未来への扉が開かれる。"
-          </p>
-          <p class="poetry-signature">— ToMoreBeyond 一同</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Advanced Animation Libraries -->
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.27/dist/lenis.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  
-  <!-- JavaScript -->
-  <script src="/js/components/navbar.js"></script>
-  <script src="/js/components/text-animations.js"></script>
-  <script src="/js/components/smooth-scroll.js"></script>
-  <script src="/js/components/performance-manager.js"></script>
-  <script src="/js/components/walking-hero-system.js"></script>
-  
   <script>
-    // Advanced Animation System inspired by allies.studio
+    // カードデータ
+    const cardsData = [
+      { icon: '🗺️', title: 'TADATAKA', description: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
+      { icon: '🚽', title: 'ToiRun', description: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
+      { icon: '📍', title: 'Meet in the Middle', description: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
+      { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'pages/company.html' },
+      { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: '#' },
+      { icon: '👨‍💻', title: '山田', description: 'CDO / デザイナー', section: 'members', link: 'pages/member_yamada.html' },
+      { icon: '🚀', title: '正留', description: 'CEO / エンジニア', section: 'members', link: 'pages/member_masadome.html' },
+      { icon: '🎨', title: '安藤', description: 'アーティスト', section: 'members', link: 'pages/member_ando.html' },
+      { icon: '📰', title: 'ブログ', description: '開発の裏話', section: 'media', link: 'pages/media.html' },
+      { icon: '🎥', title: '動画', description: 'プロダクト紹介', section: 'media', link: '#' },
+      { icon: '📱', title: 'SNS', description: '日々の発信', section: 'media', link: '#' },
+      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: '#' }
+    ];
+    
+    class MinimalSite {
+      constructor() {
+        this.currentSection = 'apps';
+        this.sections = ['apps', 'company', 'members', 'media', 'contact'];
+        this.sectionIndex = 0;
+        this.isScrolling = false;
+        this.scrollTimer = null;
+        this.baseScrollSpeed = 60;
+        this.currentScrollSpeed = this.baseScrollSpeed;
+        
+        this.init();
+      }
+      
+      init() {
+        this.createCards();
+        this.setupEventListeners();
+        this.startAutoScroll();
+      }
+      
+      createCards() {
+        const track = document.getElementById('cardsTrack');
+        const cardsHTML = [];
+        
+        // 2セット作成（無限スクロール用）
+        for (let set = 0; set < 2; set++) {
+          cardsData.forEach(data => {
+            cardsHTML.push(`
+              <div class="card" data-section="${data.section}" data-link="${data.link}">
+                <div class="card-icon">${data.icon}</div>
+                <h3 class="card-title">${data.title}</h3>
+                <p class="card-description">${data.description}</p>
+              </div>
+            `);
+          });
+        }
+        
+        track.innerHTML = cardsHTML.join('');
+        
+        // カードクリックイベント
+        track.querySelectorAll('.card').forEach(card => {
+          card.addEventListener('click', () => {
+            const link = card.dataset.link;
+            if (link && link !== '#') {
+              window.location.href = link;
+            }
+          });
+        });
+      }
+      
+      setupEventListeners() {
+        // スクロールイベント
+        window.addEventListener('wheel', (e) => {
+          this.handleScroll(e.deltaY);
+        }, { passive: true });
+        
+        // ナビゲーションクリック
+        document.querySelectorAll('.nav-item').forEach(nav => {
+          nav.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.changeSection(nav.dataset.section);
+          });
+        });
+        
+        // タッチイベント（モバイル）
+        let touchStartY = 0;
+        document.addEventListener('touchstart', (e) => {
+          touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+          const touchY = e.touches[0].clientY;
+          const deltaY = touchStartY - touchY;
+          if (Math.abs(deltaY) > 10) {
+            this.handleScroll(deltaY);
+          }
+        }, { passive: true });
+      }
+      
+      handleScroll(deltaY) {
+        // スクロール強度に応じて速度調整
+        const intensity = Math.abs(deltaY) * 0.05;
+        this.currentScrollSpeed = Math.max(20, this.baseScrollSpeed - intensity * 40);
+        
+        // カードスクロール速度更新
+        const track = document.getElementById('cardsTrack');
+        track.style.setProperty('--scroll-speed', `${this.currentScrollSpeed}s`);
+        
+        // 棒人間歩行開始
+        if (!this.isScrolling) {
+          this.startWalking();
+        }
+        
+        // スクロール終了検知
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(() => {
+          this.stopWalking();
+          // 通常速度に戻す
+          track.style.setProperty('--scroll-speed', `${this.baseScrollSpeed}s`);
+        }, 200);
+        
+        // セクション変更（確率的）
+        if (Math.random() < 0.03) {
+          if (deltaY > 0) {
+            this.nextSection();
+          } else {
+            this.prevSection();
+          }
+        }
+      }
+      
+      startWalking() {
+        this.isScrolling = true;
+        const figure = document.getElementById('tinyFigure');
+        figure.classList.remove('idle');
+        figure.classList.add('walking');
+      }
+      
+      stopWalking() {
+        this.isScrolling = false;
+        const figure = document.getElementById('tinyFigure');
+        figure.classList.remove('walking');
+        figure.classList.add('idle');
+      }
+      
+      changeSection(sectionName) {
+        if (this.currentSection === sectionName) return;
+        
+        this.currentSection = sectionName;
+        document.body.className = `section-${sectionName}`;
+        
+        // ナビゲーション更新
+        document.querySelectorAll('.nav-item').forEach(nav => {
+          nav.classList.toggle('active', nav.dataset.section === sectionName);
+        });
+        
+        this.sectionIndex = this.sections.indexOf(sectionName);
+      }
+      
+      nextSection() {
+        this.sectionIndex = (this.sectionIndex + 1) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      prevSection() {
+        this.sectionIndex = (this.sectionIndex - 1 + this.sections.length) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      startAutoScroll() {
+        const track = document.getElementById('cardsTrack');
+        track.style.setProperty('--scroll-speed', `${this.baseScrollSpeed}s`);
+      }
+    }
+    
+    // 初期化
     document.addEventListener('DOMContentLoaded', () => {
-      // Loading Screen with Path Theme
-      const loadingScreen = document.getElementById('loadingScreen');
-      const scrollProgress = document.getElementById('scrollProgress');
-      
-      // Hide loading screen after page load
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          loadingScreen.style.opacity = '0';
-          setTimeout(() => {
-            loadingScreen.style.display = 'none';
-          }, 500);
-        }, 1500);
-      });
-      
-      // Path Progress Indicator - 道の進捗
-      function updateScrollProgress() {
-        const scrollTop = window.pageYOffset;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        scrollProgress.style.width = scrollPercent + '%';
-        
-        // 道を歩く効果: スクロール位置に応じて足跡を表示
-        addFootstepAtScroll(scrollTop, docHeight);
-      }
-      
-      // 足跡を動的に追加
-      function addFootstepAtScroll(scrollTop, docHeight) {
-        const sections = document.querySelectorAll('.path-section');
-        sections.forEach((section, index) => {
-          const rect = section.getBoundingClientRect();
-          const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-          
-          if (isInView && !section.hasAttribute('data-footstep-added')) {
-            section.setAttribute('data-footstep-added', 'true');
-            createFloatingFootstep(section);
-          }
-        });
-      }
-      
-      // 浮遊する足跡エフェクト
-      function createFloatingFootstep(section) {
-        const footstep = document.createElement('div');
-        footstep.innerHTML = '👣';
-        footstep.style.cssText = `
-          position: absolute;
-          font-size: 1.2rem;
-          opacity: 0;
-          z-index: 1;
-          pointer-events: none;
-          left: ${Math.random() * 80 + 10}%;
-          top: ${Math.random() * 80 + 10}%;
-        `;
-        
-        section.appendChild(footstep);
-        
-        // アニメーション
-        gsap.to(footstep, {
-          opacity: 0.6,
-          scale: 1.2,
-          rotation: 15,
-          duration: 1,
-          ease: "power2.out",
-          onComplete: () => {
-            gsap.to(footstep, {
-              opacity: 0,
-              scale: 0.8,
-              y: -30,
-              duration: 2,
-              ease: "power2.in",
-              onComplete: () => footstep.remove()
-            });
-          }
-        });
-      }
-      
-      window.addEventListener('scroll', updateScrollProgress, { passive: true });
-      // Initialize Lenis Smooth Scroll
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
-        infinite: false,
-      });
-
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-
-      // Register GSAP ScrollTrigger with Lenis
-      gsap.registerPlugin(ScrollTrigger);
-      
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.lagSmoothing(0);
-
-      // Path Hero Title Animation - 道を歩む文字
-      const pathTitle = document.querySelector('.path-title');
-      if (pathTitle) {
-        gsap.set(pathTitle, {
-          opacity: 0,
-          y: 50,
-          scale: 0.9
-        });
-        
-        gsap.to(pathTitle, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 2,
-          ease: "power3.out"
-        });
-      }
-
-      // Path Hero Elements Sequential Animation
-      const pathHeroElements = [
-        '.path-hero-quote',
-        '.path-subtitle',
-        '.path-description',
-        '.path-mission',
-        '.path-hero-buttons',
-        '.scroll-indicator'
-      ];
-
-      pathHeroElements.forEach((selector, i) => {
-        const element = document.querySelector(selector);
-        if (element) {
-          gsap.set(element, {
-            opacity: 0,
-            y: 30,
-            scale: 0.95
-          });
-          
-          gsap.to(element, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1.2,
-            delay: 0.5 + (i * 0.3),
-            ease: "power2.out"
-          });
-        }
-      });
-
-      // Path Milestone Animation - 道標の出現
-      ScrollTrigger.batch('.path-milestone', {
-        onEnter: (elements) => {
-          elements.forEach((el, i) => {
-            const tl = gsap.timeline();
-            
-            // 道標が道に現れる
-            gsap.set(el, {
-              opacity: 0,
-              x: -100,
-              rotateY: -45
-            });
-            
-            tl.to(el, {
-              opacity: 1,
-              x: 0,
-              rotateY: 0,
-              duration: 1.2,
-              delay: i * 0.4,
-              ease: "power3.out"
-            });
-            
-            // 足跡エフェクト
-            const footprints = el.querySelector('.milestone-footprints');
-            if (footprints) {
-              gsap.set(footprints, { opacity: 0 });
-              gsap.to(footprints, {
-                opacity: 1,
-                duration: 0.8,
-                delay: 0.8 + (i * 0.4),
-                ease: "power2.out"
-              });
-            }
-          });
-        },
-        start: "top 80%"
-      });
-
-      // Destination Cards Animation - 目的地への歩み
-      ScrollTrigger.batch('.destination-card', {
-        onEnter: (elements) => {
-          elements.forEach((el, i) => {
-            const tl = gsap.timeline();
-            
-            gsap.set(el, {
-              opacity: 0,
-              y: 80,
-              scale: 0.9,
-              rotateX: 15
-            });
-            
-            // 目的地カードが道から浮かび上がる
-            tl.to(el, {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              rotateX: 0,
-              duration: 1.4,
-              delay: i * 0.2,
-              ease: "power3.out"
-            });
-            
-            // 目的地への足跡
-            const footprintTrail = el.querySelector('.footprint-trail');
-            if (footprintTrail) {
-              gsap.set(footprintTrail, { opacity: 0, scale: 0.8 });
-              gsap.to(footprintTrail, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.6,
-                delay: 0.8 + (i * 0.2),
-                ease: "back.out(1.7)"
-              });
-            }
-          });
-        },
-        start: "top 75%"
-      });
-
-      // Companion Cards Animation - 仲間との出会い
-      ScrollTrigger.batch('.companion-card', {
-        onEnter: (elements) => {
-          elements.forEach((el, i) => {
-            gsap.set(el, {
-              opacity: 0,
-              x: 100 * (i % 2 === 0 ? 1 : -1), // 左右交互
-              scale: 0.8
-            });
-            
-            gsap.to(el, {
-              opacity: 1,
-              x: 0,
-              scale: 1,
-              duration: 1.2,
-              delay: i * 0.15,
-              ease: "power2.out"
-            });
-          });
-        },
-        start: "top 80%"
-      });
-
-      // Floating Natural Elements Animation
-      gsap.utils.toArray('.floating-leaf, .floating-bird').forEach((element, i) => {
-        gsap.to(element, {
-          y: '20vh',
-          x: '10vw',
-          rotation: 15,
-          scale: 1.1,
-          opacity: 0.3,
-          scrollTrigger: {
-            trigger: 'body',
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 1 + i * 0.3,
-          }
-        });
-      });
-
-      // Path Section Natural Slide-in
-      gsap.utils.toArray('.path-section').forEach((section, i) => {
-        gsap.set(section, {
-          opacity: 0,
-          y: 50
-        });
-
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top 85%',
-          animation: gsap.to(section, {
-            opacity: 1,
-            y: 0,
-            duration: 1.8,
-            ease: "power3.out"
-          })
-        });
-      });
-
-      // Companion Cards Hover Effects
-      gsap.utils.toArray('.companion-card').forEach(card => {
-        const hoverTl = gsap.timeline({ paused: true });
-        
-        hoverTl.to(card, {
-          scale: 1.05,
-          y: -12,
-          rotateY: 5,
-          boxShadow: "0 15px 40px rgba(139, 69, 19, 0.3)",
-          duration: 0.4,
-          ease: "power2.out"
-        });
-
-        card.addEventListener('mouseenter', () => hoverTl.play());
-        card.addEventListener('mouseleave', () => hoverTl.reverse());
-      });
-
-      // Path Scroll Track Animation - キャラバンの動き
-      const pathScrollTracks = document.querySelectorAll('.path-scroll-track');
-      pathScrollTracks.forEach(track => {
-        if (track) {
-          gsap.set(track, { x: 0 });
-          
-          gsap.to(track, {
-            x: '-50%',
-            duration: 35,
-            ease: 'none',
-            repeat: -1
-          });
-
-          // Pause on hover for interaction
-          track.addEventListener('mouseenter', () => {
-            gsap.globalTimeline.timeScale(0.2);
-          });
-          
-          track.addEventListener('mouseleave', () => {
-            gsap.globalTimeline.timeScale(1);
-          });
-        }
-      });
-
-      // Wisdom Text Animation
-      const wisdomContent = document.querySelector('.wisdom-content');
-      if (wisdomContent) {
-        gsap.set(wisdomContent, { x: 0 });
-        
-        gsap.to(wisdomContent, {
-          x: '-50%',
-          duration: 45,
-          ease: 'none',
-          repeat: -1
-        });
-      }
-
-      // Contact Form Slide-in
-      const contactForm = document.querySelector('.contact-form-container');
-      if (contactForm) {
-        gsap.set(contactForm, {
-          x: 300,
-          opacity: 0,
-          rotateY: -45
-        });
-
-        ScrollTrigger.create({
-          trigger: contactForm,
-          start: 'top 80%',
-          animation: gsap.to(contactForm, {
-            x: 0,
-            opacity: 1,
-            rotateY: 0,
-            duration: 1.5,
-            ease: "expo.out"
-          })
-        });
-      }
-
-      // Magnetic Button Effect
-      gsap.utils.toArray('.cta-button-primary, .submit-button').forEach(button => {
-        button.addEventListener('mousemove', (e) => {
-          const rect = button.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-          
-          gsap.to(button, {
-            x: x * 0.3,
-            y: y * 0.3,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        });
-
-        button.addEventListener('mouseleave', () => {
-          gsap.to(button, {
-            x: 0,
-            y: 0,
-            duration: 0.5,
-            ease: "elastic.out(1, 0.3)"
-          });
-        });
-      });
-
-      // Navigation Links Smooth Scroll with Lenis
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href').substring(1);
-          const target = document.getElementById(targetId);
-          
-          if (target) {
-            lenis.scrollTo(target, {
-              duration: 2,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-            });
-          }
-        });
-      });
-
-      // Advanced Text Reveal Animation
-      gsap.utils.toArray('.section-title, .section-subtitle').forEach(text => {
-        const words = text.textContent.split(' ');
-        text.innerHTML = '';
-        
-        words.forEach((word, i) => {
-          const span = document.createElement('span');
-          span.innerHTML = word + '&nbsp;';
-          span.style.display = 'inline-block';
-          span.style.opacity = '0';
-          span.style.transform = 'translateY(50px)';
-          text.appendChild(span);
-        });
-
-        ScrollTrigger.create({
-          trigger: text,
-          start: 'top 85%',
-          animation: gsap.to(text.children, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "back.out(1.7)"
-          })
-        });
-      });
-
-      // Page Load Animation
-      const pageLoadTl = gsap.timeline();
-      
-      pageLoadTl
-        .from('.navbar-modern', {
-          y: -100,
-          opacity: 0,
-          duration: 1,
-          ease: "expo.out"
-        })
-        .from('.hero-content', {
-          scale: 0.8,
-          opacity: 0,
-          duration: 1.5,
-          ease: "expo.out"
-        }, "-=0.5")
-        .from('.floating-shape', {
-          scale: 0,
-          rotation: -180,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.1,
-          ease: "back.out(1.7)"
-        }, "-=1");
-
-      // Cursor Trail Effect
-      const cursor = document.createElement('div');
-      cursor.className = 'cursor-trail';
-      cursor.style.cssText = `
-        position: fixed;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255,179,0,0.8) 0%, rgba(255,179,0,0) 70%);
-        pointer-events: none;
-        z-index: 9999;
-        mix-blend-mode: difference;
-        transition: transform 0.1s ease;
-      `;
-      document.body.appendChild(cursor);
-
-      document.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, {
-          x: e.clientX - 10,
-          y: e.clientY - 10,
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      });
-
-      // Enhanced Signboard Bolts - 4つ角のボルトを動的に追加
-      function addSignboardBolts() {
-        const signboards = document.querySelectorAll('.wooden-sign, .trail-card, .hero-wooden-sign');
-        signboards.forEach(signboard => {
-          // 下の2つのボルトを追加
-          const bottomLeftBolt = document.createElement('div');
-          bottomLeftBolt.style.cssText = `
-            position: absolute;
-            bottom: 12px;
-            left: 12px;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle, #888 0%, #666 50%, #444 100%);
-            border-radius: 50%;
-            box-shadow: 
-              inset 0 1px 1px rgba(255, 255, 255, 0.4),
-              inset 0 -1px 1px rgba(0, 0, 0, 0.3),
-              0 1px 3px rgba(0, 0, 0, 0.4);
-            z-index: 3;
-            border: 1px solid #333;
-            pointer-events: none;
-          `;
-          
-          const bottomRightBolt = document.createElement('div');
-          bottomRightBolt.style.cssText = `
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle, #888 0%, #666 50%, #444 100%);
-            border-radius: 50%;
-            box-shadow: 
-              inset 0 1px 1px rgba(255, 255, 255, 0.4),
-              inset 0 -1px 1px rgba(0, 0, 0, 0.3),
-              0 1px 3px rgba(0, 0, 0, 0.4);
-            z-index: 3;
-            border: 1px solid #333;
-            pointer-events: none;
-          `;
-          
-          signboard.appendChild(bottomLeftBolt);
-          signboard.appendChild(bottomRightBolt);
-        });
-      }
-      
-      // ページ読み込み時にボルトを追加
-      addSignboardBolts();
-
-      // Login Button in Navigation
-      const loginBtn = document.createElement('a');
-      loginBtn.href = 'pages/login.html';
-      loginBtn.textContent = 'Login';
-      loginBtn.className = 'navbar-link-modern';
-      loginBtn.style.cssText = `
-        background: linear-gradient(135deg, #FFB300, #FF6B35);
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        color: white !important;
-        transition: all 0.3s ease;
-      `;
-      
-      loginBtn.addEventListener('mouseenter', () => {
-        gsap.to(loginBtn, {
-          scale: 1.05,
-          boxShadow: '0 5px 15px rgba(255,179,0,0.4)',
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      });
-      
-      loginBtn.addEventListener('mouseleave', () => {
-        gsap.to(loginBtn, {
-          scale: 1,
-          boxShadow: '0 0 0px rgba(255,179,0,0)',
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      });
-      
-      const navLinks = document.querySelector('.navbar-links-modern');
-      if (navLinks) {
-        navLinks.insertBefore(loginBtn, navLinks.lastElementChild);
-      }
+      new MinimalSite();
     });
   </script>
 </body>
