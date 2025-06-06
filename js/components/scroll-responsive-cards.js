@@ -5,24 +5,32 @@ class ScrollResponsiveCards {
     this.cards = this.container?.querySelectorAll('.infinite-card');
     
     this.options = {
-      baseSpeed: 1,
-      scrollMultiplier: 0.05,
-      maxSpeed: 5,
-      minSpeed: 0.1,
-      smoothness: 0.1,
+      baseSpeed: 0.5,
+      scrollMultiplier: 0.15,
+      touchMultiplier: 1.2,
+      maxSpeed: 8,
+      minSpeed: 0,
+      smoothness: 0.08,
+      friction: 0.92,
       hoverSlowdown: 0.3,
+      responsiveness: 0.15,
       ...options
     };
     
     this.state = {
-      currentSpeed: this.options.baseSpeed,
-      targetSpeed: this.options.baseSpeed,
-      scrollVelocity: 0,
+      currentSpeed: 0,
+      targetSpeed: 0,
+      velocity: 0,
       lastScrollY: 0,
+      lastTouchX: 0,
+      lastTouchY: 0,
+      lastTimestamp: Date.now(),
       isHovered: false,
+      isTouching: false,
       animationId: null,
       translateX: 0,
-      scrollDirection: -1
+      momentum: 0,
+      lastDelta: 0
     };
     
     this.init();
@@ -41,81 +49,111 @@ class ScrollResponsiveCards {
   }
   
   setupScrollDetection() {
-    let ticking = false;
-    let lastTouchX = 0;
-    let touchStartX = 0;
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    let scrollRaf = null;
+    let touchRaf = null;
     
-    const updateScrollSpeed = () => {
-      const currentScrollY = window.pageYOffset;
-      const scrollDelta = currentScrollY - this.state.lastScrollY;
+    // Unified scroll handler for both wheel and touch
+    const handleMovement = (deltaX, deltaY, isTouch = false) => {
+      const now = Date.now();
+      const timeDelta = Math.max(1, now - this.state.lastTimestamp);
+      this.state.lastTimestamp = now;
       
-      // Calculate scroll velocity
-      this.state.scrollVelocity = Math.abs(scrollDelta) * this.options.scrollMultiplier;
-      this.state.lastScrollY = currentScrollY;
+      // Calculate velocity based on movement
+      const delta = isTouch ? deltaX : deltaY;
+      const instantVelocity = delta / timeDelta;
       
-      // On mobile, reverse direction based on scroll direction
-      if (isMobile) {
-        // Negative scrollDelta means scrolling up, positive means scrolling down
-        this.state.scrollDirection = scrollDelta > 0 ? -1 : 1;
-      } else {
-        // Desktop keeps original behavior
-        this.state.scrollDirection = -1;
-      }
+      // Smooth velocity tracking
+      this.state.velocity = this.lerp(
+        this.state.velocity,
+        instantVelocity,
+        this.options.responsiveness
+      );
       
-      // Update target speed based on scroll velocity
-      if (this.state.scrollVelocity > 0) {
-        this.state.targetSpeed = Math.min(
-          this.options.baseSpeed + this.state.scrollVelocity,
-          this.options.maxSpeed
-        );
-      } else {
-        this.state.targetSpeed = this.options.baseSpeed;
-      }
+      // Update momentum
+      const multiplier = isTouch ? this.options.touchMultiplier : this.options.scrollMultiplier;
+      this.state.momentum += delta * multiplier;
       
-      // Apply hover slowdown
-      if (this.state.isHovered) {
-        this.state.targetSpeed *= this.options.hoverSlowdown;
-      }
-      
-      // Clamp to minimum speed
-      this.state.targetSpeed = Math.max(this.state.targetSpeed, this.options.minSpeed);
-      
-      ticking = false;
+      // Clamp momentum
+      const maxMomentum = this.options.maxSpeed * 10;
+      this.state.momentum = Math.max(-maxMomentum, Math.min(maxMomentum, this.state.momentum));
     };
     
-    // Handle vertical scroll
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateScrollSpeed);
-        ticking = true;
-      }
+    // Mouse wheel handler
+    this.container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(() => {
+        // Use horizontal delta if available, otherwise vertical
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        handleMovement(delta, delta, false);
+      });
+    }, { passive: false });
+    
+    // Touch handlers
+    this.container.addEventListener('touchstart', (e) => {
+      this.state.isTouching = true;
+      this.state.lastTouchX = e.touches[0].clientX;
+      this.state.lastTouchY = e.touches[0].clientY;
+      this.state.lastTimestamp = Date.now();
+      
+      // Stop any existing momentum
+      this.state.momentum *= 0.3;
     }, { passive: true });
     
-    // Handle horizontal touch gestures on mobile
-    if (isMobile) {
-      this.container.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        lastTouchX = touchStartX;
-      }, { passive: true });
+    this.container.addEventListener('touchmove', (e) => {
+      if (!this.state.isTouching) return;
       
-      this.container.addEventListener('touchmove', (e) => {
-        const currentTouchX = e.touches[0].clientX;
-        const touchDelta = currentTouchX - lastTouchX;
+      if (touchRaf) cancelAnimationFrame(touchRaf);
+      touchRaf = requestAnimationFrame(() => {
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - this.state.lastTouchX;
+        const deltaY = touch.clientY - this.state.lastTouchY;
         
-        // Set direction based on horizontal swipe
-        if (Math.abs(touchDelta) > 2) {
-          this.state.scrollDirection = touchDelta > 0 ? 1 : -1;
-          this.state.scrollVelocity = Math.abs(touchDelta) * 0.1;
-          this.state.targetSpeed = Math.min(
-            this.options.baseSpeed + this.state.scrollVelocity,
-            this.options.maxSpeed
-          );
+        // Prioritize horizontal movement
+        if (Math.abs(deltaX) > Math.abs(deltaY) * 0.5) {
+          e.preventDefault();
+          handleMovement(-deltaX, 0, true);
+        } else {
+          // For vertical scrolling, sync with page scroll
+          handleMovement(0, deltaY, true);
         }
         
-        lastTouchX = currentTouchX;
-      }, { passive: true });
-    }
+        this.state.lastTouchX = touch.clientX;
+        this.state.lastTouchY = touch.clientY;
+      });
+    }, { passive: false });
+    
+    this.container.addEventListener('touchend', () => {
+      this.state.isTouching = false;
+      
+      // Apply inertia boost based on final velocity
+      const boostFactor = Math.min(2, Math.abs(this.state.velocity) * 0.5);
+      this.state.momentum *= boostFactor;
+    }, { passive: true });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        this.state.momentum -= 30;
+      } else if (e.key === 'ArrowRight') {
+        this.state.momentum += 30;
+      }
+    });
+    
+    // Page scroll sync (for desktop)
+    let lastScrollY = window.pageYOffset;
+    window.addEventListener('scroll', () => {
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(() => {
+        const deltaY = window.pageYOffset - lastScrollY;
+        lastScrollY = window.pageYOffset;
+        
+        if (!this.state.isTouching) {
+          handleMovement(0, deltaY, false);
+        }
+      });
+    }, { passive: true });
   }
   
   setupHoverEffects() {
@@ -202,41 +240,63 @@ class ScrollResponsiveCards {
   
   startAnimation() {
     const animate = () => {
-      // Smooth speed transition
-      this.state.currentSpeed = this.lerp(
-        this.state.currentSpeed,
-        this.state.targetSpeed,
-        this.options.smoothness
-      );
+      // Apply momentum with friction
+      if (!this.state.isTouching) {
+        this.state.momentum *= this.options.friction;
+        
+        // Stop if momentum is negligible
+        if (Math.abs(this.state.momentum) < 0.01) {
+          this.state.momentum = 0;
+        }
+      }
       
-      // Update card positions with direction
-      this.state.translateX += this.state.currentSpeed * this.state.scrollDirection;
+      // Add base speed when not interacting
+      let movement = this.state.momentum;
+      if (!this.state.isTouching && !this.state.isHovered && Math.abs(this.state.momentum) < 0.5) {
+        movement += this.options.baseSpeed;
+      }
       
-      // Reset position for infinite scroll
+      // Apply hover slowdown
+      if (this.state.isHovered) {
+        movement *= this.options.hoverSlowdown;
+      }
+      
+      // Update position
+      this.state.translateX += movement;
+      
+      // Get dimensions for infinite loop
       const cardWidth = this.cards[0]?.offsetWidth || 300;
       const gap = parseFloat(getComputedStyle(this.track).gap) || 30;
       const totalCardWidth = cardWidth + gap;
-      const trackWidth = totalCardWidth * (this.cards.length / 2); // Assuming cards are duplicated
+      const trackWidth = totalCardWidth * (this.cards.length / 2);
       
-      // Handle wrapping for both directions
+      // Seamless infinite scroll
       if (this.state.translateX <= -trackWidth) {
-        this.state.translateX = 0;
+        this.state.translateX += trackWidth;
       } else if (this.state.translateX >= 0) {
-        this.state.translateX = -trackWidth;
+        this.state.translateX -= trackWidth;
       }
       
-      // Apply transform
-      this.track.style.transform = `translateX(${this.state.translateX}px)`;
+      // Apply smooth transform
+      this.track.style.transform = `translate3d(${this.state.translateX}px, 0, 0)`;
       
-      // Enhance cards based on current speed
-      this.cards.forEach(card => {
+      // Enhanced card effects based on velocity
+      const speed = Math.abs(movement);
+      const speedRatio = Math.min(speed / this.options.maxSpeed, 1);
+      
+      this.cards.forEach((card, index) => {
         if (card._enhance) {
-          card._enhance();
+          // Dynamic effects based on speed
+          const skew = speedRatio * 2;
+          const scale = 1 + (speedRatio * 0.02);
+          const blur = speedRatio > 0.5 ? speedRatio * 0.5 : 0;
+          
+          if (!card.classList.contains('hover-active')) {
+            card.style.transform = `skewX(${movement > 0 ? -skew : skew}deg) scale(${scale})`;
+            card.style.filter = blur > 0 ? `blur(${blur}px)` : 'none';
+          }
         }
       });
-      
-      // Update scroll velocity decay
-      this.state.scrollVelocity *= 0.95; // Decay scroll velocity
       
       this.state.animationId = requestAnimationFrame(animate);
     };
@@ -283,20 +343,34 @@ class ScrollResponsiveCards {
 
 // Enhanced CSS for scroll-responsive cards
 const scrollResponsiveStyles = `
+  .center-infinite-scroll {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+  
   .infinite-scroll-track {
     will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
   }
   
   .infinite-card {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.2s ease-out;
     position: relative;
     overflow: hidden;
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
   
   .infinite-card.hover-active {
     transform: translateY(-8px) scale(1.05) !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     z-index: 10;
+    filter: none !important;
   }
   
   .infinite-card::before {
@@ -330,25 +404,27 @@ const scrollResponsiveStyles = `
     }
   }
   
-  /* Speed indicator (optional visual feedback) */
-  .scroll-speed-indicator {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s;
+  /* Smooth scrolling on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    .infinite-card {
+      transition-duration: 0.1s;
+    }
+    
+    .center-infinite-scroll {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
   }
   
-  .scroll-speed-indicator.visible {
-    opacity: 1;
+  /* Performance optimizations */
+  @media (prefers-reduced-motion: reduce) {
+    .infinite-card {
+      transition: none;
+    }
+    
+    .infinite-scroll-track {
+      animation: none;
+    }
   }
 `;
 
@@ -365,41 +441,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollContainer = document.querySelector('.center-infinite-scroll');
   if (scrollContainer) {
     window.scrollResponsiveCards = new ScrollResponsiveCards(scrollContainer, {
-      baseSpeed: 1.5,
-      scrollMultiplier: 0.08,
-      maxSpeed: 6,
-      minSpeed: 0.2,
-      smoothness: 0.12,
-      hoverSlowdown: 0.25
+      baseSpeed: 0.5,
+      scrollMultiplier: 0.15,
+      touchMultiplier: 1.2,
+      maxSpeed: 8,
+      minSpeed: 0,
+      smoothness: 0.08,
+      friction: 0.92,
+      hoverSlowdown: 0.3,
+      responsiveness: 0.15
     });
     
-    // Optional: Add speed indicator
-    const addSpeedIndicator = () => {
-      const indicator = document.createElement('div');
-      indicator.className = 'scroll-speed-indicator';
-      indicator.textContent = 'Speed: 1.0x';
-      document.body.appendChild(indicator);
-      
-      let hideTimeout;
-      
-      const updateIndicator = () => {
-        if (window.scrollResponsiveCards) {
-          const speed = window.scrollResponsiveCards.state.currentSpeed;
-          indicator.textContent = `Speed: ${speed.toFixed(1)}x`;
-          indicator.classList.add('visible');
-          
-          clearTimeout(hideTimeout);
-          hideTimeout = setTimeout(() => {
-            indicator.classList.remove('visible');
-          }, 2000);
-        }
-      };
-      
-      window.addEventListener('scroll', updateIndicator, { passive: true });
-    };
-    
-    // Uncomment to enable speed indicator
-    // addSpeedIndicator();
+    // Optimize for mobile
+    if ('ontouchstart' in window) {
+      scrollContainer.style.cursor = 'grab';
+      scrollContainer.addEventListener('touchstart', () => {
+        scrollContainer.style.cursor = 'grabbing';
+      });
+      scrollContainer.addEventListener('touchend', () => {
+        scrollContainer.style.cursor = 'grab';
+      });
+    }
   }
 });
 
