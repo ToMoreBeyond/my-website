@@ -286,10 +286,14 @@
       contain: layout style paint;
     }
     
-    /* 自然な歩行サイクル - スムーズな動き */
+    /* デフォルトは静止状態 */
     .stick-figure {
-      animation: naturalWalk 0.6s infinite ease-in-out;
       will-change: transform;
+    }
+    
+    /* 歩行中のみアニメーション */
+    .walking .stick-figure {
+      animation: naturalWalk 0.6s infinite ease-in-out;
     }
     
     @keyframes naturalWalk {
@@ -300,11 +304,20 @@
       100% { transform: translateY(0px); }
     }
     
-    /* 左腕 - 自然な対側歩行 */
-    .left-arm {
-      animation: leftArmSmooth 0.6s infinite ease-in-out;
+    /* 腕と脚はデフォルトで静止 */
+    .left-arm, .right-arm, .left-leg, .right-leg {
       transform-origin: 40px 24px;
       will-change: transform;
+      transform: rotate(0deg);
+    }
+    
+    .left-leg, .right-leg {
+      transform-origin: 40px 52px;
+    }
+    
+    /* 歩行中の左腕 */
+    .walking .left-arm {
+      animation: leftArmSmooth 0.6s infinite ease-in-out;
     }
     
     @keyframes leftArmSmooth {
@@ -313,11 +326,9 @@
       100% { transform: rotate(20deg); }
     }
     
-    /* 右腕 - 左腕と逆位相 */
-    .right-arm {
+    /* 歩行中の右腕 */
+    .walking .right-arm {
       animation: rightArmSmooth 0.6s infinite ease-in-out;
-      transform-origin: 40px 24px;
-      will-change: transform;
     }
     
     @keyframes rightArmSmooth {
@@ -326,11 +337,9 @@
       100% { transform: rotate(-20deg); }
     }
     
-    /* 左脚 - 自然なストライド */
-    .left-leg {
+    /* 歩行中の左脚 */
+    .walking .left-leg {
       animation: leftLegSmooth 0.6s infinite ease-in-out;
-      transform-origin: 40px 52px;
-      will-change: transform;
     }
     
     @keyframes leftLegSmooth {
@@ -339,11 +348,9 @@
       100% { transform: rotate(-20deg); }
     }
     
-    /* 右脚 - 左脚と逆位相 */
-    .right-leg {
+    /* 歩行中の右脚 */
+    .walking .right-leg {
       animation: rightLegSmooth 0.6s infinite ease-in-out;
-      transform-origin: 40px 52px;
-      will-change: transform;
     }
     
     @keyframes rightLegSmooth {
@@ -366,14 +373,14 @@
     .section-contact .path-line { background: #FF5722; }
     
     /* 高速歩行モード - スムーズな走行 */
-    .fast-walking .stick-figure {
+    .walking.fast-walking .stick-figure {
       animation-duration: 0.3s !important;
     }
     
-    .fast-walking .left-arm,
-    .fast-walking .right-arm,
-    .fast-walking .left-leg,
-    .fast-walking .right-leg {
+    .walking.fast-walking .left-arm,
+    .walking.fast-walking .right-arm,
+    .walking.fast-walking .left-leg,
+    .walking.fast-walking .right-leg {
       animation-duration: 0.3s !important;
     }
     
@@ -384,15 +391,15 @@
     }
     
     /* 低性能デバイス向け最適化 */
-    .low-performance-mode .stick-figure {
+    .low-performance-mode .walking .stick-figure {
       animation-duration: 0.8s !important;
       will-change: auto;
     }
     
-    .low-performance-mode .left-arm,
-    .low-performance-mode .right-arm,
-    .low-performance-mode .left-leg,
-    .low-performance-mode .right-leg {
+    .low-performance-mode .walking .left-arm,
+    .low-performance-mode .walking .right-arm,
+    .low-performance-mode .walking .left-leg,
+    .low-performance-mode .walking .right-leg {
       animation-duration: 0.8s !important;
       will-change: auto;
     }
@@ -598,8 +605,8 @@
     </div>
   </div>
   
-  <!-- 適切なサイズの棒人間（80px） - 常時歩行・スクロール時走行 -->
-  <div class="tiny-character facing-right">
+  <!-- 適切なサイズの棒人間（80px） - スクロール時のみ歩行 -->
+  <div class="tiny-character">
     <svg class="stick-figure" id="stickFigure" viewBox="0 0 80 80">
       <!-- 頭 -->
       <circle cx="40" cy="12" r="6"/>
@@ -1041,12 +1048,10 @@
       
       startRunning() {
         this.isScrolling = true;
-        const figure = document.getElementById('stickFigure');
         const container = document.querySelector('.tiny-character');
         
-        // 高速歩行と軽量化を適用
-        figure.classList.add('running');
-        container.classList.add('fast-walking', 'scrolling');
+        // 歩行開始
+        container.classList.add('walking');
         
         // 雑草の揺れ効果
         this.animateWeedsOnRun();
@@ -1054,13 +1059,11 @@
       
       stopRunning() {
         this.isScrolling = false;
-        const figure = document.getElementById('stickFigure');
         const container = document.querySelector('.tiny-character');
         const track = document.getElementById('cardsTrack');
         
-        // 通常歩行に戻す
-        figure.classList.remove('running');
-        container.classList.remove('fast-walking', 'scrolling');
+        // 歩行停止
+        container.classList.remove('walking', 'fast-walking');
         
         // カードトラックをアイドル状態に
         if (track) {
