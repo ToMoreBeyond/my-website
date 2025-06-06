@@ -64,29 +64,37 @@
       padding: 0 50px;
     }
     
-    /* カードコンテナ */
+    /* カードコンテナ - 3D森の道演出 */
     .cards-container {
       width: 100%;
       max-width: 1400px;
       height: 400px;
       position: relative;
       overflow: hidden;
+      perspective: 1000px;
+      perspective-origin: center center;
     }
     
     .cards-track {
       display: flex;
-      gap: 30px;
+      gap: 60px;
       height: 100%;
-      animation: autoScroll var(--scroll-speed, 60s) linear infinite;
+      animation: forest3DScroll var(--scroll-speed, 60s) linear infinite;
       will-change: transform;
+      transform-style: preserve-3d;
+      position: relative;
     }
     
-    @keyframes autoScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    @keyframes forest3DScroll {
+      0% { 
+        transform: translateX(100px) translateZ(200px);
+      }
+      100% { 
+        transform: translateX(calc(-50% + 100px)) translateZ(200px);
+      }
     }
     
-    /* カードデザイン - damso.com風 */
+    /* カードデザイン - 3D看板風 */
     .card {
       min-width: 300px;
       height: 360px;
@@ -101,14 +109,92 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
       position: relative;
+      
+      /* 3D変形効果 */
+      transform-style: preserve-3d;
+      animation: cardDepthEffect var(--scroll-speed, 60s) linear infinite;
+      
+      /* 初期状態は右奥に配置 */
+      transform: 
+        translateX(200px) 
+        translateZ(-300px) 
+        rotateY(-15deg) 
+        scale(0.7);
+      opacity: 0.3;
+      
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    @keyframes cardDepthEffect {
+      0% {
+        /* 右奥から登場 */
+        transform: 
+          translateX(200px) 
+          translateZ(-300px) 
+          rotateY(-15deg) 
+          scale(0.7);
+        opacity: 0.3;
+        filter: blur(2px);
+      }
+      
+      25% {
+        /* 右側で少し大きく */
+        transform: 
+          translateX(100px) 
+          translateZ(-150px) 
+          rotateY(-8deg) 
+          scale(0.85);
+        opacity: 0.7;
+        filter: blur(1px);
+      }
+      
+      50% {
+        /* 中央で最大 */
+        transform: 
+          translateX(0px) 
+          translateZ(0px) 
+          rotateY(0deg) 
+          scale(1.0);
+        opacity: 1.0;
+        filter: blur(0px);
+      }
+      
+      75% {
+        /* 左側で縮小開始 */
+        transform: 
+          translateX(-100px) 
+          translateZ(-150px) 
+          rotateY(8deg) 
+          scale(0.85);
+        opacity: 0.7;
+        filter: blur(1px);
+      }
+      
+      100% {
+        /* 左奥に消える */
+        transform: 
+          translateX(-200px) 
+          translateZ(-300px) 
+          rotateY(15deg) 
+          scale(0.7);
+        opacity: 0.3;
+        filter: blur(2px);
+      }
     }
     
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      border-color: #ccc;
+      transform: 
+        translateX(0px) 
+        translateZ(50px) 
+        rotateY(0deg) 
+        scale(1.05) !important;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      border-color: #4CAF50;
+      opacity: 1.0 !important;
+      filter: blur(0px) !important;
+      z-index: 10;
     }
     
     .card-icon {
@@ -141,14 +227,14 @@
       transition: background-color 0.8s ease;
     }
     
-    /* 小さな棒人間（20px height） */
+    /* 大きな棒人間（50px height） */
     .tiny-character {
       position: fixed;
       bottom: 3px;
       left: 50%;
       transform: translateX(-50%);
-      width: 20px;
-      height: 20px;
+      width: 50px;
+      height: 50px;
       z-index: 150;
     }
     
@@ -156,73 +242,123 @@
       width: 100%;
       height: 100%;
       stroke: #333;
-      stroke-width: 1;
+      stroke-width: 2;
       fill: none;
       stroke-linecap: round;
+      stroke-linejoin: round;
     }
     
     .tiny-stick-figure circle {
       fill: #333;
     }
     
-    /* 歩行アニメーション */
+    /* 自然な歩行アニメーション */
     .walking .tiny-stick-figure {
-      animation: tinyWalk 0.6s infinite ease-in-out;
+      animation: naturalWalkBounce var(--walk-speed, 0.8s) infinite ease-in-out;
     }
     
-    @keyframes tinyWalk {
+    @keyframes naturalWalkBounce {
+      0%, 100% { transform: translateY(0px); }
+      25% { transform: translateY(-2px); }
+      50% { transform: translateY(0px); }
+      75% { transform: translateY(-1px); }
+    }
+    
+    .walking .left-arm {
+      animation: naturalLeftArm var(--walk-speed, 0.8s) infinite ease-in-out;
+      transform-origin: 25px 15px;
+    }
+    
+    .walking .right-arm {
+      animation: naturalRightArm var(--walk-speed, 0.8s) infinite ease-in-out;
+      transform-origin: 25px 15px;
+    }
+    
+    .walking .left-upper-leg {
+      animation: naturalLeftUpperLeg var(--walk-speed, 0.8s) infinite ease-in-out;
+      transform-origin: 25px 32px;
+    }
+    
+    .walking .left-lower-leg {
+      animation: naturalLeftLowerLeg var(--walk-speed, 0.8s) infinite ease-in-out;
+      transform-origin: 22px 40px;
+    }
+    
+    .walking .right-upper-leg {
+      animation: naturalRightUpperLeg var(--walk-speed, 0.8s) infinite ease-in-out;
+      transform-origin: 25px 32px;
+    }
+    
+    .walking .right-lower-leg {
+      animation: naturalRightLowerLeg var(--walk-speed, 0.8s) infinite ease-in-out;
+      transform-origin: 28px 40px;
+    }
+    
+    /* 自然な腕の振り */
+    @keyframes naturalLeftArm {
+      0%, 100% { transform: rotate(-25deg); }
+      25% { transform: rotate(-10deg); }
+      50% { transform: rotate(20deg); }
+      75% { transform: rotate(5deg); }
+    }
+    
+    @keyframes naturalRightArm {
+      0%, 100% { transform: rotate(20deg); }
+      25% { transform: rotate(5deg); }
+      50% { transform: rotate(-25deg); }
+      75% { transform: rotate(-10deg); }
+    }
+    
+    /* 膝関節付き自然な脚の動き */
+    @keyframes naturalLeftUpperLeg {
+      0%, 100% { transform: rotate(-15deg); }
+      25% { transform: rotate(5deg); }
+      50% { transform: rotate(30deg); }
+      75% { transform: rotate(10deg); }
+    }
+    
+    @keyframes naturalLeftLowerLeg {
+      0%, 100% { transform: rotate(5deg); }
+      25% { transform: rotate(-20deg); }
+      50% { transform: rotate(15deg); }
+      75% { transform: rotate(-5deg); }
+    }
+    
+    @keyframes naturalRightUpperLeg {
+      0%, 100% { transform: rotate(30deg); }
+      25% { transform: rotate(10deg); }
+      50% { transform: rotate(-15deg); }
+      75% { transform: rotate(5deg); }
+    }
+    
+    @keyframes naturalRightLowerLeg {
+      0%, 100% { transform: rotate(15deg); }
+      25% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+      75% { transform: rotate(-20deg); }
+    }
+    
+    /* アイドル状態 - より自然な呼吸 */
+    .idle .tiny-stick-figure {
+      animation: naturalIdle 4s infinite ease-in-out;
+    }
+    
+    @keyframes naturalIdle {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-1px); }
     }
     
-    .walking .left-arm {
-      animation: tinyLeftArm 0.6s infinite ease-in-out;
-      transform-origin: 10px 6px;
+    .idle .left-arm, .idle .right-arm {
+      animation: idleArmSway 6s infinite ease-in-out;
     }
     
-    .walking .right-arm {
-      animation: tinyRightArm 0.6s infinite ease-in-out;
-      transform-origin: 10px 6px;
+    .idle .right-arm {
+      animation-delay: -3s;
     }
     
-    .walking .left-leg {
-      animation: tinyLeftLeg 0.6s infinite ease-in-out;
-      transform-origin: 10px 12px;
-    }
-    
-    .walking .right-leg {
-      animation: tinyRightLeg 0.6s infinite ease-in-out;
-      transform-origin: 10px 12px;
-    }
-    
-    @keyframes tinyLeftArm {
-      0%, 100% { transform: rotate(-10deg); }
-      50% { transform: rotate(10deg); }
-    }
-    
-    @keyframes tinyRightArm {
-      0%, 100% { transform: rotate(10deg); }
-      50% { transform: rotate(-10deg); }
-    }
-    
-    @keyframes tinyLeftLeg {
-      0%, 100% { transform: rotate(-5deg); }
-      50% { transform: rotate(15deg); }
-    }
-    
-    @keyframes tinyRightLeg {
-      0%, 100% { transform: rotate(15deg); }
-      50% { transform: rotate(-5deg); }
-    }
-    
-    /* アイドル状態 */
-    .idle .tiny-stick-figure {
-      animation: tinyIdle 3s infinite ease-in-out;
-    }
-    
-    @keyframes tinyIdle {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-0.5px); }
+    @keyframes idleArmSway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
     }
     
     /* セクション別芝生色 */
@@ -231,6 +367,80 @@
     .section-members .grass-line { background: #9C27B0; }
     .section-media .grass-line { background: #2196F3; }
     .section-contact .grass-line { background: #FF5722; }
+    
+    /* 高速歩行モード */
+    .fast-walking .tiny-stick-figure {
+      animation-duration: 0.3s !important;
+    }
+    
+    .fast-walking .left-arm,
+    .fast-walking .right-arm,
+    .fast-walking .left-upper-leg,
+    .fast-walking .left-lower-leg,
+    .fast-walking .right-upper-leg,
+    .fast-walking .right-lower-leg {
+      animation-duration: 0.3s !important;
+    }
+    
+    /* 森の道の雰囲気を追加 */
+    .cards-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 20% 50%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+        linear-gradient(to bottom, transparent 60%, rgba(76, 175, 80, 0.05) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .cards-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(to right, 
+          rgba(255,255,255,0.8) 0%, 
+          transparent 20%, 
+          transparent 80%, 
+          rgba(255,255,255,0.8) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    /* 高速3Dモード */
+    .fast-3d-mode .card {
+      animation-duration: calc(var(--scroll-speed, 60s) * 0.5) !important;
+    }
+    
+    .fast-3d-mode .cards-track {
+      animation-duration: calc(var(--scroll-speed, 60s) * 0.5) !important;
+    }
+    
+    /* パフォーマンス最適化 */
+    .card {
+      will-change: transform, opacity, filter;
+      backface-visibility: hidden;
+      transform-origin: center center;
+    }
+    
+    .cards-track {
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-origin: center center;
+    }
+    
+    .tiny-stick-figure {
+      will-change: transform;
+      backface-visibility: hidden;
+    }
     
     /* レスポンシブ */
     @media (max-width: 768px) {
@@ -242,7 +452,7 @@
       .card-icon { font-size: 40px; }
       .card-title { font-size: 20px; }
       .card-description { font-size: 14px; }
-      .tiny-character { width: 16px; height: 16px; }
+      .tiny-character { width: 40px; height: 40px; }
     }
   </style>
 </head>
@@ -271,15 +481,21 @@
   <!-- 3px芝生線 -->
   <div class="grass-line"></div>
   
-  <!-- 小さな棒人間（20px） -->
+  <!-- 大きな棒人間（50px） - 膝関節付き -->
   <div class="tiny-character">
-    <svg class="tiny-stick-figure idle" id="tinyFigure" viewBox="0 0 20 20">
-      <circle cx="10" cy="3" r="2"/>
-      <line x1="10" y1="5" x2="10" y2="12"/>
-      <line x1="10" y1="6" x2="7" y2="9" class="left-arm"/>
-      <line x1="10" y1="6" x2="13" y2="9" class="right-arm"/>
-      <line x1="10" y1="12" x2="7" y2="18" class="left-leg"/>
-      <line x1="10" y1="12" x2="13" y2="18" class="right-leg"/>
+    <svg class="tiny-stick-figure idle" id="tinyFigure" viewBox="0 0 50 50">
+      <!-- 頭 -->
+      <circle cx="25" cy="8" r="4"/>
+      <!-- 体 -->
+      <line x1="25" y1="12" x2="25" y2="32"/>
+      <!-- 腕 -->
+      <line x1="25" y1="15" x2="18" y2="22" class="left-arm"/>
+      <line x1="25" y1="15" x2="32" y2="22" class="right-arm"/>
+      <!-- 膝関節付き脚 -->
+      <line x1="25" y1="32" x2="22" y2="40" class="left-upper-leg"/>
+      <line x1="22" y1="40" x2="19" y2="47" class="left-lower-leg"/>
+      <line x1="25" y1="32" x2="28" y2="40" class="right-upper-leg"/>
+      <line x1="28" y1="40" x2="31" y2="47" class="right-lower-leg"/>
     </svg>
   </div>
   
@@ -309,6 +525,13 @@
         this.scrollTimer = null;
         this.baseScrollSpeed = 60;
         this.currentScrollSpeed = this.baseScrollSpeed;
+        this.walkSpeed = 0.8;
+        this.speedMultiplier = 1.0;
+        this.isNavigating = false;
+        
+        // パフォーマンス最適化用のRAF管理
+        this.rafId = null;
+        this.lastTime = 0;
         
         this.init();
       }
@@ -317,6 +540,52 @@
         this.createCards();
         this.setupEventListeners();
         this.startAutoScroll();
+        this.optimizePerformance();
+      }
+      
+      optimizePerformance() {
+        // メモリ効率のためのRAF最適化
+        this.startRAFLoop();
+        
+        // 不要なイベントを削除するデバウンス機能
+        this.debounceCleanup();
+      }
+      
+      startRAFLoop() {
+        const loop = (currentTime) => {
+          if (currentTime - this.lastTime >= 16) { // 60FPS制限
+            this.updateAnimations();
+            this.lastTime = currentTime;
+          }
+          this.rafId = requestAnimationFrame(loop);
+        };
+        this.rafId = requestAnimationFrame(loop);
+      }
+      
+      updateAnimations() {
+        // 必要に応じてアニメーション更新
+        if (this.isScrolling) {
+          this.optimizeWalkingAnimation();
+        }
+      }
+      
+      debounceCleanup() {
+        // 5秒ごとにメモリクリーンアップ
+        setInterval(() => {
+          if (!this.isScrolling && !this.isNavigating) {
+            this.cleanupUnusedElements();
+          }
+        }, 5000);
+      }
+      
+      cleanupUnusedElements() {
+        // 不要なDOM要素の掃除（メモリ効率化）
+        const unusedCards = document.querySelectorAll('.card[data-cleanup="true"]');
+        unusedCards.forEach(card => {
+          if (card.parentNode) {
+            card.parentNode.removeChild(card);
+          }
+        });
       }
       
       createCards() {
@@ -350,21 +619,29 @@
       }
       
       setupEventListeners() {
-        // スクロールイベント
+        // スクロールイベント - 最適化されたハンドリング
+        let scrollTimeout;
         window.addEventListener('wheel', (e) => {
+          clearTimeout(scrollTimeout);
           this.handleScroll(e.deltaY);
+          
+          // スクロール終了を検知してパフォーマンス最適化
+          scrollTimeout = setTimeout(() => {
+            this.optimizeAfterScroll();
+          }, 150);
         }, { passive: true });
         
-        // ナビゲーションクリック
+        // ナビゲーションクリック - セクションジャンプ機能付き
         document.querySelectorAll('.nav-item').forEach(nav => {
           nav.addEventListener('click', (e) => {
             e.preventDefault();
-            this.changeSection(nav.dataset.section);
+            this.navigateToSection(nav.dataset.section);
           });
         });
         
-        // タッチイベント（モバイル）
+        // タッチイベント（モバイル） - メモリ効率化
         let touchStartY = 0;
+        let touchTimeout;
         document.addEventListener('touchstart', (e) => {
           touchStartY = e.touches[0].clientY;
         }, { passive: true });
@@ -373,19 +650,42 @@
           const touchY = e.touches[0].clientY;
           const deltaY = touchStartY - touchY;
           if (Math.abs(deltaY) > 10) {
+            clearTimeout(touchTimeout);
             this.handleScroll(deltaY);
+            
+            touchTimeout = setTimeout(() => {
+              this.optimizeAfterScroll();
+            }, 150);
           }
         }, { passive: true });
+        
+        // キーボードナビゲーション
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') this.navigateToSection(this.sections[Math.max(0, this.sectionIndex - 1)]);
+          if (e.key === 'ArrowRight') this.navigateToSection(this.sections[Math.min(this.sections.length - 1, this.sectionIndex + 1)]);
+        });
+      }
+      
+      optimizeAfterScroll() {
+        // スクロール終了後の最適化処理
+        this.speedMultiplier = 1.0;
+        this.updateWalkingSpeed();
       }
       
       handleScroll(deltaY) {
-        // スクロール強度に応じて速度調整
-        const intensity = Math.abs(deltaY) * 0.05;
-        this.currentScrollSpeed = Math.max(20, this.baseScrollSpeed - intensity * 40);
+        // スクロール強度に応じて速度倍率を計算
+        const intensity = Math.abs(deltaY) * 0.08;
+        this.speedMultiplier = 1.0 + intensity;
         
-        // カードスクロール速度更新
-        const track = document.getElementById('cardsTrack');
-        track.style.setProperty('--scroll-speed', `${this.currentScrollSpeed}s`);
+        // 棒人間の歩行速度を動的に調整
+        this.walkSpeed = Math.max(0.2, 0.8 / this.speedMultiplier);
+        
+        // カードのスクロール速度を棒人間の歩行速度と同期
+        this.currentScrollSpeed = Math.max(10, this.baseScrollSpeed / this.speedMultiplier);
+        
+        // 速度を即座に反映
+        this.updateCardSpeed();
+        this.updateWalkingSpeed();
         
         // 棒人間歩行開始
         if (!this.isScrolling) {
@@ -396,17 +696,49 @@
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(() => {
           this.stopWalking();
-          // 通常速度に戻す
-          track.style.setProperty('--scroll-speed', `${this.baseScrollSpeed}s`);
+          this.resetToNormalSpeed();
         }, 200);
         
         // セクション変更（確率的）
-        if (Math.random() < 0.03) {
+        if (Math.random() < 0.02) {
           if (deltaY > 0) {
             this.nextSection();
           } else {
             this.prevSection();
           }
+        }
+      }
+      
+      updateCardSpeed() {
+        const track = document.getElementById('cardsTrack');
+        track.style.setProperty('--scroll-speed', `${this.currentScrollSpeed}s`);
+      }
+      
+      updateWalkingSpeed() {
+        const figure = document.getElementById('tinyFigure');
+        figure.style.setProperty('--walk-speed', `${this.walkSpeed}s`);
+      }
+      
+      resetToNormalSpeed() {
+        this.speedMultiplier = 1.0;
+        this.walkSpeed = 0.8;
+        this.currentScrollSpeed = this.baseScrollSpeed;
+        this.updateCardSpeed();
+        this.updateWalkingSpeed();
+      }
+      
+      optimizeWalkingAnimation() {
+        // 歩行アニメーションの最適化
+        const figure = document.getElementById('tinyFigure');
+        const container = document.querySelector('.cards-container');
+        
+        if (this.speedMultiplier > 2.0) {
+          // 高速時は簡略化されたアニメーション
+          figure.classList.add('fast-walking');
+          container.classList.add('fast-3d-mode');
+        } else {
+          figure.classList.remove('fast-walking');
+          container.classList.remove('fast-3d-mode');
         }
       }
       
@@ -424,6 +756,33 @@
         figure.classList.add('idle');
       }
       
+      navigateToSection(sectionName) {
+        if (this.currentSection === sectionName) return;
+        
+        this.isNavigating = true;
+        
+        // 高速歩行でセクションに移動
+        this.speedMultiplier = 3.0;
+        this.walkSpeed = 0.25;
+        this.currentScrollSpeed = 15;
+        
+        this.updateCardSpeed();
+        this.updateWalkingSpeed();
+        this.startWalking();
+        
+        // セクション切り替え
+        setTimeout(() => {
+          this.changeSection(sectionName);
+          
+          // 通常速度に戻す
+          setTimeout(() => {
+            this.resetToNormalSpeed();
+            this.stopWalking();
+            this.isNavigating = false;
+          }, 800);
+        }, 400);
+      }
+      
       changeSection(sectionName) {
         if (this.currentSection === sectionName) return;
         
@@ -436,6 +795,23 @@
         });
         
         this.sectionIndex = this.sections.indexOf(sectionName);
+        
+        // セクション特有のカードを強調表示
+        this.highlightSectionCards(sectionName);
+      }
+      
+      highlightSectionCards(sectionName) {
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+          if (card.dataset.section === sectionName) {
+            card.style.transform = 'scale(1.05)';
+            card.style.borderColor = '#4CAF50';
+            setTimeout(() => {
+              card.style.transform = '';
+              card.style.borderColor = '';
+            }, 1000);
+          }
+        });
       }
       
       nextSection() {
