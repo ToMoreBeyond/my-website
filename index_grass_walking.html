@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える</title>
+  <meta name="description" content="ToMoreBeyondは最先端のAI技術とイノベーションで、より良い未来を創造するテクノロジーカンパニーです。">
+  
+  <style>
+    /* リセット & ベース */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* ロゴ（左上） */
+    .logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+      color: #4CAF50;
+      transform: scale(1.05);
+    }
+    
+    /* ナビゲーションバー（右上） */
+    .navigation {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    
+    .nav-item {
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid transparent;
+    }
+    
+    .nav-item:hover {
+      color: #333;
+      background: #f5f5f5;
+      border-color: #e0e0e0;
+      transform: translateY(-2px);
+    }
+    
+    .nav-item.active {
+      background: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
+    }
+    
+    /* メインコンテンツエリア */
+    .main-content {
+      width: 100%;
+      min-height: calc(100vh - 60px); /* 芝生エリア分を引く */
+      padding: 100px 20px 20px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    /* 看板コンテナ（中央無限スクロール） */
+    .signboards-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    
+    .signboards-track {
+      display: flex;
+      gap: 60px;
+      position: absolute;
+      animation: infiniteScroll var(--scroll-duration, 40s) linear infinite;
+      will-change: transform;
+    }
+    
+    @keyframes infiniteScroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+    
+    /* 森の木の看板デザイン */
+    .signboard {
+      min-width: 320px;
+      height: 240px;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+    
+    .signboard-panel {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #8B6B47 0%, #A0845C 50%, #8B6B47 100%);
+      border-radius: 15px;
+      box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #6B4423;
+    }
+    
+    /* 木目のテクスチャ */
+    .signboard-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(90deg, 
+          transparent 0px,
+          rgba(139, 69, 19, 0.1) 1px,
+          transparent 2px,
+          transparent 5px
+        ),
+        repeating-linear-gradient(0deg,
+          transparent 0px,
+          rgba(139, 69, 19, 0.15) 10px,
+          transparent 11px,
+          transparent 20px
+        );
+      pointer-events: none;
+    }
+    
+    /* 看板の支柱 */
+    .signboard-pole {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 60px;
+      background: linear-gradient(to bottom, #6B4423 0%, #4A2F1C 100%);
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* 看板コンテンツ */
+    .signboard-content {
+      padding: 30px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .signboard-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    
+    .signboard-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: 8px;
+    }
+    
+    .signboard-subtitle {
+      font-size: 14px;
+      color: #f5f5f5;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+    
+    .signboard:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+    
+    .signboard:hover .signboard-panel {
+      box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* 小さな芝生エリア */
+    .grass-walking-area {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      z-index: 100;
+    }
+    
+    .grass-area {
+      width: 100%;
+      height: 30px;
+      background: linear-gradient(to bottom, #4CAF50 0%, #2E7D32 100%);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.8s ease;
+    }
+    
+    /* 小さな草ブレード */
+    .grass-area::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px, transparent 8px,
+        #66BB6A 8px, #66BB6A 10px,
+        transparent 10px, transparent 18px,
+        #4CAF50 18px, #4CAF50 20px,
+        transparent 20px, transparent 28px,
+        #66BB6A 28px, #66BB6A 30px
+      );
+    }
+    
+    /* 時々出現する雑草 */
+    .weed {
+      position: absolute;
+      top: -8px;
+      font-size: 8px;
+      opacity: 0.7;
+      animation: grassSway 3s infinite ease-in-out;
+      --grass-icon: '🌱';
+    }
+    
+    .weed:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .weed:nth-child(2) { left: 25%; animation-delay: -1s; --grass-icon: '🌿'; }
+    .weed:nth-child(3) { left: 45%; animation-delay: -2s; --grass-icon: '🍀'; }
+    .weed:nth-child(4) { left: 70%; animation-delay: -0.5s; }
+    .weed:nth-child(5) { left: 85%; animation-delay: -1.5s; --grass-icon: '🌿'; }
+    
+    @keyframes grassSway {
+      0%, 100% { 
+        transform: translateX(0) rotate(0deg); 
+      }
+      50% { 
+        transform: translateX(2px) rotate(2deg); 
+      }
+    }
+    
+    /* スクロール時の雑草反応 */
+    .grass-area.grass-disturbed .weed {
+      animation: grassDisturbed 0.5s ease-out;
+    }
+    
+    @keyframes grassDisturbed {
+      0% { transform: translateX(0) rotate(0deg); }
+      25% { transform: translateX(-3px) rotate(-5deg); }
+      75% { transform: translateX(3px) rotate(5deg); }
+      100% { transform: translateX(0) rotate(0deg); }
+    }
+    
+    /* コンパクト棒人間 */
+    .character-on-grass {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      z-index: 101;
+    }
+    
+    .stick-figure {
+      width: 100%;
+      height: 100%;
+      stroke: #333;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+    }
+    
+    .stick-figure circle {
+      fill: #333;
+    }
+    
+    /* 自然な歩行アニメーション */
+    .walking .stick-figure {
+      animation: walkBounce 0.8s infinite ease-in-out;
+    }
+    
+    @keyframes walkBounce {
+      0%, 100% { transform: translateY(0px); }
+      25% { transform: translateY(-1px); }
+      50% { transform: translateY(0px); }
+      75% { transform: translateY(-0.5px); }
+    }
+    
+    .walking .left-arm {
+      animation: leftArmSwing 0.8s infinite ease-in-out;
+      transform-origin: 25px 22px;
+    }
+    
+    .walking .right-arm {
+      animation: rightArmSwing 0.8s infinite ease-in-out;
+      transform-origin: 25px 22px;
+    }
+    
+    .walking .left-leg {
+      animation: leftLegWalk 0.8s infinite ease-in-out;
+      transform-origin: 25px 35px;
+    }
+    
+    .walking .right-leg {
+      animation: rightLegWalk 0.8s infinite ease-in-out;
+      transform-origin: 25px 35px;
+    }
+    
+    @keyframes leftArmSwing {
+      0%, 100% { transform: rotate(-15deg); }
+      50% { transform: rotate(15deg); }
+    }
+    
+    @keyframes rightArmSwing {
+      0%, 100% { transform: rotate(15deg); }
+      50% { transform: rotate(-15deg); }
+    }
+    
+    @keyframes leftLegWalk {
+      0%, 100% { transform: rotate(-8deg); }
+      25% { transform: rotate(0deg); }
+      50% { transform: rotate(20deg); }
+      75% { transform: rotate(0deg); }
+    }
+    
+    @keyframes rightLegWalk {
+      0%, 100% { transform: rotate(20deg); }
+      25% { transform: rotate(0deg); }
+      50% { transform: rotate(-8deg); }
+      75% { transform: rotate(0deg); }
+    }
+    
+    /* アイドル状態 */
+    .idle .stick-figure {
+      animation: idleBreathe 4s infinite ease-in-out;
+    }
+    
+    @keyframes idleBreathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-1px); }
+    }
+    
+    /* セクション別テーマ */
+    .section-apps .grass-area {
+      background: linear-gradient(to bottom, #4CAF50 0%, #2E7D32 100%);
+    }
+    
+    .section-company .grass-area {
+      background: linear-gradient(to bottom, #FFB300 0%, #FF8F00 100%);
+    }
+    
+    .section-members .grass-area {
+      background: linear-gradient(to bottom, #9C27B0 0%, #6A1B9A 100%);
+    }
+    
+    .section-media .grass-area {
+      background: linear-gradient(to bottom, #2196F3 0%, #1565C0 100%);
+    }
+    
+    .section-contact .grass-area {
+      background: linear-gradient(to bottom, #FF5722 0%, #D84315 100%);
+    }
+    
+    /* 進捗インジケーター */
+    .progress-indicator {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      z-index: 500;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 20%;
+      background: #4CAF50;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 20px;
+      }
+      
+      .navigation {
+        gap: 10px;
+      }
+      
+      .nav-item {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      
+      .signboard {
+        min-width: 280px;
+        height: 200px;
+      }
+      
+      .signboard-panel {
+        height: 160px;
+      }
+      
+      .signboard-icon {
+        font-size: 36px;
+      }
+      
+      .signboard-title {
+        font-size: 18px;
+      }
+      
+      .grass-area {
+        height: 25px;
+      }
+      
+      .character-on-grass {
+        width: 40px;
+        height: 40px;
+        bottom: 25px;
+      }
+    }
+  </style>
+</head>
+<body class="section-apps">
+  <!-- ロゴ -->
+  <a href="#" class="logo">ToMoreBeyond</a>
+  
+  <!-- ナビゲーション -->
+  <nav class="navigation">
+    <a href="#apps" class="nav-item active" data-section="apps">Apps</a>
+    <a href="#company" class="nav-item" data-section="company">Company</a>
+    <a href="#members" class="nav-item" data-section="members">Members</a>
+    <a href="#media" class="nav-item" data-section="media">Media</a>
+    <a href="#contact" class="nav-item" data-section="contact">Contact</a>
+  </nav>
+  
+  <!-- メインコンテンツ -->
+  <main class="main-content">
+    <div class="signboards-container">
+      <div class="signboards-track" id="signboardsTrack">
+        <!-- JavaScriptで動的生成 -->
+      </div>
+    </div>
+  </main>
+  
+  <!-- 小さな芝生エリア -->
+  <div class="grass-walking-area">
+    <div class="grass-area" id="grassArea">
+      <span class="weed">🌱</span>
+      <span class="weed">🌿</span>
+      <span class="weed">🍀</span>
+      <span class="weed">🌱</span>
+      <span class="weed">🌿</span>
+    </div>
+    <div class="character-on-grass">
+      <svg class="stick-figure idle" id="stickFigure" viewBox="0 0 50 50">
+        <circle cx="25" cy="10" r="5"/>
+        <line x1="25" y1="15" x2="25" y2="35"/>
+        <line x1="25" y1="22" x2="18" y2="27" class="left-arm"/>
+        <line x1="25" y1="22" x2="32" y2="27" class="right-arm"/>
+        <line x1="25" y1="35" x2="19" y2="48" class="left-leg"/>
+        <line x1="25" y1="35" x2="31" y2="48" class="right-leg"/>
+      </svg>
+    </div>
+  </div>
+  
+  <!-- 進捗インジケーター -->
+  <div class="progress-indicator">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  
+  <script>
+    // 看板データ
+    const signboardsData = [
+      { icon: '🗺️', title: 'TADATAKA', subtitle: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
+      { icon: '🚽', title: 'ToiRun', subtitle: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
+      { icon: '📍', title: 'Meet in the Middle', subtitle: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
+      { icon: '🏢', title: '会社概要', subtitle: '道なき道を切り開く', section: 'company', link: 'pages/company.html' },
+      { icon: '👨‍💻', title: '山田', subtitle: 'CDO / デザイナー', section: 'members', link: 'pages/member_yamada.html' },
+      { icon: '🚀', title: '正留', subtitle: 'CEO / エンジニア', section: 'members', link: 'pages/member_masadome.html' },
+      { icon: '🎨', title: '安藤', subtitle: 'アーティスト', section: 'members', link: 'pages/member_ando.html' },
+      { icon: '📰', title: 'ブログ', subtitle: '開発の裏話', section: 'media', link: 'pages/media.html' },
+      { icon: '🎥', title: '動画', subtitle: 'プロダクト紹介', section: 'media', link: '#' },
+      { icon: '💌', title: 'お問い合わせ', subtitle: 'お気軽にどうぞ', section: 'contact', link: '#contact' }
+    ];
+    
+    // コンパクト芝生歩行システム
+    class CompactGrassWalkingSite {
+      constructor() {
+        this.baseScrollSpeed = 40;
+        this.currentScrollSpeed = this.baseScrollSpeed;
+        this.walkingSpeed = 1.0;
+        this.scrollDirection = 1;
+        this.isScrolling = false;
+        this.scrollTimer = null;
+        this.currentSection = 'apps';
+        this.sections = ['apps', 'company', 'members', 'media', 'contact'];
+        this.sectionIndex = 0;
+        
+        // パフォーマンス設定
+        this.rafId = null;
+        this.lastTime = 0;
+        this.frameTime = 1000 / 60; // 60fps
+        
+        this.init();
+      }
+      
+      init() {
+        this.createSignboards();
+        this.setupEventListeners();
+        this.startAutoScroll();
+        this.updateProgressBar();
+      }
+      
+      createSignboards() {
+        const track = document.getElementById('signboardsTrack');
+        const signboardsHTML = [];
+        
+        // 2セット作成（無限スクロール用）
+        for (let set = 0; set < 2; set++) {
+          signboardsData.forEach(data => {
+            signboardsHTML.push(`
+              <div class="signboard" data-section="${data.section}" data-link="${data.link}">
+                <div class="signboard-panel">
+                  <div class="signboard-content">
+                    <div class="signboard-icon">${data.icon}</div>
+                    <h3 class="signboard-title">${data.title}</h3>
+                    <p class="signboard-subtitle">${data.subtitle}</p>
+                  </div>
+                </div>
+                <div class="signboard-pole"></div>
+              </div>
+            `);
+          });
+        }
+        
+        track.innerHTML = signboardsHTML.join('');
+        
+        // クリックイベント
+        track.querySelectorAll('.signboard').forEach(board => {
+          board.addEventListener('click', () => {
+            const link = board.dataset.link;
+            if (link && link !== '#') {
+              window.location.href = link;
+            }
+          });
+        });
+      }
+      
+      setupEventListeners() {
+        // スクロールイベント（最適化）
+        let ticking = false;
+        window.addEventListener('wheel', (e) => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              this.handleScroll(e.deltaY);
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+        
+        // ナビゲーションクリック
+        document.querySelectorAll('.nav-item').forEach(nav => {
+          nav.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.changeSection(nav.dataset.section);
+          });
+        });
+        
+        // キーボード操作
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') this.nextSection();
+          if (e.key === 'ArrowLeft') this.prevSection();
+        });
+      }
+      
+      handleScroll(deltaY) {
+        // スクロール強度計算
+        const scrollIntensity = Math.abs(deltaY) * 0.01;
+        this.currentScrollSpeed = Math.max(10, this.baseScrollSpeed - scrollIntensity * 30);
+        this.walkingSpeed = 1.0 + scrollIntensity;
+        this.scrollDirection = deltaY > 0 ? 1 : -1;
+        
+        // スクロール速度を更新
+        const track = document.getElementById('signboardsTrack');
+        track.style.setProperty('--scroll-duration', `${this.currentScrollSpeed}s`);
+        
+        // 棒人間歩行開始
+        if (!this.isScrolling) {
+          this.startWalking();
+        }
+        
+        // スクロール終了検知
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(() => {
+          this.stopWalking();
+          // 自動スクロール速度に戻す
+          track.style.setProperty('--scroll-duration', `${this.baseScrollSpeed}s`);
+        }, 150);
+        
+        // 雑草揺れ効果
+        this.triggerGrassAnimation();
+        
+        // セクション自動切り替え（仮実装）
+        if (Math.random() < 0.02) { // 2%の確率で切り替え
+          this.nextSection();
+        }
+      }
+      
+      startWalking() {
+        this.isScrolling = true;
+        const figure = document.getElementById('stickFigure');
+        figure.classList.remove('idle');
+        figure.classList.add('walking');
+        
+        // 歩行速度を調整
+        const duration = 0.8 / this.walkingSpeed;
+        figure.style.setProperty('--walk-duration', `${duration}s`);
+      }
+      
+      stopWalking() {
+        this.isScrolling = false;
+        const figure = document.getElementById('stickFigure');
+        figure.classList.remove('walking');
+        figure.classList.add('idle');
+      }
+      
+      triggerGrassAnimation() {
+        const grassArea = document.getElementById('grassArea');
+        grassArea.classList.add('grass-disturbed');
+        setTimeout(() => {
+          grassArea.classList.remove('grass-disturbed');
+        }, 500);
+      }
+      
+      changeSection(sectionName) {
+        if (this.currentSection === sectionName) return;
+        
+        this.currentSection = sectionName;
+        document.body.className = `section-${sectionName}`;
+        
+        // ナビゲーション更新
+        document.querySelectorAll('.nav-item').forEach(nav => {
+          nav.classList.toggle('active', nav.dataset.section === sectionName);
+        });
+        
+        // 進捗バー更新
+        this.sectionIndex = this.sections.indexOf(sectionName);
+        this.updateProgressBar();
+        
+        // 雑草を変化させる
+        this.randomizeGrass();
+      }
+      
+      nextSection() {
+        this.sectionIndex = (this.sectionIndex + 1) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      prevSection() {
+        this.sectionIndex = (this.sectionIndex - 1 + this.sections.length) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      updateProgressBar() {
+        const progressBar = document.getElementById('progressBar');
+        const progress = ((this.sectionIndex + 1) / this.sections.length) * 100;
+        progressBar.style.height = `${progress}%`;
+        progressBar.style.background = this.getThemeColor();
+      }
+      
+      getThemeColor() {
+        const colors = {
+          apps: '#4CAF50',
+          company: '#FFB300',
+          members: '#9C27B0',
+          media: '#2196F3',
+          contact: '#FF5722'
+        };
+        return colors[this.currentSection] || '#4CAF50';
+      }
+      
+      randomizeGrass() {
+        const weeds = document.querySelectorAll('.weed');
+        const grassTypes = ['🌱', '🌿', '🍀'];
+        
+        weeds.forEach(weed => {
+          if (Math.random() < 0.3) { // 30%の確率で変更
+            const randomGrass = grassTypes[Math.floor(Math.random() * grassTypes.length)];
+            weed.textContent = randomGrass;
+          }
+        });
+      }
+      
+      startAutoScroll() {
+        // CSS アニメーションで自動スクロール
+        const track = document.getElementById('signboardsTrack');
+        track.style.setProperty('--scroll-duration', `${this.baseScrollSpeed}s`);
+        
+        // 時々雑草を揺らす
+        setInterval(() => {
+          if (!this.isScrolling) {
+            this.triggerGrassAnimation();
+          }
+        }, 8000);
+        
+        // 時々雑草を変更
+        setInterval(() => {
+          this.randomizeGrass();
+        }, 10000);
+      }
+    }
+    
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      const site = new CompactGrassWalkingSite();
+      
+      // パフォーマンス監視（開発用）
+      if (localStorage.getItem('debug') === 'true') {
+        let frameCount = 0;
+        let lastTime = performance.now();
+        
+        function trackFPS() {
+          frameCount++;
+          const currentTime = performance.now();
+          
+          if (currentTime - lastTime >= 1000) {
+            console.log(`FPS: ${frameCount}`);
+            frameCount = 0;
+            lastTime = currentTime;
+          }
+          
+          requestAnimationFrame(trackFPS);
+        }
+        
+        requestAnimationFrame(trackFPS);
+      }
+    });
+  </script>
+</body>
+</html>
