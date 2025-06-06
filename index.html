@@ -65,6 +65,9 @@
       height: 400px;
       position: relative;
       overflow: hidden;
+      background: transparent;
+      display: flex;
+      align-items: center;
     }
     
     .cards-track {
@@ -76,6 +79,8 @@
       contain: layout style paint;
       transform-style: preserve-3d;
       transform: translateX(0px) translateZ(0);
+      visibility: visible;
+      opacity: 1;
     }
     
     /* スクロール中は完全に滑らか（遷移なし） */
@@ -641,8 +646,11 @@
       init() {
         this.createCards();
         this.setupEventListeners();
-        this.startAutoScroll();
-        this.optimizePerformance();
+        // カードが確実に表示されてから初期化
+        setTimeout(() => {
+          this.startAutoScroll();
+          this.optimizePerformance();
+        }, 100);
       }
       
       optimizePerformance() {
@@ -741,6 +749,11 @@
       
       createCards() {
         const track = document.getElementById('cardsTrack');
+        if (!track) {
+          console.error('Cards track not found!');
+          return;
+        }
+        
         const cardsHTML = [];
         
         console.log('Creating cards...', cardsData.length);
@@ -760,6 +773,10 @@
         
         track.innerHTML = cardsHTML.join('');
         console.log('Cards created:', track.children.length);
+        
+        // カードが確実に表示されるように
+        track.style.visibility = 'visible';
+        track.style.opacity = '1';
         
         // カードクリックイベント
         track.querySelectorAll('.card').forEach(card => {
@@ -912,15 +929,18 @@
         // 60FPS で滑らかに更新
         this.cardPositionRAF = requestAnimationFrame(() => {
           const track = document.getElementById('cardsTrack');
-          if (track) {
+          if (track && track.children.length > 0) {
             // スクロール中は完全に滑らか
             track.classList.add('scrolling');
             track.classList.remove('idle');
             
             // より滑らかな変換
-            const smoothOffset = this.currentScrollOffset;
+            const smoothOffset = this.currentScrollOffset || 0;
             track.style.transform = `translateX(${smoothOffset}px) translateZ(0)`;
-            console.log('Card position updated:', smoothOffset);
+            track.style.visibility = 'visible';
+            track.style.opacity = '1';
+            
+            console.log('Card position updated:', smoothOffset, 'Cards:', track.children.length);
           }
         });
       }
@@ -1108,17 +1128,22 @@
       }
       
       startAutoScroll() {
-        // カードは自動スクロールしない（スクロール操作でのみ動く）
+        // カードの初期位置を設定
         this.currentScrollOffset = 0;
         this.scrollInertia = 0;
-        this.updateCardPosition();
         
-        // 初期状態をアイドルに設定
+        // 初期状態をアイドルに設定し、カードを表示
         const track = document.getElementById('cardsTrack');
         if (track) {
           track.classList.add('idle');
+          track.classList.remove('scrolling');
           track.style.transform = 'translateX(0px) translateZ(0)';
+          
+          // カードが確実に表示されるように強制的に再描画
+          track.offsetHeight;
         }
+        
+        console.log('Initial cards position set');
       }
     }
     
