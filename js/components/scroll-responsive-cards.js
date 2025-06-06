@@ -21,7 +21,8 @@ class ScrollResponsiveCards {
       lastScrollY: 0,
       isHovered: false,
       animationId: null,
-      translateX: 0
+      translateX: 0,
+      scrollDirection: -1
     };
     
     this.init();
@@ -41,14 +42,26 @@ class ScrollResponsiveCards {
   
   setupScrollDetection() {
     let ticking = false;
+    let lastTouchX = 0;
+    let touchStartX = 0;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     const updateScrollSpeed = () => {
       const currentScrollY = window.pageYOffset;
-      const scrollDelta = Math.abs(currentScrollY - this.state.lastScrollY);
+      const scrollDelta = currentScrollY - this.state.lastScrollY;
       
       // Calculate scroll velocity
-      this.state.scrollVelocity = scrollDelta * this.options.scrollMultiplier;
+      this.state.scrollVelocity = Math.abs(scrollDelta) * this.options.scrollMultiplier;
       this.state.lastScrollY = currentScrollY;
+      
+      // On mobile, reverse direction based on scroll direction
+      if (isMobile) {
+        // Negative scrollDelta means scrolling up, positive means scrolling down
+        this.state.scrollDirection = scrollDelta > 0 ? -1 : 1;
+      } else {
+        // Desktop keeps original behavior
+        this.state.scrollDirection = -1;
+      }
       
       // Update target speed based on scroll velocity
       if (this.state.scrollVelocity > 0) {
@@ -71,12 +84,38 @@ class ScrollResponsiveCards {
       ticking = false;
     };
     
+    // Handle vertical scroll
     window.addEventListener('scroll', () => {
       if (!ticking) {
         requestAnimationFrame(updateScrollSpeed);
         ticking = true;
       }
     }, { passive: true });
+    
+    // Handle horizontal touch gestures on mobile
+    if (isMobile) {
+      this.container.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        lastTouchX = touchStartX;
+      }, { passive: true });
+      
+      this.container.addEventListener('touchmove', (e) => {
+        const currentTouchX = e.touches[0].clientX;
+        const touchDelta = currentTouchX - lastTouchX;
+        
+        // Set direction based on horizontal swipe
+        if (Math.abs(touchDelta) > 2) {
+          this.state.scrollDirection = touchDelta > 0 ? 1 : -1;
+          this.state.scrollVelocity = Math.abs(touchDelta) * 0.1;
+          this.state.targetSpeed = Math.min(
+            this.options.baseSpeed + this.state.scrollVelocity,
+            this.options.maxSpeed
+          );
+        }
+        
+        lastTouchX = currentTouchX;
+      }, { passive: true });
+    }
   }
   
   setupHoverEffects() {
@@ -170,8 +209,8 @@ class ScrollResponsiveCards {
         this.options.smoothness
       );
       
-      // Update card positions
-      this.state.translateX -= this.state.currentSpeed;
+      // Update card positions with direction
+      this.state.translateX += this.state.currentSpeed * this.state.scrollDirection;
       
       // Reset position for infinite scroll
       const cardWidth = this.cards[0]?.offsetWidth || 300;
@@ -179,8 +218,11 @@ class ScrollResponsiveCards {
       const totalCardWidth = cardWidth + gap;
       const trackWidth = totalCardWidth * (this.cards.length / 2); // Assuming cards are duplicated
       
+      // Handle wrapping for both directions
       if (this.state.translateX <= -trackWidth) {
         this.state.translateX = 0;
+      } else if (this.state.translateX >= 0) {
+        this.state.translateX = -trackWidth;
       }
       
       // Apply transform
