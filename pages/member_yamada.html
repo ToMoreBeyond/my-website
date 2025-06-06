@@ -3,95 +3,340 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>山田（Yamada） | ToMoreBeyond</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/animations.css">
-  <link rel="stylesheet" href="../css/transitions.css">
+  <title>山田（Yamada） - CDO / プロダクトデザイン | ToMoreBeyond</title>
+  <meta name="description" content="山田（Yamada）- ToMoreBeyondのCDO。UI/UXデザイン、ブランド構築、資金調達を担当。美しさと使いやすさを両立するデザインを追求。">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/design-system.css">
+  <link rel="stylesheet" href="/css/modern-design.css">
+  <link rel="stylesheet" href="/css/components.css">
   <style>
-    html, body { height: 100%; margin: 0; padding: 0; background: #fafafa; color: #111; font-family: 'Inter', sans-serif; }
-    body { min-height: 100vh; display: flex; flex-direction: column; align-items: stretch; }
-    .et-nav { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2.5rem 0 1.5rem 0; font-size: 1.2rem; background: transparent; position: fixed; top: 0; left: 0; z-index: 1000; box-sizing: border-box; }
-    .et-nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; letter-spacing: -0.04em; color: #111; }
-    .nav-links { display: flex; gap: 3.5rem; }
-    .nav-links a { color: #111; text-decoration: none; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.04em; transition: opacity 0.3s; white-space: nowrap; }
-    .nav-links a:hover { opacity: 0.6; }
-    .member-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; padding-top: 8rem; padding-bottom: 2rem; background: #fff; }
-    .member-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 12px 0 rgba(255,179,0,0.10); margin-bottom: 1.5rem; }
-    .member-name { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: #111; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
-    .member-role { font-size: 1.2rem; color: #FFB300; font-weight: 700; margin-bottom: 1.2rem; }
-    .member-bio-section { max-width: 700px; margin: 0 auto 3rem auto; background: #fff; border-radius: 2rem; box-shadow: 0 4px 32px 0 rgba(0,0,0,0.07); padding: 2.5rem 2rem; }
-    .member-bio-title { font-size: 1.3rem; font-family: 'Poppins', sans-serif; color: #111; font-weight: 700; margin-bottom: 1rem; }
-    .member-bio { font-size: 1.08rem; color: #222; line-height: 1.8; margin-bottom: 0; }
-    .member-feature-section { max-width: 900px; margin: 0 auto 4rem auto; padding: 2rem 2rem 2rem 2rem; background: #fafafa; border-radius: 2rem; box-shadow: 0 2px 12px 0 rgba(255,179,0,0.07); }
-    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-top: 1.5rem; }
-    .feature-card { background: #fff; border-radius: 1.2rem; padding: 2rem; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07); }
-    .feature-title { font-size: 1.1rem; color: #FFB300; font-weight: 700; margin-bottom: 0.7rem; }
-    .feature-desc { font-size: 1rem; color: #222; line-height: 1.7; }
-    @media (max-width: 900px) { .feature-grid { grid-template-columns: 1fr; gap: 1.2rem; } .member-bio-section, .member-feature-section { padding: 1.2rem 0.7rem; } }
+    /* Member page specific styles */
+    body {
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+    }
+    
+    /* Enhanced Member Hero */
+    .member-hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+      padding: calc(var(--space-20) + 80px) 0 var(--space-20);
+    }
+    
+    .member-hero-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--space-16);
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .member-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .member-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: var(--space-6);
+      box-shadow: var(--shadow-large);
+      border: 4px solid white;
+      position: relative;
+    }
+    
+    .member-info {
+      padding-left: var(--space-8);
+    }
+    
+    .member-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: var(--space-2);
+      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .member-role {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--primary-orange);
+      margin-bottom: var(--space-6);
+    }
+    
+    .member-bio-hero {
+      font-size: var(--text-lg);
+      color: var(--neutral-600);
+      line-height: 1.7;
+      margin-bottom: var(--space-8);
+    }
+    
+    /* Skills Section */
+    .skills-section {
+      padding: var(--space-20) 0;
+      background: white;
+    }
+    
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+    
+    .skill-card {
+      background: white;
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-base);
+      border: 1px solid var(--neutral-200);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-base);
+    }
+    
+    .skill-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-large);
+    }
+    
+    .skill-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .skill-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-light));
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: var(--space-6);
+    }
+    
+    .skill-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-4);
+    }
+    
+    .skill-description {
+      color: var(--neutral-600);
+      line-height: 1.6;
+    }
+    
+    /* Philosophy Section */
+    .philosophy-section {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    .philosophy-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .philosophy-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--neutral-800);
+      line-height: 1.4;
+      margin-bottom: var(--space-8);
+      font-style: italic;
+    }
+    
+    .philosophy-text {
+      font-size: var(--text-lg);
+      color: var(--neutral-600);
+      line-height: 1.7;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .member-hero-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+        text-align: center;
+      }
+      
+      .member-info {
+        padding-left: 0;
+      }
+      
+      .member-photo {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+    }
   </style>
 </head>
 <body>
-  <nav class="et-nav">
-    <div class="et-nav-inner">
-      <a href="../index.html" class="nav-logo">ToMoreBeyond</a>
-      <div class="nav-links">
-        <a href="apps.html">Apps</a>
-        <a href="company.html">Company</a>
-        <a href="media.html">Media</a>
-        <a href="contact.html">Contact</a>
+  <!-- Modern Navigation -->
+  <nav class="navbar-modern">
+    <div class="container-fluid">
+      <div class="navbar-content">
+        <a href="/" class="navbar-brand-modern">ToMoreBeyond</a>
+        <div class="navbar-links-modern">
+          <a href="/#apps" class="navbar-link-modern">アプリ</a>
+          <a href="/#about" class="navbar-link-modern">会社概要</a>
+          <a href="/pages/contact.html" class="btn-modern btn-primary-modern">お問い合わせ</a>
+        </div>
       </div>
     </div>
   </nav>
-  <main>
-    <section class="member-hero">
-      <img src="../assets/member_yamada.jpg" alt="山田（Yamada）" class="member-photo" />
-      <div class="member-name">山田（Yamada）</div>
-      <div class="member-role">CDO / プロダクトデザイン</div>
-    </section>
-    <section class="member-bio-section">
-      <div class="member-bio-title">プロフィール</div>
-      <div class="member-bio">UI/UX全体統括・資金調達担当。美しさと使いやすさを両立するデザインを追求し、プロダクトの世界観を形にします。<br>デザイン思考とユーザー体験の最適化に情熱を注ぎ、ToMoreBeyondのブランド価値を高め続けています。</div>
-    </section>
-    <section class="member-feature-section">
-      <div class="member-bio-title">得意分野・スキル</div>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-title">UI/UXデザイン</div>
-          <div class="feature-desc">直感的で美しいインターフェース設計。ユーザーの行動心理を読み解き、体験価値を最大化。</div>
+
+  <!-- Member Hero Section -->
+  <section class="member-hero">
+    <div class="container-fluid">
+      <div class="member-hero-content">
+        <div class="member-visual">
+          <img src="../assets/member_yamada.jpg" alt="山田（Yamada）" class="member-photo" />
+          <div class="member-contact">
+            <p class="text-sm text-neutral-600">CDO / プロダクトデザイン</p>
+          </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-title">ブランド構築</div>
-          <div class="feature-desc">一貫した世界観とストーリー設計で、プロダクトの魅力を最大限に引き出す。</div>
+        <div class="member-info">
+          <h1 class="member-name">山田</h1>
+          <p class="member-role">CDO / プロダクトデザイン</p>
+          <p class="member-bio-hero">
+            UI/UX全体統括・資金調達担当。美しさと使いやすさを両立するデザインを追求し、プロダクトの世界観を形にします。
+            デザイン思考とユーザー体験の最適化に情熱を注ぎ、ToMoreBeyondのブランド価値を高め続けています。
+          </p>
         </div>
-        <div class="feature-card">
-          <div class="feature-title">プロジェクト推進</div>
-          <div class="feature-desc">多様なメンバーと連携し、アイデアを形にするリーダーシップ。</div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-title">資金調達・事業戦略</div>
-          <div class="feature-desc">スタートアップの成長を支える資金調達・事業計画の立案と実行。</div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-logo">ToMoreBeyond</div>
-      <div class="footer-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-      </div>
-      <div class="footer-social">
-        <a href="#" class="social-link">Twitter</a>
-        <a href="#" class="social-link">Instagram</a>
-        <a href="#" class="social-link">LinkedIn</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024 ToMoreBeyond. All rights reserved.</p>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="skills-section">
+    <div class="container-fluid">
+      <div class="section-header">
+        <h2 class="section-title">得意分野・スキル</h2>
+        <p class="section-subtitle">デザインからビジネスまで、幅広い領域での専門性</p>
+      </div>
+      
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h3 class="skill-title">UI/UXデザイン</h3>
+          <p class="skill-description">
+            直感的で美しいインターフェース設計。ユーザーの行動心理を読み解き、体験価値を最大化。
+          </p>
+        </div>
+        
+        <div class="skill-card">
+          <div class="skill-icon">🏢</div>
+          <h3 class="skill-title">ブランド構築</h3>
+          <p class="skill-description">
+            一貫した世界観とストーリー設計で、プロダクトの魅力を最大限に引き出す。
+          </p>
+        </div>
+        
+        <div class="skill-card">
+          <div class="skill-icon">🚀</div>
+          <h3 class="skill-title">プロジェクト推進</h3>
+          <p class="skill-description">
+            多様なメンバーと連携し、アイデアを形にするリーダーシップ。
+          </p>
+        </div>
+        
+        <div class="skill-card">
+          <div class="skill-icon">💰</div>
+          <h3 class="skill-title">資金調達・事業戦略</h3>
+          <p class="skill-description">
+            スタートアップの成長を支える資金調達・事業計画の立案と実行。
+          </p>
+        </div>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section class="philosophy-section">
+    <div class="container-fluid">
+      <div class="philosophy-content">
+        <h2 class="philosophy-quote">
+          "デザインは単なる見た目ではなく、<br>体験そのものである"
+        </h2>
+        <p class="philosophy-text">
+          ToMoreBeyondでは、技術とデザインの融合により、ユーザーの日常を豊かにするプロダクトを生み出しています。
+          美しさと機能性を兼ね備えたソリューションで、人々の可能性を最大限に引き出すことを目指しています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/smooth-scroll.js"></script>
+  
+  <script>
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add smooth reveal on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+      };
+      
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Apply to all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealObserver.observe(section);
+      });
+    });
+  </script>
 </body>
 </html> 

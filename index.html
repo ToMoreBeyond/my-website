@@ -6,6 +6,9 @@
   <title>ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える</title>
   <meta name="description" content="ToMoreBeyondは最先端のAI技術とイノベーションで、より良い未来を創造するテクノロジーカンパニーです。">
   
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
   <style>
     * {
       margin: 0;
@@ -21,39 +24,30 @@
       position: relative;
     }
     
-    /* 左上ロゴ */
+    /* 左上ロゴ - より洗練されたデザイン */
     .logo {
       position: fixed;
       top: 30px;
       left: 30px;
       z-index: 1000;
-      font-size: 24px;
-      font-weight: 600;
-      color: #333;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
       text-decoration: none;
+      letter-spacing: -0.5px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     
-    /* 右上ナビゲーション */
-    .nav {
-      position: fixed;
-      top: 30px;
-      right: 30px;
-      z-index: 1000;
-      display: flex;
-      gap: 24px;
+    .logo:hover {
+      transform: scale(1.05);
     }
     
-    .nav-item {
-      font-size: 16px;
-      color: #666;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    
-    .nav-item:hover,
-    .nav-item.active {
-      color: #333;
-    }
+    /* ナビゲーションバーを削除（不要） */
     
     /* メインコンテンツ */
     .main-content {
@@ -77,30 +71,31 @@
       display: flex;
       gap: 20px;
       height: 100%;
-      transform: translateX(var(--scroll-offset, 0px));
       will-change: transform;
       backface-visibility: hidden;
       contain: layout style paint;
+      transform-style: preserve-3d;
     }
     
-    /* スクロール中は遷移を無効にして滑らかに */
+    /* スクロール中は完全に滑らか（遷移なし） */
     .cards-track.scrolling {
       transition: none;
+      transform-origin: center center;
     }
     
-    /* スクロール停止時のみ遷移を適用 */
+    /* スクロール停止時は軽い遷移 */
     .cards-track.idle {
-      transition: transform 0.2s ease-out;
+      transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
-    /* damso.com風シンプルカード */
+    /* 洗練されたカードデザイン */
     .card {
-      min-width: 280px;
-      height: 350px;
-      background: #ffffff;
-      border: 1px solid #e8e8e8;
-      border-radius: 8px;
-      padding: 30px;
+      min-width: 320px;
+      height: 380px;
+      background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+      border: 1px solid #f0f0f0;
+      border-radius: 20px;
+      padding: 40px 30px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -108,15 +103,20 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      box-shadow: 
+        0 4px 20px rgba(0,0,0,0.04),
+        0 1px 3px rgba(0,0,0,0.02);
+      overflow: hidden;
     }
     
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-      border-color: #d0d0d0;
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,0.12),
+        0 8px 30px rgba(255,179,0,0.08);
+      border-color: #FFB300;
     }
     
     .card::before {
@@ -125,36 +125,61 @@
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, 
-        rgba(255,255,255,0) 0%, 
-        rgba(255,255,255,0.1) 50%, 
-        rgba(255,255,255,0) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: 8px;
+      height: 4px;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
     }
     
     .card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, 
+        rgba(255,179,0,0.03) 0%, 
+        transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 20px;
+    }
+    
+    .card:hover::after {
       opacity: 1;
     }
     
     .card-icon {
-      font-size: 48px;
-      margin-bottom: 24px;
+      font-size: 56px;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+      transition: transform 0.3s ease;
+    }
+    
+    .card:hover .card-icon {
+      transform: scale(1.1);
     }
     
     .card-title {
-      font-size: 24px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
     }
     
     .card-description {
       font-size: 16px;
       color: #666;
-      line-height: 1.5;
+      line-height: 1.6;
+      font-weight: 400;
     }
     
     /* シンプルな細い道 */
@@ -244,138 +269,78 @@
       contain: layout style paint;
     }
     
-    /* 3フレーム歩行サイクル - メモリ効率重視 */
+    /* GIF参考の歩行サイクル - 4フレーム構成 */
     .stick-figure {
-      animation: walkCycle 0.9s infinite ease-in-out;
+      animation: perfectWalk 0.8s infinite linear;
       will-change: transform;
-      contain: layout style;
     }
     
-    @keyframes walkCycle {
-      0% { transform: translateY(0px); }     /* フレーム1: 右足前 */
-      33% { transform: translateY(-2px); }   /* フレーム2: 中間（上昇） */
-      66% { transform: translateY(0px); }    /* フレーム3: 左足前 */
-      100% { transform: translateY(0px); }   /* 戻り */
+    @keyframes perfectWalk {
+      0% { transform: translateY(0px); }     /* フレーム1: 接地 */
+      25% { transform: translateY(-1px); }   /* フレーム2: 上昇開始 */
+      50% { transform: translateY(-3px); }   /* フレーム3: 最高点 */
+      75% { transform: translateY(-1px); }   /* フレーム4: 下降 */
+      100% { transform: translateY(0px); }   /* フレーム1: 接地 */
     }
     
-    /* 左腕上部（肩から肘） */
-    .left-upper-arm {
-      animation: leftUpperArmCycle 0.8s infinite ease-in-out;
+    /* 左腕 - GIF通りの対側歩行 */
+    .left-arm {
+      animation: leftArmPerfect 0.8s infinite linear;
       transform-origin: 50px 30px;
       will-change: transform;
     }
     
-    @keyframes leftUpperArmCycle {
-      0% { transform: rotate(20deg); }      /* 右足前時：左腕前 */
-      25% { transform: rotate(10deg); }     /* 中間 */
-      50% { transform: rotate(-15deg); }    /* 左足前時：左腕後ろ */
-      75% { transform: rotate(0deg); }      /* 中間 */
-      100% { transform: rotate(20deg); }    /* 戻り */
+    @keyframes leftArmPerfect {
+      0% { transform: rotate(30deg); }      /* 右足前 → 左腕大きく前 */
+      25% { transform: rotate(15deg); }     /* 中間1 */
+      50% { transform: rotate(-25deg); }    /* 左足前 → 左腕大きく後ろ */
+      75% { transform: rotate(-10deg); }    /* 中間2 */
+      100% { transform: rotate(30deg); }    /* 戻り */
     }
     
-    /* 左腕下部（肘から手） */
-    .left-lower-arm {
-      animation: leftLowerArmCycle 0.8s infinite ease-in-out;
-      transform-origin: 38px 45px;
-      will-change: transform;
-    }
-    
-    @keyframes leftLowerArmCycle {
-      0% { transform: rotate(-10deg); }
-      25% { transform: rotate(-5deg); }
-      50% { transform: rotate(15deg); }
-      75% { transform: rotate(5deg); }
-      100% { transform: rotate(-10deg); }
-    }
-    
-    /* 右腕上部 */
-    .right-upper-arm {
-      animation: rightUpperArmCycle 0.8s infinite ease-in-out;
+    /* 右腕 - 左腕と完全逆位相 */
+    .right-arm {
+      animation: rightArmPerfect 0.8s infinite linear;
       transform-origin: 50px 30px;
       will-change: transform;
     }
     
-    @keyframes rightUpperArmCycle {
-      0% { transform: rotate(-15deg); }     /* 右足前時：右腕後ろ */
-      25% { transform: rotate(0deg); }
-      50% { transform: rotate(20deg); }     /* 左足前時：右腕前 */
-      75% { transform: rotate(10deg); }
-      100% { transform: rotate(-15deg); }
+    @keyframes rightArmPerfect {
+      0% { transform: rotate(-25deg); }     /* 右足前 → 右腕大きく後ろ */
+      25% { transform: rotate(-10deg); }    /* 中間1 */
+      50% { transform: rotate(30deg); }     /* 左足前 → 右腕大きく前 */
+      75% { transform: rotate(15deg); }     /* 中間2 */
+      100% { transform: rotate(-25deg); }   /* 戻り */
     }
     
-    /* 右腕下部 */
-    .right-lower-arm {
-      animation: rightLowerArmCycle 0.8s infinite ease-in-out;
-      transform-origin: 62px 45px;
+    /* 左脚 - GIF通りの大きなストライド */
+    .left-leg {
+      animation: leftLegPerfect 0.8s infinite linear;
+      transform-origin: 50px 65px;
       will-change: transform;
     }
     
-    @keyframes rightLowerArmCycle {
-      0% { transform: rotate(15deg); }
-      25% { transform: rotate(5deg); }
-      50% { transform: rotate(-10deg); }
-      75% { transform: rotate(-5deg); }
-      100% { transform: rotate(15deg); }
+    @keyframes leftLegPerfect {
+      0% { transform: rotate(-25deg); }     /* 右足前 → 左脚大きく後ろ */
+      25% { transform: rotate(-10deg); }    /* 中間1: 後ろから前へ */
+      50% { transform: rotate(25deg); }     /* 左足前 → 左脚大きく前 */
+      75% { transform: rotate(10deg); }     /* 中間2: 前から後ろへ */
+      100% { transform: rotate(-25deg); }   /* 戻り */
     }
     
-    /* 左脚上部（腰から膝） */
-    .left-upper-leg {
-      animation: leftUpperLegCycle 0.8s infinite ease-in-out;
-      transform-origin: 50px 60px;
+    /* 右脚 - 左脚と完全逆位相 */
+    .right-leg {
+      animation: rightLegPerfect 0.8s infinite linear;
+      transform-origin: 50px 65px;
       will-change: transform;
     }
     
-    @keyframes leftUpperLegCycle {
-      0% { transform: rotate(-10deg); }     /* 右足前時：左脚後ろ */
-      25% { transform: rotate(5deg); }
-      50% { transform: rotate(25deg); }     /* 左足前時：左脚前 */
-      75% { transform: rotate(10deg); }
-      100% { transform: rotate(-10deg); }
-    }
-    
-    /* 左脚下部（膝から足） */
-    .left-lower-leg {
-      animation: leftLowerLegCycle 0.8s infinite ease-in-out;
-      transform-origin: 42px 75px;
-      will-change: transform;
-    }
-    
-    @keyframes leftLowerLegCycle {
-      0% { transform: rotate(20deg); }
-      25% { transform: rotate(-15deg); }    /* 膝を曲げる */
-      50% { transform: rotate(-5deg); }
-      75% { transform: rotate(10deg); }
-      100% { transform: rotate(20deg); }
-    }
-    
-    /* 右脚上部 */
-    .right-upper-leg {
-      animation: rightUpperLegCycle 0.8s infinite ease-in-out;
-      transform-origin: 50px 60px;
-      will-change: transform;
-    }
-    
-    @keyframes rightUpperLegCycle {
-      0% { transform: rotate(25deg); }      /* 右足前時：右脚前 */
-      25% { transform: rotate(10deg); }
-      50% { transform: rotate(-10deg); }    /* 左足前時：右脚後ろ */
-      75% { transform: rotate(5deg); }
-      100% { transform: rotate(25deg); }
-    }
-    
-    /* 右脚下部 */
-    .right-lower-leg {
-      animation: rightLowerLegCycle 0.8s infinite ease-in-out;
-      transform-origin: 58px 75px;
-      will-change: transform;
-    }
-    
-    @keyframes rightLowerLegCycle {
-      0% { transform: rotate(-5deg); }
-      25% { transform: rotate(10deg); }
-      50% { transform: rotate(20deg); }
-      75% { transform: rotate(-15deg); }    /* 膝を曲げる */
-      100% { transform: rotate(-5deg); }
+    @keyframes rightLegPerfect {
+      0% { transform: rotate(25deg); }      /* 右足前 → 右脚大きく前 */
+      25% { transform: rotate(10deg); }     /* 中間1: 前から後ろへ */
+      50% { transform: rotate(-25deg); }    /* 左足前 → 右脚大きく後ろ */
+      75% { transform: rotate(-10deg); }    /* 中間2: 後ろから前へ */
+      100% { transform: rotate(25deg); }    /* 戻り */
     }
     
     /* セクション別道の色 */
@@ -391,16 +356,12 @@
     .section-media .path-line { background: #2196F3; }
     .section-contact .path-line { background: #FF5722; }
     
-    /* 高速歩行モード - 関節対応 */
+    /* 高速歩行モード - GIF歩行対応 */
     .fast-walking .stick-figure,
-    .fast-walking .left-upper-arm,
-    .fast-walking .left-lower-arm,
-    .fast-walking .right-upper-arm,
-    .fast-walking .right-lower-arm,
-    .fast-walking .left-upper-leg,
-    .fast-walking .left-lower-leg,
-    .fast-walking .right-upper-leg,
-    .fast-walking .right-lower-leg {
+    .fast-walking .left-arm,
+    .fast-walking .right-arm,
+    .fast-walking .left-leg,
+    .fast-walking .right-leg {
       animation-duration: 0.4s !important;
       animation-timing-function: linear !important;
     }
@@ -413,19 +374,15 @@
     
     /* 低性能デバイス向け最適化 */
     .low-performance-mode .stick-figure {
-      animation-duration: 1.2s !important;
+      animation-duration: 1.3s !important;
       will-change: auto;
     }
     
-    .low-performance-mode .left-upper-arm,
-    .low-performance-mode .left-lower-arm,
-    .low-performance-mode .right-upper-arm,
-    .low-performance-mode .right-lower-arm,
-    .low-performance-mode .left-upper-leg,
-    .low-performance-mode .left-lower-leg,
-    .low-performance-mode .right-upper-leg,
-    .low-performance-mode .right-lower-leg {
-      animation-duration: 1.0s !important;
+    .low-performance-mode .left-arm,
+    .low-performance-mode .right-arm,
+    .low-performance-mode .left-leg,
+    .low-performance-mode .right-leg {
+      animation-duration: 1.3s !important;
       will-change: auto;
     }
     
@@ -554,14 +511,7 @@
   <!-- 左上ロゴ -->
   <a href="#" class="logo">ToMoreBeyond</a>
   
-  <!-- 右上ナビゲーション -->
-  <nav class="nav">
-    <a href="#" class="nav-item active" data-section="apps">Apps</a>
-    <a href="#" class="nav-item" data-section="company">Company</a>
-    <a href="#" class="nav-item" data-section="members">Members</a>
-    <a href="#" class="nav-item" data-section="media">Media</a>
-    <a href="#" class="nav-item" data-section="contact">Contact</a>
-  </nav>
+  <!-- ナビゲーションバー削除（シンプル化） -->
   
   <!-- メインコンテンツ -->
   <main class="main-content">
@@ -588,27 +538,17 @@
   <div class="tiny-character">
     <svg class="stick-figure" id="stickFigure" viewBox="0 0 100 100">
       <!-- 頭 -->
-      <circle cx="50" cy="12" r="7"/>
-      <!-- 首 -->
-      <line x1="50" y1="19" x2="50" y2="25"/>
-      <!-- 体（肩から腰まで） -->
-      <line x1="50" y1="25" x2="50" y2="60"/>
-      <!-- 左腕（肩から肘） -->
-      <line x1="50" y1="30" x2="38" y2="45" class="left-upper-arm"/>
-      <!-- 左腕（肘から手） -->
-      <line x1="38" y1="45" x2="32" y2="58" class="left-lower-arm"/>
-      <!-- 右腕（肩から肘） -->
-      <line x1="50" y1="30" x2="62" y2="45" class="right-upper-arm"/>
-      <!-- 右腕（肘から手） -->
-      <line x1="62" y1="45" x2="68" y2="58" class="right-lower-arm"/>
-      <!-- 左脚（腰から膝） -->
-      <line x1="50" y1="60" x2="42" y2="75" class="left-upper-leg"/>
-      <!-- 左脚（膝から足） -->
-      <line x1="42" y1="75" x2="38" y2="92" class="left-lower-leg"/>
-      <!-- 右脚（腰から膝） -->
-      <line x1="50" y1="60" x2="58" y2="75" class="right-upper-leg"/>
-      <!-- 右脚（膝から足） -->
-      <line x1="58" y1="75" x2="62" y2="92" class="right-lower-leg"/>
+      <circle cx="50" cy="15" r="8"/>
+      <!-- 体 -->
+      <line x1="50" y1="23" x2="50" y2="65"/>
+      <!-- 左腕 -->
+      <line x1="50" y1="30" x2="35" y2="50" class="left-arm"/>
+      <!-- 右腕 -->
+      <line x1="50" y1="30" x2="65" y2="50" class="right-arm"/>
+      <!-- 左脚 -->
+      <line x1="50" y1="65" x2="40" y2="90" class="left-leg"/>
+      <!-- 右脚 -->
+      <line x1="50" y1="65" x2="60" y2="90" class="right-leg"/>
     </svg>
   </div>
   
@@ -784,13 +724,7 @@
           }, 150);
         }, { passive: true });
         
-        // ナビゲーションクリック - セクションジャンプ機能付き
-        document.querySelectorAll('.nav-item').forEach(nav => {
-          nav.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.navigateToSection(nav.dataset.section);
-          });
-        });
+        // ナビゲーション削除により不要
         
         // タッチイベント（モバイル） - 改善版
         let touchStartY = 0;
@@ -846,51 +780,79 @@
       }
       
       handleScroll(deltaY) {
-        // スクロール方向と感度設定
+        // スクロール方向と改善された感度設定
         const scrollDirection = deltaY > 0 ? 1 : -1;
-        const sensitivity = this.isLowEndDevice ? 1.5 : 2.5; // デバイスに応じた感度
-        const scrollAmount = Math.abs(deltaY) * sensitivity;
+        const baseSensitivity = this.isLowEndDevice ? 2.0 : 3.5;
+        const scrollAmount = Math.abs(deltaY) * baseSensitivity;
         
-        // 滑らかなスクロール計算
-        this.currentScrollOffset = (this.currentScrollOffset || 0) + (scrollDirection * scrollAmount);
+        // 慣性スクロールを追加
+        const inertia = this.scrollInertia || 0;
+        const dampening = 0.85;
+        this.scrollInertia = inertia * dampening + scrollAmount * 0.15;
         
-        // 無限スクロールのループ処理を改善
+        // 滑らかなスクロール計算（慣性込み）
+        const actualScroll = scrollAmount + this.scrollInertia;
+        this.currentScrollOffset = (this.currentScrollOffset || 0) + (scrollDirection * actualScroll);
+        
+        // 無限スクロールのループ処理を大幅改善
         const cardWidth = 300; // カード幅 + gap
         const totalWidth = cardWidth * cardsData.length;
         const maxOffset = -totalWidth;
         
-        // スムーズなループ処理
-        if (this.currentScrollOffset > 50) {
-          this.currentScrollOffset = maxOffset + 50;
-        } else if (this.currentScrollOffset < maxOffset - 50) {
-          this.currentScrollOffset = 50;
+        // より自然なループ処理
+        if (this.currentScrollOffset > 100) {
+          this.currentScrollOffset = maxOffset + 100;
+        } else if (this.currentScrollOffset < maxOffset - 100) {
+          this.currentScrollOffset = 100;
         }
         
-        // リアルタイムでカード位置を更新（requestAnimationFrame使用）
-        this.updateCardPositionSmooth();
+        // 高頻度でスムーズ更新
+        this.updateCardPositionUltraSmooth();
         
         // 棒人間の歩行開始
         if (!this.isScrolling) {
           this.startRunning();
         }
         
-        // スクロール終了のタイマーをリセット
+        // スクロール終了の検知を改善
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(() => {
           this.stopRunning();
-        }, 150);
+          this.scrollInertia = 0; // 慣性リセット
+        }, 120);
         
         // 雑草の揺れ効果
         this.animateWeedsOnScroll();
         
-        // セクション変更（確率的・改善版）
-        if (Math.random() < 0.02) {
+        // セクション変更を減らす
+        if (Math.random() < 0.01) {
           if (deltaY > 0) {
             this.nextSection();
           } else {
             this.prevSection();
           }
         }
+      }
+      
+      updateCardPositionUltraSmooth() {
+        // 前回のRAFをキャンセル
+        if (this.cardPositionRAF) {
+          cancelAnimationFrame(this.cardPositionRAF);
+        }
+        
+        // 60FPS で滑らかに更新
+        this.cardPositionRAF = requestAnimationFrame(() => {
+          const track = document.getElementById('cardsTrack');
+          if (track) {
+            // スクロール中は完全に滑らか
+            track.classList.add('scrolling');
+            track.classList.remove('idle');
+            
+            // より滑らかな変換
+            const smoothOffset = this.currentScrollOffset;
+            track.style.transform = `translateX(${smoothOffset}px) translateZ(0)`;
+          }
+        });
       }
       
       updateCardPositionSmooth() {
