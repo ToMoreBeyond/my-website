@@ -77,13 +77,9 @@
       display: flex;
       gap: 20px;
       height: 100%;
-      animation: damsoScroll var(--scroll-speed, 45s) linear infinite;
+      transform: translateX(var(--scroll-offset, 0px));
+      transition: transform 0.3s ease-out;
       will-change: transform;
-    }
-    
-    @keyframes damsoScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
     }
     
     /* damso.com風シンプルカード */
@@ -230,132 +226,56 @@
       fill: #333;
     }
     
-    /* 自然な歩行アニメーション（GIF参考） */
+    /* シンプルで自然な歩行アニメーション */
     .stick-figure {
-      animation: naturalWalkBounce 1.2s infinite ease-in-out;
+      animation: simpleWalk 1.5s infinite ease-in-out;
     }
     
-    @keyframes naturalWalkBounce {
-      0% { transform: translateY(0px); }
-      25% { transform: translateY(-1px); }
-      50% { transform: translateY(0px); }
-      75% { transform: translateY(-1px); }
-      100% { transform: translateY(0px); }
+    @keyframes simpleWalk {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-2px); }
     }
     
-    /* 腕の自然な振り（対称的な動き） */
+    /* 腕のシンプルな振り */
     .left-arm {
-      animation: naturalLeftArm 1.2s infinite ease-in-out;
+      animation: simpleLeftArm 1.5s infinite ease-in-out;
       transform-origin: 50px 25px;
     }
     
     .right-arm {
-      animation: naturalRightArm 1.2s infinite ease-in-out;
+      animation: simpleRightArm 1.5s infinite ease-in-out;
       transform-origin: 50px 25px;
     }
     
-    @keyframes naturalLeftArm {
-      0% { transform: rotate(-25deg); }
-      25% { transform: rotate(-10deg); }
-      50% { transform: rotate(25deg); }
-      75% { transform: rotate(10deg); }
-      100% { transform: rotate(-25deg); }
+    @keyframes simpleLeftArm {
+      0%, 100% { transform: rotate(-15deg); }
+      50% { transform: rotate(15deg); }
     }
     
-    @keyframes naturalRightArm {
-      0% { transform: rotate(25deg); }
-      25% { transform: rotate(10deg); }
-      50% { transform: rotate(-25deg); }
-      75% { transform: rotate(-10deg); }
-      100% { transform: rotate(25deg); }
+    @keyframes simpleRightArm {
+      0%, 100% { transform: rotate(15deg); }
+      50% { transform: rotate(-15deg); }
     }
     
-    /* 脚の自然な歩行（より大きな動き） */
+    /* 脚のシンプルな動き */
     .left-leg {
-      animation: naturalLeftLeg 1.2s infinite ease-in-out;
+      animation: simpleLeftLeg 1.5s infinite ease-in-out;
       transform-origin: 50px 65px;
     }
     
     .right-leg {
-      animation: naturalRightLeg 1.2s infinite ease-in-out;
+      animation: simpleRightLeg 1.5s infinite ease-in-out;
       transform-origin: 50px 65px;
     }
     
-    @keyframes naturalLeftLeg {
-      0% { transform: rotate(-20deg); }
-      25% { transform: rotate(-5deg); }
-      50% { transform: rotate(30deg); }
-      75% { transform: rotate(15deg); }
-      100% { transform: rotate(-20deg); }
+    @keyframes simpleLeftLeg {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(20deg); }
     }
     
-    @keyframes naturalRightLeg {
-      0% { transform: rotate(30deg); }
-      25% { transform: rotate(15deg); }
-      50% { transform: rotate(-20deg); }
-      75% { transform: rotate(-5deg); }
-      100% { transform: rotate(30deg); }
-    }
-    
-    /* 走行モード（スクロール時） */
-    .running .stick-figure {
-      animation: naturalRunBounce var(--walk-speed, 0.6s) infinite ease-in-out;
-    }
-    
-    @keyframes naturalRunBounce {
-      0% { transform: translateY(0px); }
-      25% { transform: translateY(-3px); }
-      50% { transform: translateY(0px); }
-      75% { transform: translateY(-2px); }
-      100% { transform: translateY(0px); }
-    }
-    
-    .running .left-arm {
-      animation: naturalRunLeftArm var(--walk-speed, 0.6s) infinite ease-in-out;
-    }
-    
-    .running .right-arm {
-      animation: naturalRunRightArm var(--walk-speed, 0.6s) infinite ease-in-out;
-    }
-    
-    .running .left-leg {
-      animation: naturalRunLeftLeg var(--walk-speed, 0.6s) infinite ease-in-out;
-    }
-    
-    .running .right-leg {
-      animation: naturalRunRightLeg var(--walk-speed, 0.6s) infinite ease-in-out;
-    }
-    
-    @keyframes naturalRunLeftArm {
-      0% { transform: rotate(-40deg); }
-      25% { transform: rotate(-20deg); }
-      50% { transform: rotate(40deg); }
-      75% { transform: rotate(20deg); }
-      100% { transform: rotate(-40deg); }
-    }
-    
-    @keyframes naturalRunRightArm {
-      0% { transform: rotate(40deg); }
-      25% { transform: rotate(20deg); }
-      50% { transform: rotate(-40deg); }
-      75% { transform: rotate(-20deg); }
-      100% { transform: rotate(40deg); }
-    }
-    
-    @keyframes naturalRunLeftLeg {
-      0% { transform: rotate(-30deg); }
-      25% { transform: rotate(-10deg); }
-      50% { transform: rotate(45deg); }
-      75% { transform: rotate(25deg); }
-      100% { transform: rotate(-30deg); }
-    }
-    
-    @keyframes naturalRunRightLeg {
-      0% { transform: rotate(45deg); }
-      25% { transform: rotate(25deg); }
-      50% { transform: rotate(-30deg); }
-      75% { transform: rotate(-10deg); }
-      100% { transform: rotate(45deg); }
+    @keyframes simpleRightLeg {
+      0%, 100% { transform: rotate(20deg); }
+      50% { transform: rotate(-10deg); }
     }
     
     /* セクション別道の色 */
@@ -717,40 +637,58 @@
       }
       
       handleScroll(deltaY) {
-        // スクロール強度に応じて速度倍率を計算
-        const intensity = Math.abs(deltaY) * 0.08;
-        this.speedMultiplier = 1.0 + intensity;
+        // スクロール方向とカード移動
+        const scrollDirection = deltaY > 0 ? 1 : -1;
+        const scrollAmount = Math.abs(deltaY) * 2; // スクロール感度
         
-        // 棒人間の歩行速度を動的に調整
-        this.walkSpeed = Math.max(0.2, 0.8 / this.speedMultiplier);
+        // 現在のオフセットを更新
+        this.currentScrollOffset = (this.currentScrollOffset || 0) + (scrollDirection * scrollAmount);
         
-        // カードのスクロール速度を棒人間の歩行速度と同期
-        this.currentScrollSpeed = Math.max(10, this.baseScrollSpeed / this.speedMultiplier);
+        // 無限スクロールのためのループ処理
+        const cardWidth = 300; // カード幅 + gap
+        const totalWidth = cardWidth * cardsData.length;
         
-        // 速度を即座に反映
-        this.updateCardSpeed();
-        this.updateWalkingSpeed();
-        
-        // 棒人間走行開始
-        if (!this.isScrolling) {
-          this.startRunning();
+        if (this.currentScrollOffset > 0) {
+          this.currentScrollOffset = -totalWidth + (this.currentScrollOffset % totalWidth);
+        } else if (this.currentScrollOffset < -totalWidth) {
+          this.currentScrollOffset = this.currentScrollOffset % totalWidth;
         }
         
-        // スクロール終了検知
-        clearTimeout(this.scrollTimer);
-        this.scrollTimer = setTimeout(() => {
-          this.stopRunning();
-          this.resetToNormalSpeed();
-        }, 200);
+        // カード位置を更新
+        this.updateCardPosition();
+        
+        // 雑草の揺れ効果
+        this.animateWeedsOnScroll();
         
         // セクション変更（確率的）
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.03) {
           if (deltaY > 0) {
             this.nextSection();
           } else {
             this.prevSection();
           }
         }
+      }
+      
+      updateCardPosition() {
+        const track = document.getElementById('cardsTrack');
+        track.style.setProperty('--scroll-offset', `${this.currentScrollOffset}px`);
+      }
+      
+      animateWeedsOnScroll() {
+        const weeds = document.querySelectorAll('.weed');
+        weeds.forEach((weed, index) => {
+          weed.style.animation = 'none';
+          weed.offsetHeight; // リフロー強制
+          weed.style.animation = `weedSway 0.5s ease-in-out infinite`;
+          weed.style.animationDelay = `${index * 0.05}s`;
+        });
+        
+        setTimeout(() => {
+          weeds.forEach(weed => {
+            weed.style.animation = '';
+          });
+        }, 1000);
       }
       
       updateCardSpeed() {
@@ -827,18 +765,14 @@
         this.walkSpeed = 0.25;
         this.currentScrollSpeed = 15;
         
-        this.updateCardSpeed();
-        this.updateWalkingSpeed();
-        this.startRunning();
+        this.updateCardPosition();
         
         // セクション切り替え
         setTimeout(() => {
           this.changeSection(sectionName);
           
-          // 通常速度に戻す
+          // 通常状態に戻す
           setTimeout(() => {
-            this.resetToNormalSpeed();
-            this.stopRunning();
             this.isNavigating = false;
           }, 800);
         }, 400);
@@ -886,8 +820,9 @@
       }
       
       startAutoScroll() {
-        const track = document.getElementById('cardsTrack');
-        track.style.setProperty('--scroll-speed', `${this.baseScrollSpeed}s`);
+        // カードは自動スクロールしない（スクロール操作でのみ動く）
+        this.currentScrollOffset = 0;
+        this.updateCardPosition();
       }
     }
     
