@@ -255,7 +255,17 @@
       contain: layout style paint;
       will-change: transform;
       backface-visibility: hidden;
-      transition: filter 0.3s ease;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    
+    /* 左向き（逆方向スクロール時） */
+    .tiny-character.facing-left {
+      transform: translateX(-50%) scaleX(-1) translateZ(0);
+    }
+    
+    /* 右向き（通常） */
+    .tiny-character.facing-right {
+      transform: translateX(-50%) scaleX(1) translateZ(0);
     }
     
     .stick-figure {
@@ -589,7 +599,7 @@
   </div>
   
   <!-- 適切なサイズの棒人間（80px） - 常時歩行・スクロール時走行 -->
-  <div class="tiny-character">
+  <div class="tiny-character facing-right">
     <svg class="stick-figure" id="stickFigure" viewBox="0 0 80 80">
       <!-- 頭 -->
       <circle cx="40" cy="12" r="6"/>
@@ -893,9 +903,21 @@
         // 高頻度でスムーズ更新
         this.updateCardPositionUltraSmooth();
         
-        // 棒人間の歩行開始
+        // 棒人間の歩行開始と向き変更
         if (!this.isScrolling) {
           this.startRunning();
+        }
+        
+        // 棒人間の向きを変更
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          if (scrollDirection > 0) {
+            character.classList.add('facing-right');
+            character.classList.remove('facing-left');
+          } else {
+            character.classList.add('facing-left');
+            character.classList.remove('facing-right');
+          }
         }
         
         // スクロール終了の検知を改善
