@@ -64,44 +64,36 @@
       padding: 0 50px;
     }
     
-    /* カードコンテナ - 3D森の道演出 */
+    /* damso.com風カードコンテナ */
     .cards-container {
       width: 100%;
-      max-width: 1400px;
+      max-width: 1200px;
       height: 400px;
       position: relative;
       overflow: hidden;
-      perspective: 1000px;
-      perspective-origin: center center;
     }
     
     .cards-track {
       display: flex;
-      gap: 60px;
+      gap: 20px;
       height: 100%;
-      animation: forest3DScroll var(--scroll-speed, 60s) linear infinite;
+      animation: damsoScroll var(--scroll-speed, 45s) linear infinite;
       will-change: transform;
-      transform-style: preserve-3d;
-      position: relative;
     }
     
-    @keyframes forest3DScroll {
-      0% { 
-        transform: translateX(100px) translateZ(200px);
-      }
-      100% { 
-        transform: translateX(calc(-50% + 100px)) translateZ(200px);
-      }
+    @keyframes damsoScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
     
-    /* カードデザイン - 3D看板風 */
+    /* damso.com風シンプルカード */
     .card {
-      min-width: 300px;
-      height: 360px;
+      min-width: 280px;
+      height: 350px;
       background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      padding: 40px;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 30px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -109,92 +101,35 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
-      
-      /* 3D変形効果 */
-      transform-style: preserve-3d;
-      animation: cardDepthEffect var(--scroll-speed, 60s) linear infinite;
-      
-      /* 初期状態は右奥に配置 */
-      transform: 
-        translateX(200px) 
-        translateZ(-300px) 
-        rotateY(-15deg) 
-        scale(0.7);
-      opacity: 0.3;
-      
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-    
-    @keyframes cardDepthEffect {
-      0% {
-        /* 右奥から登場 */
-        transform: 
-          translateX(200px) 
-          translateZ(-300px) 
-          rotateY(-15deg) 
-          scale(0.7);
-        opacity: 0.3;
-        filter: blur(2px);
-      }
-      
-      25% {
-        /* 右側で少し大きく */
-        transform: 
-          translateX(100px) 
-          translateZ(-150px) 
-          rotateY(-8deg) 
-          scale(0.85);
-        opacity: 0.7;
-        filter: blur(1px);
-      }
-      
-      50% {
-        /* 中央で最大 */
-        transform: 
-          translateX(0px) 
-          translateZ(0px) 
-          rotateY(0deg) 
-          scale(1.0);
-        opacity: 1.0;
-        filter: blur(0px);
-      }
-      
-      75% {
-        /* 左側で縮小開始 */
-        transform: 
-          translateX(-100px) 
-          translateZ(-150px) 
-          rotateY(8deg) 
-          scale(0.85);
-        opacity: 0.7;
-        filter: blur(1px);
-      }
-      
-      100% {
-        /* 左奥に消える */
-        transform: 
-          translateX(-200px) 
-          translateZ(-300px) 
-          rotateY(15deg) 
-          scale(0.7);
-        opacity: 0.3;
-        filter: blur(2px);
-      }
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
     }
     
     .card:hover {
-      transform: 
-        translateX(0px) 
-        translateZ(50px) 
-        rotateY(0deg) 
-        scale(1.05) !important;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-      border-color: #4CAF50;
-      opacity: 1.0 !important;
-      filter: blur(0px) !important;
-      z-index: 10;
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      border-color: #d0d0d0;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.1) 50%, 
+        rgba(255,255,255,0) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 8px;
+    }
+    
+    .card:hover::before {
+      opacity: 1;
     }
     
     .card-icon {
@@ -215,59 +150,31 @@
       line-height: 1.5;
     }
     
-    /* 芝生の道エリア */
-    .grass-path-area {
+    /* シンプルな細い道 */
+    .path-area {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 25px;
+      height: 8px;
       z-index: 100;
-      background: linear-gradient(to bottom, 
-        rgba(76, 175, 80, 0.1) 0%,
-        #4CAF50 60%,
-        #2E7D32 100%
-      );
-      transition: all 0.8s ease;
+      background: #f0f0f0;
+      border-top: 1px solid #e0e0e0;
     }
     
-    /* 芝生のテクスチャ */
-    .grass-path-area::before {
-      content: '';
+    /* 道の中央線 */
+    .path-line {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        repeating-linear-gradient(90deg,
-          transparent 0px, transparent 2px,
-          rgba(56, 142, 60, 0.3) 2px, rgba(56, 142, 60, 0.3) 3px,
-          transparent 3px, transparent 8px
-        ),
-        repeating-linear-gradient(0deg,
-          transparent 0px, transparent 1px,
-          rgba(102, 187, 106, 0.2) 1px, rgba(102, 187, 106, 0.2) 2px,
-          transparent 2px, transparent 4px
-        );
-      pointer-events: none;
-    }
-    
-    /* 芝生の道のライン */
-    .grass-line {
-      position: absolute;
-      bottom: 8px;
+      bottom: 3px;
       left: 0;
       width: 100%;
       height: 2px;
-      background: rgba(46, 125, 50, 0.8);
-      box-shadow: 
-        0 1px 2px rgba(0,0,0,0.2),
-        inset 0 1px 1px rgba(255,255,255,0.3);
+      background: #d0d0d0;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     }
     
-    /* 芝生の上の小さな草 */
-    .grass-blades {
+    /* 時々現れる雑草 */
+    .weeds {
       position: absolute;
       top: 0;
       left: 0;
@@ -277,263 +184,192 @@
       pointer-events: none;
     }
     
-    .grass-blade {
+    .weed {
       position: absolute;
-      bottom: 8px;
-      width: 2px;
-      height: 6px;
-      background: linear-gradient(to top, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%);
-      border-radius: 50% 50% 0 0;
-      animation: grassSway 3s ease-in-out infinite;
+      bottom: 2px;
+      font-size: 8px;
+      color: #4CAF50;
+      animation: weedSway 4s ease-in-out infinite;
       transform-origin: bottom center;
     }
     
-    .grass-blade:nth-child(1) { left: 5%; animation-delay: 0s; height: 5px; }
-    .grass-blade:nth-child(2) { left: 15%; animation-delay: -0.5s; height: 7px; }
-    .grass-blade:nth-child(3) { left: 25%; animation-delay: -1s; height: 4px; }
-    .grass-blade:nth-child(4) { left: 35%; animation-delay: -1.5s; height: 6px; }
-    .grass-blade:nth-child(5) { left: 45%; animation-delay: -2s; height: 5px; }
-    .grass-blade:nth-child(6) { left: 55%; animation-delay: -0.3s; height: 7px; }
-    .grass-blade:nth-child(7) { left: 65%; animation-delay: -0.8s; height: 4px; }
-    .grass-blade:nth-child(8) { left: 75%; animation-delay: -1.3s; height: 6px; }
-    .grass-blade:nth-child(9) { left: 85%; animation-delay: -1.8s; height: 5px; }
-    .grass-blade:nth-child(10) { left: 95%; animation-delay: -2.3s; height: 7px; }
+    .weed:nth-child(1) { left: 8%; animation-delay: 0s; }
+    .weed:nth-child(2) { left: 23%; animation-delay: -1s; }
+    .weed:nth-child(3) { left: 41%; animation-delay: -2s; }
+    .weed:nth-child(4) { left: 67%; animation-delay: -0.5s; }
+    .weed:nth-child(5) { left: 89%; animation-delay: -1.5s; }
     
-    @keyframes grassSway {
-      0%, 100% { transform: rotate(-3deg) scaleY(1); }
-      25% { transform: rotate(1deg) scaleY(1.1); }
-      50% { transform: rotate(3deg) scaleY(1); }
-      75% { transform: rotate(-1deg) scaleY(0.9); }
+    @keyframes weedSway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
     }
     
-    /* 棒人間（60px height） - 芝生の上に立つ */
+    /* 大きな棒人間（100px height） - 道の上に立つ */
     .tiny-character {
       position: fixed;
-      bottom: 25px;
+      bottom: 8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 60px;
-      height: 60px;
+      width: 100px;
+      height: 100px;
       z-index: 150;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
     }
     
-    .tiny-stick-figure {
+    .stick-figure {
       width: 100%;
       height: 100%;
-      stroke: #2C2C2C;
-      stroke-width: 2.5;
+      stroke: #333;
+      stroke-width: 3;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
     
-    .tiny-stick-figure circle {
-      fill: #2C2C2C;
+    .stick-figure circle {
+      fill: #333;
     }
     
-    /* 常時歩行アニメーション（デフォルト） */
-    .tiny-stick-figure {
-      animation: constantWalkBounce 1.2s infinite ease-in-out;
+    /* 自然な歩行アニメーション（GIF参考） */
+    .stick-figure {
+      animation: naturalWalkBounce 1.2s infinite ease-in-out;
     }
     
-    @keyframes constantWalkBounce {
-      0%, 100% { transform: translateY(0px); }
+    @keyframes naturalWalkBounce {
+      0% { transform: translateY(0px); }
       25% { transform: translateY(-1px); }
       50% { transform: translateY(0px); }
-      75% { transform: translateY(-0.5px); }
+      75% { transform: translateY(-1px); }
+      100% { transform: translateY(0px); }
     }
     
-    /* 常時歩行 - 腕の動き */
+    /* 腕の自然な振り（対称的な動き） */
     .left-arm {
-      animation: constantLeftArm 1.2s infinite ease-in-out;
-      transform-origin: 30px 18px;
+      animation: naturalLeftArm 1.2s infinite ease-in-out;
+      transform-origin: 50px 25px;
     }
     
     .right-arm {
-      animation: constantRightArm 1.2s infinite ease-in-out;
-      transform-origin: 30px 18px;
+      animation: naturalRightArm 1.2s infinite ease-in-out;
+      transform-origin: 50px 25px;
     }
     
-    /* 常時歩行 - 脚の動き */
-    .left-upper-leg {
-      animation: constantLeftUpperLeg 1.2s infinite ease-in-out;
-      transform-origin: 30px 38px;
+    @keyframes naturalLeftArm {
+      0% { transform: rotate(-25deg); }
+      25% { transform: rotate(-10deg); }
+      50% { transform: rotate(25deg); }
+      75% { transform: rotate(10deg); }
+      100% { transform: rotate(-25deg); }
     }
     
-    .left-lower-leg {
-      animation: constantLeftLowerLeg 1.2s infinite ease-in-out;
-      transform-origin: 26px 47px;
+    @keyframes naturalRightArm {
+      0% { transform: rotate(25deg); }
+      25% { transform: rotate(10deg); }
+      50% { transform: rotate(-25deg); }
+      75% { transform: rotate(-10deg); }
+      100% { transform: rotate(25deg); }
     }
     
-    .right-upper-leg {
-      animation: constantRightUpperLeg 1.2s infinite ease-in-out;
-      transform-origin: 30px 38px;
+    /* 脚の自然な歩行（より大きな動き） */
+    .left-leg {
+      animation: naturalLeftLeg 1.2s infinite ease-in-out;
+      transform-origin: 50px 65px;
     }
     
-    .right-lower-leg {
-      animation: constantRightLowerLeg 1.2s infinite ease-in-out;
-      transform-origin: 34px 47px;
+    .right-leg {
+      animation: naturalRightLeg 1.2s infinite ease-in-out;
+      transform-origin: 50px 65px;
     }
     
-    /* 常時歩行のアニメーション */
-    @keyframes constantLeftArm {
-      0%, 100% { transform: rotate(-15deg); }
+    @keyframes naturalLeftLeg {
+      0% { transform: rotate(-20deg); }
       25% { transform: rotate(-5deg); }
-      50% { transform: rotate(15deg); }
-      75% { transform: rotate(5deg); }
+      50% { transform: rotate(30deg); }
+      75% { transform: rotate(15deg); }
+      100% { transform: rotate(-20deg); }
     }
     
-    @keyframes constantRightArm {
-      0%, 100% { transform: rotate(15deg); }
-      25% { transform: rotate(5deg); }
-      50% { transform: rotate(-15deg); }
+    @keyframes naturalRightLeg {
+      0% { transform: rotate(30deg); }
+      25% { transform: rotate(15deg); }
+      50% { transform: rotate(-20deg); }
       75% { transform: rotate(-5deg); }
-    }
-    
-    @keyframes constantLeftUpperLeg {
-      0%, 100% { transform: rotate(-10deg); }
-      25% { transform: rotate(5deg); }
-      50% { transform: rotate(20deg); }
-      75% { transform: rotate(8deg); }
-    }
-    
-    @keyframes constantLeftLowerLeg {
-      0%, 100% { transform: rotate(5deg); }
-      25% { transform: rotate(-15deg); }
-      50% { transform: rotate(10deg); }
-      75% { transform: rotate(-3deg); }
-    }
-    
-    @keyframes constantRightUpperLeg {
-      0%, 100% { transform: rotate(20deg); }
-      25% { transform: rotate(8deg); }
-      50% { transform: rotate(-10deg); }
-      75% { transform: rotate(5deg); }
-    }
-    
-    @keyframes constantRightLowerLeg {
-      0%, 100% { transform: rotate(10deg); }
-      25% { transform: rotate(-3deg); }
-      50% { transform: rotate(5deg); }
-      75% { transform: rotate(-15deg); }
+      100% { transform: rotate(30deg); }
     }
     
     /* 走行モード（スクロール時） */
-    .running .tiny-stick-figure {
-      animation: runningBounce var(--walk-speed, 0.6s) infinite ease-in-out;
+    .running .stick-figure {
+      animation: naturalRunBounce var(--walk-speed, 0.6s) infinite ease-in-out;
     }
     
-    @keyframes runningBounce {
-      0%, 100% { transform: translateY(0px); }
+    @keyframes naturalRunBounce {
+      0% { transform: translateY(0px); }
       25% { transform: translateY(-3px); }
       50% { transform: translateY(0px); }
       75% { transform: translateY(-2px); }
+      100% { transform: translateY(0px); }
     }
     
     .running .left-arm {
-      animation: runningLeftArm var(--walk-speed, 0.6s) infinite ease-in-out;
+      animation: naturalRunLeftArm var(--walk-speed, 0.6s) infinite ease-in-out;
     }
     
     .running .right-arm {
-      animation: runningRightArm var(--walk-speed, 0.6s) infinite ease-in-out;
+      animation: naturalRunRightArm var(--walk-speed, 0.6s) infinite ease-in-out;
     }
     
-    .running .left-upper-leg {
-      animation: runningLeftUpperLeg var(--walk-speed, 0.6s) infinite ease-in-out;
+    .running .left-leg {
+      animation: naturalRunLeftLeg var(--walk-speed, 0.6s) infinite ease-in-out;
     }
     
-    .running .left-lower-leg {
-      animation: runningLeftLowerLeg var(--walk-speed, 0.6s) infinite ease-in-out;
+    .running .right-leg {
+      animation: naturalRunRightLeg var(--walk-speed, 0.6s) infinite ease-in-out;
     }
     
-    .running .right-upper-leg {
-      animation: runningRightUpperLeg var(--walk-speed, 0.6s) infinite ease-in-out;
+    @keyframes naturalRunLeftArm {
+      0% { transform: rotate(-40deg); }
+      25% { transform: rotate(-20deg); }
+      50% { transform: rotate(40deg); }
+      75% { transform: rotate(20deg); }
+      100% { transform: rotate(-40deg); }
     }
     
-    .running .right-lower-leg {
-      animation: runningRightLowerLeg var(--walk-speed, 0.6s) infinite ease-in-out;
+    @keyframes naturalRunRightArm {
+      0% { transform: rotate(40deg); }
+      25% { transform: rotate(20deg); }
+      50% { transform: rotate(-40deg); }
+      75% { transform: rotate(-20deg); }
+      100% { transform: rotate(40deg); }
     }
     
-    /* 走行時のアニメーション */
-    @keyframes runningLeftArm {
-      0%, 100% { transform: rotate(-30deg); }
-      25% { transform: rotate(-15deg); }
-      50% { transform: rotate(25deg); }
-      75% { transform: rotate(10deg); }
+    @keyframes naturalRunLeftLeg {
+      0% { transform: rotate(-30deg); }
+      25% { transform: rotate(-10deg); }
+      50% { transform: rotate(45deg); }
+      75% { transform: rotate(25deg); }
+      100% { transform: rotate(-30deg); }
     }
     
-    @keyframes runningRightArm {
-      0%, 100% { transform: rotate(25deg); }
-      25% { transform: rotate(10deg); }
+    @keyframes naturalRunRightLeg {
+      0% { transform: rotate(45deg); }
+      25% { transform: rotate(25deg); }
       50% { transform: rotate(-30deg); }
-      75% { transform: rotate(-15deg); }
+      75% { transform: rotate(-10deg); }
+      100% { transform: rotate(45deg); }
     }
     
-    @keyframes runningLeftUpperLeg {
-      0%, 100% { transform: rotate(-20deg); }
-      25% { transform: rotate(10deg); }
-      50% { transform: rotate(35deg); }
-      75% { transform: rotate(15deg); }
-    }
+    /* セクション別道の色 */
+    .section-apps .path-area { background: #f0f8f0; }
+    .section-company .path-area { background: #fff8f0; }
+    .section-members .path-area { background: #f8f0f8; }
+    .section-media .path-area { background: #f0f8ff; }
+    .section-contact .path-area { background: #fff0f0; }
     
-    @keyframes runningLeftLowerLeg {
-      0%, 100% { transform: rotate(10deg); }
-      25% { transform: rotate(-25deg); }
-      50% { transform: rotate(20deg); }
-      75% { transform: rotate(-8deg); }
-    }
-    
-    @keyframes runningRightUpperLeg {
-      0%, 100% { transform: rotate(35deg); }
-      25% { transform: rotate(15deg); }
-      50% { transform: rotate(-20deg); }
-      75% { transform: rotate(10deg); }
-    }
-    
-    @keyframes runningRightLowerLeg {
-      0%, 100% { transform: rotate(20deg); }
-      25% { transform: rotate(-8deg); }
-      50% { transform: rotate(10deg); }
-      75% { transform: rotate(-25deg); }
-    }
-    
-    /* セクション別芝生色 */
-    .section-apps .grass-path-area { 
-      background: linear-gradient(to bottom, 
-        rgba(76, 175, 80, 0.1) 0%,
-        #4CAF50 60%,
-        #2E7D32 100%
-      );
-    }
-    .section-company .grass-path-area { 
-      background: linear-gradient(to bottom, 
-        rgba(255, 179, 0, 0.1) 0%,
-        #FFB300 60%,
-        #FF8F00 100%
-      );
-    }
-    .section-members .grass-path-area { 
-      background: linear-gradient(to bottom, 
-        rgba(156, 39, 176, 0.1) 0%,
-        #9C27B0 60%,
-        #6A1B9A 100%
-      );
-    }
-    .section-media .grass-path-area { 
-      background: linear-gradient(to bottom, 
-        rgba(33, 150, 243, 0.1) 0%,
-        #2196F3 60%,
-        #1565C0 100%
-      );
-    }
-    .section-contact .grass-path-area { 
-      background: linear-gradient(to bottom, 
-        rgba(255, 87, 34, 0.1) 0%,
-        #FF5722 60%,
-        #D84315 100%
-      );
-    }
+    .section-apps .path-line { background: #4CAF50; }
+    .section-company .path-line { background: #FFB300; }
+    .section-members .path-line { background: #9C27B0; }
+    .section-media .path-line { background: #2196F3; }
+    .section-contact .path-line { background: #FF5722; }
     
     /* 高速歩行モード */
     .fast-walking .tiny-stick-figure {
@@ -549,22 +385,7 @@
       animation-duration: 0.3s !important;
     }
     
-    /* 森の道の雰囲気を追加 */
-    .cards-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(ellipse at 20% 50%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
-        linear-gradient(to bottom, transparent 60%, rgba(76, 175, 80, 0.05) 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-    
+    /* damso.com風のクリーンなエフェクト */
     .cards-container::after {
       content: '';
       position: absolute;
@@ -574,21 +395,12 @@
       bottom: 0;
       background: 
         linear-gradient(to right, 
-          rgba(255,255,255,0.8) 0%, 
-          transparent 20%, 
-          transparent 80%, 
-          rgba(255,255,255,0.8) 100%);
+          rgba(255,255,255,0.9) 0%, 
+          transparent 15%, 
+          transparent 85%, 
+          rgba(255,255,255,0.9) 100%);
       pointer-events: none;
       z-index: 2;
-    }
-    
-    /* 高速3Dモード */
-    .fast-3d-mode .card {
-      animation-duration: calc(var(--scroll-speed, 60s) * 0.5) !important;
-    }
-    
-    .fast-3d-mode .cards-track {
-      animation-duration: calc(var(--scroll-speed, 60s) * 0.5) !important;
     }
     
     /* パフォーマンス最適化 */
@@ -644,52 +456,18 @@
       
       /* モバイル用棒人間調整 */
       .tiny-character { 
-        width: 50px; 
-        height: 50px;
-        bottom: 25px;
+        width: 80px; 
+        height: 80px;
+        bottom: 8px;
       }
       
-      /* モバイル用芝生調整 */
-      .grass-path-area {
-        height: 25px;
+      /* モバイル用道調整 */
+      .path-area {
+        height: 8px;
       }
       
-      .grass-blade {
-        height: 4px;
-        width: 1.5px;
-      }
-      
-      /* モバイル用3D効果軽量化 */
-      @keyframes cardDepthEffect {
-        0% {
-          transform: 
-            translateX(150px) 
-            translateZ(-200px) 
-            rotateY(-10deg) 
-            scale(0.8);
-          opacity: 0.4;
-          filter: blur(1px);
-        }
-        
-        50% {
-          transform: 
-            translateX(0px) 
-            translateZ(0px) 
-            rotateY(0deg) 
-            scale(1.0);
-          opacity: 1.0;
-          filter: blur(0px);
-        }
-        
-        100% {
-          transform: 
-            translateX(-150px) 
-            translateZ(-200px) 
-            rotateY(10deg) 
-            scale(0.8);
-          opacity: 0.4;
-          filter: blur(1px);
-        }
+      .weed {
+        font-size: 6px;
       }
     }
     
@@ -708,8 +486,8 @@
         transition: all 0.2s ease;
       }
       
-      /* タッチ時の芝生反応 */
-      .grass-blade {
+      /* タッチ時の雑草反応 */
+      .weed {
         animation-duration: 2s;
       }
     }
@@ -737,38 +515,31 @@
     </div>
   </main>
   
-  <!-- 芝生の道エリア -->
-  <div class="grass-path-area">
-    <div class="grass-line"></div>
-    <div class="grass-blades">
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
-      <div class="grass-blade"></div>
+  <!-- シンプルな道エリア -->
+  <div class="path-area">
+    <div class="path-line"></div>
+    <div class="weeds">
+      <div class="weed">🌱</div>
+      <div class="weed">🌿</div>
+      <div class="weed">🌱</div>
+      <div class="weed">🍀</div>
+      <div class="weed">🌿</div>
     </div>
   </div>
   
-  <!-- 棒人間（60px） - 常時歩行・スクロール時走行 -->
+  <!-- 大きな棒人間（100px） - 常時歩行・スクロール時走行 -->
   <div class="tiny-character">
-    <svg class="tiny-stick-figure" id="tinyFigure" viewBox="0 0 60 60">
+    <svg class="stick-figure" id="stickFigure" viewBox="0 0 100 100">
       <!-- 頭 -->
-      <circle cx="30" cy="10" r="5"/>
+      <circle cx="50" cy="15" r="8"/>
       <!-- 体 -->
-      <line x1="30" y1="15" x2="30" y2="38"/>
+      <line x1="50" y1="23" x2="50" y2="65"/>
       <!-- 腕 -->
-      <line x1="30" y1="18" x2="22" y2="26" class="left-arm"/>
-      <line x1="30" y1="18" x2="38" y2="26" class="right-arm"/>
-      <!-- 膝関節付き脚 -->
-      <line x1="30" y1="38" x2="26" y2="47" class="left-upper-leg"/>
-      <line x1="26" y1="47" x2="22" y2="56" class="left-lower-leg"/>
-      <line x1="30" y1="38" x2="34" y2="47" class="right-upper-leg"/>
-      <line x1="34" y1="47" x2="38" y2="56" class="right-lower-leg"/>
+      <line x1="50" y1="25" x2="30" y2="45" class="left-arm"/>
+      <line x1="50" y1="25" x2="70" y2="45" class="right-arm"/>
+      <!-- 脚 -->
+      <line x1="50" y1="65" x2="35" y2="95" class="left-leg"/>
+      <line x1="50" y1="65" x2="65" y2="95" class="right-leg"/>
     </svg>
   </div>
   
@@ -1017,33 +788,33 @@
       
       startRunning() {
         this.isScrolling = true;
-        const figure = document.getElementById('tinyFigure');
+        const figure = document.getElementById('stickFigure');
         figure.classList.add('running');
         
-        // 芝生の揺れ効果
-        this.animateGrassOnRun();
+        // 雑草の揺れ効果
+        this.animateWeedsOnRun();
       }
       
       stopRunning() {
         this.isScrolling = false;
-        const figure = document.getElementById('tinyFigure');
+        const figure = document.getElementById('stickFigure');
         figure.classList.remove('running');
       }
       
-      animateGrassOnRun() {
-        const grassBlades = document.querySelectorAll('.grass-blade');
-        grassBlades.forEach((blade, index) => {
-          blade.style.animation = 'none';
-          blade.offsetHeight; // リフロー強制
-          blade.style.animation = `grassSway 0.5s ease-in-out infinite`;
-          blade.style.animationDelay = `${index * 0.05}s`;
+      animateWeedsOnRun() {
+        const weeds = document.querySelectorAll('.weed');
+        weeds.forEach((weed, index) => {
+          weed.style.animation = 'none';
+          weed.offsetHeight; // リフロー強制
+          weed.style.animation = `weedSway 0.3s ease-in-out infinite`;
+          weed.style.animationDelay = `${index * 0.03}s`;
         });
         
         setTimeout(() => {
-          grassBlades.forEach(blade => {
-            blade.style.animation = '';
+          weeds.forEach(weed => {
+            weed.style.animation = '';
           });
-        }, 1000);
+        }, 800);
       }
       
       navigateToSection(sectionName) {
