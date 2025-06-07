@@ -162,10 +162,18 @@ class WalkingHeroSystem {
           </div>
         </div>
         <div class="hero-body"></div>
-        <div class="hero-arm left"></div>
-        <div class="hero-arm right"></div>
-        <div class="hero-leg left"></div>
-        <div class="hero-leg right"></div>
+        <div class="hero-arm left">
+          <div class="hero-forearm"></div>
+        </div>
+        <div class="hero-arm right">
+          <div class="hero-forearm"></div>
+        </div>
+        <div class="hero-leg left">
+          <div class="hero-shin"></div>
+        </div>
+        <div class="hero-leg right">
+          <div class="hero-shin"></div>
+        </div>
       </div>
     `;
     
@@ -427,10 +435,6 @@ class WalkingHeroSystem {
     this.hero.classList.add('walking');
     this.hero.classList.remove('facing-left', 'facing-right');
     this.hero.classList.add(`facing-${this.walkDirection}`);
-    
-    // 歩行速度をスクロール速度に合わせる
-    const walkSpeed = Math.max(0.3, Math.min(1.5, this.scrollVelocity / 10));
-    this.hero.style.setProperty('--walk-duration', `${0.8 / walkSpeed}s`);
   }
   
   stopWalking() {

@@ -18,8 +18,7 @@
   --grass-media: #9ccc65;
   --grass-contact: #aed581;
   
-  /* 歩行アニメーション設定 */
-  --walk-duration: 0.8s;
+  /* アイドルアニメーション設定 */
   --idle-duration: 4s;
 }
 
@@ -143,25 +142,58 @@
   right: 8px;
 }
 
-/* 歩行アニメーション */
+/* 歩行アニメーション - 3フレーム */
+.walking-hero.walking .hero-body {
+  animation: torso-swing 0.45s steps(3) infinite;
+}
+
 .walking-hero.walking .hero-arm.left {
-  animation: armSwingLeft var(--walk-duration) ease-in-out infinite;
+  animation: arm-forward 0.45s steps(3) infinite;
 }
 
 .walking-hero.walking .hero-arm.right {
-  animation: armSwingRight var(--walk-duration) ease-in-out infinite;
+  animation: arm-backward 0.45s steps(3) infinite;
 }
 
 .walking-hero.walking .hero-leg.left {
-  animation: legStepLeft var(--walk-duration) ease-in-out infinite;
+  animation: thigh-backward 0.45s steps(3) infinite;
 }
 
 .walking-hero.walking .hero-leg.right {
-  animation: legStepRight var(--walk-duration) ease-in-out infinite;
+  animation: thigh-forward 0.45s steps(3) infinite;
 }
 
-.walking-hero.walking .hero-body {
-  animation: bodyBounce var(--walk-duration) ease-in-out infinite;
+/* 前腕のスタイル */
+.hero-forearm {
+  position: absolute;
+  width: 10px;
+  height: 30px;
+  background: linear-gradient(180deg, #ffdbcb 0%, #f4a261 100%);
+  border-radius: 5px;
+  bottom: -28px;
+  left: 1px;
+  transform-origin: top center;
+}
+
+/* 下腿のスタイル */
+.hero-shin {
+  position: absolute;
+  width: 12px;
+  height: 35px;
+  background: linear-gradient(180deg, #2c1810 0%, #1a1a1a 100%);
+  border-radius: 6px 6px 4px 4px;
+  bottom: -33px;
+  left: 1px;
+  transform-origin: top center;
+}
+
+/* 歩行時の前腕・下腿アニメーション */
+.walking-hero.walking .hero-forearm {
+  animation: shin-swing 0.45s steps(3) infinite;
+}
+
+.walking-hero.walking .hero-shin {
+  animation: shin-swing 0.45s steps(3) infinite;
 }
 
 /* アイドルアニメーション */
@@ -182,53 +214,46 @@
   transform: scaleX(1);
 }
 
-/* キーフレームアニメーション */
-@keyframes armSwingLeft {
-  0%, 100% { 
-    transform: rotate(-15deg); 
-  }
-  50% { 
-    transform: rotate(25deg); 
-  }
+/* キーフレームアニメーション - 3フレーム周期 */
+/* 体幹の微妙な前後傾斜 */
+@keyframes torso-swing {
+  0%, 100% { transform: rotate(7deg); }
+  33.333% { transform: rotate(0deg); }
+  66.666% { transform: rotate(-7deg); }
 }
 
-@keyframes armSwingRight {
-  0%, 100% { 
-    transform: rotate(15deg); 
-  }
-  50% { 
-    transform: rotate(-25deg); 
-  }
+/* 上腕: 振り幅 ±35° */
+@keyframes arm-forward {
+  0%, 100% { transform: rotate(35deg); }
+  33.333% { transform: rotate(0deg); }
+  66.666% { transform: rotate(-35deg); }
 }
 
-@keyframes legStepLeft {
-  0%, 100% { 
-    transform: rotate(-10deg) translateY(0px); 
-  }
-  50% { 
-    transform: rotate(20deg) translateY(-5px); 
-  }
+/* 逆相（後ろ腕用） */
+@keyframes arm-backward {
+  0%, 100% { transform: rotate(-35deg); }
+  33.333% { transform: rotate(0deg); }
+  66.666% { transform: rotate(35deg); }
 }
 
-@keyframes legStepRight {
-  0%, 100% { 
-    transform: rotate(10deg) translateY(0px); 
-  }
-  50% { 
-    transform: rotate(-20deg) translateY(-5px); 
-  }
+/* 太腿: 振り幅 ±30° */
+@keyframes thigh-forward {
+  0%, 100% { transform: rotate(30deg); }
+  33.333% { transform: rotate(0deg); }
+  66.666% { transform: rotate(-30deg); }
 }
 
-@keyframes bodyBounce {
-  0%, 100% { 
-    transform: translateX(-50%) translateY(0px); 
-  }
-  25%, 75% { 
-    transform: translateX(-50%) translateY(-2px); 
-  }
-  50% { 
-    transform: translateX(-50%) translateY(-4px); 
-  }
+@keyframes thigh-backward {
+  0%, 100% { transform: rotate(-30deg); }
+  33.333% { transform: rotate(0deg); }
+  66.666% { transform: rotate(30deg); }
+}
+
+/* 下腿/前腕: 膝の蹴り出し（最大 -60°） */
+@keyframes shin-swing {
+  0%, 100% { transform: rotate(0deg); }
+  33.333% { transform: rotate(-60deg); }
+  66.666% { transform: rotate(0deg); }
 }
 
 @keyframes idleBreathe {
