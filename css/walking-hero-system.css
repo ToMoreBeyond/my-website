@@ -101,6 +101,24 @@
   transform-origin: top center;
 }
 
+/* 手のスタイル */
+.hand {
+  width: 8px;
+  height: 8px;
+  top: 104px;
+  transform-origin: center;
+  border-radius: 50%;
+}
+
+/* 足のスタイル */
+.foot {
+  width: 12px;
+  height: 6px;
+  top: 182px;
+  transform-origin: center left;
+  border-radius: 0 3px 3px 0;
+}
+
 /* 右・左の水平位置差（サンプルと完全一致） */
 .right.upper,
 .right.lower {
@@ -109,6 +127,24 @@
 
 .left.upper,
 .left.lower {
+  left: 18px;
+}
+
+/* 手の左右位置 */
+.hand.right {
+  left: 24px;
+}
+
+.hand.left {
+  left: 16px;
+}
+
+/* 足の左右位置 */
+.foot.right {
+  left: 22px;
+}
+
+.foot.left {
   left: 18px;
 }
 
@@ -147,6 +183,24 @@
 
 .stickman.walking .leg.right.lower {
   animation: shin-swing 0.45s steps(3) infinite;
+}
+
+/* 手のアニメーション */
+.stickman.walking .hand.left {
+  animation: hand-swing-left 0.45s steps(3) infinite;
+}
+
+.stickman.walking .hand.right {
+  animation: hand-swing-right 0.45s steps(3) infinite;
+}
+
+/* 足のアニメーション */
+.stickman.walking .foot.left {
+  animation: foot-step-left 0.45s steps(3) infinite;
+}
+
+.stickman.walking .foot.right {
+  animation: foot-step-right 0.45s steps(3) infinite;
 }
 
 /* アイドルアニメーション */
@@ -216,6 +270,32 @@
   0%, 100% { transform: rotate(0deg); }
   33.333% { transform: rotate(-60deg); }
   66.666% { transform: rotate(0deg); }
+}
+
+/* 手首の自然な動き */
+@keyframes hand-swing-left {
+  0%, 100% { transform: rotate(10deg); }   /* 前方時：わずかに下向き */
+  33.333% { transform: rotate(0deg); }     /* 中央：水平 */
+  66.666% { transform: rotate(-15deg); }   /* 後方時：やや上向き */
+}
+
+@keyframes hand-swing-right {
+  0%, 100% { transform: rotate(-15deg); }  /* 後方時：やや上向き */
+  33.333% { transform: rotate(0deg); }     /* 中央：水平 */
+  66.666% { transform: rotate(10deg); }    /* 前方時：わずかに下向き */
+}
+
+/* 足首の接地動作 */
+@keyframes foot-step-left {
+  0%, 100% { transform: rotate(-20deg); }  /* 後方時：つま先上がり */
+  33.333% { transform: rotate(5deg); }     /* 振り出し時：つま先やや下がり */
+  66.666% { transform: rotate(0deg); }     /* 接地時：水平 */
+}
+
+@keyframes foot-step-right {
+  0%, 100% { transform: rotate(0deg); }    /* 接地時：水平 */
+  33.333% { transform: rotate(-15deg); }   /* 持ち上げ時：つま先上がり */
+  66.666% { transform: rotate(-20deg); }   /* 後方時：つま先上がり */
 }
 
 /* ===== アイドル状態のキーフレーム ===== */
@@ -575,6 +655,12 @@
 }
 
 .stickman.walking * {
+  will-change: transform;
+}
+
+/* 手と足の最適化 */
+.hand,
+.foot {
   will-change: transform;
 }
 

@@ -160,13 +160,17 @@ class WalkingHeroSystem {
           
           <div class="arm left upper"></div>
           <div class="arm left lower"></div>
+          <div class="hand left"></div>
           <div class="arm right upper"></div>
           <div class="arm right lower"></div>
+          <div class="hand right"></div>
           
           <div class="leg left upper"></div>
           <div class="leg left lower"></div>
+          <div class="foot left"></div>
           <div class="leg right upper"></div>
           <div class="leg right lower"></div>
+          <div class="foot right"></div>
         </div>
       </div>
     `;
@@ -433,7 +437,7 @@ class WalkingHeroSystem {
     const duration = 0.45 / walkSpeed;
     
     // すべてのアニメーション要素の速度を調整
-    const animatedElements = this.hero.querySelectorAll('[class*="arm"], [class*="leg"], .torso');
+    const animatedElements = this.hero.querySelectorAll('[class*="arm"], [class*="leg"], [class*="hand"], [class*="foot"], .torso');
     animatedElements.forEach(element => {
       element.style.animationDuration = `${duration}s`;
     });
