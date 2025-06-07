@@ -158,19 +158,15 @@ class WalkingHeroSystem {
           <div class="head"></div>
           <div class="torso"></div>
           
-          <div class="arm left upper">
-            <div class="arm left lower"></div>
-          </div>
-          <div class="arm right upper">
-            <div class="arm right lower"></div>
-          </div>
+          <div class="arm left upper"></div>
+          <div class="arm left lower"></div>
+          <div class="arm right upper"></div>
+          <div class="arm right lower"></div>
           
-          <div class="leg left upper">
-            <div class="leg left lower"></div>
-          </div>
-          <div class="leg right upper">
-            <div class="leg right lower"></div>
-          </div>
+          <div class="leg left upper"></div>
+          <div class="leg left lower"></div>
+          <div class="leg right upper"></div>
+          <div class="leg right lower"></div>
         </div>
       </div>
     `;
@@ -432,9 +428,9 @@ class WalkingHeroSystem {
     this.hero.classList.remove('idle');
     this.hero.classList.add('walking');
     
-    // 歩行速度をスクロール速度に合わせて調整
+    // 歩行速度をスクロール速度に合わせて調整（0.45s基準）
     const walkSpeed = Math.max(0.5, Math.min(2.0, this.scrollVelocity / 5));
-    const duration = 1 / walkSpeed;
+    const duration = 0.45 / walkSpeed;
     
     // すべてのアニメーション要素の速度を調整
     const animatedElements = this.hero.querySelectorAll('[class*="arm"], [class*="leg"], .torso');
