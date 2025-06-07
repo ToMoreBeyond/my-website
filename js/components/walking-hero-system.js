@@ -432,6 +432,16 @@ class WalkingHeroSystem {
     this.hero.classList.remove('idle');
     this.hero.classList.add('walking');
     
+    // 歩行速度をスクロール速度に合わせて調整
+    const walkSpeed = Math.max(0.5, Math.min(2.0, this.scrollVelocity / 5));
+    const duration = 1 / walkSpeed;
+    
+    // すべてのアニメーション要素の速度を調整
+    const animatedElements = this.hero.querySelectorAll('[class*="arm"], [class*="leg"], .torso');
+    animatedElements.forEach(element => {
+      element.style.animationDuration = `${duration}s`;
+    });
+    
     // 向きの制御を改善
     if (this.walkDirection === 'left') {
       this.hero.classList.add('face-left');

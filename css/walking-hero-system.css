@@ -44,8 +44,8 @@
   position: absolute;
   left: 50%;
   bottom: 0;
-  width: 48px;
-  height: 140px;
+  width: 60px;
+  height: 150px;
   transform: translateX(-50%);
   transform-origin: center bottom;
 }
@@ -53,122 +53,147 @@
 /* 全パーツ共通 */
 .stickman * {
   position: absolute;
-  background: #000;
+  background: #1a1a1a;
 }
 
 /* 頭部 */
 .head {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   top: 0;
-  left: 8px;
+  left: 12px;
   border-radius: 50%;
+  background: #2c2c2c;
 }
 
 /* 胴体 */
 .torso {
-  width: 8px;
-  height: 58px;
-  top: 32px;
-  left: 20px;
-  transform-origin: top center;
+  width: 10px;
+  height: 60px;
+  top: 36px;
+  left: 25px;
+  transform-origin: center top;
+  background: linear-gradient(180deg, #2c2c2c 0%, #1a1a1a 100%);
+  border-radius: 4px;
 }
 
 /* 上腕 */
 .arm.upper {
-  width: 6px;
-  height: 38px;
-  top: 36px;
-  transform-origin: top center;
+  width: 8px;
+  height: 40px;
+  top: 40px;
+  transform-origin: center top;
+  background: #2c2c2c;
+  border-radius: 4px;
+  z-index: 2;
 }
 
 /* 前腕 */
 .arm.lower {
   width: 6px;
-  height: 32px;
-  top: 36px;
-  left: 0;
-  transform-origin: top center;
+  height: 35px;
+  top: 35px;
+  left: 1px;
+  transform-origin: center top;
+  background: #333;
+  border-radius: 3px;
 }
 
 /* 太腿 */
 .leg.upper {
-  width: 8px;
-  height: 48px;
-  top: 90px;
-  transform-origin: top center;
+  width: 10px;
+  height: 50px;
+  top: 94px;
+  transform-origin: center top;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+  border-radius: 5px;
+  z-index: 2;
 }
 
 /* 下腿 */
 .leg.lower {
   width: 8px;
-  height: 46px;
-  top: 46px;
-  left: 0;
-  transform-origin: top center;
+  height: 48px;
+  top: 45px;
+  left: 1px;
+  transform-origin: center top;
+  background: #0a0a0a;
+  border-radius: 4px;
 }
 
 /* 左右の位置 */
 .arm.right.upper {
-  left: 22px;
+  left: 35px;
 }
 
 .arm.left.upper {
-  left: 18px;
+  left: 17px;
 }
 
 .leg.right.upper {
-  left: 22px;
+  left: 32px;
 }
 
 .leg.left.upper {
   left: 18px;
 }
 
-/* 歩行アニメーション - 3フレーム */
+/* 歩行アニメーション - 4つのキーフレーム */
 .stickman.walking .torso {
-  animation: torso-sw 0.45s steps(3) infinite;
+  animation: walk-torso 1s linear infinite;
 }
 
-.stickman.walking .arm.left.upper {
-  animation: arm-fwd 0.45s steps(3) infinite;
-}
-
-.stickman.walking .arm.left.lower {
-  animation: shin-swing 0.45s steps(3) infinite;
-}
-
+/* 右腕（左足と同期） */
 .stickman.walking .arm.right.upper {
-  animation: arm-back 0.45s steps(3) infinite;
+  animation: walk-arm-right 1s linear infinite;
 }
 
 .stickman.walking .arm.right.lower {
-  animation: shin-swing 0.45s steps(3) infinite;
+  animation: walk-forearm-right 1s linear infinite;
 }
 
-.stickman.walking .leg.left.upper {
-  animation: thigh-back 0.45s steps(3) infinite;
+/* 左腕（右足と同期） */
+.stickman.walking .arm.left.upper {
+  animation: walk-arm-left 1s linear infinite;
 }
 
-.stickman.walking .leg.left.lower {
-  animation: shin-swing 0.45s steps(3) infinite;
+.stickman.walking .arm.left.lower {
+  animation: walk-forearm-left 1s linear infinite;
 }
 
+/* 右脚（左腕と同期） */
 .stickman.walking .leg.right.upper {
-  animation: thigh-fwd 0.45s steps(3) infinite;
+  animation: walk-leg-right 1s linear infinite;
 }
 
 .stickman.walking .leg.right.lower {
-  animation: shin-swing 0.45s steps(3) infinite;
+  animation: walk-shin-right 1s linear infinite;
+}
+
+/* 左脚（右腕と同期） */
+.stickman.walking .leg.left.upper {
+  animation: walk-leg-left 1s linear infinite;
+}
+
+.stickman.walking .leg.left.lower {
+  animation: walk-shin-left 1s linear infinite;
 }
 
 /* アイドルアニメーション */
 .stickman.idle .torso {
-  animation: idleBreathe var(--idle-duration) ease-in-out infinite;
+  animation: idle-torso-breathe 3s ease-in-out infinite;
 }
 
 .stickman.idle .head {
-  animation: idleHeadMove calc(var(--idle-duration) * 1.5) ease-in-out infinite;
+  animation: idle-head-look 4s ease-in-out infinite;
+}
+
+.stickman.idle .arm.upper {
+  animation: idle-arm-sway 5s ease-in-out infinite;
+}
+
+.stickman.idle .leg.upper {
+  animation: idle-leg-shift 6s ease-in-out infinite;
 }
 
 /* 向きの変更（左右反転） */
@@ -180,67 +205,109 @@
   transform: translateX(-50%) scaleX(1);
 }
 
-/* キーフレームアニメーション - 3フレーム周期 */
-/* 体幹（わずかな前傾 → 後傾） */
-@keyframes torso-sw {
-  0%, 100% { transform: rotate(7deg); }
-  33.333% { transform: rotate(0deg); }
-  66.666% { transform: rotate(-7deg); }
+/* ===== 4段階歩行サイクル キーフレーム ===== */
+
+/* 胴体のわずかな前後傾斜 */
+@keyframes walk-torso {
+  0%, 100% { transform: rotate(2deg); }    /* 右足接地: わずか前傾 */
+  25% { transform: rotate(-1deg); }        /* 通過1: わずか後傾 */
+  50% { transform: rotate(2deg); }         /* 左足接地: わずか前傾 */
+  75% { transform: rotate(-1deg); }        /* 通過2: わずか後傾 */
 }
 
-/* 上腕：振り角およそ ±35° */
-@keyframes arm-fwd {
-  0%, 100% { transform: rotate(35deg); }
-  33.333% { transform: rotate(0deg); }
-  66.666% { transform: rotate(-35deg); }
+/* 右腕（左足と同期） */
+@keyframes walk-arm-right {
+  0%, 100% { transform: rotate(-45deg); }  /* 右足接地時: 右腕後方 */
+  25% { transform: rotate(-10deg); }       /* 通過1: 側面に近づく */
+  50% { transform: rotate(45deg); }        /* 左足接地時: 右腕前方 */
+  75% { transform: rotate(10deg); }        /* 通過2: 側面に近づく */
 }
 
-/* 逆相（後ろ腕用） */
-@keyframes arm-back {
-  0%, 100% { transform: rotate(-35deg); }
-  33.333% { transform: rotate(0deg); }
-  66.666% { transform: rotate(35deg); }
+/* 左腕（右足と同期） */
+@keyframes walk-arm-left {
+  0%, 100% { transform: rotate(45deg); }   /* 右足接地時: 左腕前方 */
+  25% { transform: rotate(10deg); }        /* 通過1: 側面に近づく */
+  50% { transform: rotate(-45deg); }       /* 左足接地時: 左腕後方 */
+  75% { transform: rotate(-10deg); }       /* 通過2: 側面に近づく */
 }
 
-/* 太腿：振り角およそ ±30° */
-@keyframes thigh-fwd {
-  0%, 100% { transform: rotate(30deg); }
-  33.333% { transform: rotate(0deg); }
-  66.666% { transform: rotate(-30deg); }
+/* 右脚（左腕と同期） */
+@keyframes walk-leg-right {
+  0%, 100% { transform: rotate(45deg); }   /* 右足接地時: 右足前方 */
+  25% { transform: rotate(0deg); }         /* 通過1: 体重支え */
+  50% { transform: rotate(-30deg); }       /* 左足接地時: 右足後方 */
+  75% { transform: rotate(-5deg); }        /* 通過2: 前方に振り出し中 */
 }
 
-@keyframes thigh-back {
-  0%, 100% { transform: rotate(-30deg); }
-  33.333% { transform: rotate(0deg); }
-  66.666% { transform: rotate(30deg); }
+/* 左脚（右腕と同期） */
+@keyframes walk-leg-left {
+  0%, 100% { transform: rotate(-30deg); }  /* 右足接地時: 左足後方 */
+  25% { transform: rotate(-5deg); }        /* 通過1: 前方に振り出し中 */
+  50% { transform: rotate(45deg); }        /* 左足接地時: 左足前方 */
+  75% { transform: rotate(0deg); }         /* 通過2: 体重支え */
 }
 
-/* 下腿：膝の蹴り出し（最大 −60°） */
-@keyframes shin-swing {
+/* 右前腕の自然な動き */
+@keyframes walk-forearm-right {
+  0%, 100% { transform: rotate(0deg); }    /* 基本姿勢 */
+  25% { transform: rotate(-15deg); }       /* わずかに曲がる */
+  50% { transform: rotate(5deg); }         /* 前方時はほぼ直線 */
+  75% { transform: rotate(-10deg); }       /* わずかに曲がる */
+}
+
+/* 左前腕の自然な動き */
+@keyframes walk-forearm-left {
+  0%, 100% { transform: rotate(5deg); }    /* 前方時はほぼ直線 */
+  25% { transform: rotate(-10deg); }       /* わずかに曲がる */
+  50% { transform: rotate(0deg); }         /* 基本姿勢 */
+  75% { transform: rotate(-15deg); }       /* わずかに曲がる */
+}
+
+/* 右下腿の膝の動き */
+@keyframes walk-shin-right {
+  0%, 100% { transform: rotate(-5deg); }   /* 接地時: わずかに前傾 */
+  25% { transform: rotate(-45deg); }       /* 通過時: 膝を大きく曲げる */
+  50% { transform: rotate(0deg); }         /* 後方時: 伸ばす */
+  75% { transform: rotate(-25deg); }       /* 振り出し時: 膝を曲げる */
+}
+
+/* 左下腿の膝の動き */
+@keyframes walk-shin-left {
+  0%, 100% { transform: rotate(0deg); }    /* 後方時: 伸ばす */
+  25% { transform: rotate(-25deg); }       /* 振り出し時: 膝を曲げる */
+  50% { transform: rotate(-5deg); }        /* 接地時: わずかに前傾 */
+  75% { transform: rotate(-45deg); }       /* 通過時: 膝を大きく曲げる */
+}
+
+/* ===== アイドル状態のキーフレーム ===== */
+
+/* 胴体の呼吸アニメーション */
+@keyframes idle-torso-breathe {
+  0%, 100% { transform: scaleY(1) rotate(0deg); }
+  50% { transform: scaleY(1.02) rotate(1deg); }
+}
+
+/* 頭の自然な動き */
+@keyframes idle-head-look {
   0%, 100% { transform: rotate(0deg); }
-  33.333% { transform: rotate(-60deg); }
-  66.666% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  50% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
 }
 
-@keyframes idleBreathe {
-  0%, 100% { 
-    transform: translateX(-50%) scaleY(1); 
-  }
-  50% { 
-    transform: translateX(-50%) scaleY(1.02); 
-  }
+/* 腕の微細な揺れ */
+@keyframes idle-arm-sway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2deg); }
+  50% { transform: rotate(-1deg); }
+  75% { transform: rotate(1deg); }
 }
 
-@keyframes idleHeadMove {
-  0%, 100% { 
-    transform: translateX(-50%) rotate(0deg); 
-  }
-  25% { 
-    transform: translateX(-50%) rotate(-2deg); 
-  }
-  75% { 
-    transform: translateX(-50%) rotate(2deg); 
-  }
+/* 脚の重心移動 */
+@keyframes idle-leg-shift {
+  0%, 100% { transform: rotate(0deg); }
+  33% { transform: rotate(1deg); }
+  66% { transform: rotate(-1deg); }
 }
 
 /* 無限スクロール看板コンテナ */
@@ -523,19 +590,67 @@
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
-  .walking-hero {
-    width: 60px;
-    height: 90px;
+  .stickman-wrapper {
+    width: 40px;
+    height: 120px;
   }
   
-  .hero-body {
-    width: 30px;
-    height: 45px;
+  .stickman {
+    width: 40px;
+    height: 120px;
   }
   
-  .hero-head {
-    width: 24px;
-    height: 24px;
+  .head {
+    width: 28px;
+    height: 28px;
+    left: 6px;
+  }
+  
+  .torso {
+    width: 8px;
+    height: 48px;
+    top: 28px;
+    left: 16px;
+  }
+  
+  .arm.upper {
+    width: 6px;
+    height: 32px;
+    top: 32px;
+  }
+  
+  .arm.lower {
+    width: 5px;
+    height: 28px;
+    top: 28px;
+  }
+  
+  .leg.upper {
+    width: 8px;
+    height: 40px;
+    top: 76px;
+  }
+  
+  .leg.lower {
+    width: 6px;
+    height: 38px;
+    top: 36px;
+  }
+  
+  .arm.right.upper {
+    left: 28px;
+  }
+  
+  .arm.left.upper {
+    left: 6px;
+  }
+  
+  .leg.right.upper {
+    left: 24px;
+  }
+  
+  .leg.left.upper {
+    left: 10px;
   }
   
   .floating-signboard {
@@ -568,13 +683,19 @@
   will-change: background-color;
 }
 
-.walking-hero * {
+.stickman * {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.stickman.walking * {
   will-change: transform;
 }
 
 /* GPU加速 */
 .infinite-signboards-container,
 .walking-hero-container,
-.floating-navigation {
+.floating-navigation,
+.stickman {
   transform: translateZ(0);
 }
