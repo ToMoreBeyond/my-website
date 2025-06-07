@@ -153,32 +153,30 @@ class WalkingHeroSystem {
     const heroContainer = document.createElement('div');
     heroContainer.className = 'walking-hero-container';
     heroContainer.innerHTML = `
-      <div class="walking-hero idle facing-right">
-        <div class="hero-head">
-          <div class="hero-face">
-            <div class="hero-eyes left"></div>
-            <div class="hero-eyes right"></div>
-            <div class="hero-mouth"></div>
+      <div class="stickman-wrapper">
+        <div class="stickman idle">
+          <div class="head"></div>
+          <div class="torso"></div>
+          
+          <div class="arm left upper">
+            <div class="arm left lower"></div>
           </div>
-        </div>
-        <div class="hero-body"></div>
-        <div class="hero-arm left">
-          <div class="hero-forearm"></div>
-        </div>
-        <div class="hero-arm right">
-          <div class="hero-forearm"></div>
-        </div>
-        <div class="hero-leg left">
-          <div class="hero-shin"></div>
-        </div>
-        <div class="hero-leg right">
-          <div class="hero-shin"></div>
+          <div class="arm right upper">
+            <div class="arm right lower"></div>
+          </div>
+          
+          <div class="leg left upper">
+            <div class="leg left lower"></div>
+          </div>
+          <div class="leg right upper">
+            <div class="leg right lower"></div>
+          </div>
         </div>
       </div>
     `;
     
     document.body.appendChild(heroContainer);
-    this.hero = heroContainer.querySelector('.walking-hero');
+    this.hero = heroContainer.querySelector('.stickman');
   }
   
   createSignboardsContainer() {
@@ -433,8 +431,15 @@ class WalkingHeroSystem {
     this.isWalking = true;
     this.hero.classList.remove('idle');
     this.hero.classList.add('walking');
-    this.hero.classList.remove('facing-left', 'facing-right');
-    this.hero.classList.add(`facing-${this.walkDirection}`);
+    
+    // 向きの制御を改善
+    if (this.walkDirection === 'left') {
+      this.hero.classList.add('face-left');
+      this.hero.classList.remove('face-right');
+    } else {
+      this.hero.classList.remove('face-left');
+      this.hero.classList.add('face-right');
+    }
   }
   
   stopWalking() {
