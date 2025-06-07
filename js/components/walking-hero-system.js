@@ -574,12 +574,6 @@ class WalkingHeroSystem {
 let walkingHeroSystem;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 既存のナビゲーションを隠す
-  const existingNav = document.querySelector('.nature-nav');
-  if (existingNav) {
-    existingNav.style.display = 'none';
-  }
-  
   // システムを開始
   walkingHeroSystem = new WalkingHeroSystem();
 });
