@@ -94,33 +94,35 @@
       transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
-    /* App design system準拠のカードデザイン */
+    /* TADATAKAアプリ完全準拠カードデザイン */
     .card {
-      min-width: 320px;
-      height: 380px;
+      min-width: 340px;
+      height: 420px;
       background: white;
-      border: 1px solid #E8E8E8;
-      border-radius: 24px;
-      padding: 32px 24px;
+      border: 1px solid #F0F0F0;
+      border-radius: 32px;
+      padding: 40px 32px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      justify-content: flex-start;
+      align-items: flex-start;
+      text-align: left;
       cursor: pointer;
-      transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
       box-shadow: 
-        0 2px 8px 0 rgba(0, 0, 0, 0.06);
+        0 4px 16px rgba(0, 0, 0, 0.04),
+        0 2px 4px rgba(0, 0, 0, 0.02);
       overflow: hidden;
     }
     
     .card:hover {
       transform: translateY(-8px);
       box-shadow: 
-        0 8px 32px 0 rgba(0, 0, 0, 0.12);
-      border-color: #D4D4D4;
+        0 20px 40px rgba(0, 0, 0, 0.12),
+        0 8px 24px rgba(255, 179, 0, 0.08);
+      border-color: #FFB300;
     }
     
     .card::before {
@@ -129,11 +131,11 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #FFB300, #FFE082);
+      height: 4px;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
     .card:hover::before {
@@ -144,53 +146,88 @@
       content: '';
       position: absolute;
       top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 179, 0, 0.08), transparent);
-      transition: left 500ms cubic-bezier(0.4, 0, 0.2, 1);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, 
+        rgba(255, 179, 0, 0.03) 0%, 
+        transparent 70%);
+      opacity: 0;
+      transition: opacity 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-radius: 32px;
     }
     
     .card:hover::after {
-      left: 100%;
+      opacity: 1;
     }
     
     .card-icon {
       width: 80px;
       height: 80px;
       background: linear-gradient(135deg, #FFB300, #FFE082);
-      border-radius: 24px;
+      border-radius: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
+      font-size: 2.5rem;
       margin-bottom: 24px;
       position: relative;
       overflow: hidden;
-      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: drop-shadow(0 4px 8px rgba(255, 179, 0, 0.2));
     }
     
     .card:hover .card-icon {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
     
     .card-title {
       font-family: 'Playfair Display', serif;
-      font-size: 24px;
+      font-size: 1.625rem;
       font-weight: 700;
-      color: #171717;
-      margin-bottom: 12px;
+      color: #1a1a1a;
+      margin-bottom: 16px;
       letter-spacing: -0.02em;
-      line-height: 1.2;
+      line-height: 1.3;
+      width: 100%;
     }
     
     .card-description {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 16px;
-      color: #525252;
+      font-size: 1rem;
+      color: #666666;
       line-height: 1.6;
       font-weight: 400;
       letter-spacing: -0.005em;
+      width: 100%;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+    
+    /* カード下部の機能リスト */
+    .card-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+    
+    .card-features li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      color: #666666;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+    
+    .card-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #FFB300;
+      font-weight: bold;
+      font-size: 1rem;
     }
     
     /* 本格的な道路システム */
@@ -243,49 +280,147 @@
       box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     
-    /* 道路脇の草地 */
-    .road-sides {
+    /* リアルな芝生エリア */
+    .grass-area {
       position: absolute;
-      top: -20px;
+      top: -80px;
       left: 0;
       width: 100%;
-      height: 20px;
-      background: linear-gradient(180deg, 
-        #4CAF50 0%,
-        #388E3C 100%
-      );
+      height: 80px;
+      background: 
+        /* 芝生のテクスチャ */
+        radial-gradient(ellipse at 20% 30%, #4A7C45 0%, transparent 5%),
+        radial-gradient(ellipse at 60% 10%, #5B8E54 0%, transparent 4%),
+        radial-gradient(ellipse at 80% 50%, #3D6E37 0%, transparent 5%),
+        radial-gradient(ellipse at 40% 70%, #4F8148 0%, transparent 3%),
+        radial-gradient(ellipse at 90% 80%, #5A8A51 0%, transparent 4%),
+        radial-gradient(ellipse at 10% 60%, #486F42 0%, transparent 5%),
+        radial-gradient(ellipse at 70% 40%, #4E7D47 0%, transparent 3%),
+        linear-gradient(to bottom, #4A7C45 0%, #3B6335 100%);
+      background-size: 
+        300px 200px,
+        250px 150px,
+        200px 180px,
+        280px 220px,
+        150px 120px,
+        220px 160px,
+        180px 140px,
+        100% 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 -3px 8px rgba(0,0,0,0.2);
+    }
+    
+    /* 芝生の質感オーバーレイ */
+    .grass-area::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          rgba(76, 175, 80, 0.1) 1px,
+          transparent 2px,
+          transparent 4px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          rgba(56, 142, 60, 0.08) 1px,
+          transparent 2px,
+          transparent 3px
+        );
+      mix-blend-mode: overlay;
+    }
+    
+    /* 芝生の個別ブレード */
+    .grass-blades {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
     }
     
-    /* 時々現れる道路標識や植物 */
-    .road-elements {
+    .grass-blade {
       position: absolute;
-      top: -15px;
+      bottom: 0;
+      width: 3px;
+      height: 15px;
+      background: linear-gradient(to top, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%);
+      border-radius: 100% 0 0 0;
+      transform-origin: bottom center;
+      animation: grassWave 4s ease-in-out infinite;
+      opacity: 0.8;
+    }
+    
+    @keyframes grassWave {
+      0%, 100% { transform: rotate(-3deg) scaleY(1); }
+      50% { transform: rotate(3deg) scaleY(1.1); }
+    }
+    
+    /* 道路標識や植物 */
+    .road-decorations {
+      position: absolute;
+      top: -65px;
       left: 0;
       width: 100%;
-      height: 15px;
-      overflow: hidden;
+      height: 65px;
       pointer-events: none;
     }
     
-    .road-element {
+    .decoration {
       position: absolute;
       bottom: 0;
-      font-size: 12px;
-      color: #2E7D32;
-      animation: elementSway 3s ease-in-out infinite;
-      transform-origin: bottom center;
     }
     
-    .road-element:nth-child(1) { left: 5%; animation-delay: 0s; }
-    .road-element:nth-child(2) { left: 20%; animation-delay: -1s; color: #795548; }
-    .road-element:nth-child(3) { left: 45%; animation-delay: -2s; }
-    .road-element:nth-child(4) { left: 70%; animation-delay: -0.5s; color: #795548; }
-    .road-element:nth-child(5) { left: 90%; animation-delay: -1.5s; }
+    .tree {
+      width: 40px;
+      height: 50px;
+      background: linear-gradient(to top, #5D4037 0%, #5D4037 30%, #388E3C 30%, #43A047 100%);
+      border-radius: 0 0 5px 5px / 0 0 10px 10px;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+    }
     
-    @keyframes elementSway {
-      0%, 100% { transform: rotate(-1deg); }
-      50% { transform: rotate(1deg); }
+    .tree::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -10px;
+      width: 60px;
+      height: 40px;
+      background: radial-gradient(ellipse, #43A047 0%, #388E3C 100%);
+      border-radius: 50%;
+      box-shadow: inset -2px -2px 6px rgba(0,0,0,0.2);
+    }
+    
+    .sign {
+      width: 4px;
+      height: 40px;
+      background: #616161;
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .sign::before {
+      content: '⚠️';
+      position: absolute;
+      top: -20px;
+      left: -16px;
+      width: 36px;
+      height: 36px;
+      background: #FFD600;
+      border: 3px solid #333;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     }
     
     /* 適切なサイズの棒人間（100px height） - 道の上に立つ */
@@ -490,28 +625,43 @@
       }
       
       .card { 
-        min-width: 280px; 
-        height: 320px; 
-        padding: 24px 20px;
-        border-radius: 20px;
+        min-width: 300px; 
+        height: 400px; 
+        padding: 28px 20px;
+        border-radius: 24px;
       }
       
       .card-icon { 
         width: 64px;
         height: 64px;
-        font-size: 32px;
+        font-size: 2rem;
         margin-bottom: 20px;
-        border-radius: 20px;
+        border-radius: 24px;
       }
       
       .card-title { 
-        font-size: 20px;
-        margin-bottom: 10px;
+        font-size: 1.25rem;
+        margin-bottom: 12px;
       }
       
       .card-description { 
-        font-size: 14px;
+        font-size: 0.875rem;
         line-height: 1.5;
+        margin-bottom: 16px;
+      }
+      
+      .card-features {
+        margin-top: auto;
+      }
+      
+      .card-features li {
+        padding: 6px 0;
+        padding-left: 20px;
+        font-size: 0.75rem;
+      }
+      
+      .card-features li::before {
+        font-size: 0.875rem;
       }
       
       /* モバイル用棒人間調整 - より見やすく */
@@ -595,15 +745,21 @@
   
   <!-- 本格的な道路エリア -->
   <div class="path-area">
-    <div class="road-sides"></div>
-    <div class="path-line"></div>
-    <div class="road-elements">
-      <div class="road-element">🌱</div>
-      <div class="road-element">🪧</div>
-      <div class="road-element">🌿</div>
-      <div class="road-element">⚠️</div>
-      <div class="road-element">🌳</div>
+    <!-- リアルな芝生エリア -->
+    <div class="grass-area">
+      <div class="grass-blades"></div>
     </div>
+    
+    <!-- 道路装飾 -->
+    <div class="road-decorations">
+      <div class="decoration tree" style="left: 8%;"></div>
+      <div class="decoration sign" style="left: 25%;"></div>
+      <div class="decoration tree" style="left: 45%;"></div>
+      <div class="decoration sign" style="left: 72%;"></div>
+      <div class="decoration tree" style="left: 88%;"></div>
+    </div>
+    
+    <div class="path-line"></div>
   </div>
   
   <!-- 3フレーム歩行アニメーション棒人間 - サンプル準拠 -->
@@ -702,20 +858,104 @@
   </div>
   
   <script>
-    // カードデータ
+    // カードデータ - TADATAKAアプリ詳細版
     const cardsData = [
-      { icon: '🗺️', title: 'TADATAKA', description: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
-      { icon: '🚽', title: 'ToiRun', description: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
-      { icon: '📍', title: 'Meet in the Middle', description: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
-      { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'pages/company.html' },
-      { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: '#' },
-      { icon: '👨‍💻', title: '山田', description: 'CDO / デザイナー', section: 'members', link: 'pages/member_yamada.html' },
-      { icon: '🚀', title: '正留', description: 'CEO / エンジニア', section: 'members', link: 'pages/member_masadome.html' },
-      { icon: '🎨', title: '安藤', description: 'アーティスト', section: 'members', link: 'pages/member_ando.html' },
-      { icon: '📰', title: 'ブログ', description: '開発の裏話', section: 'media', link: 'pages/media.html' },
-      { icon: '🎥', title: '動画', description: 'プロダクト紹介', section: 'media', link: '#' },
-      { icon: '📱', title: 'SNS', description: '日々の発信', section: 'media', link: '#' },
-      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: '#' }
+      { 
+        icon: '🗺️', 
+        title: 'TADATAKA', 
+        description: 'GPS/BLEによる自動経路記録で、あなたの日々の移動や思い出を美しい地図で振り返ることができます。', 
+        features: ['自動経路記録', '美しい地図表示', 'プライバシー保護'],
+        section: 'apps', 
+        link: 'pages/tadataka.html' 
+      },
+      { 
+        icon: '🚽', 
+        title: 'ToiRun', 
+        description: '現在地から最も近いトイレを瞬時に検索し、最短ルートで案内する緊急時対応アプリです。', 
+        features: ['現在地から検索', '最短ルート案内', 'リアルタイム情報'],
+        section: 'apps', 
+        link: 'pages/toirun.html' 
+      },
+      { 
+        icon: '📍', 
+        title: 'Meet in the Middle', 
+        description: '複数の出発地点から最も便利な集合場所を AI が自動計算し、みんなが納得できる待ち合わせを実現します。', 
+        features: ['AI自動計算', '複数地点対応', '最適化アルゴリズム'],
+        section: 'apps', 
+        link: 'pages/midpoint.html' 
+      },
+      { 
+        icon: '🏢', 
+        title: '会社概要', 
+        description: '「面白いことだけをする」をモットーに、道なき道を切り開くテクノロジーカンパニーです。', 
+        features: ['革新的技術', 'ユーザー第一', '持続可能性'],
+        section: 'company', 
+        link: 'pages/company.html' 
+      },
+      { 
+        icon: '🎯', 
+        title: 'ミッション', 
+        description: 'より良い未来を創造するため、最先端のAI技術とイノベーションで社会課題を解決します。', 
+        features: ['AI技術活用', '社会課題解決', 'イノベーション'],
+        section: 'company', 
+        link: '#' 
+      },
+      { 
+        icon: '👨‍💻', 
+        title: '山田', 
+        description: 'CDO兼デザイナーとして、ユーザー体験の向上とブランドデザインを統括しています。', 
+        features: ['UX/UIデザイン', 'ブランディング', 'プロダクト戦略'],
+        section: 'members', 
+        link: 'pages/member_yamada.html' 
+      },
+      { 
+        icon: '🚀', 
+        title: '正留', 
+        description: 'CEO兼エンジニアとして、技術的な意思決定と事業戦略の両面を担当しています。', 
+        features: ['技術統括', '事業戦略', 'チームマネジメント'],
+        section: 'members', 
+        link: 'pages/member_masadome.html' 
+      },
+      { 
+        icon: '🎨', 
+        title: '安藤', 
+        description: 'アーティスト兼アニメーターとして、プロダクトに生命を吹き込む創造的な表現を担当しています。', 
+        features: ['アニメーション', 'ビジュアルアート', 'クリエイティブ'],
+        section: 'members', 
+        link: 'pages/member_ando.html' 
+      },
+      { 
+        icon: '📰', 
+        title: 'ブログ', 
+        description: '開発の舞台裏、技術的な挑戦、チームの成長について詳しくお伝えしています。', 
+        features: ['開発ブログ', '技術記事', 'チーム紹介'],
+        section: 'media', 
+        link: 'pages/media.html' 
+      },
+      { 
+        icon: '🎥', 
+        title: '動画コンテンツ', 
+        description: 'プロダクトの使い方、開発プロセス、会社文化を分かりやすい動画で紹介しています。', 
+        features: ['プロダクト紹介', '使い方ガイド', '会社紹介'],
+        section: 'media', 
+        link: '#' 
+      },
+      { 
+        icon: '📱', 
+        title: 'SNS', 
+        description: '日々の開発進捗、新機能のお知らせ、業界のトレンドなどをリアルタイムで発信しています。', 
+        features: ['リアルタイム更新', '開発進捗', '業界情報'],
+        section: 'media', 
+        link: '#' 
+      },
+      { 
+        icon: '💌', 
+        title: 'お問い合わせ', 
+        description: 'プロダクトについてのご質問、お仕事のご相談、取材依頼など、お気軽にご連絡ください。', 
+        features: ['迅速な対応', '丁寧なサポート', '多様な相談受付'],
+        section: 'contact', 
+        link: '#' 
+      }
     ];
     
     class MinimalSite {
@@ -740,12 +980,39 @@
       
       init() {
         this.createCards();
+        this.createGrassBlades();
         this.setupEventListeners();
         // カードが確実に表示されてから初期化
         setTimeout(() => {
           this.startAutoScroll();
           this.optimizePerformance();
         }, 100);
+      }
+      
+      createGrassBlades() {
+        const grassContainer = document.querySelector('.grass-blades');
+        if (!grassContainer) return;
+        
+        // 芝生の個別ブレードを生成
+        for (let i = 0; i < 150; i++) {
+          const blade = document.createElement('div');
+          blade.className = 'grass-blade';
+          blade.style.left = Math.random() * 100 + '%';
+          blade.style.height = (10 + Math.random() * 15) + 'px';
+          blade.style.animationDelay = Math.random() * 4 + 's';
+          blade.style.opacity = 0.6 + Math.random() * 0.4;
+          
+          // ランダムな緑の色調
+          const greenVariations = [
+            'linear-gradient(to top, #2E7D32 0%, #4CAF50 50%, #66BB6A 100%)',
+            'linear-gradient(to top, #1B5E20 0%, #388E3C 50%, #4CAF50 100%)',
+            'linear-gradient(to top, #2E7D32 0%, #43A047 50%, #81C784 100%)',
+            'linear-gradient(to top, #1B5E20 0%, #2E7D32 50%, #388E3C 100%)'
+          ];
+          blade.style.background = greenVariations[Math.floor(Math.random() * greenVariations.length)];
+          
+          grassContainer.appendChild(blade);
+        }
       }
       
       optimizePerformance() {
@@ -854,11 +1121,17 @@
         // 2セット作成（無限スクロール用）
         for (let set = 0; set < 2; set++) {
           cardsData.forEach(data => {
+            const featuresHTML = data.features ? 
+              `<ul class="card-features">
+                ${data.features.map(feature => `<li>${feature}</li>`).join('')}
+              </ul>` : '';
+            
             cardsHTML.push(`
               <div class="card" data-section="${data.section}" data-link="${data.link}">
                 <div class="card-icon">${data.icon}</div>
                 <h3 class="card-title">${data.title}</h3>
                 <p class="card-description">${data.description}</p>
+                ${featuresHTML}
               </div>
             `);
           });
@@ -972,7 +1245,7 @@
         this.currentScrollOffset = (this.currentScrollOffset || 0) + (scrollDirection * actualScroll);
         
         // 無限スクロールの滑らかなループ処理
-        const cardWidth = 340; // カード幅(320px) + gap(20px)
+        const cardWidth = 360; // カード幅(340px) + gap(20px)
         const totalWidth = cardWidth * cardsData.length;
         const halfWidth = totalWidth / 2;
         
