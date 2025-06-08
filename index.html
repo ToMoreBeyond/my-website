@@ -242,14 +242,14 @@
       50% { transform: rotate(2deg); }
     }
     
-    /* 適切なサイズの棒人間（80px height） - 道の上に立つ */
+    /* 適切なサイズの棒人間（100px height） - 道の上に立つ */
     .tiny-character {
       position: fixed;
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%) translateZ(0);
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       z-index: 150;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
       contain: layout style paint;
@@ -280,7 +280,7 @@
       opacity: 1;
     }
     
-    /* 歩行中の6フレームアニメーション */
+    /* 歩行中の3フレームアニメーション - サンプル準拠 */
     .walking .walk-frame.frame1 {
       animation: showFrame1 0.6s steps(1) infinite;
     }
@@ -293,50 +293,20 @@
       animation: showFrame3 0.6s steps(1) infinite;
     }
     
-    .walking .walk-frame.frame4 {
-      animation: showFrame4 0.6s steps(1) infinite;
-    }
-    
-    .walking .walk-frame.frame5 {
-      animation: showFrame5 0.6s steps(1) infinite;
-    }
-    
-    .walking .walk-frame.frame6 {
-      animation: showFrame6 0.6s steps(1) infinite;
-    }
-    
     @keyframes showFrame1 {
-      0%, 16.66% { opacity: 1; }
-      16.67%, 100% { opacity: 0; }
-    }
-    
-    @keyframes showFrame2 {
-      0%, 16.66% { opacity: 0; }
-      16.67%, 33.33% { opacity: 1; }
+      0%, 33.33% { opacity: 1; }
       33.34%, 100% { opacity: 0; }
     }
     
-    @keyframes showFrame3 {
+    @keyframes showFrame2 {
       0%, 33.33% { opacity: 0; }
-      33.34%, 50% { opacity: 1; }
-      50.01%, 100% { opacity: 0; }
-    }
-    
-    @keyframes showFrame4 {
-      0%, 50% { opacity: 0; }
-      50.01%, 66.66% { opacity: 1; }
+      33.34%, 66.66% { opacity: 1; }
       66.67%, 100% { opacity: 0; }
     }
     
-    @keyframes showFrame5 {
+    @keyframes showFrame3 {
       0%, 66.66% { opacity: 0; }
-      66.67%, 83.33% { opacity: 1; }
-      83.34%, 100% { opacity: 0; }
-    }
-    
-    @keyframes showFrame6 {
-      0%, 83.33% { opacity: 0; }
-      83.34%, 100% { opacity: 1; }
+      66.67%, 100% { opacity: 1; }
     }
     
     /* 左右の向き対応 */
@@ -364,10 +334,7 @@
     /* 高速歩行モード - スムーズな走行 */
     .walking.fast-walking .walk-frame.frame1,
     .walking.fast-walking .walk-frame.frame2,
-    .walking.fast-walking .walk-frame.frame3,
-    .walking.fast-walking .walk-frame.frame4,
-    .walking.fast-walking .walk-frame.frame5,
-    .walking.fast-walking .walk-frame.frame6 {
+    .walking.fast-walking .walk-frame.frame3 {
       animation-duration: 0.3s !important;
     }
     
@@ -380,10 +347,7 @@
     /* 低性能デバイス向け最適化 */
     .low-performance-mode .walking .walk-frame.frame1,
     .low-performance-mode .walking .walk-frame.frame2,
-    .low-performance-mode .walking .walk-frame.frame3,
-    .low-performance-mode .walking .walk-frame.frame4,
-    .low-performance-mode .walking .walk-frame.frame5,
-    .low-performance-mode .walking .walk-frame.frame6 {
+    .low-performance-mode .walking .walk-frame.frame3 {
       animation-duration: 0.8s !important;
       will-change: auto;
     }
@@ -493,13 +457,13 @@
       
       /* モバイル用棒人間調整 - より見やすく */
       .tiny-character { 
-        width: 60px; 
-        height: 60px;
+        width: 80px; 
+        height: 80px;
         bottom: 10px;
       }
       
       .walk-frame g {
-        stroke-width: 3;
+        stroke-width: 5;
       }
       
       /* モバイル用道調整 */
@@ -585,139 +549,73 @@
     </div>
   </div>
   
-  <!-- 6フレーム歩行アニメーション棒人間 -->
+  <!-- 3フレーム歩行アニメーション棒人間 - サンプル準拠 -->
   <div class="tiny-character">
     <div class="walking-animation-container">
       
-      <!-- フレーム1: 左脚前・右腕前 -->
-      <svg class="walk-frame frame1" viewBox="0 0 80 80">
-        <g stroke="#333" stroke-width="4" stroke-linecap="round" fill="none">
+      <!-- フレーム1: 歩行ポーズ（左脚前） -->
+      <svg class="walk-frame frame1" viewBox="0 0 100 150">
+        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
           <!-- 頭 -->
-          <circle cx="40" cy="15" r="7" fill="#333" stroke="none"/>
+          <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
           <!-- 胴体 -->
-          <line x1="40" y1="22" x2="40" y2="45"/>
+          <line x1="50" y1="32" x2="50" y2="65"/>
           <!-- 左腕（後ろ） -->
-          <line x1="40" y1="28" x2="44" y2="35"/>
-          <line x1="44" y1="35" x2="43" y2="44"/>
+          <line x1="50" y1="40" x2="56" y2="50"/>
+          <line x1="56" y1="50" x2="62" y2="67"/>
           <!-- 右腕（前） -->
-          <line x1="40" y1="28" x2="35" y2="34"/>
-          <line x1="35" y1="34" x2="36" y2="43"/>
+          <line x1="50" y1="40" x2="42" y2="53"/>
+          <line x1="42" y1="53" x2="40" y2="70"/>
           <!-- 左脚（前） -->
-          <line x1="40" y1="45" x2="36" y2="58"/>
-          <line x1="36" y1="58" x2="35" y2="72"/>
+          <line x1="50" y1="65" x2="40" y2="85"/>
+          <line x1="40" y1="85" x2="35" y2="110"/>
           <!-- 右脚（後） -->
-          <line x1="40" y1="45" x2="44" y2="58"/>
-          <line x1="44" y1="58" x2="43" y2="72"/>
+          <line x1="50" y1="65" x2="58" y2="85"/>
+          <line x1="58" y1="85" x2="65" y2="105"/>
         </g>
       </svg>
       
-      <!-- フレーム2: 左脚接地・右腕前進継続 -->
-      <svg class="walk-frame frame2" viewBox="0 0 80 80">
-        <g stroke="#333" stroke-width="4" stroke-linecap="round" fill="none">
+      <!-- フレーム2: 歩行ポーズ（脚交差） -->
+      <svg class="walk-frame frame2" viewBox="0 0 100 150">
+        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
           <!-- 頭 -->
-          <circle cx="40" cy="15" r="7" fill="#333" stroke="none"/>
+          <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
           <!-- 胴体 -->
-          <line x1="40" y1="22" x2="40" y2="45"/>
-          <!-- 左腕（やや後ろ） -->
-          <line x1="40" y1="28" x2="43" y2="35"/>
-          <line x1="43" y1="35" x2="42" y2="44"/>
-          <!-- 右腕（最大前） -->
-          <line x1="40" y1="28" x2="34" y2="33"/>
-          <line x1="34" y1="33" x2="32" y2="42"/>
-          <!-- 左脚（接地） -->
-          <line x1="40" y1="45" x2="35" y2="58"/>
-          <line x1="35" y1="58" x2="34" y2="72"/>
-          <!-- 右脚（後・離地準備） -->
-          <line x1="40" y1="45" x2="44" y2="57"/>
-          <line x1="44" y1="57" x2="45" y2="70"/>
+          <line x1="50" y1="32" x2="50" y2="65"/>
+          <!-- 左腕 -->
+          <line x1="50" y1="40" x2="45" y2="55"/>
+          <line x1="45" y1="55" x2="44" y2="72"/>
+          <!-- 右腕 -->
+          <line x1="50" y1="40" x2="55" y2="55"/>
+          <line x1="55" y1="55" x2="56" y2="72"/>
+          <!-- 左脚（移動中） -->
+          <line x1="50" y1="65" x2="48" y2="85"/>
+          <line x1="48" y1="85" x2="50" y2="110"/>
+          <!-- 右脚（前へ） -->
+          <line x1="50" y1="65" x2="52" y2="85"/>
+          <line x1="52" y1="85" x2="50" y2="110"/>
         </g>
       </svg>
       
-      <!-- フレーム3: 中間姿勢・腕脚交代開始 -->
-      <svg class="walk-frame frame3" viewBox="0 0 80 80">
-        <g stroke="#333" stroke-width="4" stroke-linecap="round" fill="none">
+      <!-- フレーム3: 歩行ポーズ（右脚前） -->
+      <svg class="walk-frame frame3" viewBox="0 0 100 150">
+        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
           <!-- 頭 -->
-          <circle cx="40" cy="15" r="7" fill="#333" stroke="none"/>
+          <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
           <!-- 胴体 -->
-          <line x1="40" y1="22" x2="40" y2="45"/>
-          <!-- 左腕（中央） -->
-          <line x1="40" y1="28" x2="41" y2="37"/>
-          <line x1="41" y1="37" x2="40" y2="46"/>
-          <!-- 右腕（中央） -->
-          <line x1="40" y1="28" x2="39" y2="37"/>
-          <line x1="39" y1="37" x2="40" y2="46"/>
-          <!-- 左脚（支持中央） -->
-          <line x1="40" y1="45" x2="39" y2="58"/>
-          <line x1="39" y1="58" x2="39" y2="72"/>
-          <!-- 右脚（振り出し中央） -->
-          <line x1="40" y1="45" x2="41" y2="58"/>
-          <line x1="41" y1="58" x2="41" y2="72"/>
-        </g>
-      </svg>
-      
-      <!-- フレーム4: 右脚前・左腕前 -->
-      <svg class="walk-frame frame4" viewBox="0 0 80 80">
-        <g stroke="#333" stroke-width="4" stroke-linecap="round" fill="none">
-          <!-- 頭 -->
-          <circle cx="40" cy="15" r="7" fill="#333" stroke="none"/>
-          <!-- 胴体 -->
-          <line x1="40" y1="22" x2="40" y2="45"/>
+          <line x1="50" y1="32" x2="50" y2="65"/>
           <!-- 左腕（前） -->
-          <line x1="40" y1="28" x2="35" y2="34"/>
-          <line x1="35" y1="34" x2="36" y2="43"/>
+          <line x1="50" y1="40" x2="42" y2="53"/>
+          <line x1="42" y1="53" x2="40" y2="70"/>
           <!-- 右腕（後ろ） -->
-          <line x1="40" y1="28" x2="44" y2="35"/>
-          <line x1="44" y1="35" x2="43" y2="44"/>
+          <line x1="50" y1="40" x2="56" y2="50"/>
+          <line x1="56" y1="50" x2="62" y2="67"/>
           <!-- 左脚（後） -->
-          <line x1="40" y1="45" x2="36" y2="58"/>
-          <line x1="36" y1="58" x2="37" y2="72"/>
+          <line x1="50" y1="65" x2="58" y2="85"/>
+          <line x1="58" y1="85" x2="65" y2="105"/>
           <!-- 右脚（前） -->
-          <line x1="40" y1="45" x2="44" y2="58"/>
-          <line x1="44" y1="58" x2="45" y2="72"/>
-        </g>
-      </svg>
-      
-      <!-- フレーム5: 右脚接地・左腕前進継続 -->
-      <svg class="walk-frame frame5" viewBox="0 0 80 80">
-        <g stroke="#333" stroke-width="4" stroke-linecap="round" fill="none">
-          <!-- 頭 -->
-          <circle cx="40" cy="15" r="7" fill="#333" stroke="none"/>
-          <!-- 胴体 -->
-          <line x1="40" y1="22" x2="40" y2="45"/>
-          <!-- 左腕（最大前） -->
-          <line x1="40" y1="28" x2="34" y2="33"/>
-          <line x1="34" y1="33" x2="32" y2="42"/>
-          <!-- 右腕（やや後ろ） -->
-          <line x1="40" y1="28" x2="43" y2="35"/>
-          <line x1="43" y1="35" x2="42" y2="44"/>
-          <!-- 左脚（後・離地準備） -->
-          <line x1="40" y1="45" x2="36" y2="57"/>
-          <line x1="36" y1="57" x2="35" y2="70"/>
-          <!-- 右脚（接地） -->
-          <line x1="40" y1="45" x2="45" y2="58"/>
-          <line x1="45" y1="58" x2="46" y2="72"/>
-        </g>
-      </svg>
-      
-      <!-- フレーム6: 中間姿勢・腕脚交代完了へ -->
-      <svg class="walk-frame frame6" viewBox="0 0 80 80">
-        <g stroke="#333" stroke-width="4" stroke-linecap="round" fill="none">
-          <!-- 頭 -->
-          <circle cx="40" cy="15" r="7" fill="#333" stroke="none"/>
-          <!-- 胴体 -->
-          <line x1="40" y1="22" x2="40" y2="45"/>
-          <!-- 左腕（中央） -->
-          <line x1="40" y1="28" x2="39" y2="37"/>
-          <line x1="39" y1="37" x2="40" y2="46"/>
-          <!-- 右腕（中央） -->
-          <line x1="40" y1="28" x2="41" y2="37"/>
-          <line x1="41" y1="37" x2="40" y2="46"/>
-          <!-- 左脚（振り出し中央） -->
-          <line x1="40" y1="45" x2="39" y2="58"/>
-          <line x1="39" y1="58" x2="39" y2="72"/>
-          <!-- 右脚（支持中央） -->
-          <line x1="40" y1="45" x2="41" y2="58"/>
-          <line x1="41" y1="58" x2="41" y2="72"/>
+          <line x1="50" y1="65" x2="40" y2="85"/>
+          <line x1="40" y1="85" x2="35" y2="110"/>
         </g>
       </svg>
       
