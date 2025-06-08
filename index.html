@@ -255,156 +255,67 @@
       contain: layout style paint;
       will-change: transform;
       backface-visibility: hidden;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      transition: filter 0.3s ease;
     }
     
-    /* 左向き（逆方向スクロール時） */
-    .tiny-character.facing-left {
-      transform: translateX(-50%) scaleX(-1) translateZ(0);
-    }
     
-    /* 右向き（通常） */
-    .tiny-character.facing-right {
-      transform: translateX(-50%) scaleX(1) translateZ(0);
-    }
-    
-    .stick-figure {
+    /* 3フレーム歩行アニメーション */
+    .walking-animation-container {
+      position: relative;
       width: 100%;
       height: 100%;
-      stroke: #333;
-      stroke-width: 3;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      shape-rendering: optimizeSpeed;
-      contain: layout style;
-      will-change: transform;
     }
     
-    .stick-figure circle {
-      fill: #333;
-      contain: layout style paint;
+    .walk-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
     }
     
-    /* デフォルトは静止状態 */
-    .stick-figure {
-      will-change: transform;
+    /* アイドル状態は最初のフレームを表示 */
+    .tiny-character:not(.walking) .walk-frame.frame1 {
+      opacity: 1;
     }
     
-    /* 歩行中のみアニメーション - 3フレーム方式 */
-    .walking .stick-figure {
-      animation: naturalWalk 0.45s steps(3) infinite;
+    /* 歩行中の3フレームアニメーション */
+    .walking .walk-frame.frame1 {
+      animation: showFrame1 0.45s steps(1) infinite;
     }
     
-    @keyframes naturalWalk {
-      0%, 100% { transform: translateY(0px); }
-      33.333% { transform: translateY(-1px); }
-      66.666% { transform: translateY(-2px); }
+    .walking .walk-frame.frame2 {
+      animation: showFrame2 0.45s steps(1) infinite;
     }
     
-    /* 腕と脚はデフォルトで静止 */
-    .left-arm, .right-arm, .left-leg, .right-leg {
-      transform-origin: 40px 24px;
-      will-change: transform;
-      transform: rotate(0deg);
+    .walking .walk-frame.frame3 {
+      animation: showFrame3 0.45s steps(1) infinite;
     }
     
-    .left-leg, .right-leg {
-      transform-origin: 40px 52px;
+    @keyframes showFrame1 {
+      0%, 33.33% { opacity: 1; }
+      33.34%, 100% { opacity: 0; }
     }
     
-    /* 歩行中の左腕 - サンプル仕様通り ±35° */
-    .walking .left-arm {
-      animation: leftArmRealistic 0.45s steps(3) infinite;
+    @keyframes showFrame2 {
+      0%, 33.33% { opacity: 0; }
+      33.34%, 66.66% { opacity: 1; }
+      66.67%, 100% { opacity: 0; }
     }
     
-    @keyframes leftArmRealistic {
-      0%, 100% { transform: rotate(35deg); }
-      33.333% { transform: rotate(0deg); }
-      66.666% { transform: rotate(-35deg); }
+    @keyframes showFrame3 {
+      0%, 66.66% { opacity: 0; }
+      66.67%, 100% { opacity: 1; }
     }
     
-    /* 歩行中の右腕 - 逆相 */
-    .walking .right-arm {
-      animation: rightArmRealistic 0.45s steps(3) infinite;
+    /* 左右の向き対応 */
+    .tiny-character.facing-left .walking-animation-container {
+      transform: scaleX(-1);
     }
     
-    @keyframes rightArmRealistic {
-      0%, 100% { transform: rotate(-35deg); }
-      33.333% { transform: rotate(0deg); }
-      66.666% { transform: rotate(35deg); }
-    }
-    
-    /* 歩行中の左脚 - サンプル仕様通り ±30° */
-    .walking .left-leg {
-      animation: leftLegRealistic 0.45s steps(3) infinite;
-    }
-    
-    @keyframes leftLegRealistic {
-      0%, 100% { transform: rotate(-30deg); }
-      33.333% { transform: rotate(0deg); }
-      66.666% { transform: rotate(30deg); }
-    }
-    
-    /* 歩行中の右脚 - 逆相 */
-    .walking .right-leg {
-      animation: rightLegRealistic 0.45s steps(3) infinite;
-    }
-    
-    @keyframes rightLegRealistic {
-      0%, 100% { transform: rotate(30deg); }
-      33.333% { transform: rotate(0deg); }
-      66.666% { transform: rotate(-30deg); }
-    }
-    
-    /* 手のアニメーション */
-    .left-hand, .right-hand {
-      transform-origin: center;
-    }
-    
-    .walking .left-hand {
-      animation: leftHandRealistic 0.45s steps(3) infinite;
-    }
-    
-    @keyframes leftHandRealistic {
-      0%, 100% { transform: translateX(7px) translateY(-2px); }
-      33.333% { transform: translateX(0px) translateY(0px); }
-      66.666% { transform: translateX(-7px) translateY(2px); }
-    }
-    
-    .walking .right-hand {
-      animation: rightHandRealistic 0.45s steps(3) infinite;
-    }
-    
-    @keyframes rightHandRealistic {
-      0%, 100% { transform: translateX(-7px) translateY(2px); }
-      33.333% { transform: translateX(0px) translateY(0px); }
-      66.666% { transform: translateX(7px) translateY(-2px); }
-    }
-    
-    /* 足のアニメーション */
-    .left-foot, .right-foot {
-      transform-origin: center;
-    }
-    
-    .walking .left-foot {
-      animation: leftFootRealistic 0.45s steps(3) infinite;
-    }
-    
-    @keyframes leftFootRealistic {
-      0%, 100% { transform: translateX(-2px) translateY(-1px) rotate(-15deg); }
-      33.333% { transform: translateX(0px) translateY(0px) rotate(0deg); }
-      66.666% { transform: translateX(2px) translateY(1px) rotate(15deg); }
-    }
-    
-    .walking .right-foot {
-      animation: rightFootRealistic 0.45s steps(3) infinite;
-    }
-    
-    @keyframes rightFootRealistic {
-      0%, 100% { transform: translateX(2px) translateY(1px) rotate(15deg); }
-      33.333% { transform: translateX(0px) translateY(0px) rotate(0deg); }
-      66.666% { transform: translateX(-2px) translateY(-1px) rotate(-15deg); }
+    .tiny-character.facing-right .walking-animation-container {
+      transform: scaleX(1);
     }
     
     /* セクション別道の色 */
@@ -653,30 +564,77 @@
     </div>
   </div>
   
-  <!-- 適切なサイズの棒人間（80px） - スクロール時のみ歩行 -->
+  <!-- 3フレーム歩行アニメーション棒人間 -->
   <div class="tiny-character">
-    <svg class="stick-figure" id="stickFigure" viewBox="0 0 80 80">
-      <!-- 頭 -->
-      <circle cx="40" cy="12" r="6"/>
-      <!-- 体 -->
-      <line x1="40" y1="18" x2="40" y2="52"/>
-      <!-- 左腕 -->
-      <line x1="40" y1="24" x2="28" y2="40" class="left-arm"/>
-      <!-- 右腕 -->
-      <line x1="40" y1="24" x2="52" y2="40" class="right-arm"/>
-      <!-- 左手 -->
-      <circle cx="28" cy="40" r="2" class="left-hand"/>
-      <!-- 右手 -->
-      <circle cx="52" cy="40" r="2" class="right-hand"/>
-      <!-- 左脚 -->
-      <line x1="40" y1="52" x2="32" y2="72" class="left-leg"/>
-      <!-- 右脚 -->
-      <line x1="40" y1="52" x2="48" y2="72" class="right-leg"/>
-      <!-- 左足 -->
-      <ellipse cx="32" cy="72" rx="4" ry="2" class="left-foot"/>
-      <!-- 右足 -->
-      <ellipse cx="48" cy="72" rx="4" ry="2" class="right-foot"/>
-    </svg>
+    <div class="walking-animation-container">
+      
+      <!-- フレーム1: 歩行ポーズ（左脚前） -->
+      <svg class="walk-frame frame1" viewBox="0 0 80 80">
+        <g stroke="#333" stroke-width="3" stroke-linecap="round" fill="none">
+          <!-- 頭 -->
+          <circle cx="40" cy="12" r="6" fill="#333" stroke="none"/>
+          <!-- 胴体 -->
+          <line x1="40" y1="18" x2="40" y2="52"/>
+          <!-- 左腕（後ろ） -->
+          <line x1="40" y1="24" x2="45" y2="32"/>
+          <line x1="45" y1="32" x2="49" y2="42"/>
+          <!-- 右腕（前） -->
+          <line x1="40" y1="24" x2="34" y2="34"/>
+          <line x1="34" y1="34" x2="32" y2="46"/>
+          <!-- 左脚（前） -->
+          <line x1="40" y1="52" x2="32" y2="62"/>
+          <line x1="32" y1="62" x2="28" y2="76"/>
+          <!-- 右脚（後） -->
+          <line x1="40" y1="52" x2="46" y2="62"/>
+          <line x1="46" y1="62" x2="52" y2="72"/>
+        </g>
+      </svg>
+      
+      <!-- フレーム2: 歩行ポーズ（脚交差） -->
+      <svg class="walk-frame frame2" viewBox="0 0 80 80">
+        <g stroke="#333" stroke-width="3" stroke-linecap="round" fill="none">
+          <!-- 頭 -->
+          <circle cx="40" cy="12" r="6" fill="#333" stroke="none"/>
+          <!-- 胴体 -->
+          <line x1="40" y1="18" x2="40" y2="52"/>
+          <!-- 左腕 -->
+          <line x1="40" y1="24" x2="36" y2="34"/>
+          <line x1="36" y1="34" x2="35" y2="46"/>
+          <!-- 右腕 -->
+          <line x1="40" y1="24" x2="44" y2="34"/>
+          <line x1="44" y1="34" x2="45" y2="46"/>
+          <!-- 左脚（移動中） -->
+          <line x1="40" y1="52" x2="38" y2="62"/>
+          <line x1="38" y1="62" x2="40" y2="76"/>
+          <!-- 右脚（前へ） -->
+          <line x1="40" y1="52" x2="42" y2="62"/>
+          <line x1="42" y1="62" x2="40" y2="76"/>
+        </g>
+      </svg>
+      
+      <!-- フレーム3: 歩行ポーズ（右脚前） -->
+      <svg class="walk-frame frame3" viewBox="0 0 80 80">
+        <g stroke="#333" stroke-width="3" stroke-linecap="round" fill="none">
+          <!-- 頭 -->
+          <circle cx="40" cy="12" r="6" fill="#333" stroke="none"/>
+          <!-- 胴体 -->
+          <line x1="40" y1="18" x2="40" y2="52"/>
+          <!-- 左腕（前） -->
+          <line x1="40" y1="24" x2="34" y2="34"/>
+          <line x1="34" y1="34" x2="32" y2="46"/>
+          <!-- 右腕（後ろ） -->
+          <line x1="40" y1="24" x2="45" y2="32"/>
+          <line x1="45" y1="32" x2="49" y2="42"/>
+          <!-- 左脚（後） -->
+          <line x1="40" y1="52" x2="34" y2="62"/>
+          <line x1="34" y1="62" x2="28" y2="72"/>
+          <!-- 右脚（前） -->
+          <line x1="40" y1="52" x2="48" y2="62"/>
+          <line x1="48" y1="62" x2="52" y2="76"/>
+        </g>
+      </svg>
+      
+    </div>
   </div>
   
   <script>
