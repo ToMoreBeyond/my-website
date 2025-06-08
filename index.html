@@ -9,11 +9,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Walking Hero System CSS -->
-  <link rel="stylesheet" href="css/walking-hero-system.css">
-  
   <style>
-    /* Basic reset and setup for Walking Hero System */
     * {
       margin: 0;
       padding: 0;
@@ -28,7 +24,7 @@
       position: relative;
     }
     
-    /* Logo */
+    /* 左上ロゴ - より洗練されたデザイン */
     .logo {
       position: fixed;
       top: 30px;
@@ -50,6 +46,584 @@
     .logo:hover {
       transform: scale(1.05);
     }
+    
+    /* ナビゲーションバーを削除（不要） */
+    
+    /* メインコンテンツ */
+    .main-content {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 50px;
+    }
+    
+    /* damso.com風カードコンテナ */
+    .cards-container {
+      width: 100%;
+      max-width: 1200px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      display: flex;
+      align-items: center;
+    }
+    
+    .cards-track {
+      display: flex;
+      gap: 20px;
+      height: 100%;
+      will-change: transform;
+      backface-visibility: hidden;
+      contain: layout style paint;
+      transform-style: preserve-3d;
+      transform: translateX(0px) translateZ(0);
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    /* スクロール中は完全に滑らか（遷移なし） */
+    .cards-track.scrolling {
+      transition: none;
+      transform-origin: center center;
+    }
+    
+    /* スクロール停止時は軽い遷移 */
+    .cards-track.idle {
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    /* 洗練されたカードデザイン */
+    .card {
+      min-width: 320px;
+      height: 380px;
+      background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+      border: 1px solid #f0f0f0;
+      border-radius: 20px;
+      padding: 40px 30px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      box-shadow: 
+        0 4px 20px rgba(0,0,0,0.04),
+        0 1px 3px rgba(0,0,0,0.02);
+      overflow: hidden;
+    }
+    
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,0.12),
+        0 8px 30px rgba(255,179,0,0.08);
+      border-color: #FFB300;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, 
+        rgba(255,179,0,0.03) 0%, 
+        transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 20px;
+    }
+    
+    .card:hover::after {
+      opacity: 1;
+    }
+    
+    .card-icon {
+      font-size: 56px;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+      transition: transform 0.3s ease;
+    }
+    
+    .card:hover .card-icon {
+      transform: scale(1.1);
+    }
+    
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    
+    .card-description {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    
+    /* シンプルな細い道 */
+    .path-area {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      z-index: 100;
+      background: #f0f0f0;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    /* 道の中央線 */
+    .path-line {
+      position: absolute;
+      bottom: 3px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #d0d0d0;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    
+    /* 時々現れる雑草 */
+    .weeds {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    
+    .weed {
+      position: absolute;
+      bottom: 2px;
+      font-size: 8px;
+      color: #4CAF50;
+      animation: weedSway 4s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+    
+    .weed:nth-child(1) { left: 8%; animation-delay: 0s; }
+    .weed:nth-child(2) { left: 23%; animation-delay: -1s; }
+    .weed:nth-child(3) { left: 41%; animation-delay: -2s; }
+    .weed:nth-child(4) { left: 67%; animation-delay: -0.5s; }
+    .weed:nth-child(5) { left: 89%; animation-delay: -1.5s; }
+    
+    @keyframes weedSway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+    
+    /* 適切なサイズの棒人間（80px height） - 道の上に立つ */
+    .tiny-character {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(0);
+      width: 80px;
+      height: 80px;
+      z-index: 150;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+      contain: layout style paint;
+      will-change: transform;
+      backface-visibility: hidden;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    
+    /* 左向き（逆方向スクロール時） */
+    .tiny-character.facing-left {
+      transform: translateX(-50%) scaleX(-1) translateZ(0);
+    }
+    
+    /* 右向き（通常） */
+    .tiny-character.facing-right {
+      transform: translateX(-50%) scaleX(1) translateZ(0);
+    }
+    
+    .stick-figure {
+      width: 100%;
+      height: 100%;
+      stroke: #333;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      shape-rendering: optimizeSpeed;
+      contain: layout style;
+      will-change: transform;
+    }
+    
+    .stick-figure circle {
+      fill: #333;
+      contain: layout style paint;
+    }
+    
+    /* デフォルトは静止状態 */
+    .stick-figure {
+      will-change: transform;
+    }
+    
+    /* 歩行中のみアニメーション - 3フレーム方式 */
+    .walking .stick-figure {
+      animation: naturalWalk 0.45s steps(3) infinite;
+    }
+    
+    @keyframes naturalWalk {
+      0%, 100% { transform: translateY(0px); }
+      33.333% { transform: translateY(-1px); }
+      66.666% { transform: translateY(-2px); }
+    }
+    
+    /* 腕と脚はデフォルトで静止 */
+    .left-arm, .right-arm, .left-leg, .right-leg {
+      transform-origin: 40px 24px;
+      will-change: transform;
+      transform: rotate(0deg);
+    }
+    
+    .left-leg, .right-leg {
+      transform-origin: 40px 52px;
+    }
+    
+    /* 歩行中の左腕 - サンプル仕様通り ±35° */
+    .walking .left-arm {
+      animation: leftArmRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes leftArmRealistic {
+      0%, 100% { transform: rotate(35deg); }
+      33.333% { transform: rotate(0deg); }
+      66.666% { transform: rotate(-35deg); }
+    }
+    
+    /* 歩行中の右腕 - 逆相 */
+    .walking .right-arm {
+      animation: rightArmRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes rightArmRealistic {
+      0%, 100% { transform: rotate(-35deg); }
+      33.333% { transform: rotate(0deg); }
+      66.666% { transform: rotate(35deg); }
+    }
+    
+    /* 歩行中の左脚 - サンプル仕様通り ±30° */
+    .walking .left-leg {
+      animation: leftLegRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes leftLegRealistic {
+      0%, 100% { transform: rotate(-30deg); }
+      33.333% { transform: rotate(0deg); }
+      66.666% { transform: rotate(30deg); }
+    }
+    
+    /* 歩行中の右脚 - 逆相 */
+    .walking .right-leg {
+      animation: rightLegRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes rightLegRealistic {
+      0%, 100% { transform: rotate(30deg); }
+      33.333% { transform: rotate(0deg); }
+      66.666% { transform: rotate(-30deg); }
+    }
+    
+    /* 手のアニメーション */
+    .left-hand, .right-hand {
+      transform-origin: center;
+    }
+    
+    .walking .left-hand {
+      animation: leftHandRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes leftHandRealistic {
+      0%, 100% { transform: translateX(7px) translateY(-2px); }
+      33.333% { transform: translateX(0px) translateY(0px); }
+      66.666% { transform: translateX(-7px) translateY(2px); }
+    }
+    
+    .walking .right-hand {
+      animation: rightHandRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes rightHandRealistic {
+      0%, 100% { transform: translateX(-7px) translateY(2px); }
+      33.333% { transform: translateX(0px) translateY(0px); }
+      66.666% { transform: translateX(7px) translateY(-2px); }
+    }
+    
+    /* 足のアニメーション */
+    .left-foot, .right-foot {
+      transform-origin: center;
+    }
+    
+    .walking .left-foot {
+      animation: leftFootRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes leftFootRealistic {
+      0%, 100% { transform: translateX(-2px) translateY(-1px) rotate(-15deg); }
+      33.333% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+      66.666% { transform: translateX(2px) translateY(1px) rotate(15deg); }
+    }
+    
+    .walking .right-foot {
+      animation: rightFootRealistic 0.45s steps(3) infinite;
+    }
+    
+    @keyframes rightFootRealistic {
+      0%, 100% { transform: translateX(2px) translateY(1px) rotate(15deg); }
+      33.333% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+      66.666% { transform: translateX(-2px) translateY(-1px) rotate(-15deg); }
+    }
+    
+    /* セクション別道の色 */
+    .section-apps .path-area { background: #f0f8f0; }
+    .section-company .path-area { background: #fff8f0; }
+    .section-members .path-area { background: #f8f0f8; }
+    .section-media .path-area { background: #f0f8ff; }
+    .section-contact .path-area { background: #fff0f0; }
+    
+    .section-apps .path-line { background: #4CAF50; }
+    .section-company .path-line { background: #FFB300; }
+    .section-members .path-line { background: #9C27B0; }
+    .section-media .path-line { background: #2196F3; }
+    .section-contact .path-line { background: #FF5722; }
+    
+    /* 高速歩行モード - スムーズな走行 */
+    .walking.fast-walking .stick-figure {
+      animation-duration: 0.3s !important;
+    }
+    
+    .walking.fast-walking .left-arm,
+    .walking.fast-walking .right-arm,
+    .walking.fast-walking .left-leg,
+    .walking.fast-walking .right-leg {
+      animation-duration: 0.3s !important;
+    }
+    
+    /* スクロール時の軽量化 */
+    .scrolling .stick-figure {
+      contain: strict;
+      transform: translateZ(0);
+    }
+    
+    /* 低性能デバイス向け最適化 */
+    .low-performance-mode .walking .stick-figure {
+      animation-duration: 0.8s !important;
+      will-change: auto;
+    }
+    
+    .low-performance-mode .walking .left-arm,
+    .low-performance-mode .walking .right-arm,
+    .low-performance-mode .walking .left-leg,
+    .low-performance-mode .walking .right-leg {
+      animation-duration: 0.8s !important;
+      will-change: auto;
+    }
+    
+    .low-performance-mode .tiny-character {
+      filter: none;
+      contain: layout;
+    }
+    
+    .low-performance-mode .weed {
+      display: none;
+    }
+    
+    .low-performance-mode .card {
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .low-performance-mode .card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    
+    .low-performance-mode .cards-track {
+      transition: none !important;
+    }
+    
+    /* damso.com風のクリーンなエフェクト */
+    .cards-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(to right, 
+          rgba(255,255,255,0.9) 0%, 
+          transparent 15%, 
+          transparent 85%, 
+          rgba(255,255,255,0.9) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    /* パフォーマンス最適化 */
+    .card {
+      will-change: transform, opacity, filter;
+      backface-visibility: hidden;
+      transform-origin: center center;
+    }
+    
+    .cards-track {
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-origin: center center;
+    }
+    
+    .tiny-stick-figure {
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    
+    /* レスポンシブ - モバイル最適化 */
+    @media (max-width: 768px) {
+      .logo { 
+        font-size: 22px; 
+        top: 15px; 
+        left: 15px;
+        z-index: 1001;
+      }
+      
+      .main-content { 
+        padding: 0 15px;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      
+      /* モバイル用カード調整 */
+      .cards-container {
+        height: 350px;
+        width: 100%;
+        overflow: hidden;
+      }
+      
+      .cards-track {
+        gap: 15px;
+      }
+      
+      .card { 
+        min-width: 280px; 
+        height: 320px; 
+        padding: 30px 20px;
+        border-radius: 16px;
+      }
+      
+      .card-icon { 
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+      
+      .card-title { 
+        font-size: 22px;
+        margin-bottom: 12px;
+      }
+      
+      .card-description { 
+        font-size: 15px;
+        line-height: 1.5;
+      }
+      
+      /* モバイル用棒人間調整 - より見やすく */
+      .tiny-character { 
+        width: 60px; 
+        height: 60px;
+        bottom: 10px;
+      }
+      
+      .stick-figure {
+        stroke-width: 4;
+      }
+      
+      /* モバイル用道調整 */
+      .path-area {
+        height: 10px;
+      }
+      
+      .path-line {
+        bottom: 4px;
+        height: 2px;
+      }
+      
+      .weed {
+        font-size: 10px;
+        bottom: 3px;
+      }
+      
+      /* カードのホバーエフェクトを無効化 */
+      .card:hover {
+        transform: none;
+        box-shadow: 
+          0 4px 20px rgba(0,0,0,0.04),
+          0 1px 3px rgba(0,0,0,0.02);
+      }
+      
+      /* グラデーションエフェクトの調整 */
+      .cards-container::after {
+        background: 
+          linear-gradient(to right, 
+            rgba(255,255,255,0.95) 0%, 
+            transparent 10%, 
+            transparent 90%, 
+            rgba(255,255,255,0.95) 100%);
+      }
+    }
+    
+    /* タッチデバイス用最適化 */
+    @media (hover: none) and (pointer: coarse) {
+      .card:hover {
+        transform: none !important;
+      }
+      
+      .card:active {
+        transform: 
+          translateX(0px) 
+          translateZ(30px) 
+          rotateY(0deg) 
+          scale(1.02) !important;
+        transition: all 0.2s ease;
+      }
+      
+      /* タッチ時の雑草反応 */
+      .weed {
+        animation-duration: 2s;
+      }
+    }
   </style>
 </head>
 <body class="section-apps">
@@ -58,19 +632,603 @@
   
   <!-- ナビゲーションバー削除（シンプル化） -->
   
-  <!-- Walking Hero System will create the content -->
+  <!-- メインコンテンツ -->
+  <main class="main-content">
+    <div class="cards-container">
+      <div class="cards-track" id="cardsTrack">
+        <!-- カードはJavaScriptで生成 -->
+      </div>
+    </div>
+  </main>
   
-  <!-- Walking Hero System will create the road and other elements -->
+  <!-- シンプルな道エリア -->
+  <div class="path-area">
+    <div class="path-line"></div>
+    <div class="weeds">
+      <div class="weed">🌱</div>
+      <div class="weed">🌿</div>
+      <div class="weed">🌱</div>
+      <div class="weed">🍀</div>
+      <div class="weed">🌿</div>
+    </div>
+  </div>
   
-  <!-- Walking Hero System will create the stickman -->
-  
-  <!-- Walking Hero System JavaScript -->
-  <script src="js/components/walking-hero-system.js"></script>
-  <script src="js/components/scroll-responsive-cards.js"></script>
+  <!-- 適切なサイズの棒人間（80px） - スクロール時のみ歩行 -->
+  <div class="tiny-character">
+    <svg class="stick-figure" id="stickFigure" viewBox="0 0 80 80">
+      <!-- 頭 -->
+      <circle cx="40" cy="12" r="6"/>
+      <!-- 体 -->
+      <line x1="40" y1="18" x2="40" y2="52"/>
+      <!-- 左腕 -->
+      <line x1="40" y1="24" x2="28" y2="40" class="left-arm"/>
+      <!-- 右腕 -->
+      <line x1="40" y1="24" x2="52" y2="40" class="right-arm"/>
+      <!-- 左手 -->
+      <circle cx="28" cy="40" r="2" class="left-hand"/>
+      <!-- 右手 -->
+      <circle cx="52" cy="40" r="2" class="right-hand"/>
+      <!-- 左脚 -->
+      <line x1="40" y1="52" x2="32" y2="72" class="left-leg"/>
+      <!-- 右脚 -->
+      <line x1="40" y1="52" x2="48" y2="72" class="right-leg"/>
+      <!-- 左足 -->
+      <ellipse cx="32" cy="72" rx="4" ry="2" class="left-foot"/>
+      <!-- 右足 -->
+      <ellipse cx="48" cy="72" rx="4" ry="2" class="right-foot"/>
+    </svg>
+  </div>
   
   <script>
-    // walking-hero-system.jsが読み込まれるので、MinimalSiteは不要
-    console.log('Walking Hero System loaded');
+    // カードデータ
+    const cardsData = [
+      { icon: '🗺️', title: 'TADATAKA', description: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
+      { icon: '🚽', title: 'ToiRun', description: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
+      { icon: '📍', title: 'Meet in the Middle', description: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
+      { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'pages/company.html' },
+      { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: '#' },
+      { icon: '👨‍💻', title: '山田', description: 'CDO / デザイナー', section: 'members', link: 'pages/member_yamada.html' },
+      { icon: '🚀', title: '正留', description: 'CEO / エンジニア', section: 'members', link: 'pages/member_masadome.html' },
+      { icon: '🎨', title: '安藤', description: 'アーティスト', section: 'members', link: 'pages/member_ando.html' },
+      { icon: '📰', title: 'ブログ', description: '開発の裏話', section: 'media', link: 'pages/media.html' },
+      { icon: '🎥', title: '動画', description: 'プロダクト紹介', section: 'media', link: '#' },
+      { icon: '📱', title: 'SNS', description: '日々の発信', section: 'media', link: '#' },
+      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: '#' }
+    ];
+    
+    class MinimalSite {
+      constructor() {
+        this.currentSection = 'apps';
+        this.sections = ['apps', 'company', 'members', 'media', 'contact'];
+        this.sectionIndex = 0;
+        this.isScrolling = false;
+        this.scrollTimer = null;
+        this.baseScrollSpeed = 60;
+        this.currentScrollSpeed = this.baseScrollSpeed;
+        this.walkSpeed = 0.8;
+        this.speedMultiplier = 1.0;
+        this.isNavigating = false;
+        
+        // パフォーマンス最適化用のRAF管理
+        this.rafId = null;
+        this.lastTime = 0;
+        
+        this.init();
+      }
+      
+      init() {
+        this.createCards();
+        this.setupEventListeners();
+        // カードが確実に表示されてから初期化
+        setTimeout(() => {
+          this.startAutoScroll();
+          this.optimizePerformance();
+        }, 100);
+      }
+      
+      optimizePerformance() {
+        // デバイス能力を検出
+        this.detectDeviceCapability();
+        
+        // メモリ効率のためのRAF最適化
+        this.startRAFLoop();
+        
+        // 不要なイベントを削除するデバウンス機能
+        this.debounceCleanup();
+        
+        // GPU最適化
+        this.enableGPUOptimizations();
+      }
+      
+      detectDeviceCapability() {
+        // 低性能デバイスを検出
+        this.isLowEndDevice = (
+          (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
+          /Android.*Chrome\/[0-8]/.test(navigator.userAgent) ||
+          /iPhone.*OS [1-1][0-3]/.test(navigator.userAgent) ||
+          window.innerWidth < 768
+        );
+        
+        // 中程度の性能デバイス
+        this.isMidEndDevice = (
+          (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)
+        );
+        
+        if (this.isLowEndDevice) {
+          document.body.classList.add('low-performance-mode');
+        } else if (this.isMidEndDevice) {
+          // 中程度の最適化
+          this.baseScrollSpeed = 40;
+        }
+      }
+      
+      enableGPUOptimizations() {
+        // 重要な要素にGPU最適化を適用
+        const criticalElements = [
+          '.tiny-character',
+          '.stick-figure',
+          '.cards-track',
+          '.path-area'
+        ];
+        
+        criticalElements.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(el => {
+            el.style.transform = el.style.transform || 'translateZ(0)';
+            el.style.willChange = 'transform';
+            el.style.backfaceVisibility = 'hidden';
+          });
+        });
+      }
+      
+      startRAFLoop() {
+        const loop = (currentTime) => {
+          if (currentTime - this.lastTime >= 16) { // 60FPS制限
+            this.updateAnimations();
+            this.lastTime = currentTime;
+          }
+          this.rafId = requestAnimationFrame(loop);
+        };
+        this.rafId = requestAnimationFrame(loop);
+      }
+      
+      updateAnimations() {
+        // 必要に応じてアニメーション更新
+        if (this.isScrolling) {
+          this.optimizeWalkingAnimation();
+        }
+      }
+      
+      debounceCleanup() {
+        // 5秒ごとにメモリクリーンアップ
+        setInterval(() => {
+          if (!this.isScrolling && !this.isNavigating) {
+            this.cleanupUnusedElements();
+          }
+        }, 5000);
+      }
+      
+      cleanupUnusedElements() {
+        // 不要なDOM要素の掃除（メモリ効率化）
+        const unusedCards = document.querySelectorAll('.card[data-cleanup="true"]');
+        unusedCards.forEach(card => {
+          if (card.parentNode) {
+            card.parentNode.removeChild(card);
+          }
+        });
+      }
+      
+      createCards() {
+        const track = document.getElementById('cardsTrack');
+        if (!track) {
+          console.error('Cards track not found!');
+          return;
+        }
+        
+        const cardsHTML = [];
+        
+        // 2セット作成（無限スクロール用）
+        for (let set = 0; set < 2; set++) {
+          cardsData.forEach(data => {
+            cardsHTML.push(`
+              <div class="card" data-section="${data.section}" data-link="${data.link}">
+                <div class="card-icon">${data.icon}</div>
+                <h3 class="card-title">${data.title}</h3>
+                <p class="card-description">${data.description}</p>
+              </div>
+            `);
+          });
+        }
+        
+        track.innerHTML = cardsHTML.join('');
+        
+        // カードが確実に表示されるように
+        track.style.visibility = 'visible';
+        track.style.opacity = '1';
+        track.style.display = 'flex';
+        
+        // カードクリックイベント
+        track.querySelectorAll('.card').forEach(card => {
+          card.addEventListener('click', () => {
+            const link = card.dataset.link;
+            if (link && link !== '#') {
+              window.location.href = link;
+            }
+          });
+        });
+      }
+      
+      setupEventListeners() {
+        // スクロールイベント - 最適化されたハンドリング
+        let scrollTimeout;
+        window.addEventListener('wheel', (e) => {
+          clearTimeout(scrollTimeout);
+          this.handleScroll(e.deltaY);
+          
+          // スクロール終了を検知してパフォーマンス最適化
+          scrollTimeout = setTimeout(() => {
+            this.optimizeAfterScroll();
+          }, 150);
+        }, { passive: true });
+        
+        // ナビゲーション削除により不要
+        
+        // タッチイベント（モバイル） - 改善版
+        let touchStartY = 0;
+        let touchStartX = 0;
+        let touchTimeout;
+        let isVerticalScroll = false;
+        
+        document.addEventListener('touchstart', (e) => {
+          touchStartY = e.touches[0].clientY;
+          touchStartX = e.touches[0].clientX;
+          isVerticalScroll = false;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+          const touchY = e.touches[0].clientY;
+          const touchX = e.touches[0].clientX;
+          const deltaY = touchStartY - touchY;
+          const deltaX = touchStartX - touchX;
+          
+          // 水平スクロールを検出（カード移動用）- より自然な感度
+          if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 5) {
+            isVerticalScroll = false;
+            clearTimeout(touchTimeout);
+            this.handleScroll(deltaX * 0.8); // より自然な感度
+            
+            touchTimeout = setTimeout(() => {
+              this.optimizeAfterScroll();
+            }, 150);
+            
+            // タッチ位置を更新（連続的なスクロールのため）
+            touchStartX = touchX;
+          }
+          // 垂直スクロールも対応
+          else if (Math.abs(deltaY) > 5 && Math.abs(deltaY) > Math.abs(deltaX)) {
+            isVerticalScroll = true;
+            clearTimeout(touchTimeout);
+            this.handleScroll(deltaY * 0.6); // モバイル用に感度調整
+            
+            touchTimeout = setTimeout(() => {
+              this.optimizeAfterScroll();
+            }, 150);
+            
+            // タッチ位置を更新
+            touchStartY = touchY;
+          }
+        }, { passive: true });
+        
+        // キーボードナビゲーション
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') this.navigateToSection(this.sections[Math.max(0, this.sectionIndex - 1)]);
+          if (e.key === 'ArrowRight') this.navigateToSection(this.sections[Math.min(this.sections.length - 1, this.sectionIndex + 1)]);
+        });
+      }
+      
+      optimizeAfterScroll() {
+        // スクロール終了後の最適化処理
+        this.speedMultiplier = 1.0;
+        this.updateWalkingSpeed();
+      }
+      
+      handleScroll(deltaY) {
+        // スクロール方向と自然な感度設定
+        const scrollDirection = deltaY > 0 ? 1 : -1;
+        const baseSensitivity = this.isLowEndDevice ? 0.5 : 0.8;
+        const scrollAmount = Math.abs(deltaY) * baseSensitivity;
+        
+        // より自然な慣性スクロール
+        const inertia = this.scrollInertia || 0;
+        const dampening = 0.92;
+        this.scrollInertia = inertia * dampening + scrollAmount * 0.08;
+        
+        // 滑らかなスクロール計算（慣性込み）
+        const actualScroll = scrollAmount + this.scrollInertia;
+        this.currentScrollOffset = (this.currentScrollOffset || 0) + (scrollDirection * actualScroll);
+        
+        // 無限スクロールの滑らかなループ処理
+        const cardWidth = 340; // カード幅(320px) + gap(20px)
+        const totalWidth = cardWidth * cardsData.length;
+        const halfWidth = totalWidth / 2;
+        
+        // シームレスなループ処理
+        if (this.currentScrollOffset > 0) {
+          this.currentScrollOffset -= totalWidth;
+        } else if (this.currentScrollOffset < -totalWidth) {
+          this.currentScrollOffset += totalWidth;
+        }
+        
+        // 高頻度でスムーズ更新
+        this.updateCardPositionUltraSmooth();
+        
+        // 棒人間の歩行開始と向き変更
+        if (!this.isScrolling) {
+          this.startRunning();
+        }
+        
+        // 棒人間の向きを変更
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          if (scrollDirection > 0) {
+            character.classList.add('facing-right');
+            character.classList.remove('facing-left');
+          } else {
+            character.classList.add('facing-left');
+            character.classList.remove('facing-right');
+          }
+        }
+        
+        // スクロール終了の検知を改善
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(() => {
+          this.stopRunning();
+          this.scrollInertia = 0; // 慣性リセット
+        }, 150);
+        
+        // 雑草の揺れ効果
+        this.animateWeedsOnScroll();
+        
+        // セクション変更（スクロール量に基づく）
+        this.scrollDistance = (this.scrollDistance || 0) + Math.abs(actualScroll);
+        if (this.scrollDistance > 2000) {
+          if (deltaY > 0) {
+            this.nextSection();
+          } else {
+            this.prevSection();
+          }
+          this.scrollDistance = 0;
+        }
+      }
+      
+      updateCardPositionUltraSmooth() {
+        // 前回のRAFをキャンセル
+        if (this.cardPositionRAF) {
+          cancelAnimationFrame(this.cardPositionRAF);
+        }
+        
+        // 60FPS で滑らかに更新
+        this.cardPositionRAF = requestAnimationFrame(() => {
+          const track = document.getElementById('cardsTrack');
+          if (track && track.children.length > 0) {
+            // スクロール中は完全に滑らか
+            track.classList.add('scrolling');
+            track.classList.remove('idle');
+            
+            // より滑らかな変換
+            const smoothOffset = this.currentScrollOffset || 0;
+            track.style.transform = `translateX(${smoothOffset}px) translateZ(0)`;
+            track.style.visibility = 'visible';
+            track.style.opacity = '1';
+            
+          }
+        });
+      }
+      
+      updateCardPositionSmooth() {
+        if (this.cardPositionRAF) {
+          cancelAnimationFrame(this.cardPositionRAF);
+        }
+        
+        this.cardPositionRAF = requestAnimationFrame(() => {
+          const track = document.getElementById('cardsTrack');
+          if (track) {
+            // スクロール中はクラスを切り替えて滑らかに
+            track.classList.add('scrolling');
+            track.classList.remove('idle');
+            track.style.setProperty('--scroll-offset', `${this.currentScrollOffset}px`);
+          }
+        });
+      }
+      
+      updateCardPosition() {
+        const track = document.getElementById('cardsTrack');
+        if (track) {
+          track.style.transform = `translateX(${this.currentScrollOffset}px) translateZ(0)`;
+        }
+      }
+      
+      animateWeedsOnScroll() {
+        const weeds = document.querySelectorAll('.weed');
+        weeds.forEach((weed, index) => {
+          weed.style.animation = 'none';
+          weed.offsetHeight; // リフロー強制
+          weed.style.animation = `weedSway 0.5s ease-in-out infinite`;
+          weed.style.animationDelay = `${index * 0.05}s`;
+        });
+        
+        setTimeout(() => {
+          weeds.forEach(weed => {
+            weed.style.animation = '';
+          });
+        }, 1000);
+      }
+      
+      updateCardSpeed() {
+        const track = document.getElementById('cardsTrack');
+        track.style.setProperty('--scroll-speed', `${this.currentScrollSpeed}s`);
+      }
+      
+      updateWalkingSpeed() {
+        const figure = document.getElementById('tinyFigure');
+        figure.style.setProperty('--walk-speed', `${this.walkSpeed}s`);
+      }
+      
+      resetToNormalSpeed() {
+        this.speedMultiplier = 1.0;
+        this.walkSpeed = 0.8;
+        this.currentScrollSpeed = this.baseScrollSpeed;
+        this.updateCardSpeed();
+        this.updateWalkingSpeed();
+      }
+      
+      optimizeWalkingAnimation() {
+        // 歩行アニメーションの最適化
+        const figure = document.getElementById('tinyFigure');
+        const container = document.querySelector('.cards-container');
+        
+        if (this.speedMultiplier > 2.0) {
+          // 高速時は簡略化されたアニメーション
+          figure.classList.add('fast-walking');
+          container.classList.add('fast-3d-mode');
+        } else {
+          figure.classList.remove('fast-walking');
+          container.classList.remove('fast-3d-mode');
+        }
+      }
+      
+      startRunning() {
+        this.isScrolling = true;
+        const container = document.querySelector('.tiny-character');
+        
+        // 歩行開始
+        container.classList.add('walking');
+        
+        // 雑草の揺れ効果
+        this.animateWeedsOnRun();
+      }
+      
+      stopRunning() {
+        this.isScrolling = false;
+        const container = document.querySelector('.tiny-character');
+        const track = document.getElementById('cardsTrack');
+        
+        // 歩行停止
+        container.classList.remove('walking', 'fast-walking');
+        
+        // カードトラックをアイドル状態に
+        if (track) {
+          track.classList.remove('scrolling');
+          track.classList.add('idle');
+        }
+      }
+      
+      animateWeedsOnRun() {
+        const weeds = document.querySelectorAll('.weed');
+        weeds.forEach((weed, index) => {
+          weed.style.animation = 'none';
+          weed.offsetHeight; // リフロー強制
+          weed.style.animation = `weedSway 0.3s ease-in-out infinite`;
+          weed.style.animationDelay = `${index * 0.03}s`;
+        });
+        
+        setTimeout(() => {
+          weeds.forEach(weed => {
+            weed.style.animation = '';
+          });
+        }, 800);
+      }
+      
+      navigateToSection(sectionName) {
+        if (this.currentSection === sectionName) return;
+        
+        this.isNavigating = true;
+        
+        // 高速歩行でセクションに移動
+        this.speedMultiplier = 3.0;
+        this.walkSpeed = 0.25;
+        this.currentScrollSpeed = 15;
+        
+        this.updateCardPosition();
+        
+        // セクション切り替え
+        setTimeout(() => {
+          this.changeSection(sectionName);
+          
+          // 通常状態に戻す
+          setTimeout(() => {
+            this.isNavigating = false;
+          }, 800);
+        }, 400);
+      }
+      
+      changeSection(sectionName) {
+        if (this.currentSection === sectionName) return;
+        
+        this.currentSection = sectionName;
+        document.body.className = `section-${sectionName}`;
+        
+        // ナビゲーション更新
+        document.querySelectorAll('.nav-item').forEach(nav => {
+          nav.classList.toggle('active', nav.dataset.section === sectionName);
+        });
+        
+        this.sectionIndex = this.sections.indexOf(sectionName);
+        
+        // セクション特有のカードを強調表示
+        this.highlightSectionCards(sectionName);
+      }
+      
+      highlightSectionCards(sectionName) {
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+          if (card.dataset.section === sectionName) {
+            card.style.transform = 'scale(1.05)';
+            card.style.borderColor = '#4CAF50';
+            setTimeout(() => {
+              card.style.transform = '';
+              card.style.borderColor = '';
+            }, 1000);
+          }
+        });
+      }
+      
+      nextSection() {
+        this.sectionIndex = (this.sectionIndex + 1) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      prevSection() {
+        this.sectionIndex = (this.sectionIndex - 1 + this.sections.length) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      startAutoScroll() {
+        // カードの初期位置を設定
+        this.currentScrollOffset = 0;
+        this.scrollInertia = 0;
+        
+        // 初期状態をアイドルに設定し、カードを表示
+        const track = document.getElementById('cardsTrack');
+        if (track) {
+          track.classList.add('idle');
+          track.classList.remove('scrolling');
+          track.style.transform = 'translateX(0px) translateZ(0)';
+          track.style.visibility = 'visible';
+          track.style.opacity = '1';
+          
+          // カードが確実に表示されるように強制的に再描画
+          track.offsetHeight;
+        }
+      }
+    }
+    
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+      new MinimalSite();
+    });
   </script>
 </body>
 </html>
