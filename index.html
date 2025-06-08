@@ -94,14 +94,14 @@
       transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
-    /* 洗練されたカードデザイン */
+    /* App design system準拠のカードデザイン */
     .card {
       min-width: 320px;
       height: 380px;
-      background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-      border: 1px solid #f0f0f0;
-      border-radius: 20px;
-      padding: 40px 30px;
+      background: white;
+      border: 1px solid #E8E8E8;
+      border-radius: 24px;
+      padding: 32px 24px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -109,20 +109,18 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       box-shadow: 
-        0 4px 20px rgba(0,0,0,0.04),
-        0 1px 3px rgba(0,0,0,0.02);
+        0 2px 8px 0 rgba(0, 0, 0, 0.06);
       overflow: hidden;
     }
     
     .card:hover {
-      transform: translateY(-12px) scale(1.02);
+      transform: translateY(-8px);
       box-shadow: 
-        0 20px 60px rgba(0,0,0,0.12),
-        0 8px 30px rgba(255,179,0,0.08);
-      border-color: #FFB300;
+        0 8px 32px 0 rgba(0, 0, 0, 0.12);
+      border-color: #D4D4D4;
     }
     
     .card::before {
@@ -131,11 +129,11 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #FFB300, #FFA000);
+      height: 3px;
+      background: linear-gradient(90deg, #FFB300, #FFE082);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 0.4s ease;
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .card:hover::before {
@@ -146,112 +144,160 @@
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at center, 
-        rgba(255,179,0,0.03) 0%, 
-        transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      border-radius: 20px;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 179, 0, 0.08), transparent);
+      transition: left 500ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .card:hover::after {
-      opacity: 1;
+      left: 100%;
     }
     
     .card-icon {
-      font-size: 56px;
-      margin-bottom: 28px;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-      transition: transform 0.3s ease;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #FFB300, #FFE082);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .card:hover .card-icon {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
     
     .card-title {
       font-family: 'Playfair Display', serif;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 16px;
-      letter-spacing: -0.5px;
+      color: #171717;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
     }
     
     .card-description {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: 16px;
-      color: #666;
+      color: #525252;
       line-height: 1.6;
       font-weight: 400;
+      letter-spacing: -0.005em;
     }
     
-    /* シンプルな細い道 */
+    /* 本格的な道路システム */
     .path-area {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 8px;
+      height: 60px;
       z-index: 100;
-      background: #f0f0f0;
-      border-top: 1px solid #e0e0e0;
+      background: linear-gradient(180deg, 
+        #7a7a7a 0%,    /* アスファルト */
+        #5a5a5a 100%   /* より暗いアスファルト */
+      );
+      border-top: 2px solid #4a4a4a;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
     }
     
-    /* 道の中央線 */
-    .path-line {
-      position: absolute;
-      bottom: 3px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #d0d0d0;
-      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    }
-    
-    /* 時々現れる雑草 */
-    .weeds {
+    /* 道路の質感 */
+    .path-area::before {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(100,100,100,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(80,80,80,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, transparent 0%, rgba(90,90,90,0.05) 50%, transparent 100%);
+      background-size: 40px 40px, 60px 60px, 100% 100%;
+      pointer-events: none;
+    }
+    
+    /* 道路の中央線（黄色の破線） */
+    .path-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: repeating-linear-gradient(
+        90deg,
+        #FFD700 0%,
+        #FFD700 40px,
+        transparent 40px,
+        transparent 80px
+      );
+      transform: translateY(-50%);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    
+    /* 道路脇の草地 */
+    .road-sides {
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(180deg, 
+        #4CAF50 0%,
+        #388E3C 100%
+      );
+      overflow: hidden;
+    }
+    
+    /* 時々現れる道路標識や植物 */
+    .road-elements {
+      position: absolute;
+      top: -15px;
+      left: 0;
+      width: 100%;
+      height: 15px;
       overflow: hidden;
       pointer-events: none;
     }
     
-    .weed {
+    .road-element {
       position: absolute;
-      bottom: 2px;
-      font-size: 8px;
-      color: #4CAF50;
-      animation: weedSway 4s ease-in-out infinite;
+      bottom: 0;
+      font-size: 12px;
+      color: #2E7D32;
+      animation: elementSway 3s ease-in-out infinite;
       transform-origin: bottom center;
     }
     
-    .weed:nth-child(1) { left: 8%; animation-delay: 0s; }
-    .weed:nth-child(2) { left: 23%; animation-delay: -1s; }
-    .weed:nth-child(3) { left: 41%; animation-delay: -2s; }
-    .weed:nth-child(4) { left: 67%; animation-delay: -0.5s; }
-    .weed:nth-child(5) { left: 89%; animation-delay: -1.5s; }
+    .road-element:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .road-element:nth-child(2) { left: 20%; animation-delay: -1s; color: #795548; }
+    .road-element:nth-child(3) { left: 45%; animation-delay: -2s; }
+    .road-element:nth-child(4) { left: 70%; animation-delay: -0.5s; color: #795548; }
+    .road-element:nth-child(5) { left: 90%; animation-delay: -1.5s; }
     
-    @keyframes weedSway {
-      0%, 100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
+    @keyframes elementSway {
+      0%, 100% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
     }
     
     /* 適切なサイズの棒人間（100px height） - 道の上に立つ */
     .tiny-character {
       position: fixed;
-      bottom: 10px;
+      bottom: 60px; /* 道路の上に立つように調整 */
       left: 50%;
       transform: translateX(-50%) translateZ(0);
       width: 100px;
       height: 100px;
       z-index: 150;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
       contain: layout style paint;
       will-change: transform;
       backface-visibility: hidden;
@@ -275,9 +321,19 @@
       opacity: 0;
     }
     
-    /* アイドル状態は最初のフレームを表示 */
+    /* アイドル状態は指さしフレームを表示 */
     .tiny-character:not(.walking) .walk-frame.frame1 {
+      opacity: 0;
+    }
+    
+    .tiny-character:not(.walking) .walk-frame.pointing {
       opacity: 1;
+      animation: pointingIdle 3s ease-in-out infinite;
+    }
+    
+    @keyframes pointingIdle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-2px); }
     }
     
     /* 歩行中の3フレームアニメーション - サンプル準拠 */
@@ -436,22 +492,25 @@
       .card { 
         min-width: 280px; 
         height: 320px; 
-        padding: 30px 20px;
-        border-radius: 16px;
+        padding: 24px 20px;
+        border-radius: 20px;
       }
       
       .card-icon { 
-        font-size: 48px;
+        width: 64px;
+        height: 64px;
+        font-size: 32px;
         margin-bottom: 20px;
+        border-radius: 20px;
       }
       
       .card-title { 
-        font-size: 22px;
-        margin-bottom: 12px;
+        font-size: 20px;
+        margin-bottom: 10px;
       }
       
       .card-description { 
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.5;
       }
       
@@ -468,25 +527,22 @@
       
       /* モバイル用道調整 */
       .path-area {
-        height: 10px;
+        height: 40px;
       }
       
-      .path-line {
-        bottom: 4px;
-        height: 2px;
+      .tiny-character {
+        bottom: 40px;
       }
       
-      .weed {
+      .road-element {
         font-size: 10px;
-        bottom: 3px;
       }
       
       /* カードのホバーエフェクトを無効化 */
       .card:hover {
         transform: none;
         box-shadow: 
-          0 4px 20px rgba(0,0,0,0.04),
-          0 1px 3px rgba(0,0,0,0.02);
+          0 2px 8px 0 rgba(0, 0, 0, 0.06);
       }
       
       /* グラデーションエフェクトの調整 */
@@ -537,15 +593,16 @@
     </div>
   </main>
   
-  <!-- シンプルな道エリア -->
+  <!-- 本格的な道路エリア -->
   <div class="path-area">
+    <div class="road-sides"></div>
     <div class="path-line"></div>
-    <div class="weeds">
-      <div class="weed">🌱</div>
-      <div class="weed">🌿</div>
-      <div class="weed">🌱</div>
-      <div class="weed">🍀</div>
-      <div class="weed">🌿</div>
+    <div class="road-elements">
+      <div class="road-element">🌱</div>
+      <div class="road-element">🪧</div>
+      <div class="road-element">🌿</div>
+      <div class="road-element">⚠️</div>
+      <div class="road-element">🌳</div>
     </div>
   </div>
   
@@ -553,69 +610,91 @@
   <div class="tiny-character">
     <div class="walking-animation-container">
       
-      <!-- フレーム1: 歩行ポーズ（左脚前） -->
+      <!-- フレーム1: 歩行ポーズ（左脚前・体重移動） -->
       <svg class="walk-frame frame1" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭 -->
-          <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体 -->
-          <line x1="50" y1="32" x2="50" y2="65"/>
-          <!-- 左腕（後ろ） -->
-          <line x1="50" y1="40" x2="56" y2="50"/>
-          <line x1="56" y1="50" x2="62" y2="67"/>
-          <!-- 右腕（前） -->
-          <line x1="50" y1="40" x2="42" y2="53"/>
-          <line x1="42" y1="53" x2="40" y2="70"/>
-          <!-- 左脚（前） -->
-          <line x1="50" y1="65" x2="40" y2="85"/>
-          <line x1="40" y1="85" x2="35" y2="110"/>
-          <!-- 右脚（後） -->
-          <line x1="50" y1="65" x2="58" y2="85"/>
-          <line x1="58" y1="85" x2="65" y2="105"/>
+          <!-- 頭（わずかに前傾） -->
+          <circle cx="48" cy="18" r="12" fill="#333" stroke="none"/>
+          <!-- 胴体（前傾姿勢） -->
+          <line x1="48" y1="30" x2="49" y2="63"/>
+          <!-- 左腕（後ろ・大きく振る） -->
+          <line x1="49" y1="38" x2="58" y2="48"/>
+          <line x1="58" y1="48" x2="65" y2="65"/>
+          <!-- 右腕（前・力強く） -->
+          <line x1="49" y1="38" x2="38" y2="52"/>
+          <line x1="38" y1="52" x2="35" y2="68"/>
+          <!-- 左脚（前・着地瞬間） -->
+          <line x1="49" y1="63" x2="38" y2="83"/>
+          <line x1="38" y1="83" x2="32" y2="108"/>
+          <!-- 右脚（後・蹴り出し） -->
+          <line x1="49" y1="63" x2="60" y2="83"/>
+          <line x1="60" y1="83" x2="68" y2="102"/>
         </g>
       </svg>
       
-      <!-- フレーム2: 歩行ポーズ（脚交差） -->
+      <!-- フレーム2: 歩行ポーズ（脚交差・最高点） -->
       <svg class="walk-frame frame2" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭 -->
-          <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体 -->
-          <line x1="50" y1="32" x2="50" y2="65"/>
-          <!-- 左腕 -->
-          <line x1="50" y1="40" x2="45" y2="55"/>
-          <line x1="45" y1="55" x2="44" y2="72"/>
-          <!-- 右腕 -->
-          <line x1="50" y1="40" x2="55" y2="55"/>
-          <line x1="55" y1="55" x2="56" y2="72"/>
-          <!-- 左脚（移動中） -->
-          <line x1="50" y1="65" x2="48" y2="85"/>
-          <line x1="48" y1="85" x2="50" y2="110"/>
-          <!-- 右脚（前へ） -->
-          <line x1="50" y1="65" x2="52" y2="85"/>
-          <line x1="52" y1="85" x2="50" y2="110"/>
+          <!-- 頭（最高点・直立） -->
+          <circle cx="50" cy="16" r="12" fill="#333" stroke="none"/>
+          <!-- 胴体（直立・最高点） -->
+          <line x1="50" y1="28" x2="50" y2="61"/>
+          <!-- 左腕（中間・戻り中） -->
+          <line x1="50" y1="36" x2="44" y2="53"/>
+          <line x1="44" y1="53" x2="43" y2="70"/>
+          <!-- 右腕（中間・戻り中） -->
+          <line x1="50" y1="36" x2="56" y2="53"/>
+          <line x1="56" y1="53" x2="57" y2="70"/>
+          <!-- 左脚（支持・直立） -->
+          <line x1="50" y1="61" x2="47" y2="83"/>
+          <line x1="47" y1="83" x2="48" y2="108"/>
+          <!-- 右脚（振り出し・高く上がる） -->
+          <line x1="50" y1="61" x2="53" y2="80"/>
+          <line x1="53" y1="80" x2="52" y2="105"/>
         </g>
       </svg>
       
-      <!-- フレーム3: 歩行ポーズ（右脚前） -->
+      <!-- フレーム3: 歩行ポーズ（右脚前・体重移動） -->
       <svg class="walk-frame frame3" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭 -->
+          <!-- 頭（わずかに前傾） -->
+          <circle cx="52" cy="18" r="12" fill="#333" stroke="none"/>
+          <!-- 胴体（前傾姿勢） -->
+          <line x1="52" y1="30" x2="51" y2="63"/>
+          <!-- 左腕（前・力強く） -->
+          <line x1="51" y1="38" x2="38" y2="52"/>
+          <line x1="38" y1="52" x2="35" y2="68"/>
+          <!-- 右腕（後ろ・大きく振る） -->
+          <line x1="51" y1="38" x2="62" y2="48"/>
+          <line x1="62" y1="48" x2="68" y2="65"/>
+          <!-- 左脚（後・蹴り出し） -->
+          <line x1="51" y1="63" x2="40" y2="83"/>
+          <line x1="40" y1="83" x2="32" y2="102"/>
+          <!-- 右脚（前・着地瞬間） -->
+          <line x1="51" y1="63" x2="62" y2="83"/>
+          <line x1="62" y1="83" x2="68" y2="108"/>
+        </g>
+      </svg>
+      
+      <!-- 指さしポーズ（アイドル時） -->
+      <svg class="walk-frame pointing" viewBox="0 0 100 150">
+        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
+          <!-- 頭（カードを見上げる） -->
           <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体 -->
+          <!-- 胴体（直立） -->
           <line x1="50" y1="32" x2="50" y2="65"/>
-          <!-- 左腕（前） -->
-          <line x1="50" y1="40" x2="42" y2="53"/>
-          <line x1="42" y1="53" x2="40" y2="70"/>
-          <!-- 右腕（後ろ） -->
-          <line x1="50" y1="40" x2="56" y2="50"/>
-          <line x1="56" y1="50" x2="62" y2="67"/>
-          <!-- 左脚（後） -->
-          <line x1="50" y1="65" x2="58" y2="85"/>
-          <line x1="58" y1="85" x2="65" y2="105"/>
-          <!-- 右脚（前） -->
-          <line x1="50" y1="65" x2="40" y2="85"/>
-          <line x1="40" y1="85" x2="35" y2="110"/>
+          <!-- 左腕（指さし） -->
+          <line x1="50" y1="40" x2="35" y2="30"/>
+          <line x1="35" y1="30" x2="25" y2="25"/>
+          <!-- 右腕（自然に下ろす） -->
+          <line x1="50" y1="40" x2="55" y2="55"/>
+          <line x1="55" y1="55" x2="53" y2="72"/>
+          <!-- 左脚（直立） -->
+          <line x1="50" y1="65" x2="48" y2="87"/>
+          <line x1="48" y1="87" x2="47" y2="110"/>
+          <!-- 右脚（直立） -->
+          <line x1="50" y1="65" x2="52" y2="87"/>
+          <line x1="52" y1="87" x2="53" y2="110"/>
         </g>
       </svg>
       
