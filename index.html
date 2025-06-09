@@ -19,7 +19,7 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #ffffff;
-      overflow-x: hidden;
+      overflow: hidden; /* 全てのスクロールバーを非表示 */
       min-height: 100vh;
       position: relative;
     }
@@ -49,13 +49,15 @@
     
     /* ナビゲーションバーを削除（不要） */
     
-    /* メインコンテンツ */
+    /* メインコンテンツ - 左右スクロール対応 */
     .main-content {
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 50px;
+      overflow-x: hidden; /* 横スクロールバーを非表示 */
+      overflow-y: hidden; /* 縦スクロールバーを非表示 */
     }
     
     /* damso.com風カードコンテナ */
@@ -360,10 +362,8 @@
       visibility: visible;
     }
     
-    /* アイドル状態は立ち姿勢フレームを表示 */
-    .tiny-character:not(.walking) .walk-frame.idle {
-      opacity: 1;
-      visibility: visible;
+    /* アイドル状態のアニメーション */
+    .walk-frame.idle.active {
       animation: idleSwaying 4s ease-in-out infinite;
     }
     
@@ -375,12 +375,12 @@
     }
     
     /* 棒人間の視線動作 */
-    .tiny-character.looking-left .walk-frame.idle circle {
+    .tiny-character.looking-left .walk-frame.idle.active circle {
       transform: translateX(-2px);
       transition: transform 0.3s ease;
     }
     
-    .tiny-character.looking-right .walk-frame.idle circle {
+    .tiny-character.looking-right .walk-frame.idle.active circle {
       transform: translateX(2px);
       transition: transform 0.3s ease;
     }
@@ -395,30 +395,18 @@
       pointer-events: none;
     }
     
-    /* 歩行速度クラス */
-    .walking-slow {
-      --walk-duration: 0.8s;
+    /* フレーム切り替えのスムーズ化 */
+    .walk-frame {
+      transition: opacity 0.1s ease-out;
     }
     
-    .walking-normal {
-      --walk-duration: 0.6s;
-    }
-    
-    .walking-fast {
-      --walk-duration: 0.4s;
-    }
-    
-    .walking-very-fast {
-      --walk-duration: 0.3s;
-    }
-    
-    /* 左右の向き対応 */
+    /* 左右の向き対応 - 左右スクロールに合わせて調整 */
     .tiny-character.facing-left .walking-animation-container {
-      transform: scaleX(-1);
+      transform: scaleX(-1); /* 左向き（左スクロール時） */
     }
     
     .tiny-character.facing-right .walking-animation-container {
-      transform: scaleX(1);
+      transform: scaleX(1); /* 右向き（右スクロール時） */
     }
     
     /* セクション別道の色 */
@@ -685,11 +673,11 @@
   <div class="path-decoration" id="pathDecoration"></div>
   
   <!-- GIF風コマ送り歩行アニメーション棒人間 -->
-  <div class="tiny-character walking-normal">
+  <div class="tiny-character">
     <div class="walking-animation-container">
       
       <!-- アイドルフレーム: 立ち姿勢 -->
-      <svg class="walk-frame idle active" viewBox="0 0 100 150">
+      <svg class="walk-frame idle" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
           <!-- 頭 -->
           <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
@@ -831,6 +819,12 @@
         this.speedMultiplier = 1.0;
         this.isNavigating = false;
         
+        // 棒人間アニメーション管理
+        this.walkingInterval = null;
+        this.pointingTimeout = null;
+        this.currentWalkFrame = 0;
+        this.walkFrames = ['frame1', 'frame2', 'frame3', 'frame4'];
+        
         // パフォーマンス最適化用のRAF管理
         this.rafId = null;
         this.lastTime = 0;
@@ -852,11 +846,10 @@
         
         // 初期状態でアイドルフレームを表示
         setTimeout(() => {
-          const idleFrame = document.querySelector('.walk-frame.idle');
-          if (idleFrame) {
-            idleFrame.classList.add('active');
+          if (!this.isScrolling) {
+            this.showIdleFrame();
           }
-        }, 100);
+        }, 200);
       }
       
       createStonePattern() {
@@ -1052,43 +1045,41 @@
       }
       
       setupEventListeners() {
-        // スクロールイベント - 最適化されたハンドリング
+        // 左右スクロールイベント - 最適化されたハンドリング
         let scrollTimeout;
         window.addEventListener('wheel', (e) => {
+          e.preventDefault(); // デフォルトの縦スクロールを無効化
           clearTimeout(scrollTimeout);
-          this.handleScroll(e.deltaY);
+          
+          // 横スクロール（deltaX）または縦スクロールを横に変換（deltaY）
+          const scrollDelta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+          this.handleScroll(scrollDelta);
           
           // スクロール終了を検知してパフォーマンス最適化
           scrollTimeout = setTimeout(() => {
             this.optimizeAfterScroll();
           }, 150);
-        }, { passive: true });
+        }, { passive: false }); // preventDefaultのためfalse
         
         // ナビゲーション削除により不要
         
-        // タッチイベント（モバイル） - 改善版
-        let touchStartY = 0;
+        // タッチイベント（モバイル） - 左右スクロール対応
         let touchStartX = 0;
         let touchTimeout;
-        let isVerticalScroll = false;
         
         document.addEventListener('touchstart', (e) => {
-          touchStartY = e.touches[0].clientY;
           touchStartX = e.touches[0].clientX;
-          isVerticalScroll = false;
         }, { passive: true });
         
         document.addEventListener('touchmove', (e) => {
-          const touchY = e.touches[0].clientY;
           const touchX = e.touches[0].clientX;
-          const deltaY = touchStartY - touchY;
           const deltaX = touchStartX - touchX;
           
-          // 水平スクロールを検出（カード移動用）- より自然な感度
-          if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 5) {
-            isVerticalScroll = false;
+          // 左右スワイプを検出
+          if (Math.abs(deltaX) > 5) {
+            e.preventDefault(); // デフォルトの動作を防ぐ
             clearTimeout(touchTimeout);
-            this.handleScroll(deltaX * 0.8); // より自然な感度
+            this.handleScroll(deltaX * 0.8); // 自然な感度
             
             touchTimeout = setTimeout(() => {
               this.optimizeAfterScroll();
@@ -1097,25 +1088,26 @@
             // タッチ位置を更新（連続的なスクロールのため）
             touchStartX = touchX;
           }
-          // 垂直スクロールも対応
-          else if (Math.abs(deltaY) > 5 && Math.abs(deltaY) > Math.abs(deltaX)) {
-            isVerticalScroll = true;
-            clearTimeout(touchTimeout);
-            this.handleScroll(deltaY * 0.6); // モバイル用に感度調整
-            
-            touchTimeout = setTimeout(() => {
-              this.optimizeAfterScroll();
-            }, 150);
-            
-            // タッチ位置を更新
-            touchStartY = touchY;
-          }
-        }, { passive: true });
+        }, { passive: false }); // preventDefaultのためfalse
         
-        // キーボードナビゲーション
+        // キーボードナビゲーション - 左右キー対応
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowLeft') this.navigateToSection(this.sections[Math.max(0, this.sectionIndex - 1)]);
-          if (e.key === 'ArrowRight') this.navigateToSection(this.sections[Math.min(this.sections.length - 1, this.sectionIndex + 1)]);
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            this.handleScroll(-50); // 左方向
+          }
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            this.handleScroll(50); // 右方向
+          }
+          if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            this.handleScroll(-50); // 上キーも左方向
+          }
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            this.handleScroll(50); // 下キーも右方向
+          }
         });
       }
       
@@ -1125,14 +1117,14 @@
         this.updateWalkingSpeed();
       }
       
-      handleScroll(deltaY) {
-        // スクロール方向と自然な感度設定
-        const scrollDirection = deltaY > 0 ? 1 : -1;
+      handleScroll(deltaX) {
+        // 左右スクロール方向と自然な感度設定
+        const scrollDirection = deltaX > 0 ? 1 : -1; // 正の値=右方向、負の値=左方向
         const baseSensitivity = this.isLowEndDevice ? 0.5 : 0.8;
-        const scrollAmount = Math.abs(deltaY) * baseSensitivity;
+        const scrollAmount = Math.abs(deltaX) * baseSensitivity;
         
         // スクロール速度を保存（アニメーション速度調整用）
-        this.scrollVelocity = Math.min(50, Math.abs(deltaY));
+        this.scrollVelocity = Math.min(50, Math.abs(deltaX));
         
         // より自然な慣性スクロール
         const inertia = this.scrollInertia || 0;
@@ -1143,8 +1135,6 @@
         const actualScroll = scrollAmount + this.scrollInertia;
         this.currentScrollOffset = (this.currentScrollOffset || 0) + (scrollDirection * actualScroll);
         
-        // 歩行速度クラスを更新
-        this.updateWalkingSpeedClass();
         
         // 無限スクロールの滑らかなループ処理
         const cardWidth = 340; // カード幅(320px) + gap(20px)
@@ -1164,18 +1154,17 @@
         // 棒人間の歩行開始と向き変更
         if (!this.isScrolling) {
           this.startRunning();
-        } else {
-          // 既に歩行中の場合は速度を更新
-          this.updateWalkingSpeedClass();
         }
         
-        // 棒人間の向きを変更
+        // 棒人間の向きを変更（左右スクロールに対応）
         const character = document.querySelector('.tiny-character');
         if (character) {
           if (scrollDirection > 0) {
+            // 右スクロール = 右向き
             character.classList.add('facing-right');
             character.classList.remove('facing-left');
           } else {
+            // 左スクロール = 左向き
             character.classList.add('facing-left');
             character.classList.remove('facing-right');
           }
@@ -1192,10 +1181,10 @@
         // セクション変更（スクロール量に基づく）
         this.scrollDistance = (this.scrollDistance || 0) + Math.abs(actualScroll);
         if (this.scrollDistance > 2000) {
-          if (deltaY > 0) {
-            this.nextSection();
+          if (deltaX > 0) {
+            this.nextSection(); // 右スクロールで次のセクション
           } else {
-            this.prevSection();
+            this.prevSection(); // 左スクロールで前のセクション
           }
           this.scrollDistance = 0;
         }
@@ -1254,25 +1243,6 @@
         track.style.setProperty('--scroll-speed', `${this.currentScrollSpeed}s`);
       }
       
-      updateWalkingSpeedClass() {
-        const character = document.querySelector('.tiny-character');
-        if (!character || !this.isScrolling) return;
-        
-        // 速度クラスをリセット
-        character.classList.remove('walking-slow', 'walking-normal', 'walking-fast', 'walking-very-fast');
-        
-        // スクロール速度に基づいて歩行速度クラスを設定
-        const velocity = this.scrollVelocity || 1;
-        if (velocity < 8) {
-          character.classList.add('walking-slow');
-        } else if (velocity < 20) {
-          character.classList.add('walking-normal');
-        } else if (velocity < 35) {
-          character.classList.add('walking-fast');
-        } else {
-          character.classList.add('walking-very-fast');
-        }
-      }
       
       resetToNormalSpeed() {
         this.speedMultiplier = 1.0;
@@ -1298,67 +1268,99 @@
       }
       
       startRunning() {
+        // 既に歩行中の場合は何もしない
+        if (this.isScrolling) {
+          return;
+        }
+        
         this.isScrolling = true;
         const container = document.querySelector('.tiny-character');
         
-        // 歩行開始
-        container.classList.add('walking');
+        // 歩行状態を設定
+        if (container) {
+          container.classList.add('walking');
+        }
         
-        // GIFアニメーション風のフレーム切り替え開始
+        // 指差しアニメーションを停止
+        this.clearPointingAnimation();
+        
+        // 歩行アニメーション開始
         this.startWalkingAnimation();
+      }
+      
+      clearPointingAnimation() {
+        // 指差しアニメーションをクリア
+        if (this.pointingTimeout) {
+          clearTimeout(this.pointingTimeout);
+          this.pointingTimeout = null;
+        }
         
+        const pointingFrame = document.querySelector('.walk-frame.pointing');
+        if (pointingFrame) {
+          pointingFrame.classList.remove('active');
+        }
       }
       
       startWalkingAnimation() {
-        const frames = ['frame1', 'frame2', 'frame3', 'frame4'];
-        let currentFrame = 0;
-        
-        // 既存のアニメーションを安全にクリア
+        // 既存のアニメーションを安全に停止
         this.clearWalkingAnimation();
         
-        // アイドルフレームを非表示
-        const idleFrame = document.querySelector('.walk-frame.idle');
-        if (idleFrame) {
-          idleFrame.classList.remove('active');
-        }
+        // 初期状態をリセット
+        this.currentWalkFrame = 0;
+        this.walkFrames = ['frame1', 'frame2', 'frame3', 'frame4'];
         
-        // スクロール速度に基づいてフレーム速度を調整（より動的に）
-        const baseFrameDuration = 180; // 少し長めに設定
+        // アイドルフレームを非表示
+        this.hideAllFrames();
+        
+        // スクロール速度に基づいたフレーム速度
         const velocity = Math.max(1, this.scrollVelocity || 1);
-        const speedFactor = Math.min(3, Math.max(0.4, velocity / 12));
-        const frameDuration = Math.max(80, baseFrameDuration / speedFactor); // 最小80ms
+        const baseFrameDuration = 200;
+        const speedFactor = Math.min(2.5, Math.max(0.5, velocity / 15));
+        const frameDuration = Math.max(100, baseFrameDuration / speedFactor);
         
         // 最初のフレームを表示
-        const firstFrame = document.querySelector('.walk-frame.frame1');
-        if (firstFrame) {
-          firstFrame.classList.add('active');
-        }
+        this.showFrame(this.walkFrames[0]);
         
-        // 目標を見据えた歩行リズム
+        // 定期的なフレーム更新
         this.walkingInterval = setInterval(() => {
           if (!this.isScrolling) {
-            this.clearWalkingAnimation();
             return;
           }
           
-          // 効率的なフレーム切り替え
-          this.switchToFrame(frames[currentFrame], frames[(currentFrame + 1) % frames.length]);
-          currentFrame = (currentFrame + 1) % frames.length;
+          this.nextWalkFrame();
         }, frameDuration);
       }
       
-      switchToFrame(currentFrameClass, nextFrameClass) {
+      nextWalkFrame() {
         // 現在のフレームを非表示
-        const currentFrame = document.querySelector(`.walk-frame.${currentFrameClass}`);
-        if (currentFrame) {
-          currentFrame.classList.remove('active');
-        }
+        this.hideFrame(this.walkFrames[this.currentWalkFrame]);
         
-        // 次のフレームを表示
-        const nextFrame = document.querySelector(`.walk-frame.${nextFrameClass}`);
-        if (nextFrame) {
-          nextFrame.classList.add('active');
+        // 次のフレームへ
+        this.currentWalkFrame = (this.currentWalkFrame + 1) % this.walkFrames.length;
+        
+        // 新しいフレームを表示
+        this.showFrame(this.walkFrames[this.currentWalkFrame]);
+      }
+      
+      showFrame(frameClass) {
+        const frame = document.querySelector(`.walk-frame.${frameClass}`);
+        if (frame) {
+          frame.classList.add('active');
         }
+      }
+      
+      hideFrame(frameClass) {
+        const frame = document.querySelector(`.walk-frame.${frameClass}`);
+        if (frame) {
+          frame.classList.remove('active');
+        }
+      }
+      
+      hideAllFrames() {
+        // 全フレームを非表示
+        document.querySelectorAll('.walk-frame').forEach(frame => {
+          frame.classList.remove('active');
+        });
       }
       
       clearWalkingAnimation() {
@@ -1367,10 +1369,11 @@
           this.walkingInterval = null;
         }
         
+        // 状態をリセット
+        this.currentWalkFrame = 0;
+        
         // 全歩行フレームを非表示
-        document.querySelectorAll('.walk-frame:not(.idle)').forEach(frame => {
-          frame.classList.remove('active');
-        });
+        this.hideAllFrames();
       }
       
       stopRunning() {
@@ -1378,35 +1381,56 @@
         const container = document.querySelector('.tiny-character');
         const track = document.getElementById('cardsTrack');
         
-        // 歩行停止
-        container.classList.remove('walking', 'fast-walking');
+        // 歩行状態をクリア
+        if (container) {
+          container.classList.remove('walking', 'fast-walking');
+        }
         
         // 歩行アニメーションを安全に停止
         this.clearWalkingAnimation();
         
-        // アイドルフレームを表示
-        const idleFrame = document.querySelector('.walk-frame.idle');
-        if (idleFrame) {
-          idleFrame.classList.add('active');
-        }
+        // アイドル状態に戻る
+        setTimeout(() => {
+          if (!this.isScrolling) {
+            this.showIdleFrame();
+            
+            // 指差しアニメーションを開始
+            setTimeout(() => {
+              if (!this.isScrolling) {
+                this.startPointingAnimation();
+              }
+            }, 300);
+          }
+        }, 100);
         
         // カードトラックをアイドル状態に
         if (track) {
           track.classList.remove('scrolling');
           track.classList.add('idle');
         }
+      }
+      
+      showIdleFrame() {
+        // 全フレームを非表示
+        this.hideAllFrames();
         
-        // 停止時に指差しアニメーションを開始
-        setTimeout(() => {
-          if (!this.isScrolling) {
-            this.startPointingAnimation();
-          }
-        }, 500);
+        // アイドルフレームを表示
+        const idleFrame = document.querySelector('.walk-frame.idle');
+        if (idleFrame) {
+          idleFrame.classList.add('active');
+        }
       }
       
       startPointingAnimation() {
+        // 歩行中は指差しアニメーションを行わない
+        if (this.isScrolling) {
+          return;
+        }
+        
         const character = document.querySelector('.tiny-character');
-        if (!character || this.isScrolling) return;
+        if (!character) {
+          return;
+        }
         
         // 現在表示中のカードを取得
         const viewportCenter = window.innerWidth / 2;
@@ -1435,8 +1459,13 @@
       }
       
       showPointingFrame(targetCard) {
+        // 歩行中は指差ししない
+        if (this.isScrolling) {
+          return;
+        }
+        
         // アイドルフレームを非表示
-        document.querySelector('.walk-frame.idle').classList.remove('active');
+        this.hideAllFrames();
         
         // 指差しフレームを作成または更新
         let pointingFrame = document.querySelector('.walk-frame.pointing');
@@ -1448,24 +1477,27 @@
           }
         }
         
-        pointingFrame.classList.add('active');
+        if (pointingFrame) {
+          pointingFrame.classList.add('active');
+        }
         
         // カードのハイライト
-        targetCard.classList.add('highlighted');
+        if (targetCard) {
+          targetCard.classList.add('highlighted');
+        }
         
         // 一定時間後にアイドルに戻る
-        setTimeout(() => {
-          if (!this.isScrolling && pointingFrame) {
-            pointingFrame.classList.remove('active');
-            const idleFrame = document.querySelector('.walk-frame.idle');
-            if (idleFrame) {
-              idleFrame.classList.add('active');
+        this.pointingTimeout = setTimeout(() => {
+          if (!this.isScrolling) {
+            if (pointingFrame) {
+              pointingFrame.classList.remove('active');
             }
             if (targetCard) {
               targetCard.classList.remove('highlighted');
             }
+            this.showIdleFrame();
           }
-        }, 2500);
+        }, 2000);
       }
       
       createPointingFrame() {
