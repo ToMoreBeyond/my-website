@@ -19,9 +19,17 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #ffffff;
-      overflow: hidden; /* 全てのスクロールバーを非表示 */
+      overflow: hidden;
       min-height: 100vh;
       position: relative;
+    }
+    
+    body.loading {
+      overflow: hidden;
+    }
+    
+    body.loaded {
+      overflow: hidden;
     }
     
     /* 左上ロゴ - より洗練されたデザイン */
@@ -41,10 +49,184 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    
+    body.loaded .logo {
+      opacity: 1;
+      transform: translateY(0);
     }
     
     .logo:hover {
       transform: scale(1.05);
+    }
+    
+    /* ローディング画面 */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .loading-content {
+      text-align: center;
+      max-width: 600px;
+      padding: 40px;
+    }
+    
+    .logo-loading {
+      margin-bottom: 60px;
+    }
+    
+    .company-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin: 0 0 20px 0;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 50%, #1a1a1a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: logoShine 3s ease-in-out infinite;
+    }
+    
+    @keyframes logoShine {
+      0%, 100% { background-position: -200% center; }
+      50% { background-position: 200% center; }
+    }
+    
+    .mission-text {
+      font-size: 1.2rem;
+      color: #666;
+      line-height: 1.6;
+      margin: 0;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.5s forwards;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* 道の描画アニメーション */
+    .path-drawing {
+      position: relative;
+      height: 200px;
+      margin: 40px 0;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    .path-svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .drawing-path {
+      animation: drawPath 3s ease-in-out 1.5s forwards;
+    }
+    
+    @keyframes drawPath {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    .unknown-path {
+      opacity: 0.3;
+    }
+    
+    /* キャラクターの移動 */
+    .loading-character {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 60px;
+      animation: characterWalk 3s ease-in-out 1.5s forwards;
+    }
+    
+    @keyframes characterWalk {
+      0% {
+        left: 0;
+        transform: translateY(-50%) translateX(-20px);
+      }
+      100% {
+        left: calc(100% - 40px);
+        transform: translateY(-50%) translateX(0);
+      }
+    }
+    
+    .char-svg {
+      width: 100%;
+      height: 100%;
+      animation: characterBob 0.6s ease-in-out infinite;
+    }
+    
+    @keyframes characterBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    
+    /* プログレスバー */
+    .loading-progress {
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 179, 0, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FFB300, #DAA520);
+      border-radius: 3px;
+      width: 0;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+    }
+    
+    .loading-text {
+      font-size: 1rem;
+      color: #666;
+      margin: 0;
+      transition: all 0.3s ease;
     }
     
     /* ナビゲーションバーを削除（不要） */
@@ -326,16 +508,82 @@
     .tiny-character {
       position: fixed;
       bottom: 60px; /* 道路の上に立つように調整 */
-      left: 50%;
-      transform: translateX(-50%) translateZ(0);
+      left: 20px; /* 左端からスタート */
+      transform: translateZ(0);
       width: 100px;
       height: 100px;
       z-index: 150;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
       contain: layout style paint;
-      will-change: transform;
+      will-change: transform, left;
       backface-visibility: hidden;
-      transition: filter 0.3s ease;
+      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
+    }
+    
+    /* キャラクターの旅路進行状態 */
+    .tiny-character.journey-mode {
+      transition: left 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* チェックポイント到達時のエフェクト */
+    .tiny-character.at-checkpoint {
+      filter: drop-shadow(0 8px 16px rgba(255,179,0,0.4));
+      animation: checkpointGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes checkpointGlow {
+      0%, 100% { 
+        filter: drop-shadow(0 8px 16px rgba(255,179,0,0.4));
+      }
+      50% { 
+        filter: drop-shadow(0 12px 24px rgba(255,179,0,0.6));
+      }
+    }
+    
+    /* チェックポイント通知アニメーション */
+    @keyframes checkpointPop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+      30% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+      }
+    }
+    
+    /* リセット通知アニメーション */
+    @keyframes resetPop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+      15% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+      25% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      85% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
     }
     
     
@@ -648,7 +896,63 @@
     }
   </style>
 </head>
-<body class="section-apps">
+<body class="section-apps loading">
+  <!-- ローディング画面 -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="logo-loading">
+        <h1 class="company-name">ToMoreBeyond</h1>
+        <p class="mission-text">面白いことだけをする。友と共に“道なき道”を越える</p>
+      </div>
+      
+      <div class="path-drawing">
+        <svg class="path-svg" viewBox="0 0 800 200">
+          <defs>
+            <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#DAA520;stop-opacity:0" />
+              <stop offset="50%" style="stop-color:#FFB300;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0" />
+            </linearGradient>
+          </defs>
+          
+          <!-- 未開拓の道 -->
+          <path class="unknown-path" d="M 0 100 Q 200 80 400 100 T 800 100" 
+                stroke="#ddd" stroke-width="3" fill="none" stroke-dasharray="10,5" />
+          
+          <!-- 開拓される道 -->
+          <path class="drawing-path" d="M 0 100 Q 200 80 400 100 T 800 100" 
+                stroke="url(#pathGradient)" stroke-width="6" fill="none" 
+                stroke-dasharray="1600" stroke-dashoffset="1600" />
+        </svg>
+        
+        <!-- 進行中のキャラクター -->
+        <div class="loading-character">
+          <svg viewBox="0 0 100 150" class="char-svg">
+            <g stroke="#FFB300" stroke-width="6" stroke-linecap="round" fill="none">
+              <circle cx="50" cy="20" r="12" fill="#FFB300" stroke="none"/>
+              <line x1="50" y1="32" x2="50" y2="65"/>
+              <line x1="50" y1="40" x2="42" y2="52"/>
+              <line x1="42" y1="52" x2="40" y2="68"/>
+              <line x1="50" y1="40" x2="58" y2="52"/>
+              <line x1="58" y1="52" x2="60" y2="68"/>
+              <line x1="50" y1="65" x2="46" y2="87"/>
+              <line x1="46" y1="87" x2="45" y2="110"/>
+              <line x1="50" y1="65" x2="54" y2="87"/>
+              <line x1="54" y1="87" x2="55" y2="110"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      
+      <div class="loading-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="loading-text" id="loadingText">旅の準備中...</p>
+      </div>
+    </div>
+  </div>
+  
   <!-- 左上ロゴ -->
   <a href="#" class="logo">ToMoreBeyond</a>
   
@@ -829,7 +1133,89 @@
         this.rafId = null;
         this.lastTime = 0;
         
-        this.init();
+        // 新しい横スクロール構造管理
+        this.characterPosition = 0; // 0 = 左端, 1 = 右端
+        this.totalJourneyWidth = window.innerWidth * 5; // 5画面分の旅路
+        this.sectionCheckpoints = [
+          { name: 'start', position: 0, title: 'スタート地点' },
+          { name: 'apps', position: 0.2, title: 'アプリケーション' },
+          { name: 'company', position: 0.4, title: '会社紹介' },
+          { name: 'members', position: 0.6, title: 'チームメンバー' },
+          { name: 'media', position: 0.8, title: 'メディア活動' },
+          { name: 'contact', position: 1.0, title: 'コンタクト' }
+        ];
+        this.currentCheckpoint = 0;
+        this.isAtCheckpoint = false;
+        this.checkpointPauseTime = 2000; // 2秒間チェックポイントで停止
+        
+        // ローディング管理
+        this.loadingProgress = 0;
+        this.loadingMessages = [
+          '旅の準備中...',
+          '道を探しています...',
+          'アプリを読み込んでいます...',
+          'メンバーを集めています...',
+          '最終準備中...',
+          '旅立ちの時です！'
+        ];
+        
+        this.startLoading();
+      }
+      
+      startLoading() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const progressFill = document.getElementById('progressFill');
+        const loadingText = document.getElementById('loadingText');
+        
+        let progress = 0;
+        let messageIndex = 0;
+        
+        const loadingInterval = setInterval(() => {
+          progress += Math.random() * 15 + 5; // 5-20%ずつ進行
+          
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(loadingInterval);
+            
+            // ローディング完了
+            setTimeout(() => {
+              this.completeLoading();
+            }, 500);
+          }
+          
+          // プログレスバー更新
+          if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+          }
+          
+          // メッシージ更新
+          if (loadingText && messageIndex < this.loadingMessages.length - 1) {
+            const newIndex = Math.floor((progress / 100) * (this.loadingMessages.length - 1));
+            if (newIndex > messageIndex) {
+              messageIndex = newIndex;
+              loadingText.textContent = this.loadingMessages[messageIndex];
+            }
+          }
+        }, 300 + Math.random() * 400); // 300-700ms間隔
+      }
+      
+      completeLoading() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const body = document.body;
+        
+        // ローディング画面をフェードアウト
+        if (loadingScreen) {
+          loadingScreen.classList.add('hidden');
+        }
+        
+        // ボディの状態を変更
+        body.classList.remove('loading');
+        body.classList.add('loaded');
+        
+        // メインコンテンツの初期化を開始
+        setTimeout(() => {
+          this.init();
+        }, 300);
       }
       
       init() {
@@ -849,7 +1235,7 @@
           if (!this.isScrolling) {
             this.showIdleFrame();
           }
-        }, 200);
+        }, 500); // ローディング後は少し遅らせる
       }
       
       createStonePattern() {
@@ -1118,76 +1504,63 @@
       }
       
       handleScroll(deltaX) {
-        // 左右スクロール方向と自然な感度設定
+        // 横スクロールの新しい旅路システム
         const scrollDirection = deltaX > 0 ? 1 : -1; // 正の値=右方向、負の値=左方向
-        const baseSensitivity = this.isLowEndDevice ? 0.5 : 0.8;
-        const scrollAmount = Math.abs(deltaX) * baseSensitivity;
+        const baseSensitivity = this.isLowEndDevice ? 0.002 : 0.003; // 感度を下げて自然な移動に
+        const movementAmount = Math.abs(deltaX) * baseSensitivity;
         
-        // スクロール速度を保存（アニメーション速度調整用）
-        this.scrollVelocity = Math.min(50, Math.abs(deltaX));
-        
-        // より自然な慣性スクロール
-        const inertia = this.scrollInertia || 0;
-        const dampening = 0.92;
-        this.scrollInertia = inertia * dampening + scrollAmount * 0.08;
-        
-        // 滑らかなスクロール計算（慣性込み）
-        const actualScroll = scrollAmount + this.scrollInertia;
-        this.currentScrollOffset = (this.currentScrollOffset || 0) + (scrollDirection * actualScroll);
-        
-        
-        // 無限スクロールの滑らかなループ処理
-        const cardWidth = 340; // カード幅(320px) + gap(20px)
-        const totalWidth = cardWidth * cardsData.length;
-        const halfWidth = totalWidth / 2;
-        
-        // シームレスなループ処理
-        if (this.currentScrollOffset > 0) {
-          this.currentScrollOffset -= totalWidth;
-        } else if (this.currentScrollOffset < -totalWidth) {
-          this.currentScrollOffset += totalWidth;
+        // チェックポイント停止中は移動を制限
+        if (this.isAtCheckpoint) {
+          return;
         }
         
-        // 高頻度でスムーズ更新
-        this.updateCardPositionUltraSmooth();
+        // キャラクターの位置を更新（0〜1の範囲）
+        const oldPosition = this.characterPosition;
+        this.characterPosition += scrollDirection * movementAmount;
+        this.characterPosition = Math.max(0, Math.min(1, this.characterPosition));
         
-        // 棒人間の歩行開始と向き変更
-        if (!this.isScrolling) {
-          this.startRunning();
-        }
+        // 実際の画面上での位置を計算
+        const screenWidth = window.innerWidth;
+        const characterScreenX = 20 + (screenWidth - 120) * this.characterPosition; // 20px〜screenWidth-100px
         
-        // 棒人間の向きを変更（左右スクロールに対応）
+        // キャラクターの位置を更新
         const character = document.querySelector('.tiny-character');
-        if (character) {
+        if (character && oldPosition !== this.characterPosition) {
+          character.style.left = `${characterScreenX}px`;
+          
+          // 向きを変更
           if (scrollDirection > 0) {
-            // 右スクロール = 右向き
             character.classList.add('facing-right');
             character.classList.remove('facing-left');
           } else {
-            // 左スクロール = 左向き
             character.classList.add('facing-left');
             character.classList.remove('facing-right');
           }
+          
+          // 歩行開始
+          if (!this.isScrolling) {
+            this.startJourneyWalking();
+          }
         }
         
-        // スクロール終了の検知を改善
+        // チェックポイント検出
+        this.checkForCheckpoints();
+        
+        // セクション表示の更新
+        this.updateSectionDisplay();
+        
+        // 右端到達時のリセット処理
+        if (this.characterPosition >= 1.0) {
+          setTimeout(() => {
+            this.resetJourney();
+          }, 1000);
+        }
+        
+        // 歩行停止タイマー
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(() => {
-          this.stopRunning();
-          this.scrollInertia = 0;
-        }, 200);
-        
-        
-        // セクション変更（スクロール量に基づく）
-        this.scrollDistance = (this.scrollDistance || 0) + Math.abs(actualScroll);
-        if (this.scrollDistance > 2000) {
-          if (deltaX > 0) {
-            this.nextSection(); // 右スクロールで次のセクション
-          } else {
-            this.prevSection(); // 左スクロールで前のセクション
-          }
-          this.scrollDistance = 0;
-        }
+          this.stopJourneyWalking();
+        }, 300);
       }
       
       updateCardPositionUltraSmooth() {
@@ -1633,22 +2006,32 @@
       }
       
       startAutoScroll() {
-        // カードの初期位置を設定
-        this.currentScrollOffset = 0;
-        this.scrollInertia = 0;
+        // 新しい横スクロール旅路の初期化
+        this.characterPosition = 0;
+        this.currentCheckpoint = 0;
+        this.isAtCheckpoint = false;
         
-        // 初期状態をアイドルに設定し、カードを表示
+        // キャラクターを左端（スタート地点）に配置
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.left = '20px';
+          character.classList.add('facing-right'); // 初期は右向き
+        }
+        
+        // カードの初期表示状態を設定
         const track = document.getElementById('cardsTrack');
         if (track) {
           track.classList.add('idle');
           track.classList.remove('scrolling');
-          track.style.transform = 'translateX(0px) translateZ(0)';
           track.style.visibility = 'visible';
           track.style.opacity = '1';
           
           // カードが確実に表示されるように強制的に再描画
           track.offsetHeight;
         }
+        
+        // 初期セクション表示の更新
+        this.updateSectionDisplay();
       }
       
       onCardHover(card) {
@@ -1676,7 +2059,181 @@
         
         // 通常の状態に戻る
         character.classList.remove('looking-left', 'looking-right');
-        character.style.transform = 'translateX(-50%) translateZ(0)';
+        character.style.transform = 'translateZ(0)';
+      }
+      
+      // 新しい横スクロール旅路システムのメソッド
+      startJourneyWalking() {
+        this.isScrolling = true;
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          character.classList.add('walking', 'journey-mode');
+          character.classList.remove('at-checkpoint');
+        }
+        
+        this.startWalkingAnimation();
+      }
+      
+      stopJourneyWalking() {
+        this.isScrolling = false;
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          character.classList.remove('walking', 'journey-mode');
+        }
+        
+        this.clearWalkingAnimation();
+        
+        setTimeout(() => {
+          if (!this.isScrolling) {
+            this.showIdleFrame();
+          }
+        }, 100);
+      }
+      
+      checkForCheckpoints() {
+        const tolerance = 0.05; // 5%の許容範囲
+        
+        for (let i = 0; i < this.sectionCheckpoints.length; i++) {
+          const checkpoint = this.sectionCheckpoints[i];
+          const distance = Math.abs(this.characterPosition - checkpoint.position);
+          
+          if (distance <= tolerance && i !== this.currentCheckpoint) {
+            this.reachCheckpoint(i);
+            break;
+          }
+        }
+      }
+      
+      reachCheckpoint(checkpointIndex) {
+        this.currentCheckpoint = checkpointIndex;
+        this.isAtCheckpoint = true;
+        
+        const checkpoint = this.sectionCheckpoints[checkpointIndex];
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          character.classList.add('at-checkpoint');
+          // チェックポイントで一時停止
+          this.stopJourneyWalking();
+        }
+        
+        // セクション変更
+        this.changeSection(checkpoint.name);
+        
+        // 2秒後に移動再開可能
+        setTimeout(() => {
+          this.isAtCheckpoint = false;
+          if (character) {
+            character.classList.remove('at-checkpoint');
+          }
+        }, this.checkpointPauseTime);
+        
+        // チェックポイント到達エフェクト
+        this.showCheckpointEffect(checkpoint);
+      }
+      
+      showCheckpointEffect(checkpoint) {
+        // チェックポイント名を表示
+        const effect = document.createElement('div');
+        effect.className = 'checkpoint-notification';
+        effect.textContent = checkpoint.title;
+        effect.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #FFB300, #FFA000);
+          color: white;
+          padding: 16px 32px;
+          border-radius: 50px;
+          font-size: 1.2rem;
+          font-weight: 600;
+          box-shadow: 0 8px 32px rgba(255, 179, 0, 0.3);
+          z-index: 2000;
+          opacity: 0;
+          animation: checkpointPop 2s ease forwards;
+        `;
+        
+        document.body.appendChild(effect);
+        
+        setTimeout(() => {
+          effect.remove();
+        }, 2000);
+      }
+      
+      updateSectionDisplay() {
+        // キャラクターの位置に基づいてカード表示を調整
+        const cards = document.querySelectorAll('.card');
+        const currentSection = this.getCurrentSectionFromPosition();
+        
+        cards.forEach(card => {
+          const cardSection = card.dataset.section;
+          if (cardSection === currentSection) {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          } else {
+            card.style.opacity = '0.3';
+            card.style.transform = 'scale(0.95)';
+          }
+        });
+      }
+      
+      getCurrentSectionFromPosition() {
+        if (this.characterPosition < 0.15) return 'apps';
+        if (this.characterPosition < 0.35) return 'company';
+        if (this.characterPosition < 0.55) return 'members';
+        if (this.characterPosition < 0.75) return 'media';
+        return 'contact';
+      }
+      
+      resetJourney() {
+        // 右端到達後のリセット
+        this.characterPosition = 0;
+        this.currentCheckpoint = 0;
+        this.isAtCheckpoint = false;
+        
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.left = '20px';
+          character.classList.remove('facing-left', 'facing-right', 'at-checkpoint', 'journey-mode');
+          character.classList.add('facing-right'); // 旅立ちは右向き
+        }
+        
+        // カードの表示をリセット
+        this.updateSectionDisplay();
+        
+        // リセット完了エフェクト
+        this.showResetEffect();
+      }
+      
+      showResetEffect() {
+        const effect = document.createElement('div');
+        effect.className = 'reset-notification';
+        effect.textContent = '新しい旅路を歩み始めます...';
+        effect.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #4CAF50, #45A049);
+          color: white;
+          padding: 20px 40px;
+          border-radius: 50px;
+          font-size: 1.3rem;
+          font-weight: 600;
+          box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3);
+          z-index: 2000;
+          opacity: 0;
+          animation: resetPop 3s ease forwards;
+        `;
+        
+        document.body.appendChild(effect);
+        
+        setTimeout(() => {
+          effect.remove();
+        }, 3000);
       }
     }
     
