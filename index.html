@@ -302,112 +302,23 @@
       transform: translateX(-50%);
     }
     
-    /* 小石 */
+    /* 小石（シンプル化） */
     .decoration-item.stone::before {
-      width: 8px;
-      height: 6px;
-      background: radial-gradient(ellipse, #6a6a6a 30%, #4a4a4a 100%);
-      border-radius: 40%;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      width: 6px;
+      height: 4px;
+      background: #666;
+      border-radius: 50%;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
     
-    /* 低い草 */
-    .decoration-item.grass::before {
-      width: 2px;
-      height: 10px;
-      background: linear-gradient(to top, #4a5d23, #7CB342);
-      border-radius: 50% 50% 0 0;
-      box-shadow: 
-        1px 0 0 0 #689F38,
-        -1px 0 0 0 #689F38;
-    }
     
     @keyframes decorSway {
-      0%, 100% { transform: rotate(0deg) translateY(0px); }
-      25% { transform: rotate(-1deg) translateY(-1px); }
-      50% { transform: rotate(0deg) translateY(0px); }
-      75% { transform: rotate(1deg) translateY(-1px); }
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-1px); }
     }
     
-    /* 芝生の自然な質感 */
-    .grass-area::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        /* 細かい芝生の質感 */
-        radial-gradient(circle at 15% 25%, rgba(129, 199, 132, 0.3) 1px, transparent 1px),
-        radial-gradient(circle at 85% 15%, rgba(165, 214, 167, 0.2) 1px, transparent 1px),
-        radial-gradient(circle at 45% 65%, rgba(102, 187, 106, 0.25) 1px, transparent 1px),
-        radial-gradient(circle at 75% 85%, rgba(139, 195, 74, 0.2) 1px, transparent 1px),
-        /* 縦方向の芝生ライン */
-        repeating-linear-gradient(
-          90deg,
-          transparent 0px,
-          rgba(76, 175, 80, 0.05) 1px,
-          transparent 2px,
-          transparent 5px
-        );
-      background-size: 
-        40px 30px,
-        60px 40px,
-        50px 35px,
-        45px 25px,
-        3px 100%;
-    }
     
-    /* 芝生の微細なディテール */
-    .grass-area::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 8px;
-      background: 
-        repeating-linear-gradient(
-          90deg,
-          rgba(56, 142, 60, 0.6) 0px,
-          rgba(56, 142, 60, 0.6) 1px,
-          transparent 1px,
-          transparent 4px
-        );
-      opacity: 0.7;
-    }
     
-    /* 時々現れる道路標識や植物 */
-    .road-elements {
-      position: absolute;
-      top: -25px;
-      left: 0;
-      width: 100%;
-      height: 25px;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    
-    .road-element {
-      position: absolute;
-      bottom: 0;
-      font-size: 16px;
-      color: #2E7D32;
-      animation: elementSway 3s ease-in-out infinite;
-      transform-origin: bottom center;
-    }
-    
-    .road-element:nth-child(1) { left: 5%; animation-delay: 0s; }
-    .road-element:nth-child(2) { left: 20%; animation-delay: -1s; color: #795548; }
-    .road-element:nth-child(3) { left: 45%; animation-delay: -2s; }
-    .road-element:nth-child(4) { left: 70%; animation-delay: -0.5s; color: #795548; }
-    .road-element:nth-child(5) { left: 90%; animation-delay: -1.5s; }
-    
-    @keyframes elementSway {
-      0%, 100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
-    }
     
     /* 適切なサイズの棒人間（100px height） - 道の上に立つ */
     .tiny-character {
@@ -770,8 +681,7 @@
     <div class="path-shadow"></div>
   </div>
   
-  <!-- 芝生と装飾 -->
-  <div class="grass-area"></div>
+  <!-- 装飾 -->
   <div class="path-decoration" id="pathDecoration"></div>
   
   <!-- GIF風コマ送り歩行アニメーション棒人間 -->
@@ -800,91 +710,91 @@
         </g>
       </svg>
       
-      <!-- フレーム1: 歩行ポーズ（左脚前・体重移動） -->
+      <!-- フレーム1: 歩行ポーズ（左脚前・目標を見据える） -->
       <svg class="walk-frame frame1" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（わずかに前傾） -->
-          <circle cx="48" cy="18" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（前傾姿勢） -->
-          <line x1="48" y1="30" x2="49" y2="63"/>
-          <!-- 左腕（後ろ・大きく振る） -->
-          <line x1="49" y1="38" x2="58" y2="48"/>
-          <line x1="58" y1="48" x2="65" y2="65"/>
-          <!-- 右腕（前・力強く） -->
-          <line x1="49" y1="38" x2="38" y2="52"/>
-          <line x1="38" y1="52" x2="35" y2="68"/>
-          <!-- 左脚（前・着地瞬間） -->
-          <line x1="49" y1="63" x2="38" y2="83"/>
-          <line x1="38" y1="83" x2="32" y2="108"/>
-          <!-- 右脚（後・蹴り出し） -->
-          <line x1="49" y1="63" x2="60" y2="83"/>
-          <line x1="60" y1="83" x2="68" y2="102"/>
+          <!-- 頭（前方を見据える） -->
+          <circle cx="52" cy="16" r="12" fill="#333" stroke="none"/>
+          <!-- 胴体（前進の意志） -->
+          <line x1="52" y1="28" x2="50" y2="62"/>
+          <!-- 左腕（後方・力強く振る） -->
+          <line x1="50" y1="36" x2="60" y2="46"/>
+          <line x1="60" y1="46" x2="65" y2="62"/>
+          <!-- 右腕（前方・バランス） -->
+          <line x1="50" y1="36" x2="40" y2="46"/>
+          <line x1="40" y1="46" x2="35" y2="62"/>
+          <!-- 左脚（大きく前進） -->
+          <line x1="50" y1="62" x2="35" y2="82"/>
+          <line x1="35" y1="82" x2="28" y2="108"/>
+          <!-- 右脚（力強い蹴り出し） -->
+          <line x1="50" y1="62" x2="62" y2="82"/>
+          <line x1="62" y1="82" x2="70" y2="100"/>
         </g>
       </svg>
       
-      <!-- フレーム2: 歩行ポーズ（脚交差・最高点） -->
+      <!-- フレーム2: 歩行ポーズ（中間点・推進力） -->
       <svg class="walk-frame frame2" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（最高点・直立） -->
-          <circle cx="50" cy="16" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（直立・最高点） -->
-          <line x1="50" y1="28" x2="50" y2="61"/>
-          <!-- 左腕（中間・戻り中） -->
-          <line x1="50" y1="36" x2="44" y2="53"/>
-          <line x1="44" y1="53" x2="43" y2="70"/>
-          <!-- 右腕（中間・戻り中） -->
-          <line x1="50" y1="36" x2="56" y2="53"/>
-          <line x1="56" y1="53" x2="57" y2="70"/>
-          <!-- 左脚（支持・直立） -->
-          <line x1="50" y1="61" x2="47" y2="83"/>
-          <line x1="47" y1="83" x2="48" y2="108"/>
-          <!-- 右脚（振り出し・高く上がる） -->
-          <line x1="50" y1="61" x2="53" y2="80"/>
-          <line x1="53" y1="80" x2="52" y2="105"/>
+          <!-- 頭（目標への集中） -->
+          <circle cx="51" cy="15" r="12" fill="#333" stroke="none"/>
+          <!-- 胴体（前進エネルギー） -->
+          <line x1="51" y1="27" x2="50" y2="61"/>
+          <!-- 左腕（バランス調整） -->
+          <line x1="50" y1="35" x2="44" y2="50"/>
+          <line x1="44" y1="50" x2="42" y2="66"/>
+          <!-- 右腕（リズム維持） -->
+          <line x1="50" y1="35" x2="56" y2="50"/>
+          <line x1="56" y1="50" x2="58" y2="66"/>
+          <!-- 左脚（安定した支持） -->
+          <line x1="50" y1="61" x2="46" y2="82"/>
+          <line x1="46" y1="82" x2="45" y2="108"/>
+          <!-- 右脚（次のステップ準備） -->
+          <line x1="50" y1="61" x2="54" y2="82"/>
+          <line x1="54" y1="82" x2="55" y2="105"/>
         </g>
       </svg>
       
-      <!-- フレーム3: 歩行ポーズ（右脚前・体重移動） -->
+      <!-- フレーム3: 歩行ポーズ（右脚前・確実な前進） -->
       <svg class="walk-frame frame3" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（わずかに前傾） -->
-          <circle cx="52" cy="18" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（前傾姿勢） -->
-          <line x1="52" y1="30" x2="51" y2="63"/>
-          <!-- 左腕（前・力強く） -->
-          <line x1="51" y1="38" x2="38" y2="52"/>
-          <line x1="38" y1="52" x2="35" y2="68"/>
-          <!-- 右腕（後ろ・大きく振る） -->
-          <line x1="51" y1="38" x2="62" y2="48"/>
-          <line x1="62" y1="48" x2="68" y2="65"/>
-          <!-- 左脚（後・蹴り出し） -->
-          <line x1="51" y1="63" x2="40" y2="83"/>
-          <line x1="40" y1="83" x2="32" y2="102"/>
-          <!-- 右脚（前・着地瞬間） -->
-          <line x1="51" y1="63" x2="62" y2="83"/>
-          <line x1="62" y1="83" x2="68" y2="108"/>
+          <!-- 頭（決意を持って前方注視） -->
+          <circle cx="53" cy="16" r="12" fill="#333" stroke="none"/>
+          <!-- 胴体（力強い前進） -->
+          <line x1="53" y1="28" x2="51" y2="62"/>
+          <!-- 左腕（前方・目標への意志） -->
+          <line x1="51" y1="36" x2="38" y2="46"/>
+          <line x1="38" y1="46" x2="32" y2="62"/>
+          <!-- 右腕（後方・推進力） -->
+          <line x1="51" y1="36" x2="64" y2="46"/>
+          <line x1="64" y1="46" x2="70" y2="62"/>
+          <!-- 左脚（後方・次への準備） -->
+          <line x1="51" y1="62" x2="38" y2="82"/>
+          <line x1="38" y1="82" x2="30" y2="100"/>
+          <!-- 右脚（前方・大胆な一歩） -->
+          <line x1="51" y1="62" x2="64" y2="82"/>
+          <line x1="64" y1="82" x2="72" y2="108"/>
         </g>
       </svg>
       
-      <!-- フレーム4: 歩行ポーズ（脚揃え・中間） -->
+      <!-- フレーム4: 歩行ポーズ（リズムの転換点） -->
       <svg class="walk-frame frame4" viewBox="0 0 100 150">
         <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（少し弾み） -->
-          <circle cx="50" cy="17" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（まっすぐ） -->
-          <line x1="50" y1="29" x2="50" y2="62"/>
-          <!-- 左腕（自然な位置） -->
-          <line x1="50" y1="37" x2="43" y2="50"/>
-          <line x1="43" y1="50" x2="42" y2="66"/>
-          <!-- 右腕（自然な位置） -->
-          <line x1="50" y1="37" x2="57" y2="50"/>
-          <line x1="57" y1="50" x2="58" y2="66"/>
-          <!-- 左脚（中間位置） -->
-          <line x1="50" y1="62" x2="48" y2="84"/>
-          <line x1="48" y1="84" x2="47" y2="108"/>
-          <!-- 右脚（中間位置） -->
-          <line x1="50" y1="62" x2="52" y2="84"/>
-          <line x1="52" y1="84" x2="53" y2="108"/>
+          <!-- 頭（前方への意識） -->
+          <circle cx="50" cy="14" r="12" fill="#333" stroke="none"/>
+          <!-- 胴体（エネルギー蓄積） -->
+          <line x1="50" y1="26" x2="49" y2="61"/>
+          <!-- 左腕（リズム作り） -->
+          <line x1="49" y1="34" x2="42" y2="48"/>
+          <line x1="42" y1="48" x2="40" y2="64"/>
+          <!-- 右腕（バランス保持） -->
+          <line x1="49" y1="34" x2="56" y2="48"/>
+          <line x1="56" y1="48" x2="58" y2="64"/>
+          <!-- 左脚（推進準備） -->
+          <line x1="49" y1="61" x2="47" y2="83"/>
+          <line x1="47" y1="83" x2="46" y2="108"/>
+          <!-- 右脚（安定した踏み込み） -->
+          <line x1="49" y1="61" x2="51" y2="83"/>
+          <line x1="51" y1="83" x2="52" y2="108"/>
         </g>
       </svg>
       
@@ -977,21 +887,22 @@
         const decoration = document.getElementById('pathDecoration');
         if (!decoration) return;
         
-        decoration.innerHTML = ''; // 既存のコンテンツをクリア
+        decoration.innerHTML = '';
         
-        // 装飾アイテムを生成
-        for (let i = 0; i < 15; i++) {
+        // より少ない装飾でメモリ効率化
+        for (let i = 0; i < 8; i++) {
           const item = document.createElement('div');
           item.className = 'decoration-item';
           
-          // ランダムに石または草
-          item.classList.add(Math.random() > 0.6 ? 'stone' : 'grass');
+          // 石のみでシンプルに
+          item.classList.add('stone');
           
-          // ランダムな位置
-          item.style.left = `${5 + Math.random() * 90}%`;
+          // 固定位置でメモリ効率化
+          const positions = [10, 20, 30, 45, 60, 70, 80, 90];
+          item.style.left = `${positions[i]}%`;
           
-          // ランダムなアニメーション遅延
-          item.style.animationDelay = `${Math.random() * 4}s`;
+          // アニメーション遅延を最小限に
+          item.style.animationDelay = `${i * 0.5}s`;
           
           decoration.appendChild(item);
         }
@@ -1277,8 +1188,6 @@
           this.scrollInertia = 0;
         }, 200);
         
-        // 雑草の揺れ効果
-        this.animateWeedsOnScroll();
         
         // セクション変更（スクロール量に基づく）
         this.scrollDistance = (this.scrollDistance || 0) + Math.abs(actualScroll);
@@ -1339,21 +1248,6 @@
         }
       }
       
-      animateWeedsOnScroll() {
-        const weeds = document.querySelectorAll('.weed');
-        weeds.forEach((weed, index) => {
-          weed.style.animation = 'none';
-          weed.offsetHeight; // リフロー強制
-          weed.style.animation = `weedSway 0.5s ease-in-out infinite`;
-          weed.style.animationDelay = `${index * 0.05}s`;
-        });
-        
-        setTimeout(() => {
-          weeds.forEach(weed => {
-            weed.style.animation = '';
-          });
-        }, 1000);
-      }
       
       updateCardSpeed() {
         const track = document.getElementById('cardsTrack');
@@ -1413,18 +1307,14 @@
         // GIFアニメーション風のフレーム切り替え開始
         this.startWalkingAnimation();
         
-        // 雑草の揺れ効果
-        this.animateWeedsOnRun();
       }
       
       startWalkingAnimation() {
         const frames = ['frame1', 'frame2', 'frame3', 'frame4'];
         let currentFrame = 0;
         
-        // 既存のアニメーションをクリア
-        if (this.walkingInterval) {
-          clearInterval(this.walkingInterval);
-        }
+        // 既存のアニメーションを安全にクリア
+        this.clearWalkingAnimation();
         
         // アイドルフレームを非表示
         const idleFrame = document.querySelector('.walk-frame.idle');
@@ -1432,10 +1322,11 @@
           idleFrame.classList.remove('active');
         }
         
-        // スクロール速度に基づいてフレーム速度を調整
-        const baseFrameDuration = 150;
-        const speedFactor = Math.min(2, Math.max(0.5, (this.scrollVelocity || 1) / 10));
-        const frameDuration = baseFrameDuration / speedFactor;
+        // スクロール速度に基づいてフレーム速度を調整（より動的に）
+        const baseFrameDuration = 180; // 少し長めに設定
+        const velocity = Math.max(1, this.scrollVelocity || 1);
+        const speedFactor = Math.min(3, Math.max(0.4, velocity / 12));
+        const frameDuration = Math.max(80, baseFrameDuration / speedFactor); // 最小80ms
         
         // 最初のフレームを表示
         const firstFrame = document.querySelector('.walk-frame.frame1');
@@ -1443,27 +1334,43 @@
           firstFrame.classList.add('active');
         }
         
-        // フレーム切り替えアニメーション
+        // 目標を見据えた歩行リズム
         this.walkingInterval = setInterval(() => {
           if (!this.isScrolling) {
-            clearInterval(this.walkingInterval);
+            this.clearWalkingAnimation();
             return;
           }
           
-          // 全フレームを非表示
-          document.querySelectorAll('.walk-frame:not(.idle)').forEach(frame => {
-            frame.classList.remove('active');
-          });
-          
-          // 次のフレームへ
+          // 効率的なフレーム切り替え
+          this.switchToFrame(frames[currentFrame], frames[(currentFrame + 1) % frames.length]);
           currentFrame = (currentFrame + 1) % frames.length;
-          
-          // 現在のフレームを表示
-          const frameElement = document.querySelector(`.walk-frame.${frames[currentFrame]}`);
-          if (frameElement) {
-            frameElement.classList.add('active');
-          }
         }, frameDuration);
+      }
+      
+      switchToFrame(currentFrameClass, nextFrameClass) {
+        // 現在のフレームを非表示
+        const currentFrame = document.querySelector(`.walk-frame.${currentFrameClass}`);
+        if (currentFrame) {
+          currentFrame.classList.remove('active');
+        }
+        
+        // 次のフレームを表示
+        const nextFrame = document.querySelector(`.walk-frame.${nextFrameClass}`);
+        if (nextFrame) {
+          nextFrame.classList.add('active');
+        }
+      }
+      
+      clearWalkingAnimation() {
+        if (this.walkingInterval) {
+          clearInterval(this.walkingInterval);
+          this.walkingInterval = null;
+        }
+        
+        // 全歩行フレームを非表示
+        document.querySelectorAll('.walk-frame:not(.idle)').forEach(frame => {
+          frame.classList.remove('active');
+        });
       }
       
       stopRunning() {
@@ -1474,16 +1381,8 @@
         // 歩行停止
         container.classList.remove('walking', 'fast-walking');
         
-        // 歩行アニメーションを停止
-        if (this.walkingInterval) {
-          clearInterval(this.walkingInterval);
-          this.walkingInterval = null;
-        }
-        
-        // 全歩行フレームを非表示
-        document.querySelectorAll('.walk-frame:not(.idle)').forEach(frame => {
-          frame.classList.remove('active');
-        });
+        // 歩行アニメーションを安全に停止
+        this.clearWalkingAnimation();
         
         // アイドルフレームを表示
         const idleFrame = document.querySelector('.walk-frame.idle');
@@ -1636,21 +1535,6 @@
         }, 500);
       }
       
-      animateWeedsOnRun() {
-        const weeds = document.querySelectorAll('.weed');
-        weeds.forEach((weed, index) => {
-          weed.style.animation = 'none';
-          weed.offsetHeight; // リフロー強制
-          weed.style.animation = `weedSway 0.3s ease-in-out infinite`;
-          weed.style.animationDelay = `${index * 0.03}s`;
-        });
-        
-        setTimeout(() => {
-          weeds.forEach(weed => {
-            weed.style.animation = '';
-          });
-        }, 800);
-      }
       
       navigateToSection(sectionName) {
         if (this.currentSection === sectionName) return;
