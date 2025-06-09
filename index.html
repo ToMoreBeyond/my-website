@@ -204,32 +204,31 @@
     /* 石畳パターン */
     .stone-pattern {
       position: absolute;
-      width: 200%;
+      width: 100%;
       height: 100%;
       top: 0;
       left: 0;
       display: flex;
-      transform: rotateX(30deg) translateZ(0);
-      transform-origin: bottom;
     }
     
     /* 石ブロック */
     .stone-block {
-      width: 60px;
+      width: 50px;
       height: 100%;
       position: relative;
       flex-shrink: 0;
       background: 
         linear-gradient(135deg, 
-          #9e9890 0%, 
-          #8b8680 25%, 
-          #7a736c 50%, 
-          #8b8680 75%, 
-          #9e9890 100%);
-      border: 1px solid rgba(0, 0, 0, 0.2);
+          #a0a0a0 0%, 
+          #8d8d8d 25%, 
+          #7a7a7a 50%, 
+          #8d8d8d 75%, 
+          #a0a0a0 100%);
+      border-right: 1px solid rgba(0, 0, 0, 0.15);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 
-        inset 0 1px 1px rgba(255, 255, 255, 0.1),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
     }
     
     /* 石の質感 */
@@ -241,11 +240,11 @@
       right: 0;
       bottom: 0;
       background-image:
-        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-        radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
-        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
-      background-size: 15px 15px, 20px 20px, 25px 25px;
-      opacity: 0.5;
+        radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 75% 70%, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.05) 50%, transparent 55%);
+      background-size: 12px 12px, 18px 18px, 8px 8px;
+      opacity: 0.7;
     }
     
     /* 道の輪郭と影 */
@@ -279,22 +278,20 @@
     
     /* 道の両脇の小石や草 */
     .path-decoration {
-      position: absolute;
-      bottom: 60px;
+      position: fixed;
+      bottom: 80px;
       left: 0;
       width: 100%;
       height: 20px;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 10px;
       pointer-events: none;
+      z-index: 90;
     }
     
     .decoration-item {
-      width: 15px;
-      height: 15px;
-      position: relative;
-      animation: decorSway 4s ease-in-out infinite;
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      animation: decorSway 6s ease-in-out infinite;
     }
     
     .decoration-item::before {
@@ -316,19 +313,20 @@
     
     /* 低い草 */
     .decoration-item.grass::before {
-      width: 3px;
-      height: 8px;
-      background: linear-gradient(to top, #558B2F, #7CB342);
-      border-radius: 0 0 50% 50%;
+      width: 2px;
+      height: 10px;
+      background: linear-gradient(to top, #4a5d23, #7CB342);
+      border-radius: 50% 50% 0 0;
       box-shadow: 
-        2px 0 0 -1px #689F38,
-        -2px 0 0 -1px #689F38;
+        1px 0 0 0 #689F38,
+        -1px 0 0 0 #689F38;
     }
     
     @keyframes decorSway {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-2deg); }
-      75% { transform: rotate(2deg); }
+      0%, 100% { transform: rotate(0deg) translateY(0px); }
+      25% { transform: rotate(-1deg) translateY(-1px); }
+      50% { transform: rotate(0deg) translateY(0px); }
+      75% { transform: rotate(1deg) translateY(-1px); }
     }
     
     /* 芝生の自然な質感 */
@@ -768,17 +766,13 @@
   
   <!-- 石畳の道エリア -->
   <div class="path-area">
-    <div class="stone-pattern" id="stonePattern">
-      <!-- 石ブロックはJavaScriptで生成 -->
-    </div>
+    <div class="stone-pattern" id="stonePattern"></div>
     <div class="path-shadow"></div>
   </div>
   
   <!-- 芝生と装飾 -->
   <div class="grass-area"></div>
-  <div class="path-decoration" id="pathDecoration">
-    <!-- 装飾はJavaScriptで生成 -->
-  </div>
+  <div class="path-decoration" id="pathDecoration"></div>
   
   <!-- GIF風コマ送り歩行アニメーション棒人間 -->
   <div class="tiny-character walking-normal">
@@ -947,10 +941,12 @@
         }, 100);
         
         // 初期状態でアイドルフレームを表示
-        const idleFrame = document.querySelector('.walk-frame.idle');
-        if (idleFrame) {
-          idleFrame.classList.add('active');
-        }
+        setTimeout(() => {
+          const idleFrame = document.querySelector('.walk-frame.idle');
+          if (idleFrame) {
+            idleFrame.classList.add('active');
+          }
+        }, 100);
       }
       
       createStonePattern() {
@@ -958,56 +954,41 @@
         if (!pattern) return;
         
         // 石ブロックを生成
-        const stoneCount = Math.ceil(window.innerWidth / 30) * 2; // 十分な数を生成
+        const stoneCount = Math.ceil(window.innerWidth / 40) + 10;
+        pattern.innerHTML = ''; // 既存のコンテンツをクリア
+        
         for (let i = 0; i < stoneCount; i++) {
           const stone = document.createElement('div');
           stone.className = 'stone-block';
           
           // ランダムな幅で石畳感を演出
-          const widthVariation = 40 + Math.random() * 40; // 40-80px
+          const widthVariation = 50 + Math.random() * 30;
           stone.style.width = `${widthVariation}px`;
           
           // ランダムな色のバリエーション
-          const brightness = 0.85 + Math.random() * 0.3;
+          const brightness = 0.9 + Math.random() * 0.2;
           stone.style.filter = `brightness(${brightness})`;
           
           pattern.appendChild(stone);
         }
-        
-        // スクロールアニメーション
-        this.animateStones();
-      }
-      
-      animateStones() {
-        const pattern = document.getElementById('stonePattern');
-        let offset = 0;
-        
-        const animate = () => {
-          offset -= 0.5; // スクロール速度
-          if (offset <= -pattern.offsetWidth / 2) {
-            offset = 0;
-          }
-          pattern.style.transform = `rotateX(30deg) translateX(${offset}px) translateZ(0)`;
-          requestAnimationFrame(animate);
-        };
-        
-        requestAnimationFrame(animate);
       }
       
       createPathDecorations() {
         const decoration = document.getElementById('pathDecoration');
         if (!decoration) return;
         
+        decoration.innerHTML = ''; // 既存のコンテンツをクリア
+        
         // 装飾アイテムを生成
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 15; i++) {
           const item = document.createElement('div');
           item.className = 'decoration-item';
           
           // ランダムに石または草
-          item.classList.add(Math.random() > 0.5 ? 'stone' : 'grass');
+          item.classList.add(Math.random() > 0.6 ? 'stone' : 'grass');
           
           // ランダムな位置
-          item.style.left = `${Math.random() * 100}%`;
+          item.style.left = `${5 + Math.random() * 90}%`;
           
           // ランダムなアニメーション遅延
           item.style.animationDelay = `${Math.random() * 4}s`;
@@ -1240,7 +1221,7 @@
         const scrollAmount = Math.abs(deltaY) * baseSensitivity;
         
         // スクロール速度を保存（アニメーション速度調整用）
-        this.scrollVelocity = Math.abs(deltaY);
+        this.scrollVelocity = Math.min(50, Math.abs(deltaY));
         
         // より自然な慣性スクロール
         const inertia = this.scrollInertia || 0;
@@ -1272,6 +1253,9 @@
         // 棒人間の歩行開始と向き変更
         if (!this.isScrolling) {
           this.startRunning();
+        } else {
+          // 既に歩行中の場合は速度を更新
+          this.updateWalkingSpeedClass();
         }
         
         // 棒人間の向きを変更
@@ -1290,8 +1274,8 @@
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(() => {
           this.stopRunning();
-          this.scrollInertia = 0; // 慣性リセット
-        }, 150);
+          this.scrollInertia = 0;
+        }, 200);
         
         // 雑草の揺れ効果
         this.animateWeedsOnScroll();
@@ -1378,25 +1362,21 @@
       
       updateWalkingSpeedClass() {
         const character = document.querySelector('.tiny-character');
-        if (!character) return;
+        if (!character || !this.isScrolling) return;
         
         // 速度クラスをリセット
         character.classList.remove('walking-slow', 'walking-normal', 'walking-fast', 'walking-very-fast');
         
         // スクロール速度に基づいて歩行速度クラスを設定
-        if (this.scrollVelocity < 5) {
+        const velocity = this.scrollVelocity || 1;
+        if (velocity < 8) {
           character.classList.add('walking-slow');
-        } else if (this.scrollVelocity < 15) {
+        } else if (velocity < 20) {
           character.classList.add('walking-normal');
-        } else if (this.scrollVelocity < 30) {
+        } else if (velocity < 35) {
           character.classList.add('walking-fast');
         } else {
           character.classList.add('walking-very-fast');
-        }
-        
-        // 既存のアニメーションの速度を更新
-        if (this.walkingInterval) {
-          this.startWalkingAnimation();
         }
       }
       
@@ -1447,30 +1427,42 @@
         }
         
         // アイドルフレームを非表示
-        document.querySelector('.walk-frame.idle').classList.remove('active');
+        const idleFrame = document.querySelector('.walk-frame.idle');
+        if (idleFrame) {
+          idleFrame.classList.remove('active');
+        }
         
         // スクロール速度に基づいてフレーム速度を調整
-        const baseFrameDuration = 150; // 基本フレーム持続時間（ミリ秒）
-        const speedFactor = Math.min(2, Math.max(0.5, this.scrollVelocity / 10));
+        const baseFrameDuration = 150;
+        const speedFactor = Math.min(2, Math.max(0.5, (this.scrollVelocity || 1) / 10));
         const frameDuration = baseFrameDuration / speedFactor;
+        
+        // 最初のフレームを表示
+        const firstFrame = document.querySelector('.walk-frame.frame1');
+        if (firstFrame) {
+          firstFrame.classList.add('active');
+        }
         
         // フレーム切り替えアニメーション
         this.walkingInterval = setInterval(() => {
-          if (!this.isScrolling) return;
+          if (!this.isScrolling) {
+            clearInterval(this.walkingInterval);
+            return;
+          }
           
           // 全フレームを非表示
-          document.querySelectorAll('.walk-frame').forEach(frame => {
+          document.querySelectorAll('.walk-frame:not(.idle)').forEach(frame => {
             frame.classList.remove('active');
           });
+          
+          // 次のフレームへ
+          currentFrame = (currentFrame + 1) % frames.length;
           
           // 現在のフレームを表示
           const frameElement = document.querySelector(`.walk-frame.${frames[currentFrame]}`);
           if (frameElement) {
             frameElement.classList.add('active');
           }
-          
-          // 次のフレームへ
-          currentFrame = (currentFrame + 1) % frames.length;
         }, frameDuration);
       }
       
@@ -1551,7 +1543,10 @@
         let pointingFrame = document.querySelector('.walk-frame.pointing');
         if (!pointingFrame) {
           pointingFrame = this.createPointingFrame();
-          document.querySelector('.walking-animation-container').appendChild(pointingFrame);
+          const container = document.querySelector('.walking-animation-container');
+          if (container) {
+            container.appendChild(pointingFrame);
+          }
         }
         
         pointingFrame.classList.add('active');
@@ -1561,12 +1556,17 @@
         
         // 一定時間後にアイドルに戻る
         setTimeout(() => {
-          if (!this.isScrolling) {
+          if (!this.isScrolling && pointingFrame) {
             pointingFrame.classList.remove('active');
-            document.querySelector('.walk-frame.idle').classList.add('active');
-            targetCard.classList.remove('highlighted');
+            const idleFrame = document.querySelector('.walk-frame.idle');
+            if (idleFrame) {
+              idleFrame.classList.add('active');
+            }
+            if (targetCard) {
+              targetCard.classList.remove('highlighted');
+            }
           }
-        }, 3000);
+        }, 2500);
       }
       
       createPointingFrame() {
