@@ -267,9 +267,9 @@
       opacity: 1;
     }
     
-    /* スクロール中は完全に滑らか（遷移なし） */
+    /* スクロール中は軽い遷移でスムーズに */
     .cards-track.scrolling {
-      transition: none;
+      transition: transform 0.1s ease-out;
       transform-origin: center center;
     }
     
@@ -915,6 +915,11 @@
     
     /* レスポンシブ - モバイル最適化 */
     @media (max-width: 768px) {
+      body {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      
       .logo { 
         font-size: 22px; 
         top: 15px; 
@@ -924,20 +929,25 @@
       
       .main-content { 
         padding: 0 15px;
-        height: 100vh;
-        display: flex;
-        align-items: center;
+        height: auto;
+        min-height: 100vh;
+        display: block;
+        padding-top: 80px;
       }
       
-      /* モバイル用カード調整 */
+      /* モバイル用カード調整 - 縦スクロール */
       .cards-container {
-        height: 350px;
+        height: auto;
         width: 100%;
-        overflow: hidden;
+        overflow: visible;
+        max-width: none;
       }
       
       .cards-track {
         gap: 15px;
+        flex-direction: column;
+        transform: none !important;
+        transition: none !important;
       }
       
       .card { 
@@ -962,28 +972,17 @@
         line-height: 1.5;
       }
       
-      /* モバイル用棒人間調整 - より見やすく */
-      .tiny-character { 
-        width: 80px; 
-        height: 80px;
-        bottom: 10px;
-      }
-      
-      .walk-frame g {
-        stroke-width: 5;
-      }
-      
-      /* モバイル用道調整 */
-      .path-area {
-        height: 40px;
-      }
-      
+      /* モバイルでは棒人間と道を非表示 */
       .tiny-character {
-        bottom: 40px;
+        display: none;
       }
       
-      .road-element {
-        font-size: 10px;
+      .path-area {
+        display: none;
+      }
+      
+      .path-decoration {
+        display: none;
       }
       
       /* カードのホバーエフェクトを無効化 */
@@ -1299,6 +1298,9 @@
         this.evolutionLevel = 0; // 0-5の進化レベル
         this.evolutionThresholds = [0.2, 0.4, 0.6, 0.8, 1.0]; // 進化が起こる位置
         
+        // カードスクロール管理
+        this.cardScrollTimeout = null;
+        
         // ローディング管理
         this.loadingProgress = 0;
         this.loadingMessages = [
@@ -1453,6 +1455,9 @@
       }
       
       detectDeviceCapability() {
+        // モバイルデバイスを検出
+        this.isMobile = window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
         // 低性能デバイスを検出
         this.isLowEndDevice = (
           (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
@@ -1473,6 +1478,11 @@
         } else if (this.isMidEndDevice) {
           // 中程度の最適化
           this.baseScrollSpeed = 40;
+        }
+        
+        // モバイルの場合はボディにクラスを追加
+        if (this.isMobile) {
+          document.body.classList.add('mobile-mode');
         }
       }
       
@@ -1590,6 +1600,11 @@
       }
       
       setupEventListeners() {
+        // モバイルの場合は横スクロールシステムを無効化
+        if (this.isMobile) {
+          return; // モバイルでは通常の縦スクロールを使用
+        }
+        
         // 左右スクロールイベント - 最適化されたハンドリング
         let scrollTimeout;
         window.addEventListener('wheel', (e) => {
@@ -1608,7 +1623,7 @@
         
         // ナビゲーション削除により不要
         
-        // タッチイベント（モバイル） - 左右スクロール対応
+        // タッチイベント（デスクトップの場合のみ） - 左右スクロール対応
         let touchStartX = 0;
         let touchTimeout;
         
@@ -1696,6 +1711,9 @@
             character.classList.remove('facing-right');
           }
           
+          // カードスクロールの更新
+          this.updateCardScroll();
+          
           // 歩行開始
           if (!this.isScrolling) {
             this.startJourneyWalking();
@@ -1770,6 +1788,38 @@
         if (track) {
           track.style.transform = `translateX(${this.currentScrollOffset}px) translateZ(0)`;
         }
+      }
+      
+      updateCardScroll() {
+        const track = document.getElementById('cardsTrack');
+        if (!track) return;
+        
+        // 棒人間の進行度に基づいてカードをスクロール
+        // 全カードの幅を取得
+        const cards = track.children;
+        if (cards.length === 0) return;
+        
+        const cardWidth = 320; // カードの最小幅
+        const cardGap = 20; // カード間のギャップ
+        const totalCardsWidth = (cardWidth + cardGap) * cards.length;
+        
+        // 棒人間の位置に基づいてスクロール量を計算
+        // characterPosition: 0-1 → スクロール量: 0 → -(totalCardsWidth - containerWidth)
+        const containerWidth = track.parentElement.offsetWidth;
+        const maxScroll = Math.max(0, totalCardsWidth - containerWidth);
+        const scrollOffset = -maxScroll * this.characterPosition;
+        
+        // スムーズなアニメーション適用
+        track.classList.add('scrolling');
+        track.classList.remove('idle');
+        track.style.transform = `translateX(${scrollOffset}px) translateZ(0)`;
+        
+        // 少し遅れてアイドル状態に戻す
+        clearTimeout(this.cardScrollTimeout);
+        this.cardScrollTimeout = setTimeout(() => {
+          track.classList.remove('scrolling');
+          track.classList.add('idle');
+        }, 100);
       }
       
       
@@ -2168,6 +2218,17 @@
       }
       
       startAutoScroll() {
+        // モバイルの場合は横スクロールシステムを無効化
+        if (this.isMobile) {
+          const track = document.getElementById('cardsTrack');
+          if (track) {
+            track.style.visibility = 'visible';
+            track.style.opacity = '1';
+            track.style.transform = 'none';
+          }
+          return;
+        }
+        
         // 新しい横スクロール旅路の初期化
         this.characterPosition = 0;
         this.currentCheckpoint = -1;
@@ -2194,6 +2255,9 @@
         
         // 初期セクション表示の更新
         this.updateSectionDisplay();
+        
+        // 初期カードスクロール位置設定
+        this.updateCardScroll();
       }
       
       onCardHover(card) {
