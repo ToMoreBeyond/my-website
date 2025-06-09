@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>正留昌臣 | ToMoreBeyond</title>
+  <meta name="description" content="ToMoreBeyond CTO・バックエンド&AIアーキテクト正留昌臣のプロフィール。元MaaS企業のリードエンジニアとして位置情報データ基盤・機械学習パイプラインを設計。">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* 戻るボタン */
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #f0f0f0;
+      border-radius: 50px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    /* ヒーローセクション */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+      padding: calc(80px + 40px) 0 40px;
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    
+    .hero-text {
+      padding-right: 32px;
+    }
+    
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: #1a1a1a;
+    }
+    
+    .hero-role {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #FFB300;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .hero-description {
+      font-size: 1.125rem;
+      color: #525252;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #FFB300;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: #666666;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .profile-avatar {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #FFB300 0%, #FFA000 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      box-shadow: 0 20px 60px rgba(255, 179, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-avatar::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    /* スキルセクション */
+    .skills-section {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    
+    .skill-card {
+      background: #fafafa;
+      border-radius: 24px;
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid #f0f0f0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skill-card:hover {
+      transform: translateY(-8px);
+      background: white;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      border-color: #FFB300;
+    }
+    
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    
+    .skill-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .skill-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 4px 8px rgba(255, 179, 0, 0.2));
+    }
+    
+    .skill-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    
+    .skill-description {
+      font-size: 1rem;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .skill-tag {
+      background: #FFB300;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    /* 経験セクション */
+    .experience-section {
+      padding: 80px 0;
+    }
+    
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #FFB300;
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .timeline-item:nth-child(odd) {
+      flex-direction: row;
+    }
+    
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    
+    .timeline-content {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      border: 1px solid #f0f0f0;
+      width: calc(50% - 30px);
+      position: relative;
+    }
+    
+    .timeline-date {
+      font-size: 0.875rem;
+      color: #FFB300;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    
+    .timeline-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    
+    .timeline-description {
+      font-size: 0.9375rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      top: 24px;
+      width: 16px;
+      height: 16px;
+      background: #FFB300;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      border: 4px solid white;
+      box-shadow: 0 0 0 4px #FFB300;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .back-button {
+        top: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      
+      .hero {
+        padding: calc(60px + 30px) 0 30px;
+        min-height: auto;
+      }
+      
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+        padding: 0 20px;
+      }
+      
+      .hero-text {
+        padding-right: 0;
+      }
+      
+      .profile-avatar {
+        width: 200px;
+        height: 200px;
+        font-size: 6rem;
+      }
+      
+      .container {
+        padding: 0 20px;
+      }
+      
+      .skills-section, .experience-section {
+        padding: 60px 0;
+      }
+      
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .skill-card {
+        padding: 24px;
+        border-radius: 20px;
+      }
+      
+      .timeline::before {
+        left: 20px;
+      }
+      
+      .timeline-item {
+        flex-direction: column !important;
+        margin-left: 40px;
+      }
+      
+      .timeline-content {
+        width: 100%;
+      }
+      
+      .timeline-dot {
+        left: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 戻るボタン -->
+  <a href="../index.html" class="back-button">
+    ← ホームに戻る
+  </a>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">正留昌臣</h1>
+        <p class="hero-role">CTO / バックエンド & AI アーキテクト</p>
+        <p class="hero-description">
+          元MaaS企業のリードエンジニア。位置情報データ基盤・機械学習パイプラインを設計し、
+          大規模なサービス開発を牽引。バックエンドからAIまで幅広い技術領域で革新的なソリューションを創造し、
+          ToMoreBeyondの技術戦略を統括しています。
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">8+</span>
+            <span class="stat-label">Years</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">10M+</span>
+            <span class="stat-label">Users</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="profile-avatar">⚡</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- スキルセクション -->
+  <section class="skills-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">専門スキル</h2>
+        <p class="section-subtitle">バックエンドからAIまで、技術で未来を創造</p>
+      </div>
+      
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🚀</div>
+          <h3 class="skill-title">バックエンドアーキテクチャ</h3>
+          <p class="skill-description">スケーラブルで高可用性なシステム設計とマイクロサービス構築</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Kubernetes</span>
+            <span class="skill-tag">AWS</span>
+          </div>
+        </div>
+        
+        <div class="skill-card">
+          <div class="skill-icon">🧠</div>
+          <h3 class="skill-title">機械学習・AI</h3>
+          <p class="skill-description">位置情報データ解析と機械学習モデルの設計・運用</p>
+          <div class="skill-tags">
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">MLOps</span>
+            <span class="skill-tag">Computer Vision</span>
+          </div>
+        </div>
+        
+        <div class="skill-card">
+          <div class="skill-icon">📍</div>
+          <h3 class="skill-title">位置情報技術</h3>
+          <p class="skill-description">GPS・地図データ処理とリアルタイム位置情報サービス開発</p>
+          <div class="skill-tags">
+            <span class="skill-tag">PostGIS</span>
+            <span class="skill-tag">GeoSpatial</span>
+            <span class="skill-tag">MapboxGL</span>
+            <span class="skill-tag">GTFS</span>
+          </div>
+        </div>
+        
+        <div class="skill-card">
+          <div class="skill-icon">🏃‍♂️</div>
+          <h3 class="skill-title">パフォーマンス最適化</h3>
+          <p class="skill-description">大規模システムの性能チューニングとデータベース最適化</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Redis</span>
+            <span class="skill-tag">Elasticsearch</span>
+            <span class="skill-tag">Performance</span>
+            <span class="skill-tag">Monitoring</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 経験セクション -->
+  <section class="experience-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">経歴</h2>
+        <p class="section-subtitle">技術リーダーとして多様なプロジェクトを牽引</p>
+      </div>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">2025 - Present</div>
+            <h3 class="timeline-title">ToMoreBeyond CTO</h3>
+            <p class="timeline-description">
+              技術戦略の策定と実行を担当。TADATAKAアプリの位置情報システムとAIエンジンの設計・開発を主導し、
+              オンデバイス機械学習による革新的なライフログサービスを実現。
+            </p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">2020 - 2025</div>
+            <h3 class="timeline-title">MaaS企業 リードエンジニア</h3>
+            <p class="timeline-description">
+              交通データプラットフォームの設計・構築を担当。リアルタイム位置情報処理システムと
+              機械学習による需要予測モデルを開発し、月間1000万回以上のAPI呼び出しを処理。
+            </p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">2017 - 2020</div>
+            <h3 class="timeline-title">スタートアップ バックエンドエンジニア</h3>
+            <p class="timeline-description">
+              位置情報サービスのバックエンド開発を担当。ゼロからシステムを構築し、
+              高トラフィックに対応するスケーラブルなアーキテクチャを設計・実装。
+            </p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">趣味</div>
+            <h3 class="timeline-title">ロングレース</h3>
+            <p class="timeline-description">
+              長距離ランニングを通じて持久力と集中力を鍛錬。技術開発における継続的な改善と
+              粘り強い問題解決のマインドセットを養っています。
+            </p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

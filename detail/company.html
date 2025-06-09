@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>会社概要 | ToMoreBeyond</title>
+  <meta name="description" content="ToMoreBeyondの会社概要。「面白いことだけをする。友と共に道なき道を越える」をミッションとするテクノロジーカンパニーです。">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* 戻るボタン */
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #f0f0f0;
+      border-radius: 50px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    /* ヒーローセクション */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+      padding: calc(80px + 40px) 0 40px;
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+    
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: #404040;
+      margin-bottom: 32px;
+      line-height: 1.4;
+    }
+    
+    .hero-description {
+      font-size: 1.125rem;
+      color: #525252;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* セクション共通 */
+    .section {
+      padding: 80px 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    /* 会社情報グリッド */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+    
+    .info-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      border: 1px solid #f0f0f0;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .info-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      border-color: #FFB300;
+    }
+    
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    
+    .info-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .info-label {
+      font-size: 0.875rem;
+      color: #FFB300;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    
+    .info-value {
+      font-size: 1.125rem;
+      color: #1a1a1a;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    
+    /* バリューセクション */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    
+    .value-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      border: 1px solid #f0f0f0;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .value-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+    
+    .value-number {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #FFB300;
+      margin-bottom: 16px;
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .value-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    
+    .value-description {
+      font-size: 0.9375rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .back-button {
+        top: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      
+      .hero {
+        padding: calc(60px + 30px) 0 30px;
+      }
+      
+      .container {
+        padding: 0 20px;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
+      
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .info-card {
+        padding: 24px;
+        border-radius: 20px;
+      }
+      
+      .values-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .value-card {
+        padding: 24px;
+        border-radius: 16px;
+      }
+      
+      .value-number {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 戻るボタン -->
+  <a href="../index.html" class="back-button">
+    ← ホームに戻る
+  </a>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">ToMoreBeyond</h1>
+      <p class="hero-subtitle">面白いことだけをする。友と共に "道なき道" を越える</p>
+      <p class="hero-description">
+        疑問や不安を"楽しさ"で解消し、人々の行動半径を広げるプロダクトを連続創出するテクノロジーカンパニーです。
+      </p>
+    </div>
+  </section>
+
+  <!-- 会社情報セクション -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">会社情報</h2>
+        <p class="section-subtitle">ToMoreBeyondの基本情報と事業領域</p>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-label">正式名称</div>
+          <div class="info-value">株式会社 ToMoreBeyond</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">設立</div>
+          <div class="info-value">2025年4月</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">本社所在地</div>
+          <div class="info-value">東京都渋谷区<br>（リモートワーク中心）</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">事業領域</div>
+          <div class="info-value">モバイルアプリ開発<br>ルート最適化・位置情報AI<br>コンシューマSaaS</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">技術スタック</div>
+          <div class="info-value">Flutter / Swift / Kotlin<br>Node.js, Python (ML)<br>Firebase, AWS, Mapbox<br>GPT-4o API</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">受賞・採択</div>
+          <div class="info-value">2025年「Tokyo Startup Gateway ファイナリスト」<br>2025年 東京都 DX アクセラレータ採択</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- バリューセクション -->
+  <section class="section" style="background: white;">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">私たちの価値観</h2>
+        <p class="section-subtitle">ToMoreBeyondが大切にする3つの価値観</p>
+      </div>
+      
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-number">1</div>
+          <h3 class="value-title">共創</h3>
+          <p class="value-description">常に"友と共に"作る。一人では越えられない道も、仲間と一緒なら必ず越えられる。</p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-number">2</div>
+          <h3 class="value-title">冒険</h3>
+          <p class="value-description">人と違う道を選ぶ。安全な道より、まだ誰も歩いたことのない道を選んで進む。</p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-number">3</div>
+          <h3 class="value-title">遊び心</h3>
+          <p class="value-description">楽しませるUI/UXを最優先。使う人の心が躍るような体験を何よりも大切にする。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

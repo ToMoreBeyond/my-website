@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNS・ソーシャルメディア | ToMoreBeyond</title>
+  <meta name="description" content="ToMoreBeyondのSNS・ソーシャルメディア活動。最新情報、開発の様子、チームの日常をSNSで発信しています。">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* 戻るボタン */
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #f0f0f0;
+      border-radius: 50px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    /* ヒーローセクション */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
+      padding: calc(80px + 40px) 0 40px;
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+    
+    .hero-icon {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #A855F7 0%, #9333EA 100%);
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: white;
+      margin: 0 auto 32px;
+      box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
+    }
+    
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #A855F7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: #404040;
+      margin-bottom: 32px;
+      line-height: 1.4;
+    }
+    
+    .hero-description {
+      font-size: 1.125rem;
+      color: #525252;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto 48px;
+    }
+    
+    .social-links-hero {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    
+    .social-link-hero {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      border: 1px solid #f0f0f0;
+      border-radius: 50px;
+      padding: 16px 24px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    
+    .social-link-hero:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      border-color: #A855F7;
+    }
+    
+    .social-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: white;
+    }
+    
+    .twitter { background: #1DA1F2; }
+    .instagram { background: linear-gradient(45deg, #E4405F, #833AB4, #C13584); }
+    .youtube { background: #FF0000; }
+    .linkedin { background: #0077B5; }
+    .github { background: #333; }
+    
+    /* セクション共通 */
+    .section {
+      padding: 80px 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    /* SNSプラットフォームグリッド */
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+    
+    .platform-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      border: 1px solid #f0f0f0;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .platform-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+    
+    .platform-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .platform-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+    
+    .platform-info h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+    
+    .platform-handle {
+      font-size: 0.875rem;
+      color: #666;
+      font-family: 'Monaco', monospace;
+    }
+    
+    .platform-stats {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .platform-description {
+      font-size: 0.9375rem;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    
+    .platform-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .platform-card:hover .platform-button {
+      background: var(--platform-color);
+      color: white;
+      border-color: var(--platform-color);
+    }
+    
+    .platform-card.twitter { --platform-color: #1DA1F2; }
+    .platform-card.instagram { --platform-color: #E4405F; }
+    .platform-card.youtube { --platform-color: #FF0000; }
+    .platform-card.linkedin { --platform-color: #0077B5; }
+    .platform-card.github { --platform-color: #333; }
+    
+    /* 最新投稿セクション */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    
+    .post-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      border: 1px solid #f0f0f0;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+    
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .post-platform {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: white;
+    }
+    
+    .post-meta {
+      flex: 1;
+    }
+    
+    .post-author {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .post-date {
+      font-size: 0.75rem;
+      color: #666;
+    }
+    
+    .post-content {
+      font-size: 0.9375rem;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .post-engagement {
+      display: flex;
+      gap: 16px;
+      font-size: 0.75rem;
+      color: #666;
+    }
+    
+    .engagement-stat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .back-button {
+        top: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      
+      .hero {
+        padding: calc(60px + 30px) 0 30px;
+      }
+      
+      .hero-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
+        border-radius: 20px;
+      }
+      
+      .social-links-hero {
+        gap: 16px;
+      }
+      
+      .social-link-hero {
+        padding: 12px 20px;
+        font-size: 0.875rem;
+      }
+      
+      .container {
+        padding: 0 20px;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
+      
+      .platforms-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .platform-card {
+        padding: 24px;
+        border-radius: 20px;
+      }
+      
+      .posts-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .post-card {
+        padding: 20px;
+        border-radius: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 戻るボタン -->
+  <a href="../index.html" class="back-button">
+    ← ホームに戻る
+  </a>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-icon">📱</div>
+      <h1 class="hero-title">Social Media</h1>
+      <p class="hero-subtitle">コミュニティとつながる場所</p>
+      <p class="hero-description">
+        ToMoreBeyondのSNS・ソーシャルメディア活動を通じて、
+        最新情報、開発の様子、チームの日常をリアルタイムでお届けしています。
+        ぜひフォローして、私たちの旅路を一緒に歩んでください。
+      </p>
+      
+      <div class="social-links-hero">
+        <a href="#" class="social-link-hero">
+          <div class="social-icon twitter">🐦</div>
+          Twitter で フォロー
+        </a>
+        <a href="#" class="social-link-hero">
+          <div class="social-icon instagram">📷</div>
+          Instagram で フォロー
+        </a>
+        <a href="#" class="social-link-hero">
+          <div class="social-icon youtube">▶</div>
+          YouTube で 購読
+        </a>
+        <a href="#" class="social-link-hero">
+          <div class="social-icon linkedin">💼</div>
+          LinkedIn で つながる
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- プラットフォーム紹介セクション -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">プラットフォーム別活動</h2>
+        <p class="section-subtitle">各SNSでの発信内容と特色</p>
+      </div>
+      
+      <div class="platforms-grid">
+        <div class="platform-card twitter">
+          <div class="platform-header">
+            <div class="platform-icon twitter">🐦</div>
+            <div class="platform-info">
+              <h3>Twitter</h3>
+              <div class="platform-handle">@ToMoreBeyond</div>
+            </div>
+          </div>
+          <div class="platform-stats">
+            <div class="stat">
+              <div class="stat-number">1.2K</div>
+              <div class="stat-label">フォロワー</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">850</div>
+              <div class="stat-label">ツイート</div>
+            </div>
+          </div>
+          <p class="platform-description">
+            日々の開発状況、技術情報、業界トレンドについてリアルタイムで発信。
+            技術者コミュニティとの交流も活発に行っています。
+          </p>
+          <a href="#" class="platform-button">
+            フォローする ↗
+          </a>
+        </div>
+        
+        <div class="platform-card instagram">
+          <div class="platform-header">
+            <div class="platform-icon instagram">📷</div>
+            <div class="platform-info">
+              <h3>Instagram</h3>
+              <div class="platform-handle">@tomorebeyond_official</div>
+            </div>
+          </div>
+          <div class="platform-stats">
+            <div class="stat">
+              <div class="stat-number">856</div>
+              <div class="stat-label">フォロワー</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">124</div>
+              <div class="stat-label">投稿</div>
+            </div>
+          </div>
+          <p class="platform-description">
+            チームの日常、オフィス風景、開発の裏側を視覚的にシェア。
+            ストーリーズでは開発現場のリアルな様子をお届けします。
+          </p>
+          <a href="#" class="platform-button">
+            フォローする ↗
+          </a>
+        </div>
+        
+        <div class="platform-card youtube">
+          <div class="platform-header">
+            <div class="platform-icon youtube">▶</div>
+            <div class="platform-info">
+              <h3>YouTube</h3>
+              <div class="platform-handle">@ToMoreBeyond</div>
+            </div>
+          </div>
+          <div class="platform-stats">
+            <div class="stat">
+              <div class="stat-number">432</div>
+              <div class="stat-label">チャンネル登録者</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">28</div>
+              <div class="stat-label">動画</div>
+            </div>
+          </div>
+          <p class="platform-description">
+            プロダクトデモ、技術解説、チーム紹介などの動画コンテンツを配信。
+            深い技術的な内容から楽しいチーム動画まで幅広く制作しています。
+          </p>
+          <a href="#" class="platform-button">
+            チャンネル登録 ↗
+          </a>
+        </div>
+        
+        <div class="platform-card linkedin">
+          <div class="platform-header">
+            <div class="platform-icon linkedin">💼</div>
+            <div class="platform-info">
+              <h3>LinkedIn</h3>
+              <div class="platform-handle">ToMoreBeyond Inc.</div>
+            </div>
+          </div>
+          <div class="platform-stats">
+            <div class="stat">
+              <div class="stat-number">298</div>
+              <div class="stat-label">フォロワー</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">67</div>
+              <div class="stat-label">投稿</div>
+            </div>
+          </div>
+          <p class="platform-description">
+            ビジネス向けの情報発信、業界インサイト、採用情報を中心に配信。
+            プロフェッショナルネットワークとの繋がりを大切にしています。
+          </p>
+          <a href="#" class="platform-button">
+            フォローする ↗
+          </a>
+        </div>
+        
+        <div class="platform-card github">
+          <div class="platform-header">
+            <div class="platform-icon github">⚡</div>
+            <div class="platform-info">
+              <h3>GitHub</h3>
+              <div class="platform-handle">@ToMoreBeyond</div>
+            </div>
+          </div>
+          <div class="platform-stats">
+            <div class="stat">
+              <div class="stat-number">156</div>
+              <div class="stat-label">フォロワー</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">23</div>
+              <div class="stat-label">リポジトリ</div>
+            </div>
+          </div>
+          <p class="platform-description">
+            オープンソースプロジェクト、技術サンプル、ライブラリを公開。
+            開発者コミュニティへの貢献と技術共有を積極的に行っています。
+          </p>
+          <a href="#" class="platform-button">
+            フォローする ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 最新投稿セクション -->
+  <section class="section" style="background: white;">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">最新の投稿</h2>
+        <p class="section-subtitle">各プラットフォームからの最新情報</p>
+      </div>
+      
+      <div class="posts-grid">
+        <article class="post-card">
+          <div class="post-header">
+            <div class="post-platform twitter">🐦</div>
+            <div class="post-meta">
+              <div class="post-author">@ToMoreBeyond</div>
+              <div class="post-date">2時間前</div>
+            </div>
+          </div>
+          <div class="post-content">
+            新機能のルート最適化アルゴリズムがついに完成！🎉
+            機械学習を活用してユーザーの行動パターンを学習し、
+            最大30%の時間短縮を実現しました。
+            #Flutter #AI #アプリ開発
+          </div>
+          <div class="post-engagement">
+            <span class="engagement-stat">❤️ 42</span>
+            <span class="engagement-stat">🔄 18</span>
+            <span class="engagement-stat">💬 7</span>
+          </div>
+        </article>
+        
+        <article class="post-card">
+          <div class="post-header">
+            <div class="post-platform instagram">📷</div>
+            <div class="post-meta">
+              <div class="post-author">@tomorebeyond_official</div>
+              <div class="post-date">1日前</div>
+            </div>
+          </div>
+          <div class="post-content">
+            チーム開発の様子をちょっとだけお見せします👨‍💻
+            みんなでホワイトボードを囲んでアイデアを出し合っているところ。
+            リモートでもこうして定期的に集まって議論するのが大切ですね！
+          </div>
+          <div class="post-engagement">
+            <span class="engagement-stat">❤️ 89</span>
+            <span class="engagement-stat">💬 12</span>
+          </div>
+        </article>
+        
+        <article class="post-card">
+          <div class="post-header">
+            <div class="post-platform youtube">▶</div>
+            <div class="post-meta">
+              <div class="post-author">ToMoreBeyond</div>
+              <div class="post-date">3日前</div>
+            </div>
+          </div>
+          <div class="post-content">
+            新動画『Flutter × AI開発の舞台裏』を公開しました！
+            GPT-4o APIの統合から実装まで、詳しく解説しています。
+            開発者の皆さんの参考になれば嬉しいです🚀
+          </div>
+          <div class="post-engagement">
+            <span class="engagement-stat">👍 156</span>
+            <span class="engagement-stat">💬 23</span>
+            <span class="engagement-stat">📤 8</span>
+          </div>
+        </article>
+        
+        <article class="post-card">
+          <div class="post-header">
+            <div class="post-platform linkedin">💼</div>
+            <div class="post-meta">
+              <div class="post-author">ToMoreBeyond Inc.</div>
+              <div class="post-date">5日前</div>
+            </div>
+          </div>
+          <div class="post-content">
+            Tokyo Startup Gatewayでファイナリストに選出いただきました。
+            「面白いことだけをする」というミッションを大切に、
+            これからも価値あるプロダクトを作り続けます。
+          </div>
+          <div class="post-engagement">
+            <span class="engagement-stat">👍 67</span>
+            <span class="engagement-stat">💬 15</span>
+            <span class="engagement-stat">📤 12</span>
+          </div>
+        </article>
+        
+        <article class="post-card">
+          <div class="post-header">
+            <div class="post-platform github">⚡</div>
+            <div class="post-meta">
+              <div class="post-author">@ToMoreBeyond</div>
+              <div class="post-date">1週間前</div>
+            </div>
+          </div>
+          <div class="post-content">
+            Flutter用の位置情報最適化ライブラリをオープンソースで公開しました！
+            Mapbox APIと機械学習を組み合わせた効率的なルート計算が可能です。
+            皆さんのプロジェクトでもご活用ください。
+          </div>
+          <div class="post-engagement">
+            <span class="engagement-stat">⭐ 28</span>
+            <span class="engagement-stat">🍴 12</span>
+            <span class="engagement-stat">👁 234</span>
+          </div>
+        </article>
+        
+        <article class="post-card">
+          <div class="post-header">
+            <div class="post-platform twitter">🐦</div>
+            <div class="post-meta">
+              <div class="post-author">@ToMoreBeyond</div>
+              <div class="post-date">1週間前</div>
+            </div>
+          </div>
+          <div class="post-content">
+            東京都のDXアクセラレータプログラムに採択されました！🎊
+            行政のデジタル化支援に貢献できることを嬉しく思います。
+            技術で社会をもっと便利にしていきたい。
+            #DX #スタートアップ #社会貢献
+          </div>
+          <div class="post-engagement">
+            <span class="engagement-stat">❤️ 78</span>
+            <span class="engagement-stat">🔄 34</span>
+            <span class="engagement-stat">💬 16</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

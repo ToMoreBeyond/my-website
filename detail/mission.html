@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ミッション | ToMoreBeyond</title>
+  <meta name="description" content="ToMoreBeyondのミッション・ビジョン。面白いことだけをして、より良い未来を創造します。">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* 戻るボタン */
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #f0f0f0;
+      border-radius: 50px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    /* ヒーローセクション */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+      padding: calc(80px + 40px) 0 40px;
+    }
+    
+    .hero-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+    
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 10vw, 6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 50%, #FFA000 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #404040;
+      margin-bottom: 48px;
+      line-height: 1.3;
+    }
+    
+    .hero-description {
+      font-size: 1.25rem;
+      color: #525252;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto 48px;
+    }
+    
+    /* ミッション・ビジョンカード */
+    .mission-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 32px;
+      margin-top: 80px;
+    }
+    
+    .mission-card {
+      background: white;
+      border-radius: 32px;
+      padding: 48px 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      border: 1px solid #f0f0f0;
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
+    
+    .mission-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+      border-color: #FFB300;
+    }
+    
+    .mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s ease;
+    }
+    
+    .mission-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .mission-icon {
+      font-size: 4rem;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 4px 8px rgba(255, 179, 0, 0.3));
+    }
+    
+    .mission-label {
+      font-size: 0.875rem;
+      color: #FFB300;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    
+    .mission-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    
+    .mission-text {
+      font-size: 1.125rem;
+      color: #525252;
+      line-height: 1.7;
+    }
+    
+    /* 価値創造セクション */
+    .value-creation {
+      padding: 100px 0;
+      background: white;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    
+    .value-item {
+      background: #fafafa;
+      border-radius: 24px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid #f0f0f0;
+    }
+    
+    .value-item:hover {
+      transform: translateY(-8px);
+      background: white;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+    
+    .value-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    
+    .value-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    
+    .value-description {
+      font-size: 1rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .back-button {
+        top: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      
+      .hero {
+        padding: calc(60px + 30px) 0 30px;
+        min-height: auto;
+      }
+      
+      .hero-content {
+        padding: 0 20px;
+      }
+      
+      .mission-cards {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-top: 60px;
+      }
+      
+      .mission-card {
+        padding: 32px 24px;
+        border-radius: 24px;
+      }
+      
+      .mission-icon {
+        font-size: 3rem;
+      }
+      
+      .mission-title {
+        font-size: 1.5rem;
+      }
+      
+      .mission-text {
+        font-size: 1rem;
+      }
+      
+      .container {
+        padding: 0 20px;
+      }
+      
+      .value-creation {
+        padding: 80px 0;
+      }
+      
+      .value-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .value-item {
+        padding: 24px;
+        border-radius: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 戻るボタン -->
+  <a href="../index.html" class="back-button">
+    ← ホームに戻る
+  </a>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Mission</h1>
+      <p class="hero-subtitle">面白いことだけをする</p>
+      <p class="hero-description">
+        私たちは、人々の日常に「楽しさ」という価値を届けることで、より良い未来を創造します。
+        疑問や不安を解消し、誰もが安心して新しい体験に挑戦できる世界を目指しています。
+      </p>
+      
+      <div class="mission-cards">
+        <div class="mission-card">
+          <div class="mission-icon">🎯</div>
+          <div class="mission-label">Mission</div>
+          <h2 class="mission-title">面白いことだけをする。友と共に道なき道を越える</h2>
+          <p class="mission-text">
+            楽しくなければ意味がない。私たちは「面白い」を追求し、仲間と一緒に誰も歩いたことのない道を切り開きます。
+          </p>
+        </div>
+        
+        <div class="mission-card">
+          <div class="mission-icon">🚀</div>
+          <div class="mission-label">Vision</div>
+          <h2 class="mission-title">疑問や不安を"楽しさ"で解消し、人々の行動半径を広げる</h2>
+          <p class="mission-text">
+            知らない場所への不安、初めての体験への躊躇。そんな壁を「楽しい」体験で取り払い、誰もが自由に行動できる世界を創造します。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 価値創造セクション -->
+  <section class="value-creation">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">私たちが創る価値</h2>
+        <p class="section-subtitle">テクノロジーの力で、人々の生活をより豊かで楽しいものに</p>
+      </div>
+      
+      <div class="value-grid">
+        <div class="value-item">
+          <div class="value-icon">🧠</div>
+          <h3 class="value-title">AI技術活用</h3>
+          <p class="value-description">最先端のAI技術を駆使して、ユーザーの行動を予測し、最適な体験を提供します。</p>
+        </div>
+        
+        <div class="value-item">
+          <div class="value-icon">🌍</div>
+          <h3 class="value-title">社会課題解決</h3>
+          <p class="value-description">移動の不便さ、情報の非対称性など、日常の課題を楽しく解決するソリューションを提供します。</p>
+        </div>
+        
+        <div class="value-item">
+          <div class="value-icon">💡</div>
+          <h3 class="value-title">イノベーション</h3>
+          <p class="value-description">既存の枠にとらわれない発想で、これまでにない新しい価値を継続的に創造します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

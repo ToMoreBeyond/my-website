@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>動画コンテンツ | ToMoreBeyond</title>
+  <meta name="description" content="ToMoreBeyondの動画コンテンツ。プロダクトデモ、技術解説、チームの想いを動画で発信しています。">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* 戻るボタン */
+    .back-button {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #f0f0f0;
+      border-radius: 50px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    /* ヒーローセクション */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: 
+        linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
+      padding: calc(80px + 40px) 0 40px;
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+    
+    .hero-icon {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: white;
+      margin: 0 auto 32px;
+      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.2);
+    }
+    
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #EF4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: #404040;
+      margin-bottom: 32px;
+      line-height: 1.4;
+    }
+    
+    .hero-description {
+      font-size: 1.125rem;
+      color: #525252;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* セクション共通 */
+    .section {
+      padding: 80px 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    /* 動画カテゴリ */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 64px;
+      flex-wrap: wrap;
+    }
+    
+    .category-tag {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .category-tag:hover,
+    .category-tag.active {
+      background: #EF4444;
+      color: white;
+      border-color: #EF4444;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
+    }
+    
+    /* 動画グリッド */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+    
+    .video-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      border: 1px solid #f0f0f0;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+    }
+    
+    .video-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      border-color: #EF4444;
+    }
+    
+    .video-thumbnail {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .video-thumbnail::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    }
+    
+    .play-button {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #EF4444;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+    
+    .video-card:hover .play-button {
+      transform: scale(1.1);
+      background: white;
+    }
+    
+    .video-duration {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .video-content {
+      padding: 24px;
+    }
+    
+    .video-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .video-date {
+      font-size: 0.875rem;
+      color: #EF4444;
+      font-weight: 500;
+    }
+    
+    .video-views {
+      font-size: 0.875rem;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .video-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    
+    .video-description {
+      font-size: 0.9375rem;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .video-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .author-info {
+      flex: 1;
+    }
+    
+    .author-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .author-role {
+      font-size: 0.75rem;
+      color: #666;
+    }
+    
+    /* おすすめ動画 */
+    .featured-video {
+      background: white;
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      border: 1px solid #f0f0f0;
+      margin-bottom: 64px;
+    }
+    
+    .featured-video-thumbnail {
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .featured-video-thumbnail:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.2);
+    }
+    
+    .featured-play-button {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: #EF4444;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    
+    .featured-video-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    
+    .featured-video-description {
+      font-size: 1.125rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .back-button {
+        top: 15px;
+        left: 15px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      
+      .hero {
+        padding: calc(60px + 30px) 0 30px;
+      }
+      
+      .hero-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
+        border-radius: 20px;
+      }
+      
+      .container {
+        padding: 0 20px;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
+      
+      .categories {
+        margin-bottom: 40px;
+      }
+      
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .featured-video {
+        padding: 32px 24px;
+        border-radius: 20px;
+      }
+      
+      .featured-video-thumbnail {
+        height: 200px;
+      }
+      
+      .featured-play-button {
+        width: 64px;
+        height: 64px;
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 戻るボタン -->
+  <a href="../index.html" class="back-button">
+    ← ホームに戻る
+  </a>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-icon">🎬</div>
+      <h1 class="hero-title">Video</h1>
+      <p class="hero-subtitle">プロダクトと技術を映像で体験</p>
+      <p class="hero-description">
+        ToMoreBeyondのプロダクトデモ、技術解説、チームインタビューなど、
+        様々な動画コンテンツを通じて私たちの想いと技術をお伝えします。
+      </p>
+    </div>
+  </section>
+
+  <!-- おすすめ動画セクション -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">注目の動画</h2>
+        <p class="section-subtitle">今最も見られているコンテンツ</p>
+      </div>
+      
+      <div class="featured-video">
+        <div class="featured-video-thumbnail">
+          <div class="featured-play-button">▶</div>
+        </div>
+        <h3 class="featured-video-title">ToMoreBeyond 会社紹介ムービー</h3>
+        <p class="featured-video-description">
+          私たちのミッション「面白いことだけをする。友と共に道なき道を越える」に込めた想いと、
+          これまでの歩み、そして未来への展望を5分で紹介します。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- カテゴリ・動画一覧セクション -->
+  <section class="section" style="background: white;">
+    <div class="container">
+      <div class="categories">
+        <a href="#" class="category-tag active">すべて</a>
+        <a href="#" class="category-tag">プロダクトデモ</a>
+        <a href="#" class="category-tag">技術解説</a>
+        <a href="#" class="category-tag">チーム紹介</a>
+        <a href="#" class="category-tag">イベント</a>
+        <a href="#" class="category-tag">開発ログ</a>
+      </div>
+      
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">▶</div>
+            <div class="video-duration">3:45</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025年6月5日</span>
+              <span class="video-views">
+                👁 1,234 回視聴
+              </span>
+            </div>
+            <h3 class="video-title">タダタカ アプリデモ動画</h3>
+            <p class="video-description">
+              位置情報AIを活用したルート最適化機能の実際の動作をデモンストレーション。日常の移動がどう変わるかを体験できます。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">山</div>
+              <div class="author-info">
+                <div class="author-name">山田 純大</div>
+                <div class="author-role">CEO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">▶</div>
+            <div class="video-duration">8:12</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025年6月1日</span>
+              <span class="video-views">
+                👁 892 回視聴
+              </span>
+            </div>
+            <h3 class="video-title">Flutter × AI開発の舞台裏</h3>
+            <p class="video-description">
+              GPT-4o APIをFlutterアプリに統合する際の技術的な課題と解決方法を詳しく解説。実際のコードも公開しています。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">安</div>
+              <div class="author-info">
+                <div class="author-name">安藤 俊平</div>
+                <div class="author-role">CTO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">▶</div>
+            <div class="video-duration">5:28</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025年5月28日</span>
+              <span class="video-views">
+                👁 2,156 回視聴
+              </span>
+            </div>
+            <h3 class="video-title">Tokyo Startup Gateway登壇発表</h3>
+            <p class="video-description">
+              ファイナリストとして登壇した際のピッチ動画。ToMoreBeyondのビジョンと事業計画を5分間で熱く語ります。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">山</div>
+              <div class="author-info">
+                <div class="author-name">山田 純大</div>
+                <div class="author-role">CEO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">▶</div>
+            <div class="video-duration">12:34</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025年5月25日</span>
+              <span class="video-views">
+                👁 1,567 回視聴
+              </span>
+            </div>
+            <h3 class="video-title">地図データ最適化の深堀り解説</h3>
+            <p class="video-description">
+              Mapbox APIを使用した高度なルート計算アルゴリズムの実装について、ホワイトボードを使って詳しく解説します。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">正</div>
+              <div class="author-info">
+                <div class="author-name">正戸 雅司</div>
+                <div class="author-role">Engineer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">▶</div>
+            <div class="video-duration">6:15</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025年5月20日</span>
+              <span class="video-views">
+                👁 934 回視聴
+              </span>
+            </div>
+            <h3 class="video-title">チーム紹介：リモートワークの日常</h3>
+            <p class="video-description">
+              ToMoreBeyondメンバーの日常的なリモートワーク風景と、オンラインでのコラボレーション方法を紹介します。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">安</div>
+              <div class="author-info">
+                <div class="author-name">安藤 俊平</div>
+                <div class="author-role">CTO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">▶</div>
+            <div class="video-duration">4:50</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025年5月15日</span>
+              <span class="video-views">
+                👁 1,789 回視聴
+              </span>
+            </div>
+            <h3 class="video-title">UI/UXデザインプロセス公開</h3>
+            <p class="video-description">
+              ユーザー体験を最優先にしたアプリデザインの制作過程を、Figmaの画面を見せながら詳しく解説します。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">山</div>
+              <div class="author-info">
+                <div class="author-name">山田 純大</div>
+                <div class="author-role">CEO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
