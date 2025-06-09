@@ -301,6 +301,79 @@
       overflow: hidden;
     }
     
+    /* セクション区切りカードのスタイル */
+    .card.divider {
+      min-width: 280px;
+      height: 320px;
+      background: linear-gradient(135deg, #FFB300 0%, #FFA000 100%);
+      border: 2px solid #DAA520;
+      color: white;
+      font-weight: 600;
+      box-shadow: 
+        0 8px 32px rgba(255, 179, 0, 0.2),
+        0 4px 16px rgba(255, 179, 0, 0.1);
+      cursor: default;
+      position: relative;
+    }
+    
+    .card.divider::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #FFB300, #FFA000, #FFB300);
+      border-radius: 22px;
+      z-index: -1;
+      animation: dividerGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes dividerGlow {
+      0%, 100% { 
+        opacity: 0.8;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1.02);
+      }
+    }
+    
+    .card.divider .card-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      animation: dividerIconFloat 4s ease-in-out infinite;
+    }
+    
+    @keyframes dividerIconFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    .card.divider .card-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      margin-bottom: 12px;
+    }
+    
+    .card.divider .card-description {
+      color: rgba(255,255,255,0.9);
+      font-size: 18px;
+      font-weight: 500;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    .card.divider:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 16px 48px rgba(255, 179, 0, 0.3),
+        0 8px 24px rgba(255, 179, 0, 0.2);
+    }
+    
     .card:hover {
       transform: translateY(-12px) scale(1.02);
       box-shadow: 
@@ -1094,20 +1167,39 @@
   </div>
   
   <script>
-    // カードデータ
+    // カードデータ（セクション区切りカード含む）
     const cardsData = [
+      // スタート区切りカード
+      { icon: '🚀', title: 'スタート', description: '旅の始まり', section: 'start', type: 'divider', link: '#' },
+      
+      // アプリセクション
       { icon: '🗺️', title: 'TADATAKA', description: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
       { icon: '🚽', title: 'ToiRun', description: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
       { icon: '📍', title: 'Meet in the Middle', description: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
+      
+      // 会社セクション区切りカード
+      { icon: '🏢', title: '会社紹介', description: 'About ToMoreBeyond', section: 'company', type: 'divider', link: '#' },
       { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'detail/company.html' },
       { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: 'detail/mission.html' },
+      
+      // メンバーセクション区切りカード
+      { icon: '👥', title: 'チームメンバー', description: 'Our Team', section: 'members', type: 'divider', link: '#' },
       { icon: '👨‍💻', title: '山田', description: 'CDO / デザイナー', section: 'members', link: 'detail/yamada.html' },
       { icon: '🚀', title: '正留', description: 'CEO / エンジニア', section: 'members', link: 'detail/masadome.html' },
       { icon: '🎨', title: '安藤', description: 'アーティスト', section: 'members', link: 'detail/ando.html' },
+      
+      // メディアセクション区切りカード
+      { icon: '📢', title: 'メディア活動', description: 'Media & Content', section: 'media', type: 'divider', link: '#' },
       { icon: '📰', title: 'ブログ', description: '開発の裏話', section: 'media', link: 'detail/blog.html' },
       { icon: '🎥', title: '動画', description: 'プロダクト紹介', section: 'media', link: 'detail/video.html' },
       { icon: '📱', title: 'SNS', description: '日々の発信', section: 'media', link: 'detail/sns.html' },
-      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: 'detail/contact.html' }
+      
+      // コンタクトセクション区切りカード
+      { icon: '📞', title: 'お問い合わせ', description: 'Contact Us', section: 'contact', type: 'divider', link: '#' },
+      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: 'detail/contact.html' },
+      
+      // ゴール区切りカード
+      { icon: '🎯', title: 'ゴール到達', description: '旅の終着点', section: 'goal', type: 'divider', link: '#' }
     ];
     
     class MinimalSite {
@@ -1390,18 +1482,17 @@
         
         const cardsHTML = [];
         
-        // 2セット作成（無限スクロール用）
-        for (let set = 0; set < 2; set++) {
-          cardsData.forEach(data => {
-            cardsHTML.push(`
-              <div class="card" data-section="${data.section}" data-link="${data.link}">
-                <div class="card-icon">${data.icon}</div>
-                <h3 class="card-title">${data.title}</h3>
-                <p class="card-description">${data.description}</p>
-              </div>
-            `);
-          });
-        }
+        // 1セットのみ作成（区切りカードを含むため）
+        cardsData.forEach(data => {
+          const dividerClass = data.type === 'divider' ? ' divider' : '';
+          cardsHTML.push(`
+            <div class="card${dividerClass}" data-section="${data.section}" data-link="${data.link}" data-type="${data.type || 'normal'}">
+              <div class="card-icon">${data.icon}</div>
+              <h3 class="card-title">${data.title}</h3>
+              <p class="card-description">${data.description}</p>
+            </div>
+          `);
+        });
         
         track.innerHTML = cardsHTML.join('');
         
@@ -1414,19 +1505,28 @@
         track.querySelectorAll('.card').forEach(card => {
           card.addEventListener('click', () => {
             const link = card.dataset.link;
+            const type = card.dataset.type;
+            
+            // 区切りカードの場合はクリックを無効化
+            if (type === 'divider') {
+              return;
+            }
+            
             if (link && link !== '#') {
               window.location.href = link;
             }
           });
           
-          // ホバー時の反応
-          card.addEventListener('mouseenter', () => {
-            this.onCardHover(card);
-          });
-          
-          card.addEventListener('mouseleave', () => {
-            this.onCardLeave(card);
-          });
+          // ホバー時の反応（区切りカード以外）
+          if (card.dataset.type !== 'divider') {
+            card.addEventListener('mouseenter', () => {
+              this.onCardHover(card);
+            });
+            
+            card.addEventListener('mouseleave', () => {
+              this.onCardLeave(card);
+            });
+          }
         });
       }
       
@@ -2170,22 +2270,38 @@
         
         cards.forEach(card => {
           const cardSection = card.dataset.section;
-          if (cardSection === currentSection) {
-            card.style.opacity = '1';
-            card.style.transform = 'scale(1)';
+          const cardType = card.dataset.type;
+          
+          // 区切りカードは常に目立つように表示
+          if (cardType === 'divider') {
+            if (cardSection === currentSection || cardSection === 'start' || cardSection === 'goal') {
+              card.style.opacity = '1';
+              card.style.transform = 'scale(1)';
+            } else {
+              card.style.opacity = '0.6';
+              card.style.transform = 'scale(0.98)';
+            }
           } else {
-            card.style.opacity = '0.3';
-            card.style.transform = 'scale(0.95)';
+            // 通常のカード
+            if (cardSection === currentSection) {
+              card.style.opacity = '1';
+              card.style.transform = 'scale(1)';
+            } else {
+              card.style.opacity = '0.3';
+              card.style.transform = 'scale(0.95)';
+            }
           }
         });
       }
       
       getCurrentSectionFromPosition() {
-        if (this.characterPosition < 0.15) return 'apps';
-        if (this.characterPosition < 0.35) return 'company';
-        if (this.characterPosition < 0.55) return 'members';
-        if (this.characterPosition < 0.75) return 'media';
-        return 'contact';
+        if (this.characterPosition < 0.1) return 'start';
+        if (this.characterPosition < 0.25) return 'apps';
+        if (this.characterPosition < 0.45) return 'company';
+        if (this.characterPosition < 0.65) return 'members';
+        if (this.characterPosition < 0.85) return 'media';
+        if (this.characterPosition < 0.95) return 'contact';
+        return 'goal';
       }
       
       resetJourney() {
