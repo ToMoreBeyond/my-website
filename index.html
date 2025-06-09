@@ -706,6 +706,63 @@
       transition: transform 0.3s ease;
     }
     
+    /* キャラクター進化システム */
+    .tiny-character.evolution-level-1 {
+      filter: drop-shadow(0 4px 8px rgba(255,179,0,0.2));
+    }
+    
+    .tiny-character.evolution-level-2 {
+      filter: drop-shadow(0 6px 12px rgba(255,179,0,0.3));
+      transform: scale(1.05);
+    }
+    
+    .tiny-character.evolution-level-3 {
+      filter: drop-shadow(0 8px 16px rgba(255,179,0,0.4));
+      transform: scale(1.1);
+    }
+    
+    .tiny-character.evolution-level-4 {
+      filter: drop-shadow(0 10px 20px rgba(255,179,0,0.5));
+      transform: scale(1.15);
+    }
+    
+    .tiny-character.evolution-level-5 {
+      filter: drop-shadow(0 12px 24px rgba(255,179,0,0.6));
+      transform: scale(1.2);
+      animation: finalEvolutionGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes finalEvolutionGlow {
+      0%, 100% { 
+        filter: drop-shadow(0 12px 24px rgba(255,179,0,0.6));
+      }
+      50% { 
+        filter: drop-shadow(0 16px 32px rgba(255,179,0,0.8));
+      }
+    }
+    
+    /* 進化エフェクト */
+    .evolution-effect {
+      position: absolute;
+      inset: -20px;
+      border: 2px solid #FFB300;
+      border-radius: 50%;
+      opacity: 0;
+      animation: evolutionPulse 0.8s ease-out;
+      pointer-events: none;
+    }
+    
+    @keyframes evolutionPulse {
+      0% {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+    }
+    
     /* 指差しフレーム */
     .walk-frame.pointing {
       transition: opacity 0.3s ease;
@@ -1169,37 +1226,35 @@
   <script>
     // カードデータ（セクション区切りカード含む）
     const cardsData = [
-      // スタート区切りカード
-      { icon: '🚀', title: 'スタート', description: '旅の始まり', section: 'start', type: 'divider', link: '#' },
-      
-      // アプリセクション
+      // アプリセクション区切りカード
+      { icon: '📱', title: 'アプリ', description: '私たちのプロダクト', section: 'apps', type: 'divider', link: '#' },
       { icon: '🗺️', title: 'TADATAKA', description: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
       { icon: '🚽', title: 'ToiRun', description: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
       { icon: '📍', title: 'Meet in the Middle', description: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
       
       // 会社セクション区切りカード
-      { icon: '🏢', title: '会社紹介', description: 'About ToMoreBeyond', section: 'company', type: 'divider', link: '#' },
+      { icon: '🏢', title: '会社', description: 'ToMoreBeyondについて', section: 'company', type: 'divider', link: '#' },
       { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'detail/company.html' },
       { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: 'detail/mission.html' },
       
-      // メンバーセクション区切りカード
-      { icon: '👥', title: 'チームメンバー', description: 'Our Team', section: 'members', type: 'divider', link: '#' },
+      // チームメンバーセクション区切りカード
+      { icon: '👥', title: 'チームメンバー', description: '一緒に歩む仲間たち', section: 'members', type: 'divider', link: '#' },
       { icon: '👨‍💻', title: '山田', description: 'CDO / デザイナー', section: 'members', link: 'detail/yamada.html' },
       { icon: '🚀', title: '正留', description: 'CEO / エンジニア', section: 'members', link: 'detail/masadome.html' },
       { icon: '🎨', title: '安藤', description: 'アーティスト', section: 'members', link: 'detail/ando.html' },
       
       // メディアセクション区切りカード
-      { icon: '📢', title: 'メディア活動', description: 'Media & Content', section: 'media', type: 'divider', link: '#' },
+      { icon: '📢', title: 'メディア', description: '情報発信と活動記録', section: 'media', type: 'divider', link: '#' },
       { icon: '📰', title: 'ブログ', description: '開発の裏話', section: 'media', link: 'detail/blog.html' },
       { icon: '🎥', title: '動画', description: 'プロダクト紹介', section: 'media', link: 'detail/video.html' },
       { icon: '📱', title: 'SNS', description: '日々の発信', section: 'media', link: 'detail/sns.html' },
       
       // コンタクトセクション区切りカード
-      { icon: '📞', title: 'お問い合わせ', description: 'Contact Us', section: 'contact', type: 'divider', link: '#' },
+      { icon: '📞', title: 'コンタクト', description: 'つながりを大切に', section: 'contact', type: 'divider', link: '#' },
       { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: 'detail/contact.html' },
       
-      // ゴール区切りカード
-      { icon: '🎯', title: 'ゴール到達', description: '旅の終着点', section: 'goal', type: 'divider', link: '#' }
+      // 新しい旅の一歩区切りカード
+      { icon: '🌟', title: '新しい旅の一歩', description: 'さらなる道なき道へ', section: 'newjourney', type: 'divider', link: '#' }
     ];
     
     class MinimalSite {
@@ -1227,18 +1282,22 @@
         
         // 新しい横スクロール構造管理
         this.characterPosition = 0; // 0 = 左端, 1 = 右端
-        this.totalJourneyWidth = window.innerWidth * 5; // 5画面分の旅路
+        this.totalJourneyWidth = window.innerWidth * 6; // 6画面分の旅路
         this.sectionCheckpoints = [
-          { name: 'start', position: 0, title: 'スタート地点' },
-          { name: 'apps', position: 0.2, title: 'アプリケーション' },
-          { name: 'company', position: 0.4, title: '会社紹介' },
-          { name: 'members', position: 0.6, title: 'チームメンバー' },
-          { name: 'media', position: 0.8, title: 'メディア活動' },
-          { name: 'contact', position: 1.0, title: 'コンタクト' }
+          { name: 'apps', position: 0.16, title: 'アプリ' },
+          { name: 'company', position: 0.32, title: '会社' },
+          { name: 'members', position: 0.48, title: 'チームメンバー' },
+          { name: 'media', position: 0.64, title: 'メディア' },
+          { name: 'contact', position: 0.8, title: 'コンタクト' },
+          { name: 'newjourney', position: 0.96, title: '新しい旅の一歩' }
         ];
-        this.currentCheckpoint = 0;
+        this.currentCheckpoint = -1; // 初期状態は-1
         this.isAtCheckpoint = false;
         this.checkpointPauseTime = 2000; // 2秒間チェックポイントで停止
+        
+        // キャラクター進化システム
+        this.evolutionLevel = 0; // 0-5の進化レベル
+        this.evolutionThresholds = [0.2, 0.4, 0.6, 0.8, 1.0]; // 進化が起こる位置
         
         // ローディング管理
         this.loadingProgress = 0;
@@ -1645,6 +1704,9 @@
         
         // チェックポイント検出
         this.checkForCheckpoints();
+        
+        // キャラクター進化チェック
+        this.checkForEvolution();
         
         // セクション表示の更新
         this.updateSectionDisplay();
@@ -2108,7 +2170,7 @@
       startAutoScroll() {
         // 新しい横スクロール旅路の初期化
         this.characterPosition = 0;
-        this.currentCheckpoint = 0;
+        this.currentCheckpoint = -1;
         this.isAtCheckpoint = false;
         
         // キャラクターを左端（スタート地点）に配置
@@ -2274,7 +2336,7 @@
           
           // 区切りカードは常に目立つように表示
           if (cardType === 'divider') {
-            if (cardSection === currentSection || cardSection === 'start' || cardSection === 'goal') {
+            if (cardSection === currentSection) {
               card.style.opacity = '1';
               card.style.transform = 'scale(1)';
             } else {
@@ -2295,26 +2357,31 @@
       }
       
       getCurrentSectionFromPosition() {
-        if (this.characterPosition < 0.1) return 'start';
-        if (this.characterPosition < 0.25) return 'apps';
-        if (this.characterPosition < 0.45) return 'company';
-        if (this.characterPosition < 0.65) return 'members';
-        if (this.characterPosition < 0.85) return 'media';
-        if (this.characterPosition < 0.95) return 'contact';
-        return 'goal';
+        if (this.characterPosition < 0.16) return 'apps';
+        if (this.characterPosition < 0.32) return 'company';
+        if (this.characterPosition < 0.48) return 'members';
+        if (this.characterPosition < 0.64) return 'media';
+        if (this.characterPosition < 0.8) return 'contact';
+        return 'newjourney';
       }
       
       resetJourney() {
         // 右端到達後のリセット
         this.characterPosition = 0;
-        this.currentCheckpoint = 0;
+        this.currentCheckpoint = -1;
         this.isAtCheckpoint = false;
+        this.evolutionLevel = 0;
         
         const character = document.querySelector('.tiny-character');
         if (character) {
           character.style.left = '20px';
           character.classList.remove('facing-left', 'facing-right', 'at-checkpoint', 'journey-mode');
           character.classList.add('facing-right'); // 旅立ちは右向き
+          
+          // 進化レベルをリセット
+          for (let i = 1; i <= 5; i++) {
+            character.classList.remove(`evolution-level-${i}`);
+          }
         }
         
         // カードの表示をリセット
@@ -2322,6 +2389,114 @@
         
         // リセット完了エフェクト
         this.showResetEffect();
+      }
+      
+      checkForEvolution() {
+        for (let i = 0; i < this.evolutionThresholds.length; i++) {
+          if (this.characterPosition >= this.evolutionThresholds[i] && this.evolutionLevel === i) {
+            this.evolveCharacter(i + 1);
+            break;
+          }
+        }
+      }
+      
+      evolveCharacter(newLevel) {
+        this.evolutionLevel = newLevel;
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          // 前の進化レベルを削除
+          for (let i = 1; i <= 5; i++) {
+            character.classList.remove(`evolution-level-${i}`);
+          }
+          
+          // 新しい進化レベルを適用
+          character.classList.add(`evolution-level-${newLevel}`);
+          
+          // 進化エフェクトを表示
+          this.showEvolutionEffect(character, newLevel);
+          
+          // 進化完了通知
+          this.showEvolutionNotification(newLevel);
+        }
+      }
+      
+      showEvolutionEffect(character, level) {
+        const effect = document.createElement('div');
+        effect.className = 'evolution-effect';
+        character.appendChild(effect);
+        
+        setTimeout(() => {
+          effect.remove();
+        }, 800);
+      }
+      
+      showEvolutionNotification(level) {
+        const evolutionMessages = [
+          '',
+          '🌱 旅路の始まり',
+          '🚶‍♂️ 歩みを深める',
+          '💪 経験を積む',
+          '⭐ 成長の証',
+          '🏆 道なき道の達人'
+        ];
+        
+        const notification = document.createElement('div');
+        notification.className = 'evolution-notification';
+        notification.textContent = evolutionMessages[level];
+        notification.style.cssText = `
+          position: fixed;
+          top: 20%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #FFB300, #FFA000);
+          color: white;
+          padding: 16px 32px;
+          border-radius: 50px;
+          font-size: 1.1rem;
+          font-weight: 600;
+          box-shadow: 0 8px 32px rgba(255, 179, 0, 0.3);
+          z-index: 2000;
+          opacity: 0;
+          animation: evolutionNotificationPop 2s ease forwards;
+        `;
+        
+        // アニメーションCSS
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes evolutionNotificationPop {
+            0% {
+              opacity: 0;
+              transform: translate(-50%, -50%) scale(0.8);
+            }
+            20% {
+              opacity: 1;
+              transform: translate(-50%, -50%) scale(1.1);
+            }
+            30% {
+              transform: translate(-50%, -50%) scale(1);
+            }
+            80% {
+              opacity: 1;
+              transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+              opacity: 0;
+              transform: translate(-50%, -50%) scale(0.9);
+            }
+          }
+        `;
+        
+        if (!document.querySelector('#evolution-notification-styles')) {
+          style.id = 'evolution-notification-styles';
+          document.head.appendChild(style);
+        }
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+        }, 2000);
       }
       
       showResetEffect() {
