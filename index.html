@@ -100,7 +100,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      min-height: 800vh; /* 適度な長さのスクロール距離 */
+      min-height: 1000vh; /* もう少し長めのスクロール距離 */
       position: relative;
     }
     
@@ -1316,16 +1316,16 @@
   <script>
     // カードデータ（セクション区切りカード含む）
     const cardsData = [
+      // 会社セクション区切りカード
+      { icon: '🏢', title: '会社', description: 'ToMoreBeyondについて', section: 'company', type: 'divider', link: '#' },
+      { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'detail/company.html' },
+      { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: 'detail/mission.html' },
+      
       // アプリセクション区切りカード
       { icon: '📱', title: 'アプリ', description: '私たちのプロダクト', section: 'apps', type: 'divider', link: '#' },
       { icon: '🗺️', title: 'TADATAKA', description: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
       { icon: '🚽', title: 'ToiRun', description: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
       { icon: '📍', title: 'Meet in the Middle', description: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
-      
-      // 会社セクション区切りカード
-      { icon: '🏢', title: '会社', description: 'ToMoreBeyondについて', section: 'company', type: 'divider', link: '#' },
-      { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'detail/company.html' },
-      { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: 'detail/mission.html' },
       
       // チームメンバーセクション区切りカード
       { icon: '👥', title: 'チームメンバー', description: '一緒に歩む仲間たち', section: 'members', type: 'divider', link: '#' },
@@ -1346,8 +1346,8 @@
     
     class MinimalSite {
       constructor() {
-        this.currentSection = 'apps';
-        this.sections = ['apps', 'company', 'members', 'media', 'contact'];
+        this.currentSection = 'company';
+        this.sections = ['company', 'apps', 'members', 'media', 'contact'];
         this.sectionIndex = 0;
         this.isScrolling = false;
         this.scrollTimer = null;
@@ -1771,8 +1771,8 @@
         // スクロール感度を大幅に下げるための調整
         // イージング関数を使用してより自然な進行にする
         const easedProgress = this.easeInOutCubic(rawScrollProgress);
-        // 普通の重さに調整
-        const dampingFactor = isMobile ? 0.08 : 0.12; // モバイルでは8%、デスクトップでは12%
+        // もう少し重めに調整
+        const dampingFactor = isMobile ? 0.05 : 0.08; // モバイルでは5%、デスクトップでは8%
         const scrollProgress = easedProgress * dampingFactor;
         
         // 不要なUI更新を削除（関数が削除されているため）
@@ -1782,8 +1782,8 @@
         
         // スムージング処理: 急激な変化を抑制
         const targetPosition = scrollProgress;
-        // 普通の重さのスムージング
-        const smoothingFactor = isMobile ? 0.02 : 0.03; // モバイルでは2%、デスクトップでは3%
+        // もう少し重めのスムージング
+        const smoothingFactor = isMobile ? 0.015 : 0.02; // モバイルでは1.5%、デスクトップでは2%
         this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
         
         // キャラクターの位置を更新
