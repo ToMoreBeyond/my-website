@@ -100,7 +100,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      min-height: 500vh; /* 縦スクロールを可能にするための高さ */
+      min-height: 300vh; /* スクロール感度を下げるために高さを減らす */
       position: relative;
     }
     
@@ -1425,7 +1425,7 @@
         this.lastTime = 0;
         
         // 新しい横スクロール構造管理
-        this.characterPosition = 0; // 0 = 左端, 1 = 右端
+        this.characterPosition = 0.1; // より自然な開始位置（少し左より）
         this.totalJourneyWidth = window.innerWidth * 6; // 6画面分の旅路
         this.sectionCheckpoints = [
           { name: 'apps', position: 0.16, title: 'アプリ' },
@@ -1819,41 +1819,56 @@
       }
       
       handleVerticalScroll() {
-        // 縦スクロールに基づく棒人間の横移動（より自然な体験）
+        // 縦スクロールに基づく棒人間の横移動（より自然で緩やかな体験）
         const scrollTop = window.pageYOffset;
         const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollProgress = Math.min(scrollTop / Math.max(documentHeight, 1), 1);
+        const rawScrollProgress = Math.min(scrollTop / Math.max(documentHeight, 1), 1);
         
-        // スクロール進行度バーを更新
-        this.updateScrollProgressBar(scrollProgress);
+        // スクロール感度を大幅に下げるための調整
+        // イージング関数を使用してより自然な進行にする
+        const easedProgress = this.easeInOutCubic(rawScrollProgress);
+        const dampingFactor = 0.4; // 進行度を40%に抑制（さらに緩やかに）
+        const scrollProgress = easedProgress * dampingFactor;
         
-        // セクション指示器を更新
+        // スクロール進行度バーは生の値を使用（UI用）
+        this.updateScrollProgressBar(rawScrollProgress);
+        
+        // セクション指示器も調整された値を使用
         this.updateSectionIndicator(scrollProgress);
         
-        // スクロール進行度に基づいて棒人間の位置を計算
+        // スクロール進行度に基づいて棒人間の位置を計算（緩やかな移動）
         const oldPosition = this.characterPosition;
-        this.characterPosition = scrollProgress;
+        
+        // スムージング処理: 急激な変化を抑制
+        const targetPosition = scrollProgress;
+        const smoothingFactor = 0.08; // さらに緩やかな追従に変更
+        this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
         
         // キャラクターの位置を更新
         this.updateCharacterPosition(oldPosition);
         
         // カードの表示もスクロール進行度に合わせて更新
-        this.updateCardScrollProgress(scrollProgress);
+        this.updateCardScrollProgress(this.characterPosition);
         
-        // 歩行アニメーション
-        if (Math.abs(oldPosition - this.characterPosition) > 0.001) {
+        // 歩行アニメーション（より高い閾値で敏感さを下げる）
+        if (Math.abs(oldPosition - this.characterPosition) > 0.005) {
           this.startJourneyWalking();
           
           // 移動方向を判定
           const isMovingRight = this.characterPosition > oldPosition;
           this.updateCharacterDirection(isMovingRight);
           
-          // 歩行停止タイマー
+          // 歩行停止タイマー（少し長めに）
           clearTimeout(this.scrollTimer);
           this.scrollTimer = setTimeout(() => {
             this.stopJourneyWalking();
-          }, 300);
+          }, 500);
         }
+      }
+      
+      // イージング関数: より自然な進行カーブ
+      easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
       
       updateScrollProgressBar(progress) {
@@ -1961,7 +1976,7 @@
       }
       
       updateCardScrollProgress(scrollProgress) {
-        // スクロール進行度に基づいてカードを流れるように表示
+        // スクロール進行度に基づいてカードを流れるように表示（緩やかな動き）
         const track = document.querySelector('.cards-track');
         if (!track) return;
         
@@ -1970,38 +1985,42 @@
         
         if (totalCards === 0) return;
         
+        // より緩やかなカード移動のための調整
+        const cardScrollProgress = scrollProgress * 0.8; // カードの移動をさらに抑制
+        
         // 現在のカードインデックスを計算
-        const currentCardIndex = Math.floor(scrollProgress * (totalCards - 1));
-        const cardProgress = (scrollProgress * (totalCards - 1)) % 1;
+        const currentCardIndex = Math.floor(cardScrollProgress * (totalCards - 1));
+        const cardProgress = (cardScrollProgress * (totalCards - 1)) % 1;
         
         // 各カードの表示状態を更新
         cards.forEach((card, index) => {
           // 現在位置からの距離を計算
-          const distanceFromCurrent = Math.abs(index - (scrollProgress * (totalCards - 1)));
+          const distanceFromCurrent = Math.abs(index - (cardScrollProgress * (totalCards - 1)));
           
           // CSS クラスをリセット
           card.classList.remove('distant', 'nearby', 'current', 'highlighted');
           
-          // 距離に基づいてクラスを設定
-          if (distanceFromCurrent < 0.5) {
+          // より緩やかな距離判定
+          if (distanceFromCurrent < 0.8) {
             card.classList.add('current');
             card.classList.add('highlighted');
-          } else if (distanceFromCurrent < 1.5) {
+          } else if (distanceFromCurrent < 2.0) {
             card.classList.add('nearby');
           } else {
             card.classList.add('distant');
           }
           
-          // より詳細な位置調整
-          const relativePosition = index - (scrollProgress * (totalCards - 1));
-          const offset = relativePosition * 50; // カード間のオフセット
+          // より詳細な位置調整（より緩やかに）
+          const relativePosition = index - (cardScrollProgress * (totalCards - 1));
+          const offset = relativePosition * 30; // オフセットを小さくして動きを抑制
           
           // カードの水平位置を調整（流れるような効果）
-          card.style.transform += ` translateX(${offset}px)`;
+          const baseTransform = card.style.transform.replace(/translateX\([^)]*\)/, '');
+          card.style.transform = `${baseTransform} translateX(${offset}px)`;
         });
         
-        // トラック全体の位置を調整
-        const trackOffset = -scrollProgress * (totalCards - 1) * 340; // カード幅 + gap
+        // トラック全体の位置を調整（より緩やかに）
+        const trackOffset = -cardScrollProgress * (totalCards - 1) * 250; // 移動距離を減らす
         track.style.transform = `translateX(${trackOffset}px)`;
       }
       
