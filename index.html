@@ -95,13 +95,16 @@
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Courier New', monospace; /* 8bitレトロ風フォント */
       background: #ffffff;
       overflow-x: hidden;
       overflow-y: auto;
-      scroll-behavior: smooth;
+      scroll-behavior: auto; /* 8bitらしくスムーズスクロールなし */
       min-height: 1000vh; /* もう少し長めのスクロール距離 */
       position: relative;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
     
     body.loading {
@@ -113,25 +116,24 @@
       overflow-y: auto;
     }
     
-    /* 左上ロゴ - より洗練されたデザイン */
+    /* 8bit ドット絵風ロゴ */
     .logo {
       position: fixed;
-      top: 30px;
-      left: 30px;
+      top: 16px; /* 8の倍数 */
+      left: 16px; /* 8の倍数 */
       z-index: 1000;
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: #1a1a1a;
+      font-family: 'Courier New', monospace;
+      font-size: 16px; /* 8の倍数 */
+      font-weight: normal;
+      color: #000;
       text-decoration: none;
-      letter-spacing: -0.5px;
-      transition: all 0.3s ease;
-      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      letter-spacing: 1px;
+      transition: none; /* 8bitらしくスムーズ化なし */
+      background: none;
       opacity: 0;
-      transform: translateY(-20px);
+      transform: translateY(-8px); /* 8の倍数 */
+      text-transform: uppercase;
+      image-rendering: pixelated;
     }
     
     body.loaded .logo {
@@ -140,22 +142,26 @@
     }
     
     .logo:hover {
-      transform: scale(1.05);
+      transform: none; /* 8bitらしくスケール効果なし */
+      color: #fff;
+      background: #000;
+      padding: 2px 4px; /* シンプルな反転効果 */
     }
     
-    /* ローディング画面 */
+    /* 8bit ドット絵風ローディング画面 */
     .loading-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      background: #fff; /* 8bit風のシンプル背景 */
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: none; /* 8bitらしくスムーズ化なし */
+      image-rendering: pixelated;
     }
     
     .loading-screen.hidden {
@@ -166,50 +172,49 @@
     
     .loading-content {
       text-align: center;
-      max-width: 600px;
-      padding: 40px;
+      max-width: 400px; /* 8の倍数 */
+      padding: 32px; /* 8の倍数 */
     }
     
     .logo-loading {
-      margin-bottom: 60px;
+      margin-bottom: 32px; /* 8の倍数 */
     }
     
     .company-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: #1a1a1a;
-      margin: 0 0 20px 0;
-      letter-spacing: -1px;
-      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 50%, #1a1a1a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: logoShine 3s ease-in-out infinite;
+      font-family: 'Courier New', monospace;
+      font-size: 24px; /* 8の倍数 */
+      font-weight: normal;
+      color: #000;
+      margin: 0 0 16px 0; /* 8の倍数 */
+      letter-spacing: 2px;
+      background: none;
+      text-transform: uppercase;
+      animation: pixel8bitBlink 1s infinite; /* 8bit風点滅 */
     }
     
-    @keyframes logoShine {
-      0%, 100% { background-position: -200% center; }
-      50% { background-position: 200% center; }
+    @keyframes pixel8bitBlink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
     }
     
     .mission-text {
-      font-size: 1.2rem;
-      color: #666;
-      line-height: 1.6;
+      font-family: 'Courier New', monospace;
+      font-size: 12px; /* 8の倍数 */
+      color: #000;
+      line-height: 1.5;
       margin: 0;
       opacity: 0;
-      animation: fadeInUp 1s ease 0.5s forwards;
+      animation: pixel8bitFadeIn 0.5s ease 0.5s forwards; /* 8bit風の短いアニメーション */
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
-    @keyframes fadeInUp {
+    @keyframes pixel8bitFadeIn {
       from {
         opacity: 0;
-        transform: translateY(30px);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
       }
     }
     
@@ -323,7 +328,7 @@
       overflow-y: hidden; /* 縦スクロールバーを非表示 */
     }
     
-    /* damso.com風カードコンテナ */
+    /* 8bit ドット絵風カードコンテナ */
     .cards-container {
       width: 100%;
       max-width: 1200px;
@@ -333,11 +338,14 @@
       background: transparent;
       display: flex;
       align-items: center;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
     
     .cards-track {
       display: flex;
-      gap: 20px;
+      gap: 16px; /* 8の倍数 */
       height: 100%;
       will-change: transform;
       backface-visibility: hidden;
@@ -346,51 +354,52 @@
       transform: translateX(0px) translateZ(0);
       visibility: visible;
       opacity: 1;
+      image-rendering: pixelated;
     }
     
-    /* より滑らかなカードトランジション */
+    /* 8bitらしくスムーズアニメーションを削除 */
     .cards-track {
-      transition: none; /* JavaScriptアニメーションに任せる */
+      transition: none;
       transform-origin: center center;
       will-change: transform;
     }
     
-    /* 流れるようなカード表示エフェクト */
+    /* シンプルな8bit風表示エフェクト */
     .card {
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: none; /* 8bitらしくスムーズ化なし */
       transform-origin: center center;
       will-change: transform, opacity;
     }
     
-    /* カードの距離に基づく表示状態 */
+    /* カードの距離に基づく8bit風表示状態 */
     .card.distant {
-      opacity: 0.3;
-      transform: scale(0.8) translateY(20px);
-      filter: blur(1px);
+      opacity: 0.5;
+      transform: scale(0.8);
+      filter: none;
     }
     
     .card.nearby {
-      opacity: 0.7;
-      transform: scale(0.9) translateY(10px);
-      filter: blur(0.5px);
+      opacity: 0.8;
+      transform: scale(0.9);
+      filter: none;
     }
     
     .card.current {
       opacity: 1;
-      transform: scale(1) translateY(0px);
-      filter: blur(0px);
-      box-shadow: 0 20px 60px rgba(255, 179, 0, 0.15);
-      border-color: rgba(255, 179, 0, 0.3);
+      transform: scale(1);
+      filter: none;
+      box-shadow: none;
+      border-color: #000;
     }
     
-    /* 洗練されたカードデザイン */
+    /* 8bit ドット絵風カードデザイン */
     .card {
-      min-width: 320px;
-      height: 380px;
-      background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-      border: 1px solid #f0f0f0;
-      border-radius: 20px;
-      padding: 40px 30px;
+      min-width: 256px; /* 8の倍数 */
+      height: 320px; /* 8の倍数 */
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 0; /* 角ばったピクセル風 */
+      padding: 24px 16px; /* 8の倍数 */
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -398,27 +407,28 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: none; /* 8bitらしくスムーズ化なし */
       position: relative;
-      box-shadow: 
-        0 4px 20px rgba(0,0,0,0.04),
-        0 1px 3px rgba(0,0,0,0.02);
+      box-shadow: none;
       overflow: hidden;
+      font-family: 'Courier New', monospace;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
     
-    /* セクション区切りカードのスタイル */
+    /* 8bit風セクション区切りカード */
     .card.divider {
-      min-width: 280px;
-      height: 320px;
-      background: linear-gradient(135deg, #FFB300 0%, #FFA000 100%);
-      border: 2px solid #DAA520;
-      color: white;
-      font-weight: 600;
-      box-shadow: 
-        0 8px 32px rgba(255, 179, 0, 0.2),
-        0 4px 16px rgba(255, 179, 0, 0.1);
+      min-width: 224px; /* 8の倍数 */
+      height: 256px; /* 8の倍数 */
+      background: #000;
+      border: 2px solid #000;
+      color: #fff;
+      font-weight: normal;
+      box-shadow: none;
       cursor: default;
       position: relative;
+      font-family: 'Courier New', monospace;
     }
     
     .card.divider::before {
@@ -445,46 +455,56 @@
       }
     }
     
+    /* 8bit風セクション区切りカードの内容 */
     .card.divider .card-icon {
-      font-size: 64px;
-      margin-bottom: 24px;
-      text-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      animation: dividerIconFloat 4s ease-in-out infinite;
-    }
-    
-    @keyframes dividerIconFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+      font-family: 'Courier New', monospace;
+      font-size: 32px; /* 8の倍数 */
+      margin-bottom: 16px; /* 8の倍数 */
+      text-shadow: none;
+      animation: none; /* 8bitらしくアニメーションなし */
+      line-height: 1;
     }
     
     .card.divider .card-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: white;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      margin-bottom: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 16px; /* 8の倍数 */
+      font-weight: normal;
+      color: #fff;
+      text-shadow: none;
+      margin-bottom: 8px; /* 8の倍数 */
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .card.divider .card-description {
-      color: rgba(255,255,255,0.9);
-      font-size: 18px;
-      font-weight: 500;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      font-size: 8px; /* 8の倍数 */
+      font-weight: normal;
+      text-shadow: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     
+    /* 8bit風ホバー効果 */
     .card.divider:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 
-        0 16px 48px rgba(255, 179, 0, 0.3),
-        0 8px 24px rgba(255, 179, 0, 0.2);
+      transform: none; /* 8bitらしくスムーズ化なし */
+      box-shadow: none;
+      filter: invert(1); /* 8bit風の反転エフェクト */
     }
     
     .card:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: 
-        0 20px 60px rgba(0,0,0,0.12),
-        0 8px 30px rgba(255,179,0,0.08);
-      border-color: #FFB300;
+      transform: none; /* 8bitらしくスムーズ化なし */
+      box-shadow: none;
+      background: #000; /* 8bit風の反転 */
+      color: #fff;
+      border-color: #000;
+    }
+    
+    .card:hover .card-title,
+    .card:hover .card-description,
+    .card:hover .card-icon {
+      color: #fff;
     }
     
     .card::before {
@@ -523,31 +543,39 @@
       opacity: 1;
     }
     
+    /* 8bit風カードの内容 */
     .card-icon {
-      font-size: 56px;
-      margin-bottom: 28px;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-      transition: transform 0.3s ease;
+      font-family: 'Courier New', monospace;
+      font-size: 24px; /* 8の倍数 */
+      margin-bottom: 16px; /* 8の倍数 */
+      filter: none;
+      transition: none; /* 8bitらしくスムーズ化なし */
+      line-height: 1;
     }
     
     .card:hover .card-icon {
-      transform: scale(1.1);
+      transform: none; /* 8bitらしくホバー効果なし */
     }
     
     .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 16px;
-      letter-spacing: -0.5px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px; /* 8の倍数 */
+      font-weight: normal;
+      color: #000;
+      margin-bottom: 8px; /* 8の倍数 */
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1.2;
     }
     
     .card-description {
-      font-size: 16px;
-      color: #666;
-      line-height: 1.6;
-      font-weight: 400;
+      font-family: 'Courier New', monospace;
+      font-size: 8px; /* 8の倍数 */
+      color: #000;
+      line-height: 1.5;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     
     /* アクセシビリティ向上 */
@@ -563,7 +591,7 @@
       border: 0;
     }
     
-    /* 看板システム */
+    /* 8bit ドット絵風看板システム */
     .signpost-container {
       position: fixed;
       bottom: 0;
@@ -571,89 +599,152 @@
       width: 100%;
       height: 80px;
       z-index: 100;
-      background: linear-gradient(to bottom, transparent, rgba(245, 245, 245, 0.3));
+      background: transparent;
       pointer-events: none;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
     
     .signpost {
       position: absolute;
       bottom: 10px;
-      width: 80px;
-      height: 60px;
+      width: 48px; /* 12x4 = 48px */
+      height: 48px; /* 12x4 = 48px */
       transform-origin: bottom center;
-      transition: transform 0.3s ease;
+      transition: none; /* 8bitらしくスムーズ化なし */
       pointer-events: auto;
+      image-rendering: pixelated;
     }
     
     .signpost:hover {
-      transform: scale(1.1) translateY(-5px);
+      /* 8bit風のシンプルな効果 */
+      filter: invert(1);
     }
     
+    /* ドット絵風ポール */
     .signpost-pole {
       position: absolute;
       bottom: 0;
       left: 50%;
-      width: 4px;
-      height: 40px;
-      background: #8B6914;
+      width: 2px;
+      height: 24px;
+      background: #000;
       transform: translateX(-50%);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      image-rendering: pixelated;
     }
     
+    /* ドット絵風看板 */
     .signpost-board {
       position: absolute;
-      bottom: 35px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: #FFEAA7;
-      border: 2px solid #8B6914;
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #333;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      background: #fff;
+      border: 1px solid #000;
+      border-radius: 0; /* 角ばったドット絵風 */
+      padding: 2px 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 8px;
+      font-weight: normal;
+      color: #000;
       white-space: nowrap;
-      min-width: 60px;
+      min-width: 32px;
       text-align: center;
+      image-rendering: pixelated;
+      line-height: 1;
     }
     
     .signpost.active .signpost-board {
-      background: #FFB300;
-      color: white;
-      border-color: #DAA520;
-      box-shadow: 0 6px 12px rgba(255, 179, 0, 0.3);
+      background: #000;
+      color: #fff;
+      border-color: #000;
     }
     
+    /* 8bit風アイコン（テキストベース） */
     .signpost-icon {
-      font-size: 16px;
-      margin-bottom: 2px;
+      font-family: 'Courier New', monospace;
+      font-size: 6px;
+      margin-bottom: 1px;
       display: block;
+      line-height: 1;
     }
     
     .signpost-label {
-      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 4px;
       line-height: 1;
       display: block;
+      text-transform: uppercase;
     }
     
     
     
     
-    /* 適切なサイズの棒人間（100px height） - 看板の高さに立つ */
+    /* 8bit ドット絵風棒人間（16x16ピクセル感） */
     .tiny-character {
       position: fixed;
-      bottom: max(10px, env(safe-area-inset-bottom)); /* 看板と同じ高さ + セーフエリア対応 */
-      left: 20px; /* 左端からスタート */
+      bottom: max(10px, env(safe-area-inset-bottom));
+      left: 20px;
       transform: translateZ(0);
-      width: 100px;
-      height: 100px;
+      width: 64px; /* 16x4 = 64px */
+      height: 64px; /* 16x4 = 64px */
       z-index: 150;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
       contain: layout style paint;
       will-change: transform, left;
       backface-visibility: hidden;
-      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
+      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* ピクセルキャラクター用グリッド */
+    .pixel-character {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .pixel-grid {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: scale(4); /* 16px → 64px */
+      transform-origin: top left;
+    }
+    
+    /* 個別ピクセル */
+    .pixel {
+      position: absolute;
+      background: #000;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+    
+    /* 白黒8bitスタイル */
+    .pixel-character .pixel {
+      background: #000;
+      box-shadow: none;
+    }
+    
+    /* ドット絵風の影効果 */
+    .tiny-character {
+      filter: none;
+    }
+    
+    .tiny-character::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 2px;
+      background: #000;
+      opacity: 0.3;
+      image-rendering: pixelated;
     }
     
     /* キャラクターの旅路進行状態 */
@@ -1196,119 +1287,132 @@
   <!-- 看板システム -->
   <div class="signpost-container" id="signpostContainer"></div>
   
-  <!-- GIF風コマ送り歩行アニメーション棒人間 -->
+  <!-- 8bit ドット絵風歩行アニメーション棒人間 -->
   <div class="tiny-character">
     <div class="walking-animation-container">
       
-      <!-- アイドルフレーム: 立ち姿勢 -->
-      <svg class="walk-frame idle" viewBox="0 0 100 150">
-        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭 -->
-          <circle cx="50" cy="20" r="12" fill="#333" stroke="none"/>
+      <!-- アイドルフレーム: 立ち姿勢 (16x16ピクセル) -->
+      <div class="walk-frame idle pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 (2x2) -->
+          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          
+          <!-- 胴体 (1x4) -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          
+          <!-- 腕部 (左右1px) -->
+          <div class="pixel" style="top: 5px; left: 6px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 2px;"></div>
+          
+          <!-- 脚部 (1px幅 x3高) -->
+          <div class="pixel" style="top: 8px; left: 7px; width: 1px; height: 3px;"></div>
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+          
+          <!-- 足部 -->
+          <div class="pixel" style="top: 11px; left: 6px; width: 1px; height: 1px;"></div>
+          <div class="pixel" style="top: 11px; left: 9px; width: 1px; height: 1px;"></div>
+        </div>
+      </div>
+      
+      <!-- フレーム1: 歩行ポーズ（左脚前進） -->
+      <div class="walk-frame frame1 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 -->
+          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          
           <!-- 胴体 -->
-          <line x1="50" y1="32" x2="50" y2="65"/>
-          <!-- 左腕（リラックス） -->
-          <line x1="50" y1="40" x2="42" y2="52"/>
-          <line x1="42" y1="52" x2="40" y2="68"/>
-          <!-- 右腕（リラックス） -->
-          <line x1="50" y1="40" x2="58" y2="52"/>
-          <line x1="58" y1="52" x2="60" y2="68"/>
-          <!-- 左脚 -->
-          <line x1="50" y1="65" x2="46" y2="87"/>
-          <line x1="46" y1="87" x2="45" y2="110"/>
-          <!-- 右脚 -->
-          <line x1="50" y1="65" x2="54" y2="87"/>
-          <line x1="54" y1="87" x2="55" y2="110"/>
-        </g>
-      </svg>
+          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          
+          <!-- 左腕（後方） -->
+          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 1px;"></div>
+          <div class="pixel" style="top: 6px; left: 10px; width: 1px; height: 1px;"></div>
+          
+          <!-- 右腕（前方） -->
+          <div class="pixel" style="top: 5px; left: 5px; width: 1px; height: 1px;"></div>
+          <div class="pixel" style="top: 6px; left: 4px; width: 1px; height: 1px;"></div>
+          
+          <!-- 左脚（前進） -->
+          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 5px; width: 1px; height: 2px;"></div>
+          
+          <!-- 右脚（後方・蹴り出し） -->
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 9px; width: 1px; height: 1px;"></div>
+        </div>
+      </div>
       
-      <!-- フレーム1: 歩行ポーズ（左脚前・目標を見据える） -->
-      <svg class="walk-frame frame1" viewBox="0 0 100 150">
-        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（前方を見据える） -->
-          <circle cx="52" cy="16" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（前進の意志） -->
-          <line x1="52" y1="28" x2="50" y2="62"/>
-          <!-- 左腕（後方・力強く振る） -->
-          <line x1="50" y1="36" x2="60" y2="46"/>
-          <line x1="60" y1="46" x2="65" y2="62"/>
-          <!-- 右腕（前方・バランス） -->
-          <line x1="50" y1="36" x2="40" y2="46"/>
-          <line x1="40" y1="46" x2="35" y2="62"/>
-          <!-- 左脚（大きく前進） -->
-          <line x1="50" y1="62" x2="35" y2="82"/>
-          <line x1="35" y1="82" x2="28" y2="108"/>
-          <!-- 右脚（力強い蹴り出し） -->
-          <line x1="50" y1="62" x2="62" y2="82"/>
-          <line x1="62" y1="82" x2="70" y2="100"/>
-        </g>
-      </svg>
+      <!-- フレーム2: 歩行ポーズ（中間点） -->
+      <div class="walk-frame frame2 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 -->
+          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          
+          <!-- 胴体 -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          
+          <!-- 腕部（バランス） -->
+          <div class="pixel" style="top: 5px; left: 6px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 2px;"></div>
+          
+          <!-- 脚部（安定姿勢） -->
+          <div class="pixel" style="top: 8px; left: 7px; width: 1px; height: 3px;"></div>
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+          
+          <!-- 足部 -->
+          <div class="pixel" style="top: 11px; left: 6px; width: 1px; height: 1px;"></div>
+          <div class="pixel" style="top: 11px; left: 9px; width: 1px; height: 1px;"></div>
+        </div>
+      </div>
       
-      <!-- フレーム2: 歩行ポーズ（中間点・推進力） -->
-      <svg class="walk-frame frame2" viewBox="0 0 100 150">
-        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（目標への集中） -->
-          <circle cx="51" cy="15" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（前進エネルギー） -->
-          <line x1="51" y1="27" x2="50" y2="61"/>
-          <!-- 左腕（バランス調整） -->
-          <line x1="50" y1="35" x2="44" y2="50"/>
-          <line x1="44" y1="50" x2="42" y2="66"/>
-          <!-- 右腕（リズム維持） -->
-          <line x1="50" y1="35" x2="56" y2="50"/>
-          <line x1="56" y1="50" x2="58" y2="66"/>
-          <!-- 左脚（安定した支持） -->
-          <line x1="50" y1="61" x2="46" y2="82"/>
-          <line x1="46" y1="82" x2="45" y2="108"/>
-          <!-- 右脚（次のステップ準備） -->
-          <line x1="50" y1="61" x2="54" y2="82"/>
-          <line x1="54" y1="82" x2="55" y2="105"/>
-        </g>
-      </svg>
+      <!-- フレーム3: 歩行ポーズ（右脚前進） -->
+      <div class="walk-frame frame3 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 -->
+          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          
+          <!-- 胴体 -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          
+          <!-- 左腕（前方） -->
+          <div class="pixel" style="top: 5px; left: 5px; width: 1px; height: 1px;"></div>
+          <div class="pixel" style="top: 6px; left: 4px; width: 1px; height: 1px;"></div>
+          
+          <!-- 右腕（後方） -->
+          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 1px;"></div>
+          <div class="pixel" style="top: 6px; left: 10px; width: 1px; height: 1px;"></div>
+          
+          <!-- 左脚（後方・蹴り出し） -->
+          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 5px; width: 1px; height: 1px;"></div>
+          
+          <!-- 右脚（前進） -->
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 9px; width: 1px; height: 2px;"></div>
+        </div>
+      </div>
       
-      <!-- フレーム3: 歩行ポーズ（右脚前・確実な前進） -->
-      <svg class="walk-frame frame3" viewBox="0 0 100 150">
-        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（決意を持って前方注視） -->
-          <circle cx="53" cy="16" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（力強い前進） -->
-          <line x1="53" y1="28" x2="51" y2="62"/>
-          <!-- 左腕（前方・目標への意志） -->
-          <line x1="51" y1="36" x2="38" y2="46"/>
-          <line x1="38" y1="46" x2="32" y2="62"/>
-          <!-- 右腕（後方・推進力） -->
-          <line x1="51" y1="36" x2="64" y2="46"/>
-          <line x1="64" y1="46" x2="70" y2="62"/>
-          <!-- 左脚（後方・次への準備） -->
-          <line x1="51" y1="62" x2="38" y2="82"/>
-          <line x1="38" y1="82" x2="30" y2="100"/>
-          <!-- 右脚（前方・大胆な一歩） -->
-          <line x1="51" y1="62" x2="64" y2="82"/>
-          <line x1="64" y1="82" x2="72" y2="108"/>
-        </g>
-      </svg>
-      
-      <!-- フレーム4: 歩行ポーズ（リズムの転換点） -->
-      <svg class="walk-frame frame4" viewBox="0 0 100 150">
-        <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
-          <!-- 頭（前方への意識） -->
-          <circle cx="50" cy="14" r="12" fill="#333" stroke="none"/>
-          <!-- 胴体（エネルギー蓄積） -->
-          <line x1="50" y1="26" x2="49" y2="61"/>
-          <!-- 左腕（リズム作り） -->
-          <line x1="49" y1="34" x2="42" y2="48"/>
-          <line x1="42" y1="48" x2="40" y2="64"/>
-          <!-- 右腕（バランス保持） -->
-          <line x1="49" y1="34" x2="56" y2="48"/>
-          <line x1="56" y1="48" x2="58" y2="64"/>
-          <!-- 左脚（推進準備） -->
-          <line x1="49" y1="61" x2="47" y2="83"/>
-          <line x1="47" y1="83" x2="46" y2="108"/>
-          <!-- 右脚（安定した踏み込み） -->
-          <line x1="49" y1="61" x2="51" y2="83"/>
-          <line x1="51" y1="83" x2="52" y2="108"/>
-        </g>
-      </svg>
+      <!-- フレーム4: 歩行ポーズ（リズム転換） -->
+      <div class="walk-frame frame4 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 -->
+          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          
+          <!-- 胴体 -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          
+          <!-- 腕部（リズム） -->
+          <div class="pixel" style="top: 5px; left: 6px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 2px;"></div>
+          
+          <!-- 脚部（踏み込み） -->
+          <div class="pixel" style="top: 8px; left: 7px; width: 1px; height: 3px;"></div>
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+          
+          <!-- 足部 -->
+          <div class="pixel" style="top: 11px; left: 6px; width: 1px; height: 1px;"></div>
+          <div class="pixel" style="top: 11px; left: 9px; width: 1px; height: 1px;"></div>
+        </div>
+      </div>
       
     </div>
   </div>
@@ -1316,32 +1420,32 @@
   <script>
     // カードデータ（セクション区切りカード含む）
     const cardsData = [
-      // 会社セクション区切りカード
-      { icon: '🏢', title: '会社', description: 'ToMoreBeyondについて', section: 'company', type: 'divider', link: '#' },
-      { icon: '🏢', title: '会社概要', description: '道なき道を切り開く', section: 'company', link: 'detail/company.html' },
-      { icon: '🎯', title: 'ミッション', description: '面白いことだけをする', section: 'company', link: 'detail/mission.html' },
+      // 会社セクション区切りカード（8bitドット絵風アスキーアート）
+      { icon: '[#]', title: '会社', description: 'TOMOREBEYOND について', section: 'company', type: 'divider', link: '#' },
+      { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU', section: 'company', link: 'detail/company.html' },
+      { icon: 'X', title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU', section: 'company', link: 'detail/mission.html' },
       
       // アプリセクション区切りカード
-      { icon: '📱', title: 'アプリ', description: '私たちのプロダクト', section: 'apps', type: 'divider', link: '#' },
-      { icon: '🗺️', title: 'TADATAKA', description: '移動がそのまま日記になる', section: 'apps', link: 'pages/tadataka.html' },
-      { icon: '🚽', title: 'ToiRun', description: '"今すぐトイレ"を最短で案内', section: 'apps', link: 'pages/toirun.html' },
-      { icon: '📍', title: 'Meet in the Middle', description: '最適な集合地点を探す', section: 'apps', link: 'pages/midpoint.html' },
+      { icon: '[A]', title: 'アプリ', description: 'WATASHITACHI NO PRODUCT', section: 'apps', type: 'divider', link: '#' },
+      { icon: '+', title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI', section: 'apps', link: 'pages/tadataka.html' },
+      { icon: 'T', title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE', section: 'apps', link: 'pages/toirun.html' },
+      { icon: 'M', title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO', section: 'apps', link: 'pages/midpoint.html' },
       
       // チームメンバーセクション区切りカード
-      { icon: '👥', title: 'チームメンバー', description: '一緒に歩む仲間たち', section: 'members', type: 'divider', link: '#' },
-      { icon: '👨‍💻', title: '山田', description: 'CDO / デザイナー', section: 'members', link: 'detail/yamada.html' },
-      { icon: '🚀', title: '正留', description: 'CEO / エンジニア', section: 'members', link: 'detail/masadome.html' },
-      { icon: '🎨', title: '安藤', description: 'アーティスト', section: 'members', link: 'detail/ando.html' },
+      { icon: '[M]', title: 'チームメンバー', description: 'ISSHO NI AYUMU NAKAMA TACHI', section: 'members', type: 'divider', link: '#' },
+      { icon: 'Y', title: '山田', description: 'CDO / DESIGNER', section: 'members', link: 'detail/yamada.html' },
+      { icon: 'M', title: '正留', description: 'CEO / ENGINEER', section: 'members', link: 'detail/masadome.html' },
+      { icon: 'A', title: '安藤', description: 'ARTIST', section: 'members', link: 'detail/ando.html' },
       
       // メディアセクション区切りカード
-      { icon: '📢', title: 'メディア', description: '情報発信と活動記録', section: 'media', type: 'divider', link: '#' },
-      { icon: '📰', title: 'ブログ', description: '開発の裏話', section: 'media', link: 'detail/blog.html' },
-      { icon: '🎥', title: '動画', description: 'プロダクト紹介', section: 'media', link: 'detail/video.html' },
-      { icon: '📱', title: 'SNS', description: '日々の発信', section: 'media', link: 'detail/sns.html' },
+      { icon: '[I]', title: 'メディア', description: 'JOUHOU HASSHIN TO KATSUDOU', section: 'media', type: 'divider', link: '#' },
+      { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI', section: 'media', link: 'detail/blog.html' },
+      { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI', section: 'media', link: 'detail/video.html' },
+      { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN', section: 'media', link: 'detail/sns.html' },
       
       // コンタクトセクション区切りカード
-      { icon: '📞', title: 'コンタクト', description: 'つながりを大切に', section: 'contact', type: 'divider', link: '#' },
-      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: 'detail/contact.html' }
+      { icon: '[C]', title: 'コンタクト', description: 'TSUNAGARI WO TAISETSU NI', section: 'contact', type: 'divider', link: '#' },
+      { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO', section: 'contact', link: 'detail/contact.html' }
     ];
     
     class MinimalSite {
