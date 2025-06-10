@@ -100,7 +100,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      min-height: 300vh; /* スクロール感度を下げるために高さを減らす */
+      min-height: 600vh; /* より長いスクロール距離でゆっくりとした移動 */
       position: relative;
     }
     
@@ -1144,6 +1144,28 @@
       transform: scale(1.2);
     }
     
+    /* モバイル向け調整 */
+    @media (max-width: 768px) {
+      .section-indicator {
+        right: 15px;
+        gap: 8px;
+      }
+      
+      .section-dot {
+        width: 10px;
+        height: 10px;
+        border-width: 1px;
+      }
+      
+      .section-dot.active {
+        transform: scale(1.1);
+      }
+      
+      .scroll-progress-bar {
+        height: 2px;
+      }
+    }
+    
     /* タッチデバイス用最適化 */
     @media (hover: none) and (pointer: coarse) {
       .card:hover {
@@ -1404,7 +1426,7 @@
     class MinimalSite {
       constructor() {
         this.currentSection = 'apps';
-        this.sections = ['apps', 'company', 'members', 'media', 'contact'];
+        this.sections = ['apps', 'company', 'members', 'media', 'contact', 'newjourney'];
         this.sectionIndex = 0;
         this.isScrolling = false;
         this.scrollTimer = null;
@@ -1764,32 +1786,31 @@
         
         // ナビゲーション削除により不要
         
-        // タッチイベント（デスクトップの場合のみ） - 左右スクロール対応
-        let touchStartX = 0;
-        let touchTimeout;
+        // モバイル向けタッチイベント最適化
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        let isTouchScrolling = false;
         
         document.addEventListener('touchstart', (e) => {
-          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchStartTime = Date.now();
+          isTouchScrolling = true;
         }, { passive: true });
         
+        document.addEventListener('touchend', () => {
+          isTouchScrolling = false;
+        }, { passive: true });
+        
+        // モバイルでのスクロール感度をさらに調整
+        let mobileScrollTimeout;
         document.addEventListener('touchmove', (e) => {
-          const touchX = e.touches[0].clientX;
-          const deltaX = touchStartX - touchX;
+          if (!isTouchScrolling) return;
           
-          // 左右スワイプを検出
-          if (Math.abs(deltaX) > 5) {
-            e.preventDefault(); // デフォルトの動作を防ぐ
-            clearTimeout(touchTimeout);
-            this.handleScroll(deltaX * 0.8); // 自然な感度
-            
-            touchTimeout = setTimeout(() => {
-              this.optimizeAfterScroll();
-            }, 150);
-            
-            // タッチ位置を更新（連続的なスクロールのため）
-            touchStartX = touchX;
-          }
-        }, { passive: false }); // preventDefaultのためfalse
+          clearTimeout(mobileScrollTimeout);
+          mobileScrollTimeout = setTimeout(() => {
+            this.optimizeAfterScroll();
+          }, 200); // モバイルでは少し長めのタイムアウト
+        }, { passive: true });
         
         // キーボードナビゲーション - 左右キー対応
         document.addEventListener('keydown', (e) => {
@@ -1824,10 +1845,14 @@
         const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
         const rawScrollProgress = Math.min(scrollTop / Math.max(documentHeight, 1), 1);
         
+        // モバイルかどうかを判定してスクロール感度を調整
+        const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
         // スクロール感度を大幅に下げるための調整
         // イージング関数を使用してより自然な進行にする
         const easedProgress = this.easeInOutCubic(rawScrollProgress);
-        const dampingFactor = 0.4; // 進行度を40%に抑制（さらに緩やかに）
+        // モバイルではさらに感度を下げる
+        const dampingFactor = isMobile ? 0.15 : 0.25; // モバイルでは15%、デスクトップでは25%
         const scrollProgress = easedProgress * dampingFactor;
         
         // スクロール進行度バーは生の値を使用（UI用）
@@ -1841,7 +1866,8 @@
         
         // スムージング処理: 急激な変化を抑制
         const targetPosition = scrollProgress;
-        const smoothingFactor = 0.08; // さらに緩やかな追従に変更
+        // モバイルではさらに緩やかなスムージング
+        const smoothingFactor = isMobile ? 0.03 : 0.05; // モバイルでは3%、デスクトップでは5%
         this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
         
         // キャラクターの位置を更新
@@ -1887,8 +1913,8 @@
           this.createSectionDots();
         }
         
-        // 現在のセクションを計算
-        const sections = ['Home', 'Apps', 'Company', 'Team', 'Media', 'Contact'];
+        // 現在のセクションを計算（カードデータと一致させる）
+        const sections = ['Apps', 'Company', 'Members', 'Media', 'Contact', 'New Journey'];
         const currentSectionIndex = Math.floor(progress * (sections.length - 1));
         
         // ドットの状態を更新
@@ -1906,7 +1932,7 @@
         const indicator = document.getElementById('sectionIndicator');
         if (!indicator) return;
         
-        const sections = ['Home', 'Apps', 'Company', 'Team', 'Media', 'Contact'];
+        const sections = ['Apps', 'Company', 'Members', 'Media', 'Contact', 'New Journey'];
         sections.forEach((section, index) => {
           const dot = document.createElement('div');
           dot.className = 'section-dot';
