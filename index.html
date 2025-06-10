@@ -100,7 +100,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      min-height: 100vh;
+      min-height: 500vh; /* 縦スクロールを可能にするための高さ */
       position: relative;
     }
     
@@ -348,11 +348,39 @@
       opacity: 1;
     }
     
-    /* 統一されたスムーズトランジション */
+    /* より滑らかなカードトランジション */
     .cards-track {
-      transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: none; /* JavaScriptアニメーションに任せる */
       transform-origin: center center;
       will-change: transform;
+    }
+    
+    /* 流れるようなカード表示エフェクト */
+    .card {
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform-origin: center center;
+      will-change: transform, opacity;
+    }
+    
+    /* カードの距離に基づく表示状態 */
+    .card.distant {
+      opacity: 0.3;
+      transform: scale(0.8) translateY(20px);
+      filter: blur(1px);
+    }
+    
+    .card.nearby {
+      opacity: 0.7;
+      transform: scale(0.9) translateY(10px);
+      filter: blur(0.5px);
+    }
+    
+    .card.current {
+      opacity: 1;
+      transform: scale(1) translateY(0px);
+      filter: blur(0px);
+      box-shadow: 0 20px 60px rgba(255, 179, 0, 0.15);
+      border-color: rgba(255, 179, 0, 0.3);
     }
     
     /* 洗練されたカードデザイン */
@@ -1070,6 +1098,52 @@
       }
     }
     
+    /* スクロール進行度バー */
+    .scroll-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 179, 0, 0.2);
+      z-index: 1000;
+    }
+    
+    .scroll-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FFB300, #FFA000);
+      width: 0%;
+      transition: width 0.1s ease-out;
+    }
+    
+    /* セクション表示エリア */
+    .section-indicator {
+      position: fixed;
+      top: 50%;
+      right: 30px;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .section-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 179, 0, 0.5);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .section-dot.active {
+      background: #FFB300;
+      border-color: #FFB300;
+      transform: scale(1.2);
+    }
+    
     /* タッチデバイス用最適化 */
     @media (hover: none) and (pointer: coarse) {
       .card:hover {
@@ -1093,6 +1167,16 @@
   </style>
 </head>
 <body class="section-apps loading">
+  <!-- スクロール進行度バー -->
+  <div class="scroll-progress-bar">
+    <div class="scroll-progress-fill" id="scrollProgressFill"></div>
+  </div>
+  
+  <!-- セクション指示器 -->
+  <div class="section-indicator" id="sectionIndicator">
+    <!-- JavaScriptで動的に生成 -->
+  </div>
+  
   <!-- ローディング画面 -->
   <div class="loading-screen" id="loadingScreen">
     <div class="loading-content">
@@ -1653,21 +1737,30 @@
       }
       
       setupEventListeners() {
-        // 左右スクロールイベント - 最適化されたハンドリング
+        // 自然な縦スクロール体験 - 縦スクロールで棒人間が横移動
         let scrollTimeout;
-        window.addEventListener('wheel', (e) => {
-          e.preventDefault(); // デフォルトの縦スクロールを無効化
+        
+        // 通常の縦スクロールを有効にし、progress-basedの横移動を実装
+        window.addEventListener('scroll', () => {
           clearTimeout(scrollTimeout);
+          this.handleVerticalScroll();
           
-          // 横スクロール（deltaX）または縦スクロールを横に変換（deltaY）
-          const scrollDelta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
-          this.handleScroll(scrollDelta);
-          
-          // スクロール終了を検知してパフォーマンス最適化
+          // スクロール終了を検知
           scrollTimeout = setTimeout(() => {
             this.optimizeAfterScroll();
           }, 150);
-        }, { passive: false }); // preventDefaultのためfalse
+        }, { passive: true });
+        
+        // ホイールイベントで横スクロールも対応
+        window.addEventListener('wheel', (e) => {
+          // 横ホイールまたはShift+縦ホイールの場合は横移動
+          if (e.deltaX !== 0 || e.shiftKey) {
+            e.preventDefault();
+            const scrollDelta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+            this.handleHorizontalScroll(scrollDelta);
+          }
+          // 通常の縦ホイールは自然にスクロールさせる（preventDefault しない）
+        }, { passive: false });
         
         // ナビゲーション削除により不要
         
@@ -1725,63 +1818,114 @@
         this.updateWalkingSpeed();
       }
       
-      handleScroll(deltaX) {
-        // 横スクロールの新しい旅路システム
-        const scrollDirection = deltaX > 0 ? 1 : -1; // 正の値=右方向、負の値=左方向
-        const baseSensitivity = this.isLowEndDevice ? 0.008 : 0.012; // より自然で反応性の良いスクロール
-        const movementAmount = Math.abs(deltaX) * baseSensitivity;
+      handleVerticalScroll() {
+        // 縦スクロールに基づく棒人間の横移動（より自然な体験）
+        const scrollTop = window.pageYOffset;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollProgress = Math.min(scrollTop / Math.max(documentHeight, 1), 1);
         
-        // チェックポイント停止中は移動を制限
-        if (this.isAtCheckpoint) {
-          return;
+        // スクロール進行度バーを更新
+        this.updateScrollProgressBar(scrollProgress);
+        
+        // セクション指示器を更新
+        this.updateSectionIndicator(scrollProgress);
+        
+        // スクロール進行度に基づいて棒人間の位置を計算
+        const oldPosition = this.characterPosition;
+        this.characterPosition = scrollProgress;
+        
+        // キャラクターの位置を更新
+        this.updateCharacterPosition(oldPosition);
+        
+        // カードの表示もスクロール進行度に合わせて更新
+        this.updateCardScrollProgress(scrollProgress);
+        
+        // 歩行アニメーション
+        if (Math.abs(oldPosition - this.characterPosition) > 0.001) {
+          this.startJourneyWalking();
+          
+          // 移動方向を判定
+          const isMovingRight = this.characterPosition > oldPosition;
+          this.updateCharacterDirection(isMovingRight);
+          
+          // 歩行停止タイマー
+          clearTimeout(this.scrollTimer);
+          this.scrollTimer = setTimeout(() => {
+            this.stopJourneyWalking();
+          }, 300);
+        }
+      }
+      
+      updateScrollProgressBar(progress) {
+        const progressFill = document.getElementById('scrollProgressFill');
+        if (progressFill) {
+          progressFill.style.width = `${progress * 100}%`;
+        }
+      }
+      
+      updateSectionIndicator(progress) {
+        const indicator = document.getElementById('sectionIndicator');
+        if (!indicator) return;
+        
+        // セクション指示器がまだ作成されていない場合は作成
+        if (indicator.children.length === 0) {
+          this.createSectionDots();
         }
         
-        // キャラクターの位置を更新（0〜1の範囲）
+        // 現在のセクションを計算
+        const sections = ['Home', 'Apps', 'Company', 'Team', 'Media', 'Contact'];
+        const currentSectionIndex = Math.floor(progress * (sections.length - 1));
+        
+        // ドットの状態を更新
+        const dots = indicator.querySelectorAll('.section-dot');
+        dots.forEach((dot, index) => {
+          if (index === currentSectionIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+      
+      createSectionDots() {
+        const indicator = document.getElementById('sectionIndicator');
+        if (!indicator) return;
+        
+        const sections = ['Home', 'Apps', 'Company', 'Team', 'Media', 'Contact'];
+        sections.forEach((section, index) => {
+          const dot = document.createElement('div');
+          dot.className = 'section-dot';
+          dot.title = section;
+          dot.addEventListener('click', () => {
+            const targetProgress = index / (sections.length - 1);
+            const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const targetScrollTop = targetProgress * documentHeight;
+            window.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
+          });
+          indicator.appendChild(dot);
+        });
+      }
+      
+      handleHorizontalScroll(deltaX) {
+        // 横スクロールでの手動移動（Shift+ホイールなど）
+        const scrollDirection = deltaX > 0 ? 1 : -1;
+        const baseSensitivity = this.isLowEndDevice ? 0.008 : 0.012;
+        const movementAmount = Math.abs(deltaX) * baseSensitivity;
+        
         const oldPosition = this.characterPosition;
         this.characterPosition += scrollDirection * movementAmount;
         this.characterPosition = Math.max(0, Math.min(1, this.characterPosition));
         
-        // 実際の画面上での位置を計算
-        const screenWidth = window.innerWidth;
-        const characterScreenX = 20 + (screenWidth - 120) * this.characterPosition; // 20px〜screenWidth-100px
-        
         // キャラクターの位置を更新
-        const character = document.querySelector('.tiny-character');
-        if (character && oldPosition !== this.characterPosition) {
-          character.style.left = `${characterScreenX}px`;
-          
-          // 向きを変更
-          if (scrollDirection > 0) {
-            character.classList.add('facing-right');
-            character.classList.remove('facing-left');
-          } else {
-            character.classList.add('facing-left');
-            character.classList.remove('facing-right');
-          }
-          
-          // カードスクロールの更新
-          this.updateCardScroll();
-          
-          // 歩行開始
-          if (!this.isScrolling) {
-            this.startJourneyWalking();
-          }
-        }
+        this.updateCharacterPosition(oldPosition);
+        this.updateCharacterDirection(scrollDirection > 0);
         
-        // チェックポイント検出
-        this.checkForCheckpoints();
+        // カードスクロールの更新
+        this.updateCardScroll();
         
-        // キャラクター進化チェック
-        this.checkForEvolution();
-        
-        // セクション表示の更新
-        this.updateSectionDisplay();
-        
-        // 右端到達時のリセット処理
-        if (this.characterPosition >= 1.0) {
-          setTimeout(() => {
-            this.resetJourney();
-          }, 1000);
+        // 歩行開始
+        if (!this.isScrolling) {
+          this.startJourneyWalking();
         }
         
         // 歩行停止タイマー
@@ -1789,6 +1933,76 @@
         this.scrollTimer = setTimeout(() => {
           this.stopJourneyWalking();
         }, 300);
+      }
+      
+      updateCharacterPosition(oldPosition) {
+        if (oldPosition === this.characterPosition) return;
+        
+        const screenWidth = window.innerWidth;
+        const characterScreenX = 20 + (screenWidth - 120) * this.characterPosition;
+        
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.left = `${characterScreenX}px`;
+        }
+      }
+      
+      updateCharacterDirection(isMovingRight) {
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          if (isMovingRight) {
+            character.classList.add('facing-right');
+            character.classList.remove('facing-left');
+          } else {
+            character.classList.add('facing-left');
+            character.classList.remove('facing-right');
+          }
+        }
+      }
+      
+      updateCardScrollProgress(scrollProgress) {
+        // スクロール進行度に基づいてカードを流れるように表示
+        const track = document.querySelector('.cards-track');
+        if (!track) return;
+        
+        const cards = track.querySelectorAll('.card');
+        const totalCards = cards.length;
+        
+        if (totalCards === 0) return;
+        
+        // 現在のカードインデックスを計算
+        const currentCardIndex = Math.floor(scrollProgress * (totalCards - 1));
+        const cardProgress = (scrollProgress * (totalCards - 1)) % 1;
+        
+        // 各カードの表示状態を更新
+        cards.forEach((card, index) => {
+          // 現在位置からの距離を計算
+          const distanceFromCurrent = Math.abs(index - (scrollProgress * (totalCards - 1)));
+          
+          // CSS クラスをリセット
+          card.classList.remove('distant', 'nearby', 'current', 'highlighted');
+          
+          // 距離に基づいてクラスを設定
+          if (distanceFromCurrent < 0.5) {
+            card.classList.add('current');
+            card.classList.add('highlighted');
+          } else if (distanceFromCurrent < 1.5) {
+            card.classList.add('nearby');
+          } else {
+            card.classList.add('distant');
+          }
+          
+          // より詳細な位置調整
+          const relativePosition = index - (scrollProgress * (totalCards - 1));
+          const offset = relativePosition * 50; // カード間のオフセット
+          
+          // カードの水平位置を調整（流れるような効果）
+          card.style.transform += ` translateX(${offset}px)`;
+        });
+        
+        // トラック全体の位置を調整
+        const trackOffset = -scrollProgress * (totalCards - 1) * 340; // カード幅 + gap
+        track.style.transform = `translateX(${trackOffset}px)`;
       }
       
       updateCardPositionUltraSmooth() {
