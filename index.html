@@ -100,7 +100,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      min-height: 1200vh; /* 非常に長いスクロール距離で極めてゆっくりとした移動 */
+      min-height: 800vh; /* 適度な長さのスクロール距離 */
       position: relative;
     }
     
@@ -1341,16 +1341,13 @@
       
       // コンタクトセクション区切りカード
       { icon: '📞', title: 'コンタクト', description: 'つながりを大切に', section: 'contact', type: 'divider', link: '#' },
-      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: 'detail/contact.html' },
-      
-      // 新しい旅の一歩区切りカード
-      { icon: '🌟', title: '新しい旅の一歩', description: 'さらなる道なき道へ', section: 'newjourney', type: 'divider', link: '#' }
+      { icon: '💌', title: 'お問い合わせ', description: 'お気軽にどうぞ', section: 'contact', link: 'detail/contact.html' }
     ];
     
     class MinimalSite {
       constructor() {
         this.currentSection = 'apps';
-        this.sections = ['apps', 'company', 'members', 'media', 'contact', 'newjourney'];
+        this.sections = ['apps', 'company', 'members', 'media', 'contact'];
         this.sectionIndex = 0;
         this.isScrolling = false;
         this.scrollTimer = null;
@@ -1371,15 +1368,14 @@
         this.lastTime = 0;
         
         // 新しい横スクロール構造管理
-        this.characterPosition = 0.1; // より自然な開始位置（少し左より）
+        this.characterPosition = 0.05; // 開始位置をより左に（ほぼ左端）
         this.totalJourneyWidth = window.innerWidth * 6; // 6画面分の旅路
         this.sectionCheckpoints = [
           { name: 'apps', position: 0.16, title: 'アプリ' },
           { name: 'company', position: 0.32, title: '会社' },
-          { name: 'members', position: 0.48, title: 'チームメンバー' },
+          { name: 'members', position: 0.48, title: 'メンバー' },
           { name: 'media', position: 0.64, title: 'メディア' },
-          { name: 'contact', position: 0.8, title: 'コンタクト' },
-          { name: 'newjourney', position: 0.96, title: '新しい旅の一歩' }
+          { name: 'contact', position: 0.8, title: 'コンタクト' }
         ];
         this.currentCheckpoint = -1; // 初期状態は-1
         this.isAtCheckpoint = false;
@@ -1775,23 +1771,19 @@
         // スクロール感度を大幅に下げるための調整
         // イージング関数を使用してより自然な進行にする
         const easedProgress = this.easeInOutCubic(rawScrollProgress);
-        // 移動速度を4分の1に大幅減速
-        const dampingFactor = isMobile ? 0.04 : 0.06; // モバイルでは4%、デスクトップでは6%
+        // 普通の重さに調整
+        const dampingFactor = isMobile ? 0.08 : 0.12; // モバイルでは8%、デスクトップでは12%
         const scrollProgress = easedProgress * dampingFactor;
         
-        // スクロール進行度バーは生の値を使用（UI用）
-        this.updateScrollProgressBar(rawScrollProgress);
-        
-        // セクション指示器も調整された値を使用
-        this.updateSectionIndicator(scrollProgress);
+        // 不要なUI更新を削除（関数が削除されているため）
         
         // スクロール進行度に基づいて棒人間の位置を計算（緩やかな移動）
         const oldPosition = this.characterPosition;
         
         // スムージング処理: 急激な変化を抑制
         const targetPosition = scrollProgress;
-        // さらに緩やかなスムージング（4分の1の速度）
-        const smoothingFactor = isMobile ? 0.008 : 0.012; // モバイルでは0.8%、デスクトップでは1.2%
+        // 普通の重さのスムージング
+        const smoothingFactor = isMobile ? 0.02 : 0.03; // モバイルでは2%、デスクトップでは3%
         this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
         
         // キャラクターの位置を更新
@@ -1800,8 +1792,8 @@
         // カードの表示もスクロール進行度に合わせて更新
         this.updateCardScrollProgress(this.characterPosition);
         
-        // 歩行アニメーション（極めて高い閾値で微細な動きを無視）
-        if (Math.abs(oldPosition - this.characterPosition) > 0.01) {
+        // 歩行アニメーション（適度な閾値）
+        if (Math.abs(oldPosition - this.characterPosition) > 0.001) {
           this.startJourneyWalking();
           
           // 移動方向を判定
