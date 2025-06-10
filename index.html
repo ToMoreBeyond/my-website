@@ -916,38 +916,38 @@
     /* レスポンシブ - モバイル最適化 */
     @media (max-width: 768px) {
       body {
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
+        transform: scale(0.75);
+        transform-origin: top left;
+        width: 133.33%;
+        height: 133.33%;
       }
       
       .logo { 
-        font-size: 22px; 
-        top: 15px; 
-        left: 15px;
+        font-size: 18px; 
+        top: 12px; 
+        left: 12px;
         z-index: 1001;
       }
       
       .main-content { 
-        padding: 0 15px;
-        height: auto;
-        min-height: 100vh;
-        display: block;
-        padding-top: 80px;
+        padding: 0 40px;
+        height: 100vh;
+        display: flex;
+        align-items: center;
       }
       
-      /* モバイル用カード調整 - 縦スクロール */
+      /* モバイル用カード調整 - 横スクロール維持 */
       .cards-container {
-        height: auto;
+        height: 320px;
         width: 100%;
-        overflow: visible;
-        max-width: none;
+        overflow: hidden;
+        max-width: 1000px;
       }
       
       .cards-track {
-        gap: 15px;
-        flex-direction: column;
-        transform: none !important;
-        transition: none !important;
+        gap: 16px;
+        flex-direction: row;
       }
       
       .card { 
@@ -972,17 +972,25 @@
         line-height: 1.5;
       }
       
-      /* モバイルでは棒人間と道を非表示 */
-      .tiny-character {
-        display: none;
+      /* モバイル用棒人間調整 */
+      .tiny-character { 
+        width: 70px; 
+        height: 70px;
+        bottom: 48px;
       }
       
+      .walk-frame g {
+        stroke-width: 5;
+      }
+      
+      /* モバイル用道調整 */
       .path-area {
-        display: none;
+        height: 48px;
       }
       
       .path-decoration {
-        display: none;
+        bottom: 64px;
+        height: 16px;
       }
       
       /* カードのホバーエフェクトを無効化 */
@@ -1000,6 +1008,30 @@
             transparent 10%, 
             transparent 90%, 
             rgba(255,255,255,0.95) 100%);
+      }
+    }
+    
+    /* 縦画面（ポートレート）モードでの追加縮尺調整 */
+    @media (max-width: 768px) and (orientation: portrait) {
+      body {
+        transform: scale(0.65);
+        width: 153.85%;
+        height: 153.85%;
+      }
+      
+      .cards-container {
+        height: 280px;
+        max-width: 900px;
+      }
+      
+      .tiny-character {
+        width: 60px;
+        height: 60px;
+        bottom: 40px;
+      }
+      
+      .path-area {
+        height: 40px;
       }
     }
     
@@ -1455,9 +1487,6 @@
       }
       
       detectDeviceCapability() {
-        // モバイルデバイスを検出
-        this.isMobile = window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
         // 低性能デバイスを検出
         this.isLowEndDevice = (
           (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
@@ -1478,11 +1507,6 @@
         } else if (this.isMidEndDevice) {
           // 中程度の最適化
           this.baseScrollSpeed = 40;
-        }
-        
-        // モバイルの場合はボディにクラスを追加
-        if (this.isMobile) {
-          document.body.classList.add('mobile-mode');
         }
       }
       
@@ -1600,11 +1624,6 @@
       }
       
       setupEventListeners() {
-        // モバイルの場合は横スクロールシステムを無効化
-        if (this.isMobile) {
-          return; // モバイルでは通常の縦スクロールを使用
-        }
-        
         // 左右スクロールイベント - 最適化されたハンドリング
         let scrollTimeout;
         window.addEventListener('wheel', (e) => {
@@ -2218,17 +2237,6 @@
       }
       
       startAutoScroll() {
-        // モバイルの場合は横スクロールシステムを無効化
-        if (this.isMobile) {
-          const track = document.getElementById('cardsTrack');
-          if (track) {
-            track.style.visibility = 'visible';
-            track.style.opacity = '1';
-            track.style.transform = 'none';
-          }
-          return;
-        }
-        
         // 新しい横スクロール旅路の初期化
         this.characterPosition = 0;
         this.currentCheckpoint = -1;
@@ -2356,38 +2364,8 @@
           }
         }, this.checkpointPauseTime);
         
-        // チェックポイント到達エフェクト
-        this.showCheckpointEffect(checkpoint);
       }
       
-      showCheckpointEffect(checkpoint) {
-        // チェックポイント名を表示
-        const effect = document.createElement('div');
-        effect.className = 'checkpoint-notification';
-        effect.textContent = checkpoint.title;
-        effect.style.cssText = `
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: linear-gradient(135deg, #FFB300, #FFA000);
-          color: white;
-          padding: 16px 32px;
-          border-radius: 50px;
-          font-size: 1.2rem;
-          font-weight: 600;
-          box-shadow: 0 8px 32px rgba(255, 179, 0, 0.3);
-          z-index: 2000;
-          opacity: 0;
-          animation: checkpointPop 2s ease forwards;
-        `;
-        
-        document.body.appendChild(effect);
-        
-        setTimeout(() => {
-          effect.remove();
-        }, 2000);
-      }
       
       updateSectionDisplay() {
         // キャラクターの位置に基づいてカード表示を調整
@@ -2479,9 +2457,6 @@
           
           // 進化エフェクトを表示
           this.showEvolutionEffect(character, newLevel);
-          
-          // 進化完了通知
-          this.showEvolutionNotification(newLevel);
         }
       }
       
@@ -2495,73 +2470,6 @@
         }, 800);
       }
       
-      showEvolutionNotification(level) {
-        const evolutionMessages = [
-          '',
-          '🌱 旅路の始まり',
-          '🚶‍♂️ 歩みを深める',
-          '💪 経験を積む',
-          '⭐ 成長の証',
-          '🏆 道なき道の達人'
-        ];
-        
-        const notification = document.createElement('div');
-        notification.className = 'evolution-notification';
-        notification.textContent = evolutionMessages[level];
-        notification.style.cssText = `
-          position: fixed;
-          top: 20%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: linear-gradient(135deg, #FFB300, #FFA000);
-          color: white;
-          padding: 16px 32px;
-          border-radius: 50px;
-          font-size: 1.1rem;
-          font-weight: 600;
-          box-shadow: 0 8px 32px rgba(255, 179, 0, 0.3);
-          z-index: 2000;
-          opacity: 0;
-          animation: evolutionNotificationPop 2s ease forwards;
-        `;
-        
-        // アニメーションCSS
-        const style = document.createElement('style');
-        style.textContent = `
-          @keyframes evolutionNotificationPop {
-            0% {
-              opacity: 0;
-              transform: translate(-50%, -50%) scale(0.8);
-            }
-            20% {
-              opacity: 1;
-              transform: translate(-50%, -50%) scale(1.1);
-            }
-            30% {
-              transform: translate(-50%, -50%) scale(1);
-            }
-            80% {
-              opacity: 1;
-              transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-              opacity: 0;
-              transform: translate(-50%, -50%) scale(0.9);
-            }
-          }
-        `;
-        
-        if (!document.querySelector('#evolution-notification-styles')) {
-          style.id = 'evolution-notification-styles';
-          document.head.appendChild(style);
-        }
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-          notification.remove();
-        }, 2000);
-      }
       
       showResetEffect() {
         const effect = document.createElement('div');
