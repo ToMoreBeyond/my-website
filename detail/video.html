@@ -23,12 +23,52 @@
       min-height: 100vh;
     }
     
+    /* 統一ヘッダーデザイン */
+    .detail-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+    
+    .page-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+    }
+    
+    .brand-name {
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+    
+    .separator {
+      color: #ccc;
+    }
+    
+    .page-name {
+      color: #EF4444;
+      font-weight: 600;
+    }
+    
     /* 統一ナビゲーションデザイン */
     .back-button {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 1000;
+      position: relative;
+      top: 0;
+      left: 0;
+      z-index: auto;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -397,7 +437,7 @@
       }
       
       .hero {
-        padding: calc(60px + 30px) 0 30px;
+        padding: calc(80px + 50px) 0 30px;
       }
       
       .hero-icon {
@@ -442,10 +482,17 @@
   </style>
 </head>
 <body>
-  <!-- 戻るボタン -->
-  <a href="../index.html" class="back-button">
-    ← ホームに戻る
-  </a>
+  <!-- 統一ヘッダー -->
+  <header class="detail-header">
+    <a href="../index.html" class="back-button">
+      ← ホームに戻る
+    </a>
+    <div class="page-breadcrumb">
+      <span class="brand-name">ToMoreBeyond</span>
+      <span class="separator">/</span>
+      <span class="page-name">Video</span>
+    </div>
+  </header>
 
   <!-- ヒーローセクション -->
   <section class="hero">

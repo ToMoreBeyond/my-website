@@ -19,7 +19,9 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #ffffff;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
       min-height: 100vh;
       position: relative;
     }
@@ -29,7 +31,8 @@
     }
     
     body.loaded {
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
     
     /* 左上ロゴ - より洗練されたデザイン */
@@ -267,15 +270,11 @@
       opacity: 1;
     }
     
-    /* スクロール中は軽い遷移でスムーズに */
-    .cards-track.scrolling {
-      transition: transform 0.1s ease-out;
+    /* 統一されたスムーズトランジション */
+    .cards-track {
+      transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       transform-origin: center center;
-    }
-    
-    /* スクロール停止時は軽い遷移 */
-    .cards-track.idle {
-      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      will-change: transform;
     }
     
     /* 洗練されたカードデザイン */
@@ -1638,7 +1637,7 @@
       handleScroll(deltaX) {
         // 横スクロールの新しい旅路システム
         const scrollDirection = deltaX > 0 ? 1 : -1; // 正の値=右方向、負の値=左方向
-        const baseSensitivity = this.isLowEndDevice ? 0.002 : 0.003; // 感度を下げて自然な移動に
+        const baseSensitivity = this.isLowEndDevice ? 0.008 : 0.012; // より自然で反応性の良いスクロール
         const movementAmount = Math.abs(deltaX) * baseSensitivity;
         
         // チェックポイント停止中は移動を制限
@@ -1712,8 +1711,7 @@
           const track = document.getElementById('cardsTrack');
           if (track && track.children.length > 0) {
             // スクロール中は完全に滑らか
-            track.classList.add('scrolling');
-            track.classList.remove('idle');
+            // 統一されたトランジションを使用
             
             // より滑らかな変換
             const smoothOffset = this.currentScrollOffset || 0;
@@ -1734,8 +1732,7 @@
           const track = document.getElementById('cardsTrack');
           if (track) {
             // スクロール中はクラスを切り替えて滑らかに
-            track.classList.add('scrolling');
-            track.classList.remove('idle');
+            // 統一されたトランジションを使用
             track.style.setProperty('--scroll-offset', `${this.currentScrollOffset}px`);
           }
         });
@@ -1768,15 +1765,13 @@
         const scrollOffset = -maxScroll * this.characterPosition;
         
         // スムーズなアニメーション適用
-        track.classList.add('scrolling');
-        track.classList.remove('idle');
+        // 統一されたトランジションを使用
         track.style.transform = `translateX(${scrollOffset}px) translateZ(0)`;
         
         // 少し遅れてアイドル状態に戻す
         clearTimeout(this.cardScrollTimeout);
         this.cardScrollTimeout = setTimeout(() => {
-          track.classList.remove('scrolling');
-          track.classList.add('idle');
+          // スクロール完了
         }, 100);
       }
       
@@ -1948,8 +1943,7 @@
         
         // カードトラックをアイドル状態に
         if (track) {
-          track.classList.remove('scrolling');
-          track.classList.add('idle');
+          // スクロール完了
         }
       }
       
