@@ -100,7 +100,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      min-height: 600vh; /* より長いスクロール距離でゆっくりとした移動 */
+      min-height: 1200vh; /* 非常に長いスクロール距離で極めてゆっくりとした移動 */
       position: relative;
     }
     
@@ -1098,73 +1098,6 @@
       }
     }
     
-    /* スクロール進行度バー */
-    .scroll-progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: rgba(255, 179, 0, 0.2);
-      z-index: 1000;
-    }
-    
-    .scroll-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #FFB300, #FFA000);
-      width: 0%;
-      transition: width 0.1s ease-out;
-    }
-    
-    /* セクション表示エリア */
-    .section-indicator {
-      position: fixed;
-      top: 50%;
-      right: 30px;
-      transform: translateY(-50%);
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    
-    .section-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      border: 2px solid rgba(255, 179, 0, 0.5);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    
-    .section-dot.active {
-      background: #FFB300;
-      border-color: #FFB300;
-      transform: scale(1.2);
-    }
-    
-    /* モバイル向け調整 */
-    @media (max-width: 768px) {
-      .section-indicator {
-        right: 15px;
-        gap: 8px;
-      }
-      
-      .section-dot {
-        width: 10px;
-        height: 10px;
-        border-width: 1px;
-      }
-      
-      .section-dot.active {
-        transform: scale(1.1);
-      }
-      
-      .scroll-progress-bar {
-        height: 2px;
-      }
-    }
     
     /* タッチデバイス用最適化 */
     @media (hover: none) and (pointer: coarse) {
@@ -1189,15 +1122,6 @@
   </style>
 </head>
 <body class="section-apps loading">
-  <!-- スクロール進行度バー -->
-  <div class="scroll-progress-bar">
-    <div class="scroll-progress-fill" id="scrollProgressFill"></div>
-  </div>
-  
-  <!-- セクション指示器 -->
-  <div class="section-indicator" id="sectionIndicator">
-    <!-- JavaScriptで動的に生成 -->
-  </div>
   
   <!-- ローディング画面 -->
   <div class="loading-screen" id="loadingScreen">
@@ -1851,8 +1775,8 @@
         // スクロール感度を大幅に下げるための調整
         // イージング関数を使用してより自然な進行にする
         const easedProgress = this.easeInOutCubic(rawScrollProgress);
-        // モバイルではさらに感度を下げる
-        const dampingFactor = isMobile ? 0.15 : 0.25; // モバイルでは15%、デスクトップでは25%
+        // 移動速度を4分の1に大幅減速
+        const dampingFactor = isMobile ? 0.04 : 0.06; // モバイルでは4%、デスクトップでは6%
         const scrollProgress = easedProgress * dampingFactor;
         
         // スクロール進行度バーは生の値を使用（UI用）
@@ -1866,8 +1790,8 @@
         
         // スムージング処理: 急激な変化を抑制
         const targetPosition = scrollProgress;
-        // モバイルではさらに緩やかなスムージング
-        const smoothingFactor = isMobile ? 0.03 : 0.05; // モバイルでは3%、デスクトップでは5%
+        // さらに緩やかなスムージング（4分の1の速度）
+        const smoothingFactor = isMobile ? 0.008 : 0.012; // モバイルでは0.8%、デスクトップでは1.2%
         this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
         
         // キャラクターの位置を更新
@@ -1876,8 +1800,8 @@
         // カードの表示もスクロール進行度に合わせて更新
         this.updateCardScrollProgress(this.characterPosition);
         
-        // 歩行アニメーション（より高い閾値で敏感さを下げる）
-        if (Math.abs(oldPosition - this.characterPosition) > 0.005) {
+        // 歩行アニメーション（極めて高い閾値で微細な動きを無視）
+        if (Math.abs(oldPosition - this.characterPosition) > 0.01) {
           this.startJourneyWalking();
           
           // 移動方向を判定
@@ -1897,55 +1821,6 @@
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
       
-      updateScrollProgressBar(progress) {
-        const progressFill = document.getElementById('scrollProgressFill');
-        if (progressFill) {
-          progressFill.style.width = `${progress * 100}%`;
-        }
-      }
-      
-      updateSectionIndicator(progress) {
-        const indicator = document.getElementById('sectionIndicator');
-        if (!indicator) return;
-        
-        // セクション指示器がまだ作成されていない場合は作成
-        if (indicator.children.length === 0) {
-          this.createSectionDots();
-        }
-        
-        // 現在のセクションを計算（カードデータと一致させる）
-        const sections = ['Apps', 'Company', 'Members', 'Media', 'Contact', 'New Journey'];
-        const currentSectionIndex = Math.floor(progress * (sections.length - 1));
-        
-        // ドットの状態を更新
-        const dots = indicator.querySelectorAll('.section-dot');
-        dots.forEach((dot, index) => {
-          if (index === currentSectionIndex) {
-            dot.classList.add('active');
-          } else {
-            dot.classList.remove('active');
-          }
-        });
-      }
-      
-      createSectionDots() {
-        const indicator = document.getElementById('sectionIndicator');
-        if (!indicator) return;
-        
-        const sections = ['Apps', 'Company', 'Members', 'Media', 'Contact', 'New Journey'];
-        sections.forEach((section, index) => {
-          const dot = document.createElement('div');
-          dot.className = 'section-dot';
-          dot.title = section;
-          dot.addEventListener('click', () => {
-            const targetProgress = index / (sections.length - 1);
-            const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const targetScrollTop = targetProgress * documentHeight;
-            window.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
-          });
-          indicator.appendChild(dot);
-        });
-      }
       
       handleHorizontalScroll(deltaX) {
         // 横スクロールでの手動移動（Shift+ホイールなど）
@@ -2002,7 +1877,7 @@
       }
       
       updateCardScrollProgress(scrollProgress) {
-        // スクロール進行度に基づいてカードを流れるように表示（緩やかな動き）
+        // スクロール進行度に基づいてカードを流れるように表示（正しい順序で）
         const track = document.querySelector('.cards-track');
         if (!track) return;
         
@@ -2011,42 +1886,41 @@
         
         if (totalCards === 0) return;
         
-        // より緩やかなカード移動のための調整
-        const cardScrollProgress = scrollProgress * 0.8; // カードの移動をさらに抑制
+        // キャラクター位置に基づく正確なカード表示
+        const characterProgress = this.characterPosition; // 直接キャラクター位置を使用
         
-        // 現在のカードインデックスを計算
-        const currentCardIndex = Math.floor(cardScrollProgress * (totalCards - 1));
-        const cardProgress = (cardScrollProgress * (totalCards - 1)) % 1;
+        // 現在のカードインデックスを計算（正確な対応）
+        const currentCardIndex = Math.floor(characterProgress * (totalCards - 1));
         
         // 各カードの表示状態を更新
         cards.forEach((card, index) => {
-          // 現在位置からの距離を計算
-          const distanceFromCurrent = Math.abs(index - (cardScrollProgress * (totalCards - 1)));
+          // キャラクター位置からの距離を正確に計算
+          const distanceFromCharacter = Math.abs(index - (characterProgress * (totalCards - 1)));
           
           // CSS クラスをリセット
           card.classList.remove('distant', 'nearby', 'current', 'highlighted');
           
-          // より緩やかな距離判定
-          if (distanceFromCurrent < 0.8) {
+          // キャラクターに最も近いカードを特定
+          if (distanceFromCharacter < 0.5) {
             card.classList.add('current');
             card.classList.add('highlighted');
-          } else if (distanceFromCurrent < 2.0) {
+          } else if (distanceFromCharacter < 1.5) {
             card.classList.add('nearby');
           } else {
             card.classList.add('distant');
           }
           
-          // より詳細な位置調整（より緩やかに）
-          const relativePosition = index - (cardScrollProgress * (totalCards - 1));
-          const offset = relativePosition * 30; // オフセットを小さくして動きを抑制
+          // カードの位置調整（キャラクターを中心に）
+          const relativePosition = index - (characterProgress * (totalCards - 1));
+          const offset = relativePosition * 25; // さらに小さなオフセット
           
-          // カードの水平位置を調整（流れるような効果）
+          // カードの水平位置を調整
           const baseTransform = card.style.transform.replace(/translateX\([^)]*\)/, '');
           card.style.transform = `${baseTransform} translateX(${offset}px)`;
         });
         
-        // トラック全体の位置を調整（より緩やかに）
-        const trackOffset = -cardScrollProgress * (totalCards - 1) * 250; // 移動距離を減らす
+        // トラック全体の位置をキャラクター位置に合わせて調整
+        const trackOffset = -characterProgress * (totalCards - 1) * 200; // より小さな移動距離
         track.style.transform = `translateX(${trackOffset}px)`;
       }
       
