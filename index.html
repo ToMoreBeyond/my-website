@@ -2,12 +2,90 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える</title>
-  <meta name="description" content="ToMoreBeyondは最先端のAI技術とイノベーションで、より良い未来を創造するテクノロジーカンパニーです。">
+  <meta name="description" content="ToMoreBeyondは面白いことだけをするというミッションのもと、AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニーです。">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="keywords" content="ToMoreBeyond,テクノロジー,AI,モバイルアプリ,位置情報,最適化,スタートアップ,イノベーション,Flutter,東京">
+  <meta name="author" content="ToMoreBeyond Inc.">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="ja">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tomorebeyond.com/">
+  <meta property="og:title" content="ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える">
+  <meta property="og:description" content="AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニー">
+  <meta property="og:image" content="https://tomorebeyond.com/og-image.jpg">
+  <meta property="og:site_name" content="ToMoreBeyond">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://tomorebeyond.com/">
+  <meta property="twitter:title" content="ToMoreBeyond - 面白いことだけをする">
+  <meta property="twitter:description" content="AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造">
+  <meta property="twitter:image" content="https://tomorebeyond.com/twitter-image.jpg">
+  <meta property="twitter:site" content="@ToMoreBeyond">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://tomorebeyond.com/">
+  
+  <!-- Favicon and Apple Touch Icons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechCompany",
+    "name": "ToMoreBeyond",
+    "alternateName": "ToMoreBeyond Inc.",
+    "description": "面白いことだけをする。友と共に道なき道を越えるというミッションのもと、AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニー",
+    "url": "https://tomorebeyond.com",
+    "logo": "https://tomorebeyond.com/logo.png",
+    "sameAs": [
+      "https://twitter.com/ToMoreBeyond",
+      "https://instagram.com/tomorebeyond_official",
+      "https://youtube.com/@ToMoreBeyond",
+      "https://linkedin.com/company/tomorebeyond",
+      "https://github.com/ToMoreBeyond"
+    ],
+    "foundingDate": "2025-04-01",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "東京都渋谷区",
+      "addressCountry": "JP"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Service",
+      "email": "contact@tomorebeyond.com",
+      "availableLanguage": "Japanese"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "山田純大",
+      "jobTitle": "CEO"
+    }
+  }
+  </script>
   
   <style>
     * {
@@ -444,6 +522,19 @@
       font-weight: 400;
     }
     
+    /* アクセシビリティ向上 */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
     /* 看板システム */
     .signpost-container {
       position: fixed;
@@ -524,7 +615,7 @@
     /* 適切なサイズの棒人間（100px height） - 看板の高さに立つ */
     .tiny-character {
       position: fixed;
-      bottom: 10px; /* 看板と同じ高さ */
+      bottom: max(10px, env(safe-area-inset-bottom)); /* 看板と同じ高さ + セーフエリア対応 */
       left: 20px; /* 左端からスタート */
       transform: translateZ(0);
       width: 100px;
@@ -920,7 +1011,7 @@
       .tiny-character { 
         width: 70px; 
         height: 70px;
-        bottom: 48px;
+        bottom: max(48px, calc(env(safe-area-inset-bottom) + 38px));
       }
       
       .walk-frame g {
@@ -971,7 +1062,7 @@
       .tiny-character {
         width: 60px;
         height: 60px;
-        bottom: 40px;
+        bottom: max(40px, calc(env(safe-area-inset-bottom) + 30px));
       }
       
       .path-area {
@@ -1849,12 +1940,11 @@
         
         // アイドルフレームを非表示
         this.hideAllFrames();
+        // トランスフォーム状態をクリーンアップ
+        this.clearTransforms();
         
-        // スクロール速度に基づいたフレーム速度
-        const velocity = Math.max(1, this.scrollVelocity || 1);
-        const baseFrameDuration = 200;
-        const speedFactor = Math.min(2.5, Math.max(0.5, velocity / 15));
-        const frameDuration = Math.max(100, baseFrameDuration / speedFactor);
+        // 安定したフレーム速度（パフォーマンス改善）
+        const frameDuration = 150; // 固定間隔で安定性を向上
         
         // 最初のフレームを表示
         this.showFrame(this.walkFrames[0]);
@@ -1912,6 +2002,17 @@
         
         // 全歩行フレームを非表示
         this.hideAllFrames();
+      }
+      
+      clearTransforms() {
+        // トランスフォーム競合を防ぐためのクリーンアップ
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          // 基本のトランスフォームのみ保持
+          character.style.transform = 'translateZ(0)';
+          // 競合するクラスを削除
+          character.classList.remove('looking-left', 'looking-right', 'fast-walking');
+        }
       }
       
       stopRunning() {
