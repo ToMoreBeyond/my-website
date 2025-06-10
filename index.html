@@ -445,142 +445,87 @@
       font-weight: 400;
     }
     
-    /* 石畳の道デザイン */
-    .path-area {
+    /* 看板システム */
+    .signpost-container {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 60px;
+      height: 80px;
       z-index: 100;
-      background: #8b8680;
-      overflow: hidden;
-      perspective: 1000px;
-    }
-    
-    /* 石畳パターン */
-    .stone-pattern {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      display: flex;
-    }
-    
-    /* 石ブロック */
-    .stone-block {
-      width: 50px;
-      height: 100%;
-      position: relative;
-      flex-shrink: 0;
-      background: 
-        linear-gradient(135deg, 
-          #a0a0a0 0%, 
-          #8d8d8d 25%, 
-          #7a7a7a 50%, 
-          #8d8d8d 75%, 
-          #a0a0a0 100%);
-      border-right: 1px solid rgba(0, 0, 0, 0.15);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        inset 0 2px 4px rgba(255, 255, 255, 0.1),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* 石の質感 */
-    .stone-block::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image:
-        radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-        radial-gradient(circle at 75% 70%, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
-        linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.05) 50%, transparent 55%);
-      background-size: 12px 12px, 18px 18px, 8px 8px;
-      opacity: 0.7;
-    }
-    
-    /* 道の輪郭と影 */
-    .path-shadow {
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 100%;
-      height: 10px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
-      filter: blur(5px);
-    }
-    
-    /* 道路脇の自然な芝生と小石 */
-    .grass-area {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      width: 100%;
-      height: 40px;
-      background: 
-        linear-gradient(180deg, 
-          #7CB342 0%,
-          #689F38 30%,
-          #558B2F 70%,
-          #33691E 100%
-        );
-      position: relative;
-      overflow: hidden;
-    }
-    
-    /* 道の両脇の小石や草 */
-    .path-decoration {
-      position: fixed;
-      bottom: 80px;
-      left: 0;
-      width: 100%;
-      height: 20px;
+      background: linear-gradient(to bottom, transparent, rgba(245, 245, 245, 0.3));
       pointer-events: none;
-      z-index: 90;
     }
     
-    .decoration-item {
-      width: 12px;
-      height: 12px;
+    .signpost {
       position: absolute;
-      animation: decorSway 6s ease-in-out infinite;
+      bottom: 10px;
+      width: 80px;
+      height: 60px;
+      transform-origin: bottom center;
+      transition: transform 0.3s ease;
+      pointer-events: auto;
     }
     
-    .decoration-item::before {
-      content: '';
+    .signpost:hover {
+      transform: scale(1.1) translateY(-5px);
+    }
+    
+    .signpost-pole {
       position: absolute;
       bottom: 0;
       left: 50%;
+      width: 4px;
+      height: 40px;
+      background: #8B6914;
       transform: translateX(-50%);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
-    /* 小石（シンプル化） */
-    .decoration-item.stone::before {
-      width: 6px;
-      height: 4px;
-      background: #666;
-      border-radius: 50%;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    .signpost-board {
+      position: absolute;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #FFEAA7;
+      border: 2px solid #8B6914;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      white-space: nowrap;
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    .signpost.active .signpost-board {
+      background: #FFB300;
+      color: white;
+      border-color: #DAA520;
+      box-shadow: 0 6px 12px rgba(255, 179, 0, 0.3);
+    }
+    
+    .signpost-icon {
+      font-size: 16px;
+      margin-bottom: 2px;
+      display: block;
+    }
+    
+    .signpost-label {
+      font-size: 10px;
+      line-height: 1;
+      display: block;
     }
     
     
-    @keyframes decorSway {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-1px); }
-    }
     
     
-    
-    
-    /* 適切なサイズの棒人間（100px height） - 道の上に立つ */
+    /* 適切なサイズの棒人間（100px height） - 看板の高さに立つ */
     .tiny-character {
       position: fixed;
-      bottom: 60px; /* 道路の上に立つように調整 */
+      bottom: 10px; /* 看板と同じ高さ */
       left: 20px; /* 左端からスタート */
       transform: translateZ(0);
       width: 100px;
@@ -1128,14 +1073,8 @@
     </div>
   </main>
   
-  <!-- 石畳の道エリア -->
-  <div class="path-area">
-    <div class="stone-pattern" id="stonePattern"></div>
-    <div class="path-shadow"></div>
-  </div>
-  
-  <!-- 装飾 -->
-  <div class="path-decoration" id="pathDecoration"></div>
+  <!-- 看板システム -->
+  <div class="signpost-container" id="signpostContainer"></div>
   
   <!-- GIF風コマ送り歩行アニメーション棒人間 -->
   <div class="tiny-character">
@@ -2382,7 +2321,7 @@
               card.style.opacity = '1';
               card.style.transform = 'scale(1)';
             } else {
-              card.style.opacity = '0.6';
+              card.style.opacity = '0.9';
               card.style.transform = 'scale(0.98)';
             }
           } else {
@@ -2391,8 +2330,8 @@
               card.style.opacity = '1';
               card.style.transform = 'scale(1)';
             } else {
-              card.style.opacity = '0.3';
-              card.style.transform = 'scale(0.95)';
+              card.style.opacity = '0.8';
+              card.style.transform = 'scale(0.98)';
             }
           }
         });
@@ -2500,8 +2439,39 @@
       }
     }
     
+    // 看板作成システム
+    function createSignposts() {
+      const container = document.getElementById('signpostContainer');
+      if (!container) return;
+      
+      const signposts = [
+        { label: 'スタート', position: 0, icon: '🏁' },
+        { label: '会社', position: 20, icon: '🏢' },
+        { label: 'アプリ', position: 36, icon: '📱' },
+        { label: 'メンバー', position: 52, icon: '👥' },
+        { label: 'メディア', position: 68, icon: '📺' },
+        { label: 'コンタクト', position: 84, icon: '📧' },
+        { label: 'ゴール', position: 100, icon: '🎯' }
+      ];
+      
+      signposts.forEach(signpost => {
+        const signpostElement = document.createElement('div');
+        signpostElement.className = 'signpost';
+        signpostElement.style.left = `${signpost.position}%`;
+        signpostElement.innerHTML = `
+          <div class="signpost-pole"></div>
+          <div class="signpost-board">
+            <div class="signpost-icon">${signpost.icon}</div>
+            <div class="signpost-label">${signpost.label}</div>
+          </div>
+        `;
+        container.appendChild(signpostElement);
+      });
+    }
+    
     // 初期化
     document.addEventListener('DOMContentLoaded', () => {
+      createSignposts();
       new MinimalSite();
     });
   </script>
