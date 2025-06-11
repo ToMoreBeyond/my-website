@@ -860,8 +860,8 @@
       bottom: max(10px, env(safe-area-inset-bottom));
       left: 20px;
       transform: translateZ(0);
-      width: 48px; /* 16x3 = 48px - 横幅を縮小 */
-      height: 48px; /* 16x3 = 48px */
+      width: 64px; /* 16x4 = 64px - ひと回り大きく */
+      height: 64px; /* 16x4 = 64px */
       z-index: 150;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
@@ -884,7 +884,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transform: scale(3); /* 16px → 48px - 横幅を縮小 */
+      transform: scale(4); /* 16px → 64px - ひと回り大きく */
       transform-origin: top left;
     }
     
@@ -1259,8 +1259,8 @@
         will-change: transform, left;
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0); /* ハードウェアアクセラレーション */
-        width: 40px; /* モバイル用サイズ - さらに縮小 */
-        height: 40px;
+        width: 56px; /* モバイル用サイズ - 適度な大きさ */
+        height: 56px;
         transition: left 0.6s ease-out; /* モバイルで軽快な動き */
       }
       
@@ -1351,8 +1351,8 @@
       
       /* モバイル用棒人間調整 */
       .tiny-character { 
-        width: 60px; 
-        height: 60px;
+        width: 72px; 
+        height: 72px;
         bottom: max(48px, calc(env(safe-area-inset-bottom) + 38px));
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -1404,8 +1404,8 @@
       }
       
       .tiny-character {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         bottom: max(40px, calc(env(safe-area-inset-bottom) + 30px));
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -2284,8 +2284,16 @@
         
         if (totalCards === 0) return;
         
-        // キャラクター位置の安全な範囲制限
+        // 棒人間とカードの完全同期を実現
         const safeCharacterPosition = Math.max(0, Math.min(1, this.characterPosition));
+        const containerWidth = track.parentElement?.offsetWidth || window.innerWidth;
+        const cardWidth = 256 + 20; // カード幅 + gap
+        const totalWidth = cardWidth * totalCards;
+        const maxOffset = Math.max(0, totalWidth - containerWidth);
+        
+        // 棒人間位置とカードスクロールを完全同期
+        // 棒人間が右端(1.0)の時、コンタクトカードが最大右に表示される
+        const perfectSyncOffset = -maxOffset * safeCharacterPosition;
         
         // 各カードの表示状態を更新（消失バグ修正）
         cards.forEach((card, index) => {
@@ -2294,32 +2302,25 @@
           card.style.opacity = '1';
           card.style.display = 'flex';
           
-          // キャラクター位置からの距離を安全に計算
-          const normalizedIndex = totalCards > 1 ? index / (totalCards - 1) : 0;
-          const distanceFromCharacter = Math.abs(normalizedIndex - safeCharacterPosition);
+          // 棒人間位置とカードインデックスの完全同期
+          const currentCardIndex = Math.round(safeCharacterPosition * (totalCards - 1));
+          const distanceFromCharacter = Math.abs(index - currentCardIndex);
           
           // CSS クラスをリセット
           card.classList.remove('distant', 'nearby', 'current', 'highlighted');
           
-          // キャラクターに最も近いカードを特定
-          if (distanceFromCharacter < 0.15) {
+          // 棒人間位置と完全に同期したハイライト
+          if (distanceFromCharacter === 0) {
             card.classList.add('current');
             card.classList.add('highlighted');
-          } else if (distanceFromCharacter < 0.35) {
+          } else if (distanceFromCharacter === 1) {
             card.classList.add('nearby');
           } else {
             card.classList.add('distant');
           }
         });
         
-        // トラック全体の位置をより安全に調整
-        const containerWidth = track.parentElement?.offsetWidth || window.innerWidth;
-        const cardWidth = 256 + 20; // カード幅 + gap
-        const totalWidth = cardWidth * totalCards;
-        const maxOffset = Math.max(0, totalWidth - containerWidth);
-        const trackOffset = -maxOffset * safeCharacterPosition;
-        
-        track.style.transform = `translateX(${trackOffset}px) translateZ(0)`;
+        track.style.transform = `translateX(${perfectSyncOffset}px) translateZ(0)`;
       }
       
       updateCardPositionUltraSmooth() {
@@ -2371,30 +2372,35 @@
         const track = document.getElementById('cardsTrack');
         if (!track) return;
         
-        // 棒人間の進行度に基づいてカードをスクロール
-        // 全カードの幅を取得
+        // 棒人間とカードの完全同期を実現
         const cards = track.children;
         if (cards.length === 0) return;
         
-        const cardWidth = 320; // カードの最小幅
-        const cardGap = 20; // カード間のギャップ
-        const totalCardsWidth = (cardWidth + cardGap) * cards.length;
-        
-        // 棒人間の位置に基づいてスクロール量を計算
-        // characterPosition: 0-1 → スクロール量: 0 → -(totalCardsWidth - containerWidth)
-        const containerWidth = track.parentElement.offsetWidth;
+        const cardWidth = 256 + 20; // カード幅 + ギャップ
+        const containerWidth = track.parentElement?.offsetWidth || window.innerWidth;
+        const totalCardsWidth = cardWidth * cards.length;
         const maxScroll = Math.max(0, totalCardsWidth - containerWidth);
-        const scrollOffset = -maxScroll * this.characterPosition;
         
-        // スムーズなアニメーション適用
-        // 統一されたトランジションを使用
-        track.style.transform = `translateX(${scrollOffset}px) translateZ(0)`;
+        // 棒人間の位置 (0-1) をカードスクロールに完全同期
+        // 棒人間が右端(1.0)の時、コンタクトカードが一番右に来る
+        const perfectSync = -maxScroll * this.characterPosition;
         
-        // 少し遅れてアイドル状態に戻す
-        clearTimeout(this.cardScrollTimeout);
-        this.cardScrollTimeout = setTimeout(() => {
-          // スクロール完了
-        }, 100);
+        track.style.transform = `translateX(${perfectSync}px) translateZ(0)`;
+        
+        // カードのハイライト状態を棒人間位置と同期
+        const currentCardIndex = Math.floor(this.characterPosition * (cards.length - 1));
+        
+        Array.from(cards).forEach((card, index) => {
+          card.classList.remove('current', 'nearby', 'distant', 'highlighted');
+          
+          if (index === currentCardIndex) {
+            card.classList.add('current', 'highlighted');
+          } else if (Math.abs(index - currentCardIndex) <= 1) {
+            card.classList.add('nearby');
+          } else {
+            card.classList.add('distant');
+          }
+        });
       }
       
       
