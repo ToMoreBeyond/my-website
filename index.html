@@ -1294,123 +1294,189 @@
       <!-- アイドルフレーム: 立ち姿勢 (16x16ピクセル) -->
       <div class="walk-frame idle pixel-character">
         <div class="pixel-grid">
-          <!-- 頭部 (2x2) -->
-          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          <!-- 頭部: 凹型構造 (6x3) -->
+          <!-- 上部: 4ドット幅の水平線 -->
+          <div class="pixel" style="top: 0px; left: 5px; width: 4px; height: 1px;"></div>
+          <!-- 中段: 左右に2ドット -->
+          <div class="pixel" style="top: 1px; left: 5px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 9px; width: 2px; height: 1px;"></div>
+          <!-- 下部: 6ドット幅の水平線 -->
+          <div class="pixel" style="top: 2px; left: 5px; width: 6px; height: 1px;"></div>
           
-          <!-- 胴体 (1x4) -->
-          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          <!-- 首: 2ドット幅の垂直線 (2ドット長) -->
+          <div class="pixel" style="top: 3px; left: 7px; width: 2px; height: 2px;"></div>
           
-          <!-- 腕部 (左右1px) -->
-          <div class="pixel" style="top: 5px; left: 6px; width: 1px; height: 2px;"></div>
-          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 2px;"></div>
+          <!-- 胴体（上部）: 6ドット幅の水平線（肩部分） -->
+          <div class="pixel" style="top: 5px; left: 5px; width: 6px; height: 1px;"></div>
+          <!-- 胴体（本体）: 4ドット幅の垂直線（4ドット長） -->
+          <div class="pixel" style="top: 6px; left: 6px; width: 4px; height: 4px;"></div>
           
-          <!-- 脚部 (1px幅 x3高) -->
-          <div class="pixel" style="top: 8px; left: 7px; width: 1px; height: 3px;"></div>
-          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+          <!-- 左腕: L字型 -->
+          <div class="pixel" style="top: 6px; left: 2px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 8px; left: 2px; width: 2px; height: 2px;"></div>
           
-          <!-- 足部 -->
-          <div class="pixel" style="top: 11px; left: 6px; width: 1px; height: 1px;"></div>
-          <div class="pixel" style="top: 11px; left: 9px; width: 1px; height: 1px;"></div>
+          <!-- 右腕: L字型 -->
+          <div class="pixel" style="top: 6px; left: 11px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 8px; left: 12px; width: 2px; height: 2px;"></div>
+          
+          <!-- 腰部: 4ドット幅の水平線 -->
+          <div class="pixel" style="top: 10px; left: 6px; width: 4px; height: 1px;"></div>
+          
+          <!-- 左脚: 2ドット幅の垂直線（5ドット長） -->
+          <div class="pixel" style="top: 11px; left: 6px; width: 2px; height: 5px;"></div>
+          
+          <!-- 右脚: 2ドット幅の垂直線（5ドット長） -->
+          <div class="pixel" style="top: 11px; left: 8px; width: 2px; height: 5px;"></div>
         </div>
       </div>
       
       <!-- フレーム1: 歩行ポーズ（左脚前進） -->
       <div class="walk-frame frame1 pixel-character">
         <div class="pixel-grid">
-          <!-- 頭部 -->
-          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          <!-- 頭部: 凹型構造 (6x3) -->
+          <div class="pixel" style="top: 0px; left: 5px; width: 4px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 5px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 9px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 2px; left: 5px; width: 6px; height: 1px;"></div>
           
-          <!-- 胴体 -->
-          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          <!-- 首 -->
+          <div class="pixel" style="top: 3px; left: 7px; width: 2px; height: 2px;"></div>
           
-          <!-- 左腕（後方） -->
-          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 1px;"></div>
-          <div class="pixel" style="top: 6px; left: 10px; width: 1px; height: 1px;"></div>
+          <!-- 胴体（肩） -->
+          <div class="pixel" style="top: 5px; left: 5px; width: 6px; height: 1px;"></div>
+          <!-- 胴体（本体） -->
+          <div class="pixel" style="top: 6px; left: 6px; width: 4px; height: 4px;"></div>
           
-          <!-- 右腕（前方） -->
-          <div class="pixel" style="top: 5px; left: 5px; width: 1px; height: 1px;"></div>
-          <div class="pixel" style="top: 6px; left: 4px; width: 1px; height: 1px;"></div>
+          <!-- 左腕（後方に振る） -->
+          <div class="pixel" style="top: 6px; left: 10px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 7px; left: 11px; width: 2px; height: 3px;"></div>
           
-          <!-- 左脚（前進） -->
-          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 2px;"></div>
-          <div class="pixel" style="top: 10px; left: 5px; width: 1px; height: 2px;"></div>
+          <!-- 右腕（前方に振る） -->
+          <div class="pixel" style="top: 6px; left: 1px; width: 4px; height: 2px;"></div>
+          <div class="pixel" style="top: 7px; left: 1px; width: 2px; height: 2px;"></div>
           
-          <!-- 右脚（後方・蹴り出し） -->
-          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 2px;"></div>
-          <div class="pixel" style="top: 10px; left: 9px; width: 1px; height: 1px;"></div>
+          <!-- 腰部 -->
+          <div class="pixel" style="top: 10px; left: 6px; width: 4px; height: 1px;"></div>
+          
+          <!-- 左脚（前進・曲げる） -->
+          <div class="pixel" style="top: 11px; left: 5px; width: 2px; height: 3px;"></div>
+          <div class="pixel" style="top: 13px; left: 4px; width: 2px; height: 3px;"></div>
+          
+          <!-- 右脚（後方・伸ばす） -->
+          <div class="pixel" style="top: 11px; left: 8px; width: 2px; height: 2px;"></div>
+          <div class="pixel" style="top: 13px; left: 9px; width: 2px; height: 3px;"></div>
         </div>
       </div>
       
       <!-- フレーム2: 歩行ポーズ（中間点） -->
       <div class="walk-frame frame2 pixel-character">
         <div class="pixel-grid">
-          <!-- 頭部 -->
-          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          <!-- 頭部: 凹型構造 (6x3) -->
+          <div class="pixel" style="top: 0px; left: 5px; width: 4px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 5px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 9px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 2px; left: 5px; width: 6px; height: 1px;"></div>
           
-          <!-- 胴体 -->
-          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          <!-- 首 -->
+          <div class="pixel" style="top: 3px; left: 7px; width: 2px; height: 2px;"></div>
           
-          <!-- 腕部（バランス） -->
-          <div class="pixel" style="top: 5px; left: 6px; width: 1px; height: 2px;"></div>
-          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 2px;"></div>
+          <!-- 胴体（肩） -->
+          <div class="pixel" style="top: 5px; left: 5px; width: 6px; height: 1px;"></div>
+          <!-- 胴体（本体） -->
+          <div class="pixel" style="top: 6px; left: 6px; width: 4px; height: 4px;"></div>
           
-          <!-- 脚部（安定姿勢） -->
-          <div class="pixel" style="top: 8px; left: 7px; width: 1px; height: 3px;"></div>
-          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+          <!-- 左腕（中間位置） -->
+          <div class="pixel" style="top: 6px; left: 3px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 8px; left: 3px; width: 2px; height: 2px;"></div>
           
-          <!-- 足部 -->
-          <div class="pixel" style="top: 11px; left: 6px; width: 1px; height: 1px;"></div>
-          <div class="pixel" style="top: 11px; left: 9px; width: 1px; height: 1px;"></div>
+          <!-- 右腕（中間位置） -->
+          <div class="pixel" style="top: 6px; left: 10px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 8px; left: 11px; width: 2px; height: 2px;"></div>
+          
+          <!-- 腰部 -->
+          <div class="pixel" style="top: 10px; left: 6px; width: 4px; height: 1px;"></div>
+          
+          <!-- 左脚（中間） -->
+          <div class="pixel" style="top: 11px; left: 6px; width: 2px; height: 5px;"></div>
+          
+          <!-- 右脚（中間） -->
+          <div class="pixel" style="top: 11px; left: 8px; width: 2px; height: 5px;"></div>
         </div>
       </div>
       
       <!-- フレーム3: 歩行ポーズ（右脚前進） -->
       <div class="walk-frame frame3 pixel-character">
         <div class="pixel-grid">
-          <!-- 頭部 -->
-          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          <!-- 頭部: 凹型構造 (6x3) -->
+          <div class="pixel" style="top: 0px; left: 5px; width: 4px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 5px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 9px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 2px; left: 5px; width: 6px; height: 1px;"></div>
           
-          <!-- 胴体 -->
-          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          <!-- 首 -->
+          <div class="pixel" style="top: 3px; left: 7px; width: 2px; height: 2px;"></div>
           
-          <!-- 左腕（前方） -->
-          <div class="pixel" style="top: 5px; left: 5px; width: 1px; height: 1px;"></div>
-          <div class="pixel" style="top: 6px; left: 4px; width: 1px; height: 1px;"></div>
+          <!-- 胴体（肩） -->
+          <div class="pixel" style="top: 5px; left: 5px; width: 6px; height: 1px;"></div>
+          <!-- 胴体（本体） -->
+          <div class="pixel" style="top: 6px; left: 6px; width: 4px; height: 4px;"></div>
           
-          <!-- 右腕（後方） -->
-          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 1px;"></div>
-          <div class="pixel" style="top: 6px; left: 10px; width: 1px; height: 1px;"></div>
+          <!-- 左腕（前方に振る） -->
+          <div class="pixel" style="top: 6px; left: 1px; width: 4px; height: 2px;"></div>
+          <div class="pixel" style="top: 7px; left: 1px; width: 2px; height: 2px;"></div>
           
-          <!-- 左脚（後方・蹴り出し） -->
-          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 2px;"></div>
-          <div class="pixel" style="top: 10px; left: 5px; width: 1px; height: 1px;"></div>
+          <!-- 右腕（後方に振る） -->
+          <div class="pixel" style="top: 6px; left: 10px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 7px; left: 11px; width: 2px; height: 3px;"></div>
           
-          <!-- 右脚（前進） -->
-          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 2px;"></div>
-          <div class="pixel" style="top: 10px; left: 9px; width: 1px; height: 2px;"></div>
+          <!-- 腰部 -->
+          <div class="pixel" style="top: 10px; left: 6px; width: 4px; height: 1px;"></div>
+          
+          <!-- 左脚（後方・伸ばす） -->
+          <div class="pixel" style="top: 11px; left: 6px; width: 2px; height: 2px;"></div>
+          <div class="pixel" style="top: 13px; left: 5px; width: 2px; height: 3px;"></div>
+          
+          <!-- 右脚（前進・曲げる） -->
+          <div class="pixel" style="top: 11px; left: 9px; width: 2px; height: 3px;"></div>
+          <div class="pixel" style="top: 13px; left: 10px; width: 2px; height: 3px;"></div>
         </div>
       </div>
       
       <!-- フレーム4: 歩行ポーズ（リズム転換） -->
       <div class="walk-frame frame4 pixel-character">
         <div class="pixel-grid">
-          <!-- 頭部 -->
-          <div class="pixel" style="top: 2px; left: 7px; width: 2px; height: 2px;"></div>
+          <!-- 頭部: 凹型構造 (6x3) -->
+          <div class="pixel" style="top: 0px; left: 5px; width: 4px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 5px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 9px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 2px; left: 5px; width: 6px; height: 1px;"></div>
           
-          <!-- 胴体 -->
-          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 4px;"></div>
+          <!-- 首 -->
+          <div class="pixel" style="top: 3px; left: 7px; width: 2px; height: 2px;"></div>
           
-          <!-- 腕部（リズム） -->
-          <div class="pixel" style="top: 5px; left: 6px; width: 1px; height: 2px;"></div>
-          <div class="pixel" style="top: 5px; left: 9px; width: 1px; height: 2px;"></div>
+          <!-- 胴体（肩） -->
+          <div class="pixel" style="top: 5px; left: 5px; width: 6px; height: 1px;"></div>
+          <!-- 胴体（本体） -->
+          <div class="pixel" style="top: 6px; left: 6px; width: 4px; height: 4px;"></div>
           
-          <!-- 脚部（踏み込み） -->
-          <div class="pixel" style="top: 8px; left: 7px; width: 1px; height: 3px;"></div>
-          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+          <!-- 左腕（リズム位置） -->
+          <div class="pixel" style="top: 6px; left: 2px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 8px; left: 2px; width: 2px; height: 2px;"></div>
           
-          <!-- 足部 -->
-          <div class="pixel" style="top: 11px; left: 6px; width: 1px; height: 1px;"></div>
-          <div class="pixel" style="top: 11px; left: 9px; width: 1px; height: 1px;"></div>
+          <!-- 右腕（リズム位置） -->
+          <div class="pixel" style="top: 6px; left: 11px; width: 3px; height: 2px;"></div>
+          <div class="pixel" style="top: 8px; left: 12px; width: 2px; height: 2px;"></div>
+          
+          <!-- 腰部 -->
+          <div class="pixel" style="top: 10px; left: 6px; width: 4px; height: 1px;"></div>
+          
+          <!-- 左脚（踏み込み準備） -->
+          <div class="pixel" style="top: 11px; left: 6px; width: 2px; height: 4px;"></div>
+          <div class="pixel" style="top: 15px; left: 6px; width: 2px; height: 1px;"></div>
+          
+          <!-- 右脚（踏み込み準備） -->
+          <div class="pixel" style="top: 11px; left: 8px; width: 2px; height: 4px;"></div>
+          <div class="pixel" style="top: 15px; left: 8px; width: 2px; height: 1px;"></div>
         </div>
       </div>
       
