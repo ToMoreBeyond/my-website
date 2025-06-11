@@ -871,6 +871,66 @@
       backface-visibility: hidden;
       transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease;
       opacity: 0; /* 初期非表示 */
+      cursor: pointer; /* クリック可能 */
+    }
+    
+    /* ジャンプアニメーション */
+    .tiny-character.jumping {
+      animation: jumpAnimation 0.6s ease;
+    }
+    
+    @keyframes jumpAnimation {
+      0% {
+        transform: translateY(0) scaleX(1) scaleY(1);
+      }
+      20% {
+        transform: translateY(-5px) scaleX(1.1) scaleY(0.9);
+      }
+      50% {
+        transform: translateY(-80px) scaleX(0.95) scaleY(1.05);
+      }
+      80% {
+        transform: translateY(-5px) scaleX(1.05) scaleY(0.95);
+      }
+      100% {
+        transform: translateY(0) scaleX(1) scaleY(1);
+      }
+    }
+    
+    /* ジャンプ中の影アニメーション */
+    .tiny-character.jumping::after {
+      animation: shadowAnimation 0.6s ease;
+    }
+    
+    @keyframes shadowAnimation {
+      0%, 100% {
+        opacity: 0.3;
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        opacity: 0.1;
+        transform: translateX(-50%) scale(0.5);
+      }
+    }
+    
+    /* 最大レベル達成時の赤色表示 */
+    .tiny-character.max-level-achieved .pixel {
+      background: #FF0000 !important;
+      box-shadow: 0 0 2px #FF0000;
+    }
+    
+    .tiny-character.max-level-achieved {
+      filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
+      animation: maxLevelGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes maxLevelGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
+      }
+      50% {
+        filter: drop-shadow(0 0 16px rgba(255, 0, 0, 0.8));
+      }
     }
     
     /* ピクセルキャラクター用グリッド */
@@ -1444,6 +1504,126 @@
         -webkit-tap-highlight-color: transparent;
       }
     }
+    /* レベル表示UI */
+    .level-display {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1000;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      color: #000;
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid #000;
+      padding: 8px 16px;
+      image-rendering: pixelated;
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: all 0.3s ease;
+    }
+    
+    body.loaded .level-display {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .level-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .exp-bar {
+      width: 120px;
+      height: 8px;
+      background: #ddd;
+      border: 1px solid #000;
+      margin-top: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .exp-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: #4CAF50;
+      transition: width 0.3s ease;
+      image-rendering: pixelated;
+    }
+    
+    /* レベルアップエフェクト */
+    .level-up-effect {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Courier New', monospace;
+      font-size: 48px;
+      font-weight: bold;
+      color: #FFD700;
+      text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      animation: levelUpAnimation 2s ease;
+    }
+    
+    @keyframes levelUpAnimation {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+      40% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(1);
+      }
+    }
+    
+    /* 完走時の特別エフェクト */
+    .completion-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1999;
+      background: radial-gradient(circle at center, transparent 0%, rgba(255, 215, 0, 0.2) 50%, transparent 100%);
+      opacity: 0;
+      animation: completionPulse 3s ease;
+    }
+    
+    @keyframes completionPulse {
+      0%, 100% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+    
+    /* モバイル用レベル表示調整 */
+    @media (max-width: 768px) {
+      .level-display {
+        font-size: 14px;
+        padding: 6px 12px;
+        top: 60px; /* ロゴの下に配置 */
+      }
+      
+      .exp-bar {
+        width: 80px;
+      }
+    }
   </style>
 </head>
 <body class="section-company loading">
@@ -1522,6 +1702,25 @@
   
   <!-- 左上ロゴ -->
   <a href="#" class="logo">ToMoreBeyond</a>
+  
+  <!-- レベル表示UI -->
+  <div class="level-display" id="levelDisplay">
+    <div class="level-text">
+      <span>LV.<span id="currentLevel">1</span></span>
+      <span style="font-size: 12px;">/<span id="maxLevel">18</span></span>
+    </div>
+    <div class="exp-bar">
+      <div class="exp-fill" id="expFill" style="width: 0%"></div>
+    </div>
+  </div>
+  
+  <!-- レベルアップエフェクト -->
+  <div class="level-up-effect" id="levelUpEffect" style="display: none;">
+    LEVEL UP!
+  </div>
+  
+  <!-- 完走エフェクト -->
+  <div class="completion-effect" id="completionEffect" style="display: none;"></div>
   
   <!-- ナビゲーションバー削除（シンプル化） -->
   
@@ -1734,6 +1933,19 @@
         this.currentCheckpoint = -1; // 初期状態は-1
         this.isAtCheckpoint = false;
         this.checkpointPauseTime = 2000; // 2秒間チェックポイントで停止
+        
+        // レベルアップシステム
+        this.currentLevel = 1;
+        this.currentExp = 0;
+        this.expPerCard = 10;
+        this.viewedCards = new Set(); // 既に見たカードを記録
+        this.maxLevel = 18; // カードの総数と同じ
+        this.expToNextLevel = 10; // 1カード見れば1レベルアップ
+        
+        // 8bit サウンドシステム
+        this.audioContext = null;
+        this.isAudioEnabled = false;
+        this.initAudio();
         
         // キャラクター進化システム
         this.evolutionLevel = 0; // 0-5の進化レベル
@@ -2163,7 +2375,25 @@
             e.preventDefault();
             this.handleScroll(50); // 下キーも右方向
           }
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            this.jumpCharacter(); // スペースキーまたはEnterキーでジャンプ
+          }
         });
+        
+        // 棒人間のクリック/タッチでジャンプ
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.jumpCharacter();
+          });
+          
+          character.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.jumpCharacter();
+          }, { passive: false });
+        }
       }
       
       optimizeAfterScroll() {
@@ -2406,11 +2636,286 @@
           
           if (index === currentCardIndex) {
             card.classList.add('current', 'highlighted');
+            // 新しいカードを見たら経験値を獲得
+            this.checkCardView(index);
           } else if (Math.abs(index - currentCardIndex) <= 1) {
             card.classList.add('nearby');
           } else {
             card.classList.add('distant');
           }
+        });
+      }
+      
+      checkCardView(cardIndex) {
+        // 既に見たカードなら何もしない
+        if (this.viewedCards.has(cardIndex)) {
+          return;
+        }
+        
+        // 新しいカードを記録
+        this.viewedCards.add(cardIndex);
+        
+        // 経験値を獲得してレベルアップチェック
+        this.gainExp();
+      }
+      
+      gainExp() {
+        this.currentExp += this.expPerCard;
+        
+        // レベルアップチェック
+        if (this.currentExp >= this.expToNextLevel && this.currentLevel < this.maxLevel) {
+          this.levelUp();
+        }
+        
+        // 経験値バーを更新
+        this.updateExpBar();
+      }
+      
+      levelUp() {
+        this.currentLevel++;
+        this.currentExp = 0;
+        
+        // UI更新
+        const levelElement = document.getElementById('currentLevel');
+        if (levelElement) {
+          levelElement.textContent = this.currentLevel;
+        }
+        
+        // レベルアップサウンド
+        this.play8BitSound('levelup');
+        
+        // レベルアップエフェクト
+        this.showLevelUpEffect();
+        
+        // 最大レベル到達時の処理
+        if (this.currentLevel >= this.maxLevel) {
+          this.onMaxLevelReached();
+        }
+      }
+      
+      updateExpBar() {
+        const expFill = document.getElementById('expFill');
+        if (expFill) {
+          const expPercent = (this.currentExp / this.expToNextLevel) * 100;
+          expFill.style.width = `${expPercent}%`;
+        }
+      }
+      
+      showLevelUpEffect() {
+        const effect = document.getElementById('levelUpEffect');
+        if (effect) {
+          effect.style.display = 'block';
+          effect.style.animation = 'none';
+          
+          // アニメーションをリセット
+          setTimeout(() => {
+            effect.style.animation = 'levelUpAnimation 2s ease';
+          }, 10);
+          
+          // エフェクトを非表示に
+          setTimeout(() => {
+            effect.style.display = 'none';
+          }, 2000);
+        }
+      }
+      
+      onMaxLevelReached() {
+        // 完走サウンド
+        this.play8BitSound('completion');
+        
+        // 完走エフェクト
+        const completionEffect = document.getElementById('completionEffect');
+        if (completionEffect) {
+          completionEffect.style.display = 'block';
+          completionEffect.style.animation = 'completionPulse 3s ease';
+          
+          setTimeout(() => {
+            completionEffect.style.display = 'none';
+          }, 3000);
+        }
+        
+        // 棒人間を赤色に変更
+        this.changeCharacterToRed();
+      }
+      
+      jumpCharacter() {
+        const character = document.querySelector('.tiny-character');
+        if (!character || character.classList.contains('jumping')) {
+          return; // 既にジャンプ中なら何もしない
+        }
+        
+        // ジャンプサウンド
+        this.play8BitSound('jump');
+        
+        // ジャンプアニメーション開始
+        character.classList.add('jumping');
+        
+        // ジャンプ中は歩行アニメーションを一時停止
+        const wasScrolling = this.isScrolling;
+        if (this.isScrolling) {
+          this.clearWalkingAnimation();
+        }
+        
+        // 0.6秒後にジャンプ終了
+        setTimeout(() => {
+          character.classList.remove('jumping');
+          
+          // 歩行アニメーションを再開
+          if (wasScrolling) {
+            this.startWalkingAnimation();
+          } else {
+            this.showIdleFrame();
+          }
+        }, 600);
+      }
+      
+      changeCharacterToRed() {
+        // 全カード閲覧時に棒人間を赤色に変更
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.classList.add('max-level-achieved');
+        }
+      }
+      
+      initAudio() {
+        // Web Audio API初期化（ユーザー操作後に有効化）
+        document.addEventListener('click', () => {
+          if (!this.audioContext) {
+            try {
+              this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+              this.isAudioEnabled = true;
+            } catch (error) {
+              console.log('Audio not supported');
+            }
+          }
+        }, { once: true });
+      }
+      
+      play8BitSound(type) {
+        if (!this.audioContext || !this.isAudioEnabled) return;
+        
+        switch (type) {
+          case 'levelup':
+            this.playLevelUpSound();
+            break;
+          case 'jump':
+            this.playJumpSound();
+            break;
+          case 'walk':
+            this.playWalkSound();
+            break;
+          case 'completion':
+            this.playCompletionSound();
+            break;
+        }
+      }
+      
+      playLevelUpSound() {
+        const ctx = this.audioContext;
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        // 8bit風レベルアップサウンド（ドミソド）
+        const frequencies = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        let time = ctx.currentTime;
+        
+        frequencies.forEach((freq, index) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.type = 'square'; // 8bit風
+          osc.frequency.setValueAtTime(freq, time);
+          
+          gain.gain.setValueAtTime(0, time);
+          gain.gain.linearRampToValueAtTime(0.3, time + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
+          
+          osc.start(time);
+          osc.stop(time + 0.2);
+          
+          time += 0.15;
+        });
+      }
+      
+      playJumpSound() {
+        const ctx = this.audioContext;
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(440, ctx.currentTime); // A4
+        oscillator.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1); // A5
+        oscillator.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.3); // A4
+        
+        gainNode.gain.setValueAtTime(0, ctx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        
+        oscillator.start(ctx.currentTime);
+        oscillator.stop(ctx.currentTime + 0.3);
+      }
+      
+      playWalkSound() {
+        const ctx = this.audioContext;
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(220, ctx.currentTime); // A3
+        
+        gainNode.gain.setValueAtTime(0, ctx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+        
+        oscillator.start(ctx.currentTime);
+        oscillator.stop(ctx.currentTime + 0.05);
+      }
+      
+      playCompletionSound() {
+        const ctx = this.audioContext;
+        
+        // ファンファーレ風サウンド
+        const melody = [
+          { freq: 523.25, duration: 0.2 }, // C5
+          { freq: 659.25, duration: 0.2 }, // E5
+          { freq: 783.99, duration: 0.2 }, // G5
+          { freq: 1046.50, duration: 0.4 }, // C6
+          { freq: 783.99, duration: 0.2 }, // G5
+          { freq: 1046.50, duration: 0.6 } // C6
+        ];
+        
+        let time = ctx.currentTime;
+        
+        melody.forEach(note => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(note.freq, time);
+          
+          gain.gain.setValueAtTime(0, time);
+          gain.gain.linearRampToValueAtTime(0.3, time + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.01, time + note.duration);
+          
+          osc.start(time);
+          osc.stop(time + note.duration);
+          
+          time += note.duration;
         });
       }
       
