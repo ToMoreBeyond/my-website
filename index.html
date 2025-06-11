@@ -96,15 +96,30 @@
     
     body {
       font-family: 'Courier New', monospace; /* 8bitレトロ風フォント */
-      background: #ffffff;
+      background: #1a1a1a; /* ゲーム風ダーク背景 */
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: auto; /* 8bitらしくスムーズスクロールなし */
-      min-height: 1000vh; /* もう少し長めのスクロール距離 */
+      min-height: 3000vh; /* 十分に長いスクロール距離 */
       position: relative;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+    }
+    
+    /* レトロゲーム風ピクセルグリッド背景 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(255,255,255,0.03) 7px, rgba(255,255,255,0.03) 8px),
+        repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(255,255,255,0.03) 7px, rgba(255,255,255,0.03) 8px);
+      pointer-events: none;
+      z-index: 1;
     }
     
     body.loading {
@@ -148,19 +163,101 @@
       padding: 2px 4px; /* シンプルな反転効果 */
     }
     
-    /* 8bit ドット絵風ローディング画面 */
+    /* 動画背景レイヤー（準備用） */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    
+    .video-background video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      opacity: 0.6; /* ゲーム要素が見えるように */
+    }
+    
+    /* ビデオからゲームへの遷移オーバーレイ */
+    .transition-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+    
+    .transition-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    /* ロゴポップアップコンテナ */
+    .logo-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      z-index: 10000;
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .logo-popup.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    
+    .logo-popup.hide {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0;
+    }
+    
+    .popup-logo {
+      font-family: 'Courier New', monospace;
+      font-size: 48px;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-shadow: 
+        0 0 10px rgba(255,255,255,0.8),
+        0 0 20px rgba(255,255,255,0.6),
+        0 0 30px rgba(255,255,255,0.4);
+      animation: pixelGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes pixelGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+    
+    /* 初期ローディング画面（動画開始前） */
     .loading-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #fff; /* 8bit風のシンプル背景 */
+      background: #000; /* 動画に合わせて黒背景 */
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: none; /* 8bitらしくスムーズ化なし */
+      transition: opacity 0.5s ease;
       image-rendering: pixelated;
     }
     
@@ -184,7 +281,7 @@
       font-family: 'Courier New', monospace;
       font-size: 24px; /* 8の倍数 */
       font-weight: normal;
-      color: #000;
+      color: #fff;
       margin: 0 0 16px 0; /* 8の倍数 */
       letter-spacing: 2px;
       background: none;
@@ -326,6 +423,8 @@
       padding: 0 50px;
       overflow-x: hidden; /* 横スクロールバーを非表示 */
       overflow-y: hidden; /* 縦スクロールバーを非表示 */
+      position: relative;
+      z-index: 5; /* 動画より前面 */
     }
     
     /* 8bit ドット絵風カードコンテナ */
@@ -396,8 +495,8 @@
     .card {
       min-width: 256px; /* 8の倍数 */
       height: 320px; /* 8の倍数 */
-      background: #fff;
-      border: 2px solid #000;
+      background: #2a2a2a; /* ダークグレー背景 */
+      border: 4px solid #fff; /* 太めの白枠 */
       border-radius: 0; /* 角ばったピクセル風 */
       padding: 24px 16px; /* 8の倍数 */
       flex-shrink: 0;
@@ -409,12 +508,15 @@
       cursor: pointer;
       transition: none; /* 8bitらしくスムーズ化なし */
       position: relative;
-      box-shadow: none;
+      box-shadow: 
+        8px 8px 0 #000, /* レトロな影効果 */
+        -2px -2px 0 #444 inset; /* 立体感 */
       overflow: hidden;
       font-family: 'Courier New', monospace;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+      z-index: 10; /* 背景動画より前面 */
     }
     
     /* 8bit風セクション区切りカード */
@@ -546,11 +648,13 @@
     /* 8bit風カードの内容 */
     .card-icon {
       font-family: 'Courier New', monospace;
-      font-size: 24px; /* 8の倍数 */
+      font-size: 32px; /* より大きく */
       margin-bottom: 16px; /* 8の倍数 */
       filter: none;
       transition: none; /* 8bitらしくスムーズ化なし */
       line-height: 1;
+      color: #0ff; /* シアン色でレトロ感 */
+      text-shadow: 2px 2px 0 #000; /* ピクセル影 */
     }
     
     .card:hover .card-icon {
@@ -559,19 +663,20 @@
     
     .card-title {
       font-family: 'Courier New', monospace;
-      font-size: 12px; /* 8の倍数 */
+      font-size: 16px; /* より読みやすく */
       font-weight: normal;
-      color: #000;
+      color: #fff; /* 白文字 */
       margin-bottom: 8px; /* 8の倍数 */
       letter-spacing: 1px;
       text-transform: uppercase;
       line-height: 1.2;
+      text-shadow: 2px 2px 0 #000; /* ピクセル影 */
     }
     
     .card-description {
       font-family: 'Courier New', monospace;
-      font-size: 8px; /* 8の倍数 */
-      color: #000;
+      font-size: 10px; /* 少し大きく */
+      color: #aaa; /* グレー文字 */
       line-height: 1.5;
       font-weight: normal;
       text-transform: uppercase;
@@ -604,6 +709,8 @@
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+      opacity: 0; /* 初期非表示 */
+      transition: opacity 1s ease;
     }
     
     .signpost {
@@ -640,25 +747,27 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: #fff;
-      border: 1px solid #000;
+      background: #2a2a2a;
+      border: 2px solid #fff;
       border-radius: 0; /* 角ばったドット絵風 */
-      padding: 2px 4px;
+      padding: 4px 8px;
       font-family: 'Courier New', monospace;
       font-size: 8px;
       font-weight: normal;
-      color: #000;
+      color: #fff;
       white-space: nowrap;
-      min-width: 32px;
+      min-width: 40px;
       text-align: center;
       image-rendering: pixelated;
       line-height: 1;
+      box-shadow: 2px 2px 0 #000;
     }
     
     .signpost.active .signpost-board {
-      background: #000;
-      color: #fff;
-      border-color: #000;
+      background: #0ff;
+      color: #000;
+      border-color: #0ff;
+      box-shadow: 0 0 8px #0ff, 2px 2px 0 #000;
     }
     
     /* 8bit風アイコン（テキストベース） */
@@ -696,7 +805,8 @@
       contain: layout style paint;
       will-change: transform, left;
       backface-visibility: hidden;
-      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease;
+      opacity: 0; /* 初期非表示 */
     }
     
     /* ピクセルキャラクター用グリッド */
@@ -1212,7 +1322,23 @@
     }
   </style>
 </head>
-<body class="section-apps loading">
+<body class="section-company loading">
+  
+  <!-- 動画背景レイヤー（準備用） -->
+  <div class="video-background" id="videoBackground" style="display: none;">
+    <!-- 動画要素はJavaScriptで制御 -->
+    <!-- <video autoplay muted loop playsinline>
+      <source src="background-video.mp4" type="video/mp4">
+    </video> -->
+  </div>
+  
+  <!-- 遷移オーバーレイ -->
+  <div class="transition-overlay" id="transitionOverlay"></div>
+  
+  <!-- ロゴポップアップ -->
+  <div class="logo-popup" id="logoPopup">
+    <div class="popup-logo">TOMOREBEYOND</div>
+  </div>
   
   <!-- ローディング画面 -->
   <div class="loading-screen" id="loadingScreen">
@@ -1294,39 +1420,39 @@
       <!-- アイドルフレーム: 立ち姿勢 (16x16ピクセル) -->
       <div class="walk-frame idle pixel-character">
         <div class="pixel-grid">
-          <!-- 頭部: 凹型構造 (6x3) -->
-          <!-- 上部: 4ドット幅の水平線 -->
-          <div class="pixel" style="top: 0px; left: 5px; width: 4px; height: 1px;"></div>
-          <!-- 中段: 左右に2ドット -->
-          <div class="pixel" style="top: 1px; left: 5px; width: 2px; height: 1px;"></div>
-          <div class="pixel" style="top: 1px; left: 9px; width: 2px; height: 1px;"></div>
-          <!-- 下部: 6ドット幅の水平線 -->
-          <div class="pixel" style="top: 2px; left: 5px; width: 6px; height: 1px;"></div>
+          <!-- かわいい頭部 (大きめ 6x4) -->
+          <div class="pixel" style="top: 0px; left: 5px; width: 6px; height: 1px;"></div>
+          <div class="pixel" style="top: 1px; left: 4px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 1px; left: 5px; width: 6px; height: 2px;"></div>
+          <div class="pixel" style="top: 1px; left: 11px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 3px; left: 5px; width: 6px; height: 1px;"></div>
           
-          <!-- 首: 2ドット幅の垂直線 (2ドット長) -->
-          <div class="pixel" style="top: 3px; left: 7px; width: 2px; height: 2px;"></div>
+          <!-- 目（かわいい点目） -->
+          <div class="pixel eye" style="top: 2px; left: 6px; width: 1px; height: 1px;"></div>
+          <div class="pixel eye" style="top: 2px; left: 9px; width: 1px; height: 1px;"></div>
           
-          <!-- 胴体（上部）: 6ドット幅の水平線（肩部分） -->
-          <div class="pixel" style="top: 5px; left: 5px; width: 6px; height: 1px;"></div>
-          <!-- 胴体（本体）: 4ドット幅の垂直線（4ドット長） -->
-          <div class="pixel" style="top: 6px; left: 6px; width: 4px; height: 4px;"></div>
+          <!-- 小さな首 -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 2px; height: 1px;"></div>
           
-          <!-- 左腕: L字型 -->
-          <div class="pixel" style="top: 6px; left: 2px; width: 3px; height: 2px;"></div>
-          <div class="pixel" style="top: 8px; left: 2px; width: 2px; height: 2px;"></div>
+          <!-- 丸い胴体 -->
+          <div class="pixel" style="top: 5px; left: 6px; width: 4px; height: 1px;"></div>
+          <div class="pixel" style="top: 6px; left: 5px; width: 6px; height: 3px;"></div>
+          <div class="pixel" style="top: 9px; left: 6px; width: 4px; height: 1px;"></div>
           
-          <!-- 右腕: L字型 -->
-          <div class="pixel" style="top: 6px; left: 11px; width: 3px; height: 2px;"></div>
-          <div class="pixel" style="top: 8px; left: 12px; width: 2px; height: 2px;"></div>
+          <!-- かわいい短い腕 -->
+          <div class="pixel" style="top: 6px; left: 3px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 7px; left: 3px; width: 2px; height: 1px;"></div>
           
-          <!-- 腰部: 4ドット幅の水平線 -->
-          <div class="pixel" style="top: 10px; left: 6px; width: 4px; height: 1px;"></div>
+          <div class="pixel" style="top: 6px; left: 11px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 7px; left: 11px; width: 2px; height: 1px;"></div>
           
-          <!-- 左脚: 2ドット幅の垂直線（5ドット長） -->
-          <div class="pixel" style="top: 11px; left: 6px; width: 2px; height: 5px;"></div>
+          <!-- 短い脚 -->
+          <div class="pixel" style="top: 10px; left: 6px; width: 2px; height: 3px;"></div>
+          <div class="pixel" style="top: 10px; left: 8px; width: 2px; height: 3px;"></div>
           
-          <!-- 右脚: 2ドット幅の垂直線（5ドット長） -->
-          <div class="pixel" style="top: 11px; left: 8px; width: 2px; height: 5px;"></div>
+          <!-- 小さな足 -->
+          <div class="pixel" style="top: 13px; left: 5px; width: 3px; height: 1px;"></div>
+          <div class="pixel" style="top: 13px; left: 8px; width: 3px; height: 1px;"></div>
         </div>
       </div>
       
@@ -1570,6 +1696,60 @@
         ];
         
         this.startLoading();
+        this.prepareVideoTransition();
+      }
+      
+      prepareVideoTransition() {
+        // 動画遷移シーケンスの準備
+        this.videoBackground = document.getElementById('videoBackground');
+        this.transitionOverlay = document.getElementById('transitionOverlay');
+        this.logoPopup = document.getElementById('logoPopup');
+      }
+      
+      startVideoSequence() {
+        // 将来的に動画が準備されたらここで制御
+        // 1. 動画開始
+        // 2. ロゴポップアップ表示
+        // 3. フェードアウト
+        // 4. ゲーム世界表示
+        
+        // 現在は直接ゲーム画面を表示
+        setTimeout(() => {
+          this.showLogoPopup();
+        }, 500);
+      }
+      
+      showLogoPopup() {
+        const logoPopup = document.getElementById('logoPopup');
+        logoPopup.classList.add('show');
+        
+        setTimeout(() => {
+          logoPopup.classList.remove('show');
+          logoPopup.classList.add('hide');
+          
+          setTimeout(() => {
+            this.showGameWorld();
+          }, 800);
+        }, 2000);
+      }
+      
+      showGameWorld() {
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+          mainContent.style.opacity = '1';
+          mainContent.style.visibility = 'visible';
+        }
+        
+        // ゲーム要素を表示
+        const character = document.querySelector('.tiny-character');
+        const signposts = document.querySelector('.signpost-container');
+        
+        if (character) {
+          character.style.opacity = '1';
+        }
+        if (signposts) {
+          signposts.style.opacity = '1';
+        }
       }
       
       startLoading() {
@@ -1621,6 +1801,11 @@
         // ボディの状態を変更
         body.classList.remove('loading');
         body.classList.add('loaded');
+        
+        // 動画シーケンスを開始（将来的に動画が準備されたら）
+        setTimeout(() => {
+          this.startVideoSequence();
+        }, 500);
         
         // メインコンテンツの初期化を開始
         setTimeout(() => {
@@ -1942,7 +2127,7 @@
         // イージング関数を使用してより自然な進行にする
         const easedProgress = this.easeInOutCubic(rawScrollProgress);
         // もう少し重めに調整
-        const dampingFactor = isMobile ? 0.05 : 0.08; // モバイルでは5%、デスクトップでは8%
+        const dampingFactor = isMobile ? 0.01 : 0.02; // モバイルでは1%、デスクトップでは2%
         const scrollProgress = easedProgress * dampingFactor;
         
         // 不要なUI更新を削除（関数が削除されているため）
@@ -1953,7 +2138,7 @@
         // スムージング処理: 急激な変化を抑制
         const targetPosition = scrollProgress;
         // もう少し重めのスムージング
-        const smoothingFactor = isMobile ? 0.015 : 0.02; // モバイルでは1.5%、デスクトップでは2%
+        const smoothingFactor = isMobile ? 0.003 : 0.005; // モバイルでは0.3%、デスクトップでは0.5%
         this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
         
         // キャラクターの位置を更新
