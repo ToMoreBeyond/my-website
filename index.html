@@ -857,11 +857,11 @@
     /* 8bit ドット絵風棒人間（16x16ピクセル感） */
     .tiny-character {
       position: fixed;
-      bottom: max(10px, env(safe-area-inset-bottom));
+      bottom: max(40px, calc(env(safe-area-inset-bottom) + 30px)); /* より下に配置 */
       left: 20px;
       transform: translateZ(0);
-      width: 64px; /* 16x4 = 64px - ひと回り大きく */
-      height: 64px; /* 16x4 = 64px */
+      width: 80px; /* 16x5 = 80px - さらに大きく */
+      height: 80px; /* 16x5 = 80px */
       z-index: 150;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
@@ -884,7 +884,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transform: scale(4); /* 16px → 64px - ひと回り大きく */
+      transform: scale(5); /* 16px → 80px - さらに大きく */
       transform-origin: top left;
     }
     
@@ -1251,16 +1251,16 @@
       }
       
       .pixel-grid {
-        transform: scale(2.5); /* モバイルでは小さく最適化 */
-        -webkit-transform: scale(2.5);
+        transform: scale(3.5); /* モバイルでも適度に大きく */
+        -webkit-transform: scale(3.5);
       }
       
       .tiny-character {
         will-change: transform, left;
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0); /* ハードウェアアクセラレーション */
-        width: 56px; /* モバイル用サイズ - 適度な大きさ */
-        height: 56px;
+        width: 70px; /* モバイル用サイズ - さらに大きく */
+        height: 70px;
         transition: left 0.6s ease-out; /* モバイルで軽快な動き */
       }
       
@@ -1351,9 +1351,9 @@
       
       /* モバイル用棒人間調整 */
       .tiny-character { 
-        width: 72px; 
-        height: 72px;
-        bottom: max(48px, calc(env(safe-area-inset-bottom) + 38px));
+        width: 84px; 
+        height: 84px;
+        bottom: max(60px, calc(env(safe-area-inset-bottom) + 50px)); /* モバイルでもより下に */
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
       }
@@ -1404,9 +1404,9 @@
       }
       
       .tiny-character {
-        width: 60px;
-        height: 60px;
-        bottom: max(40px, calc(env(safe-area-inset-bottom) + 30px));
+        width: 72px;
+        height: 72px;
+        bottom: max(55px, calc(env(safe-area-inset-bottom) + 45px)); /* より下に配置 */
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
       }
@@ -2178,7 +2178,7 @@
         // イージング関数を使用してより自然な進行にする
         const easedProgress = this.easeInOutCubic(rawScrollProgress);
         // もう少し重めに調整
-        const dampingFactor = isMobile ? 0.01 : 0.02; // モバイルでは1%、デスクトップでは2%
+        const dampingFactor = isMobile ? 0.005 : 0.01; // モバイルでは0.5%、デスクトップでは1% - より遅く
         const scrollProgress = easedProgress * dampingFactor;
         
         // 不要なUI更新を削除（関数が削除されているため）
@@ -2189,7 +2189,7 @@
         // スムージング処理: 急激な変化を抑制
         const targetPosition = scrollProgress;
         // もう少し重めのスムージング
-        const smoothingFactor = isMobile ? 0.003 : 0.005; // モバイルでは0.3%、デスクトップでは0.5%
+        const smoothingFactor = isMobile ? 0.001 : 0.002; // モバイルでは0.1%、デスクトップでは0.2% - よりゆっくり
         this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
         
         // キャラクターの位置を更新
