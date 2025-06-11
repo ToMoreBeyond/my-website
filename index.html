@@ -96,7 +96,7 @@
     
     body {
       font-family: 'Courier New', monospace; /* 8bitレトロ風フォント */
-      background: #1a1a1a; /* ゲーム風ダーク背景 */
+      background: #ffffff; /* 白背景に変更 */
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: auto; /* 8bitらしくスムーズスクロールなし */
@@ -105,9 +105,12 @@
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+      /* モバイル最適化 */
+      -webkit-overflow-scrolling: touch;
+      -webkit-font-smoothing: none;
     }
     
-    /* レトロゲーム風ピクセルグリッド背景 */
+    /* レトロゲーム風ピクセルグリッド背景（白背景用に調整） */
     body::before {
       content: '';
       position: fixed;
@@ -116,8 +119,8 @@
       width: 100%;
       height: 100%;
       background-image: 
-        repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(255,255,255,0.03) 7px, rgba(255,255,255,0.03) 8px),
-        repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(255,255,255,0.03) 7px, rgba(255,255,255,0.03) 8px);
+        repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(0,0,0,0.03) 7px, rgba(0,0,0,0.03) 8px),
+        repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(0,0,0,0.03) 7px, rgba(0,0,0,0.03) 8px);
       pointer-events: none;
       z-index: 1;
     }
@@ -491,13 +494,18 @@
       border-color: #000;
     }
     
-    /* 8bit ドット絵風カードデザイン */
+    /* 8bit ドット絵風カードデザイン + Liquid Glass エフェクト */
     .card {
       min-width: 256px; /* 8の倍数 */
       height: 320px; /* 8の倍数 */
-      background: #2a2a2a; /* ダークグレー背景 */
-      border: 4px solid #fff; /* 太めの白枠 */
-      border-radius: 0; /* 角ばったピクセル風 */
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0.05) 50%,
+          rgba(0, 0, 0, 0.1) 100%),
+        #2a2a2a; /* ベースのダークグレー背景 */
+      border: 4px solid rgba(255, 255, 255, 0.3); /* 半透明の白枠 */
+      border-radius: 16px; /* 現代的な角丸とピクセル風の融合 */
       padding: 24px 16px; /* 8の倍数 */
       flex-shrink: 0;
       display: flex;
@@ -506,17 +514,73 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: none; /* 8bitらしくスムーズ化なし */
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Liquid Glass効果のための滑らかなトランジション */
       position: relative;
       box-shadow: 
-        8px 8px 0 #000, /* レトロな影効果 */
-        -2px -2px 0 #444 inset; /* 立体感 */
+        8px 8px 0 rgba(0, 0, 0, 0.3), /* レトロな影効果 */
+        -2px -2px 0 rgba(68, 68, 68, 0.5) inset, /* 立体感 */
+        0 8px 32px rgba(0, 0, 0, 0.12), /* 現代的なドロップシャドウ */
+        inset 0 1px 0 rgba(255, 255, 255, 0.2); /* 内側のハイライト */
       overflow: hidden;
       font-family: 'Courier New', monospace;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
       z-index: 10; /* 背景動画より前面 */
+      backdrop-filter: blur(20px); /* Liquid Glass効果の核心 */
+      -webkit-backdrop-filter: blur(20px);
+    }
+    
+    /* Liquid Glass エフェクト用オーバーレイ */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 25%,
+        transparent 75%,
+        rgba(255, 255, 255, 0.08) 100%
+      );
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    /* ホバー時のLiquid Glass動的効果 */
+    .card:hover::before {
+      opacity: 1;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.05) 75%,
+        rgba(255, 255, 255, 0.15) 100%
+      );
+    }
+    
+    /* ホバー時の追加効果 */
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 
+        12px 12px 0 rgba(0, 0, 0, 0.2),
+        -3px -3px 0 rgba(68, 68, 68, 0.4) inset,
+        0 16px 48px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+    }
+    
+    /* カードコンテンツの微調整 */
+    .card > * {
+      position: relative;
+      z-index: 2;
     }
     
     /* 8bit風セクション区切りカード */
@@ -796,8 +860,8 @@
       bottom: max(10px, env(safe-area-inset-bottom));
       left: 20px;
       transform: translateZ(0);
-      width: 64px; /* 16x4 = 64px */
-      height: 64px; /* 16x4 = 64px */
+      width: 48px; /* 16x3 = 48px - 横幅を縮小 */
+      height: 48px; /* 16x3 = 48px */
       z-index: 150;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
@@ -820,7 +884,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transform: scale(4); /* 16px → 64px */
+      transform: scale(3); /* 16px → 48px - 横幅を縮小 */
       transform-origin: top left;
     }
     
@@ -1177,6 +1241,55 @@
     }
     
     
+    /* モバイルスクロール最適化 */
+    @media (max-width: 768px) {
+      body {
+        min-height: 2500vh; /* モバイルでは少し短く */
+        -webkit-overflow-scrolling: touch;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .pixel-grid {
+        transform: scale(2.5); /* モバイルでは小さく最適化 */
+        -webkit-transform: scale(2.5);
+      }
+      
+      .tiny-character {
+        will-change: transform, left;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0); /* ハードウェアアクセラレーション */
+        width: 40px; /* モバイル用サイズ - さらに縮小 */
+        height: 40px;
+        transition: left 0.6s ease-out; /* モバイルで軽快な動き */
+      }
+      
+      .cards-container {
+        width: 100%;
+        padding: 0 20px;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .cards-track {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .card {
+        min-width: 280px; /* モバイル用サイズ */
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      /* 背景グリッドをモバイルで軽量化（白背景用） */
+      body::before {
+        background-image: 
+          repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,0,0,0.01) 20px, rgba(0,0,0,0.01) 21px),
+          repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,0,0,0.01) 20px, rgba(0,0,0,0.01) 21px);
+      }
+    }
+    
     /* レスポンシブ - モバイル最適化 */
     @media (max-width: 768px) {
       body {
@@ -1238,9 +1351,11 @@
       
       /* モバイル用棒人間調整 */
       .tiny-character { 
-        width: 70px; 
-        height: 70px;
+        width: 60px; 
+        height: 60px;
         bottom: max(48px, calc(env(safe-area-inset-bottom) + 38px));
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
       }
       
       .walk-frame g {
@@ -1289,9 +1404,11 @@
       }
       
       .tiny-character {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         bottom: max(40px, calc(env(safe-area-inset-bottom) + 30px));
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
       }
       
       .path-area {
