@@ -47,8 +47,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <!-- 8bit風Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -88,6 +88,22 @@
   </script>
   
   <style>
+    /* 8bitcn風カラーパレット */
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-accent: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --accent-green: #22c55e;
+      --accent-blue: #3b82f6;
+      --accent-yellow: #eab308;
+      --accent-red: #ef4444;
+      --accent-purple: #8b5cf6;
+      --border-primary: #475569;
+      --border-accent: #64748b;
+    }
+    
     * {
       margin: 0;
       padding: 0;
@@ -95,22 +111,22 @@
     }
     
     body {
-      font-family: 'Courier New', monospace; /* 8bitレトロ風フォント */
-      background: #ffffff; /* 白背景に変更 */
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
       overflow-x: hidden;
       overflow-y: auto;
-      scroll-behavior: auto; /* 8bitらしくスムーズスクロールなし */
-      min-height: 3000vh; /* 十分に長いスクロール距離 */
+      scroll-behavior: auto;
+      min-height: 3000vh;
       position: relative;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
-      /* モバイル最適化 */
       -webkit-overflow-scrolling: touch;
       -webkit-font-smoothing: none;
     }
     
-    /* レトロゲーム風ピクセルグリッド背景（白背景用に調整） */
+    /* 8bit風ピクセルグリッド背景 */
     body::before {
       content: '';
       position: fixed;
@@ -119,8 +135,8 @@
       width: 100%;
       height: 100%;
       background-image: 
-        repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(0,0,0,0.03) 7px, rgba(0,0,0,0.03) 8px),
-        repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(0,0,0,0.03) 7px, rgba(0,0,0,0.03) 8px);
+        repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(71,85,105,0.1) 15px, rgba(71,85,105,0.1) 16px),
+        repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(71,85,105,0.1) 15px, rgba(71,85,105,0.1) 16px);
       pointer-events: none;
       z-index: 1;
     }
@@ -134,24 +150,30 @@
       overflow-y: auto;
     }
     
-    /* 8bit ドット絵風ロゴ */
+    /* 8bitcn風ロゴ */
     .logo {
       position: fixed;
-      top: 16px; /* 8の倍数 */
-      left: 16px; /* 8の倍数 */
+      top: 16px;
+      left: 16px;
       z-index: 1000;
-      font-family: 'Courier New', monospace;
-      font-size: 16px; /* 8の倍数 */
-      font-weight: normal;
-      color: #000;
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
       text-decoration: none;
       letter-spacing: 1px;
-      transition: none; /* 8bitらしくスムーズ化なし */
-      background: none;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-primary);
+      padding: 8px 12px;
       opacity: 0;
-      transform: translateY(-8px); /* 8の倍数 */
+      transform: translateY(-8px);
       text-transform: uppercase;
       image-rendering: pixelated;
+      transition: all 0.1s ease;
+      /* 8bit風ピクセルボーダー */
+      box-shadow: 
+        2px 2px 0 var(--border-accent),
+        4px 4px 0 rgba(0, 0, 0, 0.3);
     }
     
     body.loaded .logo {
@@ -160,10 +182,13 @@
     }
     
     .logo:hover {
-      transform: none; /* 8bitらしくスケール効果なし */
-      color: #fff;
-      background: #000;
-      padding: 2px 4px; /* シンプルな反転効果 */
+      background: var(--accent-green);
+      color: var(--bg-primary);
+      border-color: var(--accent-green);
+      transform: translate(1px, 1px);
+      box-shadow: 
+        1px 1px 0 var(--border-accent),
+        2px 2px 0 rgba(0, 0, 0, 0.3);
     }
     
     /* 動画背景レイヤー（準備用） */
@@ -473,40 +498,48 @@
       will-change: transform, opacity;
     }
     
-    /* カードの距離に基づく8bit風表示状態 */
+    /* カードの状態（8bitcn風） */
     .card.distant {
-      opacity: 0.5;
-      transform: scale(0.8);
-      filter: none;
+      opacity: 0.6;
+      background: var(--bg-primary);
+      border-color: var(--border-primary);
+      transform: scale(0.9);
+      box-shadow: 
+        2px 2px 0 var(--border-primary),
+        4px 4px 0 rgba(0, 0, 0, 0.2);
     }
     
     .card.nearby {
-      opacity: 0.8;
-      transform: scale(0.9);
-      filter: none;
+      opacity: 0.85;
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-accent));
+      border-color: var(--accent-blue);
+      transform: scale(0.95);
+      box-shadow: 
+        3px 3px 0 var(--accent-blue),
+        6px 6px 0 rgba(0, 0, 0, 0.25);
     }
     
     .card.current {
       opacity: 1;
+      background: var(--bg-accent);
+      border-color: var(--accent-yellow);
       transform: scale(1);
-      filter: none;
-      box-shadow: none;
-      border-color: #000;
+      box-shadow: 
+        4px 4px 0 var(--accent-yellow),
+        8px 8px 0 rgba(0, 0, 0, 0.3),
+        0 0 12px var(--accent-yellow),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.2);
     }
     
-    /* 8bit ドット絵風カードデザイン + Liquid Glass エフェクト */
+    /* 8bitcn風カードデザイン */
     .card {
-      min-width: 256px; /* 8の倍数 */
-      height: 320px; /* 8の倍数 */
-      background: 
-        linear-gradient(135deg, 
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0.05) 50%,
-          rgba(0, 0, 0, 0.1) 100%),
-        #2a2a2a; /* ベースのダークグレー背景 */
-      border: 4px solid rgba(255, 255, 255, 0.3); /* 半透明の白枠 */
-      border-radius: 16px; /* 現代的な角丸とピクセル風の融合 */
-      padding: 24px 16px; /* 8の倍数 */
+      min-width: 256px;
+      height: 320px;
+      background: var(--bg-secondary);
+      border: 3px solid var(--border-primary);
+      border-radius: 0; /* 8bit風の角ばったデザイン */
+      padding: 24px 16px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -514,67 +547,36 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Liquid Glass効果のための滑らかなトランジション */
+      transition: all 0.1s ease; /* 8bit風の素早い反応 */
       position: relative;
+      /* 8bitcn風ピクセルシャドウ */
       box-shadow: 
-        8px 8px 0 rgba(0, 0, 0, 0.3), /* レトロな影効果 */
-        -2px -2px 0 rgba(68, 68, 68, 0.5) inset, /* 立体感 */
-        0 8px 32px rgba(0, 0, 0, 0.12), /* 現代的なドロップシャドウ */
-        inset 0 1px 0 rgba(255, 255, 255, 0.2); /* 内側のハイライト */
+        4px 4px 0 var(--border-accent),
+        8px 8px 0 rgba(0, 0, 0, 0.3),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.1);
       overflow: hidden;
       font-family: 'Courier New', monospace;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
-      z-index: 10; /* 背景動画より前面 */
-      backdrop-filter: blur(20px); /* Liquid Glass効果の核心 */
-      -webkit-backdrop-filter: blur(20px);
+      z-index: 10;
+      /* ピクセル風ボーダーパターン */
+      background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
     }
     
-    /* Liquid Glass エフェクト用オーバーレイ */
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        transparent 25%,
-        transparent 75%,
-        rgba(255, 255, 255, 0.08) 100%
-      );
-      border-radius: inherit;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    /* ホバー時のLiquid Glass動的効果 */
-    .card:hover::before {
-      opacity: 1;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.25) 0%,
-        rgba(255, 255, 255, 0.1) 25%,
-        rgba(255, 255, 255, 0.05) 75%,
-        rgba(255, 255, 255, 0.15) 100%
-      );
-    }
-    
-    /* ホバー時の追加効果 */
+    /* 8bitcn風ホバーエフェクト */
     .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: var(--bg-accent);
+      border-color: var(--accent-green);
+      transform: translate(2px, 2px); /* 8bit風の「押し込み」効果 */
       box-shadow: 
-        12px 12px 0 rgba(0, 0, 0, 0.2),
-        -3px -3px 0 rgba(68, 68, 68, 0.4) inset,
-        0 16px 48px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+        2px 2px 0 var(--border-accent),
+        4px 4px 0 rgba(0, 0, 0, 0.3),
+        0 0 8px var(--accent-green),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.2);
     }
     
     /* カードコンテンツの微調整 */
@@ -583,52 +585,62 @@
       z-index: 2;
     }
     
-    /* 8bit風セクション区切りカード */
+    /* 8bitcn風セクション区切りカード */
     .card.divider {
-      min-width: 224px; /* 8の倍数 */
-      height: 256px; /* 8の倍数 */
-      background: #000;
-      border: 2px solid #000;
-      color: #fff;
-      font-weight: normal;
-      box-shadow: none;
+      min-width: 224px;
+      height: 256px;
+      background: var(--bg-primary);
+      border: 3px solid var(--accent-purple);
+      color: var(--text-primary);
+      font-weight: bold;
       cursor: default;
       position: relative;
       font-family: 'Courier New', monospace;
+      box-shadow: 
+        4px 4px 0 var(--accent-purple),
+        8px 8px 0 rgba(0, 0, 0, 0.4),
+        0 0 16px var(--accent-purple),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.4),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.1);
     }
     
     .card.divider::before {
       content: '';
       position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(135deg, #FFB300, #FFA000, #FFB300);
-      border-radius: 22px;
-      z-index: -1;
-      animation: dividerGlow 3s ease-in-out infinite;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(45deg, 
+          transparent, transparent 4px, 
+          rgba(139, 92, 246, 0.1) 4px, rgba(139, 92, 246, 0.1) 8px);
+      pointer-events: none;
     }
     
-    @keyframes dividerGlow {
-      0%, 100% { 
-        opacity: 0.8;
-        transform: scale(1);
-      }
-      50% { 
-        opacity: 1;
-        transform: scale(1.02);
-      }
-    }
-    
-    /* 8bit風セクション区切りカードの内容 */
+    /* 8bitcn風セクション区切りカードの内容 */
     .card.divider .card-icon {
       font-family: 'Courier New', monospace;
-      font-size: 32px; /* 8の倍数 */
-      margin-bottom: 16px; /* 8の倍数 */
-      text-shadow: none;
-      animation: none; /* 8bitらしくアニメーションなし */
+      font-size: 32px;
+      margin-bottom: 16px;
       line-height: 1;
+      color: var(--accent-purple);
+      text-shadow: 
+        2px 2px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
+      filter: drop-shadow(0 0 8px var(--accent-purple));
+    }
+    
+    .card.divider .card-title {
+      color: var(--accent-purple);
+      font-size: 18px;
+      text-shadow: 
+        2px 2px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
     }
     
     .card.divider .card-title {
@@ -652,99 +664,47 @@
       letter-spacing: 0.5px;
     }
     
-    /* 8bit風ホバー効果 */
-    .card.divider:hover {
-      transform: none; /* 8bitらしくスムーズ化なし */
-      box-shadow: none;
-      filter: invert(1); /* 8bit風の反転エフェクト */
-    }
     
-    .card:hover {
-      transform: none; /* 8bitらしくスムーズ化なし */
-      box-shadow: none;
-      background: #000; /* 8bit風の反転 */
-      color: #fff;
-      border-color: #000;
-    }
-    
-    .card:hover .card-title,
-    .card:hover .card-description,
-    .card:hover .card-icon {
-      color: #fff;
-    }
-    
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #FFB300, #FFA000);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    
-    .card:hover::before {
-      transform: scaleX(1);
-    }
-    
-    .card::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at center, 
-        rgba(255,179,0,0.03) 0%, 
-        transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      border-radius: 20px;
-    }
-    
-    .card:hover::after {
-      opacity: 1;
-    }
-    
-    /* 8bit風カードの内容 */
+    /* 8bitcn風カードコンテンツ */
     .card-icon {
-      font-family: 'Courier New', monospace;
-      font-size: 32px; /* より大きく */
-      margin-bottom: 16px; /* 8の倍数 */
-      filter: none;
-      transition: none; /* 8bitらしくスムーズ化なし */
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 32px;
+      margin-bottom: 16px;
       line-height: 1;
-      color: #0ff; /* シアン色でレトロ感 */
-      text-shadow: 2px 2px 0 #000; /* ピクセル影 */
-    }
-    
-    .card:hover .card-icon {
-      transform: none; /* 8bitらしくホバー効果なし */
+      color: var(--accent-green);
+      text-shadow: 
+        2px 2px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
+      filter: drop-shadow(0 0 4px var(--accent-green));
     }
     
     .card-title {
-      font-family: 'Courier New', monospace;
-      font-size: 16px; /* より読みやすく */
-      font-weight: normal;
-      color: #fff; /* 白文字 */
-      margin-bottom: 8px; /* 8の倍数 */
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
       letter-spacing: 1px;
       text-transform: uppercase;
       line-height: 1.2;
-      text-shadow: 2px 2px 0 #000; /* ピクセル影 */
+      text-shadow: 
+        1px 1px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
     }
     
     .card-description {
-      font-family: 'Courier New', monospace;
-      font-size: 10px; /* 少し大きく */
-      color: #aaa; /* グレー文字 */
-      line-height: 1.5;
-      font-weight: normal;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      opacity: 0.9;
     }
     
     /* アクセシビリティ向上 */
@@ -1504,23 +1464,29 @@
         -webkit-tap-highlight-color: transparent;
       }
     }
-    /* レベル表示UI */
+    /* 8bitcn風レベル表示UI */
     .level-display {
       position: fixed;
       top: 16px;
       right: 16px;
       z-index: 1000;
-      font-family: 'Courier New', monospace;
-      font-size: 16px;
-      color: #000;
-      background: rgba(255, 255, 255, 0.95);
-      border: 2px solid #000;
-      padding: 8px 16px;
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-primary);
+      padding: 12px 16px;
       image-rendering: pixelated;
-      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
       opacity: 0;
       transform: translateY(-8px);
-      transition: all 0.3s ease;
+      transition: all 0.1s ease;
+      /* 8bit風ピクセルボーダーエフェクト */
+      box-shadow: 
+        2px 2px 0 var(--border-accent),
+        4px 4px 0 rgba(0, 0, 0, 0.3),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.1);
     }
     
     body.loaded .level-display {
@@ -1532,16 +1498,25 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .level-text span:first-child {
+      color: var(--accent-yellow);
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
     }
     
     .exp-bar {
       width: 120px;
-      height: 8px;
-      background: #ddd;
-      border: 1px solid #000;
-      margin-top: 4px;
+      height: 12px;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-primary);
       position: relative;
       overflow: hidden;
+      /* ピクセル風インセットボーダー */
+      box-shadow: 
+        inset 2px 2px 0 rgba(0, 0, 0, 0.3),
+        inset -1px -1px 0 rgba(255, 255, 255, 0.1);
     }
     
     .exp-fill {
@@ -1549,43 +1524,65 @@
       top: 0;
       left: 0;
       height: 100%;
-      background: #4CAF50;
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+      transition: width 0.2s ease;
       image-rendering: pixelated;
+      /* グローエフェクト */
+      box-shadow: 
+        0 0 4px var(--accent-green),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
     
-    /* レベルアップエフェクト */
+    /* 8bitcn風レベルアップエフェクト */
     .level-up-effect {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: 'Courier New', monospace;
-      font-size: 48px;
+      font-size: 32px;
       font-weight: bold;
-      color: #FFD700;
-      text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+      color: var(--accent-yellow);
+      background: var(--bg-secondary);
+      border: 3px solid var(--accent-yellow);
+      padding: 16px 24px;
       z-index: 2000;
       opacity: 0;
       pointer-events: none;
       animation: levelUpAnimation 2s ease;
+      /* 8bit風ボーダーエフェクト */
+      box-shadow: 
+        4px 4px 0 var(--accent-green),
+        8px 8px 0 rgba(0, 0, 0, 0.3),
+        0 0 20px var(--accent-yellow),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.1);
+      text-shadow: 
+        2px 2px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
     }
     
     @keyframes levelUpAnimation {
       0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
+        transform: translate(-50%, -50%) scale(0.8) rotate(-2deg);
       }
       20% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
+        transform: translate(-50%, -50%) scale(1.1) rotate(1deg);
       }
       40% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
       }
       100% {
         opacity: 0;
-        transform: translate(-50%, -60%) scale(1);
+        transform: translate(-50%, -60%) scale(0.9) rotate(-1deg);
       }
     }
     
@@ -1612,16 +1609,50 @@
       }
     }
     
-    /* モバイル用レベル表示調整 */
+    /* モバイル用8bitcn風調整 */
     @media (max-width: 768px) {
       .level-display {
-        font-size: 14px;
-        padding: 6px 12px;
+        font-size: 12px;
+        padding: 8px 12px;
         top: 60px; /* ロゴの下に配置 */
+        right: 12px;
       }
       
       .exp-bar {
-        width: 80px;
+        width: 100px;
+        height: 10px;
+      }
+      
+      .logo {
+        font-size: 12px;
+        padding: 6px 10px;
+        top: 12px;
+        left: 12px;
+      }
+      
+      .card {
+        min-width: 220px;
+        height: 280px;
+        padding: 20px 12px;
+      }
+      
+      .card-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+      
+      .card-title {
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+      
+      .card-description {
+        font-size: 10px;
+      }
+      
+      .level-up-effect {
+        font-size: 24px;
+        padding: 12px 16px;
       }
     }
   </style>
