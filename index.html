@@ -532,13 +532,13 @@
         inset 2px 2px 0 rgba(255, 255, 255, 0.2);
     }
     
-    /* 8bitcn風カードデザイン */
+    /* 8bitcn.com完全再現カードデザイン */
     .card {
       min-width: 256px;
       height: 320px;
       background: var(--bg-secondary);
-      border: 3px solid var(--border-primary);
-      border-radius: 0; /* 8bit風の角ばったデザイン */
+      border: 6px dashed var(--border-primary);
+      border-radius: 0;
       padding: 24px 16px;
       flex-shrink: 0;
       display: flex;
@@ -547,36 +547,88 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: all 0.1s ease; /* 8bit風の素早い反応 */
+      transition: transform 0.1s ease;
       position: relative;
-      /* 8bitcn風ピクセルシャドウ */
-      box-shadow: 
-        4px 4px 0 var(--border-accent),
-        8px 8px 0 rgba(0, 0, 0, 0.3),
-        inset -2px -2px 0 rgba(0, 0, 0, 0.3),
-        inset 2px 2px 0 rgba(255, 255, 255, 0.1);
       overflow: hidden;
-      font-family: 'Courier New', monospace;
+      font-family: 'Share Tech Mono', monospace;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
       z-index: 10;
-      /* ピクセル風ボーダーパターン */
-      background-image: 
-        repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+      /* ピクセルパーフェクトボーダー */
+      background-clip: padding-box;
+      /* ミニマルシャドウ */
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* ピクセルアート風ボーダー装飾 */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 3px solid var(--border-primary);
+      border-radius: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* 角のピクセル装飾 */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border-top: 3px solid var(--accent-green);
+      border-left: 3px solid var(--accent-green);
+      pointer-events: none;
+    }
+    
+    /* 右上角 */
+    .card .pixel-corner-tr {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      border-top: 3px solid var(--accent-green);
+      border-right: 3px solid var(--accent-green);
+    }
+    
+    /* 左下角 */
+    .card .pixel-corner-bl {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border-bottom: 3px solid var(--accent-green);
+      border-left: 3px solid var(--accent-green);
+    }
+    
+    /* 右下角 */
+    .card .pixel-corner-br {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      border-bottom: 3px solid var(--accent-green);
+      border-right: 3px solid var(--accent-green);
     }
     
     /* 8bitcn風ホバーエフェクト */
     .card:hover {
-      background: var(--bg-accent);
-      border-color: var(--accent-green);
-      transform: translate(2px, 2px); /* 8bit風の「押し込み」効果 */
-      box-shadow: 
-        2px 2px 0 var(--border-accent),
-        4px 4px 0 rgba(0, 0, 0, 0.3),
-        0 0 8px var(--accent-green),
-        inset -1px -1px 0 rgba(0, 0, 0, 0.3),
-        inset 1px 1px 0 rgba(255, 255, 255, 0.2);
+      transform: translateY(2px);
+      box-shadow: none;
+    }
+    
+    .card:active {
+      transform: translateY(4px);
     }
     
     /* カードコンテンツの微調整 */
@@ -665,46 +717,69 @@
     }
     
     
-    /* 8bitcn風カードコンテンツ */
+    /* 8bitcn風ピクセルアートテキスト */
     .card-icon {
       font-family: 'Share Tech Mono', monospace;
-      font-size: 32px;
+      font-size: 48px;
       margin-bottom: 16px;
       line-height: 1;
       color: var(--accent-green);
+      /* ピクセルアート風テキスト効果 */
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeSpeed;
+      /* ハードシャドウ */
       text-shadow: 
-        2px 2px 0 var(--bg-primary),
-        -1px -1px 0 var(--bg-primary),
-        1px -1px 0 var(--bg-primary),
-        -1px 1px 0 var(--bg-primary);
-      filter: drop-shadow(0 0 4px var(--accent-green));
+        3px 3px 0 var(--bg-primary),
+        4px 4px 0 var(--border-primary);
     }
     
     .card-title {
-      font-family: 'Orbitron', 'Share Tech Mono', monospace;
-      font-size: 16px;
-      font-weight: 700;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+      font-weight: 400;
       color: var(--text-primary);
       margin-bottom: 8px;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1;
+      /* ピクセルパーフェクト */
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+      text-rendering: optimizeSpeed;
+      /* ドット文字風 */
       text-shadow: 
         1px 1px 0 var(--bg-primary),
-        -1px -1px 0 var(--bg-primary),
-        1px -1px 0 var(--bg-primary),
-        -1px 1px 0 var(--bg-primary);
+        2px 2px 0 var(--border-primary);
+      /* ピクセル風背景 */
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 50%,
+        var(--border-primary) 50%,
+        var(--border-primary) 100%
+      );
+      background-size: 2px 2px;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: var(--text-primary);
     }
     
     .card-description {
       font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-secondary);
-      line-height: 1.4;
+      line-height: 1.2;
       font-weight: 400;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      opacity: 0.9;
+      letter-spacing: 1px;
+      /* ピクセル化 */
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+      /* ドット調 */
+      opacity: 0.8;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
     }
     
     /* アクセシビリティ向上 */
@@ -1609,6 +1684,140 @@
       }
     }
     
+    /* 8bitcn風完走通知 */
+    .completion-notification {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .notification-content {
+      background: var(--bg-secondary);
+      border: 6px dashed var(--accent-yellow);
+      padding: 32px 48px;
+      text-align: center;
+      position: relative;
+      box-shadow: 
+        0 0 0 3px var(--bg-primary),
+        0 0 0 6px var(--accent-yellow),
+        0 0 40px var(--accent-yellow);
+      animation: notificationPop 0.5s ease;
+    }
+    
+    @keyframes notificationPop {
+      0% {
+        transform: scale(0.8) rotate(-2deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1) rotate(1deg);
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    
+    .notification-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: bounce 1s ease infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .notification-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--accent-yellow);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 
+        3px 3px 0 var(--bg-primary),
+        4px 4px 0 var(--border-primary);
+      animation: glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+      0%, 100% { 
+        text-shadow: 
+          3px 3px 0 var(--bg-primary),
+          4px 4px 0 var(--border-primary),
+          0 0 20px var(--accent-yellow);
+      }
+      50% { 
+        text-shadow: 
+          3px 3px 0 var(--bg-primary),
+          4px 4px 0 var(--border-primary),
+          0 0 40px var(--accent-yellow);
+      }
+    }
+    
+    .notification-message {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 18px;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .notification-submessage {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+      color: var(--accent-green);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .notification-button {
+      font-family: 'Orbitron', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 12px 32px;
+      background: var(--accent-green);
+      color: var(--bg-primary);
+      border: 3px solid var(--accent-green);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.1s ease;
+      box-shadow: 
+        3px 3px 0 var(--bg-primary),
+        6px 6px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    .notification-button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 
+        1px 1px 0 var(--bg-primary),
+        2px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    .notification-button:active {
+      transform: translate(3px, 3px);
+      box-shadow: none;
+    }
+    
     /* モバイル用8bitcn風調整 */
     @media (max-width: 768px) {
       .level-display {
@@ -2291,6 +2500,9 @@
           const dividerClass = data.type === 'divider' ? ' divider' : '';
           cardsHTML.push(`
             <div class="card${dividerClass}" data-section="${data.section}" data-link="${data.link}" data-type="${data.type || 'normal'}">
+              <div class="pixel-corner-tr"></div>
+              <div class="pixel-corner-bl"></div>
+              <div class="pixel-corner-br"></div>
               <div class="card-icon">${data.icon}</div>
               <h3 class="card-title">${data.title}</h3>
               <p class="card-description">${data.description}</p>
@@ -2767,6 +2979,33 @@
         
         // 棒人間を赤色に変更
         this.changeCharacterToRed();
+        
+        // 完走通知を表示
+        this.showCompletionNotification();
+      }
+      
+      showCompletionNotification() {
+        // 8bitcn風の完走通知を作成
+        const notification = document.createElement('div');
+        notification.className = 'completion-notification';
+        notification.innerHTML = `
+          <div class="notification-content">
+            <div class="notification-icon">🎉</div>
+            <h2 class="notification-title">CONGRATULATIONS!</h2>
+            <p class="notification-message">ALL CARDS CLEARED!</p>
+            <p class="notification-submessage">LEVEL ${this.maxLevel} ACHIEVED</p>
+            <button class="notification-button" onclick="this.parentElement.parentElement.remove()">OK</button>
+          </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // 自動的に通知を削除（10秒後）
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 10000);
       }
       
       jumpCharacter() {
