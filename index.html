@@ -2347,7 +2347,7 @@
   <!-- Separated JavaScript Modules -->
   <script type="module">
     // Initialize ToMoreBeyond Game System
-    import { LazyGameLoader } from './js/components/lazy-game-loader.js';
+    class GameInitializer {
       constructor() {
         this.gameInstance = null;
         this.isGameLoaded = false;
@@ -2403,21 +2403,22 @@
       }
       
       startLoadingSequence() {
+        // Immediate progress start to ensure loading progresses
+        this.updateLoadingProgress(15);
+        
         // Start simulated loading with realistic timing
-        setTimeout(() => this.updateLoadingProgress(0), 100);
-        setTimeout(() => this.updateLoadingProgress(15), 300);
-        setTimeout(() => this.updateLoadingProgress(35), 600);
-        setTimeout(() => this.updateLoadingProgress(50), 1000);
-        setTimeout(() => this.updateLoadingProgress(70), 1400);
-        setTimeout(() => this.updateLoadingProgress(85), 1800);
-        setTimeout(() => this.updateLoadingProgress(100), 2200);
+        setTimeout(() => this.updateLoadingProgress(35), 300);
+        setTimeout(() => this.updateLoadingProgress(50), 600);
+        setTimeout(() => this.updateLoadingProgress(70), 1000);
+        setTimeout(() => this.updateLoadingProgress(85), 1400);
+        setTimeout(() => this.updateLoadingProgress(100), 1800);
         
         // Auto-load after minimal delay even without interaction
         setTimeout(() => {
           if (!this.loadingStarted) {
             this.loadGameComponents();
           }
-        }, 2500);
+        }, 2000);
       }
       
       updateLoadingProgress(progress) {
@@ -2530,8 +2531,23 @@
       }
     }
     
-    // Initialize lazy loader immediately
-    const lazyLoader = new LazyGameLoader();
+    // Initialize game initializer after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const gameInitializer = new GameInitializer();
+      } catch (error) {
+        console.error('Failed to initialize game:', error);
+        // Fallback to simple loading removal
+        setTimeout(() => {
+          const loadingScreen = document.getElementById('loadingScreen');
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+          }
+          document.body.classList.remove('loading');
+          document.body.classList.add('loaded');
+        }, 2000);
+      }
+    });
     
     // ============================================================================
     // GAME DATA AND CLASSES (Loaded Asynchronously)
@@ -4732,38 +4748,35 @@
       });
     }
     
+    // Immediate fallback initialization to fix loading issue
+    initSimpleGame();
     
-    // Initialize lazy loader immediately
-    const lazyLoader = new LazyGameLoader();
+    // Fallback simple game initialization
+    function initSimpleGame() {
+      // Remove loading screen after delay
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+          loadingScreen.classList.add('hidden');
+        }
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
+        
+        // Initialize basic game functionality
+        initBasicGame();
+      }, 2000);
+    }
     
-    // Signpost creation utility
-    function createSignposts() {
-      const container = document.getElementById('signpostContainer');
-      if (!container) return;
-      
-      const signposts = [
-        { label: 'スタート', position: 0, icon: '🏁' },
-        { label: '会社', position: 20, icon: '🏢' },
-        { label: 'アプリ', position: 36, icon: '📱' },
-        { label: 'メンバー', position: 52, icon: '👥' },
-        { label: 'メディア', position: 68, icon: '📺' },
-        { label: 'コンタクト', position: 84, icon: '📧' },
-        { label: 'ゴール', position: 100, icon: '🎯' }
-      ];
-      
-      signposts.forEach(signpost => {
-        const signpostElement = document.createElement('div');
-        signpostElement.className = 'signpost';
-        signpostElement.style.left = `${signpost.position}%`;
-        signpostElement.innerHTML = `
-          <div class="signpost-pole"></div>
-          <div class="signpost-board">
-            <div class="signpost-icon">${signpost.icon}</div>
-            <div class="signpost-label">${signpost.label}</div>
-          </div>
-        `;
-        container.appendChild(signpostElement);
-      });
+    // Basic game initialization without modules
+    function initBasicGame() {
+      // Initialize the original game if cardsData exists
+      if (typeof cardsData !== 'undefined') {
+        try {
+          window.gameInstance = new MinimalSite();
+        } catch (error) {
+          console.error('Failed to initialize game:', error);
+        }
+      }
     }
     
     // Initialize on DOM ready
