@@ -219,6 +219,7 @@
   
 </head>
 <body class="section-company loading">
+  <style>
     /* Non-critical: Focus and Accessibility Styles */
     a:focus,
     button:focus,
@@ -2102,6 +2103,7 @@
         font-size: 24px;
         padding: 12px 16px;
       }
+  </style>
   
   <!-- 動画背景レイヤー（準備用） -->
   <div class="video-background" id="videoBackground" style="display: none;">
@@ -2620,7 +2622,7 @@
         this.expToNextLevel = 10; // 1カード見れば1レベルアップ
         this.maxLevelReached = false; // 最大レベル到達フラグ
         
-        // LocalStorageから進行状況を読み込む
+        // LocalStorageから進行状況を読み込む（ただし、最初の訪問なら初期化）
         this.loadProgress()
         
         // 8bit サウンドシステム
@@ -3623,8 +3625,7 @@
           
           if (index === currentCardIndex) {
             card.classList.add('current', 'highlighted');
-            // 新しいカードを見たら経験値を獲得
-            this.checkCardView(index);
+            // カードの表示だけではレベルアップしない（クリック時のみ）
           } else if (Math.abs(index - currentCardIndex) <= 1) {
             card.classList.add('nearby');
           } else {
@@ -4410,7 +4411,7 @@
         // 既に見たカードかチェック
         if (!this.viewedCards.has(cardTitle)) {
           this.viewedCards.add(cardTitle);
-          this.gainExperience();
+          this.gainExp();
           this.saveProgress();
         }
       }
