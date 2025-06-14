@@ -54,7 +54,7 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechCompany",
+    "@type": "Organization",
     "name": "ToMoreBeyond",
     "alternateName": "ToMoreBeyond Inc.",
     "description": "面白いことだけをする。友と共に道なき道を越えるというミッションのもと、AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニー",
@@ -1608,6 +1608,44 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
     
+    .reset-button {
+      margin-top: 8px;
+      padding: 4px 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      border: 2px solid var(--border-primary);
+      cursor: pointer;
+      transition: all 0.1s ease;
+      image-rendering: pixelated;
+      text-transform: uppercase;
+      width: 100%;
+      /* 8bit風プッシュボタンエフェクト */
+      box-shadow: 
+        2px 2px 0 var(--border-accent),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .reset-button:hover {
+      background: var(--bg-secondary);
+      transform: translateY(-1px);
+      box-shadow: 
+        3px 3px 0 var(--border-accent),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .reset-button:active {
+      transform: translateY(1px);
+      box-shadow: 
+        1px 1px 0 var(--border-accent),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.5),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
     /* 8bitcn風レベルアップエフェクト */
     .level-up-effect {
       position: fixed;
@@ -1952,6 +1990,7 @@
     <div class="exp-bar">
       <div class="exp-fill" id="expFill" style="width: 0%"></div>
     </div>
+    <button class="reset-button" id="resetButton" onclick="window.gameInstance?.resetProgress()">RESET</button>
   </div>
   
   <!-- レベルアップエフェクト -->
@@ -2181,6 +2220,10 @@
         this.viewedCards = new Set(); // 既に見たカードを記録
         this.maxLevel = 18; // カードの総数と同じ
         this.expToNextLevel = 10; // 1カード見れば1レベルアップ
+        this.maxLevelReached = false; // 最大レベル到達フラグ
+        
+        // LocalStorageから進行状況を読み込む
+        this.loadProgress()
         
         // 8bit サウンドシステム
         this.audioContext = null;
@@ -2900,6 +2943,9 @@
         
         // 経験値を獲得してレベルアップチェック
         this.gainExp();
+        
+        // 進行状況を保存
+        this.saveProgress();
       }
       
       gainExp() {
@@ -2963,6 +3009,9 @@
       }
       
       onMaxLevelReached() {
+        // 最大レベル到達フラグを設定
+        this.maxLevelReached = true;
+        
         // 完走サウンド
         this.play8BitSound('completion');
         
@@ -2982,6 +3031,9 @@
         
         // 完走通知を表示
         this.showCompletionNotification();
+        
+        // 進行状況を保存
+        this.saveProgress();
       }
       
       showCompletionNotification() {
@@ -3855,6 +3907,84 @@
           effect.remove();
         }, 3000);
       }
+      
+      // LocalStorage機能
+      saveProgress() {
+        try {
+          const progressData = {
+            currentLevel: this.currentLevel,
+            currentExp: this.currentExp,
+            viewedCards: Array.from(this.viewedCards),
+            maxLevelReached: this.maxLevelReached
+          };
+          localStorage.setItem('toMoreBeyond_progress', JSON.stringify(progressData));
+        } catch (error) {
+          console.log('Progress save failed:', error);
+        }
+      }
+      
+      loadProgress() {
+        try {
+          const savedData = localStorage.getItem('toMoreBeyond_progress');
+          if (savedData) {
+            const progressData = JSON.parse(savedData);
+            this.currentLevel = progressData.currentLevel || 1;
+            this.currentExp = progressData.currentExp || 0;
+            this.viewedCards = new Set(progressData.viewedCards || []);
+            this.maxLevelReached = progressData.maxLevelReached || false;
+            
+            // UIを更新
+            setTimeout(() => {
+              this.updateUI();
+            }, 100);
+          }
+        } catch (error) {
+          console.log('Progress load failed:', error);
+        }
+      }
+      
+      resetProgress() {
+        try {
+          localStorage.removeItem('toMoreBeyond_progress');
+          
+          // ゲーム状態をリセット
+          this.currentLevel = 1;
+          this.currentExp = 0;
+          this.viewedCards = new Set();
+          this.maxLevelReached = false;
+          
+          // キャラクターの色をリセット
+          const character = document.querySelector('.tiny-character');
+          if (character) {
+            character.classList.remove('max-level-achieved');
+          }
+          
+          // UIを更新
+          this.updateUI();
+          
+          // リセットエフェクトを表示
+          this.showResetEffect();
+          
+        } catch (error) {
+          console.log('Progress reset failed:', error);
+        }
+      }
+      
+      updateUI() {
+        // レベル表示を更新
+        const levelElement = document.getElementById('currentLevel');
+        if (levelElement) {
+          levelElement.textContent = this.currentLevel;
+        }
+        
+        // 経験値バーを更新
+        this.updateExpBar();
+        
+        // 最大レベル到達時の処理
+        if (this.maxLevelReached) {
+          this.changeCharacterToRed();
+        }
+      }
     }
     
     // 看板作成システム
@@ -3890,7 +4020,7 @@
     // 初期化
     document.addEventListener('DOMContentLoaded', () => {
       createSignposts();
-      new MinimalSite();
+      window.gameInstance = new MinimalSite();
     });
   </script>
 </body>
