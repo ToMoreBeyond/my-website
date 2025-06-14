@@ -1067,12 +1067,12 @@
     /* 8bit ドット絵風棒人間（16x16ピクセル感） */
     .tiny-character {
       position: fixed;
-      bottom: max(40px, calc(env(safe-area-inset-bottom) + 30px)); /* より下に配置 */
+      bottom: max(80px, calc(env(safe-area-inset-bottom) + 70px)); /* ゲームステータスバーより上に */
       left: 20px;
       transform: translateZ(0);
       width: 80px; /* 16x5 = 80px - さらに大きく */
       height: 80px; /* 16x5 = 80px */
-      z-index: 150;
+      z-index: 800;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
@@ -2045,12 +2045,18 @@
       align-items: center;
       justify-content: space-between;
       padding: 8px 16px;
-      z-index: 1000;
+      z-index: 1500;
       font-family: 'Share Tech Mono', monospace;
       font-size: 14px;
       box-shadow: 
         0 -4px 0 var(--border-primary),
         0 -8px 0 rgba(0, 0, 0, 0.1);
+      /* モバイル対応 */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: transform;
+      /* セーフエリア対応 */
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
     }
     
     .status-item {
@@ -2159,6 +2165,8 @@
         height: 50px;
         font-size: 12px;
         padding: 6px 12px;
+        /* モバイルでのセーフエリア対応を強化 */
+        padding-bottom: max(6px, calc(env(safe-area-inset-bottom) + 6px));
       }
       
       .status-item {
@@ -2178,6 +2186,18 @@
       .mini-map {
         gap: 2px;
         height: 20px;
+      }
+      
+      /* モバイルでキャラクター位置調整 */
+      .tiny-character {
+        bottom: max(60px, calc(env(safe-area-inset-bottom) + 50px));
+        width: 70px;
+        height: 70px;
+      }
+      
+      /* モバイルでメインコンテンツの下部余白を確保 */
+      .main-content {
+        padding-bottom: max(60px, calc(env(safe-area-inset-bottom) + 50px));
       }
   </style>
   
@@ -2496,22 +2516,24 @@
       }
       
       startLoadingSequence() {
-        // Immediate progress start to ensure loading progresses
-        this.updateLoadingProgress(15);
+        // モバイル対応のより長いローディングシーケンス
+        this.updateLoadingProgress(5);
         
-        // Start simulated loading with faster timing
-        setTimeout(() => this.updateLoadingProgress(35), 200);
-        setTimeout(() => this.updateLoadingProgress(50), 400);
-        setTimeout(() => this.updateLoadingProgress(70), 600);
-        setTimeout(() => this.updateLoadingProgress(85), 800);
-        setTimeout(() => this.updateLoadingProgress(100), 1000);
+        // ゆっくりとしたローディング進行（特にモバイル）
+        setTimeout(() => this.updateLoadingProgress(15), 500);
+        setTimeout(() => this.updateLoadingProgress(25), 1000);
+        setTimeout(() => this.updateLoadingProgress(40), 1500);
+        setTimeout(() => this.updateLoadingProgress(55), 2000);
+        setTimeout(() => this.updateLoadingProgress(70), 2500);
+        setTimeout(() => this.updateLoadingProgress(85), 3000);
+        setTimeout(() => this.updateLoadingProgress(100), 3500);
         
-        // Auto-load after minimal delay even without interaction
+        // Auto-load after sufficient delay for all assets
         setTimeout(() => {
           if (!this.loadingStarted) {
             this.loadGameComponents();
           }
-        }, 1200);
+        }, 2000);
       }
       
       updateLoadingProgress(progress) {
@@ -2875,11 +2897,45 @@
       }
       
       cleanupUnusedReferences() {
-        // Clean up weak references and unused DOM elements
-        if (this.viewedCards.size > 100) {
+        // モバイル向けメモリクリーンアップ
+        const maxCards = this.maxViewedCards || 50;
+        
+        if (this.viewedCards.size > maxCards) {
           // Limit the size of viewed cards set to prevent memory bloat
           const cardsArray = Array.from(this.viewedCards);
-          this.viewedCards = new Set(cardsArray.slice(-50));
+          this.viewedCards = new Set(cardsArray.slice(-Math.floor(maxCards * 0.8)));
+        }
+        
+        // モバイルでのメモリ圧迫対策
+        if (this.isMobile && performance.memory) {
+          const memoryInfo = performance.memory;
+          const memoryUsageRatio = memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit;
+          
+          if (memoryUsageRatio > 0.8) {
+            // メモリ使用量が80%を超えた場合の緊急クリーンアップ
+            this.emergencyCleanup();
+          }
+        }
+      }
+      
+      emergencyCleanup() {
+        // 緊急時のメモリクリーンアップ
+        console.log('Emergency memory cleanup activated');
+        
+        // viewedCardsを大幅に削減
+        const cardsArray = Array.from(this.viewedCards);
+        this.viewedCards = new Set(cardsArray.slice(-10));
+        
+        // 不要なタイマーとRAFをクリア
+        this.timers.forEach(timerId => clearTimeout(timerId));
+        this.timers.clear();
+        
+        this.rafIds.forEach(rafId => cancelAnimationFrame(rafId));
+        this.rafIds.clear();
+        
+        // 強制ガベージコレクション（可能なら）
+        if (window.gc) {
+          window.gc();
         }
       }
       
@@ -3032,44 +3088,179 @@
         const loadingScreen = document.getElementById('loadingScreen');
         const body = document.body;
         
-        // ローディング画面をフェードアウト
-        if (loadingScreen) {
-          loadingScreen.classList.add('hidden');
+        // ゲーム要素が確実に準備されるまで待機
+        this.ensureGameReady().then(() => {
+          // ローディング画面をフェードアウト
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+            
+            // ローディング画面を完全に非表示にする前に少し待機
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+            }, 800);
+          }
+          
+          // ボディの状態を変更
+          body.classList.remove('loading');
+          body.classList.add('loaded');
+          
+          // メインコンテンツの初期化を開始
+          setTimeout(async () => {
+            await this.init();
+          }, 200);
+          
+          // 動画シーケンスを開始（ポップアップは無効化済み）
+          setTimeout(() => {
+            this.startVideoSequence();
+          }, 400);
+          
+          // ゲーム要素を確実に表示
+          setTimeout(() => {
+            this.forceShowGameElements();
+          }, 600);
+        });
+      }
+      
+      async ensureGameReady() {
+        // ゲーム要素の準備確認
+        return new Promise((resolve) => {
+          let attempts = 0;
+          const maxAttempts = 50;
+          
+          const checkReady = () => {
+            attempts++;
+            
+            // 必要な要素がすべて存在するかチェック
+            const mainContent = document.querySelector('.main-content');
+            const cardsTrack = document.getElementById('cardsTrack');
+            const character = document.querySelector('.tiny-character');
+            const levelDisplay = document.querySelector('.level-display');
+            
+            if (mainContent && cardsTrack && character && levelDisplay) {
+              resolve();
+            } else if (attempts < maxAttempts) {
+              setTimeout(checkReady, 100);
+            } else {
+              console.warn('Game elements not fully ready, proceeding anyway');
+              resolve();
+            }
+          };
+          
+          checkReady();
+        });
+      }
+      
+      forceShowGameElements() {
+        // メインコンテンツを確実に表示
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+          mainContent.style.opacity = '1';
+          mainContent.style.visibility = 'visible';
+          mainContent.style.display = 'flex';
         }
         
-        // ボディの状態を変更
-        body.classList.remove('loading');
-        body.classList.add('loaded');
+        // カードトラックを確実に表示
+        const cardsTrack = document.getElementById('cardsTrack');
+        if (cardsTrack) {
+          cardsTrack.style.opacity = '1';
+          cardsTrack.style.visibility = 'visible';
+          cardsTrack.style.display = 'flex';
+        }
         
-        // 動画シーケンスを開始（将来的に動画が準備されたら）
-        setTimeout(() => {
-          this.startVideoSequence();
-        }, 500);
+        // キャラクターを確実に表示
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.opacity = '1';
+          character.style.visibility = 'visible';
+          character.style.display = 'block';
+        }
         
-        // メインコンテンツの初期化を開始
-        setTimeout(() => {
-          this.init();
-        }, 300);
+        // レベル表示を確実に表示
+        const levelDisplay = document.querySelector('.level-display');
+        if (levelDisplay) {
+          levelDisplay.style.opacity = '1';
+          levelDisplay.style.visibility = 'visible';
+          levelDisplay.style.display = 'block';
+        }
+        
+        // ゲームステータスバーを確実に表示
+        const statusBar = document.querySelector('.game-status-bar');
+        if (statusBar) {
+          statusBar.style.opacity = '1';
+          statusBar.style.visibility = 'visible';
+          statusBar.style.display = 'flex';
+        }
       }
       
       init() {
-        this.createCards();
-        this.setupEventListeners();
-        this.createStonePattern();
-        this.createPathDecorations();
-        
-        // カードが確実に表示されてから初期化
-        setTimeout(() => {
-          this.startAutoScroll();
-          this.optimizePerformance();
-        }, 100);
-        
-        // 初期状態でアイドルフレームを表示
-        setTimeout(() => {
-          if (!this.isScrolling) {
-            this.showIdleFrame();
+        // ゲーム要素の初期化順序を最適化
+        return new Promise((resolve) => {
+          try {
+            // 1. 基本要素の作成
+            this.createCards();
+            this.setupEventListeners();
+            this.createStonePattern();
+            this.createPathDecorations();
+            
+            // 2. UI要素の確実な表示
+            setTimeout(() => {
+              this.ensureUIVisibility();
+              this.startAutoScroll();
+              this.optimizePerformance();
+            }, 100);
+            
+            // 3. アニメーション開始
+            setTimeout(() => {
+              if (!this.isScrolling) {
+                this.showIdleFrame();
+              }
+              
+              // UIを最終確認して表示
+              this.finalUICheck();
+              resolve();
+            }, 300);
+            
+          } catch (error) {
+            console.error('Game initialization error:', error);
+            resolve(); // エラーでも続行
           }
-        }, 500); // ローディング後は少し遅らせる
+        });
+      }
+      
+      ensureUIVisibility() {
+        // UI要素の表示を確実にする
+        const elements = [
+          { selector: '.level-display', display: 'block' },
+          { selector: '.game-status-bar', display: 'flex' },
+          { selector: '.tiny-character', display: 'block' },
+          { selector: '.main-content', display: 'flex' },
+          { selector: '.cards-track', display: 'flex' }
+        ];
+        
+        elements.forEach(({ selector, display }) => {
+          const element = document.querySelector(selector);
+          if (element) {
+            element.style.visibility = 'visible';
+            element.style.opacity = '1';
+            element.style.display = display;
+          }
+        });
+      }
+      
+      finalUICheck() {
+        // 最終的なUI表示確認
+        setTimeout(() => {
+          const statusBar = document.querySelector('.game-status-bar');
+          const character = document.querySelector('.tiny-character');
+          const levelDisplay = document.querySelector('.level-display');
+          
+          if (statusBar) statusBar.style.opacity = '1';
+          if (character) character.style.opacity = '1';
+          if (levelDisplay) levelDisplay.style.opacity = '1';
+          
+          // 初期UIの更新
+          this.updateUI();
+        }, 200);
       }
       
       createStonePattern() {
@@ -3136,27 +3327,41 @@
       }
       
       detectDeviceCapability() {
-        // 低性能デバイスを検出
+        // 低性能デバイスを検出（モバイル重視）
         this.isLowEndDevice = (
           (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
           (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
           /Android.*Chrome\/[0-8]/.test(navigator.userAgent) ||
           /iPhone.*OS [1-1][0-3]/.test(navigator.userAgent) ||
-          window.innerWidth < 768
+          window.innerWidth < 768 ||
+          navigator.userAgent.includes('Mobile')
         );
         
         // 中程度の性能デバイス
         this.isMidEndDevice = (
           (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
-          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)
+          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+          /Android/.test(navigator.userAgent)
         );
         
-        if (this.isLowEndDevice) {
+        // モバイルデバイス特別対応
+        this.isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
+        if (this.isLowEndDevice || this.isMobile) {
           document.body.classList.add('low-performance-mode');
+          // モバイル向け最適化
+          this.baseScrollSpeed = 30;
+          this.targetFPS = 30; // フレームレートを下げる
+          this.frameInterval = 1000 / this.targetFPS;
         } else if (this.isMidEndDevice) {
           // 中程度の最適化
           this.baseScrollSpeed = 40;
+          this.targetFPS = 45;
+          this.frameInterval = 1000 / this.targetFPS;
         }
+        
+        // メモリ使用量の監視と制限（モバイル向け）
+        this.maxViewedCards = this.isMobile ? 20 : 50;
       }
       
       enableGPUOptimizations() {
@@ -3252,27 +3457,88 @@
         track.style.opacity = '1';
         track.style.display = 'flex';
         
-        // カードクリックイベント（シンプル化）
-        track.querySelectorAll('.card').forEach(card => {
-          const handleCardActivation = () => {
+        // カードクリック/タッチイベント（モバイル完全対応）
+        track.querySelectorAll('.card').forEach((card, index) => {
+          let touchStartTime = 0;
+          let touchStartY = 0;
+          let hasMoved = false;
+          
+          const handleCardActivation = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
             const link = card.dataset.link;
             
-            // レベル経験値処理
+            // レベル経験値処理（確実に実行）
             this.handleCardView(card);
             
+            // ハプティックフィードバック（モバイル）
+            if ('vibrate' in navigator) {
+              navigator.vibrate(50);
+            }
+            
+            // 視覚的フィードバック
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              card.style.transform = '';
+            }, 150);
+            
+            // リンク遷移（少し遅延してレベルアップ処理を確実に完了）
             if (link && link !== '#') {
-              window.location.href = link;
+              setTimeout(() => {
+                window.location.href = link;
+              }, 200);
             }
           };
           
-          card.addEventListener('click', handleCardActivation);
+          // タッチスタート（モバイル専用）
+          card.addEventListener('touchstart', (e) => {
+            touchStartTime = Date.now();
+            touchStartY = e.touches[0].clientY;
+            hasMoved = false;
+            
+            // タッチ開始の視覚フィードバック
+            card.style.transform = 'scale(1.02)';
+            card.style.transition = 'transform 0.1s ease';
+          }, { passive: false });
+          
+          // タッチムーブ（スクロール判定）
+          card.addEventListener('touchmove', (e) => {
+            const currentY = e.touches[0].clientY;
+            if (Math.abs(currentY - touchStartY) > 10) {
+              hasMoved = true;
+              // スクロール時は視覚フィードバックをリセット
+              card.style.transform = '';
+            }
+          }, { passive: true });
+          
+          // タッチエンド（タップ判定）
+          card.addEventListener('touchend', (e) => {
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+            
+            // 視覚フィードバックをリセット
+            card.style.transform = '';
+            
+            // タップ判定：短時間でほとんど動いていない場合
+            if (touchDuration < 500 && !hasMoved) {
+              handleCardActivation(e);
+            }
+          }, { passive: false });
+          
+          // デスクトップクリック
+          card.addEventListener('click', (e) => {
+            // タッチデバイスでない場合のみクリックを処理
+            if (!('ontouchstart' in window)) {
+              handleCardActivation(e);
+            }
+          });
           
           // キーボードナビゲーション
           card.addEventListener('keydown', (e) => {
-            
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              handleCardActivation();
+              handleCardActivation(e);
             } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
               e.preventDefault();
               this.navigateCards(card, e.key === 'ArrowRight' ? 1 : -1);
@@ -3400,18 +3666,51 @@
           }
         });
         
-        // 棒人間のクリック/タッチでジャンプ
+        // 棒人間のクリック/タッチでジャンプ（モバイル最適化）
         const character = document.querySelector('.tiny-character');
         if (character) {
-          character.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.jumpCharacter();
-          });
+          let characterTouchStartTime = 0;
+          let characterHasMoved = false;
+          let characterTouchStartY = 0;
           
+          // タッチスタート
           character.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            this.jumpCharacter();
+            characterTouchStartTime = Date.now();
+            characterTouchStartY = e.touches[0].clientY;
+            characterHasMoved = false;
+          }, { passive: true });
+          
+          // タッチムーブ
+          character.addEventListener('touchmove', (e) => {
+            const currentY = e.touches[0].clientY;
+            if (Math.abs(currentY - characterTouchStartY) > 15) {
+              characterHasMoved = true;
+            }
+          }, { passive: true });
+          
+          // タッチエンド（タップ判定）
+          character.addEventListener('touchend', (e) => {
+            const touchDuration = Date.now() - characterTouchStartTime;
+            
+            if (touchDuration < 300 && !characterHasMoved) {
+              e.preventDefault();
+              e.stopPropagation();
+              this.jumpCharacter();
+              
+              // ハプティックフィードバック
+              if ('vibrate' in navigator) {
+                navigator.vibrate(30);
+              }
+            }
           }, { passive: false });
+          
+          // デスクトップクリック
+          character.addEventListener('click', (e) => {
+            if (!('ontouchstart' in window)) {
+              e.preventDefault();
+              this.jumpCharacter();
+            }
+          });
         }
       }
       
