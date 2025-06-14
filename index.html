@@ -2345,7 +2345,7 @@
   
   <!-- Critical JavaScript for Initial Load -->
   <!-- Separated JavaScript Modules -->
-  <script type="module">
+  <script>
     // Initialize ToMoreBeyond Game System
     class GameInitializer {
       constructor() {
@@ -2406,19 +2406,19 @@
         // Immediate progress start to ensure loading progresses
         this.updateLoadingProgress(15);
         
-        // Start simulated loading with realistic timing
-        setTimeout(() => this.updateLoadingProgress(35), 300);
-        setTimeout(() => this.updateLoadingProgress(50), 600);
-        setTimeout(() => this.updateLoadingProgress(70), 1000);
-        setTimeout(() => this.updateLoadingProgress(85), 1400);
-        setTimeout(() => this.updateLoadingProgress(100), 1800);
+        // Start simulated loading with faster timing
+        setTimeout(() => this.updateLoadingProgress(35), 200);
+        setTimeout(() => this.updateLoadingProgress(50), 400);
+        setTimeout(() => this.updateLoadingProgress(70), 600);
+        setTimeout(() => this.updateLoadingProgress(85), 800);
+        setTimeout(() => this.updateLoadingProgress(100), 1000);
         
         // Auto-load after minimal delay even without interaction
         setTimeout(() => {
           if (!this.loadingStarted) {
             this.loadGameComponents();
           }
-        }, 2000);
+        }, 1200);
       }
       
       updateLoadingProgress(progress) {
@@ -2495,8 +2495,10 @@
       async loadGameClass() {
         // Load main game class asynchronously
         return new Promise(resolve => {
-          // The actual MinimalSite class will be loaded here
-          // For now, simulate async loading
+          // MinimalSite class is defined below, make it globally available
+          if (typeof MinimalSite !== 'undefined') {
+            window.MinimalSite = MinimalSite;
+          }
           setTimeout(resolve, 100);
         });
       }
@@ -2521,12 +2523,17 @@
       }
       
       initializeGame() {
-        if (this.isGameLoaded && window.cardsData && window.MinimalSite) {
-          this.gameInstance = new window.MinimalSite();
+        if (this.isGameLoaded && window.cardsData && typeof MinimalSite !== 'undefined') {
+          this.gameInstance = new MinimalSite();
           window.gameInstance = this.gameInstance;
         } else {
-          // Retry after short delay
-          setTimeout(() => this.initializeGame(), 100);
+          // Retry after short delay - max 50 retries to avoid infinite loop
+          this.retryCount = (this.retryCount || 0) + 1;
+          if (this.retryCount < 50) {
+            setTimeout(() => this.initializeGame(), 100);
+          } else {
+            console.warn('Failed to initialize game after 50 retries');
+          }
         }
       }
     }
@@ -2545,7 +2552,7 @@
           }
           document.body.classList.remove('loading');
           document.body.classList.add('loaded');
-        }, 2000);
+        }, 1500);
       }
     });
     
@@ -4748,36 +4755,6 @@
       });
     }
     
-    // Immediate fallback initialization to fix loading issue
-    initSimpleGame();
-    
-    // Fallback simple game initialization
-    function initSimpleGame() {
-      // Remove loading screen after delay
-      setTimeout(() => {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-          loadingScreen.classList.add('hidden');
-        }
-        document.body.classList.remove('loading');
-        document.body.classList.add('loaded');
-        
-        // Initialize basic game functionality
-        initBasicGame();
-      }, 2000);
-    }
-    
-    // Basic game initialization without modules
-    function initBasicGame() {
-      // Initialize the original game if cardsData exists
-      if (typeof cardsData !== 'undefined') {
-        try {
-          window.gameInstance = new MinimalSite();
-        } catch (error) {
-          console.error('Failed to initialize game:', error);
-        }
-      }
-    }
     
     // Initialize on DOM ready
     document.addEventListener('DOMContentLoaded', () => {
