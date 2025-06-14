@@ -1,7 +1,7 @@
 /* ToMoreBeyond - Performance Manager */
-/* メモリ効率とパフォーマンス最適化システム */
+/* メモリ効率とパフォーマンス最適化システム - ES6モジュール版 */
 
-class PerformanceManager {
+export class PerformanceManager {
   constructor() {
     this.isLowEndDevice = this.detectDeviceCapability();
     this.memoryUsage = {
@@ -162,7 +162,7 @@ class PerformanceManager {
     });
     
     // 重要な要素を監視
-    document.querySelectorAll('.floating-signboard, .walking-hero').forEach(el => {
+    document.querySelectorAll('.card, .tiny-character').forEach(el => {
       observer.observe(el);
     });
   }
@@ -211,22 +211,16 @@ class PerformanceManager {
     const style = document.createElement('style');
     style.id = 'performance-optimizations';
     style.textContent = `
-      .floating-signboard {
+      .card {
         transition: transform 0.2s ease !important;
       }
       
-      .walking-hero * {
+      .tiny-character * {
         animation-duration: 0.4s !important;
       }
       
-      .signboard-3d {
-        transform: none !important;
-      }
-      
       ${this.performanceSettings.shadowQuality === 'low' ? `
-        .trail-card,
-        .wooden-sign,
-        .hero-wooden-sign {
+        .card {
           box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
         }
       ` : ''}
@@ -266,8 +260,8 @@ class PerformanceManager {
   
   purgeOldObjects() {
     // 使用されていないDOMエレメントを削除
-    const signboards = document.querySelectorAll('.floating-signboard');
-    const toRemove = Array.from(signboards).slice(this.performanceSettings.maxSignboards);
+    const cards = document.querySelectorAll('.card');
+    const toRemove = Array.from(cards).slice(this.performanceSettings.maxSignboards);
     
     toRemove.forEach(el => {
       if (el.parentNode) {
@@ -296,7 +290,6 @@ class PerformanceManager {
   
   adaptToViewportSize() {
     const width = window.innerWidth;
-    const height = window.innerHeight;
     
     // ビューポートサイズに基づく調整
     if (width < 768) {
@@ -443,36 +436,3 @@ class PerformanceManager {
     };
   }
 }
-
-// グローバルインスタンス
-let performanceManager;
-
-// 初期化
-document.addEventListener('DOMContentLoaded', () => {
-  performanceManager = new PerformanceManager();
-  
-  // Walking Hero Systemにパフォーマンス設定を適用
-  if (window.walkingHeroSystem) {
-    const settings = performanceManager.getSettings();
-    window.walkingHeroSystem.performanceSettings = {
-      ...window.walkingHeroSystem.performanceSettings,
-      ...settings
-    };
-  }
-  
-  // パフォーマンス情報をコンソールに表示（開発用）
-  if (localStorage.getItem('debug') === 'true') {
-    console.log('Performance Manager initialized:', performanceManager.getDebugInfo());
-    
-    performanceManager.addObserver('fps', (fps) => {
-      console.log(`FPS: ${fps}`);
-    });
-    
-    performanceManager.addObserver('memory', (memory) => {
-      console.log(`Memory: ${(memory.current / 1024 / 1024).toFixed(2)}MB`);
-    });
-  }
-});
-
-// エクスポート
-window.PerformanceManager = PerformanceManager;

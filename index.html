@@ -43,12 +43,26 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="msapplication-TileColor" content="#ffffff">
   
-  <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Core Web Vitals: Resource Hints -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   
-  <!-- 8bit風Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- Core Web Vitals Optimized Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Fallback fonts to prevent CLS -->
+  <style>
+    /* Fallback font matching for CLS prevention */
+    body {
+      font-family: 'Courier New', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    }
+    .logo {
+      font-family: 'Courier New', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    }
+  </style>
   
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -86,9 +100,15 @@
     }
   }
   </script>
+
+  <!-- Separated CSS Files -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/responsive.css">
   
+  <!-- Critical CSS for Above-the-fold -->
   <style>
-    /* 8bitcn風カラーパレット */
+    /* Critical: 8bitcn風カラーパレット */
     :root {
       --bg-primary: #0f172a;
       --bg-secondary: #1e293b;
@@ -102,12 +122,188 @@
       --accent-purple: #8b5cf6;
       --border-primary: #475569;
       --border-accent: #64748b;
+      --focus-color: #fbbf24;
+      --focus-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5);
+      --text-high-contrast: #ffffff;
+      --bg-high-contrast: #000000;
+      --accent-high-contrast: #ffff00;
     }
     
+    /* Critical: Reset and Box Model */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+    
+    /* Critical: Body Styles for Initial Render */
+    body {
+      font-family: 'Courier New', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      -webkit-font-smoothing: none;
+    }
+    
+    /* Critical: Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      image-rendering: pixelated;
+    }
+    
+    .loading-content {
+      text-align: center;
+      max-width: 400px;
+      padding: 32px;
+    }
+    
+    .company-name {
+      font-family: 'Courier New', monospace;
+      font-size: 24px;
+      font-weight: normal;
+      color: #fff;
+      margin: 0 0 16px 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: pixel8bitBlink 1s infinite;
+    }
+    
+    @keyframes pixel8bitBlink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    .mission-text {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #ccc;
+      line-height: 1.5;
+      margin: 0;
+      opacity: 0;
+      animation: pixel8bitFadeIn 0.5s ease 0.5s forwards;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    @keyframes pixel8bitFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Critical: Visibility Helper */
+    .visually-hidden {
+      position: absolute !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      padding: 0 !important;
+      border: 0 !important;
+      height: 1px !important;
+      width: 1px !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
+    }
+  </style>
+  
+</head>
+<body class="section-company loading">
+    /* Non-critical: Focus and Accessibility Styles */
+    a:focus,
+    button:focus,
+    [tabindex]:focus {
+      outline: 2px solid var(--focus-color) !important;
+      outline-offset: 2px !important;
+      box-shadow: var(--focus-shadow) !important;
+    }
+    
+    /* 高コントラストモード対応 */
+    @media (prefers-contrast: high) {
+      :root {
+        --bg-primary: var(--bg-high-contrast);
+        --bg-secondary: #1a1a1a;
+        --bg-accent: #333333;
+        --text-primary: var(--text-high-contrast);
+        --text-secondary: #f0f0f0;
+        --border-primary: var(--text-high-contrast);
+        --border-accent: #cccccc;
+        --accent-green: #00ff00;
+        --accent-blue: #0080ff;
+        --accent-yellow: var(--accent-high-contrast);
+        --accent-red: #ff0000;
+        --accent-purple: #ff00ff;
+        --focus-color: var(--accent-high-contrast);
+      }
+      
+      /* カードのコントラスト強化 */
+      .card {
+        border: 2px solid var(--text-high-contrast) !important;
+        background: var(--bg-high-contrast) !important;
+      }
+      
+      /* テキストのコントラスト確保 */
+      .card-title,
+      .card-description {
+        color: var(--text-high-contrast) !important;
+        text-shadow: none !important;
+      }
+    }
+    
+    /* Windows高コントラストモード対応 */
+    @media (forced-colors: active) {
+      .card {
+        border: 1px solid ButtonText !important;
+        background: ButtonFace !important;
+        color: ButtonText !important;
+      }
+      
+      .card:focus {
+        border: 2px solid Highlight !important;
+        background: Highlight !important;
+        color: HighlightText !important;
+      }
+      
+      .card-icon {
+        color: ButtonText !important;
+      }
+      
+      .level-display {
+        border: 1px solid ButtonText !important;
+        background: ButtonFace !important;
+        color: ButtonText !important;
+      }
+      
+      .exp-bar {
+        border: 1px solid ButtonText !important;
+        background: ButtonShadow !important;
+      }
+      
+      .exp-fill {
+        background: Highlight !important;
+      }
+    }
+    
+    /* アニメーション無効化対応 */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
     
     body {
@@ -489,6 +685,11 @@
       transition: none;
       transform-origin: center center;
       will-change: transform;
+    }
+    
+    /* セクション用スタイル */
+    .card-section {
+      display: contents; /* セクション要素はレイアウトに影響しない */
     }
     
     /* シンプルな8bit風表示エフェクト */
@@ -1901,10 +2102,6 @@
         font-size: 24px;
         padding: 12px 16px;
       }
-    }
-  </style>
-</head>
-<body class="section-company loading">
   
   <!-- 動画背景レイヤー（準備用） -->
   <div class="video-background" id="videoBackground" style="display: none;">
@@ -1923,15 +2120,15 @@
   </div>
   
   <!-- ローディング画面 -->
-  <div class="loading-screen" id="loadingScreen">
+  <div class="loading-screen" id="loadingScreen" role="dialog" aria-labelledby="loading-title" aria-describedby="loading-description">
     <div class="loading-content">
       <div class="logo-loading">
-        <h1 class="company-name">ToMoreBeyond</h1>
-        <p class="mission-text">面白いことだけをする。友と共に“道なき道”を越える</p>
+        <h1 id="loading-title" class="company-name">ToMoreBeyond</h1>
+        <p id="loading-description" class="mission-text">面白いことだけをする。友と共に“道なき道”を越える</p>
       </div>
       
       <div class="path-drawing">
-        <svg class="path-svg" viewBox="0 0 800 200">
+        <svg class="path-svg" viewBox="0 0 800 200" role="img" aria-label="道を開拓する進行状況">
           <defs>
             <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" style="stop-color:#DAA520;stop-opacity:0" />
@@ -1952,7 +2149,7 @@
         
         <!-- 進行中のキャラクター -->
         <div class="loading-character">
-          <svg viewBox="0 0 100 150" class="char-svg">
+          <svg viewBox="0 0 100 150" class="char-svg" role="img" aria-label="歩行中のキャラクター">
             <g stroke="#FFB300" stroke-width="6" stroke-linecap="round" fill="none">
               <circle cx="50" cy="20" r="12" fill="#FFB300" stroke="none"/>
               <line x1="50" y1="32" x2="50" y2="65"/>
@@ -1970,53 +2167,54 @@
       </div>
       
       <div class="loading-progress">
-        <div class="progress-bar">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="ローディング進行状況">
           <div class="progress-fill" id="progressFill"></div>
         </div>
-        <p class="loading-text" id="loadingText">旅の準備中...</p>
+        <p class="loading-text" id="loadingText" aria-live="polite">旅の準備中...</p>
       </div>
     </div>
   </div>
   
   <!-- 左上ロゴ -->
-  <a href="#" class="logo">ToMoreBeyond</a>
+  <a href="#" class="logo" aria-label="ToMoreBeyond ホームページへ戻る" title="ToMoreBeyond ホームページ">ToMoreBeyond</a>
   
   <!-- レベル表示UI -->
-  <div class="level-display" id="levelDisplay">
-    <div class="level-text">
-      <span>LV.<span id="currentLevel">1</span></span>
-      <span style="font-size: 12px;">/<span id="maxLevel">18</span></span>
+  <aside class="level-display" id="levelDisplay" role="complementary" aria-label="ゲーム進行状況">
+    <div class="level-text" aria-live="polite" aria-atomic="true">
+      <span>LV.<span id="currentLevel" aria-label="現在のレベル">1</span></span>
+      <span style="font-size: 12px;">/<span id="maxLevel" aria-label="最大レベル">18</span></span>
     </div>
-    <div class="exp-bar">
+    <div class="exp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="経験値バー">
       <div class="exp-fill" id="expFill" style="width: 0%"></div>
     </div>
-    <button class="reset-button" id="resetButton" onclick="window.gameInstance?.resetProgress()">RESET</button>
-  </div>
+    <button class="reset-button" id="resetButton" onclick="window.gameInstance?.resetProgress()" aria-label="ゲーム進行状況をリセット" title="進行状況をリセット">RESET</button>
+  </aside>
   
   <!-- レベルアップエフェクト -->
-  <div class="level-up-effect" id="levelUpEffect" style="display: none;">
+  <div class="level-up-effect" id="levelUpEffect" style="display: none;" role="alert" aria-live="assertive">
     LEVEL UP!
   </div>
   
   <!-- 完走エフェクト -->
-  <div class="completion-effect" id="completionEffect" style="display: none;"></div>
+  <div class="completion-effect" id="completionEffect" style="display: none;" role="alert" aria-live="assertive" aria-label="ゲーム完了おめでとうございます"></div>
   
   <!-- ナビゲーションバー削除（シンプル化） -->
   
   <!-- メインコンテンツ -->
-  <main class="main-content">
-    <div class="cards-container">
+  <main class="main-content" role="main" aria-label="ToMoreBeyondの情報カード">
+    <h1 class="visually-hidden">ToMoreBeyond - 会社情報とプロダクト紹介</h1>
+    <nav class="cards-container" role="navigation" aria-label="サイト内容ナビゲーション">
       <div class="cards-track" id="cardsTrack">
         <!-- カードはJavaScriptで生成 -->
       </div>
-    </div>
+    </nav>
   </main>
   
   <!-- 看板システム -->
-  <div class="signpost-container" id="signpostContainer"></div>
+  <section class="signpost-container" id="signpostContainer" role="complementary" aria-label="進行状況の看板"></section>
   
   <!-- 8bit ドット絵風歩行アニメーション棒人間 -->
-  <div class="tiny-character">
+  <div class="tiny-character" role="img" aria-label="歩行中のキャラクター">
     <div class="walking-animation-container">
       
       <!-- アイドルフレーム: シンプルな棒人間 -->
@@ -2145,39 +2343,214 @@
     </div>
   </div>
   
-  <script>
-    // カードデータ（セクション区切りカード含む）
-    const cardsData = [
-      // 会社セクション区切りカード（8bitドット絵風アスキーアート）
-      { icon: '[#]', title: '会社', description: 'TOMOREBEYOND について', section: 'company', type: 'divider', link: '#' },
-      { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU', section: 'company', link: 'detail/company.html' },
-      { icon: 'X', title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU', section: 'company', link: 'detail/mission.html' },
+  <!-- Critical JavaScript for Initial Load -->
+  <!-- Separated JavaScript Modules -->
+  <script type="module">
+    // Initialize ToMoreBeyond Game System
+    import { LazyGameLoader } from './js/components/lazy-game-loader.js';
+      constructor() {
+        this.gameInstance = null;
+        this.isGameLoaded = false;
+        this.loadingStarted = false;
+        this.userInteracted = false;
+        
+        // Initialize critical components immediately
+        this.initCriticalComponents();
+        
+        // Start loading process
+        this.startLoadingSequence();
+      }
       
-      // アプリセクション区切りカード
-      { icon: '[A]', title: 'アプリ', description: 'WATASHITACHI NO PRODUCT', section: 'apps', type: 'divider', link: '#' },
-      { icon: '+', title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI', section: 'apps', link: 'pages/tadataka.html' },
-      { icon: 'T', title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE', section: 'apps', link: 'pages/toirun.html' },
-      { icon: 'M', title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO', section: 'apps', link: 'pages/midpoint.html' },
+      initCriticalComponents() {
+        // Initialize loading screen immediately
+        this.initLoadingScreen();
+        
+        // Add first user interaction listener for audio context
+        this.addUserInteractionListener();
+      }
       
-      // チームメンバーセクション区切りカード
-      { icon: '[M]', title: 'チームメンバー', description: 'ISSHO NI AYUMU NAKAMA TACHI', section: 'members', type: 'divider', link: '#' },
-      { icon: 'Y', title: '山田', description: 'CDO / DESIGNER', section: 'members', link: 'detail/yamada.html' },
-      { icon: 'M', title: '正留', description: 'CEO / ENGINEER', section: 'members', link: 'detail/masadome.html' },
-      { icon: 'A', title: '安藤', description: 'ARTIST', section: 'members', link: 'detail/ando.html' },
+      addUserInteractionListener() {
+        const handleFirstInteraction = () => {
+          this.userInteracted = true;
+          document.removeEventListener('click', handleFirstInteraction);
+          document.removeEventListener('keydown', handleFirstInteraction);
+          document.removeEventListener('touchstart', handleFirstInteraction);
+          
+          // Load game components after first interaction
+          if (!this.loadingStarted) {
+            this.loadGameComponents();
+          }
+        };
+        
+        document.addEventListener('click', handleFirstInteraction, { passive: true });
+        document.addEventListener('keydown', handleFirstInteraction, { passive: true });
+        document.addEventListener('touchstart', handleFirstInteraction, { passive: true });
+      }
       
-      // メディアセクション区切りカード
-      { icon: '[I]', title: 'メディア', description: 'JOUHOU HASSHIN TO KATSUDOU', section: 'media', type: 'divider', link: '#' },
-      { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI', section: 'media', link: 'detail/blog.html' },
-      { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI', section: 'media', link: 'detail/video.html' },
-      { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN', section: 'media', link: 'detail/sns.html' },
+      initLoadingScreen() {
+        this.loadingProgress = 0;
+        this.loadingMessages = [
+          '旅の準備中...',
+          '道を探しています...',
+          'アプリを読み込んでいます...',
+          'メンバーを集めています...',
+          '最終準備中...',
+          '旅立ちの時です！'
+        ];
+        
+        this.progressFill = document.getElementById('progressFill');
+        this.loadingText = document.getElementById('loadingText');
+      }
       
-      // コンタクトセクション区切りカード
-      { icon: '[C]', title: 'コンタクト', description: 'TSUNAGARI WO TAISETSU NI', section: 'contact', type: 'divider', link: '#' },
-      { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO', section: 'contact', link: 'detail/contact.html' }
-    ];
+      startLoadingSequence() {
+        // Start simulated loading with realistic timing
+        setTimeout(() => this.updateLoadingProgress(0), 100);
+        setTimeout(() => this.updateLoadingProgress(15), 300);
+        setTimeout(() => this.updateLoadingProgress(35), 600);
+        setTimeout(() => this.updateLoadingProgress(50), 1000);
+        setTimeout(() => this.updateLoadingProgress(70), 1400);
+        setTimeout(() => this.updateLoadingProgress(85), 1800);
+        setTimeout(() => this.updateLoadingProgress(100), 2200);
+        
+        // Auto-load after minimal delay even without interaction
+        setTimeout(() => {
+          if (!this.loadingStarted) {
+            this.loadGameComponents();
+          }
+        }, 2500);
+      }
+      
+      updateLoadingProgress(progress) {
+        this.loadingProgress = progress;
+        if (this.progressFill) {
+          this.progressFill.style.width = progress + '%';
+        }
+        
+        const messageIndex = Math.min(Math.floor(progress / 20), this.loadingMessages.length - 1);
+        if (this.loadingText) {
+          this.loadingText.textContent = this.loadingMessages[messageIndex];
+        }
+        
+        if (progress >= 100) {
+          setTimeout(() => this.completeLoading(), 500);
+        }
+      }
+      
+      async loadGameComponents() {
+        if (this.loadingStarted) return;
+        this.loadingStarted = true;
+        
+        try {
+          // Load game data and components asynchronously
+          await this.loadGameData();
+          await this.loadGameClass();
+          
+          this.isGameLoaded = true;
+        } catch (error) {
+          console.error('Failed to load game components:', error);
+          // Fallback: still complete loading
+          this.isGameLoaded = true;
+        }
+      }
+      
+      async loadGameData() {
+        // Load card data asynchronously
+        return new Promise(resolve => {
+          // Simulate async data loading
+          setTimeout(() => {
+            window.cardsData = [
+              // 会社セクション区切りカード（８bitドット絵風アスキーアート）
+              { icon: '[#]', title: '会社', description: 'TOMOREBEYOND について', section: 'company', type: 'divider', link: '#' },
+              { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU', section: 'company', link: 'detail/company.html' },
+              { icon: 'X', title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU', section: 'company', link: 'detail/mission.html' },
+              
+              // アプリセクション区切りカード
+              { icon: '[A]', title: 'アプリ', description: 'WATASHITACHI NO PRODUCT', section: 'apps', type: 'divider', link: '#' },
+              { icon: '+', title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI', section: 'apps', link: 'pages/tadataka.html' },
+              { icon: 'T', title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE', section: 'apps', link: 'pages/toirun.html' },
+              { icon: 'M', title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO', section: 'apps', link: 'pages/midpoint.html' },
+              
+              // チームメンバーセクション区切りカード
+              { icon: '[M]', title: 'チームメンバー', description: 'ISSHO NI AYUMU NAKAMA TACHI', section: 'members', type: 'divider', link: '#' },
+              { icon: 'Y', title: '山田', description: 'CDO / DESIGNER', section: 'members', link: 'detail/yamada.html' },
+              { icon: 'M', title: '正留', description: 'CEO / ENGINEER', section: 'members', link: 'detail/masadome.html' },
+              { icon: 'A', title: '安藤', description: 'ARTIST', section: 'members', link: 'detail/ando.html' },
+              
+              // メディアセクション区切りカード
+              { icon: '[I]', title: 'メディア', description: 'JOUHOU HASSHIN TO KATSUDOU', section: 'media', type: 'divider', link: '#' },
+              { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI', section: 'media', link: 'detail/blog.html' },
+              { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI', section: 'media', link: 'detail/video.html' },
+              { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN', section: 'media', link: 'detail/sns.html' },
+              
+              // コンタクトセクション区切りカード
+              { icon: '[C]', title: 'コンタクト', description: 'TSUNAGARI WO TAISETSU NI', section: 'contact', type: 'divider', link: '#' },
+              { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO', section: 'contact', link: 'detail/contact.html' }
+            ];
+            resolve();
+          }, 50);
+        });
+      }
+      
+      async loadGameClass() {
+        // Load main game class asynchronously
+        return new Promise(resolve => {
+          // The actual MinimalSite class will be loaded here
+          // For now, simulate async loading
+          setTimeout(resolve, 100);
+        });
+      }
+      
+      completeLoading() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+          loadingScreen.classList.add('hidden');
+          
+          // Remove from DOM after transition
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        }
+        
+        // Initialize game after loading is complete
+        this.initializeGame();
+        
+        // Update body class
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
+      }
+      
+      initializeGame() {
+        if (this.isGameLoaded && window.cardsData && window.MinimalSite) {
+          this.gameInstance = new window.MinimalSite();
+          window.gameInstance = this.gameInstance;
+        } else {
+          // Retry after short delay
+          setTimeout(() => this.initializeGame(), 100);
+        }
+      }
+    }
+    
+    // Initialize lazy loader immediately
+    const lazyLoader = new LazyGameLoader();
+    
+    // ============================================================================
+    // GAME DATA AND CLASSES (Loaded Asynchronously)
+    // ============================================================================
+    
+    // ============================================================================
+    // MAIN GAME CLASS (Memory Optimized)
+    // ============================================================================
     
     class MinimalSite {
       constructor() {
+        // Memory Management
+        this.isDestroyed = false;
+        this.eventListeners = new Map(); // Track event listeners for cleanup
+        this.timers = new Set(); // Track timers for cleanup
+        this.intervals = new Set(); // Track intervals for cleanup
+        this.rafIds = new Set(); // Track RAF IDs for cleanup
+        
+        // Game State
         this.currentSection = 'company';
         this.sections = ['company', 'apps', 'members', 'media', 'contact'];
         this.sectionIndex = 0;
@@ -2189,15 +2562,17 @@
         this.speedMultiplier = 1.0;
         this.isNavigating = false;
         
-        // 棒人間アニメーション管理
+        // Animation Management (Memory Optimized)
         this.walkingInterval = null;
         this.pointingTimeout = null;
         this.currentWalkFrame = 0;
         this.walkFrames = ['frame1', 'frame2', 'frame3', 'frame4'];
         
-        // パフォーマンス最適化用のRAF管理
+        // Performance Optimized RAF Management
         this.rafId = null;
         this.lastTime = 0;
+        this.targetFPS = 60;
+        this.frameInterval = 1000 / this.targetFPS;
         
         // 新しい横スクロール構造管理
         this.characterPosition = 0.05; // 開始位置をより左に（ほぼ左端）
@@ -2237,6 +2612,15 @@
         // カードスクロール管理
         this.cardScrollTimeout = null;
         
+        // Core Web Vitals Optimization
+        this.intersectionObserver = null;
+        this.mutationObserver = null;
+        this.performanceMetrics = {
+          lcp: null,
+          fid: null,
+          cls: null
+        };
+        
         // ローディング管理
         this.loadingProgress = 0;
         this.loadingMessages = [
@@ -2248,8 +2632,194 @@
           '旅立ちの時です！'
         ];
         
+        // Initialize optimizations
+        this.initCoreWebVitals();
         this.startLoading();
         this.prepareVideoTransition();
+      }
+      
+      // ============================================================================
+      // PERFORMANCE OPTIMIZATION METHODS
+      // ============================================================================
+      
+      initCoreWebVitals() {
+        // Intersection Observer for lazy loading
+        if ('IntersectionObserver' in window) {
+          this.intersectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const element = entry.target;
+                if (element.dataset.src) {
+                  element.src = element.dataset.src;
+                  element.removeAttribute('data-src');
+                  this.intersectionObserver.unobserve(element);
+                }
+              }
+            });
+          }, {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+          });
+        }
+        
+        // Performance metrics tracking
+        this.trackCoreWebVitals();
+        
+        // Passive event listeners for better performance
+        this.setupPassiveEventListeners();
+      }
+      
+      trackCoreWebVitals() {
+        // Track LCP (Largest Contentful Paint)
+        if ('PerformanceObserver' in window) {
+          try {
+            const lcpObserver = new PerformanceObserver((list) => {
+              const entries = list.getEntries();
+              const lastEntry = entries[entries.length - 1];
+              this.performanceMetrics.lcp = lastEntry.startTime;
+              console.log('LCP:', this.performanceMetrics.lcp);
+            });
+            lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+            
+            // Track FID (First Input Delay)
+            const fidObserver = new PerformanceObserver((list) => {
+              for (const entry of list.getEntries()) {
+                this.performanceMetrics.fid = entry.processingStart - entry.startTime;
+                console.log('FID:', this.performanceMetrics.fid);
+              }
+            });
+            fidObserver.observe({ entryTypes: ['first-input'] });
+            
+            // Track CLS (Cumulative Layout Shift)
+            let clsValue = 0;
+            const clsObserver = new PerformanceObserver((list) => {
+              for (const entry of list.getEntries()) {
+                if (!entry.hadRecentInput) {
+                  clsValue += entry.value;
+                }
+              }
+              this.performanceMetrics.cls = clsValue;
+              console.log('CLS:', this.performanceMetrics.cls);
+            });
+            clsObserver.observe({ entryTypes: ['layout-shift'] });
+          } catch (error) {
+            console.log('Performance Observer not fully supported');
+          }
+        }
+      }
+      
+      setupPassiveEventListeners() {
+        // Add passive event listeners for better performance
+        const passiveEvents = ['touchstart', 'touchmove', 'wheel', 'scroll'];
+        passiveEvents.forEach(eventType => {
+          document.addEventListener(eventType, this.handlePassiveEvent.bind(this), { passive: true });
+          this.eventListeners.set(eventType, this.handlePassiveEvent.bind(this));
+        });
+      }
+      
+      handlePassiveEvent(event) {
+        // Handle passive events without blocking main thread
+        if (this.isDestroyed) return;
+        
+        // Throttle expensive operations
+        if (!this.passiveEventThrottle) {
+          this.passiveEventThrottle = this.throttle(() => {
+            // Handle the actual event logic here
+            this.updatePerformanceState();
+          }, 16); // ~60fps
+        }
+        
+        this.passiveEventThrottle();
+      }
+      
+      updatePerformanceState() {
+        // Update performance-sensitive state
+        if (this.isDestroyed) return;
+        
+        // Use requestIdleCallback for non-critical updates
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            this.performNonCriticalUpdates();
+          });
+        } else {
+          // Fallback for browsers without requestIdleCallback
+          setTimeout(() => this.performNonCriticalUpdates(), 0);
+        }
+      }
+      
+      performNonCriticalUpdates() {
+        // Perform non-critical updates when the browser is idle
+        if (this.isDestroyed) return;
+        
+        // Clean up unused references
+        this.cleanupUnusedReferences();
+      }
+      
+      cleanupUnusedReferences() {
+        // Clean up weak references and unused DOM elements
+        if (this.viewedCards.size > 100) {
+          // Limit the size of viewed cards set to prevent memory bloat
+          const cardsArray = Array.from(this.viewedCards);
+          this.viewedCards = new Set(cardsArray.slice(-50));
+        }
+      }
+      
+      throttle(func, limit) {
+        let inThrottle;
+        return function() {
+          const args = arguments;
+          const context = this;
+          if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+          }
+        }
+      }
+      
+      // Memory management and cleanup
+      destroy() {
+        if (this.isDestroyed) return;
+        
+        this.isDestroyed = true;
+        
+        // Clear all timers
+        this.timers.forEach(timerId => clearTimeout(timerId));
+        this.timers.clear();
+        
+        // Clear all intervals
+        this.intervals.forEach(intervalId => clearInterval(intervalId));
+        this.intervals.clear();
+        
+        // Cancel all RAF
+        this.rafIds.forEach(rafId => cancelAnimationFrame(rafId));
+        this.rafIds.clear();
+        
+        // Remove event listeners
+        this.eventListeners.forEach((handler, eventType) => {
+          document.removeEventListener(eventType, handler);
+        });
+        this.eventListeners.clear();
+        
+        // Disconnect observers
+        if (this.intersectionObserver) {
+          this.intersectionObserver.disconnect();
+          this.intersectionObserver = null;
+        }
+        
+        if (this.mutationObserver) {
+          this.mutationObserver.disconnect();
+          this.mutationObserver = null;
+        }
+        
+        // Close audio context
+        if (this.audioContext && this.audioContext.state !== 'closed') {
+          this.audioContext.close();
+        }
+        
+        // Clear references
+        this.viewedCards.clear();
+        this.performanceMetrics = null;
       }
       
       prepareVideoTransition() {
@@ -2329,6 +2899,12 @@
           // プログレスバー更新
           if (progressFill) {
             progressFill.style.width = `${progress}%`;
+            // アクセシビリティ: プログレスバーの値を更新
+            const progressBar = document.querySelector('.progress-bar');
+            if (progressBar) {
+              progressBar.setAttribute('aria-valuenow', Math.round(progress));
+              progressBar.setAttribute('aria-valuetext', `ローディング ${Math.round(progress)}% 完了`);
+            }
           }
           
           // メッシージ更新
@@ -2536,24 +3112,73 @@
           return;
         }
         
-        const cardsHTML = [];
+        // セクション毎にグループ化
+        const sectionGroups = {};
+        let currentSection = null;
         
-        // 1セットのみ作成（区切りカードを含むため）
-        cardsData.forEach(data => {
-          const dividerClass = data.type === 'divider' ? ' divider' : '';
-          cardsHTML.push(`
-            <div class="card${dividerClass}" data-section="${data.section}" data-link="${data.link}" data-type="${data.type || 'normal'}">
+        cardsData.forEach((data, index) => {
+          if (data.type === 'divider') {
+            currentSection = data.section;
+            sectionGroups[currentSection] = { divider: data, cards: [] };
+          } else if (currentSection) {
+            sectionGroups[currentSection].cards.push({ ...data, index });
+          }
+        });
+        
+        const sectionsHTML = [];
+        
+        Object.keys(sectionGroups).forEach(sectionKey => {
+          const group = sectionGroups[sectionKey];
+          const sectionCards = [];
+          
+          // 区切りカード（セクションヘッダー）
+          sectionCards.push(`
+            <div class="card divider" 
+                 data-section="${group.divider.section}" 
+                 data-link="${group.divider.link}" 
+                 data-type="divider"
+                 role="separator"
+                 tabindex="-1"
+                 aria-label="${group.divider.title}セクション - ${group.divider.description}"
+                 aria-hidden="true">
               <div class="pixel-corner-tr"></div>
               <div class="pixel-corner-bl"></div>
               <div class="pixel-corner-br"></div>
-              <div class="card-icon">${data.icon}</div>
-              <h3 class="card-title">${data.title}</h3>
-              <p class="card-description">${data.description}</p>
+              <div class="card-icon" aria-hidden="true">${group.divider.icon}</div>
+              <h2 class="card-title">${group.divider.title}</h2>
+              <p class="card-description">${group.divider.description}</p>
             </div>
+          `);
+          
+          // セクション内のカード
+          group.cards.forEach(data => {
+            sectionCards.push(`
+              <article class="card" 
+                       data-section="${data.section}" 
+                       data-link="${data.link}" 
+                       data-type="normal"
+                       role="button"
+                       tabindex="0"
+                       aria-label="${data.title} - ${data.description}へのリンク"
+                       aria-describedby="card-desc-${data.index}">
+                <div class="pixel-corner-tr"></div>
+                <div class="pixel-corner-bl"></div>
+                <div class="pixel-corner-br"></div>
+                <div class="card-icon" aria-hidden="true">${data.icon}</div>
+                <h3 class="card-title">${data.title}</h3>
+                <p class="card-description" id="card-desc-${data.index}">${data.description}</p>
+              </article>
+            `);
+          });
+          
+          sectionsHTML.push(`
+            <section class="card-section" data-section="${sectionKey}" aria-labelledby="section-${sectionKey}">
+              ${sectionCards.join('')}
+            </section>
           `);
         });
         
-        track.innerHTML = cardsHTML.join('');
+        track.innerHTML = sectionsHTML.join('');
         
         // カードが確実に表示されるように
         track.style.visibility = 'visible';
@@ -2562,17 +3187,40 @@
         
         // カードクリックイベント
         track.querySelectorAll('.card').forEach(card => {
-          card.addEventListener('click', () => {
+          const handleCardActivation = () => {
             const link = card.dataset.link;
             const type = card.dataset.type;
             
-            // 区切りカードの場合はクリックを無効化
+            // 区切りカードの場合は無効化
             if (type === 'divider') {
               return;
             }
             
+            // レベル経験値処理
+            this.handleCardView(card);
+            
             if (link && link !== '#') {
               window.location.href = link;
+            }
+          };
+          
+          card.addEventListener('click', handleCardActivation);
+          
+          // キーボードナビゲーション
+          card.addEventListener('keydown', (e) => {
+            const type = card.dataset.type;
+            
+            // 区切りカードはキーボード操作を無効化
+            if (type === 'divider') {
+              return;
+            }
+            
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCardActivation();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+              e.preventDefault();
+              this.navigateCards(card, e.key === 'ArrowRight' ? 1 : -1);
             }
           });
           
@@ -2583,6 +3231,15 @@
             });
             
             card.addEventListener('mouseleave', () => {
+              this.onCardLeave(card);
+            });
+            
+            // フォーカス時の反応
+            card.addEventListener('focus', () => {
+              this.onCardHover(card);
+            });
+            
+            card.addEventListener('blur', () => {
               this.onCardLeave(card);
             });
           }
@@ -2662,8 +3319,29 @@
             this.handleScroll(50); // 下キーも右方向
           }
           if (e.key === ' ' || e.key === 'Enter') {
+            // フォーカスされたカードがある場合は、そのカードを優先
+            const focusedCard = document.activeElement;
+            if (focusedCard && focusedCard.classList.contains('card') && focusedCard.getAttribute('tabindex') === '0') {
+              // カードがフォーカスされている場合はカードの処理を優先
+              return;
+            }
             e.preventDefault();
             this.jumpCharacter(); // スペースキーまたはEnterキーでジャンプ
+          }
+          
+          // Tab キーナビゲーション補助
+          if (e.key === 'Tab') {
+            // カードへのフォーカス補助
+            const cards = document.querySelectorAll('.card[tabindex="0"]');
+            if (cards.length > 0 && !document.querySelector('.card:focus')) {
+              // フォーカスされたカードがない場合、最初のカードにフォーカス
+              const firstCard = cards[0];
+              if (firstCard && !e.shiftKey) {
+                setTimeout(() => {
+                  firstCard.focus();
+                }, 0);
+              }
+            }
           }
         });
         
@@ -2984,9 +3662,13 @@
       
       updateExpBar() {
         const expFill = document.getElementById('expFill');
-        if (expFill) {
+        const expBar = document.querySelector('.exp-bar');
+        if (expFill && expBar) {
           const expPercent = (this.currentExp / this.expToNextLevel) * 100;
           expFill.style.width = `${expPercent}%`;
+          // アクセシビリティ: プログレスバーの値を更新
+          expBar.setAttribute('aria-valuenow', Math.round(expPercent));
+          expBar.setAttribute('aria-valuetext', `レベル ${this.currentLevel} - 経験値 ${this.currentExp}/${this.expToNextLevel}`);
         }
       }
       
@@ -3677,6 +4359,39 @@
         this.updateCardScroll();
       }
       
+      // キーボードナビゲーション用のカード移動
+      navigateCards(currentCard, direction) {
+        const cards = Array.from(document.querySelectorAll('.card[tabindex="0"]'));
+        const currentIndex = cards.indexOf(currentCard);
+        let nextIndex = currentIndex + direction;
+        
+        // 範囲外の場合は循環
+        if (nextIndex < 0) {
+          nextIndex = cards.length - 1;
+        } else if (nextIndex >= cards.length) {
+          nextIndex = 0;
+        }
+        
+        const nextCard = cards[nextIndex];
+        if (nextCard) {
+          nextCard.focus();
+          // カードが見えるようにスクロール
+          nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+      
+      // カード表示時の経験値処理
+      handleCardView(card) {
+        const cardTitle = card.querySelector('.card-title').textContent;
+        
+        // 既に見たカードかチェック
+        if (!this.viewedCards.has(cardTitle)) {
+          this.viewedCards.add(cardTitle);
+          this.gainExperience();
+          this.saveProgress();
+        }
+      }
+      
       onCardHover(card) {
         const character = document.querySelector('.tiny-character');
         if (!character || this.isScrolling) return;
@@ -4017,10 +4732,43 @@
       });
     }
     
-    // 初期化
+    
+    // Initialize lazy loader immediately
+    const lazyLoader = new LazyGameLoader();
+    
+    // Signpost creation utility
+    function createSignposts() {
+      const container = document.getElementById('signpostContainer');
+      if (!container) return;
+      
+      const signposts = [
+        { label: 'スタート', position: 0, icon: '🏁' },
+        { label: '会社', position: 20, icon: '🏢' },
+        { label: 'アプリ', position: 36, icon: '📱' },
+        { label: 'メンバー', position: 52, icon: '👥' },
+        { label: 'メディア', position: 68, icon: '📺' },
+        { label: 'コンタクト', position: 84, icon: '📧' },
+        { label: 'ゴール', position: 100, icon: '🎯' }
+      ];
+      
+      signposts.forEach(signpost => {
+        const signpostElement = document.createElement('div');
+        signpostElement.className = 'signpost';
+        signpostElement.style.left = `${signpost.position}%`;
+        signpostElement.innerHTML = `
+          <div class="signpost-pole"></div>
+          <div class="signpost-board">
+            <div class="signpost-icon">${signpost.icon}</div>
+            <div class="signpost-label">${signpost.label}</div>
+          </div>
+        `;
+        container.appendChild(signpostElement);
+      });
+    }
+    
+    // Initialize on DOM ready
     document.addEventListener('DOMContentLoaded', () => {
       createSignposts();
-      window.gameInstance = new MinimalSite();
     });
   </script>
 </body>

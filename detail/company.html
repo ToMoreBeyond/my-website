@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>会社概要 - 株式会社ToMoreBeyond | AIモバイルアプリ開発企業 東京</title>
-  <meta name="description" content="株式会社ToMoreBeyondの会社概要。AI技術とモバイルアプリ開発を専門とするスタートアップ企業。「面白いことだけをする。友と共に道なき道を越える」をミッションに位置情報最適化とユーザー体験向上を実現。">
+  <title>会社概要 - ToMoreBeyond | 技術と情熱で、より遠くへ</title>
+  <meta name="description" content="ToMoreBeyondの会社概要。2023年設立、革新的なモバイルアプリ開発とゲーミフィケーション技術で人々の日常をより豊かにすることを目指しています。8ビット風デザインと最先端技術の融合。">
   
   <!-- SEO Enhancement -->
   <meta name="keywords" content="ToMoreBeyond,株式会社,会社概要,AI開発,モバイルアプリ,位置情報技術,スタートアップ,テクノロジー企業,東京,渋谷,Flutter,機械学習,ルート最適化,Tokyo Startup Gateway">
@@ -91,8 +91,8 @@
   }
   </script>
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <!-- 8-bit Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
   <style>
     * {
@@ -102,10 +102,13 @@
     }
     
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      font-family: 'Share Tech Mono', monospace;
+      background: #0f172a;
+      color: #ffffff;
       overflow-x: hidden;
       min-height: 100vh;
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
     }
     
     /* 統一ヘッダーデザイン */
@@ -115,37 +118,34 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      background: #0f172a;
+      border-bottom: 6px dashed #22c55e;
       padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.04);
     }
     
     .back-button {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50px;
-      padding: 10px 20px;
+      background: #1e293b;
+      border: 2px solid #22c55e;
+      padding: 12px 24px;
       text-decoration: none;
-      color: #1a1a1a;
-      font-weight: 600;
+      color: #ffffff;
+      font-family: 'Share Tech Mono', monospace;
       font-size: 14px;
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.1s ease-out;
       display: flex;
       align-items: center;
       gap: 8px;
-      letter-spacing: -0.2px;
+      text-transform: uppercase;
     }
     
     .back-button:hover {
       transform: translateY(-2px);
-      background: rgba(255, 255, 255, 1);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: #22c55e;
+      color: #0f172a;
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
     }
     
     .page-breadcrumb {
@@ -166,7 +166,7 @@
     }
     
     .page-name {
-      color: #FFB300;
+      color: #22c55e;
       font-weight: 700;
     }
     
@@ -176,9 +176,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+      background: #0f172a;
       padding: calc(80px + 50px) 0 30px;
     }
     
@@ -190,28 +188,27 @@
     }
     
     .hero-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', monospace;
       font-size: clamp(3rem, 8vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
       margin-bottom: 24px;
-      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #22c55e;
+      text-shadow: 2px 2px 0px #0f172a, 4px 4px 0px #1e293b;
     }
     
     .hero-subtitle {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
-      font-weight: 600;
-      color: #404040;
+      font-weight: 400;
+      color: #94a3b8;
       margin-bottom: 32px;
       line-height: 1.4;
+      text-transform: uppercase;
     }
     
     .hero-description {
       font-size: 1.125rem;
-      color: #525252;
+      color: #ffffff;
       line-height: 1.7;
       max-width: 800px;
       margin: 0 auto;
@@ -234,16 +231,17 @@
     }
     
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', monospace;
       font-size: 2.5rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #22c55e;
       margin-bottom: 16px;
+      text-transform: uppercase;
     }
     
     .section-subtitle {
       font-size: 1.125rem;
-      color: #666666;
+      color: #94a3b8;
       line-height: 1.6;
     }
     
@@ -256,43 +254,23 @@
     }
     
     .info-card {
-      background: white;
-      border-radius: 24px;
+      background: #1e293b;
+      border: 6px dashed #22c55e;
       padding: 32px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      border: 1px solid #f0f0f0;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.3s ease-out;
       position: relative;
-      overflow: hidden;
     }
     
     .info-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      border-color: #FFB300;
+      transform: translateY(-2px);
+      border-color: #3b82f6;
     }
     
-    .info-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #FFB300, #FFA000);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    
-    .info-card:hover::before {
-      transform: scaleX(1);
-    }
     
     .info-label {
       font-size: 0.875rem;
-      color: #FFB300;
-      font-weight: 600;
+      color: #22c55e;
+      font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 8px;
@@ -300,8 +278,8 @@
     
     .info-value {
       font-size: 1.125rem;
-      color: #1a1a1a;
-      font-weight: 500;
+      color: #ffffff;
+      font-weight: 400;
       line-height: 1.6;
     }
     
@@ -313,38 +291,37 @@
     }
     
     .value-card {
-      background: white;
-      border-radius: 20px;
+      background: #1e293b;
+      border: 6px dashed #8b5cf6;
       padding: 28px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      border: 1px solid #f0f0f0;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.3s ease-out;
     }
     
     .value-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+      border-color: #eab308;
     }
     
     .value-number {
       font-size: 3rem;
       font-weight: 900;
-      color: #FFB300;
+      color: #8b5cf6;
       margin-bottom: 16px;
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', monospace;
     }
     
     .value-title {
       font-size: 1.25rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #ffffff;
       margin-bottom: 12px;
+      text-transform: uppercase;
     }
     
     .value-description {
       font-size: 0.9375rem;
-      color: #666666;
+      color: #94a3b8;
       line-height: 1.6;
     }
     
@@ -414,9 +391,9 @@
     <section class="hero">
       <div class="hero-content">
         <h1 class="hero-title">ToMoreBeyond</h1>
-        <p class="hero-subtitle">面白いことだけをする。友と共に "道なき道" を越える</p>
+        <p class="hero-subtitle">技術と情熱で、人々の日常をより豊かに、より遠くへ</p>
         <p class="hero-description">
-          疑問や不安を"楽しさ"で解消し、人々の行動半径を広げるプロダクトを連続創出するテクノロジーカンパニーです。
+          8ビット風レトロゲームと最先端技術を融合した、革新的なデジタル体験の提供。ゲーミフィケーション要素でユーザーの成長をサポートし、日常をより楽しく豊かにします。
         </p>
       </div>
     </section>
@@ -437,34 +414,34 @@
           
           <div class="info-card">
             <div class="info-label">設立</div>
-            <div class="info-value">2025年4月</div>
+            <div class="info-value">2023年</div>
           </div>
           
           <div class="info-card">
             <div class="info-label">本社所在地</div>
-            <div class="info-value">東京都渋谷区<br>（リモートワーク中心）</div>
+            <div class="info-value">東京都</div>
           </div>
           
           <div class="info-card">
             <div class="info-label">事業領域</div>
-            <div class="info-value">モバイルアプリ開発<br>ルート最適化・位置情報AI<br>コンシューマSaaS</div>
+            <div class="info-value">モバイルアプリケーション開発<br>Webアプリケーション開発<br>ゲーミフィケーション技術<br>位置情報サービス<br>フィットネス・ヘルスケアアプリ</div>
           </div>
           
           <div class="info-card">
             <div class="info-label">技術スタック</div>
-            <div class="info-value">Flutter / Swift / Kotlin<br>Node.js, Python (ML)<br>Firebase, AWS, Mapbox<br>GPT-4o API</div>
+            <div class="info-value">Vanilla JavaScript, HTML5, CSS3<br>React Native, Flutter<br>Node.js, Python<br>PostgreSQL, Redis<br>AWS, Docker</div>
           </div>
           
           <div class="info-card">
-            <div class="info-label">受賞・採択</div>
-            <div class="info-value">2025年「Tokyo Startup Gateway ファイナリスト」<br>2025年 東京都 DX アクセラレータ採択</div>
+            <div class="info-label">代表取締役CEO</div>
+            <div class="info-value">山田 隼大</div>
           </div>
         </div>
       </div>
     </article>
 
     <!-- バリューセクション -->
-    <section class="section" style="background: white;">
+    <section class="section" style="background: #1e293b;">
       <div class="container">
         <header class="section-header">
           <h2 class="section-title">私たちの価値観</h2>

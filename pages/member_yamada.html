@@ -3,42 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>山田（Yamada） - CDO / プロダクトデザイン | ToMoreBeyond</title>
-  <meta name="description" content="山田（Yamada）- ToMoreBeyondのCDO。UI/UXデザイン、ブランド構築、資金調達を担当。美しさと使いやすさを両立するデザインを追求。">
+  <title>山田 隼大 - 代表取締役CEO | ToMoreBeyond</title>
+  <meta name="description" content="山田 隼大 - ToMoreBeyondの代表取締役CEO。1年以上のソフトウェア開発経験。フルスタック開発、プロダクトマネジメント、UI/UXデザイン、チームリーダーシップを専門とするエンジニア兼起業家。">
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <!-- 8-bit Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/design-system.css">
-  <link rel="stylesheet" href="/css/modern-design.css">
-  <link rel="stylesheet" href="/css/components.css">
   <style>
-    /* Member page specific styles */
-    body {
-      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
-      overflow-x: hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
-    /* Enhanced Member Hero */
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: #0f172a;
+      color: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background: #0f172a;
+      border-bottom: 6px dashed #22c55e;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+    }
+    
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #22c55e;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    
+    .navbar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
+    }
+    
+    .navbar-link:hover {
+      color: #22c55e;
+    }
+    
+    .btn-primary {
+      background: #22c55e;
+      color: #0f172a;
+      padding: 12px 24px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
+      font-weight: 400;
+      text-transform: uppercase;
+      transition: all 0.1s ease-out;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    }
+    
+    /* Member Hero */
     .member-hero {
       min-height: 70vh;
       display: flex;
       align-items: center;
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
-      padding: calc(var(--space-20) + 80px) 0 var(--space-20);
+      background: #0f172a;
+      padding: 80px 0 32px;
     }
     
     .member-hero-content {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: var(--space-16);
+      gap: 64px;
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .section {
+      padding: 80px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #22c55e;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    
+    .section-subtitle {
+      font-size: 18px;
+      color: #94a3b8;
+      line-height: 1.6;
     }
     
     .member-visual {
@@ -212,36 +309,34 @@
   </style>
 </head>
 <body>
-  <!-- Modern Navigation -->
-  <nav class="navbar-modern">
-    <div class="container-fluid">
-      <div class="navbar-content">
-        <a href="/" class="navbar-brand-modern">ToMoreBeyond</a>
-        <div class="navbar-links-modern">
-          <a href="/#apps" class="navbar-link-modern">アプリ</a>
-          <a href="/#about" class="navbar-link-modern">会社概要</a>
-          <a href="/pages/contact.html" class="btn-modern btn-primary-modern">お問い合わせ</a>
-        </div>
+  <!-- 8-bit Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="navbar-brand">ToMoreBeyond</a>
+      <div class="navbar-links">
+        <a href="../index.html#apps" class="navbar-link">アプリ</a>
+        <a href="../index.html#about" class="navbar-link">会社概要</a>
+        <a href="contact.html" class="btn-primary">お問い合わせ</a>
       </div>
     </div>
   </nav>
 
   <!-- Member Hero Section -->
   <section class="member-hero">
-    <div class="container-fluid">
+    <div class="container">
       <div class="member-hero-content">
         <div class="member-visual">
-          <img src="../assets/member_yamada.jpg" alt="山田（Yamada）" class="member-photo" />
+          <div class="member-photo-placeholder">[PHOTO]</div>
           <div class="member-contact">
-            <p class="text-sm text-neutral-600">CDO / プロダクトデザイン</p>
+            <p class="member-position">代表取締役CEO</p>
           </div>
         </div>
         <div class="member-info">
-          <h1 class="member-name">山田</h1>
-          <p class="member-role">CDO / プロダクトデザイン</p>
+          <h1 class="member-name">山田 隼大</h1>
+          <p class="member-role">代表取締役CEO & FOUNDER</p>
           <p class="member-bio-hero">
-            UI/UX全体統括・資金調達担当。美しさと使いやすさを両立するデザインを追求し、プロダクトの世界観を形にします。
-            デザイン思考とユーザー体験の最適化に情熱を注ぎ、ToMoreBeyondのブランド価値を高め続けています。
+            テクノロジーの力で人々の生活をより豊かにすることを目指すエンジニア兼起業家。8ビット文化への深い愛情と最先端技術への情熱を併せ持ち、新しいデジタル体験の創造に取り組んでいます。
+            10年以上のソフトウェア開発経験を活かし、フルスタック開発からプロダクトマネジメントまで幅広い分野でリーダーシップを発揮しています。
           </p>
         </div>
       </div>
