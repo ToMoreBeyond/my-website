@@ -312,9 +312,9 @@
       background: var(--bg-primary);
       color: var(--text-primary);
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
       scroll-behavior: auto;
-      min-height: 3000vh;
+      min-height: 100vh;
       position: relative;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
@@ -1541,7 +1541,7 @@
     /* モバイルスクロール最適化 */
     @media (max-width: 768px) {
       body {
-        min-height: 2800vh; /* モバイルでもパソコン版に近いスクロール量 */
+        min-height: 100vh; /* モバイルも通常の高さ */
         -webkit-overflow-scrolling: touch;
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -2462,31 +2462,26 @@
           // Simulate async data loading
           setTimeout(() => {
             window.cardsData = [
-              // 会社セクション区切りカード（８bitドット絵風アスキーアート）
-              { icon: '[#]', title: '会社', description: 'TOMOREBEYOND について', section: 'company', type: 'divider', link: '#' },
+              // 会社セクション - セクション分けカードを削除してシンプルに
               { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU', section: 'company', link: 'detail/company.html' },
               { icon: 'X', title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU', section: 'company', link: 'detail/mission.html' },
               
-              // アプリセクション区切りカード
-              { icon: '[A]', title: 'アプリ', description: 'WATASHITACHI NO PRODUCT', section: 'apps', type: 'divider', link: '#' },
+              // アプリセクション
               { icon: '+', title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI', section: 'apps', link: 'pages/tadataka.html' },
               { icon: 'T', title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE', section: 'apps', link: 'pages/toirun.html' },
               { icon: 'M', title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO', section: 'apps', link: 'pages/midpoint.html' },
               
-              // チームメンバーセクション区切りカード
-              { icon: '[M]', title: 'チームメンバー', description: 'ISSHO NI AYUMU NAKAMA TACHI', section: 'members', type: 'divider', link: '#' },
+              // チームメンバーセクション
               { icon: 'Y', title: '山田', description: 'CDO / DESIGNER', section: 'members', link: 'detail/yamada.html' },
               { icon: 'M', title: '正留', description: 'CEO / ENGINEER', section: 'members', link: 'detail/masadome.html' },
               { icon: 'A', title: '安藤', description: 'ARTIST', section: 'members', link: 'detail/ando.html' },
               
-              // メディアセクション区切りカード
-              { icon: '[I]', title: 'メディア', description: 'JOUHOU HASSHIN TO KATSUDOU', section: 'media', type: 'divider', link: '#' },
+              // メディアセクション
               { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI', section: 'media', link: 'detail/blog.html' },
               { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI', section: 'media', link: 'detail/video.html' },
               { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN', section: 'media', link: 'detail/sns.html' },
               
-              // コンタクトセクション区切りカード
-              { icon: '[C]', title: 'コンタクト', description: 'TSUNAGARI WO TAISETSU NI', section: 'contact', type: 'divider', link: '#' },
+              // コンタクトセクション
               { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO', section: 'contact', link: 'detail/contact.html' }
             ];
             resolve();
@@ -2600,7 +2595,7 @@
         this.frameInterval = 1000 / this.targetFPS;
         
         // 新しい横スクロール構造管理
-        this.characterPosition = 0.05; // 開始位置をより左に（ほぼ左端）
+        this.characterPosition = 0; // 開始位置は完全に左端（最初のカード）
         this.totalJourneyWidth = window.innerWidth * 6; // 6画面分の旅路
         this.sectionCheckpoints = [
           { name: 'apps', position: 0.16, title: 'アプリ' },
@@ -2618,11 +2613,19 @@
         this.currentExp = 0;
         this.expPerCard = 10;
         this.viewedCards = new Set(); // 既に見たカードを記録
-        this.maxLevel = 18; // カードの総数と同じ
+        this.maxLevel = 12; // カードの総数と同じ（セクション分けカードを削除したため）
         this.expToNextLevel = 10; // 1カード見れば1レベルアップ
         this.maxLevelReached = false; // 最大レベル到達フラグ
         
-        // LocalStorageから進行状況を読み込む（ただし、最初の訪問なら初期化）
+        // デバッグ用：確実にレベル1から始まるようにLocalStorageをクリア
+        // 本番環境では削除してください
+        try {
+          localStorage.removeItem('toMoreBeyond_progress');
+        } catch (error) {
+          console.log('LocalStorage clear failed:', error);
+        }
+        
+        // LocalStorageから進行状況を読み込む
         this.loadProgress()
         
         // 8bit サウンドシステム
@@ -3137,89 +3140,40 @@
           return;
         }
         
-        // セクション毎にグループ化
-        const sectionGroups = {};
-        let currentSection = null;
+        // シンプルなカード作成（セクション分けカードなし）
+        const cardsHTML = [];
         
         cardsData.forEach((data, index) => {
-          if (data.type === 'divider') {
-            currentSection = data.section;
-            sectionGroups[currentSection] = { divider: data, cards: [] };
-          } else if (currentSection) {
-            sectionGroups[currentSection].cards.push({ ...data, index });
-          }
-        });
-        
-        const sectionsHTML = [];
-        
-        Object.keys(sectionGroups).forEach(sectionKey => {
-          const group = sectionGroups[sectionKey];
-          const sectionCards = [];
-          
-          // 区切りカード（セクションヘッダー）
-          sectionCards.push(`
-            <div class="card divider" 
-                 data-section="${group.divider.section}" 
-                 data-link="${group.divider.link}" 
-                 data-type="divider"
-                 role="separator"
-                 tabindex="-1"
-                 aria-label="${group.divider.title}セクション - ${group.divider.description}"
-                 aria-hidden="true">
+          cardsHTML.push(`
+            <article class="card" 
+                     data-section="${data.section}" 
+                     data-link="${data.link}" 
+                     data-type="normal"
+                     role="button"
+                     tabindex="0"
+                     aria-label="${data.title} - ${data.description}へのリンク"
+                     aria-describedby="card-desc-${index}">
               <div class="pixel-corner-tr"></div>
               <div class="pixel-corner-bl"></div>
               <div class="pixel-corner-br"></div>
-              <div class="card-icon" aria-hidden="true">${group.divider.icon}</div>
-              <h2 class="card-title">${group.divider.title}</h2>
-              <p class="card-description">${group.divider.description}</p>
-            </div>
-          `);
-          
-          // セクション内のカード
-          group.cards.forEach(data => {
-            sectionCards.push(`
-              <article class="card" 
-                       data-section="${data.section}" 
-                       data-link="${data.link}" 
-                       data-type="normal"
-                       role="button"
-                       tabindex="0"
-                       aria-label="${data.title} - ${data.description}へのリンク"
-                       aria-describedby="card-desc-${data.index}">
-                <div class="pixel-corner-tr"></div>
-                <div class="pixel-corner-bl"></div>
-                <div class="pixel-corner-br"></div>
-                <div class="card-icon" aria-hidden="true">${data.icon}</div>
-                <h3 class="card-title">${data.title}</h3>
-                <p class="card-description" id="card-desc-${data.index}">${data.description}</p>
-              </article>
-            `);
-          });
-          
-          sectionsHTML.push(`
-            <section class="card-section" data-section="${sectionKey}" aria-labelledby="section-${sectionKey}">
-              ${sectionCards.join('')}
-            </section>
+              <div class="card-icon" aria-hidden="true">${data.icon}</div>
+              <h3 class="card-title">${data.title}</h3>
+              <p class="card-description" id="card-desc-${index}">${data.description}</p>
+            </article>
           `);
         });
         
-        track.innerHTML = sectionsHTML.join('');
+        track.innerHTML = cardsHTML.join('');
         
         // カードが確実に表示されるように
         track.style.visibility = 'visible';
         track.style.opacity = '1';
         track.style.display = 'flex';
         
-        // カードクリックイベント
+        // カードクリックイベント（シンプル化）
         track.querySelectorAll('.card').forEach(card => {
           const handleCardActivation = () => {
             const link = card.dataset.link;
-            const type = card.dataset.type;
-            
-            // 区切りカードの場合は無効化
-            if (type === 'divider') {
-              return;
-            }
             
             // レベル経験値処理
             this.handleCardView(card);
@@ -3233,12 +3187,6 @@
           
           // キーボードナビゲーション
           card.addEventListener('keydown', (e) => {
-            const type = card.dataset.type;
-            
-            // 区切りカードはキーボード操作を無効化
-            if (type === 'divider') {
-              return;
-            }
             
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -4516,32 +4464,20 @@
       
       
       updateSectionDisplay() {
-        // キャラクターの位置に基づいてカード表示を調整
+        // キャラクターの位置に基づいてカード表示を調整（シンプル化）
         const cards = document.querySelectorAll('.card');
         const currentSection = this.getCurrentSectionFromPosition();
         
         cards.forEach(card => {
           const cardSection = card.dataset.section;
-          const cardType = card.dataset.type;
           
-          // 区切りカードは常に目立つように表示
-          if (cardType === 'divider') {
-            if (cardSection === currentSection) {
-              card.style.opacity = '1';
-              card.style.transform = 'scale(1)';
-            } else {
-              card.style.opacity = '0.9';
-              card.style.transform = 'scale(0.98)';
-            }
+          // 全カード統一処理
+          if (cardSection === currentSection) {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
           } else {
-            // 通常のカード
-            if (cardSection === currentSection) {
-              card.style.opacity = '1';
-              card.style.transform = 'scale(1)';
-            } else {
-              card.style.opacity = '0.8';
-              card.style.transform = 'scale(0.98)';
-            }
+            card.style.opacity = '0.8';
+            card.style.transform = 'scale(0.98)';
           }
         });
       }

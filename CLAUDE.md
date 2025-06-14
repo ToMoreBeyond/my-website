@@ -9,27 +9,27 @@ ToMoreBeyond is a Japanese technology company website featuring an interactive 8
 ## Architecture
 
 ### Core Structure
-- **Modular single-page application**: Main game interface in `index.html` with ES6 modules
-- **Separated concerns**: CSS/JS split into external files with critical CSS inlined
-- **Vanilla JavaScript**: No frameworks, pure JavaScript game engine with ES6 modules
+- **Self-contained single-page application**: All code embedded in `index.html` for simplicity
+- **Horizontal scrolling game**: Character moves left-to-right through card collection
+- **Vanilla JavaScript**: No frameworks, pure JavaScript game engine
 - **8bitcn design system**: Pixel-perfect borders, dashed lines, retro typography
-- **Progressive enhancement**: Lazy loading for non-critical features
+- **Fixed viewport**: No vertical scrolling, 100vh height
 
 ### Key Components
 
-#### Main Game Engine (`/js/components/game-engine.js` - MinimalSite class)
-- **Level System**: Players gain 1 level per card viewed (max level 18)
+#### Main Game Engine (MinimalSite class in `index.html`)
+- **Level System**: Players gain 1 level per card click (max level 12)
 - **Character Controller**: Pixel art character with jump functionality
-- **Card System**: 18 cards across 5 sections with 8bitcn-style design
+- **Card System**: 12 simplified cards without section dividers
 - **Audio System**: Web Audio API for 8-bit sound effects
 - **Notification System**: Completion notification when all cards are viewed
 - **LocalStorage**: Progress persistence across browser sessions
 
-#### Module System
-- **LazyGameLoader** (`/js/components/lazy-game-loader.js`): Performance-optimized initialization
-- **UIController** (`/js/components/ui-controller.js`): Loading screens, notifications, level display
-- **PerformanceManager** (`/js/components/performance-manager.js`): Core Web Vitals tracking
-- **CardsData** (`/js/data/cards-data.js`): Game content and configuration
+#### Game Initialization System
+- **GameInitializer**: Loading sequence and DOM ready initialization
+- **Critical CSS**: Inlined for fast rendering, non-critical CSS in `<style>` tags
+- **Card Creation**: Dynamic HTML generation from `cardsData` array
+- **Performance Optimization**: Hardware acceleration and memory management
 
 #### Game Features
 - **Leveling**: `currentLevel`, `viewedCards` Set, experience tracking with persistence
@@ -40,24 +40,21 @@ ToMoreBeyond is a Japanese technology company website featuring an interactive 8
 
 ### File Organization
 ```
-/index.html              - Main game interface with critical CSS inlined
-/css/                   - Modular CSS architecture
-  ├── styles.css        - Main 8bitcn design system
-  ├── game.css          - Game-specific styles
-  └── responsive.css    - Mobile/desktop breakpoints
-/js/                    - ES6 module system
-  ├── components/       - Feature modules
-  │   ├── game-engine.js        - Core game logic
-  │   ├── lazy-game-loader.js   - Performance loader
-  │   ├── ui-controller.js      - UI management
-  │   └── performance-manager.js - Web Vitals tracking
-  └── data/
-      └── cards-data.js - Game content configuration
-/detail/                - Card detail pages
-/pages/                 - Product and feature pages
+/index.html              - Main game interface (self-contained with embedded CSS/JS)
+/detail/                - Card detail pages for individual content
+/pages/                 - Product pages (tadataka.html, toirun.html, etc.)
+/css/                   - Legacy CSS files (currently unused)
+/js/components/         - Legacy JS modules (currently unused)
 /assets/                - Media content specifications and brand guidelines
 /metadata.json          - Site-wide metadata and SEO configuration
+/site.webmanifest       - PWA manifest file
 ```
+
+### Current Architecture Notes
+- **Monolithic Structure**: All game logic, styles, and data are embedded in `index.html`
+- **No Build Process**: Direct HTML/CSS/JS - no compilation or bundling required
+- **Static Hosting**: Can be served from any static file server
+- **Legacy Files**: External CSS/JS files exist but are not currently used
 
 ## Development Commands
 
@@ -73,9 +70,12 @@ npx serve .
 ## Key Technical Details
 
 ### Game Mechanics
-- **Experience System**: 10 exp per card, 10 exp to level up
+- **Experience System**: Click-based leveling, 1 level per card click
+- **Starting Position**: Character begins at position 0 (leftmost card)
+- **Card Interaction**: Only card clicks trigger level progression
 - **Jump Mechanics**: 0.6s animation, accessible via click/tap/spacebar
-- **Completion Trigger**: Level 18 triggers red character + notification
+- **Completion Trigger**: Level 12 triggers red character + notification
+- **Reset Function**: RESET button clears LocalStorage and returns to level 1
 
 ### 8bitcn Design Implementation
 - **Colors**: Dark theme (#0f172a, #1e293b), accent colors (green, blue, yellow, red, purple)
@@ -89,38 +89,44 @@ npx serve .
 
 ## Content Management
 
-### Card Data Structure
+### Card Data Structure (embedded in index.html)
 ```javascript
 {
-  icon: '[#]',        // ASCII icon
-  title: '会社',      // Japanese title
-  description: 'DESC', // Uppercase description
-  section: 'company',  // Section grouping
-  link: 'detail/company.html',
-  type: 'divider'     // Optional: section header
+  icon: '[]',         // ASCII icon
+  title: '会社概要',  // Japanese title
+  description: 'MICHI NAKI MICHI WO KIRU', // Uppercase description
+  section: 'company', // Section grouping
+  link: 'detail/company.html'
 }
 ```
 
+### Current Card Configuration
+- **Total Cards**: 12 (simplified from original 18)
+- **Sections**: company, apps, members, media, contact
+- **No Dividers**: Section divider cards removed for UX simplicity
+- **Embedded Data**: All card data is in `window.cardsData` array within index.html
+
 ### Adding Game Elements
-- Levels: Modify `maxLevel` and adjust `cardsData` array
-- Sounds: Add cases to `play8BitSound()` method
-- Animations: Update character pixel divs in walk frames
+- **Levels**: Modify `this.maxLevel = 12` and adjust `cardsData` array length
+- **Cards**: Add entries to `cardsData` array in `loadGameData()` method
+- **Sounds**: Add cases to `play8BitSound()` method
+- **Animations**: Update character pixel divs in walk frames
 
 ## Performance Architecture
 
 ### Core Web Vitals Implementation
-- **LCP Optimization**: Critical CSS inlined, resource prioritization
-- **FID Improvement**: Lazy game loading, passive event listeners
-- **CLS Prevention**: Fallback fonts, layout stabilization
+- **LCP Optimization**: Critical CSS inlined in `<head>`, main CSS in `<body>`
+- **FID Improvement**: Game initialization on `DOMContentLoaded`
+- **CLS Prevention**: Fixed viewport height (100vh), no vertical scrolling
 - **Memory Management**: Complete cleanup system with `destroy()` methods
 
 ### Performance Features
 - **Hardware acceleration**: `translateZ(0)`, `will-change: transform`
-- **RAF throttling**: 60fps animations with `requestAnimationFrame`
+- **Monolithic loading**: Single HTML file reduces HTTP requests
 - **Event delegation**: Optimized card interactions
-- **Lazy initialization**: Sound and game features load on user interaction
 - **Device detection**: Low-end device optimizations
 - **Memory limits**: Auto-cleanup for `viewedCards` Set
+- **Debug Mode**: LocalStorage auto-clear for testing (remove in production)
 
 ## Design System
 
