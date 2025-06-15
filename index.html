@@ -2199,6 +2199,122 @@
       .main-content {
         padding-bottom: max(60px, calc(env(safe-area-inset-bottom) + 50px));
       }
+    }
+    
+    /* モバイル用操作UI */
+    .mobile-control-ui {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none; /* デフォルトは非表示 */
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .control-arrow {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-yellow);
+      border: 2px solid var(--border-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text-primary);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--border-primary);
+      transition: all 0.1s ease;
+      user-select: none;
+    }
+    
+    .control-arrow:active {
+      transform: scale(0.95);
+      box-shadow: 1px 1px 0 var(--border-primary);
+    }
+    
+    .control-hint {
+      background: var(--bg-primary);
+      border: 2px solid var(--border-primary);
+      border-radius: 16px;
+      padding: 4px 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--text-primary);
+      text-align: center;
+      box-shadow: 2px 2px 0 var(--border-primary);
+      min-width: 80px;
+    }
+    
+    .hint-text {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    
+    .hint-arrow {
+      font-size: 14px;
+      color: var(--accent-blue);
+      animation: hintPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes hintPulse {
+      0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% { 
+        transform: scale(1.2);
+        opacity: 0.7;
+      }
+    }
+    
+    /* モバイルでのみ表示 */
+    @media (max-width: 768px) and (pointer: coarse) {
+      .mobile-control-ui {
+        display: flex;
+      }
+      
+      .tiny-character:hover .mobile-control-ui,
+      .tiny-character.show-controls .mobile-control-ui {
+        opacity: 1;
+      }
+      
+      /* 初回表示時のアニメーション */
+      .mobile-control-ui.first-show {
+        animation: controlUIIntro 3s ease;
+      }
+      
+      @keyframes controlUIIntro {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-10px);
+        }
+        20%, 80% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+        100% {
+          opacity: 0.3;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+    }
+    
+    /* タッチ中の状態 */
+    .tiny-character.dragging .mobile-control-ui {
+      opacity: 1;
+    }
+    
+    .tiny-character.dragging .control-hint {
+      background: var(--accent-green);
+      color: var(--bg-primary);
+    }
   </style>
   
   <!-- 動画背景レイヤー（準備用） -->
@@ -2328,6 +2444,19 @@
   
   <!-- 8bit ドット絵風歩行アニメーション棒人間 -->
   <div class="tiny-character" role="img" aria-label="歩行中のキャラクター">
+    <!-- モバイル用操作UI -->
+    <div class="mobile-control-ui" id="mobileControlUI">
+      <div class="control-arrow control-left" id="controlLeft">
+        <span>←</span>
+      </div>
+      <div class="control-hint" id="controlHint">
+        <span class="hint-text">ドラッグして移動</span>
+        <div class="hint-arrow">⟷</div>
+      </div>
+      <div class="control-arrow control-right" id="controlRight">
+        <span>→</span>
+      </div>
+    </div>
     <div class="walking-animation-container">
       
       <!-- アイドルフレーム: シンプルな棒人間 -->
@@ -2761,6 +2890,9 @@
           fid: null,
           cls: null
         };
+        
+        // ページ状態管理
+        this.setupPageStateHandlers();
         
         // ローディング管理
         this.loadingProgress = 0;
@@ -3568,10 +3700,23 @@
       }
       
       setupEventListeners() {
-        // 自然な縦スクロール体験 - 縦スクロールで棒人間が横移動
+        // デスクトップとモバイルで操作方法を分離
+        this.isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
+        if (this.isMobile) {
+          this.setupMobileControls();
+        } else {
+          this.setupDesktopControls();
+        }
+        
+        // 共通のキーボードナビゲーション
+        this.setupKeyboardControls();
+      }
+      
+      setupDesktopControls() {
+        // デスクトップ用：縦スクロールで棒人間が横移動
         let scrollTimeout;
         
-        // 通常の縦スクロールを有効にし、progress-basedの横移動を実装
         window.addEventListener('scroll', () => {
           clearTimeout(scrollTimeout);
           this.handleVerticalScroll();
@@ -3592,34 +3737,135 @@
           }
           // 通常の縦ホイールは自然にスクロールさせる（preventDefault しない）
         }, { passive: false });
+      }
+      
+      setupMobileControls() {
+        // モバイル用：棒人間をドラッグで移動
+        const character = document.querySelector('.tiny-character');
+        const mobileUI = document.getElementById('mobileControlUI');
+        const leftArrow = document.getElementById('controlLeft');
+        const rightArrow = document.getElementById('controlRight');
         
-        // ナビゲーション削除により不要
+        if (!character) return;
         
-        // モバイル向けタッチイベント最適化
-        let touchStartY = 0;
-        let touchStartTime = 0;
-        let isTouchScrolling = false;
+        // 初回表示時のヒント
+        setTimeout(() => {
+          if (mobileUI) {
+            mobileUI.classList.add('first-show');
+            character.classList.add('show-controls');
+            
+            setTimeout(() => {
+              character.classList.remove('show-controls');
+            }, 3000);
+          }
+        }, 1000);
         
-        document.addEventListener('touchstart', (e) => {
-          touchStartY = e.touches[0].clientY;
-          touchStartTime = Date.now();
-          isTouchScrolling = true;
-        }, { passive: true });
+        // ドラッグ操作の実装
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartPosition = 0;
         
-        document.addEventListener('touchend', () => {
-          isTouchScrolling = false;
-        }, { passive: true });
+        // タッチスタート
+        character.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 1) {
+            isDragging = true;
+            dragStartX = e.touches[0].clientX;
+            dragStartPosition = this.characterPosition;
+            character.classList.add('dragging');
+            
+            // ハプティックフィードバック
+            if ('vibrate' in navigator) {
+              navigator.vibrate(20);
+            }
+          }
+        }, { passive: false });
         
-        // モバイルでのスクロール感度をさらに調整
-        let mobileScrollTimeout;
-        document.addEventListener('touchmove', (e) => {
-          if (!isTouchScrolling) return;
+        // タッチムーブ
+        character.addEventListener('touchmove', (e) => {
+          if (isDragging && e.touches.length === 1) {
+            e.preventDefault();
+            
+            const currentX = e.touches[0].clientX;
+            const deltaX = currentX - dragStartX;
+            const sensitivity = 0.003; // ドラッグ感度
+            
+            const newPosition = Math.max(0, Math.min(1, 
+              dragStartPosition + (deltaX * sensitivity)
+            ));
+            
+            const oldPosition = this.characterPosition;
+            this.characterPosition = newPosition;
+            
+            // キャラクターとカードの位置を更新
+            this.updateCharacterPosition(oldPosition);
+            this.updateCardScrollProgress(this.characterPosition);
+            this.updateGameStatusBar();
+            
+            // 歩行アニメーション
+            this.startJourneyWalking();
+            this.updateCharacterDirection(deltaX > 0);
+          }
+        }, { passive: false });
+        
+        // タッチエンド
+        character.addEventListener('touchend', (e) => {
+          if (isDragging) {
+            isDragging = false;
+            character.classList.remove('dragging');
+            
+            setTimeout(() => {
+              this.stopJourneyWalking();
+            }, 200);
+          }
+        }, { passive: false });
+        
+        // 矢印ボタンでの移動
+        if (leftArrow) {
+          leftArrow.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.moveCharacterByStep(-0.1);
+            if ('vibrate' in navigator) {
+              navigator.vibrate(30);
+            }
+          }, { passive: false });
+        }
+        
+        if (rightArrow) {
+          rightArrow.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.moveCharacterByStep(0.1);
+            if ('vibrate' in navigator) {
+              navigator.vibrate(30);
+            }
+          }, { passive: false });
+        }
+      }
+      
+      moveCharacterByStep(direction) {
+        // 段階的移動メソッド（矢印ボタン用）
+        const oldPosition = this.characterPosition;
+        const newPosition = Math.max(0, Math.min(1, this.characterPosition + direction));
+        
+        if (newPosition !== oldPosition) {
+          this.characterPosition = newPosition;
+          this.updateCharacterPosition(oldPosition);
+          this.updateCardScrollProgress(this.characterPosition);
+          this.updateGameStatusBar();
+          this.updateCharacterDirection(direction > 0);
           
-          clearTimeout(mobileScrollTimeout);
-          mobileScrollTimeout = setTimeout(() => {
-            this.optimizeAfterScroll();
-          }, 200); // モバイルでは少し長めのタイムアウト
-        }, { passive: true });
+          // 歩行アニメーション
+          this.startJourneyWalking();
+          setTimeout(() => {
+            this.stopJourneyWalking();
+          }, 300);
+          
+          // プログレス保存
+          this.saveProgress();
+        }
+      }
+      
+      setupKeyboardControls() {
+        // 共通のキーボードナビゲーション
         
         // キーボードナビゲーション - 左右キー対応
         document.addEventListener('keydown', (e) => {
@@ -4736,7 +4982,7 @@
         }
       }
       
-      // カード表示時の経験値処理
+      // カード表示時の経験値処理（即座に保存）
       handleCardView(card) {
         const cardTitle = card.querySelector('.card-title').textContent;
         
@@ -4744,7 +4990,14 @@
         if (!this.viewedCards.has(cardTitle)) {
           this.viewedCards.add(cardTitle);
           this.gainExp();
+          
+          // 即座に進行状況を保存（ページ遷移前）
           this.saveProgress();
+          
+          // 追加の保存確認（ダブル保存）
+          setTimeout(() => {
+            this.saveProgress();
+          }, 100);
         }
       }
       
@@ -5083,6 +5336,46 @@
             );
           });
           segment.classList.toggle('completed', sectionCards.length > 0);
+        });
+      }
+      
+      setupPageStateHandlers() {
+        // ページ遷移前の保存（確実にレベルを保存）
+        window.addEventListener('beforeunload', () => {
+          this.saveProgress();
+        });
+        
+        // ページが表示された時の復元
+        window.addEventListener('pageshow', (e) => {
+          if (e.persisted) {
+            // bfcacheから復元された場合
+            this.loadProgress();
+            setTimeout(() => {
+              this.updateUI();
+            }, 100);
+          }
+        });
+        
+        // ページの可視性変更時の処理
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            // ページが非表示になった時（進行状況を保存）
+            this.saveProgress();
+          } else {
+            // ページが表示された時（進行状況を復元）
+            this.loadProgress();
+            setTimeout(() => {
+              this.updateUI();
+            }, 100);
+          }
+        });
+        
+        // フォーカス復帰時の処理
+        window.addEventListener('focus', () => {
+          this.loadProgress();
+          setTimeout(() => {
+            this.updateUI();
+          }, 100);
         });
       }
     }
