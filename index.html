@@ -2201,88 +2201,99 @@
       }
     }
     
-    /* モバイル用操作UI */
+    /* モバイル用操作UI - 棒人間の横に配置 */
     .mobile-control-ui {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
+      position: fixed;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
       display: none; /* デフォルトは非表示 */
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
+      gap: 12px;
       z-index: 1000;
       opacity: 0;
       transition: opacity 0.3s ease;
+      padding: 8px;
+      background: rgba(0,0,0,0.95);
+      border: 4px solid #000;
+      border-radius: 0;
+      box-shadow: 
+        6px 6px 0px #000,
+        inset 2px 2px 0px #333;
     }
     
     .control-arrow {
-      width: 32px;
-      height: 32px;
-      background: var(--accent-yellow);
-      border: 2px solid var(--border-primary);
-      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+      border: 4px solid #000;
+      border-radius: 0; /* 角ばった8bitスタイル */
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
-      color: var(--text-primary);
+      color: #00ff00;
       cursor: pointer;
-      box-shadow: 2px 2px 0 var(--border-primary);
+      box-shadow: 
+        4px 4px 0px #000,
+        inset 2px 2px 0px #666,
+        inset -2px -2px 0px #1a1a1a;
       transition: all 0.1s ease;
       user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .control-arrow::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      height: 3px;
+      background: linear-gradient(90deg, #00ff00 0%, #00aa00 100%);
+      opacity: 0.8;
+    }
+    
+    .control-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 2px;
+      right: 2px;
+      height: 1px;
+      background: #003300;
+      opacity: 0.6;
+    }
+    
+    .control-arrow:hover {
+      background: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 100%);
+      color: #00ff88;
+      transform: translate(1px, 1px);
+      box-shadow: 
+        3px 3px 0px #000,
+        inset 2px 2px 0px #777,
+        inset -2px -2px 0px #2a2a2a;
     }
     
     .control-arrow:active {
-      transform: scale(0.95);
-      box-shadow: 1px 1px 0 var(--border-primary);
+      background: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 100%);
+      color: #00ff44;
+      transform: translate(2px, 2px);
+      box-shadow: 
+        2px 2px 0px #000,
+        inset 1px 1px 0px #555,
+        inset -1px -1px 0px #0a0a0a;
     }
     
-    .control-hint {
-      background: var(--bg-primary);
-      border: 2px solid var(--border-primary);
-      border-radius: 16px;
-      padding: 4px 8px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      color: var(--text-primary);
-      text-align: center;
-      box-shadow: 2px 2px 0 var(--border-primary);
-      min-width: 80px;
-    }
-    
-    .hint-text {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 2px;
-    }
-    
-    .hint-arrow {
-      font-size: 14px;
-      color: var(--accent-blue);
-      animation: hintPulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes hintPulse {
-      0%, 100% { 
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% { 
-        transform: scale(1.2);
-        opacity: 0.7;
-      }
-    }
+    /* ヒント部分を削除してシンプルに */
     
     /* モバイルでのみ表示 */
     @media (max-width: 768px) and (pointer: coarse) {
       .mobile-control-ui {
         display: flex;
-      }
-      
-      .tiny-character:hover .mobile-control-ui,
-      .tiny-character.show-controls .mobile-control-ui {
-        opacity: 1;
+        opacity: 1; /* 常に表示 */
       }
       
       /* 初回表示時のアニメーション */
@@ -2293,27 +2304,29 @@
       @keyframes controlUIIntro {
         0% {
           opacity: 0;
-          transform: translateX(-50%) translateY(-10px);
+          transform: translateY(-50%) translateX(20px);
         }
-        20%, 80% {
+        50% {
           opacity: 1;
-          transform: translateX(-50%) translateY(0);
+          transform: translateY(-50%) translateX(0);
         }
         100% {
-          opacity: 0.3;
-          transform: translateX(-50%) translateY(0);
+          opacity: 1;
+          transform: translateY(-50%) translateX(0);
         }
+      }
+      
+      /* モバイル用追加調整 */
+      .control-arrow {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
       }
     }
     
     /* タッチ中の状態 */
     .tiny-character.dragging .mobile-control-ui {
-      opacity: 1;
-    }
-    
-    .tiny-character.dragging .control-hint {
-      background: var(--accent-green);
-      color: var(--bg-primary);
+      opacity: 0.5;
     }
   </style>
   
@@ -2444,17 +2457,13 @@
   
   <!-- 8bit ドット絵風歩行アニメーション棒人間 -->
   <div class="tiny-character" role="img" aria-label="歩行中のキャラクター">
-    <!-- モバイル用操作UI -->
+    <!-- モバイル用操作UI - 8bitレトロゲーム風矢印 -->
     <div class="mobile-control-ui" id="mobileControlUI">
       <div class="control-arrow control-left" id="controlLeft">
-        <span>←</span>
-      </div>
-      <div class="control-hint" id="controlHint">
-        <span class="hint-text">ドラッグして移動</span>
-        <div class="hint-arrow">⟷</div>
+        <span>▲</span>
       </div>
       <div class="control-arrow control-right" id="controlRight">
-        <span>→</span>
+        <span>▼</span>
       </div>
     </div>
     <div class="walking-animation-container">
@@ -5340,20 +5349,34 @@
       }
       
       setupPageStateHandlers() {
-        // ページ遷移前の保存（確実にレベルを保存）
+        // より強力なレベル保持システム
+        
+        // ページ遷移前の保存（複数回保存で確実性向上）
         window.addEventListener('beforeunload', () => {
+          this.saveProgress();
+          this.saveProgress(); // 二重保存で確実性向上
+        });
+        
+        // ページ離脱前の保存（より早いタイミング）
+        window.addEventListener('pagehide', () => {
           this.saveProgress();
         });
         
-        // ページが表示された時の復元
+        // ページが表示された時の復元（強化版）
         window.addEventListener('pageshow', (e) => {
-          if (e.persisted) {
-            // bfcacheから復元された場合
+          setTimeout(() => {
             this.loadProgress();
-            setTimeout(() => {
-              this.updateUI();
-            }, 100);
-          }
+            this.updateUI();
+            this.forceUIUpdate(); // 強制UI更新
+          }, 50);
+        });
+        
+        // DOMContentLoaded時の復元（ページリロード対応）
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => {
+            this.loadProgress();
+            this.updateUI();
+          }, 100);
         });
         
         // ページの可視性変更時の処理
@@ -5363,20 +5386,57 @@
             this.saveProgress();
           } else {
             // ページが表示された時（進行状況を復元）
-            this.loadProgress();
             setTimeout(() => {
+              this.loadProgress();
               this.updateUI();
-            }, 100);
+              this.forceUIUpdate();
+            }, 50);
           }
         });
         
-        // フォーカス復帰時の処理
+        // フォーカス復帰時の処理（強化版）
         window.addEventListener('focus', () => {
-          this.loadProgress();
           setTimeout(() => {
+            this.loadProgress();
             this.updateUI();
-          }, 100);
+            this.forceUIUpdate();
+          }, 50);
         });
+        
+        // 定期的な自動保存（5秒間隔）
+        setInterval(() => {
+          if (this.currentLevel > 1) {
+            this.saveProgress();
+          }
+        }, 5000);
+      }
+      
+      forceUIUpdate() {
+        // 強制的にUIを更新する（レベル表示の確実な反映）
+        const levelDisplay = document.getElementById('currentLevel');
+        const expDisplay = document.getElementById('currentExp');
+        const cardsViewedDisplay = document.getElementById('cardsViewed');
+        
+        if (levelDisplay) {
+          levelDisplay.textContent = `LV.${this.currentLevel}`;
+          levelDisplay.style.color = this.currentLevel >= this.maxLevel ? '#ff4444' : '#00ff00';
+        }
+        
+        if (expDisplay) {
+          expDisplay.textContent = `EXP: ${this.currentExp}`;
+        }
+        
+        if (cardsViewedDisplay) {
+          cardsViewedDisplay.textContent = `${this.viewedCards.size}/${this.cardsData.length}`;
+        }
+        
+        // キャラクターの色も強制更新
+        const character = document.querySelector('.tiny-character');
+        if (character && this.currentLevel >= this.maxLevel) {
+          character.classList.add('max-level-achieved');
+        }
+        
+        console.log('Force UI Update - Level:', this.currentLevel, 'Exp:', this.currentExp, 'Viewed:', this.viewedCards.size);
       }
     }
     
