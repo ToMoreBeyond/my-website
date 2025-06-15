@@ -2859,6 +2859,7 @@
         // 新しい横スクロール構造管理
         this.characterPosition = 0; // 開始位置は完全に左端（最初のカード）
         this.totalJourneyWidth = window.innerWidth * 6; // 6画面分の旅路
+        this.moveInterval = null; // 矢印長押し用の連続移動タイマー
         this.sectionCheckpoints = [
           { name: 'apps', position: 0.16, title: 'アプリ' },
           { name: 'company', position: 0.32, title: '会社' },
@@ -3839,38 +3840,134 @@
           }
         }, { passive: false });
         
-        // 矢印ボタンでの移動 - より大きな移動幅とビジュアルフィードバック
-        if (leftArrow) {
-          leftArrow.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            leftArrow.classList.add('arrow-pressed');
-            this.moveCharacterByStep(-3); // 左に3カード分移動
-            if ('vibrate' in navigator) {
-              navigator.vibrate(50);
-            }
-          }, { passive: false });
+        // 矢印ボタンでの移動 - 長押し対応の連続移動
+        this.setupArrowButton(leftArrow, -1, 'left'); // 左矢印
+        this.setupArrowButton(rightArrow, 1, 'right'); // 右矢印
+      }
+      
+      setupArrowButton(button, direction, directionName) {
+        if (!button) return;
+        
+        let isPressed = false;
+        let holdTimeout = null;
+        let moveInterval = null;
+        let moveCount = 0;
+        
+        const startMove = () => {
+          if (!isPressed) return;
           
-          leftArrow.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            leftArrow.classList.remove('arrow-pressed');
-          }, { passive: false });
+          // 初回移動
+          this.moveCharacterByStep(direction * 2); // 2カード分移動
+          moveCount++;
+          
+          // ハプティックフィードバック
+          if ('vibrate' in navigator) {
+            navigator.vibrate(30);
+          }
+          
+          // 長押し検出（300ms後）
+          holdTimeout = setTimeout(() => {
+            if (!isPressed) return;
+            
+            // 連続移動開始
+            this.startContinuousMove(direction);
+            
+            // より強いハプティック
+            if ('vibrate' in navigator) {
+              navigator.vibrate([50, 50, 50]);
+            }
+          }, 300);
+        };
+        
+        const stopMove = () => {
+          isPressed = false;
+          button.classList.remove('arrow-pressed');
+          
+          // タイマーをクリア
+          if (holdTimeout) {
+            clearTimeout(holdTimeout);
+            holdTimeout = null;
+          }
+          
+          if (moveInterval) {
+            clearInterval(moveInterval);
+            moveInterval = null;
+          }
+          
+          // 歩行停止
+          setTimeout(() => {
+            this.stopJourneyWalking();
+          }, 200);
+          
+          moveCount = 0;
+        };
+        
+        // タッチイベント
+        button.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          isPressed = true;
+          button.classList.add('arrow-pressed');
+          startMove();
+        }, { passive: false });
+        
+        button.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          stopMove();
+        }, { passive: false });
+        
+        button.addEventListener('touchcancel', (e) => {
+          e.preventDefault();
+          stopMove();
+        }, { passive: false });
+        
+        // マウスイベント（デスクトップでもテスト可能）
+        button.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          isPressed = true;
+          button.classList.add('arrow-pressed');
+          startMove();
+        });
+        
+        button.addEventListener('mouseup', (e) => {
+          e.preventDefault();
+          stopMove();
+        });
+        
+        button.addEventListener('mouseleave', (e) => {
+          e.preventDefault();
+          stopMove();
+        });
+      }
+      
+      startContinuousMove(direction) {
+        // 連続移動の実装
+        if (this.moveInterval) {
+          clearInterval(this.moveInterval);
         }
         
-        if (rightArrow) {
-          rightArrow.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            rightArrow.classList.add('arrow-pressed');
-            this.moveCharacterByStep(3); // 右に3カード分移動
-            if ('vibrate' in navigator) {
-              navigator.vibrate(50);
-            }
-          }, { passive: false });
+        this.moveInterval = setInterval(() => {
+          // スムーズな連続移動
+          const moveAmount = direction * 0.02; // より細かい移動単位
+          const oldPosition = this.characterPosition;
+          const newPosition = Math.max(0, Math.min(1, this.characterPosition + moveAmount));
           
-          rightArrow.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            rightArrow.classList.remove('arrow-pressed');
-          }, { passive: false });
-        }
+          if (Math.abs(newPosition - oldPosition) > 0.001) {
+            this.characterPosition = newPosition;
+            this.updateCharacterPosition(oldPosition);
+            this.updateCardScrollProgress(this.characterPosition);
+            this.updateGameStatusBar();
+            this.updateCharacterDirection(direction > 0);
+            
+            // 連続歩行アニメーション
+            if (!this.isScrolling) {
+              this.startJourneyWalking();
+            }
+          } else {
+            // 端に到達した場合は停止
+            clearInterval(this.moveInterval);
+            this.moveInterval = null;
+          }
+        }, 16); // 60FPSで滑らか移動
       }
       
       moveCharacterByStep(direction) {
