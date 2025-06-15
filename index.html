@@ -2275,7 +2275,8 @@
         inset -2px -2px 0px #2a2a2a;
     }
     
-    .control-arrow:active {
+    .control-arrow:active,
+    .control-arrow.arrow-pressed {
       background: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 100%);
       color: #00ff44;
       transform: translate(2px, 2px);
@@ -2283,6 +2284,18 @@
         2px 2px 0px #000,
         inset 1px 1px 0px #555,
         inset -1px -1px 0px #0a0a0a;
+    }
+    
+    /* 矢印ボタンの追加エフェクト */
+    .control-arrow.arrow-pressed::before {
+      background: linear-gradient(90deg, #00ff44 0%, #00aa22 100%);
+      animation: arrowFlash 0.3s ease;
+    }
+    
+    @keyframes arrowFlash {
+      0% { opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { opacity: 0.8; }
     }
     
     /* ヒント部分を削除してシンプルに */
@@ -3826,24 +3839,36 @@
           }
         }, { passive: false });
         
-        // 矢印ボタンでの移動
+        // 矢印ボタンでの移動 - より大きな移動幅とビジュアルフィードバック
         if (leftArrow) {
           leftArrow.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            this.moveCharacterByStep(-0.1);
+            leftArrow.classList.add('arrow-pressed');
+            this.moveCharacterByStep(-3); // 左に3カード分移動
             if ('vibrate' in navigator) {
-              navigator.vibrate(30);
+              navigator.vibrate(50);
             }
+          }, { passive: false });
+          
+          leftArrow.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            leftArrow.classList.remove('arrow-pressed');
           }, { passive: false });
         }
         
         if (rightArrow) {
           rightArrow.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            this.moveCharacterByStep(0.1);
+            rightArrow.classList.add('arrow-pressed');
+            this.moveCharacterByStep(3); // 右に3カード分移動
             if ('vibrate' in navigator) {
-              navigator.vibrate(30);
+              navigator.vibrate(50);
             }
+          }, { passive: false });
+          
+          rightArrow.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            rightArrow.classList.remove('arrow-pressed');
           }, { passive: false });
         }
       }
@@ -3851,23 +3876,32 @@
       moveCharacterByStep(direction) {
         // 段階的移動メソッド（矢印ボタン用）
         const oldPosition = this.characterPosition;
-        const newPosition = Math.max(0, Math.min(1, this.characterPosition + direction));
         
-        if (newPosition !== oldPosition) {
+        // カード数に基づいた適切な移動量を計算
+        const totalCards = this.cardsData.length;
+        const stepSize = Math.abs(direction);
+        const cardStepSize = stepSize / (totalCards - 1); // カード間隔に基づく
+        const actualDirection = direction > 0 ? cardStepSize : -cardStepSize;
+        
+        const newPosition = Math.max(0, Math.min(1, this.characterPosition + actualDirection));
+        
+        if (Math.abs(newPosition - oldPosition) > 0.001) { // 微小な変化を無視
           this.characterPosition = newPosition;
           this.updateCharacterPosition(oldPosition);
           this.updateCardScrollProgress(this.characterPosition);
           this.updateGameStatusBar();
           this.updateCharacterDirection(direction > 0);
           
-          // 歩行アニメーション
+          // より長い歩行アニメーション
           this.startJourneyWalking();
           setTimeout(() => {
             this.stopJourneyWalking();
-          }, 300);
+          }, 500);
           
           // プログレス保存
           this.saveProgress();
+          
+          console.log('Character moved to position:', this.characterPosition, 'Direction:', direction);
         }
       }
       
