@@ -2279,9 +2279,9 @@
       <source src="backvideo.mp4" type="video/mp4">
       <!-- 本番環境用：外部ホスティングURL（後で追加） -->
       <!-- <source src="https://your-cdn.com/backvideo.mp4" type="video/mp4"> -->
-      <!-- フォールバック用静止画 -->
-      <div class="video-fallback"></div>
     </video>
+    <!-- フォールバック用静止画（videoタグの外に移動） -->
+    <div class="video-fallback" style="display: none;"></div>
     <!-- 動画オーバーレイ（8bit感を強調） -->
     <div class="video-overlay"></div>
   </div>
@@ -2861,51 +2861,117 @@
         const video = document.getElementById('backgroundVideo');
         const videoBackground = document.getElementById('videoBackground');
         
-        if (video && videoBackground) {
-          // 動画読み込み完了時の処理
-          video.addEventListener('loadeddata', () => {
-            console.log('Background video loaded successfully');
-            videoBackground.style.opacity = '1';
-          });
-          
-          // 動画エラー時の処理
-          video.addEventListener('error', (e) => {
-            console.warn('Background video failed to load:', e);
-            // フォールバック背景を表示
-            videoBackground.style.background = 'var(--bg-primary)';
-            const fallback = videoBackground.querySelector('.video-fallback');
-            if (fallback) {
-              fallback.style.display = 'block';
-            }
-          });
-          
-          // ユーザー操作後に動画を再生
-          const playVideoOnInteraction = () => {
-            video.play().catch(e => {
-              console.log('Video play failed:', e);
-            });
-            document.removeEventListener('click', playVideoOnInteraction);
-            document.removeEventListener('touchstart', playVideoOnInteraction);
-          };
-          
-          document.addEventListener('click', playVideoOnInteraction);
-          document.addEventListener('touchstart', playVideoOnInteraction);
-          
-          // モバイル用の最適化
-          if (window.innerWidth <= 768) {
-            video.style.opacity = '0.5'; // モバイルでは薄く
-          }
-          
-          // 低性能デバイスでは動画を無効に
-          if (this.isLowEndDevice) {
-            video.style.display = 'none';
-            const fallback = videoBackground.querySelector('.video-fallback');
-            if (fallback) {
-              fallback.style.display = 'block';
-              fallback.style.opacity = '0.3';
-            }
-          }
+        if (!video || !videoBackground) return;
+        
+        // デバイス判定の改善
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isLowEndMobile = isMobile && (
+          (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2)
+        );
+        
+        // 低性能デバイスでは動画を無効
+        if (isLowEndMobile) {
+          this.showVideoFallback(videoBackground);
+          return;
         }
+        
+        // 動画の初期設定
+        video.currentTime = 0;
+        video.volume = 0;
+        
+        // 動画読み込み完了時の処理
+        video.addEventListener('loadeddata', () => {
+          console.log('Background video loaded successfully');
+          videoBackground.style.opacity = '1';
+          this.tryPlayVideo(video);
+        });
+        
+        // 動画エラー時の処理
+        video.addEventListener('error', (e) => {
+          console.warn('Background video failed to load:', e);
+          this.showVideoFallback(videoBackground);
+        });
+        
+        // モバイル用の最適化
+        if (isMobile) {
+          video.style.opacity = '0.4'; // モバイルでは薄く
+        }
+        
+        // Intersection Observerで動画の可視性を管理
+        if ('IntersectionObserver' in window) {
+          const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.tryPlayVideo(video);
+              } else {
+                video.pause();
+              }
+            });
+          });
+          videoObserver.observe(video);
+        }
+        
+        // 初回再生試行
+        this.tryPlayVideo(video);
+        
+        // ページの可視性変更時の処理
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            video.pause();
+          } else {
+            this.tryPlayVideo(video);
+          }
+        });
+      }
+      
+      tryPlayVideo(video) {
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Video playing successfully');
+            })
+            .catch(error => {
+              console.log('Auto-play prevented, waiting for user interaction:', error);
+              this.setupUserInteractionPlay(video);
+            });
+        }
+      }
+      
+      setupUserInteractionPlay(video) {
+        const playOnInteraction = () => {
+          video.play().then(() => {
+            console.log('Video started after user interaction');
+          }).catch(e => {
+            console.log('Video play still failed:', e);
+          });
+        };
+        
+        // 様々なユーザー操作をリッスン
+        document.addEventListener('click', playOnInteraction, { once: true });
+        document.addEventListener('touchstart', playOnInteraction, { once: true });
+        document.addEventListener('keydown', playOnInteraction, { once: true });
+        
+        // ゲーム操作でも再生を試みる
+        document.addEventListener('scroll', playOnInteraction, { once: true });
+      }
+      
+      showVideoFallback(videoBackground) {
+        const video = videoBackground.querySelector('video');
+        const fallback = videoBackground.querySelector('.video-fallback');
+        
+        if (video) {
+          video.style.display = 'none';
+        }
+        
+        if (fallback) {
+          fallback.style.display = 'block';
+          fallback.style.opacity = '0.3';
+        }
+        
+        videoBackground.style.background = 'var(--bg-primary)';
       }
       
       // ============================================================================
