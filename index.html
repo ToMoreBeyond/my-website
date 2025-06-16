@@ -2272,7 +2272,14 @@
   <!-- 8bitレトロゲーム背景動画 -->
   <div class="video-background" id="videoBackground">
     <video id="backgroundVideo" muted loop playsinline preload="metadata">
+      <!-- ローカル開発用 -->
       <source src="backvideo.mp4" type="video/mp4">
+      <!-- 本番環境用: 外部ホスティングURL -->
+      <source src="https://github.com/user-attachments/assets/example-video.mp4" type="video/mp4">
+      <!-- YouTubeの埋め込みフォールバック -->
+      <iframe id="youtubeBackup" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.6;" 
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&showinfo=0&rel=0&modestbranding=1" 
+              frameborder="0" allow="autoplay; encrypted-media"></iframe>
     </video>
     <div class="video-fallback" style="display: none;"></div>
     <div class="video-overlay"></div>
@@ -3006,18 +3013,61 @@
         console.log('フォールバックモードに切り替えます');
         
         const video = videoBackground.querySelector('video');
+        const iframe = videoBackground.querySelector('#youtubeBackup');
         const fallback = videoBackground.querySelector('.video-fallback');
         
         if (video) {
           video.style.display = 'none';
         }
         
-        if (fallback) {
-          fallback.style.display = 'block';
-          fallback.style.opacity = '0.3';
+        // YouTubeフォールバックを試行
+        if (iframe) {
+          console.log('YouTubeフォールバックを表示中...');
+          iframe.style.display = 'block';
+          return;
         }
         
-        videoBackground.style.background = 'var(--bg-primary)';
+        // アニメーション背景フォールバック
+        if (fallback) {
+          fallback.style.display = 'block';
+          fallback.style.opacity = '0.4';
+          // 動的アニメーション背景を作成
+          this.createAnimatedBackground(fallback);
+        }
+        
+        videoBackground.style.background = 'linear-gradient(45deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%)';
+      }
+      
+      createAnimatedBackground(fallback) {
+        console.log('動的アニメーション背景を作成中...');
+        
+        fallback.innerHTML = `
+          <div style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+              radial-gradient(circle at 20% 50%, rgba(255,255,255,0.8) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(240,240,240,0.6) 0%, transparent 50%),
+              linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
+              linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
+              linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+            background-size: 200px 200px, 300px 300px, 30px 30px, 30px 30px, 30px 30px, 30px 30px;
+            background-position: 0 0, 100px 100px, 0 0, 0 15px, 15px -15px, -15px 0px;
+            animation: backgroundMove 20s linear infinite;
+            opacity: 0.3;
+          ">
+          </div>
+          <style>
+            @keyframes backgroundMove {
+              0% { background-position: 0 0, 100px 100px, 0 0, 0 15px, 15px -15px, -15px 0px; }
+              100% { background-position: 200px 200px, 300px 300px, 30px 30px, 30px 45px, 45px 15px, 15px 30px; }
+            }
+          </style>
+        `;
       }
       
       // ============================================================================
