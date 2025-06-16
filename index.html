@@ -2071,88 +2071,6 @@
       box-shadow: none;
     }
     
-    /* 8bitcn風ゲームステータスバー */
-    .game-status-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background: var(--bg-primary);
-      border-top: 4px solid var(--border-primary);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 16px;
-      z-index: 1500;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 14px;
-      box-shadow: 
-        0 -4px 0 var(--border-primary),
-        0 -8px 0 rgba(0, 0, 0, 0.1);
-      /* モバイル対応 */
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      will-change: transform;
-      /* セーフエリア対応 */
-      padding-bottom: max(8px, env(safe-area-inset-bottom));
-    }
-    
-    .status-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      background: var(--bg-secondary);
-      border: 2px solid var(--border-primary);
-      border-radius: 0;
-      box-shadow: 2px 2px 0 var(--border-primary);
-    }
-    
-    .status-icon {
-      font-size: 16px;
-      image-rendering: pixelated;
-    }
-    
-    .status-text {
-      font-weight: bold;
-      color: var(--text-primary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .mini-map {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      height: 30px;
-    }
-    
-    .map-segment {
-      width: 40px;
-      height: 12px;
-      background: var(--bg-secondary);
-      border: 2px solid var(--border-primary);
-      position: relative;
-      transition: all 0.2s ease;
-    }
-    
-    .map-segment[data-section="company"] { background: var(--accent-yellow); }
-    .map-segment[data-section="apps"] { background: var(--accent-green); }
-    .map-segment[data-section="members"] { background: var(--accent-blue); }
-    .map-segment[data-section="media"] { background: var(--accent-purple); }
-    .map-segment[data-section="contact"] { background: var(--accent-red); }
-    
-    .map-segment.active {
-      transform: scale(1.2);
-      box-shadow: 0 0 8px currentColor;
-      z-index: 1;
-    }
-    
-    .map-segment.completed {
-      border-color: var(--accent-green);
-      box-shadow: inset 0 0 0 2px var(--accent-green);
-    }
 
     /* モバイル用8bitcn風調整 */
     @media (max-width: 768px) {
@@ -2200,43 +2118,17 @@
         padding: 12px 16px;
       }
       
-      .game-status-bar {
-        height: 50px;
-        font-size: 12px;
-        padding: 6px 12px;
-        /* モバイルでのセーフエリア対応を強化 */
-        padding-bottom: max(6px, calc(env(safe-area-inset-bottom) + 6px));
-      }
-      
-      .status-item {
-        padding: 4px 8px;
-        gap: 6px;
-      }
-      
-      .status-icon {
-        font-size: 14px;
-      }
-      
-      .map-segment {
-        width: 24px;
-        height: 8px;
-      }
-      
-      .mini-map {
-        gap: 2px;
-        height: 20px;
-      }
       
       /* モバイルでキャラクター位置調整 */
       .tiny-character {
-        bottom: max(60px, calc(env(safe-area-inset-bottom) + 50px));
+        bottom: 20px;
         width: 70px;
         height: 70px;
       }
       
       /* モバイルでメインコンテンツの下部余白を確保 */
       .main-content {
-        padding-bottom: max(60px, calc(env(safe-area-inset-bottom) + 50px));
+        padding-bottom: 20px;
       }
     }
     
@@ -2387,7 +2279,6 @@
       <source src="backvideo.mp4" type="video/mp4">
       <!-- 本番環境用：外部ホスティングURL（後で追加） -->
       <!-- <source src="https://your-cdn.com/backvideo.mp4" type="video/mp4"> -->
-      <source src="backvideo.webm" type="video/webm">
       <!-- フォールバック用静止画 -->
       <div class="video-fallback"></div>
     </video>
@@ -2493,24 +2384,6 @@
   <!-- 看板システム -->
   <section class="signpost-container" id="signpostContainer" role="complementary" aria-label="進行状況の看板"></section>
   
-  <!-- 8bitcn風ゲームステータスバー -->
-  <footer class="game-status-bar" role="complementary" aria-label="ゲームステータス">
-    <div class="status-item">
-      <span class="status-icon">📍</span>
-      <span class="status-text" id="currentSection">COMPANY</span>
-    </div>
-    <div class="status-item">
-      <span class="status-icon">🎯</span>
-      <span class="status-text" id="cardsViewed">0/12</span>
-    </div>
-    <div class="mini-map">
-      <div class="map-segment" data-section="company"></div>
-      <div class="map-segment" data-section="apps"></div>
-      <div class="map-segment" data-section="members"></div>
-      <div class="map-segment" data-section="media"></div>
-      <div class="map-segment" data-section="contact"></div>
-    </div>
-  </footer>
   
   <!-- 8bit ドット絵風歩行アニメーション棒人間 -->
   <div class="tiny-character" role="img" aria-label="歩行中のキャラクター">
@@ -2883,7 +2756,6 @@
         this.rafIds = new Set(); // Track RAF IDs for cleanup
         
         // Game State
-        this.currentSection = 'company';
         this.sections = ['company', 'apps', 'members', 'media', 'contact'];
         this.sectionIndex = 0;
         this.isScrolling = false;
@@ -3007,12 +2879,17 @@
             }
           });
           
-          // 動画の再生準備完了
-          video.addEventListener('canplaythrough', () => {
+          // ユーザー操作後に動画を再生
+          const playVideoOnInteraction = () => {
             video.play().catch(e => {
-              console.log('Auto-play prevented, video will play on user interaction');
+              console.log('Video play failed:', e);
             });
-          });
+            document.removeEventListener('click', playVideoOnInteraction);
+            document.removeEventListener('touchstart', playVideoOnInteraction);
+          };
+          
+          document.addEventListener('click', playVideoOnInteraction);
+          document.addEventListener('touchstart', playVideoOnInteraction);
           
           // モバイル用の最適化
           if (window.innerWidth <= 768) {
@@ -3434,14 +3311,6 @@
           levelDisplay.style.visibility = 'visible';
           levelDisplay.style.display = 'block';
         }
-        
-        // ゲームステータスバーを確実に表示
-        const statusBar = document.querySelector('.game-status-bar');
-        if (statusBar) {
-          statusBar.style.opacity = '1';
-          statusBar.style.visibility = 'visible';
-          statusBar.style.display = 'flex';
-        }
       }
       
       init() {
@@ -3483,7 +3352,6 @@
         // UI要素の表示を確実にする
         const elements = [
           { selector: '.level-display', display: 'block' },
-          { selector: '.game-status-bar', display: 'flex' },
           { selector: '.tiny-character', display: 'block' },
           { selector: '.main-content', display: 'flex' },
           { selector: '.cards-track', display: 'flex' }
@@ -3502,11 +3370,8 @@
       finalUICheck() {
         // 最終的なUI表示確認
         setTimeout(() => {
-          const statusBar = document.querySelector('.game-status-bar');
           const character = document.querySelector('.tiny-character');
           const levelDisplay = document.querySelector('.level-display');
-          
-          if (statusBar) statusBar.style.opacity = '1';
           if (character) character.style.opacity = '1';
           if (levelDisplay) levelDisplay.style.opacity = '1';
           
@@ -3921,7 +3786,6 @@
             // キャラクターとカードの位置を更新
             this.updateCharacterPosition(oldPosition);
             this.updateCardScrollProgress(this.characterPosition);
-            this.updateGameStatusBar();
             
             // 歩行アニメーション
             this.startJourneyWalking();
@@ -4056,7 +3920,6 @@
             this.characterPosition = newPosition;
             this.updateCharacterPosition(oldPosition);
             this.updateCardScrollProgress(this.characterPosition);
-            this.updateGameStatusBar();
             this.updateCharacterDirection(direction > 0);
             
             // 連続歩行アニメーション
@@ -4087,7 +3950,6 @@
           this.characterPosition = newPosition;
           this.updateCharacterPosition(oldPosition);
           this.updateCardScrollProgress(this.characterPosition);
-          this.updateGameStatusBar();
           this.updateCharacterDirection(direction > 0);
           
           // より長い歩行アニメーション
@@ -4239,7 +4101,6 @@
         this.updateCardScrollProgress(this.characterPosition);
         
         // ゲームステータスバーを更新
-        this.updateGameStatusBar();
         
         // 歩行アニメーション（適度な閾値）
         if (Math.abs(oldPosition - this.characterPosition) > 0.001) {
@@ -5104,45 +4965,6 @@
       }
       
       
-      navigateToSection(sectionName) {
-        if (this.currentSection === sectionName) return;
-        
-        this.isNavigating = true;
-        
-        // 高速歩行でセクションに移動
-        this.speedMultiplier = 3.0;
-        this.walkSpeed = 0.25;
-        this.currentScrollSpeed = 15;
-        
-        this.updateCardPosition();
-        
-        // セクション切り替え
-        setTimeout(() => {
-          this.changeSection(sectionName);
-          
-          // 通常状態に戻す
-          setTimeout(() => {
-            this.isNavigating = false;
-          }, 800);
-        }, 400);
-      }
-      
-      changeSection(sectionName) {
-        if (this.currentSection === sectionName) return;
-        
-        this.currentSection = sectionName;
-        document.body.className = `section-${sectionName}`;
-        
-        // ナビゲーション更新
-        document.querySelectorAll('.nav-item').forEach(nav => {
-          nav.classList.toggle('active', nav.dataset.section === sectionName);
-        });
-        
-        this.sectionIndex = this.sections.indexOf(sectionName);
-        
-        // セクション特有のカードを強調表示
-        this.highlightSectionCards(sectionName);
-      }
       
       highlightSectionCards(sectionName) {
         const allCards = document.querySelectorAll('.card');
@@ -5532,7 +5354,6 @@
         this.updateExpBar();
         
         // ゲームステータスバーを更新
-        this.updateGameStatusBar();
         
         // 最大レベル到達時の処理
         if (this.maxLevelReached) {
@@ -5540,43 +5361,6 @@
         }
       }
       
-      updateGameStatusBar() {
-        // カード閲覧数の更新
-        const cardsViewedElement = document.getElementById('cardsViewed');
-        if (cardsViewedElement) {
-          cardsViewedElement.textContent = `${this.viewedCards.size}/${this.maxLevel}`;
-        }
-        
-        // 現在のセクションを更新
-        const currentSectionElement = document.getElementById('currentSection');
-        if (currentSectionElement) {
-          const section = this.getCurrentSectionFromPosition();
-          currentSectionElement.textContent = section.toUpperCase();
-        }
-        
-        // ミニマップの更新
-        this.updateMiniMap();
-      }
-      
-      updateMiniMap() {
-        const mapSegments = document.querySelectorAll('.map-segment');
-        const currentSection = this.getCurrentSectionFromPosition();
-        
-        mapSegments.forEach(segment => {
-          const section = segment.dataset.section;
-          
-          // アクティブセクションの設定
-          segment.classList.toggle('active', section === currentSection);
-          
-          // 完了セクションの判定（そのセクションのカードが1つ以上見られている場合）
-          const sectionCards = Array.from(this.viewedCards).filter(cardTitle => {
-            return window.cardsData?.some(card => 
-              card.title === cardTitle && card.section === section
-            );
-          });
-          segment.classList.toggle('completed', sectionCards.length > 0);
-        });
-      }
       
       setupPageStateHandlers() {
         // より強力なレベル保持システム
@@ -5645,7 +5429,6 @@
         // 強制的にUIを更新する（レベル表示の確実な反映）
         const levelDisplay = document.getElementById('currentLevel');
         const expDisplay = document.getElementById('currentExp');
-        const cardsViewedDisplay = document.getElementById('cardsViewed');
         
         if (levelDisplay) {
           levelDisplay.textContent = `LV.${this.currentLevel}`;
@@ -5654,10 +5437,6 @@
         
         if (expDisplay) {
           expDisplay.textContent = `EXP: ${this.currentExp}`;
-        }
-        
-        if (cardsViewedDisplay) {
-          cardsViewedDisplay.textContent = `${this.viewedCards.size}/${window.cardsData.length}`;
         }
         
         // キャラクターの色も強制更新
