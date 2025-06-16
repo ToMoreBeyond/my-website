@@ -400,23 +400,20 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
+      z-index: -1;
       overflow: hidden;
       background: var(--bg-primary);
     }
     
     .video-background video {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      opacity: 0.7; /* ゲーム要素が見えるように調整 */
-      filter: contrast(1.1) saturate(1.05); /* 8bit風コントラスト */
+      opacity: 0.6;
+      filter: contrast(1.1) saturate(1.05);
     }
     
     /* 動画オーバーレイで8bit効果 */
@@ -436,7 +433,7 @@
         );
       pointer-events: none;
       z-index: 1;
-      opacity: 0.3;
+      opacity: 0.2;
     }
     
     /* 動画フォールバック */
@@ -2274,16 +2271,16 @@
   
   <!-- 8bitレトロゲーム背景動画 -->
   <div class="video-background" id="videoBackground">
-    <video id="backgroundVideo" autoplay muted loop playsinline preload="auto">
-      <!-- ローカル開発用 -->
+    <video id="backgroundVideo" muted loop playsinline preload="metadata">
       <source src="backvideo.mp4" type="video/mp4">
-      <!-- 本番環境用：外部ホスティングURL（後で追加） -->
-      <!-- <source src="https://your-cdn.com/backvideo.mp4" type="video/mp4"> -->
     </video>
-    <!-- フォールバック用静止画（videoタグの外に移動） -->
     <div class="video-fallback" style="display: none;"></div>
-    <!-- 動画オーバーレイ（8bit感を強調） -->
     <div class="video-overlay"></div>
+  </div>
+  
+  <!-- 動画再生トリガーボタン -->
+  <div id="videoPlayTrigger" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; cursor: pointer; font-family: monospace; font-size: 12px; display: none;">
+    🎥 クリックで動画再生
   </div>
   
   <!-- 遷移オーバーレイ -->
@@ -2858,107 +2855,156 @@
       }
       
       initializeBackgroundVideo() {
+        console.log('=== 背景動画初期化開始 ===');
+        
         const video = document.getElementById('backgroundVideo');
         const videoBackground = document.getElementById('videoBackground');
+        const playTrigger = document.getElementById('videoPlayTrigger');
         
-        if (!video || !videoBackground) return;
-        
-        // デバイス判定の改善
-        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const isLowEndMobile = isMobile && (
-          (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
-          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2)
-        );
-        
-        // 低性能デバイスでは動画を無効
-        if (isLowEndMobile) {
-          this.showVideoFallback(videoBackground);
+        if (!video || !videoBackground) {
+          console.error('動画要素が見つかりません');
           return;
         }
+        
+        console.log('Video element found:', video);
+        console.log('Video source:', video.currentSrc || 'ソースが未設定');
         
         // 動画の初期設定
         video.currentTime = 0;
         video.volume = 0;
+        video.muted = true;
         
-        // 動画読み込み完了時の処理
-        video.addEventListener('loadeddata', () => {
-          console.log('Background video loaded successfully');
-          videoBackground.style.opacity = '1';
-          this.tryPlayVideo(video);
+        // デバイス情報をログ出力
+        const userAgent = navigator.userAgent;
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        console.log('User Agent:', userAgent);
+        console.log('Is Mobile:', isMobile);
+        console.log('Device Memory:', navigator.deviceMemory || 'Unknown');
+        console.log('Hardware Concurrency:', navigator.hardwareConcurrency || 'Unknown');
+        
+        // 動画のメタデータ読み込みイベント
+        video.addEventListener('loadstart', () => {
+          console.log('動画読み込み開始');
         });
         
-        // 動画エラー時の処理
+        video.addEventListener('loadedmetadata', () => {
+          console.log('動画メタデータ読み込み完了');
+          console.log('Video duration:', video.duration);
+          console.log('Video dimensions:', video.videoWidth, 'x', video.videoHeight);
+        });
+        
+        video.addEventListener('loadeddata', () => {
+          console.log('動画データ読み込み完了');
+          videoBackground.style.opacity = '1';
+          this.attemptVideoPlay(video, playTrigger);
+        });
+        
+        video.addEventListener('canplay', () => {
+          console.log('動画再生準備完了');
+          this.attemptVideoPlay(video, playTrigger);
+        });
+        
+        video.addEventListener('canplaythrough', () => {
+          console.log('動画完全読み込み完了');
+          this.attemptVideoPlay(video, playTrigger);
+        });
+        
+        video.addEventListener('play', () => {
+          console.log('動画再生開始');
+          if (playTrigger) playTrigger.style.display = 'none';
+        });
+        
+        video.addEventListener('pause', () => {
+          console.log('動画一時停止');
+        });
+        
         video.addEventListener('error', (e) => {
-          console.warn('Background video failed to load:', e);
+          console.error('動画エラー:', e);
+          console.error('Error details:', video.error);
           this.showVideoFallback(videoBackground);
         });
         
         // モバイル用の最適化
         if (isMobile) {
-          video.style.opacity = '0.4'; // モバイルでは薄く
+          video.style.opacity = '0.4';
+          console.log('モバイルデバイス: 動画透明度を下げました');
         }
         
-        // Intersection Observerで動画の可視性を管理
-        if ('IntersectionObserver' in window) {
-          const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                this.tryPlayVideo(video);
-              } else {
-                video.pause();
-              }
-            });
+        // 手動再生トリガーの設定
+        if (playTrigger) {
+          playTrigger.addEventListener('click', () => {
+            console.log('手動再生トリガークリック');
+            this.forcePlayVideo(video);
           });
-          videoObserver.observe(video);
         }
         
-        // 初回再生試行
-        this.tryPlayVideo(video);
-        
-        // ページの可視性変更時の処理
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            video.pause();
-          } else {
-            this.tryPlayVideo(video);
-          }
-        });
+        // 初回読み込み試行
+        console.log('動画の初期読み込みを開始します...');
+        video.load();
       }
       
-      tryPlayVideo(video) {
+      attemptVideoPlay(video, playTrigger) {
+        console.log('動画再生を試行中...');
+        
         const playPromise = video.play();
         
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
-              console.log('Video playing successfully');
+              console.log('✅ 動画再生成功!');
+              if (playTrigger) playTrigger.style.display = 'none';
             })
             .catch(error => {
-              console.log('Auto-play prevented, waiting for user interaction:', error);
-              this.setupUserInteractionPlay(video);
+              console.log('❌ 自動再生がブロックされました:', error);
+              if (playTrigger) {
+                playTrigger.style.display = 'block';
+                console.log('手動再生ボタンを表示しました');
+              }
+              this.setupUserInteractionPlay(video, playTrigger);
+            });
+        } else {
+          console.log('動画再生 Promise が未対応');
+          this.setupUserInteractionPlay(video, playTrigger);
+        }
+      }
+      
+      forcePlayVideo(video) {
+        console.log('強制的に動画再生を試行中...');
+        
+        video.muted = true;
+        video.currentTime = 0;
+        
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('✅ 強制再生成功!');
+              const playTrigger = document.getElementById('videoPlayTrigger');
+              if (playTrigger) playTrigger.style.display = 'none';
+            })
+            .catch(error => {
+              console.error('❌ 強制再生も失敗:', error);
             });
         }
       }
       
-      setupUserInteractionPlay(video) {
-        const playOnInteraction = () => {
-          video.play().then(() => {
-            console.log('Video started after user interaction');
-          }).catch(e => {
-            console.log('Video play still failed:', e);
-          });
+      setupUserInteractionPlay(video, playTrigger) {
+        console.log('ユーザー操作待ちモードに入りました');
+        
+        const playOnInteraction = (event) => {
+          console.log('ユーザー操作を検知:', event.type);
+          this.forcePlayVideo(video);
         };
         
-        // 様々なユーザー操作をリッスン
-        document.addEventListener('click', playOnInteraction, { once: true });
-        document.addEventListener('touchstart', playOnInteraction, { once: true });
-        document.addEventListener('keydown', playOnInteraction, { once: true });
-        
-        // ゲーム操作でも再生を試みる
-        document.addEventListener('scroll', playOnInteraction, { once: true });
+        // 様々なイベントで再生を試みる
+        ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'].forEach(eventType => {
+          document.addEventListener(eventType, playOnInteraction, { once: true, passive: true });
+        });
       }
       
       showVideoFallback(videoBackground) {
+        console.log('フォールバックモードに切り替えます');
+        
         const video = videoBackground.querySelector('video');
         const fallback = videoBackground.querySelector('.video-fallback');
         
