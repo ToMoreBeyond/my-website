@@ -393,7 +393,7 @@
         2px 2px 0 rgba(0, 0, 0, 0.3);
     }
     
-    /* 動画背景レイヤー（準備用） */
+    /* 8bitレトロゲーム背景動画システム */
     .video-background {
       position: fixed;
       top: 0;
@@ -402,7 +402,7 @@
       height: 100%;
       z-index: 0;
       overflow: hidden;
-      background: #000;
+      background: var(--bg-primary);
     }
     
     .video-background video {
@@ -414,7 +414,46 @@
       width: auto;
       height: auto;
       transform: translate(-50%, -50%);
-      opacity: 0.6; /* ゲーム要素が見えるように */
+      object-fit: cover;
+      opacity: 0.7; /* ゲーム要素が見えるように調整 */
+      filter: contrast(1.1) saturate(1.05); /* 8bit風コントラスト */
+    }
+    
+    /* 動画オーバーレイで8bit効果 */
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.02) 2px,
+          rgba(0, 0, 0, 0.02) 4px
+        );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.3;
+    }
+    
+    /* 動画フォールバック */
+    .video-fallback {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
+        linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
+        linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+      background-size: 30px 30px;
+      background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+      opacity: 0.05;
     }
     
     /* ビデオからゲームへの遷移オーバーレイ */
@@ -2341,12 +2380,16 @@
     }
   </style>
   
-  <!-- 動画背景レイヤー（準備用） -->
-  <div class="video-background" id="videoBackground" style="display: none;">
-    <!-- 動画要素はJavaScriptで制御 -->
-    <!-- <video autoplay muted loop playsinline>
-      <source src="background-video.mp4" type="video/mp4">
-    </video> -->
+  <!-- 8bitレトロゲーム背景動画 -->
+  <div class="video-background" id="videoBackground">
+    <video id="backgroundVideo" autoplay muted loop playsinline preload="auto">
+      <source src="backvideo.mp4" type="video/mp4">
+      <source src="backvideo.webm" type="video/webm">
+      <!-- フォールバック用静止画 -->
+      <div class="video-fallback"></div>
+    </video>
+    <!-- 動画オーバーレイ（8bit感を強調） -->
+    <div class="video-overlay"></div>
   </div>
   
   <!-- 遷移オーバーレイ -->
@@ -2930,6 +2973,55 @@
         this.initCoreWebVitals();
         this.startLoading();
         this.prepareVideoTransition();
+        
+        // 背景動画初期化
+        this.initializeBackgroundVideo();
+      }
+      
+      initializeBackgroundVideo() {
+        const video = document.getElementById('backgroundVideo');
+        const videoBackground = document.getElementById('videoBackground');
+        
+        if (video && videoBackground) {
+          // 動画読み込み完了時の処理
+          video.addEventListener('loadeddata', () => {
+            console.log('Background video loaded successfully');
+            videoBackground.style.opacity = '1';
+          });
+          
+          // 動画エラー時の処理
+          video.addEventListener('error', (e) => {
+            console.warn('Background video failed to load:', e);
+            // フォールバック背景を表示
+            videoBackground.style.background = 'var(--bg-primary)';
+            const fallback = videoBackground.querySelector('.video-fallback');
+            if (fallback) {
+              fallback.style.display = 'block';
+            }
+          });
+          
+          // 動画の再生準備完了
+          video.addEventListener('canplaythrough', () => {
+            video.play().catch(e => {
+              console.log('Auto-play prevented, video will play on user interaction');
+            });
+          });
+          
+          // モバイル用の最適化
+          if (window.innerWidth <= 768) {
+            video.style.opacity = '0.5'; // モバイルでは薄く
+          }
+          
+          // 低性能デバイスでは動画を無効に
+          if (this.isLowEndDevice) {
+            video.style.display = 'none';
+            const fallback = videoBackground.querySelector('.video-fallback');
+            if (fallback) {
+              fallback.style.display = 'block';
+              fallback.style.opacity = '0.3';
+            }
+          }
+        }
       }
       
       // ============================================================================
