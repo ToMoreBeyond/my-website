@@ -16,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tomorebeyond.com/">
   <meta property="og:title" content="ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える">
-  <meta property="og:description" content="AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニー">
+  <meta property="og:description" content="モバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニー">
   <meta property="og:image" content="https://tomorebeyond.com/og-image.jpg">
   <meta property="og:site_name" content="ToMoreBeyond">
   <meta property="og:locale" content="ja_JP">
@@ -2828,6 +2828,10 @@
       }
       
       initializeGame() {
+        if (this.gameInstance) {
+          return; // Prevent multiple instances
+        }
+        
         if (this.isGameLoaded && window.cardsData && typeof MinimalSite !== 'undefined') {
           this.gameInstance = new MinimalSite();
           window.gameInstance = this.gameInstance;
@@ -3640,6 +3644,7 @@
           this.rafId = requestAnimationFrame(loop);
         };
         this.rafId = requestAnimationFrame(loop);
+        this.rafIds.add(this.rafId);
       }
       
       updateAnimations() {
@@ -3651,11 +3656,12 @@
       
       debounceCleanup() {
         // 5秒ごとにメモリクリーンアップ
-        setInterval(() => {
+        const cleanupInterval = setInterval(() => {
           if (!this.isScrolling && !this.isNavigating) {
             this.cleanupUnusedElements();
           }
         }, 5000);
+        this.intervals.add(cleanupInterval);
       }
       
       cleanupUnusedElements() {
@@ -3678,7 +3684,7 @@
         // シンプルなカード作成（セクション分けカードなし）
         const cardsHTML = [];
         
-        cardsData.forEach((data, index) => {
+        window.cardsData.forEach((data, index) => {
           cardsHTML.push(`
             <article class="card" 
                      data-section="${data.section}" 
@@ -4070,7 +4076,7 @@
         const oldPosition = this.characterPosition;
         
         // カード数に基づいた適切な移動量を計算
-        const totalCards = this.cardsData.length;
+        const totalCards = window.cardsData.length;
         const stepSize = Math.abs(direction);
         const cardStepSize = stepSize / (totalCards - 1); // カード間隔に基づく
         const actualDirection = direction > 0 ? cardStepSize : -cardStepSize;
@@ -4104,19 +4110,19 @@
         document.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowLeft') {
             e.preventDefault();
-            this.handleScroll(-50); // 左方向
+            this.moveCharacterByStep(-50); // 左方向
           }
           if (e.key === 'ArrowRight') {
             e.preventDefault();
-            this.handleScroll(50); // 右方向
+            this.moveCharacterByStep(50); // 右方向
           }
           if (e.key === 'ArrowUp') {
             e.preventDefault();
-            this.handleScroll(-50); // 上キーも左方向
+            this.moveCharacterByStep(-50); // 上キーも左方向
           }
           if (e.key === 'ArrowDown') {
             e.preventDefault();
-            this.handleScroll(50); // 下キーも右方向
+            this.moveCharacterByStep(50); // 下キーも右方向
           }
           if (e.key === ' ' || e.key === 'Enter') {
             // フォーカスされたカードがある場合は、そのカードを優先
@@ -4196,7 +4202,7 @@
       optimizeAfterScroll() {
         // スクロール終了後の最適化処理
         this.speedMultiplier = 1.0;
-        this.updateWalkingSpeed();
+        // Walking speed update removed - not needed
       }
       
       handleVerticalScroll() {
@@ -4770,7 +4776,7 @@
         this.walkSpeed = 0.8;
         this.currentScrollSpeed = this.baseScrollSpeed;
         this.updateCardSpeed();
-        this.updateWalkingSpeed();
+        // Walking speed update removed - not needed
       }
       
       optimizeWalkingAnimation() {
@@ -5651,7 +5657,7 @@
         }
         
         if (cardsViewedDisplay) {
-          cardsViewedDisplay.textContent = `${this.viewedCards.size}/${this.cardsData.length}`;
+          cardsViewedDisplay.textContent = `${this.viewedCards.size}/${window.cardsData.length}`;
         }
         
         // キャラクターの色も強制更新

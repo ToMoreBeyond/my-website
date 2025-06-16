@@ -14,6 +14,7 @@ ToMoreBeyond is a Japanese technology company website featuring an interactive 8
 - **Vanilla JavaScript**: No frameworks, pure JavaScript game engine
 - **8bitcn design system**: Pixel-perfect borders, dashed lines, retro typography
 - **Fixed viewport**: No vertical scrolling, 100vh height
+- **Background video system**: 8-bit retro game aesthetic with performance optimizations
 
 ### Key Components
 
@@ -37,6 +38,8 @@ ToMoreBeyond is a Japanese technology company website featuring an interactive 8
 - **Sound Effects**: Level up, jump, walk, completion sounds via Web Audio API
 - **Visual Feedback**: Level display UI, experience bar, completion effects
 - **Accessibility**: ARIA attributes, keyboard navigation, screen reader support
+- **Mobile Controls**: Touch-based drag controls for character movement, arrow buttons with long-press support
+- **Desktop Controls**: Vertical scroll for horizontal movement, keyboard navigation (arrow keys, space for jump)
 
 ### File Organization
 ```
@@ -48,6 +51,8 @@ ToMoreBeyond is a Japanese technology company website featuring an interactive 8
 /assets/                - Media content specifications and brand guidelines
 /metadata.json          - Site-wide metadata and SEO configuration
 /site.webmanifest       - PWA manifest file
+/VIDEO_SETUP.md         - Background video configuration guide
+/.gitignore             - Excludes large video files (backvideo.mp4)
 ```
 
 ### Current Architecture Notes
@@ -78,10 +83,11 @@ npx serve .
 - **Reset Function**: RESET button clears LocalStorage and returns to level 1
 
 ### 8bitcn Design Implementation
-- **Colors**: Dark theme (#0f172a, #1e293b), accent colors (green, blue, yellow, red, purple)
+- **Colors**: White theme (#ffffff, #f8f9fa), black borders and text (#000000)
 - **Fonts**: Orbitron (titles), Share Tech Mono (content)
-- **Card Design**: 6px dashed borders, pixel corners, translateY hover effect
+- **Card Design**: 4px solid black borders, pixel-perfect corners, 8-bit shadow effects
 - **Text Rendering**: `image-rendering: pixelated`, hard shadows
+- **Mobile Arrow Buttons**: 8-bit style with gradient backgrounds, positioned beside character
 
 ### Responsive Breakpoints
 - Mobile: ≤768px (adjusted card sizes, smaller fonts, touch optimizations)
@@ -126,7 +132,9 @@ npx serve .
 - **Event delegation**: Optimized card interactions
 - **Device detection**: Low-end device optimizations
 - **Memory limits**: Auto-cleanup for `viewedCards` Set
-- **Debug Mode**: LocalStorage auto-clear for testing (remove in production)
+- **Background video**: Auto-disabled on low-end devices, reduced opacity on mobile
+- **Progress persistence**: Multiple save points (beforeunload, pagehide, visibility change)
+- **Auto-save interval**: 5-second periodic saves for level progress
 
 ## Design System
 
@@ -165,3 +173,7 @@ Reference `/assets/brand-guidelines.md` for complete design specifications inclu
 - **Modular content**: Each page references metadata for consistent information
 - **Multilingual ready**: Japanese primary with English alternate names
 - **Asset management**: Organized media specifications for required images/videos
+
+## Video Background Setup
+
+For local development, place `backvideo.mp4` in the project root. For production, use external hosting (see VIDEO_SETUP.md for details). The video file is excluded from git via `.gitignore` due to size constraints (>100MB).
