@@ -2383,7 +2383,10 @@
   <!-- 8bitレトロゲーム背景動画 -->
   <div class="video-background" id="videoBackground">
     <video id="backgroundVideo" autoplay muted loop playsinline preload="auto">
+      <!-- ローカル開発用 -->
       <source src="backvideo.mp4" type="video/mp4">
+      <!-- 本番環境用：外部ホスティングURL（後で追加） -->
+      <!-- <source src="https://your-cdn.com/backvideo.mp4" type="video/mp4"> -->
       <source src="backvideo.webm" type="video/webm">
       <!-- フォールバック用静止画 -->
       <div class="video-fallback"></div>
