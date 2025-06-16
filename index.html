@@ -2948,6 +2948,18 @@
         // 初回読み込み試行
         console.log('動画の初期読み込みを開始します...');
         video.load();
+        
+        // 3秒後に強制的にフォールバックを実行
+        setTimeout(() => {
+          console.log('動画読み込みタイムアウト - フォールバックを強制実行');
+          this.showVideoFallback(videoBackground);
+        }, 3000);
+        
+        // 即座フォールバックを試行（デバッグ用）
+        setTimeout(() => {
+          console.log('🚑 緊急フォールバックを実行中...');
+          this.showVideoFallback(videoBackground);
+        }, 1000);
       }
       
       attemptVideoPlay(video, playTrigger) {
@@ -3039,35 +3051,66 @@
       }
       
       createAnimatedBackground(fallback) {
-        console.log('動的アニメーション背景を作成中...');
+        console.log('🌌 動的アニメーション背景を作成中...');
         
-        fallback.innerHTML = `
-          <div style="
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-              radial-gradient(circle at 20% 50%, rgba(255,255,255,0.8) 0%, transparent 50%),
-              radial-gradient(circle at 80% 50%, rgba(240,240,240,0.6) 0%, transparent 50%),
-              linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
-              linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
-              linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
-              linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
-            background-size: 200px 200px, 300px 300px, 30px 30px, 30px 30px, 30px 30px, 30px 30px;
-            background-position: 0 0, 100px 100px, 0 0, 0 15px, 15px -15px, -15px 0px;
-            animation: backgroundMove 20s linear infinite;
-            opacity: 0.3;
-          ">
-          </div>
-          <style>
-            @keyframes backgroundMove {
-              0% { background-position: 0 0, 100px 100px, 0 0, 0 15px, 15px -15px, -15px 0px; }
-              100% { background-position: 200px 200px, 300px 300px, 30px 30px, 30px 45px, 45px 15px, 15px 30px; }
-            }
-          </style>
+        // 既存のアニメーションをクリア
+        fallback.innerHTML = '';
+        
+        // 新しい動的背景を作成
+        const animatedDiv = document.createElement('div');
+        animatedDiv.style.cssText = `
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: 
+            radial-gradient(circle at 30% 20%, rgba(200,220,255,0.4) 0%, transparent 60%),
+            radial-gradient(circle at 70% 80%, rgba(255,200,200,0.3) 0%, transparent 60%),
+            radial-gradient(circle at 20% 80%, rgba(200,255,200,0.3) 0%, transparent 60%),
+            linear-gradient(45deg, rgba(248,249,250,0.8) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(248,249,250,0.8) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, rgba(248,249,250,0.8) 75%),
+            linear-gradient(-45deg, transparent 75%, rgba(248,249,250,0.8) 75%);
+          background-size: 400px 400px, 350px 350px, 300px 300px, 50px 50px, 50px 50px, 50px 50px, 50px 50px;
+          background-position: 0 0, 200px 100px, 100px 200px, 0 0, 0 25px, 25px -25px, -25px 0px;
+          animation: backgroundMove 25s linear infinite, colorShift 15s ease-in-out infinite;
+          opacity: 0.6;
         `;
+        
+        // CSSアニメーションを追加
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes backgroundMove {
+            0% { 
+              background-position: 0 0, 200px 100px, 100px 200px, 0 0, 0 25px, 25px -25px, -25px 0px;
+            }
+            50% { 
+              background-position: 200px 200px, 400px 300px, 300px 400px, 25px 25px, 25px 50px, 50px 0px, 0px 25px;
+            }
+            100% { 
+              background-position: 400px 400px, 600px 500px, 500px 600px, 50px 50px, 50px 75px, 75px 25px, 25px 50px;
+            }
+          }
+          
+          @keyframes colorShift {
+            0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+            25% { filter: hue-rotate(90deg) brightness(1.1); }
+            50% { filter: hue-rotate(180deg) brightness(0.9); }
+            75% { filter: hue-rotate(270deg) brightness(1.05); }
+          }
+        `;
+        
+        fallback.appendChild(animatedDiv);
+        fallback.appendChild(style);
+        
+        // 確実に表示されるように強制設定
+        fallback.style.display = 'block';
+        fallback.style.opacity = '1';
+        fallback.style.visibility = 'visible';
+        fallback.style.zIndex = '1';
+        
+        console.log('✨ アニメーション背景が正常に作成されました!');
       }
       
       // ============================================================================
