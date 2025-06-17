@@ -737,6 +737,55 @@
         inset 2px 2px 0 rgba(255, 255, 255, 0.2);
     }
     
+    /* カード間の道のスタイル */
+    .path-connector {
+      width: 60px;
+      height: 280px;
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .path-connector .path-area {
+      width: 100%;
+      height: 40px;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+    
+    .path-connector .path-line {
+      width: 100%;
+      height: 12px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      border-radius: 2px;
+      box-shadow: 
+        0 2px 0 rgba(0, 0, 0, 0.2),
+        0 -2px 0 rgba(255, 255, 255, 0.3);
+      opacity: 0.8;
+    }
+    
+    /* パスのアニメーション */
+    .path-connector.active .path-area {
+      opacity: 0.6;
+    }
+    
+    .path-connector.active .path-line {
+      animation: pathPulse 1s ease-in-out infinite;
+    }
+    
+    @keyframes pathPulse {
+      0%, 100% { opacity: 0.8; transform: translateY(-50%) scaleY(1); }
+      50% { opacity: 1; transform: translateY(-50%) scaleY(1.2); }
+    }
+    
     /* 8bitcn風カードデザイン - ホワイトテーマ */
     .card {
       min-width: 240px;
@@ -1562,6 +1611,20 @@
         -webkit-transform: scale(4);
       }
       
+      /* モバイル用の道のスタイル */
+      .path-connector {
+        width: 40px;
+        height: 200px;
+      }
+      
+      .path-connector .path-area {
+        height: 30px;
+      }
+      
+      .path-connector .path-line {
+        height: 8px;
+      }
+      
       .tiny-character {
         will-change: transform, left;
         -webkit-transform: translate3d(0, 0, 0);
@@ -2271,23 +2334,21 @@
   
   <!-- 8bitレトロゲーム背景動画 -->
   <div class="video-background" id="videoBackground">
-    <video id="backgroundVideo" muted loop playsinline preload="metadata">
-      <!-- ローカル開発用 -->
-      <source src="backvideo.mp4" type="video/mp4">
-      <!-- 本番環境用: 外部ホスティングURL -->
-      <source src="https://github.com/user-attachments/assets/example-video.mp4" type="video/mp4">
-      <!-- YouTubeの埋め込みフォールバック -->
-      <iframe id="youtubeBackup" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.6;" 
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&showinfo=0&rel=0&modestbranding=1" 
-              frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    <!-- メイン動画 -->
+    <video id="backgroundVideo" muted loop playsinline>
+      <source src="./backvideo.mp4" type="video/mp4">
     </video>
-    <div class="video-fallback" style="display: none;"></div>
+    
+    <!-- 確実なフォールバック動画システム -->
+    <div class="video-fallback-system" style="display: none;"></div>
+    
+    <!-- 8bit風オーバーレイ -->
     <div class="video-overlay"></div>
   </div>
   
-  <!-- 動画再生トリガーボタン -->
-  <div id="videoPlayTrigger" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; cursor: pointer; font-family: monospace; font-size: 12px; display: none;">
-    🎥 クリックで動画再生
+  <!-- 動画状態表示 -->
+  <div id="videoStatus" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.85); color: #00ff00; padding: 12px 16px; border-radius: 8px; font-family: 'Share Tech Mono', monospace; font-size: 12px; max-width: 250px; word-wrap: break-word; border: 2px solid rgba(0,255,0,0.3); backdrop-filter: blur(5px); transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(0);">
+    🔄 動画読み込み中...
   </div>
   
   <!-- 遷移オーバーレイ -->
@@ -2806,16 +2867,12 @@
         this.expToNextLevel = 10; // 1カード見れば1レベルアップ
         this.maxLevelReached = false; // 最大レベル到達フラグ
         
-        // デバッグ用：確実にレベル1から始まるようにLocalStorageをクリア
-        // 本番環境では削除してください
-        try {
-          localStorage.removeItem('toMoreBeyond_progress');
-        } catch (error) {
-          console.log('LocalStorage clear failed:', error);
-        }
+        // LocalStorage永続化システムを有効化
+        // ※ デバッグ用のクリアは無効化しました
+        console.log('💾 LocalStorage永続化システム有効 - レベルが保存されます');
         
-        // LocalStorageから進行状況を読み込む
-        this.loadProgress()
+        // 初期化後に進行状況を保存（読み込みは既に上記で実行済み）
+        this.saveProgress();
         
         // 8bit サウンドシステム
         this.audioContext = null;
@@ -2838,7 +2895,10 @@
           cls: null
         };
         
-        // ページ状態管理
+        // LocalStorageから進行状況を即座に読み込む（最初に実行）
+        this.loadProgress();
+        
+        // ページ状態管理（強化版）
         this.setupPageStateHandlers();
         
         // ローディング管理
@@ -2866,7 +2926,7 @@
         
         const video = document.getElementById('backgroundVideo');
         const videoBackground = document.getElementById('videoBackground');
-        const playTrigger = document.getElementById('videoPlayTrigger');
+        const videoStatus = document.getElementById('videoStatus');
         
         if (!video || !videoBackground) {
           console.error('動画要素が見つかりません');
@@ -2880,89 +2940,102 @@
         video.currentTime = 0;
         video.volume = 0;
         video.muted = true;
+        video.preload = 'auto';
+        video.playsInline = true;
         
         // デバイス情報をログ出力
         const userAgent = navigator.userAgent;
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
         console.log('User Agent:', userAgent);
         console.log('Is Mobile:', isMobile);
-        console.log('Device Memory:', navigator.deviceMemory || 'Unknown');
-        console.log('Hardware Concurrency:', navigator.hardwareConcurrency || 'Unknown');
+        
+        // ステータス更新関数
+        const updateStatus = (message) => {
+          if (videoStatus) {
+            videoStatus.textContent = message;
+            console.log('Status:', message);
+          }
+        };
         
         // 動画のメタデータ読み込みイベント
         video.addEventListener('loadstart', () => {
-          console.log('動画読み込み開始');
+          updateStatus('📁 動画ファイル読み込み開始');
         });
         
         video.addEventListener('loadedmetadata', () => {
-          console.log('動画メタデータ読み込み完了');
+          updateStatus('📊 動画情報読み込み完了');
           console.log('Video duration:', video.duration);
           console.log('Video dimensions:', video.videoWidth, 'x', video.videoHeight);
         });
         
         video.addEventListener('loadeddata', () => {
-          console.log('動画データ読み込み完了');
+          updateStatus('📦 動画データ読み込み完了');
           videoBackground.style.opacity = '1';
-          this.attemptVideoPlay(video, playTrigger);
+          this.attemptVideoPlay(video);
         });
         
         video.addEventListener('canplay', () => {
-          console.log('動画再生準備完了');
-          this.attemptVideoPlay(video, playTrigger);
+          updateStatus('▶️ 動画再生準備完了');
+          this.attemptVideoPlay(video);
         });
         
         video.addEventListener('canplaythrough', () => {
-          console.log('動画完全読み込み完了');
-          this.attemptVideoPlay(video, playTrigger);
+          updateStatus('✅ 動画完全読み込み完了');
+          this.attemptVideoPlay(video);
         });
         
         video.addEventListener('play', () => {
-          console.log('動画再生開始');
-          if (playTrigger) playTrigger.style.display = 'none';
+          updateStatus('🎥 動画再生中');
+          // 2秒後にステータス表示をフェードアウト
+          setTimeout(() => {
+            if (videoStatus) {
+              videoStatus.style.opacity = '0';
+              videoStatus.style.transform = 'translateY(-20px)';
+              // アニメーション完了後に完全に隠す
+              setTimeout(() => {
+                videoStatus.style.display = 'none';
+              }, 300);
+            }
+          }, 2000);
         });
         
         video.addEventListener('pause', () => {
-          console.log('動画一時停止');
+          updateStatus('⏸️ 動画一時停止');
         });
         
         video.addEventListener('error', (e) => {
           console.error('動画エラー:', e);
           console.error('Error details:', video.error);
+          updateStatus('❌ 動画読み込みエラー');
           this.showVideoFallback(videoBackground);
         });
         
-        // モバイル用の最適化
+        // モバイル・低端末用の最適化
+        const isLowEndDevice = this.detectLowEndDevice();
+        
         if (isMobile) {
-          video.style.opacity = '0.4';
-          console.log('モバイルデバイス: 動画透明度を下げました');
+          video.style.opacity = '0.3';
+          video.playbackRate = 0.8; // 再生速度を下げてCPU負荷軽減
+          console.log('モバイルデバイス: 動画透明度を下げ、再生速度を調整しました');
         }
         
-        // 手動再生トリガーの設定
-        if (playTrigger) {
-          playTrigger.addEventListener('click', () => {
-            console.log('手動再生トリガークリック');
-            this.forcePlayVideo(video);
-          });
+        if (isLowEndDevice) {
+          video.style.display = 'none';
+          updateStatus('📱 低端末のため動画を無効化');
+          console.log('低端末のため動画を無効化しました');
+          return;
         }
         
         // 初回読み込み試行
         console.log('動画の初期読み込みを開始します...');
+        updateStatus('🔄 動画読み込み中...');
         video.load();
         
-        // 3秒後に強制的にフォールバックを実行
-        setTimeout(() => {
-          console.log('動画読み込みタイムアウト - フォールバックを強制実行');
-          this.showVideoFallback(videoBackground);
-        }, 3000);
-        
-        // 即座フォールバックを試行（デバッグ用）
-        setTimeout(() => {
-          console.log('🚑 緊急フォールバックを実行中...');
-          this.showVideoFallback(videoBackground);
-        }, 1000);
+        // ユーザーインタラクション後に再生試行
+        this.setupVideoInteraction(video);
       }
       
-      attemptVideoPlay(video, playTrigger) {
+      attemptVideoPlay(video) {
         console.log('動画再生を試行中...');
         
         const playPromise = video.play();
@@ -2971,55 +3044,53 @@
           playPromise
             .then(() => {
               console.log('✅ 動画再生成功!');
-              if (playTrigger) playTrigger.style.display = 'none';
             })
             .catch(error => {
               console.log('❌ 自動再生がブロックされました:', error);
-              if (playTrigger) {
-                playTrigger.style.display = 'block';
-                console.log('手動再生ボタンを表示しました');
-              }
-              this.setupUserInteractionPlay(video, playTrigger);
+              console.log('ユーザーインタラクション待機中...');
             });
         } else {
           console.log('動画再生 Promise が未対応');
-          this.setupUserInteractionPlay(video, playTrigger);
         }
       }
       
-      forcePlayVideo(video) {
-        console.log('強制的に動画再生を試行中...');
-        
-        video.muted = true;
-        video.currentTime = 0;
-        
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log('✅ 強制再生成功!');
-              const playTrigger = document.getElementById('videoPlayTrigger');
-              if (playTrigger) playTrigger.style.display = 'none';
-            })
-            .catch(error => {
-              console.error('❌ 強制再生も失敗:', error);
-            });
-        }
-      }
-      
-      setupUserInteractionPlay(video, playTrigger) {
-        console.log('ユーザー操作待ちモードに入りました');
-        
-        const playOnInteraction = (event) => {
-          console.log('ユーザー操作を検知:', event.type);
-          this.forcePlayVideo(video);
+      setupVideoInteraction(video) {
+        const playOnInteraction = () => {
+          console.log('ユーザー操作を検知 - 動画再生開始');
+          video.play().catch(error => {
+            console.error('動画再生エラー:', error);
+          });
         };
         
-        // 様々なイベントで再生を試みる
-        ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'].forEach(eventType => {
+        // 各種ユーザーインタラクションで再生を試行
+        ['click', 'touchstart', 'keydown'].forEach(eventType => {
           document.addEventListener(eventType, playOnInteraction, { once: true, passive: true });
         });
       }
+      
+      detectLowEndDevice() {
+        // デバイス性能の簡易判定
+        const memory = navigator.deviceMemory || 4; // デフォルト4GB
+        const cores = navigator.hardwareConcurrency || 2; // デフォルト2コア
+        const connection = navigator.connection || { effectiveType: '4g' };
+        
+        // 低端末の条件
+        const isLowMemory = memory <= 2; // 2GB以下
+        const isLowCores = cores <= 2; // 2コア以下
+        const isSlowConnection = ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+        
+        const isLowEndDevice = isLowMemory || (isLowCores && isSlowConnection);
+        
+        console.log('Device Performance Check:', {
+          memory: memory + 'GB',
+          cores: cores + ' cores',
+          connection: connection.effectiveType,
+          isLowEnd: isLowEndDevice
+        });
+        
+        return isLowEndDevice;
+      }
+      
       
       showVideoFallback(videoBackground) {
         console.log('フォールバックモードに切り替えます');
@@ -3755,6 +3826,20 @@
         const cardsHTML = [];
         
         window.cardsData.forEach((data, index) => {
+          // カード間の道を追加（最初のカード以外）
+          if (index > 0) {
+            const prevSection = window.cardsData[index - 1].section;
+            const currentSection = data.section;
+            // セクションに基づいて道の色を決定
+            cardsHTML.push(`
+              <div class="path-connector section-${prevSection}">
+                <div class="path-area">
+                  <div class="path-line"></div>
+                </div>
+              </div>
+            `);
+          }
+          
           cardsHTML.push(`
             <article class="card" 
                      data-section="${data.section}" 
@@ -5568,66 +5653,81 @@
       
       
       setupPageStateHandlers() {
-        // より強力なレベル保持システム
+        // 超強力なレベル保持システム - レベルが絶対に失われないように
+        
+        // 即座にイベントリスナーを設定
+        const ensureProgressLoad = () => {
+          this.loadProgress();
+          this.updateUI();
+          this.forceUIUpdate();
+          console.log('🔄 Progress restored - Level:', this.currentLevel, 'Viewed cards:', this.viewedCards.size);
+        };
+        
+        const ensureProgressSave = () => {
+          this.saveProgress();
+          console.log('💾 Progress saved - Level:', this.currentLevel, 'Viewed cards:', this.viewedCards.size);
+        };
         
         // ページ遷移前の保存（複数回保存で確実性向上）
         window.addEventListener('beforeunload', () => {
-          this.saveProgress();
-          this.saveProgress(); // 二重保存で確実性向上
+          ensureProgressSave();
+          ensureProgressSave(); // 二重保存
+          ensureProgressSave(); // 三重保存で完璧に
         });
         
         // ページ離脱前の保存（より早いタイミング）
         window.addEventListener('pagehide', () => {
-          this.saveProgress();
+          ensureProgressSave();
         });
         
-        // ページが表示された時の復元（強化版）
+        // ページが表示された時の復元（即座に実行）
         window.addEventListener('pageshow', (e) => {
-          setTimeout(() => {
-            this.loadProgress();
-            this.updateUI();
-            this.forceUIUpdate(); // 強制UI更新
-          }, 50);
+          console.log('📄 Page show event triggered');
+          ensureProgressLoad();
+          
+          // 追加で遅延実行（確実性のため）
+          setTimeout(ensureProgressLoad, 100);
+          setTimeout(ensureProgressLoad, 300);
         });
         
         // DOMContentLoaded時の復元（ページリロード対応）
         document.addEventListener('DOMContentLoaded', () => {
-          setTimeout(() => {
-            this.loadProgress();
-            this.updateUI();
-          }, 100);
+          console.log('📋 DOM Content Loaded');
+          setTimeout(ensureProgressLoad, 50);
         });
         
         // ページの可視性変更時の処理
         document.addEventListener('visibilitychange', () => {
           if (document.hidden) {
-            // ページが非表示になった時（進行状況を保存）
-            this.saveProgress();
+            console.log('👁️ Page hidden - saving progress');
+            ensureProgressSave();
           } else {
-            // ページが表示された時（進行状況を復元）
-            setTimeout(() => {
-              this.loadProgress();
-              this.updateUI();
-              this.forceUIUpdate();
-            }, 50);
+            console.log('👁️ Page visible - loading progress');
+            setTimeout(ensureProgressLoad, 50);
           }
         });
         
         // フォーカス復帰時の処理（強化版）
         window.addEventListener('focus', () => {
-          setTimeout(() => {
-            this.loadProgress();
-            this.updateUI();
-            this.forceUIUpdate();
-          }, 50);
+          console.log('🎯 Window focus - loading progress');
+          setTimeout(ensureProgressLoad, 50);
         });
         
-        // 定期的な自動保存（5秒間隔）
+        // ページロード直後の復元
+        window.addEventListener('load', () => {
+          console.log('🚀 Window load complete');
+          setTimeout(ensureProgressLoad, 100);
+        });
+        
+        // 定期的な自動保存（3秒間隔に短縮）
         setInterval(() => {
           if (this.currentLevel > 1) {
-            this.saveProgress();
+            ensureProgressSave();
           }
-        }, 5000);
+        }, 3000);
+        
+        // 即座に一度確認（初期化時）
+        setTimeout(ensureProgressLoad, 100);
       }
       
       forceUIUpdate() {
@@ -5636,7 +5736,7 @@
         const expDisplay = document.getElementById('currentExp');
         
         if (levelDisplay) {
-          levelDisplay.textContent = `LV.${this.currentLevel}`;
+          levelDisplay.textContent = this.currentLevel;
           levelDisplay.style.color = this.currentLevel >= this.maxLevel ? '#ff4444' : '#00ff00';
         }
         
@@ -5644,13 +5744,17 @@
           expDisplay.textContent = `EXP: ${this.currentExp}`;
         }
         
+        // 経験値バーも更新
+        this.updateExpBar();
+        
         // キャラクターの色も強制更新
         const character = document.querySelector('.tiny-character');
         if (character && this.currentLevel >= this.maxLevel) {
           character.classList.add('max-level-achieved');
+          this.maxLevelReached = true;
         }
         
-        console.log('Force UI Update - Level:', this.currentLevel, 'Exp:', this.currentExp, 'Viewed:', this.viewedCards.size);
+        console.log('🔄 Force UI Update - Level:', this.currentLevel, 'Exp:', this.currentExp, 'Viewed:', this.viewedCards.size);
       }
     }
     
