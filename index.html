@@ -1055,97 +1055,6 @@
       border: 0;
     }
     
-    /* 8bit ドット絵風看板システム */
-    .signpost-container {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 80px;
-      z-index: 100;
-      background: transparent;
-      pointer-events: none;
-      image-rendering: pixelated;
-      image-rendering: -moz-crisp-edges;
-      image-rendering: crisp-edges;
-      opacity: 0; /* 初期非表示 */
-      transition: opacity 1s ease;
-    }
-    
-    .signpost {
-      position: absolute;
-      bottom: 10px;
-      width: 48px; /* 12x4 = 48px */
-      height: 48px; /* 12x4 = 48px */
-      transform-origin: bottom center;
-      transition: none; /* 8bitらしくスムーズ化なし */
-      pointer-events: auto;
-      image-rendering: pixelated;
-    }
-    
-    .signpost:hover {
-      /* 8bit風のシンプルな効果 */
-      filter: invert(1);
-    }
-    
-    /* ドット絵風ポール - ホワイトテーマ */
-    .signpost-pole {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 3px;
-      height: 24px;
-      background: var(--border-primary);
-      transform: translateX(-50%);
-      image-rendering: pixelated;
-      box-shadow: 1px 0 0 rgba(0, 0, 0, 0.2);
-    }
-    
-    /* ドット絵風看板 - ホワイトテーマ */
-    .signpost-board {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--bg-primary);
-      border: 2px solid var(--border-primary);
-      border-radius: 0; /* 角ばったドット絵風 */
-      padding: 4px 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 8px;
-      font-weight: bold;
-      color: var(--text-primary);
-      white-space: nowrap;
-      min-width: 40px;
-      text-align: center;
-      image-rendering: pixelated;
-      line-height: 1;
-      box-shadow: 3px 3px 0 var(--border-primary), 4px 4px 0 rgba(0, 0, 0, 0.2);
-    }
-    
-    .signpost.active .signpost-board {
-      background: var(--accent-yellow);
-      color: var(--text-primary);
-      border-color: var(--border-primary);
-      box-shadow: 0 0 8px var(--accent-yellow), 3px 3px 0 var(--border-primary);
-    }
-    
-    /* 8bit風アイコン（テキストベース） */
-    .signpost-icon {
-      font-family: 'Courier New', monospace;
-      font-size: 6px;
-      margin-bottom: 1px;
-      display: block;
-      line-height: 1;
-    }
-    
-    .signpost-label {
-      font-family: 'Courier New', monospace;
-      font-size: 4px;
-      line-height: 1;
-      display: block;
-      text-transform: uppercase;
-    }
     
     
     
@@ -2425,15 +2334,46 @@
   <!-- 8bitレトロゲーム背景動画 -->
   <div class="video-background" id="videoBackground">
     <!-- メイン動画 -->
-    <video id="backgroundVideo" muted loop playsinline autoplay preload="auto" style="width: 100%; height: 100%; object-fit: cover;">
+    <video 
+      id="backgroundVideo" 
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      preload="auto"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.6;
+        z-index: -1;
+      "
+    >
       <source src="backvideo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
     </video>
     
-    <!-- 確実なフォールバック動画システム -->
-    <div class="video-fallback-system" style="display: none;"></div>
-    
     <!-- 8bit風オーバーレイ -->
-    <div class="video-overlay"></div>
+    <div class="video-overlay" style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.2;
+    "></div>
   </div>
   
   <!-- 動画状態表示 -->
@@ -2547,8 +2487,6 @@
     </nav>
   </main>
   
-  <!-- 看板システム削除 -->
-  <!-- <section class="signpost-container" id="signpostContainer" role="complementary" aria-label="進行状況の看板"></section> -->
   
   
   <!-- 8bit ドット絵風歩行アニメーション棒人間 -->
@@ -3028,331 +2966,59 @@
       }
       
       initializeBackgroundVideo() {
-        console.log('=== 背景動画初期化開始 ===');
+        console.log('=== 背景動画初期化開始（簡素版）===');
         
         const video = document.getElementById('backgroundVideo');
-        const videoBackground = document.getElementById('videoBackground');
         const videoStatus = document.getElementById('videoStatus');
         
-        if (!video || !videoBackground) {
+        if (!video) {
           console.error('動画要素が見つかりません');
           return;
         }
         
-        console.log('Video element found:', video);
-        console.log('Video source:', video.currentSrc || 'ソースが未設定');
-        
-        // 動画の初期設定（強化版）
-        video.currentTime = 0;
-        video.volume = 0;
+        // 動画の基本設定
         video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.autoplay = true;
         video.preload = 'auto';
-        video.playsInline = true;
-        video.autoplay = true;
-        video.loop = true;
         
-        // CSSで確実に表示
-        video.style.width = '100%';
-        video.style.height = '100%';
-        video.style.objectFit = 'cover';
-        video.style.position = 'absolute';
-        video.style.top = '0';
-        video.style.left = '0';
-        
-        // 動画背景を確実に表示
-        videoBackground.style.display = 'block';
-        videoBackground.style.opacity = '1';
-        
-        // デバイス情報をログ出力
-        const userAgent = navigator.userAgent;
-        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-        console.log('User Agent:', userAgent);
-        console.log('Is Mobile:', isMobile);
-        
-        // ステータス更新関数
-        const updateStatus = (message) => {
-          if (videoStatus) {
-            videoStatus.textContent = message;
-            console.log('Status:', message);
+        // 即座に再生試行
+        const playVideo = () => {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                console.log('✅ 動画再生成功!');
+                if (videoStatus) {
+                  videoStatus.textContent = '🎥 動画再生中';
+                  setTimeout(() => {
+                    videoStatus.style.display = 'none';
+                  }, 2000);
+                }
+              })
+              .catch(error => {
+                console.log('❌ 動画再生失敗:', error);
+                if (videoStatus) {
+                  videoStatus.textContent = '❌ 動画再生失敗';
+                }
+              });
           }
         };
         
-        // 動画のメタデータ読み込みイベント
-        video.addEventListener('loadstart', () => {
-          updateStatus('📁 動画ファイル読み込み開始');
-        });
+        // 複数のタイミングで再生を試行
+        video.addEventListener('loadeddata', playVideo);
+        video.addEventListener('canplay', playVideo);
         
-        video.addEventListener('loadedmetadata', () => {
-          updateStatus('📊 動画情報読み込み完了');
-          console.log('Video duration:', video.duration);
-          console.log('Video dimensions:', video.videoWidth, 'x', video.videoHeight);
-        });
-        
-        video.addEventListener('loadeddata', () => {
-          updateStatus('📦 動画データ読み込み完了');
-          videoBackground.style.opacity = '1';
-          this.attemptVideoPlay(video);
-        });
-        
-        video.addEventListener('canplay', () => {
-          updateStatus('▶️ 動画再生準備完了');
-          this.attemptVideoPlay(video);
-        });
-        
-        video.addEventListener('canplaythrough', () => {
-          updateStatus('✅ 動画完全読み込み完了');
-          this.attemptVideoPlay(video);
-        });
-        
-        video.addEventListener('play', () => {
-          updateStatus('🎥 動画再生中');
-          // 2秒後にステータス表示をフェードアウト
-          setTimeout(() => {
-            if (videoStatus) {
-              videoStatus.style.opacity = '0';
-              videoStatus.style.transform = 'translateY(-20px)';
-              // アニメーション完了後に完全に隠す
-              setTimeout(() => {
-                videoStatus.style.display = 'none';
-              }, 300);
-            }
-          }, 2000);
-        });
-        
-        video.addEventListener('pause', () => {
-          updateStatus('⏸️ 動画一時停止');
-        });
-        
-        video.addEventListener('error', (e) => {
-          console.error('動画エラー:', e);
-          console.error('Error details:', video.error);
-          updateStatus('❌ 動画読み込みエラー');
-          this.showVideoFallback(videoBackground);
-        });
-        
-        // モバイル・低端末用の最適化
-        const isLowEndDevice = this.detectLowEndDevice();
-        
-        if (isMobile) {
-          video.style.opacity = '0.4';
-          console.log('モバイルデバイス: 動画透明度を調整しました');
-        }
-        
-        // 低端末検出を緩くして、動画を表示しやすくする
-        if (isLowEndDevice) {
-          video.style.opacity = '0.2';
-          updateStatus('📱 低端末: 動画を軽量モードで表示');
-          console.log('低端末: 軽量モードで動画表示');
-          // return; // 無効化せずに軽量モードで表示
-        }
-        
-        // 初回読み込み試行
-        console.log('動画の初期読み込みを開始します...');
-        updateStatus('🔄 動画読み込み中...');
-        
-        // 動画ソースを強制的に設定
-        const source = video.querySelector('source');
-        if (source) {
-          source.src = 'backvideo.mp4';
-          video.load();
-        }
-        
-        // 即座に再生を試行
-        setTimeout(() => {
-          this.attemptVideoPlay(video);
-        }, 500);
-        
-        // ユーザーインタラクション後に再生試行
-        this.setupVideoInteraction(video);
-        
-        // 3秒後にフォールバック確認
-        setTimeout(() => {
-          if (video.paused || video.readyState < 2) {
-            console.log('動画再生に問題があります。再試行します...');
-            updateStatus('🔄 動画再試行中...');
-            this.forceVideoPlay(video);
-          }
-        }, 3000);
-      }
-      
-      attemptVideoPlay(video) {
-        console.log('動画再生を試行中...');
-        
-        const playPromise = video.play();
-        
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log('✅ 動画再生成功!');
-            })
-            .catch(error => {
-              console.log('❌ 自動再生がブロックされました:', error);
-              console.log('ユーザーインタラクション待機中...');
-            });
-        } else {
-          console.log('動画再生 Promise が未対応');
-        }
-      }
-      
-      setupVideoInteraction(video) {
-        const playOnInteraction = () => {
-          console.log('ユーザー操作を検知 - 動画再生開始');
-          this.forceVideoPlay(video);
-        };
-        
-        // 各種ユーザーインタラクションで再生を試行
+        // ユーザーインタラクション後の再生
         ['click', 'touchstart', 'keydown'].forEach(eventType => {
-          document.addEventListener(eventType, playOnInteraction, { once: true, passive: true });
-        });
-      }
-      
-      forceVideoPlay(video) {
-        console.log('強制動画再生を試行中...');
-        
-        // 動画要素の設定を確実にする
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.autoplay = true;
-        
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log('✅ 動画再生成功!');
-              const videoStatus = document.getElementById('videoStatus');
-              if (videoStatus) {
-                videoStatus.textContent = '🎥 動画再生中';
-                setTimeout(() => {
-                  videoStatus.style.opacity = '0';
-                  videoStatus.style.transform = 'translateY(-20px)';
-                }, 2000);
-              }
-            })
-            .catch(error => {
-              console.error('❌ 動画再生エラー:', error);
-              const videoStatus = document.getElementById('videoStatus');
-              if (videoStatus) {
-                videoStatus.textContent = '❌ 動画再生失敗';
-              }
-            });
-        }
-      }
-      
-      detectLowEndDevice() {
-        // デバイス性能の簡易判定
-        const memory = navigator.deviceMemory || 4; // デフォルト4GB
-        const cores = navigator.hardwareConcurrency || 2; // デフォルト2コア
-        const connection = navigator.connection || { effectiveType: '4g' };
-        
-        // 低端末の条件
-        const isLowMemory = memory <= 2; // 2GB以下
-        const isLowCores = cores <= 2; // 2コア以下
-        const isSlowConnection = ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
-        
-        const isLowEndDevice = isLowMemory || (isLowCores && isSlowConnection);
-        
-        console.log('Device Performance Check:', {
-          memory: memory + 'GB',
-          cores: cores + ' cores',
-          connection: connection.effectiveType,
-          isLowEnd: isLowEndDevice
+          document.addEventListener(eventType, playVideo, { once: true, passive: true });
         });
         
-        return isLowEndDevice;
-      }
-      
-      
-      showVideoFallback(videoBackground) {
-        console.log('フォールバックモードに切り替えます');
+        // 初回読み込み
+        video.load();
         
-        const video = videoBackground.querySelector('video');
-        const iframe = videoBackground.querySelector('#youtubeBackup');
-        const fallback = videoBackground.querySelector('.video-fallback');
-        
-        if (video) {
-          video.style.display = 'none';
-        }
-        
-        // YouTubeフォールバックを試行
-        if (iframe) {
-          console.log('YouTubeフォールバックを表示中...');
-          iframe.style.display = 'block';
-          return;
-        }
-        
-        // アニメーション背景フォールバック
-        if (fallback) {
-          fallback.style.display = 'block';
-          fallback.style.opacity = '0.4';
-          // 動的アニメーション背景を作成
-          this.createAnimatedBackground(fallback);
-        }
-        
-        videoBackground.style.background = 'linear-gradient(45deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%)';
-      }
-      
-      createAnimatedBackground(fallback) {
-        console.log('🌌 動的アニメーション背景を作成中...');
-        
-        // 既存のアニメーションをクリア
-        fallback.innerHTML = '';
-        
-        // 新しい動的背景を作成
-        const animatedDiv = document.createElement('div');
-        animatedDiv.style.cssText = `
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: 
-            radial-gradient(circle at 30% 20%, rgba(200,220,255,0.4) 0%, transparent 60%),
-            radial-gradient(circle at 70% 80%, rgba(255,200,200,0.3) 0%, transparent 60%),
-            radial-gradient(circle at 20% 80%, rgba(200,255,200,0.3) 0%, transparent 60%),
-            linear-gradient(45deg, rgba(248,249,250,0.8) 25%, transparent 25%),
-            linear-gradient(-45deg, rgba(248,249,250,0.8) 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, rgba(248,249,250,0.8) 75%),
-            linear-gradient(-45deg, transparent 75%, rgba(248,249,250,0.8) 75%);
-          background-size: 400px 400px, 350px 350px, 300px 300px, 50px 50px, 50px 50px, 50px 50px, 50px 50px;
-          background-position: 0 0, 200px 100px, 100px 200px, 0 0, 0 25px, 25px -25px, -25px 0px;
-          animation: backgroundMove 25s linear infinite, colorShift 15s ease-in-out infinite;
-          opacity: 0.6;
-        `;
-        
-        // CSSアニメーションを追加
-        const style = document.createElement('style');
-        style.textContent = `
-          @keyframes backgroundMove {
-            0% { 
-              background-position: 0 0, 200px 100px, 100px 200px, 0 0, 0 25px, 25px -25px, -25px 0px;
-            }
-            50% { 
-              background-position: 200px 200px, 400px 300px, 300px 400px, 25px 25px, 25px 50px, 50px 0px, 0px 25px;
-            }
-            100% { 
-              background-position: 400px 400px, 600px 500px, 500px 600px, 50px 50px, 50px 75px, 75px 25px, 25px 50px;
-            }
-          }
-          
-          @keyframes colorShift {
-            0%, 100% { filter: hue-rotate(0deg) brightness(1); }
-            25% { filter: hue-rotate(90deg) brightness(1.1); }
-            50% { filter: hue-rotate(180deg) brightness(0.9); }
-            75% { filter: hue-rotate(270deg) brightness(1.05); }
-          }
-        `;
-        
-        fallback.appendChild(animatedDiv);
-        fallback.appendChild(style);
-        
-        // 確実に表示されるように強制設定
-        fallback.style.display = 'block';
-        fallback.style.opacity = '1';
-        fallback.style.visibility = 'visible';
-        fallback.style.zIndex = '1';
-        
-        console.log('✨ アニメーション背景が正常に作成されました!');
+        console.log('動画初期化完了');
       }
       
       // ============================================================================
@@ -3607,13 +3273,9 @@
         
         // ゲーム要素を表示
         const character = document.querySelector('.tiny-character');
-        const signposts = document.querySelector('.signpost-container');
         
         if (character) {
           character.style.opacity = '1';
-        }
-        if (signposts) {
-          signposts.style.opacity = '1';
         }
       }
       
@@ -4049,8 +3711,8 @@
             
             const link = card.dataset.link;
             
-            // レベル経験値処理（確実に実行）
-            this.handleCardView(card);
+            // レベル経験値処理（確実に実行）- 棒人間位置は変更しない
+            this.handleCardViewOnly(card);
             
             // ハプティックフィードバック（モバイル）
             if ('vibrate' in navigator) {
@@ -5461,6 +5123,29 @@
         }
       }
       
+      // カードクリック専用メソッド（棒人間位置は変更しない）
+      handleCardViewOnly(card) {
+        const cardTitle = card.querySelector('.card-title').textContent;
+        
+        // 既に見たカードかチェック
+        if (!this.viewedCards.has(cardTitle)) {
+          this.viewedCards.add(cardTitle);
+          this.gainExp();
+          
+          // 即座に進行状況を保存（ページ遷移前）
+          this.saveProgress();
+          
+          // URLにも状態を保存（追加の安全策）
+          this.saveToURL();
+          
+          // 追加の保存確認（ダブル保存）
+          setTimeout(() => {
+            this.saveProgress();
+            this.saveToURL();
+          }, 100);
+        }
+      }
+      
       saveToURL() {
         try {
           // URLパラメータに現在の状態を保存
@@ -5925,7 +5610,6 @@
     
     // Initialize on DOM ready
     document.addEventListener('DOMContentLoaded', () => {
-      // createSignposts(); // 看板システム削除
     });
   </script>
 </body>
