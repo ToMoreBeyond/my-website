@@ -411,8 +411,7 @@
   <!-- 背景動画 -->
   <div class="video-background" id="videoBackground">
     <video id="backgroundVideo" autoplay muted loop playsinline preload="auto">
-      <source src="./backvideo.mp4" type="video/mp4">
-      <source src="backvideo.mp4" type="video/mp4">
+      <source src="背景動画.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
   </div>
@@ -764,10 +763,27 @@
         
         if (!video) return;
         
+        console.log('背景動画初期化開始');
+        
+        // 動画の基本設定を確実に行う
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        
         // 動画の読み込み完了を待つ
         video.addEventListener('loadeddata', () => {
-          video.play().catch(error => {
+          console.log('動画データ読み込み完了');
+          video.play().then(() => {
+            console.log('✅ 動画再生開始');
+            if (videoStatus) {
+              videoStatus.textContent = '🎥 動画再生中';
+            }
+          }).catch(error => {
             console.log('動画の自動再生がブロックされました:', error);
+            if (videoStatus) {
+              videoStatus.textContent = '🎯 クリックで再生';
+            }
             // ユーザーインタラクションで再生を試みる
             document.addEventListener('click', () => {
               video.play();
@@ -777,19 +793,25 @@
         
         // 動画が再生開始したら状態表示を隠す
         video.addEventListener('playing', () => {
+          console.log('動画再生中');
           if (videoStatus) {
-            videoStatus.style.opacity = '0';
-            setTimeout(() => videoStatus.style.display = 'none', 500);
+            setTimeout(() => {
+              videoStatus.style.opacity = '0';
+              setTimeout(() => videoStatus.style.display = 'none', 500);
+            }, 1000);
           }
         });
         
         // 動画エラー時のフォールバック
-        video.addEventListener('error', () => {
-          console.log('動画の読み込みに失敗しました');
+        video.addEventListener('error', (e) => {
+          console.error('動画の読み込みに失敗しました:', e);
           if (videoStatus) {
             videoStatus.textContent = '❌ 動画読み込み失敗';
           }
         });
+        
+        // 即座に読み込み開始
+        video.load();
       }
       
       hideLoading() {
