@@ -411,7 +411,7 @@
   <!-- 背景動画 -->
   <div class="video-background" id="videoBackground">
     <video id="backgroundVideo" autoplay muted loop playsinline preload="auto">
-      <source src="背景動画.mp4" type="video/mp4">
+      <source src="Timeline 1.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
   </div>
@@ -621,8 +621,13 @@
         const character = document.getElementById('tinyCharacter');
         if (character) {
           character.style.opacity = '1';
+          // 初期位置を設定
+          character.style.left = '20px';
+          // 最初のカード位置を更新
+          this.updatePositions();
+          
           setTimeout(() => {
-            character.style.transition = 'left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            character.style.transition = 'left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
           }, 100);
         }
       }
@@ -697,32 +702,45 @@
           }
         };
         
-        // タッチ操作（モバイル）
+        // タッチ操作（モバイル）- 改善版
         let touchStartX = 0;
+        let isTouching = false;
+        
         const touchStartHandler = (e) => {
           touchStartX = e.touches[0].clientX;
+          isTouching = true;
         };
         
         const touchMoveHandler = this.throttle((e) => {
+          if (!isTouching) return;
           e.preventDefault();
+          
           const touchX = e.touches[0].clientX;
-          const diff = (touchStartX - touchX) * 0.001;
-          this.handleScroll(diff * 100);
+          const diff = touchStartX - touchX;
+          const sensitivity = 0.01; // モバイル用の感度調整
+          
+          this.handleScroll(diff * sensitivity * 100);
           touchStartX = touchX;
         }, 16);
+        
+        const touchEndHandler = () => {
+          isTouching = false;
+        };
         
         // イベントリスナーを登録
         document.addEventListener('wheel', wheelHandler, { passive: false });
         document.addEventListener('keydown', keyHandler);
         document.addEventListener('touchstart', touchStartHandler, { passive: true });
         document.addEventListener('touchmove', touchMoveHandler, { passive: false });
+        document.addEventListener('touchend', touchEndHandler, { passive: true });
         
         // クリーンアップ用に保存
         this.eventListeners.push(
           { element: document, type: 'wheel', handler: wheelHandler },
           { element: document, type: 'keydown', handler: keyHandler },
           { element: document, type: 'touchstart', handler: touchStartHandler },
-          { element: document, type: 'touchmove', handler: touchMoveHandler }
+          { element: document, type: 'touchmove', handler: touchMoveHandler },
+          { element: document, type: 'touchend', handler: touchEndHandler }
         );
       }
       
@@ -763,8 +781,6 @@
         
         if (!video) return;
         
-        console.log('背景動画初期化開始');
-        
         // 動画の基本設定を確実に行う
         video.muted = true;
         video.loop = true;
@@ -773,14 +789,11 @@
         
         // 動画の読み込み完了を待つ
         video.addEventListener('loadeddata', () => {
-          console.log('動画データ読み込み完了');
           video.play().then(() => {
-            console.log('✅ 動画再生開始');
             if (videoStatus) {
               videoStatus.textContent = '🎥 動画再生中';
             }
-          }).catch(error => {
-            console.log('動画の自動再生がブロックされました:', error);
+          }).catch(() => {
             if (videoStatus) {
               videoStatus.textContent = '🎯 クリックで再生';
             }
@@ -793,7 +806,6 @@
         
         // 動画が再生開始したら状態表示を隠す
         video.addEventListener('playing', () => {
-          console.log('動画再生中');
           if (videoStatus) {
             setTimeout(() => {
               videoStatus.style.opacity = '0';
@@ -803,8 +815,7 @@
         });
         
         // 動画エラー時のフォールバック
-        video.addEventListener('error', (e) => {
-          console.error('動画の読み込みに失敗しました:', e);
+        video.addEventListener('error', () => {
           if (videoStatus) {
             videoStatus.textContent = '❌ 動画読み込み失敗';
           }
@@ -826,8 +837,8 @@
       }
       
       handleScroll(deltaY) {
-        // スクロール量を位置に変換（より緻細な制御）
-        const sensitivity = 0.0008; // より自然なスクロール感度
+        // スクロール量を位置に変換（快適な感度）
+        const sensitivity = 0.003; // より反応的なスクロール感度
         const scrollAmount = deltaY * sensitivity;
         this.moveCharacter(scrollAmount);
         
@@ -838,7 +849,7 @@
         clearTimeout(this.walkingTimeout);
         this.walkingTimeout = setTimeout(() => {
           this.stopWalkingAnimation();
-        }, 300);
+        }, 200);
       }
       
       startWalkingAnimation() {
@@ -900,27 +911,35 @@
           const track = document.getElementById('cardsTrack');
           const screenWidth = window.innerWidth;
           
-          // キャラクターの位置を計算
+          if (!character || !track) return;
+          
+          // スムーズなキャラクター位置計算
+          const basePosition = 20; // 左端からの基本位置
+          const fixedPosition = Math.min(screenWidth * 0.2, 200); // 固定位置（画面幅の20%または200px）
+          
           let charX;
-          if (this.characterPosition <= 0.05) {
-            // 開始位置（より精緻な制御）
-            charX = 20 + (screenWidth * 0.25 - 20) * (this.characterPosition / 0.05);
-          } else if (this.characterPosition >= 0.95) {
-            // 終了位置（最後のカードと完全同期）
-            charX = screenWidth * 0.25 + (screenWidth - 100 - screenWidth * 0.25) * ((this.characterPosition - 0.95) / 0.05);
+          if (this.characterPosition <= 0.1) {
+            // 開始時：左端から徐々に移動
+            charX = basePosition + (fixedPosition - basePosition) * (this.characterPosition / 0.1);
+          } else if (this.characterPosition >= 0.9) {
+            // 終了時：右端へ移動
+            const endPosition = screenWidth - 120;
+            charX = fixedPosition + (endPosition - fixedPosition) * ((this.characterPosition - 0.9) / 0.1);
           } else {
-            // 中間はキャラクターを固定
-            charX = screenWidth * 0.25;
+            // 中間：固定位置を維持
+            charX = fixedPosition;
           }
           
           character.style.left = charX + 'px';
           
-          // カードのスクロール（最後のカードが右端に来るように調整）
-          const cardWidth = 304; // カード幅 + gap
-          const totalWidth = cardWidth * this.cards.length;
-          const maxScroll = totalWidth - charX - 280; // カード幅を考慮
-          const scrollX = -Math.max(0, Math.min(maxScroll, maxScroll * this.characterPosition));
+          // 改善されたカードスクロール計算
+          const cardWidth = 280 + 24; // カード幅 + マージン
+          const totalCardsWidth = cardWidth * this.cards.length;
+          const visibleWidth = screenWidth - charX - 150; // キャラクター位置から右端までの表示可能幅
+          const maxScrollDistance = Math.max(0, totalCardsWidth - visibleWidth);
           
+          // スムーズなスクロール
+          const scrollX = -maxScrollDistance * this.characterPosition;
           track.style.transform = `translateX(${scrollX}px) translateZ(0)`;
           
           // 現在のカードをハイライト
