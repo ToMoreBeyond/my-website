@@ -224,27 +224,6 @@
   
 </head>
 <body class="section-company loading">
-  <!-- ローディング画面を即座に非表示にする修正 -->
-  <script>
-    // ローディング画面を即座に非表示
-    document.addEventListener('DOMContentLoaded', function() {
-      const loadingScreen = document.getElementById('loadingScreen');
-      if (loadingScreen) {
-        loadingScreen.style.display = 'none';
-      }
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
-      
-      // 動画の自動再生を確実に開始
-      setTimeout(() => {
-        const video = document.getElementById('backgroundVideo');
-        if (video) {
-          video.muted = true;
-          video.play().catch(() => {});
-        }
-      }, 100);
-    });
-  </script>
   <style>
     /* Non-critical: Focus and Accessibility Styles */
     a:focus,

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToMoreBeyond - 面白いことだけをする</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Courier New', monospace;
+      background: #ffffff;
+      color: #000000;
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* 背景動画 */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .video-background video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      opacity: 0.7;
+    }
+    
+    /* メインコンテンツ */
+    .main-content {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* カードコンテナ */
+    .cards-container {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .cards-track {
+      display: flex;
+      gap: 24px;
+      padding: 0 50px;
+      transition: transform 0.3s ease;
+    }
+    
+    .card {
+      min-width: 280px;
+      height: 360px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 4px solid #000;
+      border-radius: 8px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    /* キャラクター */
+    .character {
+      position: fixed;
+      bottom: 50px;
+      left: 50px;
+      width: 40px;
+      height: 60px;
+      background: #000;
+      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+      transition: left 0.5s ease;
+    }
+    
+    /* シンプルなロゴ */
+    .logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景動画 -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline>
+      <source src="backvideo.mp4" type="video/mp4">
+    </video>
+  </div>
+  
+  <!-- ロゴ -->
+  <div class="logo">ToMoreBeyond</div>
+  
+  <!-- メインコンテンツ -->
+  <div class="main-content">
+    <div class="cards-container">
+      <div class="cards-track" id="cardsTrack">
+        <!-- カードはJavaScriptで生成 -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- キャラクター -->
+  <div class="character" id="character"></div>
+  
+  <script>
+    // カードデータ
+    const cardsData = [
+      { title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU' },
+      { title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU' },
+      { title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI' },
+      { title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE' },
+      { title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO' },
+      { title: '山田', description: 'CDO / DESIGNER' },
+      { title: '正留', description: 'CEO / ENGINEER' },
+      { title: '安藤', description: 'ARTIST' },
+      { title: 'ブログ', description: 'KAIHATSU NO URA BANASHI' },
+      { title: '動画', description: 'PRODUCT SHOUKAI' },
+      { title: 'SNS', description: 'HIBI NO HASSHIN' },
+      { title: 'お問い合わせ', description: 'OKI GARU NI DOUZO' }
+    ];
+    
+    // カードを生成
+    const track = document.getElementById('cardsTrack');
+    cardsData.forEach((card, index) => {
+      const cardEl = document.createElement('div');
+      cardEl.className = 'card';
+      cardEl.innerHTML = `
+        <h3>${card.title}</h3>
+        <p>${card.description}</p>
+      `;
+      track.appendChild(cardEl);
+    });
+    
+    // キャラクターとカードの同期
+    let position = 0;
+    const character = document.getElementById('character');
+    const totalCards = cardsData.length;
+    
+    // スクロールでキャラクターとカードを動かす
+    let scrollAmount = 0;
+    document.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      
+      // スクロール量を計算
+      scrollAmount += e.deltaY * 0.001;
+      scrollAmount = Math.max(0, Math.min(1, scrollAmount));
+      
+      // キャラクターの位置を更新
+      updateCharacterPosition(scrollAmount);
+      
+      // カードのスクロールを更新
+      updateCardScroll(scrollAmount);
+    });
+    
+    function updateCharacterPosition(pos) {
+      const screenWidth = window.innerWidth;
+      let characterX;
+      
+      if (pos <= 0.1) {
+        // 開始時
+        characterX = 50 + (screenWidth * 0.3 - 50) * (pos / 0.1);
+      } else if (pos >= 0.9) {
+        // 終了時
+        characterX = screenWidth * 0.3 + (screenWidth - 150 - screenWidth * 0.3) * ((pos - 0.9) / 0.1);
+      } else {
+        // 中間
+        characterX = screenWidth * 0.3;
+      }
+      
+      character.style.left = characterX + 'px';
+    }
+    
+    function updateCardScroll(pos) {
+      const cardWidth = 304; // カード幅 + gap
+      const containerWidth = window.innerWidth;
+      const totalWidth = cardWidth * totalCards;
+      const maxScroll = totalWidth - containerWidth + 100;
+      
+      const scrollX = -maxScroll * pos;
+      track.style.transform = `translateX(${scrollX}px)`;
+    }
+    
+    // 動画の自動再生
+    const video = document.querySelector('video');
+    video.play().catch(() => {
+      // 自動再生失敗時は手動再生を促す
+      document.addEventListener('click', () => {
+        video.play();
+      }, { once: true });
+    });
+  </script>
+</body>
+</html>
