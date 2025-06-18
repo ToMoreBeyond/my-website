@@ -36,7 +36,7 @@
       height: 100%;
       z-index: -1;
       overflow: hidden;
-      background: #ffffff;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     }
     
     .video-background video {
@@ -49,7 +49,6 @@
       height: auto;
       transform: translate(-50%, -50%);
       object-fit: cover;
-      opacity: 0.7;
     }
     
     /* 動画オーバーレイ */
@@ -59,16 +58,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.05) 2px,
-        rgba(255, 255, 255, 0.05) 4px
-      );
+      background: rgba(0, 0, 0, 0.3);
       pointer-events: none;
       z-index: 1;
-      opacity: 0.3;
     }
     
     /* メインコンテンツラッパー */
@@ -418,14 +410,8 @@
 <body>
   <!-- 背景動画 -->
   <div class="video-background" id="videoBackground">
-    <video 
-      id="backgroundVideo" 
-      autoplay 
-      muted 
-      loop 
-      playsinline 
-      preload="auto"
-    >
+    <video id="backgroundVideo" autoplay muted loop playsinline preload="auto">
+      <source src="./backvideo.mp4" type="video/mp4">
       <source src="backvideo.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
@@ -773,58 +759,37 @@
       }
       
       initializeBackgroundVideo() {
-        console.log('=== 背景動画初期化開始 ===');
-        
         const video = document.getElementById('backgroundVideo');
         const videoStatus = document.getElementById('videoStatus');
         
-        if (!video) {
-          console.error('動画要素が見つかりません');
-          return;
-        }
+        if (!video) return;
         
-        // 動画の基本設定を強制
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.autoplay = true;
-        video.preload = 'metadata';
-        video.defaultMuted = true;
-        
-        // 強制的に再生を試行する関数
-        const forcePlay = async () => {
-          try {
-            video.currentTime = 0;
-            await video.play();
-            console.log('✅ 動画再生成功!');
-            if (videoStatus) {
-              videoStatus.textContent = '🎥 動画再生中';
-              setTimeout(() => {
-                videoStatus.style.opacity = '0';
-                setTimeout(() => videoStatus.style.display = 'none', 500);
-              }, 2000);
-            }
-          } catch (error) {
-            console.log('❌ 動画再生失敗:', error.message);
-            if (videoStatus) {
-              videoStatus.textContent = '❌ ファイルが見つかりません';
-            }
-          }
-        };
-        
-        // 即座に実行
-        forcePlay();
-        
-        // フォールバック: 複数のイベントで再生を試行
-        video.addEventListener('loadeddata', forcePlay);
-        video.addEventListener('canplay', forcePlay);
-        
-        // ユーザーインタラクション後の再生
-        ['click', 'touchstart', 'scroll'].forEach(eventType => {
-          document.addEventListener(eventType, forcePlay, { once: true, passive: true });
+        // 動画の読み込み完了を待つ
+        video.addEventListener('loadeddata', () => {
+          video.play().catch(error => {
+            console.log('動画の自動再生がブロックされました:', error);
+            // ユーザーインタラクションで再生を試みる
+            document.addEventListener('click', () => {
+              video.play();
+            }, { once: true });
+          });
         });
         
-        console.log('動画初期化完了');
+        // 動画が再生開始したら状態表示を隠す
+        video.addEventListener('playing', () => {
+          if (videoStatus) {
+            videoStatus.style.opacity = '0';
+            setTimeout(() => videoStatus.style.display = 'none', 500);
+          }
+        });
+        
+        // 動画エラー時のフォールバック
+        video.addEventListener('error', () => {
+          console.log('動画の読み込みに失敗しました');
+          if (videoStatus) {
+            videoStatus.textContent = '❌ 動画読み込み失敗';
+          }
+        });
       }
       
       hideLoading() {
@@ -840,7 +805,7 @@
       
       handleScroll(deltaY) {
         // スクロール量を位置に変換（より緻細な制御）
-        const sensitivity = 0.002; // スクロール感度を上げる
+        const sensitivity = 0.0008; // より自然なスクロール感度
         const scrollAmount = deltaY * sensitivity;
         this.moveCharacter(scrollAmount);
         
@@ -1047,6 +1012,19 @@
     // ゲーム開始
     document.addEventListener('DOMContentLoaded', () => {
       window.gameInstance = new MinimalSite();
+      
+      // 動画の自動再生を即座に試行
+      const video = document.getElementById('backgroundVideo');
+      if (video) {
+        // すでに読み込まれている場合は即座に再生
+        if (video.readyState >= 3) {
+          video.play().catch(() => {});
+        }
+        // まだの場合はcanplayイベントで再生
+        video.addEventListener('canplay', () => {
+          video.play().catch(() => {});
+        }, { once: true });
+      }
     });
     
     // ページ離脱時のクリーンアップ
