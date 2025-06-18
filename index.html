@@ -157,25 +157,80 @@
       line-height: 1.5;
     }
     
-    /* キャラクター（棒人間） */
+    /* 8bitレトロゲーム風キャラクター */
     .character-container {
       position: fixed;
-      bottom: 80px;
+      bottom: 100px;
       left: 50px;
       z-index: 100;
-      transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
     .character {
-      width: 60px;
+      width: 80px;
       height: 80px;
       position: relative;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
     
-    /* 棒人間のSVG描画 */
-    .character-body {
+    /* 8bitピクセルアートシステム */
+    .pixel-character {
+      position: relative;
       width: 100%;
       height: 100%;
+    }
+    
+    .pixel-grid {
+      position: relative;
+      width: 20px;
+      height: 42px;
+      transform: scale(3);
+      transform-origin: top left;
+      image-rendering: pixelated;
+    }
+    
+    .pixel {
+      position: absolute;
+      background: #00ff00;
+      image-rendering: pixelated;
+      box-shadow: 1px 1px 0 rgba(0, 255, 0, 0.3);
+    }
+    
+    /* キャラクターの状態変更 */
+    .character.walking .pixel {
+      animation: pixelWalk 0.6s infinite;
+    }
+    
+    @keyframes pixelWalk {
+      0%, 100% { background: #00ff00; }
+      50% { background: #00cc00; }
+    }
+    
+    /* ジャンプアニメーション */
+    .character.jumping {
+      animation: pixelJump 0.6s ease;
+    }
+    
+    @keyframes pixelJump {
+      0% { transform: translateY(0) scaleY(1); }
+      20% { transform: translateY(-5px) scaleY(0.9); }
+      50% { transform: translateY(-30px) scaleY(1.1); }
+      80% { transform: translateY(-5px) scaleY(0.9); }
+      100% { transform: translateY(0) scaleY(1); }
+    }
+    
+    /* レベルアップ時の色変化 */
+    .character.level-up .pixel {
+      background: #ff0000 !important;
+      box-shadow: 1px 1px 0 rgba(255, 0, 0, 0.5), 0 0 8px #ff0000;
+      animation: levelUpGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes levelUpGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(2); }
     }
     
     /* レベル表示 */
@@ -318,12 +373,15 @@
 <body>
   <!-- 背景動画 -->
   <div class="video-container">
-    <video id="bgVideo" autoplay muted loop playsinline preload="auto">
+    <video id="bgVideo" muted loop playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
       <source src="backvideo.mp4" type="video/mp4">
-      <!-- WebM形式も追加（ブラウザ互換性） -->
-      <source src="backvideo.webm" type="video/webm">
     </video>
     <div class="video-overlay"></div>
+  </div>
+  
+  <!-- 動画状態確認用 -->
+  <div id="videoDebug" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #00ff00; padding: 8px; font-size: 12px; z-index: 9999; font-family: monospace;">
+    🎥 Video: Loading...
   </div>
   
   <!-- メインコンテンツ -->
@@ -348,23 +406,44 @@
       </div>
     </div>
     
-    <!-- キャラクター（棒人間） -->
+    <!-- 8bitレトロゲーム風キャラクター -->
     <div class="character-container" id="character">
       <div class="character">
-        <svg class="character-body" viewBox="0 0 60 80">
-          <!-- 頭 -->
-          <circle cx="30" cy="15" r="10" fill="#fff" stroke="#000" stroke-width="2"/>
-          <!-- 体 -->
-          <line x1="30" y1="25" x2="30" y2="50" stroke="#fff" stroke-width="3"/>
-          <!-- 左腕 -->
-          <line x1="30" y1="35" x2="20" y2="45" stroke="#fff" stroke-width="2"/>
-          <!-- 右腕 -->
-          <line x1="30" y1="35" x2="40" y2="45" stroke="#fff" stroke-width="2"/>
-          <!-- 左足 -->
-          <line x1="30" y1="50" x2="20" y2="70" stroke="#fff" stroke-width="2"/>
-          <!-- 右足 -->
-          <line x1="30" y1="50" x2="40" y2="70" stroke="#fff" stroke-width="2"/>
-        </svg>
+        <div class="pixel-character">
+          <div class="pixel-grid">
+            <!-- 8bitピクセルアートの棒人間 -->
+            <!-- 頭部 -->
+            <div class="pixel" style="left: 6px; top: 2px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 10px; top: 2px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 14px; top: 2px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 4px; top: 6px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 8px; top: 6px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 12px; top: 6px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 16px; top: 6px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 4px; top: 10px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 16px; top: 10px; width: 4px; height: 4px;"></div>
+            
+            <!-- 体部 -->
+            <div class="pixel" style="left: 10px; top: 14px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 10px; top: 18px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 10px; top: 22px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 10px; top: 26px; width: 4px; height: 4px;"></div>
+            
+            <!-- 腕 -->
+            <div class="pixel" style="left: 6px; top: 18px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 14px; top: 18px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 2px; top: 22px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 18px; top: 22px; width: 4px; height: 4px;"></div>
+            
+            <!-- 足 -->
+            <div class="pixel" style="left: 8px; top: 30px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 12px; top: 30px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 6px; top: 34px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 14px; top: 34px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 4px; top: 38px; width: 4px; height: 4px;"></div>
+            <div class="pixel" style="left: 16px; top: 38px; width: 4px; height: 4px;"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -568,33 +647,76 @@
       
       setupVideo() {
         const video = document.getElementById('bgVideo');
+        const debug = document.getElementById('videoDebug');
         
-        // 動画の自動再生を確実にする
+        if (!video) {
+          console.error('動画要素が見つかりません');
+          return;
+        }
+        
+        // 動画の状態をデバッグ表示
+        const updateDebug = (status) => {
+          if (debug) debug.textContent = `🎥 Video: ${status}`;
+          console.log('🎥 Video status:', status);
+        };
+        
+        updateDebug('Initializing...');
+        
+        // 動画の基本設定
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = 'auto';
+        
+        // 再生関数
         const playVideo = () => {
-          video.play().catch(err => {
-            console.log('自動再生に失敗しました。ユーザー操作を待ちます。');
-            // ユーザー操作後に再生
-            document.addEventListener('click', () => {
-              video.play();
-            }, { once: true });
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              updateDebug('Playing ✓');
+            }).catch(error => {
+              updateDebug('Failed: ' + error.message);
+              console.error('動画再生エラー:', error);
+            });
+          }
+        };
+        
+        // イベントリスナー
+        video.addEventListener('loadstart', () => updateDebug('Loading started'));
+        video.addEventListener('loadedmetadata', () => updateDebug('Metadata loaded'));
+        video.addEventListener('loadeddata', () => updateDebug('Data loaded'));
+        video.addEventListener('canplay', () => {
+          updateDebug('Can play');
+          playVideo();
+        });
+        video.addEventListener('canplaythrough', () => updateDebug('Can play through'));
+        video.addEventListener('playing', () => updateDebug('Playing ✓'));
+        video.addEventListener('error', (e) => {
+          updateDebug('Error: ' + e.message);
+          console.error('動画エラー:', e);
+        });
+        
+        // 即座に読み込み開始
+        video.load();
+        
+        // ユーザーインタラクション後に再生を試行
+        const interactionEvents = ['click', 'touchstart', 'keydown'];
+        const enableAutoplay = () => {
+          playVideo();
+          // イベントリスナーを削除
+          interactionEvents.forEach(event => {
+            document.removeEventListener(event, enableAutoplay);
           });
         };
         
-        // 動画の準備ができたら再生
-        if (video.readyState >= 3) {
-          playVideo();
-        } else {
-          video.addEventListener('canplaythrough', playVideo, { once: true });
-        }
-        
-        // メモリ最適化: バックグラウンドで一時停止
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            video.pause();
-          } else {
-            video.play();
-          }
+        interactionEvents.forEach(event => {
+          document.addEventListener(event, enableAutoplay, { once: true, passive: true });
         });
+        
+        // デバッグ情報を非表示（5秒後）
+        setTimeout(() => {
+          if (debug) debug.style.display = 'none';
+        }, 5000);
       }
       
       hideLoading() {
@@ -609,9 +731,33 @@
       }
       
       handleScroll(deltaY) {
-        // スクロール量を位置に変換
-        const scrollAmount = deltaY * 0.001;
+        // スクロール量を位置に変換（より緻細な制御）
+        const sensitivity = 0.002; // スクロール感度を上げる
+        const scrollAmount = deltaY * sensitivity;
         this.moveCharacter(scrollAmount);
+        
+        // 歩行アニメーションを開始
+        this.startWalkingAnimation();
+        
+        // 歩行停止タイマー
+        clearTimeout(this.walkingTimeout);
+        this.walkingTimeout = setTimeout(() => {
+          this.stopWalkingAnimation();
+        }, 300);
+      }
+      
+      startWalkingAnimation() {
+        const character = document.querySelector('.character');
+        if (character) {
+          character.classList.add('walking');
+        }
+      }
+      
+      stopWalkingAnimation() {
+        const character = document.querySelector('.character');
+        if (character) {
+          character.classList.remove('walking');
+        }
       }
       
       moveCharacter(amount) {
@@ -696,12 +842,25 @@
         this.currentLevel++;
         this.currentExp = 0;
         
-        // レベルアップエフェクト
-        const character = document.querySelector('.character-body');
-        character.style.filter = 'brightness(2)';
-        setTimeout(() => {
-          character.style.filter = '';
-        }, 500);
+        // 8bitレベルアップエフェクト
+        const character = document.querySelector('.character');
+        if (character) {
+          character.classList.add('level-up');
+          setTimeout(() => {
+            character.classList.remove('level-up');
+          }, 2000);
+        }
+        
+        // 最大レベル時は赤色に変更
+        if (this.currentLevel >= this.cards.length) {
+          setTimeout(() => {
+            const pixels = document.querySelectorAll('.pixel');
+            pixels.forEach(pixel => {
+              pixel.style.background = '#ff0000';
+              pixel.style.boxShadow = '1px 1px 0 rgba(255, 0, 0, 0.5), 0 0 8px #ff0000';
+            });
+          }, 2000);
+        }
       }
       
       updateUI() {
@@ -714,12 +873,13 @@
       
       jump() {
         const character = document.querySelector('.character');
-        character.style.transition = 'transform 0.3s ease';
-        character.style.transform = 'translateY(-30px)';
-        
-        setTimeout(() => {
-          character.style.transform = '';
-        }, 300);
+        if (character && !character.classList.contains('jumping')) {
+          character.classList.add('jumping');
+          
+          setTimeout(() => {
+            character.classList.remove('jumping');
+          }, 600);
+        }
       }
       
       cleanup() {
