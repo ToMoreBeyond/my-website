@@ -177,3 +177,43 @@ Reference `/assets/brand-guidelines.md` for complete design specifications inclu
 ## Video Background Setup
 
 For local development, place `backvideo.mp4` in the project root. For production, use external hosting (see VIDEO_SETUP.md for details). The video file is excluded from git via `.gitignore` due to size constraints (>100MB).
+
+## Recent Critical Fixes
+
+### Background Video System
+- **Issue**: Complex device detection and fallback systems causing playback failures
+- **Solution**: Simplified to basic HTML5 video with `autoplay`, `muted`, `loop`, `playsinline`
+- **Implementation**: Single `initializeBackgroundVideo()` method with multiple play attempt strategies
+
+### Signpost System Removal
+- **Issue**: Unwanted visual elements (看板/signposts) appearing between cards
+- **Solution**: Complete removal of signpost-related CSS, HTML, and JavaScript
+- **Files Modified**: Removed `.signpost-container`, `.signpost`, `.signpost-board` classes
+
+### Character Movement Synchronization
+- **Issue**: Card clicks causing unwanted character position changes
+- **Solution**: Created `handleCardViewOnly()` method for card interactions without position updates
+- **Behavior**: Character position only changes via scroll/keyboard, not card clicks
+
+### Level Persistence Across Pages
+- **Issue**: Level resetting when returning from detail pages
+- **Solution**: Added URL parameter system (`?level=persist&from=detail`) to all detail page back links
+- **Implementation**: `restoreFromURL()` and `saveToURL()` methods with LocalStorage backup
+
+## Troubleshooting Common Issues
+
+### Background Video Not Playing
+1. Verify `backvideo.mp4` exists in project root
+2. Check browser autoplay policies (modern browsers require user interaction)
+3. Ensure video attributes: `autoplay muted loop playsinline`
+4. Video status indicator shows in top-right corner during development
+
+### Character Position Issues
+- Character movement is controlled by `updateCharacterPosition()` and synchronized with card scroll via `updateCardScroll()`
+- Card clicks should NOT move character - use `handleCardViewOnly()` for card interactions
+- Scroll-based movement uses `characterPosition` (0-1 range) for precise synchronization
+
+### Level/Progress Loss
+- Check LocalStorage for `tomorebeyond_game_state`
+- Verify URL parameters are preserved when navigating between pages
+- Progress saves occur: on card view, before page unload, every 5 seconds, on visibility change

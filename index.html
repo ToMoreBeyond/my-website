@@ -407,13 +407,50 @@
     
     .video-background video {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
       object-fit: cover;
-      opacity: 0.6;
-      filter: contrast(1.1) saturate(1.05);
+      opacity: 0.7;
+      filter: contrast(1.2) saturate(1.1) brightness(0.9);
+    }
+    
+    /* モバイルで動画の透明度を調整 */
+    @media (max-width: 768px) {
+      .video-background video {
+        opacity: 0.5;
+      }
+    }
+    
+    /* パフォーマンス最適化モード */
+    .low-performance-mode .video-background video {
+      display: none;
+    }
+    
+    .low-performance-mode .video-overlay {
+      background: linear-gradient(135deg, 
+        rgba(248, 249, 250, 0.95) 0%, 
+        rgba(233, 236, 239, 0.95) 100%);
+    }
+    
+    /* メモリ最適化のためのwill-changeの制限 */
+    .low-performance-mode * {
+      will-change: auto !important;
+    }
+    
+    .low-performance-mode .card {
+      transform: none !important;
+      transition: none !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    }
+    
+    .low-performance-mode .tiny-character {
+      filter: none !important;
+      transition: left 0.3s linear !important;
     }
     
     /* 動画オーバーレイで8bit効果 */
@@ -2353,6 +2390,7 @@
       "
     >
       <source src="backvideo.mp4" type="video/mp4">
+      <source src="backvideo.webm" type="video/webm">
       Your browser does not support the video tag.
     </video>
     
@@ -2376,8 +2414,8 @@
     "></div>
   </div>
   
-  <!-- 動画状態表示 -->
-  <div id="videoStatus" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.85); color: #00ff00; padding: 12px 16px; border-radius: 8px; font-family: 'Share Tech Mono', monospace; font-size: 12px; max-width: 250px; word-wrap: break-word; border: 2px solid rgba(0,255,0,0.3); backdrop-filter: blur(5px); transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(0);">
+  <!-- 動画状態表示 (開発環境のみ) -->
+  <div id="videoStatus" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.85); color: #00ff00; padding: 8px 12px; border-radius: 4px; font-family: 'Share Tech Mono', monospace; font-size: 10px; border: 1px solid rgba(0,255,0,0.3); opacity: 0.8; display: none;">
     🔄 動画読み込み中...
   </div>
   
@@ -2936,6 +2974,11 @@
           cls: null
         };
         
+        // メモリ最適化設定
+        this.maxViewedCards = 30; // viewedCardsの最大サイズを制限
+        this.isLowEndDevice = false;
+        this.isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
         // LocalStorageから進行状況を即座に読み込む（最初に実行）
         this.loadProgress();
         
@@ -2961,18 +3004,58 @@
         this.startLoading();
         this.prepareVideoTransition();
         
+        // パフォーマンス最適化
+        this.setupPerformanceOptimizations();
+        
         // 背景動画初期化
         this.initializeBackgroundVideo();
       }
       
-      initializeBackgroundVideo() {
-        console.log('=== 背景動画初期化開始（簡素版）===');
+      setupPerformanceOptimizations() {
+        // パフォーマンス最適化のセットアップ
+        this.isLowEndDevice = this.detectLowEndDevice();
         
+        if (this.isLowEndDevice || this.isMobile) {
+          // 低スペックデバイスやモバイル向け最適化
+          document.body.classList.add('low-performance-mode');
+          
+          // アニメーションFPSを下げる
+          this.targetFPS = 30;
+          this.frameInterval = 1000 / this.targetFPS;
+          
+          // viewedCardsの上限を下げる
+          this.maxViewedCards = 20;
+        }
+        
+        // メモリ監視のセットアップ
+        this.setupMemoryMonitoring();
+      }
+      
+      setupMemoryMonitoring() {
+        // 定期的なメモリ監視
+        if (performance.memory) {
+          this.memoryMonitorInterval = setInterval(() => {
+            this.cleanupUnusedReferences();
+          }, 30000); // 30秒ごとにチェック
+          
+          this.intervals.add(this.memoryMonitorInterval);
+        }
+      }
+      
+      initializeBackgroundVideo() {
         const video = document.getElementById('backgroundVideo');
         const videoStatus = document.getElementById('videoStatus');
         
-        if (!video) {
-          console.error('動画要素が見つかりません');
+        if (!video) return;
+        
+        // モバイルデバイスでのメモリ最適化
+        const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        const isLowEndDevice = this.detectLowEndDevice();
+        
+        if (isLowEndDevice) {
+          // 低スペックデバイスでは動画を無効化
+          video.style.display = 'none';
+          if (videoStatus) videoStatus.style.display = 'none';
           return;
         }
         
@@ -2981,44 +3064,73 @@
         video.loop = true;
         video.playsInline = true;
         video.autoplay = true;
-        video.preload = 'auto';
+        video.preload = isMobile ? 'metadata' : 'auto'; // モバイルではメタデータのみ
         
-        // 即座に再生試行
+        // パフォーマンス最適化のためのrequestIdleCallbackを使用
         const playVideo = () => {
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then(() => {
-                console.log('✅ 動画再生成功!');
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+              video.play().then(() => {
                 if (videoStatus) {
-                  videoStatus.textContent = '🎥 動画再生中';
-                  setTimeout(() => {
-                    videoStatus.style.display = 'none';
-                  }, 2000);
+                  videoStatus.style.display = 'none';
                 }
-              })
-              .catch(error => {
-                console.log('❌ 動画再生失敗:', error);
-                if (videoStatus) {
-                  videoStatus.textContent = '❌ 動画再生失敗';
-                }
+              }).catch(() => {
+                // エラーは無視（バックグラウンド要素のため）
               });
+            }, { timeout: 2000 });
+          } else {
+            setTimeout(() => {
+              video.play().catch(() => {});
+              if (videoStatus) videoStatus.style.display = 'none';
+            }, 1000);
           }
         };
         
-        // 複数のタイミングで再生を試行
-        video.addEventListener('loadeddata', playVideo);
-        video.addEventListener('canplay', playVideo);
+        // メモリ効率的なイベントリスナー
+        const eventOptions = { once: true, passive: true };
+        video.addEventListener('canplaythrough', playVideo, eventOptions);
         
-        // ユーザーインタラクション後の再生
-        ['click', 'touchstart', 'keydown'].forEach(eventType => {
-          document.addEventListener(eventType, playVideo, { once: true, passive: true });
+        // ユーザーインタラクション後の再生（メモリ効率的）
+        const interactionHandler = () => {
+          video.play().catch(() => {});
+        };
+        
+        ['click', 'touchstart'].forEach(eventType => {
+          document.addEventListener(eventType, interactionHandler, eventOptions);
         });
         
-        // 初回読み込み
-        video.load();
+        // メモリ節約のためvisibility変更時に動画を一時停止
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            video.pause();
+          } else {
+            video.play().catch(() => {});
+          }
+        });
+      }
+      
+      detectLowEndDevice() {
+        // 低スペックデバイスの検出
+        const memoryLimit = 2; // 2GB以下を低スペックと判定
         
-        console.log('動画初期化完了');
+        if ('deviceMemory' in navigator && navigator.deviceMemory < memoryLimit) {
+          return true;
+        }
+        
+        // ハードウェアコンカレンシー数をチェック
+        if ('hardwareConcurrency' in navigator && navigator.hardwareConcurrency <= 2) {
+          return true;
+        }
+        
+        // ネットワーク速度をチェック
+        if ('connection' in navigator) {
+          const connection = navigator.connection;
+          if (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+            return true;
+          }
+        }
+        
+        return false;
       }
       
       // ============================================================================
@@ -3139,41 +3251,94 @@
       }
       
       cleanupUnusedReferences() {
-        // モバイル向けメモリクリーンアップ
-        const maxCards = this.maxViewedCards || 50;
+        // メモリクリーンアップの改善
+        const maxCards = this.maxViewedCards;
         
         if (this.viewedCards.size > maxCards) {
-          // Limit the size of viewed cards set to prevent memory bloat
+          // 古いカード情報を削除
           const cardsArray = Array.from(this.viewedCards);
-          this.viewedCards = new Set(cardsArray.slice(-Math.floor(maxCards * 0.8)));
+          this.viewedCards = new Set(cardsArray.slice(-Math.floor(maxCards * 0.6)));
         }
         
-        // モバイルでのメモリ圧迫対策
-        if (this.isMobile && performance.memory) {
+        // メモリ圧迫対策
+        if (performance.memory) {
           const memoryInfo = performance.memory;
           const memoryUsageRatio = memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit;
           
-          if (memoryUsageRatio > 0.8) {
-            // メモリ使用量が80%を超えた場合の緊急クリーンアップ
+          if (memoryUsageRatio > 0.7) {
+            // 70%を超えたら早めにクリーンアップ
+            this.performMemoryOptimization();
+          }
+          
+          if (memoryUsageRatio > 0.85) {
+            // 85%を超えたら緊急クリーンアップ
             this.emergencyCleanup();
           }
+        }
+        
+        // アニメーションフレームの最適化
+        this.optimizeAnimationFrames();
+      }
+      
+      performMemoryOptimization() {
+        // メモリ最適化処理
+        // viewedCardsを半分に削減
+        const cardsArray = Array.from(this.viewedCards);
+        this.viewedCards = new Set(cardsArray.slice(-Math.floor(this.maxViewedCards / 2)));
+        
+        // 不要なタイマーをクリア
+        if (this.scrollTimer) {
+          clearTimeout(this.scrollTimer);
+          this.scrollTimer = null;
+        }
+        
+        // アニメーションの簡略化
+        if (this.isMobile || this.isLowEndDevice) {
+          document.body.classList.add('low-performance-mode');
+        }
+      }
+      
+      optimizeAnimationFrames() {
+        // アニメーションフレームの最適化
+        if (this.rafId && this.rafIds.size > 5) {
+          // 古いRAF IDをクリア
+          const rafArray = Array.from(this.rafIds);
+          rafArray.slice(0, -5).forEach(id => {
+            cancelAnimationFrame(id);
+            this.rafIds.delete(id);
+          });
         }
       }
       
       emergencyCleanup() {
         // 緊急時のメモリクリーンアップ
-        console.log('Emergency memory cleanup activated');
+        console.warn('⚠️ メモリ緊急クリーンアップ実行');
         
-        // viewedCardsを大幅に削減
+        // viewedCardsを最小限に
         const cardsArray = Array.from(this.viewedCards);
-        this.viewedCards = new Set(cardsArray.slice(-10));
+        this.viewedCards = new Set(cardsArray.slice(-5));
         
-        // 不要なタイマーとRAFをクリア
+        // すべてのタイマーとRAFをクリア
         this.timers.forEach(timerId => clearTimeout(timerId));
         this.timers.clear();
         
+        this.intervals.forEach(intervalId => clearInterval(intervalId));
+        this.intervals.clear();
+        
         this.rafIds.forEach(rafId => cancelAnimationFrame(rafId));
         this.rafIds.clear();
+        
+        // アニメーションを停止
+        this.stopJourneyWalking();
+        
+        // パフォーマンスモードを強制適用
+        document.body.classList.add('low-performance-mode');
+        
+        // 動画を一時停止
+        const video = document.getElementById('backgroundVideo');
+        if (video) {
+          video.pause();
+        }
         
         // 強制ガベージコレクション（可能なら）
         if (window.gc) {
@@ -4280,18 +4445,23 @@
         if (oldPosition === this.characterPosition) return;
         
         const screenWidth = window.innerWidth;
+        const isMobile = screenWidth <= 768 || 'ontouchstart' in window;
+        
         // 棒人間は画面の中央付近に固定し、代わりにカードをスクロール
         let characterScreenX;
         
-        if (this.characterPosition <= 0.1) {
+        if (this.characterPosition <= 0.05) {
           // 開始時は左端から移動開始
-          characterScreenX = 20 + (screenWidth * 0.3) * (this.characterPosition / 0.1);
-        } else if (this.characterPosition >= 0.9) {
-          // 終了時は右端に向かって移動
-          characterScreenX = screenWidth * 0.3 + (screenWidth * 0.5) * ((this.characterPosition - 0.9) / 0.1);
+          const targetX = isMobile ? screenWidth * 0.25 : screenWidth * 0.3;
+          characterScreenX = 20 + (targetX - 20) * (this.characterPosition / 0.05);
+        } else if (this.characterPosition >= 0.95) {
+          // 終了時は右端に向かって移動（最後のカードと同期）
+          const startX = isMobile ? screenWidth * 0.25 : screenWidth * 0.3;
+          const endX = screenWidth - 100; // 右端から100px手前
+          characterScreenX = startX + (endX - startX) * ((this.characterPosition - 0.95) / 0.05);
         } else {
-          // 中間は画面の30%位置に固定（カードがスクロール）
-          characterScreenX = screenWidth * 0.3;
+          // 中間は画面の25-30%位置に固定（カードがスクロール）
+          characterScreenX = isMobile ? screenWidth * 0.25 : screenWidth * 0.3;
         }
         
         const character = document.querySelector('.tiny-character');
@@ -4334,23 +4504,33 @@
         const containerWidth = track.parentElement?.offsetWidth || window.innerWidth;
         const totalCardsWidth = cardWidth * cards.length;
         
-        // 最後のカードが画面右端にピッタリ来るように計算
-        const lastCardPosition = totalCardsWidth - cardWidth; // 最後のカードの開始位置
-        const maxScroll = lastCardPosition - (containerWidth - cardWidth); // 最後のカードが右端に来る位置
+        // キャラクターの画面上の位置を取得（中央付近で固定されている）
+        const character = document.querySelector('.tiny-character');
+        const characterX = character ? parseInt(character.style.left || 20) : containerWidth * 0.3;
+        
+        // 最後のカードがキャラクター位置に来るまでのスクロール量を計算
+        // characterPosition = 0: 最初のカードがキャラクター位置
+        // characterPosition = 1: 最後のカードがキャラクター位置
+        const maxScroll = totalCardsWidth - characterX - cardWidth;
         
         // 棒人間の位置 (0-1) をカードスクロールに完全同期
-        // characterPosition = 1.0 の時、お問い合わせカードが画面右端に来る
-        const perfectSync = -Math.max(0, maxScroll * this.characterPosition);
+        const scrollAmount = Math.max(0, Math.min(maxScroll, maxScroll * this.characterPosition));
+        const translateX = -scrollAmount;
         
-        track.style.transform = `translateX(${perfectSync}px) translateZ(0)`;
+        track.style.transform = `translateX(${translateX}px) translateZ(0)`;
         
-        console.log('📍 スクロール位置:', {
-          characterPosition: this.characterPosition.toFixed(3),
-          perfectSync: perfectSync.toFixed(1),
-          cardWidth: cardWidth,
-          maxScroll: maxScroll.toFixed(1),
-          containerWidth: containerWidth
-        });
+        // デバッグ用ログ
+        if (this.characterPosition > 0.98 || this.characterPosition < 0.02) {
+          console.log('🎯 端到達時の同期状態:', {
+            characterPosition: this.characterPosition.toFixed(3),
+            characterX: characterX,
+            translateX: translateX.toFixed(1),
+            cardWidth: cardWidth,
+            maxScroll: maxScroll.toFixed(1),
+            totalCardsWidth: totalCardsWidth,
+            containerWidth: containerWidth
+          });
+        }
         
         // カードのハイライト状態を棒人間位置と同期
         const currentCardIndex = Math.round(this.characterPosition * (cards.length - 1));
