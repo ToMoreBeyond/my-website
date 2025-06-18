@@ -1,0 +1,5817 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える</title>
+  <meta name="description" content="ToMoreBeyondは面白いことだけをするというミッションのもと、AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニーです。">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="keywords" content="ToMoreBeyond,テクノロジー,AI,モバイルアプリ,位置情報,最適化,スタートアップ,イノベーション,Flutter,東京">
+  <meta name="author" content="ToMoreBeyond Inc.">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="ja">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tomorebeyond.com/">
+  <meta property="og:title" content="ToMoreBeyond - 面白いことだけをする。友と共に道なき道を越える">
+  <meta property="og:description" content="モバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニー">
+  <meta property="og:image" content="https://tomorebeyond.com/og-image.jpg">
+  <meta property="og:site_name" content="ToMoreBeyond">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://tomorebeyond.com/">
+  <meta property="twitter:title" content="ToMoreBeyond - 面白いことだけをする">
+  <meta property="twitter:description" content="AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造">
+  <meta property="twitter:image" content="https://tomorebeyond.com/twitter-image.jpg">
+  <meta property="twitter:site" content="@ToMoreBeyond">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://tomorebeyond.com/">
+  
+  <!-- Favicon and Apple Touch Icons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  
+  <!-- Core Web Vitals: Resource Hints -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  
+  <!-- Core Web Vitals Optimized Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Fallback fonts to prevent CLS -->
+  <style>
+    /* Fallback font matching for CLS prevention */
+    body {
+      font-family: 'Courier New', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    }
+    .logo {
+      font-family: 'Courier New', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    }
+  </style>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ToMoreBeyond",
+    "alternateName": "ToMoreBeyond Inc.",
+    "description": "面白いことだけをする。友と共に道なき道を越えるというミッションのもと、AIモバイルアプリ開発、位置情報最適化技術で新しい価値を創造するテクノロジーカンパニー",
+    "url": "https://tomorebeyond.com",
+    "logo": "https://tomorebeyond.com/logo.png",
+    "sameAs": [
+      "https://twitter.com/ToMoreBeyond",
+      "https://instagram.com/tomorebeyond_official",
+      "https://youtube.com/@ToMoreBeyond",
+      "https://linkedin.com/company/tomorebeyond",
+      "https://github.com/ToMoreBeyond"
+    ],
+    "foundingDate": "2025-04-01",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "東京都渋谷区",
+      "addressCountry": "JP"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Service",
+      "email": "contact@tomorebeyond.com",
+      "availableLanguage": "Japanese"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "山田純大",
+      "jobTitle": "CEO"
+    }
+  }
+  </script>
+
+  <!-- Separated CSS Files -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Critical CSS for Above-the-fold -->
+  <style>
+    /* Critical: 8bitcn風カラーパレット - ホワイトベース */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-accent: #e9ecef;
+      --text-primary: #000000;
+      --text-secondary: #343a40;
+      --accent-green: #28a745;
+      --accent-blue: #007bff;
+      --accent-yellow: #ffc107;
+      --accent-red: #dc3545;
+      --accent-purple: #6f42c1;
+      --border-primary: #000000;
+      --border-accent: #343a40;
+      --focus-color: #007bff;
+      --focus-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+      --text-high-contrast: #000000;
+      --bg-high-contrast: #ffffff;
+      --accent-high-contrast: #0000ff;
+      --pixel-shadow: 2px 2px 0px #000000;
+      --pixel-border: 4px solid #000000;
+    }
+    
+    /* Critical: Reset and Box Model */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* Critical: Body Styles for Initial Render */
+    body {
+      font-family: 'Courier New', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      -webkit-font-smoothing: none;
+    }
+    
+    /* Critical: Loading Screen - 8bitcn風ホワイトベース */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      image-rendering: pixelated;
+      border: var(--pixel-border);
+    }
+    
+    .loading-content {
+      text-align: center;
+      max-width: 400px;
+      padding: 32px;
+    }
+    
+    .company-name {
+      font-family: 'Courier New', monospace;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--text-primary);
+      margin: 0 0 16px 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: pixel8bitBlink 1s infinite;
+      text-shadow: var(--pixel-shadow);
+    }
+    
+    @keyframes pixel8bitBlink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    .mission-text {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+      opacity: 0;
+      animation: pixel8bitFadeIn 0.5s ease 0.5s forwards;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+    }
+    
+    @keyframes pixel8bitFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Critical: Visibility Helper */
+    .visually-hidden {
+      position: absolute !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      padding: 0 !important;
+      border: 0 !important;
+      height: 1px !important;
+      width: 1px !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
+    }
+  </style>
+  
+</head>
+<body class="section-company loading">
+  <!-- ローディング画面を即座に非表示にする修正 -->
+  <script>
+    // ローディング画面を即座に非表示
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+      }
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
+      
+      // 動画の自動再生を確実に開始
+      setTimeout(() => {
+        const video = document.getElementById('backgroundVideo');
+        if (video) {
+          video.muted = true;
+          video.play().catch(() => {});
+        }
+      }, 100);
+    });
+  </script>
+  <style>
+    /* Non-critical: Focus and Accessibility Styles */
+    a:focus,
+    button:focus,
+    [tabindex]:focus {
+      outline: 2px solid var(--focus-color) !important;
+      outline-offset: 2px !important;
+      box-shadow: var(--focus-shadow) !important;
+    }
+    
+    /* 高コントラストモード対応 */
+    @media (prefers-contrast: high) {
+      :root {
+        --bg-primary: var(--bg-high-contrast);
+        --bg-secondary: #1a1a1a;
+        --bg-accent: #333333;
+        --text-primary: var(--text-high-contrast);
+        --text-secondary: #f0f0f0;
+        --border-primary: var(--text-high-contrast);
+        --border-accent: #cccccc;
+        --accent-green: #00ff00;
+        --accent-blue: #0080ff;
+        --accent-yellow: var(--accent-high-contrast);
+        --accent-red: #ff0000;
+        --accent-purple: #ff00ff;
+        --focus-color: var(--accent-high-contrast);
+      }
+      
+      /* カードのコントラスト強化 */
+      .card {
+        border: 2px solid var(--text-high-contrast) !important;
+        background: var(--bg-high-contrast) !important;
+      }
+      
+      /* テキストのコントラスト確保 */
+      .card-title,
+      .card-description {
+        color: var(--text-high-contrast) !important;
+        text-shadow: none !important;
+      }
+    }
+    
+    /* Windows高コントラストモード対応 */
+    @media (forced-colors: active) {
+      .card {
+        border: 1px solid ButtonText !important;
+        background: ButtonFace !important;
+        color: ButtonText !important;
+      }
+      
+      .card:focus {
+        border: 2px solid Highlight !important;
+        background: Highlight !important;
+        color: HighlightText !important;
+      }
+      
+      .card-icon {
+        color: ButtonText !important;
+      }
+      
+      .level-display {
+        border: 1px solid ButtonText !important;
+        background: ButtonFace !important;
+        color: ButtonText !important;
+      }
+      
+      .exp-bar {
+        border: 1px solid ButtonText !important;
+        background: ButtonShadow !important;
+      }
+      
+      .exp-fill {
+        background: Highlight !important;
+      }
+    }
+    
+    /* アニメーション無効化対応 */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    
+    body {
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      overflow-y: hidden;
+      scroll-behavior: auto;
+      min-height: 100vh;
+      position: relative;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      -webkit-overflow-scrolling: touch;
+      -webkit-font-smoothing: none;
+    }
+    
+    /* 8bit風ピクセルグリッド背景 - ホワイトベース */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(0,0,0,0.08) 15px, rgba(0,0,0,0.08) 16px),
+        repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0,0,0,0.08) 15px, rgba(0,0,0,0.08) 16px);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    body.loading {
+      overflow: hidden;
+    }
+    
+    body.loaded {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    
+    /* 8bitcn風ロゴ */
+    .logo {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 1000;
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 1px;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-primary);
+      padding: 8px 12px;
+      opacity: 0;
+      transform: translateY(-8px);
+      text-transform: uppercase;
+      image-rendering: pixelated;
+      transition: all 0.1s ease;
+      /* 8bit風ピクセルボーダー */
+      box-shadow: 
+        2px 2px 0 var(--border-accent),
+        4px 4px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    body.loaded .logo {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .logo:hover {
+      background: var(--accent-green);
+      color: var(--bg-primary);
+      border-color: var(--accent-green);
+      transform: translate(1px, 1px);
+      box-shadow: 
+        1px 1px 0 var(--border-accent),
+        2px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    /* 8bitレトロゲーム背景動画システム */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: var(--bg-primary);
+    }
+    
+    .video-background video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      opacity: 0.7;
+      filter: contrast(1.2) saturate(1.1) brightness(0.9);
+    }
+    
+    /* モバイルで動画の透明度を調整 */
+    @media (max-width: 768px) {
+      .video-background video {
+        opacity: 0.5;
+      }
+    }
+    
+    /* パフォーマンス最適化モード */
+    .low-performance-mode .video-background video {
+      display: none;
+    }
+    
+    .low-performance-mode .video-overlay {
+      background: linear-gradient(135deg, 
+        rgba(248, 249, 250, 0.95) 0%, 
+        rgba(233, 236, 239, 0.95) 100%);
+    }
+    
+    /* メモリ最適化のためのwill-changeの制限 */
+    .low-performance-mode * {
+      will-change: auto !important;
+    }
+    
+    .low-performance-mode .card {
+      transform: none !important;
+      transition: none !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    }
+    
+    .low-performance-mode .tiny-character {
+      filter: none !important;
+      transition: left 0.3s linear !important;
+    }
+    
+    /* 動画オーバーレイで8bit効果 */
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.02) 2px,
+          rgba(0, 0, 0, 0.02) 4px
+        );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.2;
+    }
+    
+    /* 動画フォールバック */
+    .video-fallback {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
+        linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
+        linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+      background-size: 30px 30px;
+      background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+      opacity: 0.05;
+    }
+    
+    /* ビデオからゲームへの遷移オーバーレイ */
+    .transition-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+    
+    .transition-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    
+    /* 初期ローディング画面（動画開始前） */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000; /* 動画に合わせて黒背景 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+      image-rendering: pixelated;
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .loading-content {
+      text-align: center;
+      max-width: 400px; /* 8の倍数 */
+      padding: 32px; /* 8の倍数 */
+    }
+    
+    .logo-loading {
+      margin-bottom: 32px; /* 8の倍数 */
+    }
+    
+    .company-name {
+      font-family: 'Courier New', monospace;
+      font-size: 24px; /* 8の倍数 */
+      font-weight: normal;
+      color: #fff;
+      margin: 0 0 16px 0; /* 8の倍数 */
+      letter-spacing: 2px;
+      background: none;
+      text-transform: uppercase;
+      animation: pixel8bitBlink 1s infinite; /* 8bit風点滅 */
+    }
+    
+    @keyframes pixel8bitBlink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    .mission-text {
+      font-family: 'Courier New', monospace;
+      font-size: 12px; /* 8の倍数 */
+      color: #000;
+      line-height: 1.5;
+      margin: 0;
+      opacity: 0;
+      animation: pixel8bitFadeIn 0.5s ease 0.5s forwards; /* 8bit風の短いアニメーション */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    @keyframes pixel8bitFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    /* 道の描画アニメーション */
+    .path-drawing {
+      position: relative;
+      height: 200px;
+      margin: 40px 0;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    .path-svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .drawing-path {
+      animation: drawPath 3s ease-in-out 1.5s forwards;
+    }
+    
+    @keyframes drawPath {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    .unknown-path {
+      opacity: 0.3;
+    }
+    
+    /* キャラクターの移動 */
+    .loading-character {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 60px;
+      animation: characterWalk 3s ease-in-out 1.5s forwards;
+    }
+    
+    @keyframes characterWalk {
+      0% {
+        left: 0;
+        transform: translateY(-50%) translateX(-20px);
+      }
+      100% {
+        left: calc(100% - 40px);
+        transform: translateY(-50%) translateX(0);
+      }
+    }
+    
+    .char-svg {
+      width: 100%;
+      height: 100%;
+      animation: characterBob 0.6s ease-in-out infinite;
+    }
+    
+    @keyframes characterBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    
+    /* プログレスバー */
+    .loading-progress {
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 179, 0, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FFB300, #DAA520);
+      border-radius: 3px;
+      width: 0;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+    }
+    
+    .loading-text {
+      font-size: 1rem;
+      color: #666;
+      margin: 0;
+      transition: all 0.3s ease;
+    }
+    
+    /* ナビゲーションバーを削除（不要） */
+    
+    /* メインコンテンツ - 左右スクロール対応 */
+    .main-content {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 50px;
+      overflow-x: hidden; /* 横スクロールバーを非表示 */
+      overflow-y: hidden; /* 縦スクロールバーを非表示 */
+      position: relative;
+      z-index: 5; /* 動画より前面 */
+    }
+    
+    /* 8bit ドット絵風カードコンテナ */
+    .cards-container {
+      width: 100%;
+      max-width: 1200px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+    
+    .cards-track {
+      display: flex;
+      gap: 16px; /* 8の倍数 */
+      height: 100%;
+      will-change: transform;
+      backface-visibility: hidden;
+      contain: layout style paint;
+      transform-style: preserve-3d;
+      transform: translateX(0px) translateZ(0);
+      visibility: visible;
+      opacity: 1;
+      image-rendering: pixelated;
+    }
+    
+    /* 8bitらしくスムーズアニメーションを削除 */
+    .cards-track {
+      transition: none;
+      transform-origin: center center;
+      will-change: transform;
+    }
+    
+    /* セクション用スタイル */
+    .card-section {
+      display: contents; /* セクション要素はレイアウトに影響しない */
+    }
+    
+    /* シンプルな8bit風表示エフェクト */
+    .card {
+      transition: none; /* 8bitらしくスムーズ化なし */
+      transform-origin: center center;
+      will-change: transform, opacity;
+    }
+    
+    /* カードの状態（8bitcn風） */
+    .card.distant {
+      opacity: 0.6;
+      background: var(--bg-primary);
+      border-color: var(--border-primary);
+      transform: scale(0.9);
+      box-shadow: 
+        2px 2px 0 var(--border-primary),
+        4px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .card.nearby {
+      opacity: 0.85;
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-accent));
+      border-color: var(--accent-blue);
+      transform: scale(0.95);
+      box-shadow: 
+        3px 3px 0 var(--accent-blue),
+        6px 6px 0 rgba(0, 0, 0, 0.25);
+    }
+    
+    .card.current {
+      opacity: 1;
+      background: var(--bg-accent);
+      border-color: var(--accent-yellow);
+      transform: scale(1);
+      box-shadow: 
+        4px 4px 0 var(--accent-yellow),
+        8px 8px 0 rgba(0, 0, 0, 0.3),
+        0 0 12px var(--accent-yellow),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    /* カード間の道のスタイル */
+    .path-connector {
+      width: 60px;
+      height: 280px;
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .path-connector .path-area {
+      width: 100%;
+      height: 40px;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+    
+    .path-connector .path-line {
+      width: 100%;
+      height: 12px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      border-radius: 2px;
+      box-shadow: 
+        0 2px 0 rgba(0, 0, 0, 0.2),
+        0 -2px 0 rgba(255, 255, 255, 0.3);
+      opacity: 0.8;
+    }
+    
+    /* パスのアニメーション */
+    .path-connector.active .path-area {
+      opacity: 0.6;
+    }
+    
+    .path-connector.active .path-line {
+      animation: pathPulse 1s ease-in-out infinite;
+    }
+    
+    @keyframes pathPulse {
+      0%, 100% { opacity: 0.8; transform: translateY(-50%) scaleY(1); }
+      50% { opacity: 1; transform: translateY(-50%) scaleY(1.2); }
+    }
+    
+    /* 8bitcn風カードデザイン - ホワイトテーマ（統一サイズ） */
+    .card {
+      width: 280px; /* 固定サイズで統一 */
+      height: 320px; /* 少し高くして余裕を持たせる */
+      margin-right: 20px; /* カード間の余白を統一 */
+      background: var(--bg-primary);
+      border: 4px solid var(--border-primary);
+      border-radius: 0;
+      padding: 24px 20px; /* パディングを統一 */
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      position: relative;
+      overflow: visible;
+      font-family: 'Share Tech Mono', monospace;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      z-index: 10;
+      /* 8bitcn風ピクセルシャドウ */
+      box-shadow: 
+        6px 6px 0px var(--border-primary),
+        8px 8px 0px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* ピクセルアート風ボーダー装飾 */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 3px solid var(--border-primary);
+      border-radius: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* 角のピクセル装飾 */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border-top: 3px solid var(--accent-green);
+      border-left: 3px solid var(--accent-green);
+      pointer-events: none;
+    }
+    
+    /* 右上角 */
+    .card .pixel-corner-tr {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      border-top: 3px solid var(--accent-green);
+      border-right: 3px solid var(--accent-green);
+    }
+    
+    /* 左下角 */
+    .card .pixel-corner-bl {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border-bottom: 3px solid var(--accent-green);
+      border-left: 3px solid var(--accent-green);
+    }
+    
+    /* 右下角 */
+    .card .pixel-corner-br {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      border-bottom: 3px solid var(--accent-green);
+      border-right: 3px solid var(--accent-green);
+    }
+    
+    /* 8bitcn風シンプルホバーエフェクト */
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        6px 8px 0px var(--border-primary),
+        8px 10px 0px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card:active {
+      transform: translateY(0px);
+      box-shadow: 
+        4px 4px 0px var(--border-primary),
+        6px 6px 0px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* カードコンテンツの微調整 */
+    .card > * {
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* 8bitcn風セクション区切りカード */
+    .card.divider {
+      min-width: 224px;
+      height: 256px;
+      background: var(--bg-primary);
+      border: 3px solid var(--accent-purple);
+      color: var(--text-primary);
+      font-weight: bold;
+      cursor: default;
+      position: relative;
+      font-family: 'Courier New', monospace;
+      box-shadow: 
+        4px 4px 0 var(--accent-purple),
+        8px 8px 0 rgba(0, 0, 0, 0.4),
+        0 0 16px var(--accent-purple),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.4),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .card.divider::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(45deg, 
+          transparent, transparent 4px, 
+          rgba(139, 92, 246, 0.1) 4px, rgba(139, 92, 246, 0.1) 8px);
+      pointer-events: none;
+    }
+    
+    /* 8bitcn風セクション区切りカードの内容 */
+    .card.divider .card-icon {
+      font-family: 'Courier New', monospace;
+      font-size: 32px;
+      margin-bottom: 16px;
+      line-height: 1;
+      color: var(--accent-purple);
+      text-shadow: 
+        2px 2px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
+      filter: drop-shadow(0 0 8px var(--accent-purple));
+    }
+    
+    .card.divider .card-title {
+      color: var(--accent-purple);
+      font-size: 18px;
+      text-shadow: 
+        2px 2px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
+    }
+    
+    .card.divider .card-title {
+      font-family: 'Courier New', monospace;
+      font-size: 16px; /* 8の倍数 */
+      font-weight: normal;
+      color: #fff;
+      text-shadow: none;
+      margin-bottom: 8px; /* 8の倍数 */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .card.divider .card-description {
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      font-size: 8px; /* 8の倍数 */
+      font-weight: normal;
+      text-shadow: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    
+    /* 8bitcn風ピクセルアートテキスト */
+    .card-icon {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 48px;
+      margin-bottom: 16px;
+      line-height: 1;
+      color: var(--accent-green);
+      /* ピクセルアート風テキスト効果 */
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeSpeed;
+      /* ハードシャドウ */
+      text-shadow: 
+        3px 3px 0 var(--bg-primary),
+        4px 4px 0 var(--border-primary);
+    }
+    
+    .card-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+      /* ピクセルパーフェクト */
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+      text-rendering: optimizeSpeed;
+      /* ドット文字風 */
+      text-shadow: 
+        1px 1px 0 var(--bg-primary),
+        2px 2px 0 var(--border-primary);
+      /* ピクセル風背景 */
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 50%,
+        var(--border-primary) 50%,
+        var(--border-primary) 100%
+      );
+      background-size: 2px 2px;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: var(--text-primary);
+    }
+    
+    .card-description {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--text-secondary);
+      line-height: 1.2;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      /* ピクセル化 */
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+      /* ドット調 */
+      opacity: 0.8;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+    }
+    
+    /* アクセシビリティ向上 */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
+    
+    
+    
+    
+    /* 8bit ドット絵風棒人間（16x16ピクセル感） */
+    .tiny-character {
+      position: fixed;
+      bottom: max(80px, calc(env(safe-area-inset-bottom) + 70px)); /* ゲームステータスバーより上に */
+      left: 20px;
+      transform: translateZ(0);
+      width: 80px; /* 16x5 = 80px - さらに大きく */
+      height: 80px; /* 16x5 = 80px */
+      z-index: 800;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      contain: layout style paint;
+      will-change: transform, left;
+      backface-visibility: hidden;
+      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease;
+      opacity: 0; /* 初期非表示 */
+      cursor: pointer; /* クリック可能 */
+    }
+    
+    /* ジャンプアニメーション */
+    .tiny-character.jumping {
+      animation: jumpAnimation 0.6s ease;
+    }
+    
+    @keyframes jumpAnimation {
+      0% {
+        transform: translateY(0) scaleX(1) scaleY(1);
+      }
+      20% {
+        transform: translateY(-5px) scaleX(1.1) scaleY(0.9);
+      }
+      50% {
+        transform: translateY(-80px) scaleX(0.95) scaleY(1.05);
+      }
+      80% {
+        transform: translateY(-5px) scaleX(1.05) scaleY(0.95);
+      }
+      100% {
+        transform: translateY(0) scaleX(1) scaleY(1);
+      }
+    }
+    
+    /* ジャンプ中の影アニメーション */
+    .tiny-character.jumping::after {
+      animation: shadowAnimation 0.6s ease;
+    }
+    
+    @keyframes shadowAnimation {
+      0%, 100% {
+        opacity: 0.3;
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        opacity: 0.1;
+        transform: translateX(-50%) scale(0.5);
+      }
+    }
+    
+    /* 最大レベル達成時の赤色表示 - ホワイトテーマ */
+    .tiny-character.max-level-achieved .pixel {
+      background: var(--accent-red) !important;
+      box-shadow: 1px 1px 0 rgba(220, 53, 69, 0.3), 0 0 4px var(--accent-red);
+    }
+    
+    .tiny-character.max-level-achieved {
+      filter: drop-shadow(0 0 8px rgba(220, 53, 69, 0.6));
+      animation: maxLevelGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes maxLevelGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(220, 53, 69, 0.6));
+      }
+      50% {
+        filter: drop-shadow(0 0 16px rgba(220, 53, 69, 0.9));
+      }
+    }
+    
+    /* ピクセルキャラクター用グリッド */
+    .pixel-character {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .pixel-grid {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: scale(5); /* 16px → 80px - さらに大きく */
+      transform-origin: top left;
+    }
+    
+    /* 個別ピクセル */
+    .pixel {
+      position: absolute;
+      background: #000;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+    
+    /* 8bitレトロゲーム風スタイル - ホワイトテーマ */
+    .pixel-character .pixel {
+      background: var(--text-primary);
+      box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    /* ドット絵風の影効果 */
+    .tiny-character {
+      filter: none;
+    }
+    
+    .tiny-character::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 2px;
+      background: var(--border-primary);
+      opacity: 0.4;
+      image-rendering: pixelated;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* キャラクターの旅路進行状態 */
+    .tiny-character.journey-mode {
+      transition: left 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* チェックポイント到達時のエフェクト */
+    .tiny-character.at-checkpoint {
+      filter: drop-shadow(0 8px 16px rgba(255,179,0,0.4));
+      animation: checkpointGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes checkpointGlow {
+      0%, 100% { 
+        filter: drop-shadow(0 8px 16px rgba(255,179,0,0.4));
+      }
+      50% { 
+        filter: drop-shadow(0 12px 24px rgba(255,179,0,0.6));
+      }
+    }
+    
+    /* チェックポイント通知アニメーション */
+    @keyframes checkpointPop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+      30% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+      }
+    }
+    
+    /* リセット通知アニメーション */
+    @keyframes resetPop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+      15% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+      25% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      85% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+    }
+    
+    
+    /* GIF風コマ送り歩行アニメーション */
+    .walking-animation-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .walk-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    /* 各フレームの表示タイミング */
+    .walk-frame.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* アイドル状態のアニメーション */
+    .walk-frame.idle.active {
+      animation: idleSwaying 4s ease-in-out infinite;
+    }
+    
+    @keyframes idleSwaying {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-1px) rotate(0.5deg); }
+      50% { transform: translateY(0px) rotate(0deg); }
+      75% { transform: translateY(-1px) rotate(-0.5deg); }
+    }
+    
+    /* 棒人間の視線動作 */
+    .tiny-character.looking-left .walk-frame.idle.active circle {
+      transform: translateX(-2px);
+      transition: transform 0.3s ease;
+    }
+    
+    .tiny-character.looking-right .walk-frame.idle.active circle {
+      transform: translateX(2px);
+      transition: transform 0.3s ease;
+    }
+    
+    /* キャラクター進化システム */
+    .tiny-character.evolution-level-1 {
+      filter: drop-shadow(0 4px 8px rgba(255,179,0,0.2));
+    }
+    
+    .tiny-character.evolution-level-2 {
+      filter: drop-shadow(0 6px 12px rgba(255,179,0,0.3));
+      transform: scale(1.05);
+    }
+    
+    .tiny-character.evolution-level-3 {
+      filter: drop-shadow(0 8px 16px rgba(255,179,0,0.4));
+      transform: scale(1.1);
+    }
+    
+    .tiny-character.evolution-level-4 {
+      filter: drop-shadow(0 10px 20px rgba(255,179,0,0.5));
+      transform: scale(1.15);
+    }
+    
+    .tiny-character.evolution-level-5 {
+      filter: drop-shadow(0 12px 24px rgba(255,179,0,0.6));
+      transform: scale(1.2);
+      animation: finalEvolutionGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes finalEvolutionGlow {
+      0%, 100% { 
+        filter: drop-shadow(0 12px 24px rgba(255,179,0,0.6));
+      }
+      50% { 
+        filter: drop-shadow(0 16px 32px rgba(255,179,0,0.8));
+      }
+    }
+    
+    /* 進化エフェクト */
+    .evolution-effect {
+      position: absolute;
+      inset: -20px;
+      border: 2px solid #FFB300;
+      border-radius: 50%;
+      opacity: 0;
+      animation: evolutionPulse 0.8s ease-out;
+      pointer-events: none;
+    }
+    
+    @keyframes evolutionPulse {
+      0% {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+    }
+    
+    /* 指差しフレーム */
+    .walk-frame.pointing {
+      transition: opacity 0.3s ease;
+    }
+    
+    /* GIF風コマ送り歩行（4フレーム） */
+    .walking-animation {
+      pointer-events: none;
+    }
+    
+    /* フレーム切り替えのスムーズ化 */
+    .walk-frame {
+      transition: opacity 0.1s ease-out;
+    }
+    
+    /* 左右の向き対応 - 左右スクロールに合わせて調整 */
+    .tiny-character.facing-left .walking-animation-container {
+      transform: scaleX(-1); /* 左向き（左スクロール時） */
+    }
+    
+    .tiny-character.facing-right .walking-animation-container {
+      transform: scaleX(1); /* 右向き（右スクロール時） */
+    }
+    
+    /* セクション別道の色 */
+    .section-apps .path-area { background: #f0f8f0; }
+    .section-company .path-area { background: #fff8f0; }
+    .section-members .path-area { background: #f8f0f8; }
+    .section-media .path-area { background: #f0f8ff; }
+    .section-contact .path-area { background: #fff0f0; }
+    
+    .section-apps .path-line { background: #4CAF50; }
+    .section-company .path-line { background: #FFB300; }
+    .section-members .path-line { background: #9C27B0; }
+    .section-media .path-line { background: #2196F3; }
+    .section-contact .path-line { background: #FF5722; }
+    
+    /* 高速歩行モード - スムーズな走行 */
+    .walking.fast-walking .walk-frame.frame1,
+    .walking.fast-walking .walk-frame.frame2,
+    .walking.fast-walking .walk-frame.frame3 {
+      animation-duration: 0.3s !important;
+    }
+    
+    /* カードハイライト効果 */
+    .card.highlighted {
+      transform: translateY(-15px) scale(1.05) !important;
+      box-shadow: 
+        0 25px 70px rgba(255,179,0,0.3),
+        0 10px 35px rgba(255,179,0,0.2) !important;
+      border-color: #FFB300 !important;
+      animation: highlightPulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes highlightPulse {
+      0%, 100% { 
+        box-shadow: 
+          0 25px 70px rgba(255,179,0,0.3),
+          0 10px 35px rgba(255,179,0,0.2);
+      }
+      50% { 
+        box-shadow: 
+          0 30px 80px rgba(255,179,0,0.4),
+          0 15px 40px rgba(255,179,0,0.3);
+      }
+    }
+    
+    /* 視線エフェクト */
+    @keyframes gazeFlash {
+      0% { 
+        opacity: 0;
+        transform: rotate(var(--angle, 90deg)) scaleY(0);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% { 
+        opacity: 0;
+        transform: rotate(var(--angle, 90deg)) scaleY(1);
+      }
+    }
+    
+    /* スクロール時の軽量化 */
+    .scrolling .walk-frame {
+      contain: strict;
+      transform: translateZ(0);
+    }
+    
+    /* 低性能デバイス向け最適化 */
+    .low-performance-mode .walking .walk-frame.frame1,
+    .low-performance-mode .walking .walk-frame.frame2,
+    .low-performance-mode .walking .walk-frame.frame3 {
+      animation-duration: 0.8s !important;
+      will-change: auto;
+    }
+    
+    .low-performance-mode .tiny-character {
+      filter: none;
+      contain: layout;
+    }
+    
+    .low-performance-mode .weed {
+      display: none;
+    }
+    
+    .low-performance-mode .card {
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .low-performance-mode .card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    
+    .low-performance-mode .cards-track {
+      transition: none !important;
+    }
+    
+    /* damso.com風のクリーンなエフェクト */
+    .cards-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(to right, 
+          rgba(255,255,255,0.9) 0%, 
+          transparent 15%, 
+          transparent 85%, 
+          rgba(255,255,255,0.9) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    /* パフォーマンス最適化 */
+    .card {
+      will-change: transform, opacity, filter;
+      backface-visibility: hidden;
+      transform-origin: center center;
+    }
+    
+    .cards-track {
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-origin: center center;
+    }
+    
+    
+    /* モバイルスクロール最適化 */
+    @media (max-width: 768px) {
+      body {
+        min-height: 100vh; /* モバイルも通常の高さ */
+        -webkit-overflow-scrolling: touch;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .pixel-grid {
+        transform: scale(4); /* モバイルでもパソコンと同じサイズ感 */
+        -webkit-transform: scale(4);
+      }
+      
+      /* モバイル用の道のスタイル */
+      .path-connector {
+        width: 40px;
+        height: 200px;
+      }
+      
+      .path-connector .path-area {
+        height: 30px;
+      }
+      
+      .path-connector .path-line {
+        height: 8px;
+      }
+      
+      .tiny-character {
+        will-change: transform, left;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0); /* ハードウェアアクセラレーション */
+        width: 76px; /* モバイル用サイズ - パソコンに近いサイズ */
+        height: 76px;
+        transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* パソコンと同じトランジション */
+        bottom: max(45px, calc(env(safe-area-inset-bottom) + 35px));
+      }
+      
+      .cards-container {
+        width: 100%;
+        padding: 0 20px;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .cards-track {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .card {
+        width: 260px; /* モバイル用統一サイズ */
+        height: 300px; /* モバイル用高さ調整 */
+        margin-right: 16px; /* モバイル用余白調整 */
+        padding: 20px 16px; /* モバイル用パディング調整 */
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      /* 背景グリッドをモバイルで軽量化（白背景用） */
+      body::before {
+        background-image: 
+          repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(0,0,0,0.01) 25px, rgba(0,0,0,0.01) 26px),
+          repeating-linear-gradient(90deg, transparent, transparent 25px, rgba(0,0,0,0.01) 25px, rgba(0,0,0,0.01) 26px);
+        /* モバイルのパフォーマンス向上のためGPUアクセラレーション */
+        will-change: auto;
+        transform: translateZ(0);
+      }
+    }
+    
+    /* 追加のモバイル最適化 */
+    @media (max-width: 768px) {
+      body {
+        /* 1602行のメディアクエリと統合 */
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      
+      .logo { 
+        font-size: 18px; 
+        top: 12px; 
+        left: 12px;
+        z-index: 1001;
+      }
+      
+      .main-content { 
+        padding: 0 20px; /* モバイル用に少し縮小 */
+        height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      
+      /* モバイル用カード調整 - 横スクロール維持 */
+      .cards-container {
+        height: 320px;
+        width: 100%;
+        overflow: hidden;
+        max-width: 1000px;
+      }
+      
+      .cards-track {
+        gap: 16px;
+        flex-direction: row;
+      }
+      
+      .card { 
+        min-width: 240px; /* モバイル用にサイズ調整 */
+        height: 280px; 
+        padding: 20px 16px;
+        border-radius: 12px;
+      }
+      
+      .card-icon { 
+        font-size: 40px;
+        margin-bottom: 16px;
+      }
+      
+      .card-title { 
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      
+      .card-description { 
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      
+      /* モバイル用棒人間調整 - 簡素化 */
+      .tiny-character { 
+        width: 80px; 
+        height: 80px;
+        bottom: max(55px, calc(env(safe-area-inset-bottom) + 45px));
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .walk-frame g {
+        stroke-width: 5;
+      }
+      
+      /* モバイル用道調整 */
+      .path-area {
+        height: 48px;
+      }
+      
+      .path-decoration {
+        bottom: 64px;
+        height: 16px;
+      }
+      
+      /* カードのホバーエフェクトを無効化 */
+      .card:hover {
+        transform: none;
+        box-shadow: 
+          0 2px 8px 0 rgba(0, 0, 0, 0.06);
+      }
+      
+      /* グラデーションエフェクトの調整 */
+      .cards-container::after {
+        background: 
+          linear-gradient(to right, 
+            rgba(255,255,255,0.95) 0%, 
+            transparent 10%, 
+            transparent 90%, 
+            rgba(255,255,255,0.95) 100%);
+      }
+    }
+    
+    /* 縦画面（ポートレート）モードの簡単調整 */
+    @media (max-width: 768px) and (orientation: portrait) {
+      .cards-container {
+        height: 260px;
+        max-width: 100%;
+      }
+      
+      .tiny-character {
+        width: 68px;
+        height: 68px;
+        bottom: max(50px, calc(env(safe-area-inset-bottom) + 40px));
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .card {
+        min-width: 220px;
+        height: 260px;
+      }
+      
+      .path-area {
+        height: 36px;
+      }
+    }
+    
+    
+    /* タッチデバイス用最適化 */
+    @media (hover: none) and (pointer: coarse) {
+      /* ホバーエフェクトを完全に無効化してパフォーマンス向上 */
+      .card:hover {
+        transform: none !important;
+        box-shadow: inherit !important;
+        backdrop-filter: inherit !important;
+      }
+      
+      .card:active {
+        transform: scale(1.02) !important;
+        transition: all 0.15s ease;
+      }
+      
+      /* モバイルでのLiquid Glassエフェクトを軽量化 */
+      .card {
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+      
+      /* タッチスクロール最適化 */
+      * {
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+    }
+    /* 8bitcn風レベル表示UI */
+    .level-display {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1000;
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      border: 3px solid var(--border-primary);
+      padding: 16px;
+      image-rendering: pixelated;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: all 0.2s ease;
+      border-radius: 0;
+      /* 8bit風ゲームUIスタイル */
+      box-shadow: 
+        4px 4px 0 var(--border-accent),
+        6px 6px 0 rgba(0, 0, 0, 0.2),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.2),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .game-status-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed var(--border-primary);
+    }
+    
+    .status-icon {
+      font-size: 16px;
+      filter: grayscale(1) brightness(0);
+    }
+    
+    .status-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+    }
+    
+    body.loaded .level-display {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .level-text {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    
+    .current-level {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-yellow);
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      filter: drop-shadow(0 0 4px var(--accent-yellow));
+    }
+    
+    .max-level {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    .exp-section {
+      margin-bottom: 12px;
+    }
+    
+    .exp-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    
+    .exp-bar {
+      width: 140px;
+      height: 14px;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-primary);
+      position: relative;
+      overflow: hidden;
+      border-radius: 0;
+      /* ピクセル風ゲージスタイル */
+      box-shadow: 
+        inset 2px 2px 0 rgba(0, 0, 0, 0.4),
+        inset -1px -1px 0 rgba(255, 255, 255, 0.2),
+        0 2px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+    .exp-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-yellow));
+      transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      image-rendering: pixelated;
+      /* 8bitゲーム風グローエフェクト */
+      box-shadow: 
+        0 0 6px var(--accent-green),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .exp-bar-border {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+    }
+    
+    .reset-button {
+      padding: 8px 12px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      border: 2px solid var(--border-primary);
+      cursor: pointer;
+      transition: all 0.1s ease;
+      image-rendering: pixelated;
+      text-transform: uppercase;
+      width: 100%;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      /* 8bit風アクションボタンスタイル */
+      box-shadow: 
+        3px 3px 0 var(--border-accent),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.2),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .reset-icon {
+      font-size: 12px;
+      filter: grayscale(1) brightness(0);
+    }
+    
+    .reset-button:hover {
+      background: var(--bg-secondary);
+      transform: translateY(-1px);
+      box-shadow: 
+        3px 3px 0 var(--border-accent),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .reset-button:active {
+      transform: translateY(1px);
+      box-shadow: 
+        1px 1px 0 var(--border-accent),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.5),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    /* 8bitcn風レベルアップエフェクト */
+    .level-up-effect {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Courier New', monospace;
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--accent-yellow);
+      background: var(--bg-secondary);
+      border: 3px solid var(--accent-yellow);
+      padding: 16px 24px;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      animation: levelUpAnimation 2s ease;
+      /* 8bit風ボーダーエフェクト */
+      box-shadow: 
+        4px 4px 0 var(--accent-green),
+        8px 8px 0 rgba(0, 0, 0, 0.3),
+        0 0 20px var(--accent-yellow),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+        inset 2px 2px 0 rgba(255, 255, 255, 0.1);
+      text-shadow: 
+        2px 2px 0 var(--bg-primary),
+        -1px -1px 0 var(--bg-primary),
+        1px -1px 0 var(--bg-primary),
+        -1px 1px 0 var(--bg-primary);
+    }
+    
+    @keyframes levelUpAnimation {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8) rotate(-2deg);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1) rotate(1deg);
+      }
+      40% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.9) rotate(-1deg);
+      }
+    }
+    
+    /* 完走時の特別エフェクト */
+    .completion-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1999;
+      background: radial-gradient(circle at center, transparent 0%, rgba(255, 215, 0, 0.2) 50%, transparent 100%);
+      opacity: 0;
+      animation: completionPulse 3s ease;
+    }
+    
+    @keyframes completionPulse {
+      0%, 100% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+    
+    /* 8bitcn風完走通知 */
+    .completion-notification {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .notification-content {
+      background: var(--bg-secondary);
+      border: 6px dashed var(--accent-yellow);
+      padding: 32px 48px;
+      text-align: center;
+      position: relative;
+      box-shadow: 
+        0 0 0 3px var(--bg-primary),
+        0 0 0 6px var(--accent-yellow),
+        0 0 40px var(--accent-yellow);
+      animation: notificationPop 0.5s ease;
+    }
+    
+    @keyframes notificationPop {
+      0% {
+        transform: scale(0.8) rotate(-2deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1) rotate(1deg);
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    
+    .notification-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: bounce 1s ease infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .notification-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--accent-yellow);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 
+        3px 3px 0 var(--bg-primary),
+        4px 4px 0 var(--border-primary);
+      animation: glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+      0%, 100% { 
+        text-shadow: 
+          3px 3px 0 var(--bg-primary),
+          4px 4px 0 var(--border-primary),
+          0 0 20px var(--accent-yellow);
+      }
+      50% { 
+        text-shadow: 
+          3px 3px 0 var(--bg-primary),
+          4px 4px 0 var(--border-primary),
+          0 0 40px var(--accent-yellow);
+      }
+    }
+    
+    .notification-message {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 18px;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .notification-submessage {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+      color: var(--accent-green);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .notification-button {
+      font-family: 'Orbitron', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 12px 32px;
+      background: var(--accent-green);
+      color: var(--bg-primary);
+      border: 3px solid var(--accent-green);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.1s ease;
+      box-shadow: 
+        3px 3px 0 var(--bg-primary),
+        6px 6px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    .notification-button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 
+        1px 1px 0 var(--bg-primary),
+        2px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    .notification-button:active {
+      transform: translate(3px, 3px);
+      box-shadow: none;
+    }
+    
+
+    /* モバイル用8bitcn風調整 */
+    @media (max-width: 768px) {
+      .level-display {
+        font-size: 12px;
+        padding: 8px 12px;
+        top: 60px; /* ロゴの下に配置 */
+        right: 12px;
+      }
+      
+      .exp-bar {
+        width: 100px;
+        height: 10px;
+      }
+      
+      .logo {
+        font-size: 12px;
+        padding: 6px 10px;
+        top: 12px;
+        left: 12px;
+      }
+      
+      .card {
+        min-width: 220px;
+        height: 280px;
+        padding: 20px 12px;
+      }
+      
+      .card-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+      
+      .card-title {
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+      
+      .card-description {
+        font-size: 10px;
+      }
+      
+      .level-up-effect {
+        font-size: 24px;
+        padding: 12px 16px;
+      }
+      
+      
+      /* モバイルでキャラクター位置調整 */
+      .tiny-character {
+        bottom: 20px;
+        width: 70px;
+        height: 70px;
+      }
+      
+      /* モバイルでメインコンテンツの下部余白を確保 */
+      .main-content {
+        padding-bottom: 20px;
+      }
+    }
+    
+    /* モバイル用操作UI - 棒人間の左右に配置 */
+    .mobile-control-ui {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none; /* デフォルトは非表示 */
+      align-items: center;
+      gap: 120px; /* 棒人間を挟む幅 */
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none; /* 中央部分はクリック無効 */
+    }
+    
+    .mobile-control-ui .control-arrow {
+      pointer-events: auto; /* 矢印部分のみクリック有効 */
+    }
+    
+    .control-arrow {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      border: 3px solid var(--border-primary);
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 
+        4px 4px 0px var(--border-primary),
+        inset 2px 2px 0px rgba(255, 255, 255, 0.2),
+        inset -2px -2px 0px rgba(0, 0, 0, 0.2);
+      transition: all 0.1s ease;
+      user-select: none;
+      position: relative;
+      overflow: visible;
+      backdrop-filter: blur(5px);
+    }
+    
+    .arrow-icon {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--accent-blue);
+      filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.3));
+    }
+    
+    .arrow-label {
+      font-size: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+    
+    .control-arrow::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      height: 3px;
+      background: linear-gradient(90deg, #00ff00 0%, #00aa00 100%);
+      opacity: 0.8;
+    }
+    
+    .control-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 2px;
+      right: 2px;
+      height: 1px;
+      background: #003300;
+      opacity: 0.6;
+    }
+    
+    .control-arrow:hover {
+      background: linear-gradient(135deg, var(--bg-accent) 0%, var(--bg-secondary) 100%);
+      transform: translate(1px, 1px);
+      box-shadow: 
+        3px 3px 0px var(--border-primary),
+        inset 2px 2px 0px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 0px rgba(0, 0, 0, 0.3);
+    }
+    
+    .control-arrow:hover .arrow-icon {
+      color: var(--accent-yellow);
+      filter: drop-shadow(0 0 4px var(--accent-yellow));
+    }
+    
+    .control-arrow:active,
+    .control-arrow.arrow-pressed {
+      background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-blue) 100%);
+      transform: translate(2px, 2px);
+      box-shadow: 
+        2px 2px 0px var(--border-primary),
+        inset 1px 1px 0px rgba(255, 255, 255, 0.4),
+        inset -1px -1px 0px rgba(0, 0, 0, 0.1);
+    }
+    
+    .control-arrow:active .arrow-icon,
+    .control-arrow.arrow-pressed .arrow-icon {
+      color: var(--bg-primary);
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+    }
+    
+    /* 矢印ボタンの追加エフェクト */
+    .control-arrow.arrow-pressed::before {
+      background: linear-gradient(90deg, #00ff44 0%, #00aa22 100%);
+      animation: arrowFlash 0.3s ease;
+    }
+    
+    @keyframes arrowFlash {
+      0% { opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { opacity: 0.8; }
+    }
+    
+    /* ヒント部分を削除してシンプルに */
+    
+    /* モバイルでのみ表示 */
+    @media (max-width: 768px) and (pointer: coarse) {
+      .mobile-control-ui {
+        display: flex;
+        opacity: 1; /* 常に表示 */
+      }
+      
+      /* 初回表示時のアニメーション */
+      .mobile-control-ui.first-show {
+        animation: controlUIIntro 3s ease;
+      }
+      
+      @keyframes controlUIIntro {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+      
+      /* モバイル用追加調整 */
+      .control-arrow {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+      }
+    }
+    
+    /* タッチ中の状態 */
+    .tiny-character.dragging .mobile-control-ui {
+      opacity: 0.5;
+    }
+  </style>
+  
+  <!-- 8bitレトロゲーム背景動画 -->
+  <div class="video-background" id="videoBackground">
+    <!-- メイン動画 -->
+    <video 
+      id="backgroundVideo" 
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      preload="auto"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.6;
+        z-index: -1;
+      "
+    >
+      <source src="backvideo.mp4" type="video/mp4">
+      <source src="backvideo.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+    
+    <!-- 8bit風オーバーレイ -->
+    <div class="video-overlay" style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.2;
+    "></div>
+  </div>
+  
+  <!-- 動画状態表示 (開発環境のみ) -->
+  <div id="videoStatus" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.85); color: #00ff00; padding: 8px 12px; border-radius: 4px; font-family: 'Share Tech Mono', monospace; font-size: 10px; border: 1px solid rgba(0,255,0,0.3); opacity: 0.8; display: none;">
+    🔄 動画読み込み中...
+  </div>
+  
+  <!-- 遷移オーバーレイ -->
+  <div class="transition-overlay" id="transitionOverlay"></div>
+  
+  
+  <!-- ローディング画面 -->
+  <div class="loading-screen" id="loadingScreen" role="dialog" aria-labelledby="loading-title" aria-describedby="loading-description">
+    <div class="loading-content">
+      <div class="logo-loading">
+        <h1 id="loading-title" class="company-name">ToMoreBeyond</h1>
+        <p id="loading-description" class="mission-text">面白いことだけをする。友と共に“道なき道”を越える</p>
+      </div>
+      
+      <div class="path-drawing">
+        <svg class="path-svg" viewBox="0 0 800 200" role="img" aria-label="道を開拓する進行状況">
+          <defs>
+            <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#DAA520;stop-opacity:0" />
+              <stop offset="50%" style="stop-color:#FFB300;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#DAA520;stop-opacity:0" />
+            </linearGradient>
+          </defs>
+          
+          <!-- 未開拓の道 -->
+          <path class="unknown-path" d="M 0 100 Q 200 80 400 100 T 800 100" 
+                stroke="#ddd" stroke-width="3" fill="none" stroke-dasharray="10,5" />
+          
+          <!-- 開拓される道 -->
+          <path class="drawing-path" d="M 0 100 Q 200 80 400 100 T 800 100" 
+                stroke="url(#pathGradient)" stroke-width="6" fill="none" 
+                stroke-dasharray="1600" stroke-dashoffset="1600" />
+        </svg>
+        
+        <!-- 進行中のキャラクター -->
+        <div class="loading-character">
+          <svg viewBox="0 0 100 150" class="char-svg" role="img" aria-label="歩行中のキャラクター">
+            <g stroke="#FFB300" stroke-width="6" stroke-linecap="round" fill="none">
+              <circle cx="50" cy="20" r="12" fill="#FFB300" stroke="none"/>
+              <line x1="50" y1="32" x2="50" y2="65"/>
+              <line x1="50" y1="40" x2="42" y2="52"/>
+              <line x1="42" y1="52" x2="40" y2="68"/>
+              <line x1="50" y1="40" x2="58" y2="52"/>
+              <line x1="58" y1="52" x2="60" y2="68"/>
+              <line x1="50" y1="65" x2="46" y2="87"/>
+              <line x1="46" y1="87" x2="45" y2="110"/>
+              <line x1="50" y1="65" x2="54" y2="87"/>
+              <line x1="54" y1="87" x2="55" y2="110"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      
+      <div class="loading-progress">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="ローディング進行状況">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="loading-text" id="loadingText" aria-live="polite">旅の準備中...</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 左上ロゴ -->
+  <a href="#" class="logo" aria-label="ToMoreBeyond ホームページへ戻る" title="ToMoreBeyond ホームページ">ToMoreBeyond</a>
+  
+  <!-- 8bit風ゲームUI -->
+  <aside class="level-display" id="levelDisplay" role="complementary" aria-label="ゲーム進行状況">
+    <div class="game-status-header">
+      <span class="status-icon">🎮</span>
+      <span class="status-title">LEVEL</span>
+    </div>
+    <div class="level-text" aria-live="polite" aria-atomic="true">
+      <span class="current-level">LV.<span id="currentLevel" aria-label="現在のレベル">1</span></span>
+      <span class="max-level">/<span id="maxLevel" aria-label="最大レベル">12</span></span>
+    </div>
+    <div class="exp-section">
+      <div class="exp-label">EXP</div>
+      <div class="exp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="経験値バー">
+        <div class="exp-fill" id="expFill" style="width: 0%"></div>
+        <div class="exp-bar-border"></div>
+      </div>
+    </div>
+    <button class="reset-button" id="resetButton" onclick="window.gameInstance?.resetProgress()" aria-label="ゲーム進行状況をリセット" title="進行状況をリセット">
+      <span class="reset-icon">🔄</span>
+      RESET
+    </button>
+  </aside>
+  
+  <!-- レベルアップエフェクト -->
+  <div class="level-up-effect" id="levelUpEffect" style="display: none;" role="alert" aria-live="assertive">
+    LEVEL UP!
+  </div>
+  
+  <!-- 完走エフェクト -->
+  <div class="completion-effect" id="completionEffect" style="display: none;" role="alert" aria-live="assertive" aria-label="ゲーム完了おめでとうございます"></div>
+  
+  <!-- ナビゲーションバー削除（シンプル化） -->
+  
+  <!-- メインコンテンツ -->
+  <main class="main-content" role="main" aria-label="ToMoreBeyondの情報カード">
+    <h1 class="visually-hidden">ToMoreBeyond - 会社情報とプロダクト紹介</h1>
+    <nav class="cards-container" role="navigation" aria-label="サイト内容ナビゲーション">
+      <div class="cards-track" id="cardsTrack">
+        <!-- カードはJavaScriptで生成 -->
+      </div>
+    </nav>
+  </main>
+  
+  
+  
+  <!-- 8bit ドット絵風歩行アニメーション棒人間 -->
+  <div class="tiny-character" role="img" aria-label="歩行中のキャラクター">
+    <!-- モバイル用操作UI - 8bit風改良版 -->
+    <div class="mobile-control-ui" id="mobileControlUI">
+      <div class="control-arrow control-left" id="controlLeft">
+        <span class="arrow-icon">◀</span>
+        <span class="arrow-label">LEFT</span>
+      </div>
+      <div class="control-arrow control-right" id="controlRight">
+        <span class="arrow-icon">▶</span>
+        <span class="arrow-label">RIGHT</span>
+      </div>
+    </div>
+    <div class="walking-animation-container">
+      
+      <!-- アイドルフレーム: シンプルな棒人間 -->
+      <div class="walk-frame idle pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 (3x3の四角) -->
+          <div class="pixel" style="top: 1px; left: 6px; width: 3px; height: 3px;"></div>
+          
+          <!-- 胴体 (縦線 4ピクセル) -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 1px; height: 4px;"></div>
+          
+          <!-- 左腕 (水平線) -->
+          <div class="pixel" style="top: 5px; left: 4px; width: 3px; height: 1px;"></div>
+          
+          <!-- 右腕 (水平線) -->
+          <div class="pixel" style="top: 5px; left: 8px; width: 3px; height: 1px;"></div>
+          
+          <!-- 左脚 (斜め下) -->
+          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 3px;"></div>
+          
+          <!-- 右脚 (斜め下) -->
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+        </div>
+      </div>
+      
+      <!-- フレーム1: 歩行ポーズ（左脚前進） -->
+      <div class="walk-frame frame1 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 (3x3の四角) -->
+          <div class="pixel" style="top: 1px; left: 6px; width: 3px; height: 3px;"></div>
+          
+          <!-- 胴体 (縦線 4ピクセル) -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 1px; height: 4px;"></div>
+          
+          <!-- 左腕 (上向き) -->
+          <div class="pixel" style="top: 4px; left: 5px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 3px; left: 5px; width: 1px; height: 1px;"></div>
+          
+          <!-- 右腕 (下向き) -->
+          <div class="pixel" style="top: 6px; left: 8px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 7px; left: 9px; width: 1px; height: 1px;"></div>
+          
+          <!-- 左脚 (前進) -->
+          <div class="pixel" style="top: 8px; left: 5px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 4px; width: 1px; height: 1px;"></div>
+          
+          <!-- 右脚 (後方) -->
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 9px; width: 1px; height: 1px;"></div>
+        </div>
+      </div>
+      
+      <!-- フレーム2: 歩行ポーズ（中間点） -->
+      <div class="walk-frame frame2 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 (3x3の四角) -->
+          <div class="pixel" style="top: 1px; left: 6px; width: 3px; height: 3px;"></div>
+          
+          <!-- 胴体 (縦線 4ピクセル) -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 1px; height: 4px;"></div>
+          
+          <!-- 左腕 (水平) -->
+          <div class="pixel" style="top: 5px; left: 4px; width: 3px; height: 1px;"></div>
+          
+          <!-- 右腕 (水平) -->
+          <div class="pixel" style="top: 5px; left: 8px; width: 3px; height: 1px;"></div>
+          
+          <!-- 左脚 (まっすぐ) -->
+          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 3px;"></div>
+          
+          <!-- 右脚 (まっすぐ) -->
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+        </div>
+      </div>
+      
+      <!-- フレーム3: 歩行ポーズ（右脚前進） -->
+      <div class="walk-frame frame3 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 (3x3の四角) -->
+          <div class="pixel" style="top: 1px; left: 6px; width: 3px; height: 3px;"></div>
+          
+          <!-- 胴体 (縦線 4ピクセル) -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 1px; height: 4px;"></div>
+          
+          <!-- 左腕 (下向き) -->
+          <div class="pixel" style="top: 6px; left: 5px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 7px; left: 4px; width: 1px; height: 1px;"></div>
+          
+          <!-- 右腕 (上向き) -->
+          <div class="pixel" style="top: 4px; left: 8px; width: 2px; height: 1px;"></div>
+          <div class="pixel" style="top: 3px; left: 9px; width: 1px; height: 1px;"></div>
+          
+          <!-- 左脚 (後方) -->
+          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 5px; width: 1px; height: 1px;"></div>
+          
+          <!-- 右脚 (前進) -->
+          <div class="pixel" style="top: 8px; left: 9px; width: 1px; height: 2px;"></div>
+          <div class="pixel" style="top: 10px; left: 10px; width: 1px; height: 1px;"></div>
+        </div>
+      </div>
+      
+      <!-- フレーム4: 歩行ポーズ（リズム転換） -->
+      <div class="walk-frame frame4 pixel-character">
+        <div class="pixel-grid">
+          <!-- 頭部 (3x3の四角) -->
+          <div class="pixel" style="top: 1px; left: 6px; width: 3px; height: 3px;"></div>
+          
+          <!-- 胴体 (縦線 4ピクセル) -->
+          <div class="pixel" style="top: 4px; left: 7px; width: 1px; height: 4px;"></div>
+          
+          <!-- 左腕 (水平) -->
+          <div class="pixel" style="top: 5px; left: 4px; width: 3px; height: 1px;"></div>
+          
+          <!-- 右腕 (水平) -->
+          <div class="pixel" style="top: 5px; left: 8px; width: 3px; height: 1px;"></div>
+          
+          <!-- 左脚 (まっすぐ) -->
+          <div class="pixel" style="top: 8px; left: 6px; width: 1px; height: 3px;"></div>
+          
+          <!-- 右脚 (まっすぐ) -->
+          <div class="pixel" style="top: 8px; left: 8px; width: 1px; height: 3px;"></div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- Critical JavaScript for Initial Load -->
+  <!-- Separated JavaScript Modules -->
+  <script>
+    // Initialize ToMoreBeyond Game System
+    class GameInitializer {
+      constructor() {
+        this.gameInstance = null;
+        this.isGameLoaded = false;
+        this.loadingStarted = false;
+        this.userInteracted = false;
+        
+        // Initialize critical components immediately
+        this.initCriticalComponents();
+        
+        // Start loading process
+        this.startLoadingSequence();
+      }
+      
+      initCriticalComponents() {
+        // Initialize loading screen immediately
+        this.initLoadingScreen();
+        
+        // Add first user interaction listener for audio context
+        this.addUserInteractionListener();
+      }
+      
+      addUserInteractionListener() {
+        const handleFirstInteraction = () => {
+          this.userInteracted = true;
+          document.removeEventListener('click', handleFirstInteraction);
+          document.removeEventListener('keydown', handleFirstInteraction);
+          document.removeEventListener('touchstart', handleFirstInteraction);
+          
+          // Load game components after first interaction
+          if (!this.loadingStarted) {
+            this.loadGameComponents();
+          }
+        };
+        
+        document.addEventListener('click', handleFirstInteraction, { passive: true });
+        document.addEventListener('keydown', handleFirstInteraction, { passive: true });
+        document.addEventListener('touchstart', handleFirstInteraction, { passive: true });
+      }
+      
+      initLoadingScreen() {
+        this.loadingProgress = 0;
+        this.loadingMessages = [
+          '旅の準備中...',
+          '道を探しています...',
+          'アプリを読み込んでいます...',
+          'メンバーを集めています...',
+          '最終準備中...',
+          '旅立ちの時です！'
+        ];
+        
+        this.progressFill = document.getElementById('progressFill');
+        this.loadingText = document.getElementById('loadingText');
+      }
+      
+      startLoadingSequence() {
+        // モバイル対応のより長いローディングシーケンス
+        this.updateLoadingProgress(5);
+        
+        // ゆっくりとしたローディング進行（特にモバイル）
+        setTimeout(() => this.updateLoadingProgress(15), 500);
+        setTimeout(() => this.updateLoadingProgress(25), 1000);
+        setTimeout(() => this.updateLoadingProgress(40), 1500);
+        setTimeout(() => this.updateLoadingProgress(55), 2000);
+        setTimeout(() => this.updateLoadingProgress(70), 2500);
+        setTimeout(() => this.updateLoadingProgress(85), 3000);
+        setTimeout(() => this.updateLoadingProgress(100), 3500);
+        
+        // Auto-load after sufficient delay for all assets
+        setTimeout(() => {
+          if (!this.loadingStarted) {
+            this.loadGameComponents();
+          }
+        }, 2000);
+      }
+      
+      updateLoadingProgress(progress) {
+        this.loadingProgress = progress;
+        if (this.progressFill) {
+          this.progressFill.style.width = progress + '%';
+        }
+        
+        const messageIndex = Math.min(Math.floor(progress / 20), this.loadingMessages.length - 1);
+        if (this.loadingText) {
+          this.loadingText.textContent = this.loadingMessages[messageIndex];
+        }
+        
+        if (progress >= 100) {
+          setTimeout(() => this.completeLoading(), 500);
+        }
+      }
+      
+      async loadGameComponents() {
+        if (this.loadingStarted) return;
+        this.loadingStarted = true;
+        
+        try {
+          // Load game data and components asynchronously
+          await this.loadGameData();
+          await this.loadGameClass();
+          
+          this.isGameLoaded = true;
+        } catch (error) {
+          console.error('Failed to load game components:', error);
+          // Fallback: still complete loading
+          this.isGameLoaded = true;
+        }
+      }
+      
+      async loadGameData() {
+        // Load card data asynchronously
+        return new Promise(resolve => {
+          // Simulate async data loading
+          setTimeout(() => {
+            window.cardsData = [
+              // 会社セクション - セクション分けカードを削除してシンプルに
+              { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU', section: 'company', link: 'detail/company.html' },
+              { icon: 'X', title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU', section: 'company', link: 'detail/mission.html' },
+              
+              // アプリセクション
+              { icon: '+', title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI', section: 'apps', link: 'pages/tadataka.html' },
+              { icon: 'T', title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE', section: 'apps', link: 'pages/toirun.html' },
+              { icon: 'M', title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO', section: 'apps', link: 'pages/midpoint.html' },
+              
+              // チームメンバーセクション
+              { icon: 'Y', title: '山田', description: 'CDO / DESIGNER', section: 'members', link: 'detail/yamada.html' },
+              { icon: 'M', title: '正留', description: 'CEO / ENGINEER', section: 'members', link: 'detail/masadome.html' },
+              { icon: 'A', title: '安藤', description: 'ARTIST', section: 'members', link: 'detail/ando.html' },
+              
+              // メディアセクション
+              { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI', section: 'media', link: 'detail/blog.html' },
+              { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI', section: 'media', link: 'detail/video.html' },
+              { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN', section: 'media', link: 'detail/sns.html' },
+              
+              // コンタクトセクション
+              { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO', section: 'contact', link: 'detail/contact.html' }
+            ];
+            resolve();
+          }, 50);
+        });
+      }
+      
+      async loadGameClass() {
+        // Load main game class asynchronously
+        return new Promise(resolve => {
+          // MinimalSite class is defined below, make it globally available
+          if (typeof MinimalSite !== 'undefined') {
+            window.MinimalSite = MinimalSite;
+          }
+          setTimeout(resolve, 100);
+        });
+      }
+      
+      completeLoading() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+          loadingScreen.classList.add('hidden');
+          
+          // Remove from DOM after transition
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        }
+        
+        // Initialize game after loading is complete
+        this.initializeGame();
+        
+        // Update body class
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
+      }
+      
+      initializeGame() {
+        if (this.gameInstance) {
+          return; // Prevent multiple instances
+        }
+        
+        if (this.isGameLoaded && window.cardsData && typeof MinimalSite !== 'undefined') {
+          this.gameInstance = new MinimalSite();
+          window.gameInstance = this.gameInstance;
+        } else {
+          // Retry after short delay - max 50 retries to avoid infinite loop
+          this.retryCount = (this.retryCount || 0) + 1;
+          if (this.retryCount < 50) {
+            setTimeout(() => this.initializeGame(), 100);
+          } else {
+            console.warn('Failed to initialize game after 50 retries');
+          }
+        }
+      }
+    }
+    
+    // Initialize game initializer after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const gameInitializer = new GameInitializer();
+      } catch (error) {
+        console.error('Failed to initialize game:', error);
+        // Fallback to simple loading removal
+        setTimeout(() => {
+          const loadingScreen = document.getElementById('loadingScreen');
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+          }
+          document.body.classList.remove('loading');
+          document.body.classList.add('loaded');
+        }, 1500);
+      }
+    });
+    
+    // ============================================================================
+    // GAME DATA AND CLASSES (Loaded Asynchronously)
+    // ============================================================================
+    
+    // ============================================================================
+    // MAIN GAME CLASS (Memory Optimized)
+    // ============================================================================
+    
+    class MinimalSite {
+      constructor() {
+        // Memory Management
+        this.isDestroyed = false;
+        this.eventListeners = new Map(); // Track event listeners for cleanup
+        this.timers = new Set(); // Track timers for cleanup
+        this.intervals = new Set(); // Track intervals for cleanup
+        this.rafIds = new Set(); // Track RAF IDs for cleanup
+        
+        // Game State
+        this.sections = ['company', 'apps', 'members', 'media', 'contact'];
+        this.sectionIndex = 0;
+        this.isScrolling = false;
+        this.scrollTimer = null;
+        this.baseScrollSpeed = 60;
+        this.currentScrollSpeed = this.baseScrollSpeed;
+        this.walkSpeed = 0.8;
+        this.speedMultiplier = 1.0;
+        this.isNavigating = false;
+        
+        // Animation Management (Memory Optimized)
+        this.walkingInterval = null;
+        this.pointingTimeout = null;
+        this.currentWalkFrame = 0;
+        this.walkFrames = ['frame1', 'frame2', 'frame3', 'frame4'];
+        
+        // Performance Optimized RAF Management
+        this.rafId = null;
+        this.lastTime = 0;
+        this.targetFPS = 60;
+        this.frameInterval = 1000 / this.targetFPS;
+        
+        // 新しい横スクロール構造管理
+        this.characterPosition = 0; // 開始位置は完全に左端（最初のカード）
+        this.totalJourneyWidth = window.innerWidth * 6; // 6画面分の旅路
+        this.moveInterval = null; // 矢印長押し用の連続移動タイマー
+        this.sectionCheckpoints = [
+          { name: 'apps', position: 0.16, title: 'アプリ' },
+          { name: 'company', position: 0.32, title: '会社' },
+          { name: 'members', position: 0.48, title: 'メンバー' },
+          { name: 'media', position: 0.64, title: 'メディア' },
+          { name: 'contact', position: 0.8, title: 'コンタクト' }
+        ];
+        this.currentCheckpoint = -1; // 初期状態は-1
+        this.isAtCheckpoint = false;
+        this.checkpointPauseTime = 2000; // 2秒間チェックポイントで停止
+        
+        // レベルアップシステム
+        this.currentLevel = 1;
+        this.currentExp = 0;
+        this.expPerCard = 10;
+        this.viewedCards = new Set(); // 既に見たカードを記録
+        this.maxLevel = 12; // カードの総数と同じ（セクション分けカードを削除したため）
+        this.expToNextLevel = 10; // 1カード見れば1レベルアップ
+        this.maxLevelReached = false; // 最大レベル到達フラグ
+        
+        // LocalStorage永続化システムを有効化
+        // ※ デバッグ用のクリアは無効化しました
+        console.log('💾 LocalStorage永続化システム有効 - レベルが保存されます');
+        
+        // 初期化後に進行状況を保存（読み込みは既に上記で実行済み）
+        this.saveProgress();
+        
+        // 8bit サウンドシステム
+        this.audioContext = null;
+        this.isAudioEnabled = false;
+        this.initAudio();
+        
+        // キャラクター進化システム
+        this.evolutionLevel = 0; // 0-5の進化レベル
+        this.evolutionThresholds = [0.2, 0.4, 0.6, 0.8, 1.0]; // 進化が起こる位置
+        
+        // カードスクロール管理
+        this.cardScrollTimeout = null;
+        
+        // Core Web Vitals Optimization
+        this.intersectionObserver = null;
+        this.mutationObserver = null;
+        this.performanceMetrics = {
+          lcp: null,
+          fid: null,
+          cls: null
+        };
+        
+        // メモリ最適化設定
+        this.maxViewedCards = 30; // viewedCardsの最大サイズを制限
+        this.isLowEndDevice = false;
+        this.isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
+        // LocalStorageから進行状況を即座に読み込む（最初に実行）
+        this.loadProgress();
+        
+        // 追加の安全策: URLパラメータからレベルを復元（詳細画面からの復帰対策）
+        this.restoreFromURL();
+        
+        // ページ状態管理（強化版）
+        this.setupPageStateHandlers();
+        
+        // ローディング管理
+        this.loadingProgress = 0;
+        this.loadingMessages = [
+          '旅の準備中...',
+          '道を探しています...',
+          'アプリを読み込んでいます...',
+          'メンバーを集めています...',
+          '最終準備中...',
+          '旅立ちの時です！'
+        ];
+        
+        // Initialize optimizations
+        this.initCoreWebVitals();
+        this.startLoading();
+        this.prepareVideoTransition();
+        
+        // パフォーマンス最適化
+        this.setupPerformanceOptimizations();
+        
+        // 背景動画初期化
+        this.initializeBackgroundVideo();
+      }
+      
+      setupPerformanceOptimizations() {
+        // パフォーマンス最適化のセットアップ
+        this.isLowEndDevice = this.detectLowEndDevice();
+        
+        if (this.isLowEndDevice || this.isMobile) {
+          // 低スペックデバイスやモバイル向け最適化
+          document.body.classList.add('low-performance-mode');
+          
+          // アニメーションFPSを下げる
+          this.targetFPS = 30;
+          this.frameInterval = 1000 / this.targetFPS;
+          
+          // viewedCardsの上限を下げる
+          this.maxViewedCards = 20;
+        }
+        
+        // メモリ監視のセットアップ
+        this.setupMemoryMonitoring();
+      }
+      
+      setupMemoryMonitoring() {
+        // 定期的なメモリ監視
+        if (performance.memory) {
+          this.memoryMonitorInterval = setInterval(() => {
+            this.cleanupUnusedReferences();
+          }, 30000); // 30秒ごとにチェック
+          
+          this.intervals.add(this.memoryMonitorInterval);
+        }
+      }
+      
+      initializeBackgroundVideo() {
+        const video = document.getElementById('backgroundVideo');
+        const videoStatus = document.getElementById('videoStatus');
+        
+        if (!video) return;
+        
+        // モバイルデバイスでのメモリ最適化
+        const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        const isLowEndDevice = this.detectLowEndDevice();
+        
+        if (isLowEndDevice) {
+          // 低スペックデバイスでは動画を無効化
+          video.style.display = 'none';
+          if (videoStatus) videoStatus.style.display = 'none';
+          return;
+        }
+        
+        // 動画の基本設定
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.preload = isMobile ? 'metadata' : 'auto'; // モバイルではメタデータのみ
+        
+        // パフォーマンス最適化のためのrequestIdleCallbackを使用
+        const playVideo = () => {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+              video.play().then(() => {
+                if (videoStatus) {
+                  videoStatus.style.display = 'none';
+                }
+              }).catch(() => {
+                // エラーは無視（バックグラウンド要素のため）
+              });
+            }, { timeout: 2000 });
+          } else {
+            setTimeout(() => {
+              video.play().catch(() => {});
+              if (videoStatus) videoStatus.style.display = 'none';
+            }, 1000);
+          }
+        };
+        
+        // メモリ効率的なイベントリスナー
+        const eventOptions = { once: true, passive: true };
+        video.addEventListener('canplaythrough', playVideo, eventOptions);
+        
+        // ユーザーインタラクション後の再生（メモリ効率的）
+        const interactionHandler = () => {
+          video.play().catch(() => {});
+        };
+        
+        ['click', 'touchstart'].forEach(eventType => {
+          document.addEventListener(eventType, interactionHandler, eventOptions);
+        });
+        
+        // メモリ節約のためvisibility変更時に動画を一時停止
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            video.pause();
+          } else {
+            video.play().catch(() => {});
+          }
+        });
+      }
+      
+      detectLowEndDevice() {
+        // 低スペックデバイスの検出
+        const memoryLimit = 2; // 2GB以下を低スペックと判定
+        
+        if ('deviceMemory' in navigator && navigator.deviceMemory < memoryLimit) {
+          return true;
+        }
+        
+        // ハードウェアコンカレンシー数をチェック
+        if ('hardwareConcurrency' in navigator && navigator.hardwareConcurrency <= 2) {
+          return true;
+        }
+        
+        // ネットワーク速度をチェック
+        if ('connection' in navigator) {
+          const connection = navigator.connection;
+          if (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+            return true;
+          }
+        }
+        
+        return false;
+      }
+      
+      // ============================================================================
+      // PERFORMANCE OPTIMIZATION METHODS
+      // ============================================================================
+      
+      initCoreWebVitals() {
+        // Intersection Observer for lazy loading
+        if ('IntersectionObserver' in window) {
+          this.intersectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const element = entry.target;
+                if (element.dataset.src) {
+                  element.src = element.dataset.src;
+                  element.removeAttribute('data-src');
+                  this.intersectionObserver.unobserve(element);
+                }
+              }
+            });
+          }, {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+          });
+        }
+        
+        // Performance metrics tracking
+        this.trackCoreWebVitals();
+        
+        // Passive event listeners for better performance
+        this.setupPassiveEventListeners();
+      }
+      
+      trackCoreWebVitals() {
+        // Track LCP (Largest Contentful Paint)
+        if ('PerformanceObserver' in window) {
+          try {
+            const lcpObserver = new PerformanceObserver((list) => {
+              const entries = list.getEntries();
+              const lastEntry = entries[entries.length - 1];
+              this.performanceMetrics.lcp = lastEntry.startTime;
+              console.log('LCP:', this.performanceMetrics.lcp);
+            });
+            lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+            
+            // Track FID (First Input Delay)
+            const fidObserver = new PerformanceObserver((list) => {
+              for (const entry of list.getEntries()) {
+                this.performanceMetrics.fid = entry.processingStart - entry.startTime;
+                console.log('FID:', this.performanceMetrics.fid);
+              }
+            });
+            fidObserver.observe({ entryTypes: ['first-input'] });
+            
+            // Track CLS (Cumulative Layout Shift)
+            let clsValue = 0;
+            const clsObserver = new PerformanceObserver((list) => {
+              for (const entry of list.getEntries()) {
+                if (!entry.hadRecentInput) {
+                  clsValue += entry.value;
+                }
+              }
+              this.performanceMetrics.cls = clsValue;
+              console.log('CLS:', this.performanceMetrics.cls);
+            });
+            clsObserver.observe({ entryTypes: ['layout-shift'] });
+          } catch (error) {
+            console.log('Performance Observer not fully supported');
+          }
+        }
+      }
+      
+      setupPassiveEventListeners() {
+        // Add passive event listeners for better performance
+        const passiveEvents = ['touchstart', 'touchmove', 'wheel', 'scroll'];
+        passiveEvents.forEach(eventType => {
+          document.addEventListener(eventType, this.handlePassiveEvent.bind(this), { passive: true });
+          this.eventListeners.set(eventType, this.handlePassiveEvent.bind(this));
+        });
+      }
+      
+      handlePassiveEvent(event) {
+        // Handle passive events without blocking main thread
+        if (this.isDestroyed) return;
+        
+        // Throttle expensive operations
+        if (!this.passiveEventThrottle) {
+          this.passiveEventThrottle = this.throttle(() => {
+            // Handle the actual event logic here
+            this.updatePerformanceState();
+          }, 16); // ~60fps
+        }
+        
+        this.passiveEventThrottle();
+      }
+      
+      updatePerformanceState() {
+        // Update performance-sensitive state
+        if (this.isDestroyed) return;
+        
+        // Use requestIdleCallback for non-critical updates
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            this.performNonCriticalUpdates();
+          });
+        } else {
+          // Fallback for browsers without requestIdleCallback
+          setTimeout(() => this.performNonCriticalUpdates(), 0);
+        }
+      }
+      
+      performNonCriticalUpdates() {
+        // Perform non-critical updates when the browser is idle
+        if (this.isDestroyed) return;
+        
+        // Clean up unused references
+        this.cleanupUnusedReferences();
+      }
+      
+      cleanupUnusedReferences() {
+        // メモリクリーンアップの改善
+        const maxCards = this.maxViewedCards;
+        
+        if (this.viewedCards.size > maxCards) {
+          // 古いカード情報を削除
+          const cardsArray = Array.from(this.viewedCards);
+          this.viewedCards = new Set(cardsArray.slice(-Math.floor(maxCards * 0.6)));
+        }
+        
+        // メモリ圧迫対策
+        if (performance.memory) {
+          const memoryInfo = performance.memory;
+          const memoryUsageRatio = memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit;
+          
+          if (memoryUsageRatio > 0.7) {
+            // 70%を超えたら早めにクリーンアップ
+            this.performMemoryOptimization();
+          }
+          
+          if (memoryUsageRatio > 0.85) {
+            // 85%を超えたら緊急クリーンアップ
+            this.emergencyCleanup();
+          }
+        }
+        
+        // アニメーションフレームの最適化
+        this.optimizeAnimationFrames();
+      }
+      
+      performMemoryOptimization() {
+        // メモリ最適化処理
+        // viewedCardsを半分に削減
+        const cardsArray = Array.from(this.viewedCards);
+        this.viewedCards = new Set(cardsArray.slice(-Math.floor(this.maxViewedCards / 2)));
+        
+        // 不要なタイマーをクリア
+        if (this.scrollTimer) {
+          clearTimeout(this.scrollTimer);
+          this.scrollTimer = null;
+        }
+        
+        // アニメーションの簡略化
+        if (this.isMobile || this.isLowEndDevice) {
+          document.body.classList.add('low-performance-mode');
+        }
+      }
+      
+      optimizeAnimationFrames() {
+        // アニメーションフレームの最適化
+        if (this.rafId && this.rafIds.size > 5) {
+          // 古いRAF IDをクリア
+          const rafArray = Array.from(this.rafIds);
+          rafArray.slice(0, -5).forEach(id => {
+            cancelAnimationFrame(id);
+            this.rafIds.delete(id);
+          });
+        }
+      }
+      
+      emergencyCleanup() {
+        // 緊急時のメモリクリーンアップ
+        console.warn('⚠️ メモリ緊急クリーンアップ実行');
+        
+        // viewedCardsを最小限に
+        const cardsArray = Array.from(this.viewedCards);
+        this.viewedCards = new Set(cardsArray.slice(-5));
+        
+        // すべてのタイマーとRAFをクリア
+        this.timers.forEach(timerId => clearTimeout(timerId));
+        this.timers.clear();
+        
+        this.intervals.forEach(intervalId => clearInterval(intervalId));
+        this.intervals.clear();
+        
+        this.rafIds.forEach(rafId => cancelAnimationFrame(rafId));
+        this.rafIds.clear();
+        
+        // アニメーションを停止
+        this.stopJourneyWalking();
+        
+        // パフォーマンスモードを強制適用
+        document.body.classList.add('low-performance-mode');
+        
+        // 動画を一時停止
+        const video = document.getElementById('backgroundVideo');
+        if (video) {
+          video.pause();
+        }
+        
+        // 強制ガベージコレクション（可能なら）
+        if (window.gc) {
+          window.gc();
+        }
+      }
+      
+      throttle(func, limit) {
+        let inThrottle;
+        return function() {
+          const args = arguments;
+          const context = this;
+          if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+          }
+        }
+      }
+      
+      // Memory management and cleanup
+      destroy() {
+        if (this.isDestroyed) return;
+        
+        this.isDestroyed = true;
+        
+        // Clear all timers
+        this.timers.forEach(timerId => clearTimeout(timerId));
+        this.timers.clear();
+        
+        // Clear all intervals
+        this.intervals.forEach(intervalId => clearInterval(intervalId));
+        this.intervals.clear();
+        
+        // Cancel all RAF
+        this.rafIds.forEach(rafId => cancelAnimationFrame(rafId));
+        this.rafIds.clear();
+        
+        // Remove event listeners
+        this.eventListeners.forEach((handler, eventType) => {
+          document.removeEventListener(eventType, handler);
+        });
+        this.eventListeners.clear();
+        
+        // Disconnect observers
+        if (this.intersectionObserver) {
+          this.intersectionObserver.disconnect();
+          this.intersectionObserver = null;
+        }
+        
+        if (this.mutationObserver) {
+          this.mutationObserver.disconnect();
+          this.mutationObserver = null;
+        }
+        
+        // Close audio context
+        if (this.audioContext && this.audioContext.state !== 'closed') {
+          this.audioContext.close();
+        }
+        
+        // Clear references
+        this.viewedCards.clear();
+        this.performanceMetrics = null;
+      }
+      
+      prepareVideoTransition() {
+        // 動画遷移シーケンスの準備
+        this.videoBackground = document.getElementById('videoBackground');
+        this.transitionOverlay = document.getElementById('transitionOverlay');
+        this.logoPopup = document.getElementById('logoPopup');
+      }
+      
+      startVideoSequence() {
+        // 将来的に動画が準備されたらここで制御
+        // 1. 動画開始
+        // 2. ロゴポップアップ表示
+        // 3. フェードアウト
+        // 4. ゲーム世界表示
+        
+        // 現在は直接ゲーム画面を表示
+        setTimeout(() => {
+          this.showLogoPopup();
+        }, 500);
+      }
+      
+      showLogoPopup() {
+        // ToMoreBeyondポップアップは無効化
+        this.showGameWorld();
+      }
+      
+      showGameWorld() {
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+          mainContent.style.opacity = '1';
+          mainContent.style.visibility = 'visible';
+        }
+        
+        // ゲーム要素を表示
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          character.style.opacity = '1';
+        }
+      }
+      
+      startLoading() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const progressFill = document.getElementById('progressFill');
+        const loadingText = document.getElementById('loadingText');
+        
+        let progress = 0;
+        let messageIndex = 0;
+        
+        const loadingInterval = setInterval(() => {
+          progress += Math.random() * 15 + 5; // 5-20%ずつ進行
+          
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(loadingInterval);
+            
+            // ローディング完了
+            setTimeout(() => {
+              this.completeLoading();
+            }, 500);
+          }
+          
+          // プログレスバー更新
+          if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+            // アクセシビリティ: プログレスバーの値を更新
+            const progressBar = document.querySelector('.progress-bar');
+            if (progressBar) {
+              progressBar.setAttribute('aria-valuenow', Math.round(progress));
+              progressBar.setAttribute('aria-valuetext', `ローディング ${Math.round(progress)}% 完了`);
+            }
+          }
+          
+          // メッシージ更新
+          if (loadingText && messageIndex < this.loadingMessages.length - 1) {
+            const newIndex = Math.floor((progress / 100) * (this.loadingMessages.length - 1));
+            if (newIndex > messageIndex) {
+              messageIndex = newIndex;
+              loadingText.textContent = this.loadingMessages[messageIndex];
+            }
+          }
+        }, 300 + Math.random() * 400); // 300-700ms間隔
+      }
+      
+      completeLoading() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const body = document.body;
+        
+        // ゲーム要素が確実に準備されるまで待機
+        this.ensureGameReady().then(() => {
+          // ローディング画面をフェードアウト
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+            
+            // ローディング画面を完全に非表示にする前に少し待機
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+            }, 800);
+          }
+          
+          // ボディの状態を変更
+          body.classList.remove('loading');
+          body.classList.add('loaded');
+          
+          // メインコンテンツの初期化を開始
+          setTimeout(async () => {
+            await this.init();
+          }, 200);
+          
+          // 動画シーケンスを開始（ポップアップは無効化済み）
+          setTimeout(() => {
+            this.startVideoSequence();
+          }, 400);
+          
+          // ゲーム要素を確実に表示
+          setTimeout(() => {
+            this.forceShowGameElements();
+          }, 600);
+        });
+      }
+      
+      async ensureGameReady() {
+        // ゲーム要素の準備確認
+        return new Promise((resolve) => {
+          let attempts = 0;
+          const maxAttempts = 50;
+          
+          const checkReady = () => {
+            attempts++;
+            
+            // 必要な要素がすべて存在するかチェック
+            const mainContent = document.querySelector('.main-content');
+            const cardsTrack = document.getElementById('cardsTrack');
+            const character = document.querySelector('.tiny-character');
+            const levelDisplay = document.querySelector('.level-display');
+            
+            if (mainContent && cardsTrack && character && levelDisplay) {
+              resolve();
+            } else if (attempts < maxAttempts) {
+              setTimeout(checkReady, 100);
+            } else {
+              console.warn('Game elements not fully ready, proceeding anyway');
+              resolve();
+            }
+          };
+          
+          checkReady();
+        });
+      }
+      
+      forceShowGameElements() {
+        // メインコンテンツを確実に表示
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+          mainContent.style.opacity = '1';
+          mainContent.style.visibility = 'visible';
+          mainContent.style.display = 'flex';
+        }
+        
+        // カードトラックを確実に表示
+        const cardsTrack = document.getElementById('cardsTrack');
+        if (cardsTrack) {
+          cardsTrack.style.opacity = '1';
+          cardsTrack.style.visibility = 'visible';
+          cardsTrack.style.display = 'flex';
+        }
+        
+        // キャラクターを確実に表示
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.opacity = '1';
+          character.style.visibility = 'visible';
+          character.style.display = 'block';
+        }
+        
+        // レベル表示を確実に表示
+        const levelDisplay = document.querySelector('.level-display');
+        if (levelDisplay) {
+          levelDisplay.style.opacity = '1';
+          levelDisplay.style.visibility = 'visible';
+          levelDisplay.style.display = 'block';
+        }
+      }
+      
+      init() {
+        // ゲーム要素の初期化順序を最適化
+        return new Promise((resolve) => {
+          try {
+            // 1. 基本要素の作成
+            this.createCards();
+            this.setupEventListeners();
+            this.createStonePattern();
+            this.createPathDecorations();
+            
+            // 2. UI要素の確実な表示
+            setTimeout(() => {
+              this.ensureUIVisibility();
+              this.startAutoScroll();
+              this.optimizePerformance();
+            }, 100);
+            
+            // 3. アニメーション開始
+            setTimeout(() => {
+              if (!this.isScrolling) {
+                this.showIdleFrame();
+              }
+              
+              // UIを最終確認して表示
+              this.finalUICheck();
+              resolve();
+            }, 300);
+            
+          } catch (error) {
+            console.error('Game initialization error:', error);
+            resolve(); // エラーでも続行
+          }
+        });
+      }
+      
+      ensureUIVisibility() {
+        // UI要素の表示を確実にする
+        const elements = [
+          { selector: '.level-display', display: 'block' },
+          { selector: '.tiny-character', display: 'block' },
+          { selector: '.main-content', display: 'flex' },
+          { selector: '.cards-track', display: 'flex' }
+        ];
+        
+        elements.forEach(({ selector, display }) => {
+          const element = document.querySelector(selector);
+          if (element) {
+            element.style.visibility = 'visible';
+            element.style.opacity = '1';
+            element.style.display = display;
+          }
+        });
+      }
+      
+      finalUICheck() {
+        // 最終的なUI表示確認
+        setTimeout(() => {
+          const character = document.querySelector('.tiny-character');
+          const levelDisplay = document.querySelector('.level-display');
+          if (character) character.style.opacity = '1';
+          if (levelDisplay) levelDisplay.style.opacity = '1';
+          
+          // 初期UIの更新
+          this.updateUI();
+        }, 200);
+      }
+      
+      createStonePattern() {
+        const pattern = document.getElementById('stonePattern');
+        if (!pattern) return;
+        
+        // 石ブロックを生成
+        const stoneCount = Math.ceil(window.innerWidth / 40) + 10;
+        pattern.innerHTML = ''; // 既存のコンテンツをクリア
+        
+        for (let i = 0; i < stoneCount; i++) {
+          const stone = document.createElement('div');
+          stone.className = 'stone-block';
+          
+          // ランダムな幅で石畳感を演出
+          const widthVariation = 50 + Math.random() * 30;
+          stone.style.width = `${widthVariation}px`;
+          
+          // ランダムな色のバリエーション
+          const brightness = 0.9 + Math.random() * 0.2;
+          stone.style.filter = `brightness(${brightness})`;
+          
+          pattern.appendChild(stone);
+        }
+      }
+      
+      createPathDecorations() {
+        const decoration = document.getElementById('pathDecoration');
+        if (!decoration) return;
+        
+        decoration.innerHTML = '';
+        
+        // より少ない装飾でメモリ効率化
+        for (let i = 0; i < 8; i++) {
+          const item = document.createElement('div');
+          item.className = 'decoration-item';
+          
+          // 石のみでシンプルに
+          item.classList.add('stone');
+          
+          // 固定位置でメモリ効率化
+          const positions = [10, 20, 30, 45, 60, 70, 80, 90];
+          item.style.left = `${positions[i]}%`;
+          
+          // アニメーション遅延を最小限に
+          item.style.animationDelay = `${i * 0.5}s`;
+          
+          decoration.appendChild(item);
+        }
+      }
+      
+      optimizePerformance() {
+        // デバイス能力を検出
+        this.detectDeviceCapability();
+        
+        // メモリ効率のためのRAF最適化
+        this.startRAFLoop();
+        
+        // 不要なイベントを削除するデバウンス機能
+        this.debounceCleanup();
+        
+        // GPU最適化
+        this.enableGPUOptimizations();
+      }
+      
+      detectDeviceCapability() {
+        // 低性能デバイスを検出（モバイル重視）
+        this.isLowEndDevice = (
+          (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
+          /Android.*Chrome\/[0-8]/.test(navigator.userAgent) ||
+          /iPhone.*OS [1-1][0-3]/.test(navigator.userAgent) ||
+          window.innerWidth < 768 ||
+          navigator.userAgent.includes('Mobile')
+        );
+        
+        // 中程度の性能デバイス
+        this.isMidEndDevice = (
+          (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+          (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+          /Android/.test(navigator.userAgent)
+        );
+        
+        // モバイルデバイス特別対応
+        this.isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
+        if (this.isLowEndDevice || this.isMobile) {
+          document.body.classList.add('low-performance-mode');
+          // モバイル向け最適化
+          this.baseScrollSpeed = 30;
+          this.targetFPS = 30; // フレームレートを下げる
+          this.frameInterval = 1000 / this.targetFPS;
+        } else if (this.isMidEndDevice) {
+          // 中程度の最適化
+          this.baseScrollSpeed = 40;
+          this.targetFPS = 45;
+          this.frameInterval = 1000 / this.targetFPS;
+        }
+        
+        // メモリ使用量の監視と制限（モバイル向け）
+        this.maxViewedCards = this.isMobile ? 20 : 50;
+      }
+      
+      enableGPUOptimizations() {
+        // 重要な要素にGPU最適化を適用
+        const criticalElements = [
+          '.tiny-character',
+          '.stick-figure',
+          '.cards-track',
+          '.path-area'
+        ];
+        
+        criticalElements.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(el => {
+            el.style.transform = el.style.transform || 'translateZ(0)';
+            el.style.willChange = 'transform';
+            el.style.backfaceVisibility = 'hidden';
+          });
+        });
+      }
+      
+      startRAFLoop() {
+        const loop = (currentTime) => {
+          if (currentTime - this.lastTime >= 16) { // 60FPS制限
+            this.updateAnimations();
+            this.lastTime = currentTime;
+          }
+          this.rafId = requestAnimationFrame(loop);
+        };
+        this.rafId = requestAnimationFrame(loop);
+        this.rafIds.add(this.rafId);
+      }
+      
+      updateAnimations() {
+        // 必要に応じてアニメーション更新
+        if (this.isScrolling) {
+          this.optimizeWalkingAnimation();
+        }
+      }
+      
+      debounceCleanup() {
+        // 5秒ごとにメモリクリーンアップ
+        const cleanupInterval = setInterval(() => {
+          if (!this.isScrolling && !this.isNavigating) {
+            this.cleanupUnusedElements();
+          }
+        }, 5000);
+        this.intervals.add(cleanupInterval);
+      }
+      
+      cleanupUnusedElements() {
+        // 不要なDOM要素の掃除（メモリ効率化）
+        const unusedCards = document.querySelectorAll('.card[data-cleanup="true"]');
+        unusedCards.forEach(card => {
+          if (card.parentNode) {
+            card.parentNode.removeChild(card);
+          }
+        });
+      }
+      
+      createCards() {
+        const track = document.getElementById('cardsTrack');
+        if (!track) {
+          console.error('Cards track not found!');
+          return;
+        }
+        
+        // シンプルなカード作成（セクション分けカードなし）
+        const cardsHTML = [];
+        
+        window.cardsData.forEach((data, index) => {
+          // カード間の道を追加（最初のカード以外）
+          if (index > 0) {
+            const prevSection = window.cardsData[index - 1].section;
+            const currentSection = data.section;
+            // セクションに基づいて道の色を決定
+            cardsHTML.push(`
+              <div class="path-connector section-${prevSection}">
+                <div class="path-area">
+                  <div class="path-line"></div>
+                </div>
+              </div>
+            `);
+          }
+          
+          cardsHTML.push(`
+            <article class="card" 
+                     data-section="${data.section}" 
+                     data-link="${data.link}" 
+                     data-type="normal"
+                     role="button"
+                     tabindex="0"
+                     aria-label="${data.title} - ${data.description}へのリンク"
+                     aria-describedby="card-desc-${index}">
+              <div class="pixel-corner-tr"></div>
+              <div class="pixel-corner-bl"></div>
+              <div class="pixel-corner-br"></div>
+              <div class="card-icon" aria-hidden="true">${data.icon}</div>
+              <h3 class="card-title">${data.title}</h3>
+              <p class="card-description" id="card-desc-${index}">${data.description}</p>
+            </article>
+          `);
+        });
+        
+        track.innerHTML = cardsHTML.join('');
+        
+        // カードが確実に表示されるように
+        track.style.visibility = 'visible';
+        track.style.opacity = '1';
+        track.style.display = 'flex';
+        
+        // カードクリック/タッチイベント（モバイル完全対応）
+        track.querySelectorAll('.card').forEach((card, index) => {
+          let touchStartTime = 0;
+          let touchStartY = 0;
+          let hasMoved = false;
+          
+          const handleCardActivation = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const link = card.dataset.link;
+            
+            // レベル経験値処理（確実に実行）- 棒人間位置は変更しない
+            this.handleCardViewOnly(card);
+            
+            // ハプティックフィードバック（モバイル）
+            if ('vibrate' in navigator) {
+              navigator.vibrate(50);
+            }
+            
+            // 視覚的フィードバック
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              card.style.transform = '';
+            }, 150);
+            
+            // リンク遷移（少し遅延してレベルアップ処理を確実に完了）
+            if (link && link !== '#') {
+              setTimeout(() => {
+                window.location.href = link;
+              }, 200);
+            }
+          };
+          
+          // タッチスタート（モバイル専用）
+          card.addEventListener('touchstart', (e) => {
+            touchStartTime = Date.now();
+            touchStartY = e.touches[0].clientY;
+            hasMoved = false;
+            
+            // タッチ開始の視覚フィードバック
+            card.style.transform = 'scale(1.02)';
+            card.style.transition = 'transform 0.1s ease';
+          }, { passive: false });
+          
+          // タッチムーブ（スクロール判定）
+          card.addEventListener('touchmove', (e) => {
+            const currentY = e.touches[0].clientY;
+            if (Math.abs(currentY - touchStartY) > 10) {
+              hasMoved = true;
+              // スクロール時は視覚フィードバックをリセット
+              card.style.transform = '';
+            }
+          }, { passive: true });
+          
+          // タッチエンド（タップ判定）
+          card.addEventListener('touchend', (e) => {
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+            
+            // 視覚フィードバックをリセット
+            card.style.transform = '';
+            
+            // タップ判定：短時間でほとんど動いていない場合
+            if (touchDuration < 500 && !hasMoved) {
+              handleCardActivation(e);
+            }
+          }, { passive: false });
+          
+          // デスクトップクリック
+          card.addEventListener('click', (e) => {
+            // タッチデバイスでない場合のみクリックを処理
+            if (!('ontouchstart' in window)) {
+              handleCardActivation(e);
+            }
+          });
+          
+          // キーボードナビゲーション
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCardActivation(e);
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+              e.preventDefault();
+              this.navigateCards(card, e.key === 'ArrowRight' ? 1 : -1);
+            }
+          });
+          
+          // ホバー時の反応（区切りカード以外）
+          if (card.dataset.type !== 'divider') {
+            card.addEventListener('mouseenter', () => {
+              this.onCardHover(card);
+            });
+            
+            card.addEventListener('mouseleave', () => {
+              this.onCardLeave(card);
+            });
+            
+            // フォーカス時の反応
+            card.addEventListener('focus', () => {
+              this.onCardHover(card);
+            });
+            
+            card.addEventListener('blur', () => {
+              this.onCardLeave(card);
+            });
+          }
+        });
+      }
+      
+      setupEventListeners() {
+        // デスクトップとモバイルで操作方法を分離
+        this.isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
+        if (this.isMobile) {
+          this.setupMobileControls();
+        } else {
+          this.setupDesktopControls();
+        }
+        
+        // 共通のキーボードナビゲーション
+        this.setupKeyboardControls();
+      }
+      
+      setupDesktopControls() {
+        // デスクトップ用：縦スクロールで棒人間が横移動
+        let scrollTimeout;
+        
+        window.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          this.handleVerticalScroll();
+          
+          // スクロール終了を検知
+          scrollTimeout = setTimeout(() => {
+            this.optimizeAfterScroll();
+          }, 150);
+        }, { passive: true });
+        
+        // ホイールイベントで横スクロールも対応
+        window.addEventListener('wheel', (e) => {
+          // 横ホイールまたはShift+縦ホイールの場合は横移動
+          if (e.deltaX !== 0 || e.shiftKey) {
+            e.preventDefault();
+            const scrollDelta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+            this.handleHorizontalScroll(scrollDelta);
+          }
+          // 通常の縦ホイールは自然にスクロールさせる（preventDefault しない）
+        }, { passive: false });
+      }
+      
+      setupMobileControls() {
+        // モバイル用：棒人間をドラッグで移動
+        const character = document.querySelector('.tiny-character');
+        const mobileUI = document.getElementById('mobileControlUI');
+        const leftArrow = document.getElementById('controlLeft');
+        const rightArrow = document.getElementById('controlRight');
+        
+        if (!character) return;
+        
+        // 初回表示時のヒント
+        setTimeout(() => {
+          if (mobileUI) {
+            mobileUI.classList.add('first-show');
+            character.classList.add('show-controls');
+            
+            setTimeout(() => {
+              character.classList.remove('show-controls');
+            }, 3000);
+          }
+        }, 1000);
+        
+        // ドラッグ操作の実装
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartPosition = 0;
+        
+        // タッチスタート
+        character.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 1) {
+            isDragging = true;
+            dragStartX = e.touches[0].clientX;
+            dragStartPosition = this.characterPosition;
+            character.classList.add('dragging');
+            
+            // ハプティックフィードバック
+            if ('vibrate' in navigator) {
+              navigator.vibrate(20);
+            }
+          }
+        }, { passive: false });
+        
+        // タッチムーブ
+        character.addEventListener('touchmove', (e) => {
+          if (isDragging && e.touches.length === 1) {
+            e.preventDefault();
+            
+            const currentX = e.touches[0].clientX;
+            const deltaX = currentX - dragStartX;
+            const sensitivity = 0.003; // ドラッグ感度
+            
+            const newPosition = Math.max(0, Math.min(1, 
+              dragStartPosition + (deltaX * sensitivity)
+            ));
+            
+            const oldPosition = this.characterPosition;
+            this.characterPosition = newPosition;
+            
+            // キャラクターとカードの位置を更新
+            this.updateCharacterPosition(oldPosition);
+            this.updateCardScroll();
+            
+            // 歩行アニメーション
+            this.startJourneyWalking();
+            this.updateCharacterDirection(deltaX > 0);
+          }
+        }, { passive: false });
+        
+        // タッチエンド
+        character.addEventListener('touchend', (e) => {
+          if (isDragging) {
+            isDragging = false;
+            character.classList.remove('dragging');
+            
+            setTimeout(() => {
+              this.stopJourneyWalking();
+            }, 200);
+          }
+        }, { passive: false });
+        
+        // 矢印ボタンでの移動 - 長押し対応の連続移動
+        this.setupArrowButton(leftArrow, -1, 'left'); // 左矢印
+        this.setupArrowButton(rightArrow, 1, 'right'); // 右矢印
+      }
+      
+      setupArrowButton(button, direction, directionName) {
+        if (!button) return;
+        
+        let isPressed = false;
+        let holdTimeout = null;
+        let moveInterval = null;
+        let moveCount = 0;
+        
+        const startMove = () => {
+          if (!isPressed) return;
+          
+          // 初回移動
+          this.moveCharacterByStep(direction * 2); // 2カード分移動
+          moveCount++;
+          
+          // ハプティックフィードバック
+          if ('vibrate' in navigator) {
+            navigator.vibrate(30);
+          }
+          
+          // 長押し検出（300ms後）
+          holdTimeout = setTimeout(() => {
+            if (!isPressed) return;
+            
+            // 連続移動開始
+            this.startContinuousMove(direction);
+            
+            // より強いハプティック
+            if ('vibrate' in navigator) {
+              navigator.vibrate([50, 50, 50]);
+            }
+          }, 300);
+        };
+        
+        const stopMove = () => {
+          isPressed = false;
+          button.classList.remove('arrow-pressed');
+          
+          // タイマーをクリア
+          if (holdTimeout) {
+            clearTimeout(holdTimeout);
+            holdTimeout = null;
+          }
+          
+          if (moveInterval) {
+            clearInterval(moveInterval);
+            moveInterval = null;
+          }
+          
+          // 歩行停止
+          setTimeout(() => {
+            this.stopJourneyWalking();
+          }, 200);
+          
+          moveCount = 0;
+        };
+        
+        // タッチイベント
+        button.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          isPressed = true;
+          button.classList.add('arrow-pressed');
+          startMove();
+        }, { passive: false });
+        
+        button.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          stopMove();
+        }, { passive: false });
+        
+        button.addEventListener('touchcancel', (e) => {
+          e.preventDefault();
+          stopMove();
+        }, { passive: false });
+        
+        // マウスイベント（デスクトップでもテスト可能）
+        button.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          isPressed = true;
+          button.classList.add('arrow-pressed');
+          startMove();
+        });
+        
+        button.addEventListener('mouseup', (e) => {
+          e.preventDefault();
+          stopMove();
+        });
+        
+        button.addEventListener('mouseleave', (e) => {
+          e.preventDefault();
+          stopMove();
+        });
+      }
+      
+      startContinuousMove(direction) {
+        // 連続移動の実装
+        if (this.moveInterval) {
+          clearInterval(this.moveInterval);
+        }
+        
+        this.moveInterval = setInterval(() => {
+          // スムーズな連続移動
+          const moveAmount = direction * 0.02; // より細かい移動単位
+          const oldPosition = this.characterPosition;
+          const newPosition = Math.max(0, Math.min(1, this.characterPosition + moveAmount));
+          
+          if (Math.abs(newPosition - oldPosition) > 0.001) {
+            this.characterPosition = newPosition;
+            this.updateCharacterPosition(oldPosition);
+            this.updateCardScroll();
+            this.updateCharacterDirection(direction > 0);
+            
+            // 連続歩行アニメーション
+            if (!this.isScrolling) {
+              this.startJourneyWalking();
+            }
+          } else {
+            // 端に到達した場合は停止
+            clearInterval(this.moveInterval);
+            this.moveInterval = null;
+          }
+        }, 16); // 60FPSで滑らか移動
+      }
+      
+      moveCharacterByStep(direction) {
+        // 段階的移動メソッド（矢印ボタン用）
+        const oldPosition = this.characterPosition;
+        
+        // カード数に基づいた適切な移動量を計算
+        const totalCards = window.cardsData.length;
+        const stepSize = Math.abs(direction);
+        const cardStepSize = stepSize / (totalCards - 1); // カード間隔に基づく
+        const actualDirection = direction > 0 ? cardStepSize : -cardStepSize;
+        
+        const newPosition = Math.max(0, Math.min(1, this.characterPosition + actualDirection));
+        
+        if (Math.abs(newPosition - oldPosition) > 0.001) { // 微小な変化を無視
+          this.characterPosition = newPosition;
+          this.updateCharacterPosition(oldPosition);
+          this.updateCardScroll();
+          this.updateCharacterDirection(direction > 0);
+          
+          // より長い歩行アニメーション
+          this.startJourneyWalking();
+          setTimeout(() => {
+            this.stopJourneyWalking();
+          }, 500);
+          
+          // プログレス保存
+          this.saveProgress();
+          
+          console.log('Character moved to position:', this.characterPosition, 'Direction:', direction);
+        }
+      }
+      
+      setupKeyboardControls() {
+        // 共通のキーボードナビゲーション
+        
+        // キーボードナビゲーション - 左右キー対応
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            this.moveCharacterByStep(-50); // 左方向
+          }
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            this.moveCharacterByStep(50); // 右方向
+          }
+          if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            this.moveCharacterByStep(-50); // 上キーも左方向
+          }
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            this.moveCharacterByStep(50); // 下キーも右方向
+          }
+          if (e.key === ' ' || e.key === 'Enter') {
+            // フォーカスされたカードがある場合は、そのカードを優先
+            const focusedCard = document.activeElement;
+            if (focusedCard && focusedCard.classList.contains('card') && focusedCard.getAttribute('tabindex') === '0') {
+              // カードがフォーカスされている場合はカードの処理を優先
+              return;
+            }
+            e.preventDefault();
+            this.jumpCharacter(); // スペースキーまたはEnterキーでジャンプ
+          }
+          
+          // Tab キーナビゲーション補助
+          if (e.key === 'Tab') {
+            // カードへのフォーカス補助
+            const cards = document.querySelectorAll('.card[tabindex="0"]');
+            if (cards.length > 0 && !document.querySelector('.card:focus')) {
+              // フォーカスされたカードがない場合、最初のカードにフォーカス
+              const firstCard = cards[0];
+              if (firstCard && !e.shiftKey) {
+                setTimeout(() => {
+                  firstCard.focus();
+                }, 0);
+              }
+            }
+          }
+        });
+        
+        // 棒人間のクリック/タッチでジャンプ（モバイル最適化）
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          let characterTouchStartTime = 0;
+          let characterHasMoved = false;
+          let characterTouchStartY = 0;
+          
+          // タッチスタート
+          character.addEventListener('touchstart', (e) => {
+            characterTouchStartTime = Date.now();
+            characterTouchStartY = e.touches[0].clientY;
+            characterHasMoved = false;
+          }, { passive: true });
+          
+          // タッチムーブ
+          character.addEventListener('touchmove', (e) => {
+            const currentY = e.touches[0].clientY;
+            if (Math.abs(currentY - characterTouchStartY) > 15) {
+              characterHasMoved = true;
+            }
+          }, { passive: true });
+          
+          // タッチエンド（タップ判定）
+          character.addEventListener('touchend', (e) => {
+            const touchDuration = Date.now() - characterTouchStartTime;
+            
+            if (touchDuration < 300 && !characterHasMoved) {
+              e.preventDefault();
+              e.stopPropagation();
+              this.jumpCharacter();
+              
+              // ハプティックフィードバック
+              if ('vibrate' in navigator) {
+                navigator.vibrate(30);
+              }
+            }
+          }, { passive: false });
+          
+          // デスクトップクリック
+          character.addEventListener('click', (e) => {
+            if (!('ontouchstart' in window)) {
+              e.preventDefault();
+              this.jumpCharacter();
+            }
+          });
+        }
+      }
+      
+      optimizeAfterScroll() {
+        // スクロール終了後の最適化処理
+        this.speedMultiplier = 1.0;
+        // Walking speed update removed - not needed
+      }
+      
+      handleVerticalScroll() {
+        // 縦スクロールに基づく棒人間の横移動（より自然で緩やかな体験）
+        const scrollTop = window.pageYOffset;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const rawScrollProgress = Math.min(scrollTop / Math.max(documentHeight, 1), 1);
+        
+        // モバイルかどうかを判定してスクロール感度を調整
+        const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
+        // スクロール感度を大幅に下げるための調整
+        // イージング関数を使用してより自然な進行にする
+        const easedProgress = this.easeInOutCubic(rawScrollProgress);
+        // もう少し重めに調整
+        const dampingFactor = isMobile ? 0.008 : 0.01; // モバイルとデスクトップの差を小さく
+        const scrollProgress = easedProgress * dampingFactor;
+        
+        // 不要なUI更新を削除（関数が削除されているため）
+        
+        // スクロール進行度に基づいて棒人間の位置を計算（緩やかな移動）
+        const oldPosition = this.characterPosition;
+        
+        // スムージング処理: 急激な変化を抑制
+        const targetPosition = scrollProgress;
+        // もう少し重めのスムージング
+        const smoothingFactor = isMobile ? 0.0015 : 0.002; // モバイルとデスクトップの差を小さく
+        this.characterPosition += (targetPosition - this.characterPosition) * smoothingFactor;
+        
+        // キャラクターの位置を更新
+        this.updateCharacterPosition(oldPosition);
+        
+        // カードの表示もスクロール進行度に合わせて更新
+        this.updateCardScroll();
+        
+        // ゲームステータスバーを更新
+        
+        // 歩行アニメーション（適度な閾値）
+        if (Math.abs(oldPosition - this.characterPosition) > 0.001) {
+          this.startJourneyWalking();
+          
+          // 移動方向を判定
+          const isMovingRight = this.characterPosition > oldPosition;
+          this.updateCharacterDirection(isMovingRight);
+          
+          // 歩行停止タイマー（少し長めに）
+          clearTimeout(this.scrollTimer);
+          this.scrollTimer = setTimeout(() => {
+            this.stopJourneyWalking();
+          }, 500);
+        }
+      }
+      
+      // イージング関数: より自然な進行カーブ
+      easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+      
+      
+      handleHorizontalScroll(deltaX) {
+        // 横スクロールでの手動移動（Shift+ホイールなど）
+        const scrollDirection = deltaX > 0 ? 1 : -1;
+        const baseSensitivity = this.isLowEndDevice ? 0.008 : 0.012;
+        const movementAmount = Math.abs(deltaX) * baseSensitivity;
+        
+        const oldPosition = this.characterPosition;
+        this.characterPosition += scrollDirection * movementAmount;
+        this.characterPosition = Math.max(0, Math.min(1, this.characterPosition));
+        
+        // キャラクターの位置を更新
+        this.updateCharacterPosition(oldPosition);
+        this.updateCharacterDirection(scrollDirection > 0);
+        
+        // カードスクロールの更新
+        this.updateCardScroll();
+        
+        // 歩行開始
+        if (!this.isScrolling) {
+          this.startJourneyWalking();
+        }
+        
+        // 歩行停止タイマー
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(() => {
+          this.stopJourneyWalking();
+        }, 300);
+      }
+      
+      updateCharacterPosition(oldPosition) {
+        if (oldPosition === this.characterPosition) return;
+        
+        const screenWidth = window.innerWidth;
+        const isMobile = screenWidth <= 768 || 'ontouchstart' in window;
+        
+        // 棒人間は画面の中央付近に固定し、代わりにカードをスクロール
+        let characterScreenX;
+        
+        if (this.characterPosition <= 0.05) {
+          // 開始時は左端から移動開始
+          const targetX = isMobile ? screenWidth * 0.25 : screenWidth * 0.3;
+          characterScreenX = 20 + (targetX - 20) * (this.characterPosition / 0.05);
+        } else if (this.characterPosition >= 0.95) {
+          // 終了時は右端に向かって移動（最後のカードと同期）
+          const startX = isMobile ? screenWidth * 0.25 : screenWidth * 0.3;
+          const endX = screenWidth - 100; // 右端から100px手前
+          characterScreenX = startX + (endX - startX) * ((this.characterPosition - 0.95) / 0.05);
+        } else {
+          // 中間は画面の25-30%位置に固定（カードがスクロール）
+          characterScreenX = isMobile ? screenWidth * 0.25 : screenWidth * 0.3;
+        }
+        
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.left = `${characterScreenX}px`;
+        }
+      }
+      
+      updateCharacterDirection(isMovingRight) {
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          if (isMovingRight) {
+            character.classList.add('facing-right');
+            character.classList.remove('facing-left');
+          } else {
+            character.classList.add('facing-left');
+            character.classList.remove('facing-right');
+          }
+        }
+      }
+      
+      // 不要なメソッドを削除して整理済み
+      
+      updateCardScroll() {
+        const track = document.getElementById('cardsTrack');
+        if (!track) return;
+        
+        // 棒人間とカードの完全同期を実現（改良版）
+        const cards = track.children;
+        if (cards.length === 0) return;
+        
+        // モバイルかどうかを判定
+        const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+        
+        // 実際のカード幅を動的に取得
+        const firstCard = cards[0];
+        const cardStyle = window.getComputedStyle(firstCard);
+        const cardWidth = firstCard.offsetWidth + parseInt(cardStyle.marginRight || 0) + parseInt(cardStyle.marginLeft || 0);
+        
+        const containerWidth = track.parentElement?.offsetWidth || window.innerWidth;
+        const totalCardsWidth = cardWidth * cards.length;
+        
+        // キャラクターの画面上の位置を取得（中央付近で固定されている）
+        const character = document.querySelector('.tiny-character');
+        const characterX = character ? parseInt(character.style.left || 20) : containerWidth * 0.3;
+        
+        // 最後のカードがキャラクター位置に来るまでのスクロール量を計算
+        // characterPosition = 0: 最初のカードがキャラクター位置
+        // characterPosition = 1: 最後のカードがキャラクター位置
+        const maxScroll = totalCardsWidth - characterX - cardWidth;
+        
+        // 棒人間の位置 (0-1) をカードスクロールに完全同期
+        const scrollAmount = Math.max(0, Math.min(maxScroll, maxScroll * this.characterPosition));
+        const translateX = -scrollAmount;
+        
+        track.style.transform = `translateX(${translateX}px) translateZ(0)`;
+        
+        // デバッグ用ログ
+        if (this.characterPosition > 0.98 || this.characterPosition < 0.02) {
+          console.log('🎯 端到達時の同期状態:', {
+            characterPosition: this.characterPosition.toFixed(3),
+            characterX: characterX,
+            translateX: translateX.toFixed(1),
+            cardWidth: cardWidth,
+            maxScroll: maxScroll.toFixed(1),
+            totalCardsWidth: totalCardsWidth,
+            containerWidth: containerWidth
+          });
+        }
+        
+        // カードのハイライト状態を棒人間位置と同期
+        const currentCardIndex = Math.round(this.characterPosition * (cards.length - 1));
+        
+        Array.from(cards).forEach((card, index) => {
+          card.classList.remove('current', 'nearby', 'distant', 'highlighted');
+          
+          if (index === currentCardIndex) {
+            card.classList.add('current', 'highlighted');
+            // カードの表示だけではレベルアップしない（クリック時のみ）
+          } else if (Math.abs(index - currentCardIndex) <= 1) {
+            card.classList.add('nearby');
+          } else {
+            card.classList.add('distant');
+          }
+        });
+      }
+      
+      checkCardView(cardIndex) {
+        // 既に見たカードなら何もしない
+        if (this.viewedCards.has(cardIndex)) {
+          return;
+        }
+        
+        // 新しいカードを記録
+        this.viewedCards.add(cardIndex);
+        
+        // 経験値を獲得してレベルアップチェック
+        this.gainExp();
+        
+        // 進行状況を保存
+        this.saveProgress();
+      }
+      
+      gainExp() {
+        this.currentExp += this.expPerCard;
+        
+        // レベルアップチェック
+        if (this.currentExp >= this.expToNextLevel && this.currentLevel < this.maxLevel) {
+          this.levelUp();
+        }
+        
+        // 経験値バーを更新
+        this.updateExpBar();
+      }
+      
+      levelUp() {
+        this.currentLevel++;
+        this.currentExp = 0;
+        
+        // UI更新
+        const levelElement = document.getElementById('currentLevel');
+        if (levelElement) {
+          levelElement.textContent = this.currentLevel;
+        }
+        
+        // レベルアップサウンド
+        this.play8BitSound('levelup');
+        
+        // レベルアップエフェクト
+        this.showLevelUpEffect();
+        
+        // 最大レベル到達時の処理
+        if (this.currentLevel >= this.maxLevel) {
+          this.onMaxLevelReached();
+        }
+      }
+      
+      updateExpBar() {
+        const expFill = document.getElementById('expFill');
+        const expBar = document.querySelector('.exp-bar');
+        if (expFill && expBar) {
+          const expPercent = (this.currentExp / this.expToNextLevel) * 100;
+          expFill.style.width = `${expPercent}%`;
+          // アクセシビリティ: プログレスバーの値を更新
+          expBar.setAttribute('aria-valuenow', Math.round(expPercent));
+          expBar.setAttribute('aria-valuetext', `レベル ${this.currentLevel} - 経験値 ${this.currentExp}/${this.expToNextLevel}`);
+        }
+      }
+      
+      showLevelUpEffect() {
+        const effect = document.getElementById('levelUpEffect');
+        if (effect) {
+          effect.style.display = 'block';
+          effect.style.animation = 'none';
+          
+          // アニメーションをリセット
+          setTimeout(() => {
+            effect.style.animation = 'levelUpAnimation 2s ease';
+          }, 10);
+          
+          // エフェクトを非表示に
+          setTimeout(() => {
+            effect.style.display = 'none';
+          }, 2000);
+        }
+      }
+      
+      onMaxLevelReached() {
+        // 最大レベル到達フラグを設定
+        this.maxLevelReached = true;
+        
+        // 完走サウンド
+        this.play8BitSound('completion');
+        
+        // 完走エフェクト
+        const completionEffect = document.getElementById('completionEffect');
+        if (completionEffect) {
+          completionEffect.style.display = 'block';
+          completionEffect.style.animation = 'completionPulse 3s ease';
+          
+          setTimeout(() => {
+            completionEffect.style.display = 'none';
+          }, 3000);
+        }
+        
+        // 棒人間を赤色に変更
+        this.changeCharacterToRed();
+        
+        // 完走通知を表示
+        this.showCompletionNotification();
+        
+        // 進行状況を保存
+        this.saveProgress();
+      }
+      
+      showCompletionNotification() {
+        // 8bitcn風の完走通知を作成
+        const notification = document.createElement('div');
+        notification.className = 'completion-notification';
+        notification.innerHTML = `
+          <div class="notification-content">
+            <div class="notification-icon">🎉</div>
+            <h2 class="notification-title">CONGRATULATIONS!</h2>
+            <p class="notification-message">ALL CARDS CLEARED!</p>
+            <p class="notification-submessage">LEVEL ${this.maxLevel} ACHIEVED</p>
+            <button class="notification-button" onclick="this.parentElement.parentElement.remove()">OK</button>
+          </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // 自動的に通知を削除（10秒後）
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 10000);
+      }
+      
+      jumpCharacter() {
+        const character = document.querySelector('.tiny-character');
+        if (!character || character.classList.contains('jumping')) {
+          return; // 既にジャンプ中なら何もしない
+        }
+        
+        // ジャンプサウンド
+        this.play8BitSound('jump');
+        
+        // ジャンプアニメーション開始
+        character.classList.add('jumping');
+        
+        // ジャンプ中は歩行アニメーションを一時停止
+        const wasScrolling = this.isScrolling;
+        if (this.isScrolling) {
+          this.clearWalkingAnimation();
+        }
+        
+        // 0.6秒後にジャンプ終了
+        setTimeout(() => {
+          character.classList.remove('jumping');
+          
+          // 歩行アニメーションを再開
+          if (wasScrolling) {
+            this.startWalkingAnimation();
+          } else {
+            this.showIdleFrame();
+          }
+        }, 600);
+      }
+      
+      changeCharacterToRed() {
+        // 全カード閲覧時に棒人間を赤色に変更
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.classList.add('max-level-achieved');
+        }
+      }
+      
+      initAudio() {
+        // Web Audio API初期化（ユーザー操作後に有効化）
+        document.addEventListener('click', () => {
+          if (!this.audioContext) {
+            try {
+              this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+              this.isAudioEnabled = true;
+            } catch (error) {
+              console.log('Audio not supported');
+            }
+          }
+        }, { once: true });
+      }
+      
+      play8BitSound(type) {
+        if (!this.audioContext || !this.isAudioEnabled) return;
+        
+        switch (type) {
+          case 'levelup':
+            this.playLevelUpSound();
+            break;
+          case 'jump':
+            this.playJumpSound();
+            break;
+          case 'walk':
+            this.playWalkSound();
+            break;
+          case 'completion':
+            this.playCompletionSound();
+            break;
+        }
+      }
+      
+      playLevelUpSound() {
+        const ctx = this.audioContext;
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        // 8bit風レベルアップサウンド（ドミソド）
+        const frequencies = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        let time = ctx.currentTime;
+        
+        frequencies.forEach((freq, index) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.type = 'square'; // 8bit風
+          osc.frequency.setValueAtTime(freq, time);
+          
+          gain.gain.setValueAtTime(0, time);
+          gain.gain.linearRampToValueAtTime(0.3, time + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
+          
+          osc.start(time);
+          osc.stop(time + 0.2);
+          
+          time += 0.15;
+        });
+      }
+      
+      playJumpSound() {
+        const ctx = this.audioContext;
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(440, ctx.currentTime); // A4
+        oscillator.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1); // A5
+        oscillator.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.3); // A4
+        
+        gainNode.gain.setValueAtTime(0, ctx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        
+        oscillator.start(ctx.currentTime);
+        oscillator.stop(ctx.currentTime + 0.3);
+      }
+      
+      playWalkSound() {
+        const ctx = this.audioContext;
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(220, ctx.currentTime); // A3
+        
+        gainNode.gain.setValueAtTime(0, ctx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+        
+        oscillator.start(ctx.currentTime);
+        oscillator.stop(ctx.currentTime + 0.05);
+      }
+      
+      playCompletionSound() {
+        const ctx = this.audioContext;
+        
+        // ファンファーレ風サウンド
+        const melody = [
+          { freq: 523.25, duration: 0.2 }, // C5
+          { freq: 659.25, duration: 0.2 }, // E5
+          { freq: 783.99, duration: 0.2 }, // G5
+          { freq: 1046.50, duration: 0.4 }, // C6
+          { freq: 783.99, duration: 0.2 }, // G5
+          { freq: 1046.50, duration: 0.6 } // C6
+        ];
+        
+        let time = ctx.currentTime;
+        
+        melody.forEach(note => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(note.freq, time);
+          
+          gain.gain.setValueAtTime(0, time);
+          gain.gain.linearRampToValueAtTime(0.3, time + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.01, time + note.duration);
+          
+          osc.start(time);
+          osc.stop(time + note.duration);
+          
+          time += note.duration;
+        });
+      }
+      
+      
+      updateCardSpeed() {
+        const track = document.getElementById('cardsTrack');
+        track.style.setProperty('--scroll-speed', `${this.currentScrollSpeed}s`);
+      }
+      
+      
+      resetToNormalSpeed() {
+        this.speedMultiplier = 1.0;
+        this.walkSpeed = 0.8;
+        this.currentScrollSpeed = this.baseScrollSpeed;
+        this.updateCardSpeed();
+        // Walking speed update removed - not needed
+      }
+      
+      optimizeWalkingAnimation() {
+        // 歩行アニメーションの最適化
+        const character = document.querySelector('.tiny-character');
+        const container = document.querySelector('.cards-container');
+        
+        if (this.speedMultiplier > 2.0 && character) {
+          // 高速時は簡略化されたアニメーション
+          character.classList.add('fast-walking');
+          container.classList.add('fast-3d-mode');
+        } else if (character) {
+          character.classList.remove('fast-walking');
+          container.classList.remove('fast-3d-mode');
+        }
+      }
+      
+      startRunning() {
+        // 既に歩行中の場合は何もしない
+        if (this.isScrolling) {
+          return;
+        }
+        
+        this.isScrolling = true;
+        const container = document.querySelector('.tiny-character');
+        
+        // 歩行状態を設定
+        if (container) {
+          container.classList.add('walking');
+        }
+        
+        // 指差しアニメーションを停止
+        this.clearPointingAnimation();
+        
+        // 歩行アニメーション開始
+        this.startWalkingAnimation();
+      }
+      
+      clearPointingAnimation() {
+        // 指差しアニメーションをクリア
+        if (this.pointingTimeout) {
+          clearTimeout(this.pointingTimeout);
+          this.pointingTimeout = null;
+        }
+        
+        const pointingFrame = document.querySelector('.walk-frame.pointing');
+        if (pointingFrame) {
+          pointingFrame.classList.remove('active');
+        }
+      }
+      
+      startWalkingAnimation() {
+        // 既存のアニメーションを安全に停止
+        this.clearWalkingAnimation();
+        
+        // 初期状態をリセット
+        this.currentWalkFrame = 0;
+        this.walkFrames = ['frame1', 'frame2', 'frame3', 'frame4'];
+        
+        // アイドルフレームを非表示
+        this.hideAllFrames();
+        // トランスフォーム状態をクリーンアップ
+        this.clearTransforms();
+        
+        // 安定したフレーム速度（パフォーマンス改善）
+        const frameDuration = 150; // 固定間隔で安定性を向上
+        
+        // 最初のフレームを表示
+        this.showFrame(this.walkFrames[0]);
+        
+        // 定期的なフレーム更新
+        this.walkingInterval = setInterval(() => {
+          if (!this.isScrolling) {
+            return;
+          }
+          
+          this.nextWalkFrame();
+        }, frameDuration);
+      }
+      
+      nextWalkFrame() {
+        // 現在のフレームを非表示
+        this.hideFrame(this.walkFrames[this.currentWalkFrame]);
+        
+        // 次のフレームへ
+        this.currentWalkFrame = (this.currentWalkFrame + 1) % this.walkFrames.length;
+        
+        // 新しいフレームを表示
+        this.showFrame(this.walkFrames[this.currentWalkFrame]);
+      }
+      
+      showFrame(frameClass) {
+        const frame = document.querySelector(`.walk-frame.${frameClass}`);
+        if (frame) {
+          frame.classList.add('active');
+        }
+      }
+      
+      hideFrame(frameClass) {
+        const frame = document.querySelector(`.walk-frame.${frameClass}`);
+        if (frame) {
+          frame.classList.remove('active');
+        }
+      }
+      
+      hideAllFrames() {
+        // 全フレームを非表示
+        document.querySelectorAll('.walk-frame').forEach(frame => {
+          frame.classList.remove('active');
+        });
+      }
+      
+      clearWalkingAnimation() {
+        if (this.walkingInterval) {
+          clearInterval(this.walkingInterval);
+          this.walkingInterval = null;
+        }
+        
+        // 状態をリセット
+        this.currentWalkFrame = 0;
+        
+        // 全歩行フレームを非表示
+        this.hideAllFrames();
+      }
+      
+      clearTransforms() {
+        // トランスフォーム競合を防ぐためのクリーンアップ
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          // 基本のトランスフォームのみ保持
+          character.style.transform = 'translateZ(0)';
+          // 競合するクラスを削除
+          character.classList.remove('looking-left', 'looking-right', 'fast-walking');
+        }
+      }
+      
+      stopRunning() {
+        this.isScrolling = false;
+        const container = document.querySelector('.tiny-character');
+        const track = document.getElementById('cardsTrack');
+        
+        // 歩行状態をクリア
+        if (container) {
+          container.classList.remove('walking', 'fast-walking');
+        }
+        
+        // 歩行アニメーションを安全に停止
+        this.clearWalkingAnimation();
+        
+        // アイドル状態に戻る
+        setTimeout(() => {
+          if (!this.isScrolling) {
+            this.showIdleFrame();
+            
+            // 指差しアニメーションを開始
+            setTimeout(() => {
+              if (!this.isScrolling) {
+                this.startPointingAnimation();
+              }
+            }, 300);
+          }
+        }, 100);
+        
+        // カードトラックをアイドル状態に
+        if (track) {
+          // スクロール完了
+        }
+      }
+      
+      showIdleFrame() {
+        // 全フレームを非表示
+        this.hideAllFrames();
+        
+        // アイドルフレームを表示
+        const idleFrame = document.querySelector('.walk-frame.idle');
+        if (idleFrame) {
+          idleFrame.classList.add('active');
+        }
+      }
+      
+      startPointingAnimation() {
+        // 歩行中は指差しアニメーションを行わない
+        if (this.isScrolling) {
+          return;
+        }
+        
+        const character = document.querySelector('.tiny-character');
+        if (!character) {
+          return;
+        }
+        
+        // 現在表示中のカードを取得
+        const viewportCenter = window.innerWidth / 2;
+        const cards = document.querySelectorAll('.card');
+        let closestCard = null;
+        let minDistance = Infinity;
+        
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
+          const distance = Math.abs(cardCenter - viewportCenter);
+          
+          if (distance < minDistance && rect.left > 0 && rect.right < window.innerWidth) {
+            minDistance = distance;
+            closestCard = card;
+          }
+        });
+        
+        if (closestCard) {
+          // 指差しフレームを作成
+          this.showPointingFrame(closestCard);
+          
+          // 視線エフェクト
+          this.createGazeEffect(closestCard);
+        }
+      }
+      
+      showPointingFrame(targetCard) {
+        // 歩行中は指差ししない
+        if (this.isScrolling) {
+          return;
+        }
+        
+        // アイドルフレームを非表示
+        this.hideAllFrames();
+        
+        // 指差しフレームを作成または更新
+        let pointingFrame = document.querySelector('.walk-frame.pointing');
+        if (!pointingFrame) {
+          pointingFrame = this.createPointingFrame();
+          const container = document.querySelector('.walking-animation-container');
+          if (container) {
+            container.appendChild(pointingFrame);
+          }
+        }
+        
+        if (pointingFrame) {
+          pointingFrame.classList.add('active');
+        }
+        
+        // カードのハイライト
+        if (targetCard) {
+          targetCard.classList.add('highlighted');
+        }
+        
+        // 一定時間後にアイドルに戻る
+        this.pointingTimeout = setTimeout(() => {
+          if (!this.isScrolling) {
+            if (pointingFrame) {
+              pointingFrame.classList.remove('active');
+            }
+            if (targetCard) {
+              targetCard.classList.remove('highlighted');
+            }
+            this.showIdleFrame();
+          }
+        }, 2000);
+      }
+      
+      createPointingFrame() {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'walk-frame pointing');
+        svg.setAttribute('viewBox', '0 0 100 150');
+        
+        svg.innerHTML = `
+          <g stroke="#333" stroke-width="6" stroke-linecap="round" fill="none">
+            <!-- 頭（カードを見上げる） -->
+            <circle cx="50" cy="15" r="12" fill="#333" stroke="none"/>
+            <!-- 胴体（少し後傾） -->
+            <line x1="50" y1="27" x2="48" y2="62"/>
+            <!-- 左腕（指差し） -->
+            <line x1="48" y1="35" x2="30" y2="25"/>
+            <line x1="30" y1="25" x2="20" y2="20"/>
+            <!-- 人差し指 -->
+            <line x1="20" y1="20" x2="15" y2="18" stroke-width="4"/>
+            <!-- 右腕（自然に下ろす） -->
+            <line x1="48" y1="35" x2="55" y2="50"/>
+            <line x1="55" y1="50" x2="58" y2="68"/>
+            <!-- 左脚 -->
+            <line x1="48" y1="62" x2="45" y2="85"/>
+            <line x1="45" y1="85" x2="44" y2="110"/>
+            <!-- 右脚 -->
+            <line x1="48" y1="62" x2="51" y2="85"/>
+            <line x1="51" y1="85" x2="52" y2="110"/>
+          </g>
+        `;
+        
+        return svg;
+      }
+      
+      createGazeEffect(targetCard) {
+        const effect = document.createElement('div');
+        effect.className = 'gaze-effect';
+        
+        const rect = targetCard.getBoundingClientRect();
+        const characterPos = document.querySelector('.tiny-character').getBoundingClientRect();
+        
+        // 視線の角度を計算
+        const angle = Math.atan2(
+          rect.top + rect.height / 2 - characterPos.top,
+          rect.left + rect.width / 2 - characterPos.left
+        ) * 180 / Math.PI;
+        
+        effect.style.cssText = `
+          position: fixed;
+          left: ${characterPos.left + characterPos.width / 2}px;
+          top: ${characterPos.top + 20}px;
+          width: 2px;
+          height: ${Math.sqrt(
+            Math.pow(rect.left + rect.width / 2 - characterPos.left - characterPos.width / 2, 2) +
+            Math.pow(rect.top + rect.height / 2 - characterPos.top - 20, 2)
+          )}px;
+          background: linear-gradient(to bottom, rgba(255, 179, 0, 0.8), transparent);
+          transform-origin: top;
+          transform: rotate(${angle + 90}deg);
+          pointer-events: none;
+          animation: gazeFlash 0.5s ease-out;
+        `;
+        
+        document.body.appendChild(effect);
+        
+        setTimeout(() => {
+          effect.remove();
+        }, 500);
+      }
+      
+      
+      
+      highlightSectionCards(sectionName) {
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+          if (card.dataset.section === sectionName) {
+            card.style.transform = 'scale(1.05)';
+            card.style.borderColor = '#4CAF50';
+            setTimeout(() => {
+              card.style.transform = '';
+              card.style.borderColor = '';
+            }, 1000);
+          }
+        });
+      }
+      
+      nextSection() {
+        this.sectionIndex = (this.sectionIndex + 1) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      prevSection() {
+        this.sectionIndex = (this.sectionIndex - 1 + this.sections.length) % this.sections.length;
+        this.changeSection(this.sections[this.sectionIndex]);
+      }
+      
+      startAutoScroll() {
+        // 新しい横スクロール旅路の初期化
+        this.characterPosition = 0;
+        this.currentCheckpoint = -1;
+        this.isAtCheckpoint = false;
+        
+        // キャラクターを左端（スタート地点）に配置
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.left = '20px';
+          character.classList.add('facing-right'); // 初期は右向き
+        }
+        
+        // カードの初期表示状態を設定
+        const track = document.getElementById('cardsTrack');
+        if (track) {
+          track.classList.add('idle');
+          track.classList.remove('scrolling');
+          track.style.visibility = 'visible';
+          track.style.opacity = '1';
+          
+          // カードが確実に表示されるように強制的に再描画
+          track.offsetHeight;
+        }
+        
+        // 初期セクション表示の更新
+        this.updateSectionDisplay();
+        
+        // 初期カードスクロール位置設定
+        this.updateCardScroll();
+      }
+      
+      // キーボードナビゲーション用のカード移動
+      navigateCards(currentCard, direction) {
+        const cards = Array.from(document.querySelectorAll('.card[tabindex="0"]'));
+        const currentIndex = cards.indexOf(currentCard);
+        let nextIndex = currentIndex + direction;
+        
+        // 範囲外の場合は循環
+        if (nextIndex < 0) {
+          nextIndex = cards.length - 1;
+        } else if (nextIndex >= cards.length) {
+          nextIndex = 0;
+        }
+        
+        const nextCard = cards[nextIndex];
+        if (nextCard) {
+          nextCard.focus();
+          // カードが見えるようにスクロール
+          nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+      
+      // カード表示時の経験値処理（即座に保存）
+      handleCardView(card) {
+        const cardTitle = card.querySelector('.card-title').textContent;
+        
+        // 既に見たカードかチェック
+        if (!this.viewedCards.has(cardTitle)) {
+          this.viewedCards.add(cardTitle);
+          this.gainExp();
+          
+          // 即座に進行状況を保存（ページ遷移前）
+          this.saveProgress();
+          
+          // URLにも状態を保存（追加の安全策）
+          this.saveToURL();
+          
+          // 追加の保存確認（ダブル保存）
+          setTimeout(() => {
+            this.saveProgress();
+            this.saveToURL();
+          }, 100);
+        }
+      }
+      
+      // カードクリック専用メソッド（棒人間位置は変更しない）
+      handleCardViewOnly(card) {
+        const cardTitle = card.querySelector('.card-title').textContent;
+        
+        // 既に見たカードかチェック
+        if (!this.viewedCards.has(cardTitle)) {
+          this.viewedCards.add(cardTitle);
+          this.gainExp();
+          
+          // 即座に進行状況を保存（ページ遷移前）
+          this.saveProgress();
+          
+          // URLにも状態を保存（追加の安全策）
+          this.saveToURL();
+          
+          // 追加の保存確認（ダブル保存）
+          setTimeout(() => {
+            this.saveProgress();
+            this.saveToURL();
+          }, 100);
+        }
+      }
+      
+      saveToURL() {
+        try {
+          // URLパラメータに現在の状態を保存
+          const url = new URL(window.location);
+          url.searchParams.set('level', this.currentLevel);
+          url.searchParams.set('exp', this.currentExp);
+          url.searchParams.set('viewed', Array.from(this.viewedCards).join(','));
+          
+          // ページを移動せずにURLを更新
+          window.history.replaceState({}, '', url);
+          console.log('🔗 URL状態保存:', { level: this.currentLevel, exp: this.currentExp });
+        } catch (error) {
+          console.log('URL保存エラー:', error);
+        }
+      }
+      
+      restoreFromURL() {
+        try {
+          const url = new URL(window.location);
+          const levelParam = url.searchParams.get('level');
+          const expParam = url.searchParams.get('exp');
+          const viewedParam = url.searchParams.get('viewed');
+          
+          if (levelParam && expParam) {
+            const urlLevel = parseInt(levelParam);
+            const urlExp = parseInt(expParam);
+            const urlViewed = viewedParam ? viewedParam.split(',').filter(v => v) : [];
+            
+            // URLの状態がLocalStorageの状態より新しい場合は優先
+            if (urlLevel > this.currentLevel || (urlLevel === this.currentLevel && urlExp > this.currentExp)) {
+              this.currentLevel = urlLevel;
+              this.currentExp = urlExp;
+              this.viewedCards = new Set(urlViewed);
+              
+              console.log('🔗 URL状態復元:', { level: urlLevel, exp: urlExp, viewed: urlViewed.length });
+              
+              // 復元後にLocalStorageも更新
+              this.saveProgress();
+            }
+          }
+        } catch (error) {
+          console.log('URL復元エラー:', error);
+        }
+      }
+      
+      onCardHover(card) {
+        const character = document.querySelector('.tiny-character');
+        if (!character || this.isScrolling) return;
+        
+        // 棒人間がカードを見る
+        const rect = card.getBoundingClientRect();
+        const characterRect = character.getBoundingClientRect();
+        
+        // カードが画面内にある場合のみ反応
+        if (rect.left > 0 && rect.right < window.innerWidth) {
+          // 頭だけ傾けるアニメーション
+          const lookDirection = rect.left < characterRect.left ? 'left' : 'right';
+          character.classList.add(`looking-${lookDirection}`);
+          
+          // 小さなジャンプ
+          character.style.transform = 'translateX(-50%) translateY(-5px) translateZ(0)';
+        }
+      }
+      
+      onCardLeave(card) {
+        const character = document.querySelector('.tiny-character');
+        if (!character) return;
+        
+        // 通常の状態に戻る
+        character.classList.remove('looking-left', 'looking-right');
+        character.style.transform = 'translateZ(0)';
+      }
+      
+      // 新しい横スクロール旅路システムのメソッド
+      startJourneyWalking() {
+        this.isScrolling = true;
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          character.classList.add('walking', 'journey-mode');
+          character.classList.remove('at-checkpoint');
+        }
+        
+        this.startWalkingAnimation();
+      }
+      
+      stopJourneyWalking() {
+        this.isScrolling = false;
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          character.classList.remove('walking', 'journey-mode');
+        }
+        
+        this.clearWalkingAnimation();
+        
+        setTimeout(() => {
+          if (!this.isScrolling) {
+            this.showIdleFrame();
+          }
+        }, 100);
+      }
+      
+      checkForCheckpoints() {
+        const tolerance = 0.05; // 5%の許容範囲
+        
+        for (let i = 0; i < this.sectionCheckpoints.length; i++) {
+          const checkpoint = this.sectionCheckpoints[i];
+          const distance = Math.abs(this.characterPosition - checkpoint.position);
+          
+          if (distance <= tolerance && i !== this.currentCheckpoint) {
+            this.reachCheckpoint(i);
+            break;
+          }
+        }
+      }
+      
+      reachCheckpoint(checkpointIndex) {
+        this.currentCheckpoint = checkpointIndex;
+        this.isAtCheckpoint = true;
+        
+        const checkpoint = this.sectionCheckpoints[checkpointIndex];
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          character.classList.add('at-checkpoint');
+          // チェックポイントで一時停止
+          this.stopJourneyWalking();
+        }
+        
+        // セクション変更
+        this.changeSection(checkpoint.name);
+        
+        // 2秒後に移動再開可能
+        setTimeout(() => {
+          this.isAtCheckpoint = false;
+          if (character) {
+            character.classList.remove('at-checkpoint');
+          }
+        }, this.checkpointPauseTime);
+        
+      }
+      
+      
+      updateSectionDisplay() {
+        // キャラクターの位置に基づいてカード表示を調整（シンプル化）
+        const cards = document.querySelectorAll('.card');
+        const currentSection = this.getCurrentSectionFromPosition();
+        
+        cards.forEach(card => {
+          const cardSection = card.dataset.section;
+          
+          // 全カード統一処理
+          if (cardSection === currentSection) {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          } else {
+            card.style.opacity = '0.8';
+            card.style.transform = 'scale(0.98)';
+          }
+        });
+      }
+      
+      getCurrentSectionFromPosition() {
+        if (this.characterPosition < 0.16) return 'apps';
+        if (this.characterPosition < 0.32) return 'company';
+        if (this.characterPosition < 0.48) return 'members';
+        if (this.characterPosition < 0.64) return 'media';
+        if (this.characterPosition < 0.8) return 'contact';
+        return 'newjourney';
+      }
+      
+      resetJourney() {
+        // 右端到達後のリセット
+        this.characterPosition = 0;
+        this.currentCheckpoint = -1;
+        this.isAtCheckpoint = false;
+        this.evolutionLevel = 0;
+        
+        const character = document.querySelector('.tiny-character');
+        if (character) {
+          character.style.left = '20px';
+          character.classList.remove('facing-left', 'facing-right', 'at-checkpoint', 'journey-mode');
+          character.classList.add('facing-right'); // 旅立ちは右向き
+          
+          // 進化レベルをリセット
+          for (let i = 1; i <= 5; i++) {
+            character.classList.remove(`evolution-level-${i}`);
+          }
+        }
+        
+        // カードの表示をリセット
+        this.updateSectionDisplay();
+        
+        // リセット完了エフェクト
+        this.showResetEffect();
+      }
+      
+      checkForEvolution() {
+        for (let i = 0; i < this.evolutionThresholds.length; i++) {
+          if (this.characterPosition >= this.evolutionThresholds[i] && this.evolutionLevel === i) {
+            this.evolveCharacter(i + 1);
+            break;
+          }
+        }
+      }
+      
+      evolveCharacter(newLevel) {
+        this.evolutionLevel = newLevel;
+        const character = document.querySelector('.tiny-character');
+        
+        if (character) {
+          // 前の進化レベルを削除
+          for (let i = 1; i <= 5; i++) {
+            character.classList.remove(`evolution-level-${i}`);
+          }
+          
+          // 新しい進化レベルを適用
+          character.classList.add(`evolution-level-${newLevel}`);
+          
+          // 進化エフェクトを表示
+          this.showEvolutionEffect(character, newLevel);
+        }
+      }
+      
+      showEvolutionEffect(character, level) {
+        const effect = document.createElement('div');
+        effect.className = 'evolution-effect';
+        character.appendChild(effect);
+        
+        setTimeout(() => {
+          effect.remove();
+        }, 800);
+      }
+      
+      
+      showResetEffect() {
+        const effect = document.createElement('div');
+        effect.className = 'reset-notification';
+        effect.textContent = '新しい旅路を歩み始めます...';
+        effect.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #4CAF50, #45A049);
+          color: white;
+          padding: 20px 40px;
+          border-radius: 50px;
+          font-size: 1.3rem;
+          font-weight: 600;
+          box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3);
+          z-index: 2000;
+          opacity: 0;
+          animation: resetPop 3s ease forwards;
+        `;
+        
+        document.body.appendChild(effect);
+        
+        setTimeout(() => {
+          effect.remove();
+        }, 3000);
+      }
+      
+      // LocalStorage機能
+      saveProgress() {
+        try {
+          const progressData = {
+            currentLevel: this.currentLevel,
+            currentExp: this.currentExp,
+            viewedCards: Array.from(this.viewedCards),
+            maxLevelReached: this.maxLevelReached
+          };
+          localStorage.setItem('toMoreBeyond_progress', JSON.stringify(progressData));
+        } catch (error) {
+          console.log('Progress save failed:', error);
+        }
+      }
+      
+      loadProgress() {
+        try {
+          const savedData = localStorage.getItem('toMoreBeyond_progress');
+          if (savedData) {
+            const progressData = JSON.parse(savedData);
+            this.currentLevel = progressData.currentLevel || 1;
+            this.currentExp = progressData.currentExp || 0;
+            this.viewedCards = new Set(progressData.viewedCards || []);
+            this.maxLevelReached = progressData.maxLevelReached || false;
+            
+            // UIを更新
+            setTimeout(() => {
+              this.updateUI();
+            }, 100);
+          }
+        } catch (error) {
+          console.log('Progress load failed:', error);
+        }
+      }
+      
+      resetProgress() {
+        try {
+          localStorage.removeItem('toMoreBeyond_progress');
+          
+          // ゲーム状態をリセット
+          this.currentLevel = 1;
+          this.currentExp = 0;
+          this.viewedCards = new Set();
+          this.maxLevelReached = false;
+          
+          // キャラクターの色をリセット
+          const character = document.querySelector('.tiny-character');
+          if (character) {
+            character.classList.remove('max-level-achieved');
+          }
+          
+          // UIを更新
+          this.updateUI();
+          
+          // リセットエフェクトを表示
+          this.showResetEffect();
+          
+        } catch (error) {
+          console.log('Progress reset failed:', error);
+        }
+      }
+      
+      updateUI() {
+        // レベル表示を更新
+        const levelElement = document.getElementById('currentLevel');
+        if (levelElement) {
+          levelElement.textContent = this.currentLevel;
+        }
+        
+        // 経験値バーを更新
+        this.updateExpBar();
+        
+        // ゲームステータスバーを更新
+        
+        // 最大レベル到達時の処理
+        if (this.maxLevelReached) {
+          this.changeCharacterToRed();
+        }
+      }
+      
+      
+      setupPageStateHandlers() {
+        // 超強力なレベル保持システム - レベルが絶対に失われないように
+        
+        // 即座にイベントリスナーを設定
+        const ensureProgressLoad = () => {
+          this.loadProgress();
+          this.updateUI();
+          this.forceUIUpdate();
+          console.log('🔄 Progress restored - Level:', this.currentLevel, 'Viewed cards:', this.viewedCards.size);
+        };
+        
+        const ensureProgressSave = () => {
+          this.saveProgress();
+          console.log('💾 Progress saved - Level:', this.currentLevel, 'Viewed cards:', this.viewedCards.size);
+        };
+        
+        // ページ遷移前の保存（複数回保存で確実性向上）
+        window.addEventListener('beforeunload', () => {
+          ensureProgressSave();
+          ensureProgressSave(); // 二重保存
+          ensureProgressSave(); // 三重保存で完璧に
+        });
+        
+        // ページ離脱前の保存（より早いタイミング）
+        window.addEventListener('pagehide', () => {
+          ensureProgressSave();
+        });
+        
+        // ページが表示された時の復元（即座に実行）
+        window.addEventListener('pageshow', (e) => {
+          console.log('📄 Page show event triggered');
+          ensureProgressLoad();
+          
+          // 追加で遅延実行（確実性のため）
+          setTimeout(ensureProgressLoad, 100);
+          setTimeout(ensureProgressLoad, 300);
+        });
+        
+        // DOMContentLoaded時の復元（ページリロード対応）
+        document.addEventListener('DOMContentLoaded', () => {
+          console.log('📋 DOM Content Loaded');
+          setTimeout(ensureProgressLoad, 50);
+        });
+        
+        // ページの可視性変更時の処理
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            console.log('👁️ Page hidden - saving progress');
+            ensureProgressSave();
+          } else {
+            console.log('👁️ Page visible - loading progress');
+            setTimeout(ensureProgressLoad, 50);
+          }
+        });
+        
+        // フォーカス復帰時の処理（強化版）
+        window.addEventListener('focus', () => {
+          console.log('🎯 Window focus - loading progress');
+          setTimeout(ensureProgressLoad, 50);
+        });
+        
+        // ページロード直後の復元
+        window.addEventListener('load', () => {
+          console.log('🚀 Window load complete');
+          setTimeout(ensureProgressLoad, 100);
+        });
+        
+        // 定期的な自動保存（3秒間隔に短縮）
+        setInterval(() => {
+          if (this.currentLevel > 1) {
+            ensureProgressSave();
+          }
+        }, 3000);
+        
+        // 即座に一度確認（初期化時）
+        setTimeout(ensureProgressLoad, 100);
+        
+        // 追加の安全策: 3秒後に最終確認
+        setTimeout(() => {
+          console.log('🔄 最終レベル確認・復元');
+          ensureProgressLoad();
+          this.restoreFromURL();
+        }, 3000);
+      }
+      
+      forceUIUpdate() {
+        // 強制的にUIを更新する（レベル表示の確実な反映）
+        const levelDisplay = document.getElementById('currentLevel');
+        const expDisplay = document.getElementById('currentExp');
+        
+        if (levelDisplay) {
+          levelDisplay.textContent = this.currentLevel;
+          levelDisplay.style.color = this.currentLevel >= this.maxLevel ? '#ff4444' : '#00ff00';
+        }
+        
+        if (expDisplay) {
+          expDisplay.textContent = `EXP: ${this.currentExp}`;
+        }
+        
+        // 経験値バーも更新
+        this.updateExpBar();
+        
+        // キャラクターの色も強制更新
+        const character = document.querySelector('.tiny-character');
+        if (character && this.currentLevel >= this.maxLevel) {
+          character.classList.add('max-level-achieved');
+          this.maxLevelReached = true;
+        }
+        
+        console.log('🔄 Force UI Update - Level:', this.currentLevel, 'Exp:', this.currentExp, 'Viewed:', this.viewedCards.size);
+      }
+    }
+    
+    // 看板作成システム削除
+    // function createSignposts() { ... }
+    
+    
+    // Initialize on DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+    });
+  </script>
+</body>
+</html>

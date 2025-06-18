@@ -252,42 +252,6 @@
       }
     }
     
-    /* 低スペックデバイス向け最適化 */
-    .low-performance-mode .video-container video {
-      display: none;
-    }
-    
-    .low-performance-mode .video-overlay {
-      background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
-    }
-    
-    .low-performance-mode .card {
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      background: rgba(255, 255, 255, 0.98);
-      transition: transform 0.2s ease !important;
-    }
-    
-    .low-performance-mode .character-container {
-      transition: left 0.3s linear !important;
-    }
-    
-    /* GPUアクセラレーション最適化 */
-    .cards-track {
-      will-change: transform;
-      transform: translateZ(0);
-    }
-    
-    .character-container {
-      will-change: left;
-      transform: translateZ(0);
-    }
-    
-    .card {
-      will-change: transform;
-      transform: translateZ(0);
-    }
-    
     /* ローディング表示（シンプル） */
     .loading-overlay {
       position: fixed;
@@ -399,93 +363,21 @@
         this.characterPosition = 0;
         this.viewedCards = new Set();
         
-        // メモリ最適化のための設定
-        this.isLowEndDevice = this.detectLowEndDevice();
-        this.lastUpdateTime = 0;
-        this.rafId = null;
-        this.eventListeners = [];
-        
         this.init();
       }
       
-      detectLowEndDevice() {
-        // メモリ制限のチェック
-        if ('deviceMemory' in navigator && navigator.deviceMemory < 2) {
-          return true;
-        }
-        
-        // CPUコア数のチェック
-        if ('hardwareConcurrency' in navigator && navigator.hardwareConcurrency <= 2) {
-          return true;
-        }
-        
-        // ネットワーク速度のチェック
-        if ('connection' in navigator) {
-          const connection = navigator.connection;
-          if (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
-            return true;
-          }
-        }
-        
-        return false;
-      }
-      
       init() {
-        // 低スペックデバイスの場合はパフォーマンスモードを適用
-        if (this.isLowEndDevice) {
-          document.body.classList.add('low-performance-mode');
-        }
-        
         // カードを生成
         this.createCards();
         
         // イベントリスナー設定
         this.setupEventListeners();
         
-        // 動画の自動再生（低スペックデバイスではスキップ）
-        if (!this.isLowEndDevice) {
-          this.setupVideo();
-        }
-        
-        // メモリ監視のセットアップ
-        this.setupMemoryMonitoring();
+        // 動画の自動再生
+        this.setupVideo();
         
         // ローディング完了
         this.hideLoading();
-      }
-      
-      setupMemoryMonitoring() {
-        // メモリ監視（低スペックデバイスのみ）
-        if (this.isLowEndDevice && 'performance' in window && 'memory' in performance) {
-          setInterval(() => {
-            const memoryInfo = performance.memory;
-            const memoryUsageRatio = memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit;
-            
-            if (memoryUsageRatio > 0.8) {
-              this.emergencyCleanup();
-            }
-          }, 30000); // 30秒ごとにチェック
-        }
-      }
-      
-      emergencyCleanup() {
-        // 緊急メモリクリーンアップ
-        console.warn('⚠️ メモリクリーンアップ実行');
-        
-        // 不要なデータをクリア
-        this.viewedCards.clear();
-        
-        // 動画を一時停止
-        const video = document.getElementById('bgVideo');
-        if (video) {
-          video.pause();
-        }
-        
-        // アニメーションを停止
-        if (this.rafId) {
-          cancelAnimationFrame(this.rafId);
-          this.rafId = null;
-        }
       }
       
       createCards() {
@@ -507,13 +399,14 @@
       }
       
       setupEventListeners() {
-        // パフォーマンス最適化されたイベントリスナー
-        const wheelHandler = this.throttle((e) => {
+        // マウスホイールでスクロール
+        document.addEventListener('wheel', (e) => {
           e.preventDefault();
           this.handleScroll(e.deltaY);
-        }, 16); // 60fps
+        });
         
-        const keyHandler = (e) => {
+        // キーボード操作
+        document.addEventListener('keydown', (e) => {
           if (e.key === 'ArrowRight') {
             this.moveCharacter(0.05);
           } else if (e.key === 'ArrowLeft') {
@@ -522,48 +415,21 @@
             e.preventDefault();
             this.jump();
           }
-        };
+        });
         
         // タッチ操作（モバイル）
         let touchStartX = 0;
-        const touchStartHandler = (e) => {
+        document.addEventListener('touchstart', (e) => {
           touchStartX = e.touches[0].clientX;
-        };
+        });
         
-        const touchMoveHandler = this.throttle((e) => {
+        document.addEventListener('touchmove', (e) => {
           e.preventDefault();
           const touchX = e.touches[0].clientX;
           const diff = (touchStartX - touchX) * 0.001;
           this.handleScroll(diff * 100);
           touchStartX = touchX;
-        }, 16);
-        
-        // イベントリスナーを登録
-        document.addEventListener('wheel', wheelHandler, { passive: false });
-        document.addEventListener('keydown', keyHandler);
-        document.addEventListener('touchstart', touchStartHandler, { passive: true });
-        document.addEventListener('touchmove', touchMoveHandler, { passive: false });
-        
-        // クリーンアップ用に保存
-        this.eventListeners.push(
-          { element: document, type: 'wheel', handler: wheelHandler },
-          { element: document, type: 'keydown', handler: keyHandler },
-          { element: document, type: 'touchstart', handler: touchStartHandler },
-          { element: document, type: 'touchmove', handler: touchMoveHandler }
-        );
-      }
-      
-      throttle(func, limit) {
-        let inThrottle;
-        return function() {
-          const args = arguments;
-          const context = this;
-          if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-          }
-        };
+        });
       }
       
       setupVideo() {
@@ -623,43 +489,36 @@
       }
       
       updatePositions() {
-        // RAFでパフォーマンス最適化
-        if (this.rafId) {
-          cancelAnimationFrame(this.rafId);
+        const character = document.getElementById('character');
+        const track = document.getElementById('cardsTrack');
+        const screenWidth = window.innerWidth;
+        
+        // キャラクターの位置を計算
+        let charX;
+        if (this.characterPosition <= 0.1) {
+          // 開始位置
+          charX = 50 + (screenWidth * 0.3 - 50) * (this.characterPosition / 0.1);
+        } else if (this.characterPosition >= 0.9) {
+          // 終了位置
+          charX = screenWidth * 0.3 + (screenWidth - 150 - screenWidth * 0.3) * ((this.characterPosition - 0.9) / 0.1);
+        } else {
+          // 中間はキャラクターを固定
+          charX = screenWidth * 0.3;
         }
         
-        this.rafId = requestAnimationFrame(() => {
-          const character = document.getElementById('character');
-          const track = document.getElementById('cardsTrack');
-          const screenWidth = window.innerWidth;
-          
-          // キャラクターの位置を計算
-          let charX;
-          if (this.characterPosition <= 0.05) {
-            // 開始位置（より精緻な制御）
-            charX = 50 + (screenWidth * 0.25 - 50) * (this.characterPosition / 0.05);
-          } else if (this.characterPosition >= 0.95) {
-            // 終了位置（最後のカードと完全同期）
-            charX = screenWidth * 0.25 + (screenWidth - 100 - screenWidth * 0.25) * ((this.characterPosition - 0.95) / 0.05);
-          } else {
-            // 中間はキャラクターを固定
-            charX = screenWidth * 0.25;
-          }
-          
-          character.style.left = charX + 'px';
-          
-          // カードのスクロール（最後のカードが右端に来るように調整）
-          const cardWidth = 304; // カード幅 + gap
-          const totalWidth = cardWidth * this.cards.length;
-          const maxScroll = totalWidth - charX - 280; // カード幅を考慮
-          const scrollX = -Math.max(0, Math.min(maxScroll, maxScroll * this.characterPosition));
-          
-          track.style.transform = `translateX(${scrollX}px) translateZ(0)`;
-          
-          // 現在のカードをハイライト
-          const currentCardIndex = Math.round(this.characterPosition * (this.cards.length - 1));
-          this.highlightCard(currentCardIndex);
-        });
+        character.style.left = charX + 'px';
+        
+        // カードのスクロール
+        const cardWidth = 304; // カード幅 + gap
+        const totalWidth = cardWidth * this.cards.length;
+        const maxScroll = totalWidth - screenWidth + 100;
+        const scrollX = -maxScroll * this.characterPosition;
+        
+        track.style.transform = `translateX(${scrollX}px)`;
+        
+        // 現在のカードをハイライト
+        const currentCardIndex = Math.round(this.characterPosition * (this.cards.length - 1));
+        this.highlightCard(currentCardIndex);
       }
       
       highlightCard(index) {
@@ -721,61 +580,11 @@
           character.style.transform = '';
         }, 300);
       }
-      
-      cleanup() {
-        // イベントリスナーをクリーンアップ
-        this.eventListeners.forEach(({ element, type, handler }) => {
-          element.removeEventListener(type, handler);
-        });
-        this.eventListeners = [];
-        
-        // RAFをキャンセル
-        if (this.rafId) {
-          cancelAnimationFrame(this.rafId);
-          this.rafId = null;
-        }
-        
-        // 動画を停止
-        const video = document.getElementById('bgVideo');
-        if (video) {
-          video.pause();
-          video.src = '';
-        }
-        
-        // データをクリア
-        this.viewedCards.clear();
-        this.cards = null;
-        
-        console.log('🧹 ゲームクリーンアップ完了');
-      }
     }
     
     // ゲーム開始
     document.addEventListener('DOMContentLoaded', () => {
-      window.gameInstance = new VideoBackgroundGame();
-    });
-    
-    // ページ離脱時のクリーンアップ
-    window.addEventListener('beforeunload', () => {
-      if (window.gameInstance) {
-        window.gameInstance.cleanup();
-      }
-    });
-    
-    // バックグラウンドでのメモリ最適化
-    document.addEventListener('visibilitychange', () => {
-      if (window.gameInstance) {
-        const video = document.getElementById('bgVideo');
-        if (document.hidden) {
-          // バックグラウンドで動画を一時停止
-          if (video) video.pause();
-        } else {
-          // フォアグラウンドで動画を再開
-          if (video && !window.gameInstance.isLowEndDevice) {
-            video.play().catch(() => {});
-          }
-        }
-      }
+      new VideoBackgroundGame();
     });
   </script>
 </body>
