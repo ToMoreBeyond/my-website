@@ -24,11 +24,11 @@
       overflow: hidden;
       position: relative;
       height: 100vh;
-      background: #000;
+      background: #ffffff;
     }
     
-    /* 背景動画コンテナ - 最重要 */
-    .video-container {
+    /* 背景動画コンテナ */
+    .video-background {
       position: fixed;
       top: 0;
       left: 0;
@@ -36,10 +36,10 @@
       height: 100%;
       z-index: -1;
       overflow: hidden;
+      background: #ffffff;
     }
     
-    /* 動画要素 - フルスクリーンカバー */
-    .video-container video {
+    .video-background video {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -49,17 +49,26 @@
       height: auto;
       transform: translate(-50%, -50%);
       object-fit: cover;
+      opacity: 0.7;
     }
     
-    /* 動画オーバーレイ（暗さ調整） */
+    /* 動画オーバーレイ */
     .video-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.3);
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.05) 2px,
+        rgba(255, 255, 255, 0.05) 4px
+      );
       pointer-events: none;
+      z-index: 1;
+      opacity: 0.3;
     }
     
     /* メインコンテンツラッパー */
@@ -157,25 +166,70 @@
       line-height: 1.5;
     }
     
-    /* 8bitレトロゲーム風キャラクター */
-    .character-container {
+    /* 8bit ドット絵風棒人間（元のサイズ） */
+    .tiny-character {
       position: fixed;
-      bottom: 100px;
-      left: 50px;
-      z-index: 100;
-      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    
-    .character {
+      bottom: max(80px, calc(env(safe-area-inset-bottom) + 70px));
+      left: 20px;
+      transform: translateZ(0);
       width: 80px;
       height: 80px;
-      position: relative;
+      z-index: 800;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+      contain: layout style paint;
+      will-change: transform, left;
+      backface-visibility: hidden;
+      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease;
+      opacity: 1;
+      cursor: pointer;
     }
     
-    /* 8bitピクセルアートシステム */
+    /* ジャンプアニメーション */
+    .tiny-character.jumping {
+      animation: jumpAnimation 0.6s ease;
+    }
+    
+    @keyframes jumpAnimation {
+      0% {
+        transform: translateY(0) scaleX(1) scaleY(1);
+      }
+      20% {
+        transform: translateY(-5px) scaleX(1.1) scaleY(0.9);
+      }
+      50% {
+        transform: translateY(-80px) scaleX(0.95) scaleY(1.05);
+      }
+      80% {
+        transform: translateY(-5px) scaleX(1.05) scaleY(0.95);
+      }
+      100% {
+        transform: translateY(0) scaleX(1) scaleY(1);
+      }
+    }
+    
+    /* 最大レベル達成時の赤色表示 */
+    .tiny-character.max-level-achieved .pixel {
+      background: #dc3545 !important;
+      box-shadow: 1px 1px 0 rgba(220, 53, 69, 0.3), 0 0 4px #dc3545;
+    }
+    
+    .tiny-character.max-level-achieved {
+      filter: drop-shadow(0 0 8px rgba(220, 53, 69, 0.6));
+      animation: maxLevelGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes maxLevelGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(220, 53, 69, 0.6));
+      }
+      50% {
+        filter: drop-shadow(0 0 16px rgba(220, 53, 69, 0.9));
+      }
+    }
+    
+    /* ピクセルキャラクター用グリッド */
     .pixel-character {
       position: relative;
       width: 100%;
@@ -184,53 +238,32 @@
     
     .pixel-grid {
       position: relative;
-      width: 20px;
-      height: 42px;
-      transform: scale(3);
+      width: 100%;
+      height: 100%;
+      transform: scale(5);
       transform-origin: top left;
-      image-rendering: pixelated;
     }
     
+    /* 個別ピクセル */
     .pixel {
       position: absolute;
-      background: #00ff00;
+      background: #000;
       image-rendering: pixelated;
-      box-shadow: 1px 1px 0 rgba(0, 255, 0, 0.3);
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
     
-    /* キャラクターの状態変更 */
-    .character.walking .pixel {
-      animation: pixelWalk 0.6s infinite;
+    /* 歩行フレーム */
+    .walk-frame {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.1s ease;
     }
     
-    @keyframes pixelWalk {
-      0%, 100% { background: #00ff00; }
-      50% { background: #00cc00; }
-    }
-    
-    /* ジャンプアニメーション */
-    .character.jumping {
-      animation: pixelJump 0.6s ease;
-    }
-    
-    @keyframes pixelJump {
-      0% { transform: translateY(0) scaleY(1); }
-      20% { transform: translateY(-5px) scaleY(0.9); }
-      50% { transform: translateY(-30px) scaleY(1.1); }
-      80% { transform: translateY(-5px) scaleY(0.9); }
-      100% { transform: translateY(0) scaleY(1); }
-    }
-    
-    /* レベルアップ時の色変化 */
-    .character.level-up .pixel {
-      background: #ff0000 !important;
-      box-shadow: 1px 1px 0 rgba(255, 0, 0, 0.5), 0 0 8px #ff0000;
-      animation: levelUpGlow 2s ease-in-out infinite;
-    }
-    
-    @keyframes levelUpGlow {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(2); }
+    .walk-frame.active {
+      opacity: 1;
     }
     
     /* レベル表示 */
@@ -372,16 +405,23 @@
 </head>
 <body>
   <!-- 背景動画 -->
-  <div class="video-container">
-    <video id="bgVideo" muted loop playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
+  <div class="video-background" id="videoBackground">
+    <video 
+      id="backgroundVideo" 
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      preload="auto"
+    >
       <source src="backvideo.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
   </div>
   
-  <!-- 動画状態確認用 -->
-  <div id="videoDebug" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #00ff00; padding: 8px; font-size: 12px; z-index: 9999; font-family: monospace;">
-    🎥 Video: Loading...
+  <!-- 動画状態表示 -->
+  <div id="videoStatus" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.85); color: #00ff00; padding: 12px 16px; border-radius: 8px; font-family: 'Share Tech Mono', monospace; font-size: 12px; max-width: 250px; word-wrap: break-word; border: 2px solid rgba(0,255,0,0.3); backdrop-filter: blur(5px); transition: opacity 0.3s ease;">
+    🔄 動画読み込み中...
   </div>
   
   <!-- メインコンテンツ -->
@@ -406,42 +446,36 @@
       </div>
     </div>
     
-    <!-- 8bitレトロゲーム風キャラクター -->
-    <div class="character-container" id="character">
-      <div class="character">
-        <div class="pixel-character">
-          <div class="pixel-grid">
-            <!-- 8bitピクセルアートの棒人間 -->
-            <!-- 頭部 -->
-            <div class="pixel" style="left: 6px; top: 2px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 10px; top: 2px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 14px; top: 2px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 4px; top: 6px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 8px; top: 6px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 12px; top: 6px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 16px; top: 6px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 4px; top: 10px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 16px; top: 10px; width: 4px; height: 4px;"></div>
-            
-            <!-- 体部 -->
-            <div class="pixel" style="left: 10px; top: 14px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 10px; top: 18px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 10px; top: 22px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 10px; top: 26px; width: 4px; height: 4px;"></div>
-            
-            <!-- 腕 -->
-            <div class="pixel" style="left: 6px; top: 18px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 14px; top: 18px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 2px; top: 22px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 18px; top: 22px; width: 4px; height: 4px;"></div>
-            
-            <!-- 足 -->
-            <div class="pixel" style="left: 8px; top: 30px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 12px; top: 30px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 6px; top: 34px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 14px; top: 34px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 4px; top: 38px; width: 4px; height: 4px;"></div>
-            <div class="pixel" style="left: 16px; top: 38px; width: 4px; height: 4px;"></div>
+    <!-- 元の棒人間キャラクター -->
+    <div class="tiny-character" id="tinyCharacter" role="button" tabindex="0" aria-label="キャラクターをクリックしてジャンプ">
+      <div class="pixel-character">
+        <div class="pixel-grid">
+          <!-- 元のピクセルアート棒人間 -->
+          <div class="walk-frame frame1 active">
+            <div class="pixel" style="left: 7px; top: 1px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 7px; top: 3px; width: 2px; height: 6px;"></div>
+            <div class="pixel" style="left: 5px; top: 5px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 9px; top: 5px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 6px; top: 9px; width: 2px; height: 4px;"></div>
+            <div class="pixel" style="left: 8px; top: 9px; width: 2px; height: 4px;"></div>
+          </div>
+          
+          <div class="walk-frame frame2">
+            <div class="pixel" style="left: 7px; top: 1px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 7px; top: 3px; width: 2px; height: 6px;"></div>
+            <div class="pixel" style="left: 6px; top: 5px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 8px; top: 5px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 6px; top: 9px; width: 2px; height: 4px;"></div>
+            <div class="pixel" style="left: 8px; top: 9px; width: 2px; height: 4px;"></div>
+          </div>
+          
+          <div class="walk-frame frame3">
+            <div class="pixel" style="left: 7px; top: 1px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 7px; top: 3px; width: 2px; height: 6px;"></div>
+            <div class="pixel" style="left: 5px; top: 5px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 9px; top: 5px; width: 2px; height: 2px;"></div>
+            <div class="pixel" style="left: 7px; top: 9px; width: 2px; height: 4px;"></div>
+            <div class="pixel" style="left: 9px; top: 9px; width: 2px; height: 4px;"></div>
           </div>
         </div>
       </div>
@@ -455,7 +489,7 @@
   
   <script>
     // ゲームクラス
-    class VideoBackgroundGame {
+    class MinimalSite {
       constructor() {
         this.cards = [
           { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU' },
@@ -483,6 +517,7 @@
         this.lastUpdateTime = 0;
         this.rafId = null;
         this.eventListeners = [];
+        this.walkFrameInterval = null;
         
         this.init();
       }
@@ -521,10 +556,11 @@
         // イベントリスナー設定
         this.setupEventListeners();
         
-        // 動画の自動再生（低スペックデバイスではスキップ）
-        if (!this.isLowEndDevice) {
-          this.setupVideo();
-        }
+        // キャラクタークリックイベント
+        this.setupCharacterEvents();
+        
+        // 背景動画初期化
+        this.initializeBackgroundVideo();
         
         // メモリ監視のセットアップ
         this.setupMemoryMonitoring();
@@ -632,6 +668,24 @@
         );
       }
       
+      setupCharacterEvents() {
+        const character = document.getElementById('tinyCharacter');
+        if (character) {
+          const jumpHandler = () => this.jump();
+          character.addEventListener('click', jumpHandler);
+          character.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.jump();
+            }
+          });
+          
+          this.eventListeners.push(
+            { element: character, type: 'click', handler: jumpHandler }
+          );
+        }
+      }
+      
       throttle(func, limit) {
         let inThrottle;
         return function() {
@@ -645,78 +699,74 @@
         };
       }
       
-      setupVideo() {
-        const video = document.getElementById('bgVideo');
-        const debug = document.getElementById('videoDebug');
+      initializeBackgroundVideo() {
+        console.log('=== 背景動画初期化開始 ===');
+        
+        const video = document.getElementById('backgroundVideo');
+        const videoStatus = document.getElementById('videoStatus');
         
         if (!video) {
           console.error('動画要素が見つかりません');
           return;
         }
         
-        // 動画の状態をデバッグ表示
-        const updateDebug = (status) => {
-          if (debug) debug.textContent = `🎥 Video: ${status}`;
-          console.log('🎥 Video status:', status);
-        };
-        
-        updateDebug('Initializing...');
-        
         // 動画の基本設定
         video.muted = true;
         video.loop = true;
         video.playsInline = true;
+        video.autoplay = true;
         video.preload = 'auto';
         
-        // 再生関数
-        const playVideo = () => {
+        // 再生試行関数
+        const attemptPlay = () => {
           const playPromise = video.play();
           if (playPromise !== undefined) {
             playPromise.then(() => {
-              updateDebug('Playing ✓');
+              console.log('✅ 動画再生成功!');
+              if (videoStatus) {
+                videoStatus.textContent = '🎥 動画再生中';
+                setTimeout(() => {
+                  videoStatus.style.opacity = '0';
+                  setTimeout(() => videoStatus.style.display = 'none', 500);
+                }, 3000);
+              }
             }).catch(error => {
-              updateDebug('Failed: ' + error.message);
-              console.error('動画再生エラー:', error);
+              console.log('❌ 動画再生失敗:', error.message);
+              if (videoStatus) {
+                videoStatus.textContent = '❌ クリックで再生開始';
+              }
             });
           }
         };
         
-        // イベントリスナー
-        video.addEventListener('loadstart', () => updateDebug('Loading started'));
-        video.addEventListener('loadedmetadata', () => updateDebug('Metadata loaded'));
-        video.addEventListener('loadeddata', () => updateDebug('Data loaded'));
-        video.addEventListener('canplay', () => {
-          updateDebug('Can play');
-          playVideo();
-        });
-        video.addEventListener('canplaythrough', () => updateDebug('Can play through'));
-        video.addEventListener('playing', () => updateDebug('Playing ✓'));
-        video.addEventListener('error', (e) => {
-          updateDebug('Error: ' + e.message);
-          console.error('動画エラー:', e);
-        });
+        // 複数のタイミングで再生を試行
+        video.addEventListener('loadeddata', attemptPlay);
+        video.addEventListener('canplay', attemptPlay);
+        video.addEventListener('canplaythrough', attemptPlay);
         
-        // 即座に読み込み開始
-        video.load();
-        
-        // ユーザーインタラクション後に再生を試行
-        const interactionEvents = ['click', 'touchstart', 'keydown'];
-        const enableAutoplay = () => {
-          playVideo();
-          // イベントリスナーを削除
-          interactionEvents.forEach(event => {
-            document.removeEventListener(event, enableAutoplay);
-          });
+        // ユーザーインタラクション後の再生
+        const interactionHandler = () => {
+          attemptPlay();
         };
         
-        interactionEvents.forEach(event => {
-          document.addEventListener(event, enableAutoplay, { once: true, passive: true });
+        ['click', 'touchstart', 'keydown', 'scroll', 'wheel'].forEach(eventType => {
+          document.addEventListener(eventType, interactionHandler, { once: true, passive: true });
         });
         
-        // デバッグ情報を非表示（5秒後）
-        setTimeout(() => {
-          if (debug) debug.style.display = 'none';
-        }, 5000);
+        // 即座に読み込み開始と再生試行
+        video.load();
+        setTimeout(attemptPlay, 100); // 短時間後に再生を試行
+        
+        // メモリ最適化: バックグラウンドで一時停止
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            video.pause();
+          } else {
+            video.play().catch(() => {});
+          }
+        });
+        
+        console.log('動画初期化完了');
       }
       
       hideLoading() {
@@ -747,17 +797,43 @@
       }
       
       startWalkingAnimation() {
-        const character = document.querySelector('.character');
+        const character = document.getElementById('tinyCharacter');
         if (character) {
           character.classList.add('walking');
+          this.animateWalkFrames();
         }
       }
       
       stopWalkingAnimation() {
-        const character = document.querySelector('.character');
+        const character = document.getElementById('tinyCharacter');
         if (character) {
           character.classList.remove('walking');
+          this.stopWalkFrames();
         }
+      }
+      
+      animateWalkFrames() {
+        if (this.walkFrameInterval) return;
+        
+        const frames = document.querySelectorAll('.walk-frame');
+        let currentFrame = 0;
+        
+        this.walkFrameInterval = setInterval(() => {
+          frames.forEach(frame => frame.classList.remove('active'));
+          frames[currentFrame].classList.add('active');
+          currentFrame = (currentFrame + 1) % frames.length;
+        }, 200);
+      }
+      
+      stopWalkFrames() {
+        if (this.walkFrameInterval) {
+          clearInterval(this.walkFrameInterval);
+          this.walkFrameInterval = null;
+        }
+        
+        const frames = document.querySelectorAll('.walk-frame');
+        frames.forEach(frame => frame.classList.remove('active'));
+        frames[0].classList.add('active'); // Reset to first frame
       }
       
       moveCharacter(amount) {
@@ -775,7 +851,7 @@
         }
         
         this.rafId = requestAnimationFrame(() => {
-          const character = document.getElementById('character');
+          const character = document.getElementById('tinyCharacter');
           const track = document.getElementById('cardsTrack');
           const screenWidth = window.innerWidth;
           
@@ -783,7 +859,7 @@
           let charX;
           if (this.characterPosition <= 0.05) {
             // 開始位置（より精緻な制御）
-            charX = 50 + (screenWidth * 0.25 - 50) * (this.characterPosition / 0.05);
+            charX = 20 + (screenWidth * 0.25 - 20) * (this.characterPosition / 0.05);
           } else if (this.characterPosition >= 0.95) {
             // 終了位置（最後のカードと完全同期）
             charX = screenWidth * 0.25 + (screenWidth - 100 - screenWidth * 0.25) * ((this.characterPosition - 0.95) / 0.05);
@@ -843,7 +919,7 @@
         this.currentExp = 0;
         
         // 8bitレベルアップエフェクト
-        const character = document.querySelector('.character');
+        const character = document.getElementById('tinyCharacter');
         if (character) {
           character.classList.add('level-up');
           setTimeout(() => {
@@ -854,11 +930,8 @@
         // 最大レベル時は赤色に変更
         if (this.currentLevel >= this.cards.length) {
           setTimeout(() => {
-            const pixels = document.querySelectorAll('.pixel');
-            pixels.forEach(pixel => {
-              pixel.style.background = '#ff0000';
-              pixel.style.boxShadow = '1px 1px 0 rgba(255, 0, 0, 0.5), 0 0 8px #ff0000';
-            });
+            const character = document.getElementById('tinyCharacter');
+            character.classList.add('max-level-achieved');
           }, 2000);
         }
       }
@@ -872,7 +945,7 @@
       }
       
       jump() {
-        const character = document.querySelector('.character');
+        const character = document.getElementById('tinyCharacter');
         if (character && !character.classList.contains('jumping')) {
           character.classList.add('jumping');
           
@@ -895,8 +968,11 @@
           this.rafId = null;
         }
         
+        // 歩行アニメーションをクリーンアップ
+        this.stopWalkFrames();
+        
         // 動画を停止
-        const video = document.getElementById('bgVideo');
+        const video = document.getElementById('backgroundVideo');
         if (video) {
           video.pause();
           video.src = '';
@@ -912,7 +988,7 @@
     
     // ゲーム開始
     document.addEventListener('DOMContentLoaded', () => {
-      window.gameInstance = new VideoBackgroundGame();
+      window.gameInstance = new MinimalSite();
     });
     
     // ページ離脱時のクリーンアップ
@@ -925,7 +1001,7 @@
     // バックグラウンドでのメモリ最適化
     document.addEventListener('visibilitychange', () => {
       if (window.gameInstance) {
-        const video = document.getElementById('bgVideo');
+        const video = document.getElementById('backgroundVideo');
         if (document.hidden) {
           // バックグラウンドで動画を一時停止
           if (video) video.pause();
