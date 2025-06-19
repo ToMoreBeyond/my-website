@@ -221,6 +221,30 @@
       }
     }
     
+    /* スター状態エフェクト（マリオのような無敵状態） */
+    @keyframes starEffect {
+      0% {
+        transform: scale(1) rotate(0deg);
+        filter: hue-rotate(0deg) brightness(1.2) saturate(1.5);
+      }
+      25% {
+        transform: scale(1.1) rotate(90deg);
+        filter: hue-rotate(90deg) brightness(1.5) saturate(2);
+      }
+      50% {
+        transform: scale(1) rotate(180deg);
+        filter: hue-rotate(180deg) brightness(1.8) saturate(2.5);
+      }
+      75% {
+        transform: scale(1.1) rotate(270deg);
+        filter: hue-rotate(270deg) brightness(1.5) saturate(2);
+      }
+      100% {
+        transform: scale(1) rotate(360deg);
+        filter: hue-rotate(360deg) brightness(1.2) saturate(1.5);
+      }
+    }
+    
     /* ピクセルキャラクター用グリッド */
     .pixel-character {
       position: relative;
@@ -537,18 +561,18 @@
     class MinimalSite {
       constructor() {
         this.cards = [
-          { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU' },
-          { icon: 'X', title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU' },
-          { icon: '+', title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI' },
-          { icon: 'T', title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE' },
-          { icon: 'M', title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO' },
-          { icon: 'Y', title: '山田', description: 'CDO / DESIGNER' },
-          { icon: 'M', title: '正留', description: 'CEO / ENGINEER' },
-          { icon: 'A', title: '安藤', description: 'ARTIST' },
-          { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI' },
-          { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI' },
-          { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN' },
-          { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO' }
+          { icon: '[]', title: '会社概要', description: 'MICHI NAKI MICHI WO KIRU', link: 'detail/company.html' },
+          { icon: 'X', title: 'ミッション', description: 'OMOSHIROI KOTO DAKE WO SURU', link: 'detail/mission.html' },
+          { icon: '+', title: 'TADATAKA', description: 'IDOU GA SONO MAMA NIKKI NI', link: 'pages/tadataka.html' },
+          { icon: 'T', title: 'TOIRUN', description: 'IMA SUGU TOIRE WO SAITAN DE', link: 'pages/toirun.html' },
+          { icon: 'M', title: 'MEET IN THE MIDDLE', description: 'SAITEKI NA SHUUGOU CHITEN WO', link: 'pages/meetinthemiddle.html' },
+          { icon: 'Y', title: '山田', description: 'CDO / DESIGNER', link: 'detail/yamada.html' },
+          { icon: 'M', title: '正留', description: 'CEO / ENGINEER', link: 'detail/masatome.html' },
+          { icon: 'A', title: '安藤', description: 'ARTIST', link: 'detail/ando.html' },
+          { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI', link: 'detail/blog.html' },
+          { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI', link: 'detail/video.html' },
+          { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN', link: 'detail/sns.html' },
+          { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO', link: 'detail/contact.html' }
         ];
         
         this.currentLevel = 1;
@@ -609,6 +633,9 @@
         
         // メモリ監視のセットアップ
         this.setupMemoryMonitoring();
+        
+        // ゲーム状態を読み込み
+        this.loadGameState();
         
         // キャラクターを表示
         this.showCharacter();
@@ -679,7 +706,12 @@
             <p class="card-description">${card.description}</p>
           `;
           
-          cardEl.addEventListener('click', () => this.onCardClick(index));
+          // カードクリックで詳細ページに遷移 + レベルアップ
+          cardEl.addEventListener('click', () => {
+            this.onCardClick(index);
+            this.navigateToDetail(card, index);
+          });
+          
           track.appendChild(cardEl);
         });
       }
@@ -965,6 +997,8 @@
         if (!this.viewedCards.has(index)) {
           this.viewedCards.add(index);
           this.gainExp(10);
+          // カードクリック時にゲーム状態保存
+          this.saveGameState();
         }
       }
       
@@ -991,13 +1025,15 @@
           }, 2000);
         }
         
-        // 最大レベル時は赤色に変更
+        // 最大レベル時は赤色 + スター状態
         if (this.currentLevel >= this.cards.length) {
           setTimeout(() => {
-            const character = document.getElementById('tinyCharacter');
-            character.classList.add('max-level-achieved');
+            this.activateMaxLevelEffect();
           }, 2000);
         }
+        
+        // ゲーム状態を保存
+        this.saveGameState();
       }
       
       updateUI() {
@@ -1016,6 +1052,67 @@
           setTimeout(() => {
             character.classList.remove('jumping');
           }, 600);
+        }
+      }
+      
+      navigateToDetail(card, index) {
+        // レベルとゲーム状態を保存
+        this.saveGameState();
+        
+        // 詳細ページに遷移（レベル保持パラメータ付き）
+        if (card.link) {
+          const currentUrl = new URL(card.link, window.location.href);
+          currentUrl.searchParams.set('level', this.currentLevel);
+          currentUrl.searchParams.set('from', 'main');
+          currentUrl.searchParams.set('cardIndex', index);
+          
+          window.location.href = currentUrl.toString();
+        }
+      }
+      
+      saveGameState() {
+        const gameState = {
+          currentLevel: this.currentLevel,
+          currentExp: this.currentExp,
+          characterPosition: this.characterPosition,
+          viewedCards: Array.from(this.viewedCards),
+          timestamp: Date.now()
+        };
+        
+        localStorage.setItem('tomorebeyond_game_state', JSON.stringify(gameState));
+      }
+      
+      loadGameState() {
+        try {
+          const saved = localStorage.getItem('tomorebeyond_game_state');
+          if (saved) {
+            const gameState = JSON.parse(saved);
+            
+            this.currentLevel = gameState.currentLevel || 1;
+            this.currentExp = gameState.currentExp || 0;
+            this.characterPosition = gameState.characterPosition || 0;
+            this.viewedCards = new Set(gameState.viewedCards || []);
+            
+            // UI更新
+            this.updateUI();
+            this.updatePositions();
+            
+            // 最大レベル時のエフェクト適用
+            if (this.currentLevel >= this.cards.length) {
+              this.activateMaxLevelEffect();
+            }
+          }
+        } catch (error) {
+          console.error('ゲーム状態の読み込みに失敗:', error);
+        }
+      }
+      
+      activateMaxLevelEffect() {
+        const character = document.getElementById('tinyCharacter');
+        if (character) {
+          character.classList.add('max-level-achieved');
+          // スター状態エフェクト
+          character.style.animation = 'starEffect 0.5s ease-in-out infinite alternate';
         }
       }
       
