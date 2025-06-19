@@ -720,7 +720,9 @@
         // パフォーマンス最適化されたイベントリスナー
         const wheelHandler = this.throttle((e) => {
           e.preventDefault();
-          this.handleScroll(e.deltaY);
+          // 横スクロールを優先、縦スクロールも横方向として扱う
+          const deltaX = e.deltaX || e.deltaY;
+          this.handleScroll(deltaX);
         }, 16); // 60fps
         
         const keyHandler = (e) => {
@@ -748,10 +750,10 @@
           e.preventDefault();
           
           const touchX = e.touches[0].clientX;
-          const diff = touchStartX - touchX;
-          const sensitivity = 0.01; // モバイル用の感度調整
+          const diff = touchStartX - touchX; // 左スワイプで正の値（右へ移動）
+          const sensitivity = 0.005; // モバイル用の感度調整
           
-          this.handleScroll(diff * sensitivity * 100);
+          this.handleScroll(diff);
           touchStartX = touchX;
         }, 16);
         
@@ -868,10 +870,10 @@
         }, 1000);
       }
       
-      handleScroll(deltaY) {
-        // スクロール量を位置に変換（快適な感度）
+      handleScroll(deltaX) {
+        // スクロール量を位置に変換（右スクロール = 右移動）
         const sensitivity = 0.003; // より反応的なスクロール感度
-        const scrollAmount = deltaY * sensitivity;
+        const scrollAmount = deltaX * sensitivity; // 正の値で右へ
         this.moveCharacter(scrollAmount);
         
         // 歩行アニメーションを開始
@@ -996,7 +998,8 @@
       onCardClick(index) {
         if (!this.viewedCards.has(index)) {
           this.viewedCards.add(index);
-          this.gainExp(10);
+          // カード1枚で1レベルアップ（経験値100%）
+          this.gainExp(100);
           // カードクリック時にゲーム状態保存
           this.saveGameState();
         }
