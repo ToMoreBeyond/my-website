@@ -221,27 +221,26 @@
       }
     }
     
-    /* スター状態エフェクト（マリオのような無敵状態） */
-    @keyframes starEffect {
+    /* 最大レベル時のジャンプアニメーション（高さ変更） */
+    .tiny-character.max-level-achieved.jumping {
+      animation: maxLevelJumpAnimation 0.6s ease;
+    }
+    
+    @keyframes maxLevelJumpAnimation {
       0% {
-        transform: scale(1) rotate(0deg);
-        filter: hue-rotate(0deg) brightness(1.2) saturate(1.5);
+        transform: translateY(0) scaleX(1) scaleY(1);
       }
-      25% {
-        transform: scale(1.1) rotate(90deg);
-        filter: hue-rotate(90deg) brightness(1.5) saturate(2);
+      20% {
+        transform: translateY(-8px) scaleX(1.1) scaleY(0.9);
       }
       50% {
-        transform: scale(1) rotate(180deg);
-        filter: hue-rotate(180deg) brightness(1.8) saturate(2.5);
+        transform: translateY(-120px) scaleX(0.95) scaleY(1.05);
       }
-      75% {
-        transform: scale(1.1) rotate(270deg);
-        filter: hue-rotate(270deg) brightness(1.5) saturate(2);
+      80% {
+        transform: translateY(-8px) scaleX(1.05) scaleY(0.95);
       }
       100% {
-        transform: scale(1) rotate(360deg);
-        filter: hue-rotate(360deg) brightness(1.2) saturate(1.5);
+        transform: translateY(0) scaleX(1) scaleY(1);
       }
     }
     
@@ -1116,8 +1115,7 @@
         const character = document.getElementById('tinyCharacter');
         if (character) {
           character.classList.add('max-level-achieved');
-          // スター状態エフェクト
-          character.style.animation = 'starEffect 0.5s ease-in-out infinite alternate';
+          // 赤色表示のみ（動きは変更しない）
         }
       }
       
