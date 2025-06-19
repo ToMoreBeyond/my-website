@@ -647,9 +647,14 @@
       showCharacter() {
         const character = document.getElementById('tinyCharacter');
         if (character) {
+          // 確実に表示
           character.style.opacity = '1';
+          character.style.visibility = 'visible';
+          character.style.display = 'block';
+          
           // 初期位置を設定
           character.style.left = '20px';
+          
           // 最初のカード位置を更新
           this.updatePositions();
           
@@ -947,32 +952,29 @@
           
           if (!character || !track) return;
           
-          // スムーズなキャラクター位置計算
-          const basePosition = 20; // 左端からの基本位置
-          const fixedPosition = Math.min(screenWidth * 0.2, 200); // 固定位置（画面幅の20%または200px）
+          // 確実に表示状態を維持
+          character.style.opacity = '1';
+          character.style.visibility = 'visible';
+          character.style.display = 'block';
           
-          let charX;
-          if (this.characterPosition <= 0.1) {
-            // 開始時：左端から徐々に移動
-            charX = basePosition + (fixedPosition - basePosition) * (this.characterPosition / 0.1);
-          } else if (this.characterPosition >= 0.9) {
-            // 終了時：右端へ移動
-            const endPosition = screenWidth - 120;
-            charX = fixedPosition + (endPosition - fixedPosition) * ((this.characterPosition - 0.9) / 0.1);
-          } else {
-            // 中間：固定位置を維持
-            charX = fixedPosition;
-          }
+          // 改善されたキャラクター位置計算（線形で連続的）
+          const minPosition = 50; // 最小位置（左端）
+          const maxPosition = screenWidth - 100; // 最大位置（右端）
+          const travelDistance = maxPosition - minPosition;
           
+          // 線形補間で連続的な位置計算
+          const charX = minPosition + (travelDistance * this.characterPosition);
+          
+          // キャラクター位置を更新
           character.style.left = charX + 'px';
           
-          // 改善されたカードスクロール計算
+          // カードスクロール計算（キャラクター位置と同期）
           const cardWidth = 280 + 24; // カード幅 + マージン
           const totalCardsWidth = cardWidth * this.cards.length;
-          const visibleWidth = screenWidth - charX - 150; // キャラクター位置から右端までの表示可能幅
-          const maxScrollDistance = Math.max(0, totalCardsWidth - visibleWidth);
+          const containerPadding = 100; // 左右のパディング
+          const maxScrollDistance = Math.max(0, totalCardsWidth - screenWidth + containerPadding * 2);
           
-          // スムーズなスクロール
+          // キャラクター位置に完全同期したスクロール
           const scrollX = -maxScrollDistance * this.characterPosition;
           track.style.transform = `translateX(${scrollX}px) translateZ(0)`;
           

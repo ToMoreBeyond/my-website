@@ -184,36 +184,62 @@ For local development, place `backvideo.mp4` in the project root. For production
 - **Issue**: Complex device detection and fallback systems causing playback failures
 - **Solution**: Simplified to basic HTML5 video with `autoplay`, `muted`, `loop`, `playsinline`
 - **Implementation**: Single `initializeBackgroundVideo()` method with multiple play attempt strategies
+- **Current Video**: Uses `Timeline 1.mp4` as background video file
 
-### Signpost System Removal
-- **Issue**: Unwanted visual elements (看板/signposts) appearing between cards
-- **Solution**: Complete removal of signpost-related CSS, HTML, and JavaScript
-- **Files Modified**: Removed `.signpost-container`, `.signpost`, `.signpost-board` classes
+### Character Movement & Positioning System
+- **Issue**: Character stopping midway and disappearing during scroll
+- **Solution**: Completely rewritten `updatePositions()` method with linear interpolation
+- **Implementation**: 
+  - Simplified position calculation: `charX = minPosition + (travelDistance * this.characterPosition)`
+  - Added explicit visibility properties in each RAF update
+  - Removed complex three-phase positioning logic (start/middle/end)
+  - Perfect synchronization between character position and card scrolling
 
-### Character Movement Synchronization
+### Card Interaction & Level System
 - **Issue**: Card clicks causing unwanted character position changes
-- **Solution**: Created `handleCardViewOnly()` method for card interactions without position updates
-- **Behavior**: Character position only changes via scroll/keyboard, not card clicks
+- **Solution**: Separated card viewing from character movement
+- **Implementation**: 
+  - Card clicks trigger level progression only (1 card = 1 level)
+  - Character movement controlled exclusively by scroll/keyboard input
+  - Maximum level (12) triggers red character color + star effect animation
 
 ### Level Persistence Across Pages
 - **Issue**: Level resetting when returning from detail pages
-- **Solution**: Added URL parameter system (`?level=persist&from=detail`) to all detail page back links
-- **Implementation**: `restoreFromURL()` and `saveToURL()` methods with LocalStorage backup
+- **Solution**: Added URL parameter system and LocalStorage backup
+- **Implementation**: 
+  - URL parameters: `?level=persist&from=detail&cardIndex=N`
+  - LocalStorage key: `tomorebeyond_game_state`
+  - Auto-save on card view, page unload, and every 5 seconds
+
+### Scroll Direction & Natural Controls
+- **Issue**: Unnatural scroll direction (left scroll = right movement)
+- **Solution**: Inverted scroll handling for intuitive controls
+- **Implementation**: Right scroll = right movement, works on both mobile and desktop
 
 ## Troubleshooting Common Issues
 
 ### Background Video Not Playing
-1. Verify `backvideo.mp4` exists in project root
+1. Verify `Timeline 1.mp4` exists in project root (current video file)
 2. Check browser autoplay policies (modern browsers require user interaction)
 3. Ensure video attributes: `autoplay muted loop playsinline`
 4. Video status indicator shows in top-right corner during development
+5. Video initialization happens in `initializeBackgroundVideo()` method
 
 ### Character Position Issues
-- Character movement is controlled by `updateCharacterPosition()` and synchronized with card scroll via `updateCardScroll()`
-- Card clicks should NOT move character - use `handleCardViewOnly()` for card interactions
+- Character movement is controlled by `updatePositions()` with linear interpolation
+- Character should move smoothly from `minPosition` (50px) to `maxPosition` (screenWidth - 100px)
+- If character disappears: Check that `opacity: '1'`, `visibility: 'visible'`, `display: 'block'` are set
+- Card clicks should NOT move character - they only trigger level progression
 - Scroll-based movement uses `characterPosition` (0-1 range) for precise synchronization
 
 ### Level/Progress Loss
 - Check LocalStorage for `tomorebeyond_game_state`
-- Verify URL parameters are preserved when navigating between pages
+- Verify URL parameters are preserved when navigating between pages  
 - Progress saves occur: on card view, before page unload, every 5 seconds, on visibility change
+- Ensure `saveGameState()` is called after level changes
+
+### Performance Issues
+- Low-end devices automatically get `.low-performance-mode` class
+- RAF optimization prevents excessive position updates
+- Memory monitoring runs every 30 seconds on low-end devices
+- Emergency cleanup stops animations and pauses video if memory usage > 80%
