@@ -3,24 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>山田隼大 - 代表取締役CEO | ToMoreBeyond</title>
-  <meta name="description" content="ToMoreBeyond代表取締役CEO山田隼大のプロフィール。8ビット風デザインと最先端技術を融合し、革新的なモバイルアプリ開発とゲーミフィケーション技術でイノベーションを創出する起業家。">
-  
-  <!-- SEO Enhancement -->
-  <meta name="keywords" content="山田隼大,ToMoreBeyond,CEO,代表取締役,創業者,起業家,プロダクトデザイナー,8ビット,レトロゲーム,モバイルアプリ,ゲーミフィケーション">
-  <meta property="og:title" content="山田隼大 - ToMoreBeyond代表取締役CEO">
-  <meta property="og:description" content="8ビット風デザインと最先端技術を融合し、革新的なモバイルアプリ開発を手がけるToMoreBeyond創業者">
-  <meta property="og:url" content="https://tomorebeyond.com/detail/yamada.html">
-  <meta property="og:type" content="profile">
-  <meta property="og:image" content="https://tomorebeyond.com/assets/yamada-profile-og.jpg">
-  
-  <link rel="canonical" href="https://tomorebeyond.com/detail/yamada.html">
+  <title>山田純大 - CDO / DESIGNER | ToMoreBeyond</title>
+  <meta name="description" content="ToMoreBeyond CDO/デザイナーの山田純大のプロフィール。8ビット風デザインとユーザー体験設計を専門とし、楽しさを最優先にしたプロダクト開発を手がけています。">
   
   <!-- 8-bit Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
   <style>
-    /* 8ビット風統一デザインシステム */
     * {
       margin: 0;
       padding: 0;
@@ -35,100 +24,97 @@
       min-height: 100vh;
       image-rendering: pixelated;
       -webkit-font-smoothing: none;
-      text-rendering: geometricPrecision;
     }
     
-    /* 統一ヘッダーデザイン */
-    .detail-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
+    /* Navigation */
+    .navbar {
       background: #0f172a;
-      border-bottom: 4px solid #22c55e;
-      padding: 16px 24px;
+      border-bottom: 6px dashed #22c55e;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    .back-button {
-      background: #1e293b;
-      border: 2px solid #22c55e;
-      padding: 12px 24px;
-      text-decoration: none;
-      color: #ffffff;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 14px;
-      transition: all 0.1s ease-out;
-      display: flex;
       align-items: center;
-      gap: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 0 24px;
     }
     
-    .back-button:hover {
-      transform: translateY(-2px);
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #22c55e;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    
+    .navbar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
+    }
+    
+    .navbar-link:hover {
+      color: #22c55e;
+    }
+    
+    .btn-primary {
       background: #22c55e;
       color: #0f172a;
-      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.4);
-    }
-    
-    .page-breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
+      padding: 12px 24px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
       font-weight: 400;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      transition: all 0.1s ease-out;
     }
     
-    .brand-name {
-      color: #94a3b8;
-      font-weight: 400;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
     }
     
-    .separator {
-      color: #22c55e;
-      font-weight: 700;
-    }
-    
-    .page-name {
-      color: #22c55e;
-      font-weight: 700;
-    }
-    
-    /* ヒーローセクション */
-    .hero {
+    /* Hero Section */
+    .app-hero {
       min-height: 80vh;
       display: flex;
       align-items: center;
       position: relative;
       background: #0f172a;
-      padding: calc(80px + 50px) 0 30px;
+      padding: 80px 0 32px;
     }
     
-    .hero-content {
+    .app-hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 60px;
-      align-items: center;
+      padding: 0 24px;
     }
     
-    .hero-text {
-      text-align: left;
+    .app-hero-text {
+      padding-right: 32px;
     }
     
-    .hero-title {
+    .app-title-large {
       font-family: 'Orbitron', monospace;
-      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(3rem, 8vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
       margin-bottom: 16px;
@@ -137,96 +123,53 @@
       text-transform: uppercase;
     }
     
-    .hero-position {
-      font-size: clamp(1rem, 2.5vw, 1.5rem);
+    .app-tagline {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
       font-weight: 400;
-      color: #3b82f6;
+      color: #94a3b8;
       margin-bottom: 24px;
+      line-height: 1.4;
       text-transform: uppercase;
-      letter-spacing: 2px;
     }
     
-    .hero-description {
-      font-size: 1.125rem;
+    .app-description-hero {
+      font-size: 18px;
       color: #ffffff;
       line-height: 1.7;
       margin-bottom: 32px;
     }
     
-    .hero-stats {
-      display: flex;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-    
-    .stat-item {
-      text-align: left;
-    }
-    
-    .stat-number {
-      font-family: 'Orbitron', monospace;
-      font-size: 2rem;
-      font-weight: 900;
-      color: #eab308;
-      display: block;
-      text-shadow: 1px 1px 0px #0f172a;
-    }
-    
-    .stat-label {
-      font-size: 0.875rem;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .hero-avatar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .avatar-container {
-      width: 280px;
-      height: 280px;
-      background: #1e293b;
-      border: 4px solid #22c55e;
+    .app-hero-visual {
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      box-shadow: 0 8px 0px #0a0f1a, 0 12px 24px rgba(0, 0, 0, 0.4);
-      transition: all 0.1s ease-out;
     }
     
-    .avatar-container:hover {
-      transform: translateY(-4px);
-      border-color: #3b82f6;
-      box-shadow: 0 12px 0px #0a0f1a, 0 16px 32px rgba(59, 130, 246, 0.4);
-    }
-    
-    .avatar-placeholder {
-      width: 200px;
-      height: 200px;
-      background: #22c55e;
+    .profile-avatar {
+      width: 300px;
+      height: 300px;
+      background: #1e293b;
+      border: 6px dashed #22c55e;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Orbitron', monospace;
-      font-size: 4rem;
-      font-weight: 900;
-      color: #0f172a;
-      image-rendering: pixelated;
+      font-size: 6rem;
+      position: relative;
+      overflow: hidden;
+      color: #22c55e;
     }
     
-    /* セクション共通 */
-    .section {
-      padding: 80px 0;
-    }
-    
+    /* Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 24px;
+    }
+    
+    /* Section */
+    .section {
+      padding: 80px 0;
     }
     
     .section-header {
@@ -244,221 +187,345 @@
     }
     
     .section-subtitle {
-      font-size: 1.125rem;
+      font-size: 18px;
       color: #94a3b8;
       line-height: 1.6;
     }
     
-    /* 経歴・スキルセクション */
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 32px;
-      margin-bottom: 64px;
-    }
-    
-    .info-card {
+    /* Features Section */
+    .features-section {
+      padding: 80px 0;
       background: #1e293b;
-      border: 4px solid #8b5cf6;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    
+    .feature-card-detailed {
+      background: #0f172a;
+      border: 6px dashed #3b82f6;
       padding: 32px;
-      transition: all 0.1s ease-out;
+      transition: all 0.3s ease-out;
       position: relative;
-      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
     }
     
-    .info-card:hover {
+    .feature-card-detailed:hover {
       transform: translateY(-2px);
-      border-color: #3b82f6;
-      box-shadow: 0 6px 0px #0a0f1a, 0 8px 16px rgba(59, 130, 246, 0.3);
+      border-color: #22c55e;
     }
     
-    .info-icon {
-      font-size: 2rem;
-      color: #8b5cf6;
-      margin-bottom: 16px;
-      font-family: 'Orbitron', monospace;
-      font-weight: 900;
+    .feature-icon-large {
+      width: 80px;
+      height: 80px;
+      background: #22c55e;
+      border: 2px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 24px;
+      color: #0f172a;
     }
     
-    .info-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.25rem;
+    .feature-title-large {
+      font-size: 24px;
       font-weight: 700;
       color: #ffffff;
       margin-bottom: 16px;
       text-transform: uppercase;
     }
     
-    .info-content {
-      font-size: 1rem;
+    .feature-description-large {
       color: #94a3b8;
       line-height: 1.6;
+      margin-bottom: 16px;
     }
     
-    .info-list {
+    .feature-benefits {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
     
-    .info-list li {
+    .feature-benefits li {
       padding: 8px 0;
-      border-bottom: 1px solid #374151;
+      padding-left: 24px;
       position: relative;
-      padding-left: 16px;
+      color: #94a3b8;
     }
     
-    .info-list li:before {
-      content: ">";
+    .feature-benefits li::before {
+      content: '[#]';
       position: absolute;
       left: 0;
       color: #22c55e;
       font-weight: bold;
     }
     
-    .info-list li:last-child {
-      border-bottom: none;
+    /* Profile Stats */
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
     }
     
-    /* レスポンシブ */
+    .stat-card {
+      background: #1e293b;
+      border: 4px solid #22c55e;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.1s ease-out;
+      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: #3b82f6;
+      box-shadow: 0 6px 0px #0a0f1a, 0 8px 16px rgba(59, 130, 246, 0.3);
+    }
+    
+    .stat-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #22c55e;
+      margin-bottom: 8px;
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
-      .hero-content {
+      .app-hero-content {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
         text-align: center;
       }
       
-      .hero-text {
-        text-align: center;
+      .app-hero-text {
+        padding-right: 0;
       }
       
-      .hero-stats {
-        justify-content: center;
+      .profile-avatar {
+        width: 250px;
+        height: 250px;
+        font-size: 4rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
         gap: 24px;
       }
       
-      .avatar-container {
-        width: 220px;
-        height: 220px;
-      }
-      
-      .avatar-placeholder {
-        width: 160px;
-        height: 160px;
-        font-size: 3rem;
-      }
-      
-      .container {
-        padding: 0 20px;
-      }
-      
-      .section {
-        padding: 60px 0;
-      }
-      
-      .info-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      
-      .info-card {
-        padding: 24px;
+      .profile-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 統一ヘッダー -->
-  <header class="detail-header">
-    <a href="../index.html?level=persist&from=detail" class="back-button">
-      ← ホームに戻る
-    </a>
-    <div class="page-breadcrumb">
-      <span class="brand-name">ToMoreBeyond</span>
-      <span class="separator">/</span>
-      <span class="page-name">Yamada</span>
+  <!-- 8-bit Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html?level=persist&from=detail" class="navbar-brand">ToMoreBeyond</a>
+      <div class="navbar-links">
+        <a href="../index.html#apps" class="navbar-link">アプリ</a>
+        <a href="../index.html#about" class="navbar-link">会社概要</a>
+        <a href="contact.html" class="btn-primary">お問い合わせ</a>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <main>
-    <!-- ヒーローセクション -->
-    <section class="hero">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1 class="hero-title">山田隼大</h1>
-          <p class="hero-position">代表取締役CEO / Founder</p>
-          <p class="hero-description">
-            8ビット風デザインと最先端技術を融合し、革新的なモバイルアプリ開発とゲーミフィケーション技術で人々の日常をより豊かにする起業家。「面白いことだけをする」というビジョンのもと、ToMoreBeyondを創業。
+  <!-- App Hero Section -->
+  <section class="app-hero">
+    <div class="container">
+      <div class="app-hero-content">
+        <div class="app-hero-text">
+          <h1 class="app-title-large">山田純大</h1>
+          <p class="app-tagline">CDO / DESIGNER</p>
+          <p class="app-description-hero">
+            ToMoreBeyondのCDO（Chief Design Officer）として、8ビット風デザインとユーザー体験設計を専門としています。「楽しさを最優先にしたプロダクト開発」をモットーに、使う人の心が躍るようなデジタル体験を創造しています。
           </p>
-          <div class="hero-stats">
-            <div class="stat-item">
-              <span class="stat-number">10+</span>
-              <span class="stat-label">年の経験</span>
+          
+          <div class="profile-stats">
+            <div class="stat-card">
+              <div class="stat-number">5+</div>
+              <div class="stat-label">YEARS EXPERIENCE</div>
             </div>
-            <div class="stat-item">
-              <span class="stat-number">2023</span>
-              <span class="stat-label">創業年</span>
+            <div class="stat-card">
+              <div class="stat-number">50+</div>
+              <div class="stat-label">PROJECTS</div>
             </div>
-            <div class="stat-item">
-              <span class="stat-number">CEO</span>
-              <span class="stat-label">現在の役職</span>
+            <div class="stat-card">
+              <div class="stat-number">3</div>
+              <div class="stat-label">APPS LAUNCHED</div>
             </div>
           </div>
         </div>
-        <div class="hero-avatar">
-          <div class="avatar-container">
-            <div class="avatar-placeholder">Y</div>
+        <div class="app-hero-visual">
+          <div class="profile-avatar">
+            [Y]
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 経歴・専門分野セクション -->
-    <section class="section">
-      <div class="container">
-        <header class="section-header">
-          <h2 class="section-title">Profile & Skills</h2>
-          <p class="section-subtitle">山田隼大の経歴と専門分野</p>
-        </header>
+  <!-- Skills Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">スキル・専門分野</h2>
+        <p class="section-subtitle">デザインとテクノロジーの融合で新しい価値を創造</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🎨</div>
+          <h3 class="feature-title-large">UI/UXデザイン</h3>
+          <p class="feature-description-large">
+            ユーザー中心設計に基づく直感的なインターフェース設計と、8ビット風レトロデザインの融合。
+          </p>
+          <ul class="feature-benefits">
+            <li>プロトタイピング・ワイヤーフレーム</li>
+            <li>ユーザーリサーチ・テスト</li>
+            <li>アクセシビリティ設計</li>
+          </ul>
+        </div>
         
-        <div class="info-grid">
-          <article class="info-card">
-            <div class="info-icon">@</div>
-            <h3 class="info-title">Background</h3>
-            <div class="info-content">
-              テクノロジーの力で人々の生活をより豊かにすることを目指すエンジニア兼起業家。8ビット文化への深い愛情と最先端技術への情熱を併せ持つ。
-            </div>
-          </article>
-          
-          <article class="info-card">
-            <div class="info-icon">#</div>
-            <h3 class="info-title">Specialties</h3>
-            <ul class="info-list">
-              <li>フルスタック開発</li>
-              <li>プロダクトマネジメント</li>
-              <li>UI/UXデザイン</li>
-              <li>チームリーダーシップ</li>
-              <li>8ビット風デザインシステム</li>
-            </ul>
-          </article>
-          
-          <article class="info-card">
-            <div class="info-icon">%</div>
-            <h3 class="info-title">Experience</h3>
-            <div class="info-content">
-              10年以上のソフトウェア開発経験を持ち、モバイルアプリ開発からWebアプリケーション、ゲーミフィケーション技術まで幅広い分野で実績を積む。
-            </div>
-          </article>
-          
-          <article class="info-card">
-            <div class="info-icon">*</div>
-            <h3 class="info-title">Vision</h3>
-            <div class="info-content">
-              「技術と情熱で、人々の日常をより豊かに、より遠くへ」というミッションのもと、8ビット風レトロゲームと最先端技術を融合した革新的なデジタル体験を提供。
-            </div>
-          </article>
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">💻</div>
+          <h3 class="feature-title-large">フロントエンド開発</h3>
+          <p class="feature-description-large">
+            HTML5、CSS3、JavaScriptを駆使したレスポンシブWebデザインとインタラクティブ体験の実装。
+          </p>
+          <ul class="feature-benefits">
+            <li>React・Vue.js・Vanilla JS</li>
+            <li>CSS Animation・WebGL</li>
+            <li>PWA・WebAPI活用</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🎮</div>
+          <h3 class="feature-title-large">ゲーミフィケーション</h3>
+          <p class="feature-description-large">
+            ゲーム要素をプロダクトに組み込み、ユーザーエンゲージメントを高める仕組みの設計。
+          </p>
+          <ul class="feature-benefits">
+            <li>レベルシステム・アチーブメント</li>
+            <li>プログレッション設計</li>
+            <li>ユーザーモチベーション分析</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">📱</div>
+          <h3 class="feature-title-large">モバイルアプリデザイン</h3>
+          <p class="feature-description-large">
+            iOS・Androidアプリのネイティブデザインガイドラインに準拠した使いやすいアプリ設計。
+          </p>
+          <ul class="feature-benefits">
+            <li>Material Design・Human Interface</li>
+            <li>マイクロインタラクション</li>
+            <li>パフォーマンス最適化</li>
+          </ul>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">デザイン哲学</h2>
+        <p class="section-subtitle">山田が大切にする3つのデザイン原則</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">[JOY]</div>
+          <h3 class="feature-title-large">喜びのデザイン</h3>
+          <p class="feature-description-large">
+            使う人の心が躍る、楽しい体験を何よりも大切にする。機能的であることはもちろん、感情的な満足度を追求。
+          </p>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">[SIMPLE]</div>
+          <h3 class="feature-title-large">シンプルの追求</h3>
+          <p class="feature-description-large">
+            複雑さを隠し、本質的な価値だけを残す。ユーザーが迷わず、直感的に操作できるインターフェースを目指す。
+          </p>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">[PIXEL]</div>
+          <h3 class="feature-title-large">ピクセルパーフェクト</h3>
+          <p class="feature-description-large">
+            8ビット時代の制約の中で生まれた美学を現代に蘇らせ、ノスタルジックでありながら新しい体験を創造。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/smooth-scroll.js"></script>
+  
+  <script>
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add smooth reveal on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+      };
+      
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Apply to all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealObserver.observe(section);
+      });
+      
+      // Smooth scroll for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

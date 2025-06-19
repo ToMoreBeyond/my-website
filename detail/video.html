@@ -3,82 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>動画コンテンツ | ToMoreBeyond</title>
-  <meta name="description" content="ToMoreBeyondの動画コンテンツ。プロダクトデモ、技術解説、チームの想いを動画で発信しています。">
-  
-  <!-- SEO Enhancement -->
-  <meta name="keywords" content="ToMoreBeyond,動画コンテンツ,ビデオ,プロダクトデモ,技術解説,チーム紹介,イベント,開発ログ,AI開発,Flutter,アプリ開発">
-  <meta property="og:title" content="動画コンテンツ - ToMoreBeyond | プロダクトと技術を映像で体験">
-  <meta property="og:description" content="ToMoreBeyondのプロダクトデモ、技術解説、チームインタビューなど、様々な動画コンテンツを通じて私たちの想いと技術をお伝えします">
-  <meta property="og:url" content="https://tomorebeyond.com/detail/video.html">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://tomorebeyond.com/assets/video-og-image.jpg">
-  
-  <!-- Twitter Card Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://tomorebeyond.com/detail/video.html">
-  <meta name="twitter:title" content="動画コンテンツ | ToMoreBeyond">
-  <meta name="twitter:description" content="ToMoreBeyondのプロダクトデモ、技術解説、チームインタビューなど、様々な動画コンテンツを通じて私たちの想いと技術をお伝えします">
-  <meta name="twitter:image" content="https://tomorebeyond.com/assets/video-og-image.jpg">
-  <meta name="twitter:site" content="@ToMoreBeyond">
-  
-  <link rel="canonical" href="https://tomorebeyond.com/detail/video.html">
-  
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "動画コンテンツ",
-    "description": "ToMoreBeyondの動画コンテンツ。プロダクトデモ、技術解説、チームの想いを動画で発信しています。",
-    "url": "https://tomorebeyond.com/detail/video.html",
-    "mainEntity": {
-      "@type": "VideoGallery",
-      "name": "ToMoreBeyond 動画コンテンツ",
-      "description": "プロダクトデモ、技術解説、チームインタビューなど、様々な動画コンテンツを通じて私たちの想いと技術をお伝えします",
-      "publisher": {
-        "@type": "Organization",
-        "name": "ToMoreBeyond",
-        "url": "https://tomorebeyond.com"
-      },
-      "about": [
-        "プロダクトデモ",
-        "技術解説",
-        "チーム紹介",
-        "AI開発",
-        "Flutter",
-        "アプリ開発"
-      ],
-      "inLanguage": "ja"
-    },
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "ToMoreBeyond",
-      "url": "https://tomorebeyond.com"
-    },
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "ホーム",
-          "item": "https://tomorebeyond.com"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "動画コンテンツ",
-          "item": "https://tomorebeyond.com/detail/video.html"
-        }
-      ]
-    }
-  }
-  </script>
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
-  
+  <title>動画 - プロダクト紹介 | ToMoreBeyond</title>
+  <meta name="description" content="ToMoreBeyondの動画コンテンツ。プロダクトデモ、技術解説、開発の舞台裏など、8ビット風映像でお届けします。">
+  <meta name="keywords" content="ToMoreBeyond, 動画, プロダクト紹介, 技術解説, 8ビット, 開発">
+
+  <!-- 8-bit Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -87,158 +18,258 @@
     }
     
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      font-family: 'Share Tech Mono', monospace;
+      background: #0f172a;
+      color: #ffffff;
       overflow-x: hidden;
       min-height: 100vh;
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
     }
     
-    /* 統一ヘッダーデザイン */
-    .detail-header {
-      position: fixed;
+    /* Navigation */
+    .navbar {
+      background: #0f172a;
+      border-bottom: 6px dashed #22c55e;
+      padding: 16px 0;
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
-      height: 80px;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 100;
+    }
+    
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       padding: 0 24px;
     }
     
-    .page-breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: #666;
-      font-weight: 500;
-    }
-    
-    .brand-name {
-      color: #1a1a1a;
-      font-weight: 600;
-    }
-    
-    .separator {
-      color: #ccc;
-    }
-    
-    .page-name {
-      color: #EF4444;
-      font-weight: 600;
-    }
-    
-    /* 統一ナビゲーションデザイン */
-    .back-button {
-      position: relative;
-      top: 0;
-      left: 0;
-      z-index: auto;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50px;
-      padding: 14px 24px;
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #22c55e;
       text-decoration: none;
-      color: #1a1a1a;
-      font-weight: 600;
-      font-size: 14px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      text-transform: uppercase;
+    }
+    
+    .navbar-links {
       display: flex;
+      gap: 24px;
       align-items: center;
-      gap: 10px;
-      min-width: 140px;
-      letter-spacing: -0.2px;
     }
     
-    .back-button:hover {
-      transform: translateY(-4px) scale(1.02);
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
-      border-color: rgba(255, 255, 255, 0.4);
+    .navbar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
     }
     
-    .back-button:active {
-      transform: translateY(-2px) scale(1.01);
-      transition: all 0.15s ease;
+    .navbar-link:hover {
+      color: #22c55e;
     }
     
-    /* ヒーローセクション */
-    .hero {
+    .btn-primary {
+      background: #22c55e;
+      color: #0f172a;
+      padding: 12px 24px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
+      font-weight: 400;
+      text-transform: uppercase;
+      transition: all 0.1s ease-out;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Section */
+    .video-hero {
       min-height: 80vh;
       display: flex;
       align-items: center;
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
-      padding: calc(80px + 40px) 0 40px;
+      background: #0f172a;
+      padding: 80px 0 32px;
     }
     
-    .hero-content {
+    .video-hero-content {
+      text-align: center;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
-      text-align: center;
+      padding: 0 24px;
     }
     
-    .hero-icon {
-      width: 120px;
-      height: 120px;
-      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-      border-radius: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      color: white;
-      margin: 0 auto 32px;
-      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.2);
-    }
-    
-    .hero-title {
-      font-family: 'Playfair Display', serif;
+    .video-title-large {
+      font-family: 'Orbitron', monospace;
       font-size: clamp(3rem, 8vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, #1a1a1a 0%, #EF4444 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 16px;
+      color: #ef4444;
+      text-shadow: 2px 2px 0px #0f172a, 4px 4px 0px #1e293b;
+      text-transform: uppercase;
     }
     
-    .hero-subtitle {
+    .video-subtitle {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
-      font-weight: 600;
-      color: #404040;
-      margin-bottom: 32px;
+      font-weight: 400;
+      color: #94a3b8;
+      margin-bottom: 24px;
       line-height: 1.4;
+      text-transform: uppercase;
     }
     
-    .hero-description {
-      font-size: 1.125rem;
-      color: #525252;
+    .video-description-hero {
+      font-size: 18px;
+      color: #ffffff;
       line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Featured Video Section */
+    .featured-section {
+      padding: 40px 0;
+      background: #1e293b;
+    }
+
+    .featured-video-card {
+      background: #0f172a;
+      border: 6px dashed #ef4444;
+      padding: 32px;
       max-width: 800px;
       margin: 0 auto;
+      text-align: center;
     }
-    
-    /* セクション共通 */
-    .section {
+
+    .featured-thumbnail {
+      width: 100%;
+      height: 400px;
+      background: #1e293b;
+      border: 4px solid #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .featured-thumbnail:hover {
+      transform: scale(1.02);
+      border-color: #22c55e;
+    }
+
+    .featured-play-icon {
+      width: 100px;
+      height: 100px;
+      background: #ef4444;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: 900;
+      transition: all 0.3s ease;
+    }
+
+    .featured-thumbnail:hover .featured-play-icon {
+      background: #22c55e;
+      transform: scale(1.1);
+    }
+
+    .featured-video-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ef4444;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .featured-video-desc {
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .video-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      font-size: 14px;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    /* Video Categories */
+    .categories-section {
+      padding: 40px 0;
+      background: #0f172a;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .category-card {
+      background: #1e293b;
+      border: 6px dashed #3b82f6;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s ease-out;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .category-card:hover {
+      transform: translateY(-2px);
+      border-color: #ef4444;
+    }
+
+    .category-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .category-name {
+      font-size: 16px;
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .category-count {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* Video Grid Section */
+    .videos-section {
       padding: 80px 0;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px;
+      background: #1e293b;
     }
     
     .section-header {
@@ -247,123 +278,98 @@
     }
     
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', monospace;
       font-size: 2.5rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #ef4444;
       margin-bottom: 16px;
+      text-transform: uppercase;
     }
     
     .section-subtitle {
-      font-size: 1.125rem;
-      color: #666666;
+      font-size: 18px;
+      color: #94a3b8;
       line-height: 1.6;
     }
     
-    /* 動画カテゴリ */
-    .categories {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 64px;
-      flex-wrap: wrap;
-    }
-    
-    .category-tag {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 50px;
-      padding: 12px 24px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #666;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    
-    .category-tag:hover,
-    .category-tag.active {
-      background: #EF4444;
-      color: white;
-      border-color: #EF4444;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
-    }
-    
-    /* 動画グリッド */
-    .video-grid {
+    .videos-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 32px;
-      margin-bottom: 64px;
+      margin-top: 48px;
     }
     
     .video-card {
-      background: white;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      border: 1px solid #f0f0f0;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      cursor: pointer;
-    }
-    
-    .video-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      border-color: #EF4444;
-    }
-    
-    .video-thumbnail {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: #0f172a;
+      border: 6px dashed #06b6d4;
+      transition: all 0.3s ease-out;
       position: relative;
       overflow: hidden;
     }
     
-    .video-thumbnail::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    .video-card:hover {
+      transform: translateY(-2px);
+      border-color: #ef4444;
     }
     
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+      transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      transition: transform 0.6s ease;
+    }
+
+    .video-card:hover::before {
+      transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+
+    .video-thumbnail {
+      width: 100%;
+      height: 200px;
+      background: #1e293b;
+      border-bottom: 4px solid #06b6d4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+    }
+
     .play-button {
-      width: 64px;
-      height: 64px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      background: #06b6d4;
+      color: #0f172a;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 24px;
-      color: #EF4444;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      font-weight: 900;
       transition: all 0.3s ease;
-      z-index: 1;
     }
-    
+
     .video-card:hover .play-button {
+      background: #ef4444;
       transform: scale(1.1);
-      background: white;
     }
-    
+
     .video-duration {
       position: absolute;
-      bottom: 12px;
-      right: 12px;
+      bottom: 8px;
+      right: 8px;
       background: rgba(0,0,0,0.8);
-      color: white;
+      color: #ffffff;
       padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 500;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
     }
-    
+
     .video-content {
       padding: 24px;
     }
@@ -372,36 +378,37 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     
     .video-date {
-      font-size: 0.875rem;
-      color: #EF4444;
-      font-weight: 500;
+      font-size: 12px;
+      color: #ef4444;
+      text-transform: uppercase;
+      font-weight: 700;
     }
     
     .video-views {
-      font-size: 0.875rem;
-      color: #666;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      font-size: 12px;
+      color: #94a3b8;
+      text-transform: uppercase;
     }
     
     .video-title {
-      font-size: 1.25rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 18px;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #ffffff;
       margin-bottom: 12px;
-      line-height: 1.4;
+      text-transform: uppercase;
+      line-height: 1.3;
     }
     
     .video-description {
-      font-size: 0.9375rem;
-      color: #666666;
+      color: #94a3b8;
       line-height: 1.6;
       margin-bottom: 16px;
+      font-size: 14px;
     }
     
     .video-author {
@@ -413,361 +420,425 @@
     .author-avatar {
       width: 32px;
       height: 32px;
-      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-      border-radius: 50%;
+      background: #ef4444;
+      color: #0f172a;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
-      font-weight: 600;
-      color: white;
-    }
-    
-    .author-info {
-      flex: 1;
+      font-weight: 700;
     }
     
     .author-name {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #333;
+      font-size: 12px;
+      color: #94a3b8;
+      text-transform: uppercase;
     }
-    
-    .author-role {
-      font-size: 0.75rem;
-      color: #666;
+
+    /* Subscribe Section */
+    .subscribe-section {
+      padding: 80px 0;
+      background: #0f172a;
     }
-    
-    /* おすすめ動画 */
-    .featured-video {
-      background: white;
-      border-radius: 24px;
+
+    .subscribe-card {
+      background: #1e293b;
+      border: 6px dashed #eab308;
       padding: 48px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      border: 1px solid #f0f0f0;
-      margin-bottom: 64px;
-    }
-    
-    .featured-video-thumbnail {
-      width: 100%;
       max-width: 600px;
-      height: 300px;
-      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 32px;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      margin: 0 auto;
     }
-    
-    .featured-video-thumbnail:hover {
-      transform: scale(1.02);
-      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.2);
-    }
-    
-    .featured-play-button {
-      width: 80px;
-      height: 80px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      color: #EF4444;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-    
-    .featured-video-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
+
+    .subscribe-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 28px;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #eab308;
       margin-bottom: 16px;
+      text-transform: uppercase;
     }
-    
-    .featured-video-description {
-      font-size: 1.125rem;
-      color: #666666;
+
+    .subscribe-description {
+      color: #94a3b8;
+      margin-bottom: 32px;
       line-height: 1.6;
     }
-    
-    /* レスポンシブ */
+
+    .subscribe-button {
+      background: #eab308;
+      color: #0f172a;
+      border: none;
+      padding: 16px 32px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .subscribe-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(234, 179, 8, 0.3);
+    }
+
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
-      .back-button {
-        top: 20px;
-        left: 20px;
-        padding: 12px 20px;
-        font-size: 13px;
-        min-width: 120px;
-      }
-      
-      .hero {
-        padding: calc(80px + 50px) 0 30px;
-      }
-      
-      .hero-icon {
-        width: 80px;
-        height: 80px;
-        font-size: 32px;
-        border-radius: 20px;
-      }
-      
-      .container {
+      .video-hero-content {
         padding: 0 20px;
       }
       
-      .section {
-        padding: 60px 0;
+      .featured-thumbnail {
+        height: 250px;
+      }
+
+      .featured-play-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
       }
       
-      .categories {
-        margin-bottom: 40px;
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
       }
       
-      .video-grid {
+      .videos-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 24px;
       }
-      
-      .featured-video {
+
+      .featured-video-card, .subscribe-card {
         padding: 32px 24px;
-        border-radius: 20px;
       }
-      
-      .featured-video-thumbnail {
-        height: 200px;
+
+      .video-stats {
+        gap: 16px;
       }
-      
-      .featured-play-button {
-        width: 64px;
-        height: 64px;
-        font-size: 24px;
+    }
+
+    @media (max-width: 480px) {
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .video-stats {
+        flex-direction: column;
+        gap: 8px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 統一ヘッダー -->
-  <header class="detail-header">
-    <a href="../index.html?level=persist&from=detail" class="back-button">
-      ← ホームに戻る
-    </a>
-    <div class="page-breadcrumb">
-      <span class="brand-name">ToMoreBeyond</span>
-      <span class="separator">/</span>
-      <span class="page-name">Video</span>
-    </div>
-  </header>
-
-  <!-- ヒーローセクション -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-icon">🎬</div>
-      <h1 class="hero-title">Video</h1>
-      <p class="hero-subtitle">プロダクトと技術を映像で体験</p>
-      <p class="hero-description">
-        ToMoreBeyondのプロダクトデモ、技術解説、チームインタビューなど、
-        様々な動画コンテンツを通じて私たちの想いと技術をお伝えします。
-      </p>
-    </div>
-  </section>
-
-  <!-- おすすめ動画セクション -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">注目の動画</h2>
-        <p class="section-subtitle">今最も見られているコンテンツ</p>
+  <!-- 8-bit Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html" class="navbar-brand">ToMoreBeyond</a>
+      <div class="navbar-links">
+        <a href="../index.html#media" class="navbar-link">メディア</a>
+        <a href="../index.html#about" class="navbar-link">会社概要</a>
+        <a href="../index.html" class="btn-primary">← BACK TO GAME</a>
       </div>
-      
-      <div class="featured-video">
-        <div class="featured-video-thumbnail">
-          <div class="featured-play-button">▶</div>
-        </div>
-        <h3 class="featured-video-title">ToMoreBeyond 会社紹介ムービー</h3>
-        <p class="featured-video-description">
-          私たちのミッション「面白いことだけをする。友と共に道なき道を越える」に込めた想いと、
-          これまでの歩み、そして未来への展望を5分で紹介します。
+    </div>
+  </nav>
+
+  <!-- Video Hero Section -->
+  <section class="video-hero">
+    <div class="container">
+      <div class="video-hero-content">
+        <h1 class="video-title-large">動画</h1>
+        <p class="video-subtitle">プロダクト紹介</p>
+        <p class="video-description-hero">
+          ToMoreBeyondのプロダクトデモ、技術解説、開発の舞台裏など、
+          8ビット風の映像コンテンツでお届けします。
+          革新的なアプリケーションの魅力を動画で体験してください。
         </p>
       </div>
     </div>
   </section>
 
-  <!-- カテゴリ・動画一覧セクション -->
-  <section class="section" style="background: white;">
+  <!-- Featured Video Section -->
+  <section class="featured-section">
     <div class="container">
-      <div class="categories">
-        <a href="#" class="category-tag active">すべて</a>
-        <a href="#" class="category-tag">プロダクトデモ</a>
-        <a href="#" class="category-tag">技術解説</a>
-        <a href="#" class="category-tag">チーム紹介</a>
-        <a href="#" class="category-tag">イベント</a>
-        <a href="#" class="category-tag">開発ログ</a>
+      <div class="featured-video-card">
+        <div class="featured-thumbnail">
+          <div class="featured-play-icon">[▶]</div>
+        </div>
+        <h2 class="featured-video-title">TADATAKA APP デモ</h2>
+        <p class="featured-video-desc">
+          位置情報AIと8ビット風UIが融合した革新的なライフログアプリ。
+          日常の移動を特別な思い出に変える機能をフルデモンストレーションでお見せします。
+        </p>
+        <div class="video-stats">
+          <span>2025.06.19 公開</span>
+          <span>視聴回数: 3,247</span>
+          <span>時間: 5:42</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">カテゴリ</h2>
+        <p class="section-subtitle">動画コンテンツを探す</p>
       </div>
       
-      <div class="video-grid">
-        <div class="video-card">
-          <div class="video-thumbnail">
-            <div class="play-button">▶</div>
-            <div class="video-duration">3:45</div>
-          </div>
-          <div class="video-content">
-            <div class="video-meta">
-              <span class="video-date">2025年6月5日</span>
-              <span class="video-views">
-                👁 1,234 回視聴
-              </span>
-            </div>
-            <h3 class="video-title">タダタカ アプリデモ動画</h3>
-            <p class="video-description">
-              位置情報AIを活用したルート最適化機能の実際の動作をデモンストレーション。日常の移動がどう変わるかを体験できます。
-            </p>
-            <div class="video-author">
-              <div class="author-avatar">山</div>
-              <div class="author-info">
-                <div class="author-name">山田 純大</div>
-                <div class="author-role">CEO</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="categories-grid">
+        <a href="#" class="category-card">
+          <div class="category-icon">🎮</div>
+          <h3 class="category-name">プロダクトデモ</h3>
+          <p class="category-count">12 VIDEOS</p>
+        </a>
         
+        <a href="#" class="category-card">
+          <div class="category-icon">🔧</div>
+          <h3 class="category-name">技術解説</h3>
+          <p class="category-count">8 VIDEOS</p>
+        </a>
+        
+        <a href="#" class="category-card">
+          <div class="category-icon">🎬</div>
+          <h3 class="category-name">開発ドキュメンタリー</h3>
+          <p class="category-count">6 VIDEOS</p>
+        </a>
+        
+        <a href="#" class="category-card">
+          <div class="category-icon">👥</div>
+          <h3 class="category-name">チーム紹介</h3>
+          <p class="category-count">4 VIDEOS</p>
+        </a>
+        
+        <a href="#" class="category-card">
+          <div class="category-icon">🚀</div>
+          <h3 class="category-name">イベント・発表</h3>
+          <p class="category-count">7 VIDEOS</p>
+        </a>
+        
+        <a href="#" class="category-card">
+          <div class="category-icon">🎨</div>
+          <h3 class="category-name">デザインプロセス</h3>
+          <p class="category-count">5 VIDEOS</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos Grid Section -->
+  <section class="videos-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">最新動画</h2>
+        <p class="section-subtitle">開発現場からの生の映像</p>
+      </div>
+      
+      <div class="videos-grid">
         <div class="video-card">
           <div class="video-thumbnail">
-            <div class="play-button">▶</div>
-            <div class="video-duration">8:12</div>
+            <div class="play-button">[▶]</div>
+            <div class="video-duration">3:24</div>
           </div>
           <div class="video-content">
             <div class="video-meta">
-              <span class="video-date">2025年6月1日</span>
-              <span class="video-views">
-                👁 892 回視聴
-              </span>
+              <span class="video-date">2025.06.15</span>
+              <span class="video-views">1,456 VIEWS</span>
             </div>
-            <h3 class="video-title">Flutter × AI開発の舞台裏</h3>
+            <h3 class="video-title">8ビットUI開発の舞台裏</h3>
             <p class="video-description">
-              GPT-4o APIをFlutterアプリに統合する際の技術的な課題と解決方法を詳しく解説。実際のコードも公開しています。
+              レトロゲーム風デザインシステムを現代Webアプリに実装する技術的挑戦。
+              ピクセルパーフェクトな表現とパフォーマンスを両立する秘訣を公開。
             </p>
             <div class="video-author">
               <div class="author-avatar">安</div>
-              <div class="author-info">
-                <div class="author-name">安藤 俊平</div>
-                <div class="author-role">CTO</div>
-              </div>
+              <span class="author-name">安藤 - ARTIST</span>
             </div>
           </div>
         </div>
         
         <div class="video-card">
           <div class="video-thumbnail">
-            <div class="play-button">▶</div>
-            <div class="video-duration">5:28</div>
+            <div class="play-button">[▶]</div>
+            <div class="video-duration">7:18</div>
           </div>
           <div class="video-content">
             <div class="video-meta">
-              <span class="video-date">2025年5月28日</span>
-              <span class="video-views">
-                👁 2,156 回視聴
-              </span>
+              <span class="video-date">2025.06.12</span>
+              <span class="video-views">2,134 VIEWS</span>
             </div>
-            <h3 class="video-title">Tokyo Startup Gateway登壇発表</h3>
+            <h3 class="video-title">AI位置情報エンジン解説</h3>
             <p class="video-description">
-              ファイナリストとして登壇した際のピッチ動画。ToMoreBeyondのビジョンと事業計画を5分間で熱く語ります。
-            </p>
-            <div class="video-author">
-              <div class="author-avatar">山</div>
-              <div class="author-info">
-                <div class="author-name">山田 純大</div>
-                <div class="author-role">CEO</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="video-card">
-          <div class="video-thumbnail">
-            <div class="play-button">▶</div>
-            <div class="video-duration">12:34</div>
-          </div>
-          <div class="video-content">
-            <div class="video-meta">
-              <span class="video-date">2025年5月25日</span>
-              <span class="video-views">
-                👁 1,567 回視聴
-              </span>
-            </div>
-            <h3 class="video-title">地図データ最適化の深堀り解説</h3>
-            <p class="video-description">
-              Mapbox APIを使用した高度なルート計算アルゴリズムの実装について、ホワイトボードを使って詳しく解説します。
+              機械学習を活用した最適ルート提案システムの内部構造。
+              リアルタイム処理とプライバシー保護を両立するアーキテクチャを詳解。
             </p>
             <div class="video-author">
               <div class="author-avatar">正</div>
-              <div class="author-info">
-                <div class="author-name">正戸 雅司</div>
-                <div class="author-role">Engineer</div>
-              </div>
+              <span class="author-name">正留 - CEO</span>
             </div>
           </div>
         </div>
         
         <div class="video-card">
           <div class="video-thumbnail">
-            <div class="play-button">▶</div>
-            <div class="video-duration">6:15</div>
+            <div class="play-button">[▶]</div>
+            <div class="video-duration">4:56</div>
           </div>
           <div class="video-content">
             <div class="video-meta">
-              <span class="video-date">2025年5月20日</span>
-              <span class="video-views">
-                👁 934 回視聴
-              </span>
+              <span class="video-date">2025.06.08</span>
+              <span class="video-views">987 VIEWS</span>
             </div>
-            <h3 class="video-title">チーム紹介：リモートワークの日常</h3>
+            <h3 class="video-title">創業ストーリー ドキュメンタリー</h3>
             <p class="video-description">
-              ToMoreBeyondメンバーの日常的なリモートワーク風景と、オンラインでのコラボレーション方法を紹介します。
-            </p>
-            <div class="video-author">
-              <div class="author-avatar">安</div>
-              <div class="author-info">
-                <div class="author-name">安藤 俊平</div>
-                <div class="author-role">CTO</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="video-card">
-          <div class="video-thumbnail">
-            <div class="play-button">▶</div>
-            <div class="video-duration">4:50</div>
-          </div>
-          <div class="video-content">
-            <div class="video-meta">
-              <span class="video-date">2025年5月15日</span>
-              <span class="video-views">
-                👁 1,789 回視聴
-              </span>
-            </div>
-            <h3 class="video-title">UI/UXデザインプロセス公開</h3>
-            <p class="video-description">
-              ユーザー体験を最優先にしたアプリデザインの制作過程を、Figmaの画面を見せながら詳しく解説します。
+              「道なき道を切る」というビジョンの誕生から現在まで。
+              ToMoreBeyond創業メンバーが語る挑戦と成長の軌跡。
             </p>
             <div class="video-author">
               <div class="author-avatar">山</div>
-              <div class="author-info">
-                <div class="author-name">山田 純大</div>
-                <div class="author-role">CEO</div>
-              </div>
+              <span class="author-name">山田 - FOUNDER</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">[▶]</div>
+            <div class="video-duration">6:32</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025.06.05</span>
+              <span class="video-views">1,789 VIEWS</span>
+            </div>
+            <h3 class="video-title">Flutter x AI 統合実装</h3>
+            <p class="video-description">
+              モバイルアプリにAI機能を組み込む実践的な開発手法。
+              実際のコーディング画面と共に、最適化テクニックを伝授。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">安</div>
+              <span class="author-name">安藤 - ARTIST</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">[▶]</div>
+            <div class="video-duration">8:14</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025.06.01</span>
+              <span class="video-views">2,456 VIEWS</span>
+            </div>
+            <h3 class="video-title">Tokyo Startup Gateway 登壇</h3>
+            <p class="video-description">
+              2025年ファイナリストとして登壇したピッチ動画。
+              審査員からの質疑応答も含めた完全版をノーカットで公開。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">山</div>
+              <span class="author-name">山田 - FOUNDER</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <div class="play-button">[▶]</div>
+            <div class="video-duration">5:43</div>
+          </div>
+          <div class="video-content">
+            <div class="video-meta">
+              <span class="video-date">2025.05.28</span>
+              <span class="video-views">1,234 VIEWS</span>
+            </div>
+            <h3 class="video-title">リモートチーム開発の日常</h3>
+            <p class="video-description">
+              分散したメンバーが一つのプロダクトを作り上げる協働プロセス。
+              オンラインコラボレーションツールとワークフローを完全公開。
+            </p>
+            <div class="video-author">
+              <div class="author-avatar">安</div>
+              <span class="author-name">安藤 - ARTIST</span>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Subscribe Section -->
+  <section class="subscribe-section">
+    <div class="container">
+      <div class="subscribe-card">
+        <h2 class="subscribe-title">チャンネル登録</h2>
+        <p class="subscribe-description">
+          最新の動画コンテンツとプロダクト情報をいち早くお届け。
+          開発の舞台裏や技術解説動画を見逃さないよう、今すぐ登録しよう。
+        </p>
+        <a href="#" class="subscribe-button">SUBSCRIBE</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add smooth reveal on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+      };
+      
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Apply to all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealObserver.observe(section);
+      });
+      
+      // Video card hover effects
+      document.querySelectorAll('.video-card, .category-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+
+      // Video thumbnail click simulation
+      document.querySelectorAll('.video-thumbnail, .featured-thumbnail').forEach(thumbnail => {
+        thumbnail.addEventListener('click', () => {
+          const playButton = thumbnail.querySelector('.play-button, .featured-play-icon');
+          playButton.textContent = '[■]';
+          playButton.style.background = '#22c55e';
+          
+          setTimeout(() => {
+            playButton.textContent = '[▶]';
+            playButton.style.background = '';
+          }, 2000);
+        });
+      });
+    });
+  </script>
 </body>
 </html>

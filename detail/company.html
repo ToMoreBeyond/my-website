@@ -95,7 +95,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
   <style>
-    /* 8ビット風統一デザインシステム */
     * {
       margin: 0;
       padding: 0;
@@ -110,126 +109,132 @@
       min-height: 100vh;
       image-rendering: pixelated;
       -webkit-font-smoothing: none;
-      text-rendering: geometricPrecision;
     }
     
-    /* 統一ヘッダーデザイン */
-    .detail-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
+    /* Navigation */
+    .navbar {
       background: #0f172a;
-      border-bottom: 4px solid #22c55e;
-      padding: 16px 24px;
+      border-bottom: 6px dashed #22c55e;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    .back-button {
-      background: #1e293b;
-      border: 2px solid #22c55e;
-      padding: 12px 24px;
-      text-decoration: none;
-      color: #ffffff;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 14px;
-      transition: all 0.1s ease-out;
-      display: flex;
       align-items: center;
-      gap: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 0 24px;
     }
     
-    .back-button:hover {
-      transform: translateY(-2px);
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #22c55e;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    
+    .navbar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
+    }
+    
+    .navbar-link:hover {
+      color: #22c55e;
+    }
+    
+    .btn-primary {
       background: #22c55e;
       color: #0f172a;
-      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.4);
-    }
-    
-    .page-breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
+      padding: 12px 24px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
       font-weight: 400;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      transition: all 0.1s ease-out;
     }
     
-    .brand-name {
-      color: #94a3b8;
-      font-weight: 400;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
     }
     
-    .separator {
-      color: #22c55e;
-      font-weight: 700;
-    }
-    
-    .page-name {
-      color: #22c55e;
-      font-weight: 700;
-    }
-    
-    /* ヒーローセクション */
-    .hero {
+    /* Hero Section */
+    .app-hero {
       min-height: 80vh;
       display: flex;
       align-items: center;
       position: relative;
       background: #0f172a;
-      padding: calc(80px + 50px) 0 30px;
+      padding: 80px 0 32px;
     }
     
-    .hero-content {
+    .app-hero-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 64px;
+      align-items: center;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 24px;
       text-align: center;
     }
     
-    .hero-title {
+    .app-hero-text {
+      padding: 0;
+    }
+    
+    .app-title-large {
       font-family: 'Orbitron', monospace;
       font-size: clamp(3rem, 8vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       color: #22c55e;
       text-shadow: 2px 2px 0px #0f172a, 4px 4px 0px #1e293b;
+      text-transform: uppercase;
     }
     
-    .hero-subtitle {
+    .app-tagline {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
       font-weight: 400;
       color: #94a3b8;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
       line-height: 1.4;
       text-transform: uppercase;
     }
     
-    .hero-description {
-      font-size: 1.125rem;
+    .app-description-hero {
+      font-size: 18px;
       color: #ffffff;
       line-height: 1.7;
-      max-width: 800px;
-      margin: 0 auto;
+      margin-bottom: 32px;
     }
     
-    /* セクション共通 */
-    .section {
-      padding: 80px 0;
-    }
-    
+    /* Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 24px;
+    }
+    
+    /* Section */
+    .section {
+      padding: 80px 0;
     }
     
     .section-header {
@@ -247,139 +252,100 @@
     }
     
     .section-subtitle {
-      font-size: 1.125rem;
+      font-size: 18px;
       color: #94a3b8;
       line-height: 1.6;
     }
     
-    /* 会社情報グリッド */
-    .info-grid {
+    /* Features Section */
+    .features-section {
+      padding: 80px 0;
+      background: #1e293b;
+    }
+    
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 32px;
-      margin-bottom: 64px;
+      margin-top: 48px;
     }
     
-    .info-card {
-      background: #1e293b;
-      border: 4px solid #22c55e;
+    .feature-card-detailed {
+      background: #0f172a;
+      border: 6px dashed #3b82f6;
       padding: 32px;
-      transition: all 0.1s ease-out;
+      transition: all 0.3s ease-out;
       position: relative;
-      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
     }
     
-    .info-card:hover {
+    .feature-card-detailed:hover {
       transform: translateY(-2px);
-      border-color: #3b82f6;
-      box-shadow: 0 6px 0px #0a0f1a, 0 8px 16px rgba(59, 130, 246, 0.3);
+      border-color: #22c55e;
     }
     
-    
-    .info-label {
-      font-size: 0.875rem;
-      color: #22c55e;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
+    .feature-icon-large {
+      width: 80px;
+      height: 80px;
+      background: #22c55e;
+      border: 2px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 24px;
+      color: #0f172a;
     }
     
-    .info-value {
-      font-size: 1.125rem;
-      color: #ffffff;
-      font-weight: 400;
-      line-height: 1.6;
-    }
-    
-    /* バリューセクション */
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
-    }
-    
-    .value-card {
-      background: #1e293b;
-      border: 4px solid #8b5cf6;
-      padding: 28px;
-      text-align: center;
-      transition: all 0.1s ease-out;
-      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
-    
-    .value-card:hover {
-      transform: translateY(-2px);
-      border-color: #eab308;
-      box-shadow: 0 6px 0px #0a0f1a, 0 8px 16px rgba(234, 179, 8, 0.3);
-    }
-    
-    .value-number {
-      font-size: 3rem;
-      font-weight: 900;
-      color: #8b5cf6;
-      margin-bottom: 16px;
-      font-family: 'Orbitron', monospace;
-    }
-    
-    .value-title {
-      font-size: 1.25rem;
+    .feature-title-large {
+      font-size: 24px;
       font-weight: 700;
       color: #ffffff;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       text-transform: uppercase;
     }
     
-    .value-description {
-      font-size: 0.9375rem;
+    .feature-description-large {
       color: #94a3b8;
       line-height: 1.6;
+      margin-bottom: 16px;
     }
     
-    /* レスポンシブ */
+    .feature-benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .feature-benefits li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      color: #94a3b8;
+    }
+    
+    .feature-benefits li::before {
+      content: '[#]';
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+      font-weight: bold;
+    }
+    
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
-      .back-button {
-        top: 20px;
-        left: 20px;
-        padding: 12px 20px;
-        font-size: 13px;
-        min-width: 120px;
-      }
-      
-      .hero {
-        padding: calc(80px + 50px) 0 30px;
-      }
-      
-      .container {
-        padding: 0 20px;
-      }
-      
-      .section {
-        padding: 60px 0;
-      }
-      
-      .info-grid {
+      .app-hero-content {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 32px;
+        text-align: center;
       }
       
-      .info-card {
-        padding: 24px;
-        border-radius: 20px;
+      .app-hero-text {
+        padding-right: 0;
       }
       
-      .values-grid {
+      .features-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      
-      .value-card {
-        padding: 24px;
-        border-radius: 16px;
-      }
-      
-      .value-number {
-        font-size: 2.5rem;
+        gap: 24px;
       }
     }
   </style>

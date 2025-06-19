@@ -7,71 +7,164 @@
   <meta name="description" content="ToiRunは今すぐトイレを最短で案内するAIナビ。商業施設のフロアマップを自動学習し、AR矢印で誘導。多言語・ユニバーサルデザイン対応。">
   <meta name="keywords" content="ToiRun, トイレナビ, AR案内, ユニバーサルデザイン, 多言語対応, 緊急時対応, ToMoreBeyond">
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/design-system.css">
-  <link rel="stylesheet" href="/css/modern-design.css">
-  <link rel="stylesheet" href="/css/components.css">
+  <!-- 8-bit Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
   <style>
-    /* App-specific enhanced styles */
-    body {
-      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
-      overflow-x: hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
-    /* Enhanced Hero Section */
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: #0f172a;
+      color: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background: #0f172a;
+      border-bottom: 6px dashed #22c55e;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+    }
+    
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #22c55e;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    
+    .navbar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
+    }
+    
+    .navbar-link:hover {
+      color: #22c55e;
+    }
+    
+    .btn-primary {
+      background: #22c55e;
+      color: #0f172a;
+      padding: 12px 24px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
+      font-weight: 400;
+      text-transform: uppercase;
+      transition: all 0.1s ease-out;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    }
+    
+    /* Hero Section */
     .app-hero {
       min-height: 80vh;
       display: flex;
       align-items: center;
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
-      padding: calc(var(--space-20) + 80px) 0 var(--space-20);
+      background: #0f172a;
+      padding: 80px 0 32px;
     }
     
     .app-hero-content {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-16);
+      gap: 64px;
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 24px;
     }
     
     .app-hero-text {
-      padding-right: var(--space-8);
+      padding-right: 32px;
     }
     
     .app-title-large {
-      font-family: var(--font-display);
+      font-family: 'Orbitron', monospace;
       font-size: clamp(3rem, 8vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
-      margin-bottom: var(--space-4);
-      background: linear-gradient(135deg, #1a1a1a 0%, #3B82F6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 16px;
+      color: #22c55e;
+      text-shadow: 2px 2px 0px #0f172a, 4px 4px 0px #1e293b;
+      text-transform: uppercase;
     }
     
     .app-tagline {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
-      font-weight: 600;
-      color: var(--neutral-700);
-      margin-bottom: var(--space-6);
+      font-weight: 400;
+      color: #94a3b8;
+      margin-bottom: 24px;
       line-height: 1.4;
+      text-transform: uppercase;
     }
     
     .app-description-hero {
-      font-size: var(--text-lg);
-      color: var(--neutral-600);
+      font-size: 18px;
+      color: #ffffff;
       line-height: 1.7;
-      margin-bottom: var(--space-8);
+      margin-bottom: 32px;
+    }
+    
+    .download-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    
+    .download-button {
+      background: #22c55e;
+      color: #0f172a;
+      padding: 16px 32px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.1s ease-out;
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
+    
+    .download-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.4);
     }
     
     .app-hero-visual {
@@ -84,101 +177,110 @@
     .app-mockup {
       width: 300px;
       height: 600px;
-      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-      border-radius: 2rem;
-      box-shadow: var(--shadow-large);
+      background: #1e293b;
+      border: 6px dashed #22c55e;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 4rem;
       position: relative;
       overflow: hidden;
-      border: 8px solid #1f2937;
     }
     
     .mockup-screen {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-      border-radius: 1.2rem;
+      background: #0f172a;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: #22c55e;
       font-size: 3rem;
+    }
+    
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* Section */
+    .section {
+      padding: 80px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #22c55e;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    
+    .section-subtitle {
+      font-size: 18px;
+      color: #94a3b8;
+      line-height: 1.6;
     }
     
     /* Features Section */
     .features-section {
-      padding: var(--space-20) 0;
-      background: white;
+      padding: 80px 0;
+      background: #1e293b;
     }
     
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-8);
-      margin-top: var(--space-12);
+      gap: 32px;
+      margin-top: 48px;
     }
     
     .feature-card-detailed {
-      background: white;
-      border-radius: var(--radius-2xl);
-      padding: var(--space-8);
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
+      background: #0f172a;
+      border: 6px dashed #3b82f6;
+      padding: 32px;
+      transition: all 0.3s ease-out;
       position: relative;
-      overflow: hidden;
-    }
-    
-    .feature-card-detailed::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #3B82F6, #22C55E);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform var(--transition-base);
     }
     
     .feature-card-detailed:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-large);
-    }
-    
-    .feature-card-detailed:hover::before {
-      transform: scaleX(1);
+      transform: translateY(-2px);
+      border-color: #22c55e;
     }
     
     .feature-icon-large {
       width: 80px;
       height: 80px;
-      background: linear-gradient(135deg, #3B82F6, #22C55E);
-      border-radius: var(--radius-2xl);
+      background: #22c55e;
+      border: 2px solid #1e293b;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 2.5rem;
-      margin-bottom: var(--space-6);
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 24px;
+      color: #0f172a;
     }
     
     .feature-title-large {
-      font-size: var(--text-2xl);
+      font-size: 24px;
       font-weight: 700;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-4);
+      color: #ffffff;
+      margin-bottom: 16px;
+      text-transform: uppercase;
     }
     
     .feature-description-large {
-      color: var(--neutral-600);
+      color: #94a3b8;
       line-height: 1.6;
-      margin-bottom: var(--space-4);
+      margin-bottom: 16px;
     }
     
     .feature-benefits {
@@ -188,175 +290,25 @@
     }
     
     .feature-benefits li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-6);
+      padding: 8px 0;
+      padding-left: 24px;
       position: relative;
-      color: var(--neutral-600);
+      color: #94a3b8;
     }
     
     .feature-benefits li::before {
-      content: '✓';
+      content: '[#]';
       position: absolute;
       left: 0;
-      color: #3B82F6;
+      color: #22c55e;
       font-weight: bold;
-    }
-    
-    /* Technology Section */
-    .tech-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    }
-    
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-12);
-    }
-    
-    .tech-card {
-      background: white;
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
-    }
-    
-    .tech-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-medium);
-    }
-    
-    .tech-icon {
-      font-size: 3rem;
-      margin-bottom: var(--space-4);
-    }
-    
-    .tech-title {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-2);
-    }
-    
-    .tech-description {
-      font-size: var(--text-sm);
-      color: var(--neutral-600);
-      line-height: 1.5;
-    }
-    
-    /* Benefits Section */
-    .benefits-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    }
-    
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-12);
-    }
-    
-    .benefit-card {
-      background: white;
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
-    }
-    
-    .benefit-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-medium);
-    }
-    
-    .benefit-icon {
-      font-size: 3rem;
-      margin-bottom: var(--space-4);
-    }
-    
-    .benefit-title {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-2);
-    }
-    
-    .benefit-description {
-      font-size: var(--text-sm);
-      color: var(--neutral-600);
-      line-height: 1.5;
-    }
-    
-    /* CTA Section */
-    .cta-section-app {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
-      color: white;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .cta-content-app {
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .cta-title-app {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      margin-bottom: var(--space-6);
-    }
-    
-    .cta-subtitle-app {
-      font-size: var(--text-lg);
-      opacity: 0.9;
-      margin-bottom: var(--space-8);
-      line-height: 1.6;
-    }
-    
-    .download-buttons {
-      display: flex;
-      gap: var(--space-4);
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
-    .download-button {
-      background: #3B82F6;
-      color: white;
-      padding: var(--space-4) var(--space-8);
-      border-radius: var(--radius-lg);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all var(--transition-base);
-      box-shadow: var(--shadow-medium);
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-    }
-    
-    .download-button:hover {
-      background: #1E40AF;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-large);
     }
     
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .app-hero-content {
         grid-template-columns: 1fr;
-        gap: var(--space-8);
+        gap: 32px;
         text-align: center;
       }
       
@@ -371,15 +323,7 @@
       
       .features-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-6);
-      }
-      
-      .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .benefits-grid {
-        grid-template-columns: 1fr;
+        gap: 24px;
       }
       
       .download-buttons {
@@ -387,54 +331,45 @@
         align-items: center;
       }
     }
-    
-    @media (max-width: 480px) {
-      .tech-grid {
-        grid-template-columns: 1fr;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Modern Navigation -->
-  <nav class="navbar-modern">
-    <div class="container-fluid">
-      <div class="navbar-content">
-        <a href="/" class="navbar-brand-modern">ToMoreBeyond</a>
-        <div class="navbar-links-modern">
-          <a href="/#apps" class="navbar-link-modern">アプリ</a>
-          <a href="/#about" class="navbar-link-modern">会社概要</a>
-          <a href="/pages/contact.html" class="btn-modern btn-primary-modern">お問い合わせ</a>
-        </div>
+  <!-- 8-bit Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html?level=persist&from=detail" class="navbar-brand">ToMoreBeyond</a>
+      <div class="navbar-links">
+        <a href="../index.html#apps" class="navbar-link">アプリ</a>
+        <a href="../index.html#about" class="navbar-link">会社概要</a>
+        <a href="../detail/contact.html" class="btn-primary">お問い合わせ</a>
       </div>
     </div>
   </nav>
 
   <!-- App Hero Section -->
   <section class="app-hero">
-    <div class="container-fluid">
+    <div class="container">
       <div class="app-hero-content">
         <div class="app-hero-text">
           <h1 class="app-title-large">ToiRun</h1>
-          <p class="app-tagline">"今すぐトイレ"を最短で案内</p>
+          <p class="app-tagline">今すぐトイレを最短で案内</p>
           <p class="app-description-hero">
-            商業施設や空港のフロアマップを自動学習し、現在地から最短トイレルートをAR矢印で表示。
-            多言語・ユニバーサルデザイン対応で、誰にでもやさしいAIナビゲーションアプリです。
+            ToiRunは緊急時のトイレ探しを革命的にサポートするAIナビゲーションアプリです。商業施設のフロアマップを自動学習し、AR矢印でリアルタイム誘導。多言語・ユニバーサルデザイン対応で、誰でも安心して使えます。
           </p>
           <div class="download-buttons">
             <a href="#" class="download-button">
-              <span>📱</span>
-              App Store
+              <span>[APP]</span>
+              COMING SOON
             </a>
             <a href="#" class="download-button">
-              <span>🤖</span>
-              Google Play
+              <span>[WEB]</span>
+              BETA VERSION
             </a>
           </div>
         </div>
         <div class="app-hero-visual">
           <div class="app-mockup">
-            <div class="mockup-screen">🚽</div>
+            <div class="mockup-screen">[WC]</div>
           </div>
         </div>
       </div>
@@ -443,7 +378,7 @@
 
   <!-- Features Section -->
   <section class="features-section">
-    <div class="container-fluid">
+    <div class="container">
       <div class="section-header">
         <h2 class="section-title">主な機能</h2>
         <p class="section-subtitle">ToiRunがあなたの緊急時をサポートする理由</p>
@@ -451,54 +386,54 @@
       
       <div class="features-grid">
         <div class="feature-card-detailed">
-          <div class="feature-icon-large">🗺️</div>
-          <h3 class="feature-title-large">フロアマップ自動学習</h3>
+          <div class="feature-icon-large">🧭</div>
+          <h3 class="feature-title-large">AI最短ルート案内</h3>
           <p class="feature-description-large">
-            商業施設や空港のフロアマップを自動学習し、リアルタイムで最新情報を更新します。
+            独自のAIアルゴリズムで現在地から最も近いトイレまでの最短ルートを瞬時に計算します。
           </p>
           <ul class="feature-benefits">
-            <li>複雑な建物構造にも対応</li>
-            <li>リアルタイム情報更新</li>
-            <li>クラウド連携で精度向上</li>
+            <li>リアルタイム混雑状況判定</li>
+            <li>バリアフリートイレ対応</li>
+            <li>多目的トイレ自動検出</li>
           </ul>
         </div>
         
         <div class="feature-card-detailed">
-          <div class="feature-icon-large">📍</div>
+          <div class="feature-icon-large">📱</div>
           <h3 class="feature-title-large">AR矢印ナビゲーション</h3>
           <p class="feature-description-large">
-            現在地から最短トイレルートを直感的なAR矢印で表示し、迷うことなく誘導します。
+            スマートフォンのカメラを通してAR矢印を表示。複雑な施設内でも迷わず到達できます。
           </p>
           <ul class="feature-benefits">
-            <li>直感的なAR表示</li>
-            <li>最短経路の自動計算</li>
-            <li>障害物回避機能</li>
+            <li>3D矢印によるリアルタイム誘導</li>
+            <li>階段・エレベーター案内</li>
+            <li>音声ガイダンス対応</li>
           </ul>
         </div>
         
         <div class="feature-card-detailed">
-          <div class="feature-icon-large">🌐</div>
-          <h3 class="feature-title-large">多言語対応</h3>
+          <div class="feature-icon-large">🌍</div>
+          <h3 class="feature-title-large">多言語・ユニバーサル対応</h3>
           <p class="feature-description-large">
-            日本語、英語、中国語、韓国語など、訪日外国人にも安心して利用いただけます。
+            10ヶ国語対応で海外の方も安心。視覚・聴覚サポート機能で誰でも使いやすい設計。
           </p>
           <ul class="feature-benefits">
-            <li>10カ国語以上対応</li>
-            <li>文化的配慮を含む表示</li>
-            <li>音声案内対応</li>
+            <li>音声読み上げ機能</li>
+            <li>大きな文字表示</li>
+            <li>色覚サポートモード</li>
           </ul>
         </div>
         
         <div class="feature-card-detailed">
-          <div class="feature-icon-large">♿</div>
-          <h3 class="feature-title-large">ユニバーサルデザイン</h3>
+          <div class="feature-icon-large">⚡</div>
+          <h3 class="feature-title-large">緊急時高速対応</h3>
           <p class="feature-description-large">
-            色覚補正、文字拡大、音声案内など、すべての人が使いやすい設計です。
+            アプリ起動から案内開始まで3秒以内。緊急時の一刻を争う状況に最適化されています。
           </p>
           <ul class="feature-benefits">
-            <li>色覚多様性に配慮</li>
-            <li>大きな文字とボタン</li>
-            <li>音声・振動フィードバック</li>
+            <li>ワンタップ緊急モード</li>
+            <li>オフライン地図対応</li>
+            <li>低電力モード搭載</li>
           </ul>
         </div>
       </div>
@@ -506,111 +441,44 @@
   </section>
 
   <!-- Technology Section -->
-  <section class="tech-section">
-    <div class="container-fluid">
+  <section class="section">
+    <div class="container">
       <div class="section-header">
         <h2 class="section-title">技術的特徴</h2>
-        <p class="section-subtitle">最先端技術で確実な案内を実現</p>
+        <p class="section-subtitle">最新技術でユーザビリティとアクセシビリティを両立</p>
       </div>
       
-      <div class="tech-grid">
-        <div class="tech-card">
-          <div class="tech-icon">🎯</div>
-          <h3 class="tech-title">SLAM技術</h3>
-          <p class="tech-description">
-            同時位置推定とマッピング技術で、複雑な建物内でも正確な位置を特定
+      <div class="features-grid">
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🧠</div>
+          <h3 class="feature-title-large">機械学習フロアマップ</h3>
+          <p class="feature-description-large">
+            施設の構造を自動学習し、常に最新のレイアウト情報を維持します。
           </p>
         </div>
         
-        <div class="tech-card">
-          <div class="tech-icon">👁️</div>
-          <h3 class="tech-title">画像認識</h3>
-          <p class="tech-description">
-            AIによる看板・案内板認識で、入口が複数ある建物でも迷わない経路復元
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">📶</div>
+          <h3 class="feature-title-large">リアルタイム状況把握</h3>
+          <p class="feature-description-large">
+            IoTセンサーと連携してトイレの使用状況をリアルタイムで把握します。
           </p>
         </div>
         
-        <div class="tech-card">
-          <div class="tech-icon">📶</div>
-          <h3 class="tech-title">リアルタイム処理</h3>
-          <p class="tech-description">
-            高速アルゴリズムで遅延なく案内情報を更新し、スムーズな誘導を実現
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🔒</div>
+          <h3 class="feature-title-large">プライバシー保護</h3>
+          <p class="feature-description-large">
+            位置情報は端末内で処理し、個人データを外部送信しない設計です。
           </p>
         </div>
         
-        <div class="tech-card">
-          <div class="tech-icon">🔐</div>
-          <h3 class="tech-title">プライバシー保護</h3>
-          <p class="tech-description">
-            位置情報は案内時のみ一時利用し、個人データの安全性を最優先に設計
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🌐</div>
+          <h3 class="feature-title-large">クラウド連携</h3>
+          <p class="feature-description-large">
+            全国の施設情報をクラウドで管理し、常に最新情報を提供します。
           </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Benefits Section -->
-  <section class="benefits-section">
-    <div class="container-fluid">
-      <div class="section-header">
-        <h2 class="section-title">誰のためのアプリ？</h2>
-        <p class="section-subtitle">ToiRunが支援するシーン</p>
-      </div>
-      
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-icon">👨‍👩‍👧‍👦</div>
-          <h3 class="benefit-title">子ども連れの家族</h3>
-          <p class="benefit-description">
-            急な「トイレ！」にも慌てずに、最短ルートで案内
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">👴</div>
-          <h3 class="benefit-title">高齢者</h3>
-          <p class="benefit-description">
-            大きな文字と音声案内で、安心してご利用いただけます
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">🌍</div>
-          <h3 class="benefit-title">訪日外国人</h3>
-          <p class="benefit-description">
-            多言語対応で、言語の壁を感じることなく利用可能
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">♿</div>
-          <h3 class="benefit-title">身体的配慮が必要な方</h3>
-          <p class="benefit-description">
-            バリアフリートイレの場所も含めて適切に案内
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta-section-app">
-    <div class="container-fluid">
-      <div class="cta-content-app">
-        <h2 class="cta-title-app">緊急時も安心<br>誰にでもやさしいナビ</h2>
-        <p class="cta-subtitle-app">
-          ToiRunで、トイレ探しのストレスから解放されます。<br>
-          今すぐダウンロードして、安心の外出体験を始めましょう。
-        </p>
-        <div class="download-buttons">
-          <a href="#" class="download-button">
-            <span>📱</span>
-            App Store
-          </a>
-          <a href="#" class="download-button">
-            <span>🤖</span>
-            Google Play
-          </a>
         </div>
       </div>
     </div>

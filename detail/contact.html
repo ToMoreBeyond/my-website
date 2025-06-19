@@ -85,8 +85,8 @@
   }
   </script>
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <!-- 8-bit Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
   <style>
     * {
@@ -96,158 +96,139 @@
     }
     
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
+      font-family: 'Share Tech Mono', monospace;
+      background: #0f172a;
+      color: #ffffff;
       overflow-x: hidden;
       min-height: 100vh;
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
     }
     
-    /* 統一ヘッダーデザイン */
-    .detail-header {
-      position: fixed;
+    /* Navigation */
+    .navbar {
+      background: #0f172a;
+      border-bottom: 6px dashed #22c55e;
+      padding: 16px 0;
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
-      height: 80px;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 100;
+    }
+    
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       padding: 0 24px;
     }
     
-    .page-breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: #666;
-      font-weight: 500;
-    }
-    
-    .brand-name {
-      color: #1a1a1a;
-      font-weight: 600;
-    }
-    
-    .separator {
-      color: #ccc;
-    }
-    
-    .page-name {
-      color: #06B6D4;
-      font-weight: 600;
-    }
-    
-    /* 統一ナビゲーションデザイン */
-    .back-button {
-      position: relative;
-      top: 0;
-      left: 0;
-      z-index: auto;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50px;
-      padding: 14px 24px;
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #22c55e;
       text-decoration: none;
-      color: #1a1a1a;
-      font-weight: 600;
-      font-size: 14px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      text-transform: uppercase;
+    }
+    
+    .navbar-links {
       display: flex;
+      gap: 24px;
       align-items: center;
-      gap: 10px;
-      min-width: 140px;
-      letter-spacing: -0.2px;
     }
     
-    .back-button:hover {
-      transform: translateY(-4px) scale(1.02);
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
-      border-color: rgba(255, 255, 255, 0.4);
+    .navbar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
     }
     
-    .back-button:active {
-      transform: translateY(-2px) scale(1.01);
-      transition: all 0.15s ease;
+    .navbar-link:hover {
+      color: #22c55e;
     }
     
-    /* ヒーローセクション */
-    .hero {
+    .btn-primary {
+      background: #22c55e;
+      color: #0f172a;
+      padding: 12px 24px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
+      font-weight: 400;
+      text-transform: uppercase;
+      transition: all 0.1s ease-out;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    }
+    
+    /* Hero Section */
+    .app-hero {
       min-height: 80vh;
       display: flex;
       align-items: center;
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
-      padding: calc(80px + 60px) 0 40px;
+      background: #0f172a;
+      padding: 80px 0 32px;
     }
     
-    .hero-content {
+    .app-hero-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 64px;
+      align-items: center;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 24px;
       text-align: center;
     }
     
-    .hero-icon {
-      width: 120px;
-      height: 120px;
-      background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
-      border-radius: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      color: white;
-      margin: 0 auto 32px;
-      box-shadow: 0 20px 60px rgba(6, 182, 212, 0.2);
+    .app-hero-text {
+      padding: 0;
     }
     
-    .hero-title {
-      font-family: 'Playfair Display', serif;
+    .app-title-large {
+      font-family: 'Orbitron', monospace;
       font-size: clamp(3rem, 8vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, #1a1a1a 0%, #06B6D4 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 16px;
+      color: #22c55e;
+      text-shadow: 2px 2px 0px #0f172a, 4px 4px 0px #1e293b;
+      text-transform: uppercase;
     }
     
-    .hero-subtitle {
+    .app-tagline {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
-      font-weight: 600;
-      color: #404040;
-      margin-bottom: 32px;
+      font-weight: 400;
+      color: #94a3b8;
+      margin-bottom: 24px;
       line-height: 1.4;
+      text-transform: uppercase;
     }
     
-    .hero-description {
-      font-size: 1.125rem;
-      color: #525252;
+    .app-description-hero {
+      font-size: 18px;
+      color: #ffffff;
       line-height: 1.7;
-      max-width: 800px;
-      margin: 0 auto;
+      margin-bottom: 32px;
     }
     
-    /* セクション共通 */
-    .section {
-      padding: 80px 0;
-    }
-    
+    /* Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 24px;
+    }
+    
+    /* Section */
+    .section {
+      padding: 80px 0;
     }
     
     .section-header {
@@ -256,74 +237,78 @@
     }
     
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', monospace;
       font-size: 2.5rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #22c55e;
       margin-bottom: 16px;
+      text-transform: uppercase;
     }
     
     .section-subtitle {
-      font-size: 1.125rem;
-      color: #666666;
+      font-size: 18px;
+      color: #94a3b8;
       line-height: 1.6;
     }
     
-    /* コンタクト方法グリッド */
-    .contact-methods {
+    /* Features Section */
+    .features-section {
+      padding: 80px 0;
+      background: #1e293b;
+    }
+    
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 32px;
-      margin-bottom: 80px;
+      margin-top: 48px;
     }
     
-    .contact-card {
-      background: white;
-      border-radius: 24px;
+    .feature-card-detailed {
+      background: #0f172a;
+      border: 6px dashed #3b82f6;
       padding: 32px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      border: 1px solid #f0f0f0;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.3s ease-out;
+      position: relative;
       text-align: center;
     }
     
-    .contact-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      border-color: #06B6D4;
+    .feature-card-detailed:hover {
+      transform: translateY(-2px);
+      border-color: #22c55e;
     }
     
-    .contact-icon {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
-      border-radius: 16px;
+    .feature-icon-large {
+      width: 80px;
+      height: 80px;
+      background: #22c55e;
+      border: 2px solid #1e293b;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      color: white;
+      font-size: 2.5rem;
       margin: 0 auto 24px;
+      color: #0f172a;
     }
     
-    .contact-title {
-      font-size: 1.25rem;
+    .feature-title-large {
+      font-size: 24px;
       font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 12px;
+      color: #ffffff;
+      margin-bottom: 16px;
+      text-transform: uppercase;
     }
     
-    .contact-description {
-      font-size: 0.9375rem;
-      color: #666666;
+    .feature-description-large {
+      color: #94a3b8;
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     
     .contact-info {
       font-size: 1rem;
       font-weight: 500;
-      color: #06B6D4;
+      color: #22c55e;
       margin-bottom: 20px;
     }
     
@@ -331,29 +316,28 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
-      color: white;
-      border: none;
-      border-radius: 50px;
+      background: #22c55e;
+      color: #0f172a;
+      border: 2px solid #22c55e;
       padding: 12px 24px;
       font-size: 0.875rem;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
     }
     
     .contact-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
     }
     
-    /* お問い合わせフォーム */
+    /* Form Section */
     .contact-form-section {
-      background: white;
-      border-radius: 32px;
+      background: #0f172a;
+      border: 6px dashed #22c55e;
       padding: 48px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      border: 1px solid #f0f0f0;
+      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
     }
     
     .form-header {
@@ -362,16 +346,17 @@
     }
     
     .form-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', monospace;
       font-size: 2rem;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #22c55e;
       margin-bottom: 16px;
+      text-transform: uppercase;
     }
     
     .form-description {
       font-size: 1.125rem;
-      color: #666666;
+      color: #94a3b8;
       line-height: 1.6;
     }
     
@@ -388,8 +373,9 @@
       display: block;
       font-size: 0.875rem;
       font-weight: 600;
-      color: #333;
+      color: #22c55e;
       margin-bottom: 8px;
+      text-transform: uppercase;
     }
     
     .form-input,
@@ -397,20 +383,20 @@
     .form-textarea {
       width: 100%;
       padding: 16px 20px;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
+      border: 2px solid #1e293b;
+      background: #1e293b;
+      color: #ffffff;
       font-size: 1rem;
-      font-family: inherit;
+      font-family: 'Share Tech Mono', monospace;
       outline: none;
-      transition: all 0.3s ease;
-      background: white;
+      transition: all 0.1s ease;
     }
     
     .form-input:focus,
     .form-select:focus,
     .form-textarea:focus {
-      border-color: #06B6D4;
-      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+      border-color: #22c55e;
+      background: #0f172a;
     }
     
     .form-textarea {
@@ -426,24 +412,25 @@
     
     .form-submit {
       width: 100%;
-      background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
+      background: #22c55e;
+      color: #0f172a;
+      border: 2px solid #22c55e;
       padding: 18px 32px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.1s ease;
       margin-top: 8px;
+      text-transform: uppercase;
+      font-family: 'Share Tech Mono', monospace;
     }
     
     .form-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
     }
     
-    /* 会社情報 */
+    /* Company Info */
     .company-info {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -451,23 +438,24 @@
     }
     
     .info-card {
-      background: white;
-      border-radius: 20px;
+      background: #1e293b;
+      border: 4px solid #22c55e;
       padding: 28px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      border: 1px solid #f0f0f0;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.1s ease-out;
+      position: relative;
+      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
     }
     
     .info-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+      border-color: #3b82f6;
+      box-shadow: 0 6px 0px #0a0f1a, 0 8px 16px rgba(59, 130, 246, 0.3);
     }
     
     .info-label {
       font-size: 0.875rem;
-      color: #06B6D4;
-      font-weight: 600;
+      color: #22c55e;
+      font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 8px;
@@ -475,54 +463,26 @@
     
     .info-value {
       font-size: 1rem;
-      color: #1a1a1a;
-      font-weight: 500;
+      color: #ffffff;
+      font-weight: 400;
       line-height: 1.6;
     }
     
-    /* レスポンシブ */
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
-      .back-button {
-        top: 20px;
-        left: 20px;
-        padding: 12px 20px;
-        font-size: 13px;
-        min-width: 120px;
-      }
-      
-      .hero {
-        padding: calc(60px + 30px) 0 30px;
-      }
-      
-      .hero-icon {
-        width: 80px;
-        height: 80px;
-        font-size: 32px;
-        border-radius: 20px;
-      }
-      
-      .container {
-        padding: 0 20px;
-      }
-      
-      .section {
-        padding: 60px 0;
-      }
-      
-      .contact-methods {
+      .app-hero-content {
         grid-template-columns: 1fr;
-        gap: 20px;
-        margin-bottom: 60px;
+        gap: 32px;
+        text-align: center;
       }
       
-      .contact-card {
-        padding: 24px;
-        border-radius: 20px;
+      .app-hero-text {
+        padding-right: 0;
       }
       
-      .contact-form-section {
-        padding: 32px 24px;
-        border-radius: 24px;
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
       }
       
       .form-row {
@@ -534,108 +494,99 @@
         grid-template-columns: 1fr;
         gap: 20px;
       }
-      
-      .info-card {
-        padding: 20px;
-        border-radius: 16px;
-      }
     }
   </style>
 </head>
 <body>
-  <!-- 統一ヘッダー -->
-  <header class="detail-header">
-    <a href="../index.html?level=persist&from=detail" class="back-button">
-      ← ホームに戻る
-    </a>
-    <div class="page-breadcrumb">
-      <span class="brand-name">ToMoreBeyond</span>
-      <span class="separator">/</span>
-      <span class="page-name">Contact</span>
-    </div>
-  </header>
-
-  <main>
-    <!-- ヒーローセクション -->
-    <section class="hero">
-      <div class="hero-content">
-        <div class="hero-icon">📧</div>
-        <h1 class="hero-title">Contact</h1>
-        <p class="hero-subtitle">一緒に新しい道を歩みませんか</p>
-        <p class="hero-description">
-          ビジネスパートナーシップ、技術相談、採用に関するご相談など、
-          どんな内容でもお気軽にお問い合わせください。
-          ToMoreBeyondチーム一同、あなたとの出会いを楽しみにしています。
-        </p>
+  <!-- 8-bit Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html?level=persist&from=detail" class="navbar-brand">ToMoreBeyond</a>
+      <div class="navbar-links">
+        <a href="../index.html#apps" class="navbar-link">アプリ</a>
+        <a href="../index.html#about" class="navbar-link">会社概要</a>
+        <a href="contact.html" class="btn-primary">お問い合わせ</a>
       </div>
-    </section>
+    </div>
+  </nav>
 
-    <!-- お問い合わせ方法セクション -->
-    <section class="section">
-      <div class="container">
-        <header class="section-header">
-          <h2 class="section-title">お問い合わせ方法</h2>
-          <p class="section-subtitle">用途に応じて最適な方法をお選びください</p>
-        </header>
-        
-        <div class="contact-methods">
-          <article class="contact-card">
-            <div class="contact-icon">💼</div>
-            <h3 class="contact-title">ビジネス相談</h3>
-            <p class="contact-description">
-              パートナーシップ、投資、事業提携に関するご相談は
-              こちらからお問い合わせください。
-            </p>
-            <div class="contact-info">business@tomorebeyond.com</div>
-            <a href="mailto:business@tomorebeyond.com" class="contact-button">
-              メールで相談 ↗
-            </a>
-          </article>
-          
-          <article class="contact-card">
-            <div class="contact-icon">🔧</div>
-            <h3 class="contact-title">技術相談</h3>
-            <p class="contact-description">
-              技術的な質問、開発相談、システム構築に関する
-              ご相談はこちらからどうぞ。
-            </p>
-            <div class="contact-info">tech@tomorebeyond.com</div>
-            <a href="mailto:tech@tomorebeyond.com" class="contact-button">
-              技術相談する ↗
-            </a>
-          </article>
-          
-          <article class="contact-card">
-            <div class="contact-icon">👥</div>
-            <h3 class="contact-title">採用・求人</h3>
-            <p class="contact-description">
-              エンジニア、デザイナー、ビジネス職など
-              チーム参加に興味のある方はこちら。
-            </p>
-            <div class="contact-info">careers@tomorebeyond.com</div>
-            <a href="mailto:careers@tomorebeyond.com" class="contact-button">
-              採用について ↗
-            </a>
-          </article>
-          
-          <article class="contact-card">
-            <div class="contact-icon">📝</div>
-            <h3 class="contact-title">メディア・取材</h3>
-            <p class="contact-description">
-              取材依頼、プレスリリース、メディア掲載に
-              関するお問い合わせはこちら。
-            </p>
-            <div class="contact-info">media@tomorebeyond.com</div>
-            <a href="mailto:media@tomorebeyond.com" class="contact-button">
-              取材依頼 ↗
-            </a>
-          </article>
+  <!-- App Hero Section -->
+  <section class="app-hero">
+    <div class="container">
+      <div class="app-hero-content">
+        <div class="app-hero-text">
+          <h1 class="app-title-large">Contact</h1>
+          <p class="app-tagline">一緒に新しい道を歩みませんか</p>
+          <p class="app-description-hero">
+            ビジネスパートナーシップ、技術相談、採用に関するご相談など、どんな内容でもお気軽にお問い合わせください。ToMoreBeyondチーム一同、あなたとの出会いを楽しみにしています。
+          </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  <!-- お問い合わせフォームセクション -->
-  <section class="section" style="background: transparent;">
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">お問い合わせ方法</h2>
+        <p class="section-subtitle">用途に応じて最適な方法をお選びください</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">[BIZ]</div>
+          <h3 class="feature-title-large">ビジネス相談</h3>
+          <p class="feature-description-large">
+            パートナーシップ、投資、事業提携に関するご相談はこちらからお問い合わせください。
+          </p>
+          <div class="contact-info">business@tomorebeyond.com</div>
+          <a href="mailto:business@tomorebeyond.com" class="contact-button">
+            メールで相談
+          </a>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">[TECH]</div>
+          <h3 class="feature-title-large">技術相談</h3>
+          <p class="feature-description-large">
+            技術的な質問、開発相談、システム構築に関するご相談はこちらからどうぞ。
+          </p>
+          <div class="contact-info">tech@tomorebeyond.com</div>
+          <a href="mailto:tech@tomorebeyond.com" class="contact-button">
+            技術相談する
+          </a>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">[TEAM]</div>
+          <h3 class="feature-title-large">採用・求人</h3>
+          <p class="feature-description-large">
+            エンジニア、デザイナー、ビジネス職などチーム参加に興味のある方はこちら。
+          </p>
+          <div class="contact-info">careers@tomorebeyond.com</div>
+          <a href="mailto:careers@tomorebeyond.com" class="contact-button">
+            採用について
+          </a>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">[MEDIA]</div>
+          <h3 class="feature-title-large">メディア・取材</h3>
+          <p class="feature-description-large">
+            取材依頼、プレスリリース、メディア掲載に関するお問い合わせはこちら。
+          </p>
+          <div class="contact-info">media@tomorebeyond.com</div>
+          <a href="mailto:media@tomorebeyond.com" class="contact-button">
+            取材依頼
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="section">
     <div class="container">
       <div class="contact-form-section">
         <div class="form-header">
@@ -693,47 +644,92 @@
     </div>
   </section>
 
-    <!-- 会社情報セクション -->
-    <section class="section" style="background: white;">
-      <div class="container">
-        <header class="section-header">
-          <h2 class="section-title">会社情報</h2>
-          <p class="section-subtitle">ToMoreBeyondの基本情報</p>
-        </header>
+  <!-- Company Info Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">会社情報</h2>
+        <p class="section-subtitle">ToMoreBeyondの基本情報</p>
+      </div>
+      
+      <div class="company-info">
+        <div class="info-card">
+          <div class="info-label">会社名</div>
+          <div class="info-value">株式会社 ToMoreBeyond</div>
+        </div>
         
-        <div class="company-info">
-          <div class="info-card">
-            <div class="info-label">会社名</div>
-            <div class="info-value">株式会社 ToMoreBeyond</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">所在地</div>
-            <div class="info-value">東京都渋谷区<br>（リモートワーク中心）</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">設立</div>
-            <div class="info-value">2025年4月</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">事業内容</div>
-            <div class="info-value">モバイルアプリ開発<br>位置情報AI技術<br>コンシューマSaaS</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">代表者</div>
-            <div class="info-value">代表取締役CEO<br>山田 純大</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">営業時間</div>
-            <div class="info-value">平日 10:00 - 18:00<br>（日本時間）</div>
-          </div>
+        <div class="info-card">
+          <div class="info-label">所在地</div>
+          <div class="info-value">東京都渋谷区<br>（リモートワーク中心）</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">設立</div>
+          <div class="info-value">2025年4月</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">事業内容</div>
+          <div class="info-value">モバイルアプリ開発<br>位置情報AI技術<br>コンシューマSaaS</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">代表者</div>
+          <div class="info-value">代表取締役CEO<br>山田 純大</div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-label">営業時間</div>
+          <div class="info-value">平日 10:00 - 18:00<br>（日本時間）</div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="/js/components/navbar.js"></script>
+  <script src="/js/components/smooth-scroll.js"></script>
+  
+  <script>
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add smooth reveal on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+      };
+      
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Apply to all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealObserver.observe(section);
+      });
+      
+      // Smooth scroll for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

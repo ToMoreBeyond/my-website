@@ -3,75 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meet in the Middle - みんなで集まる最適な場所を提案 | ToMoreBeyond</title>
-  <meta name="description" content="Meet in the Middleは最大10名の出発地から公平な中間点を自動計算。カフェ・居酒屋・コワーキングスペースまで目的に合わせて同時提案する、新時代の待ち合わせアプリ。">
-  <meta name="keywords" content="Meet in the Middle, 待ち合わせ, 中間点, 最適化, AI提案, 公平性, ToMoreBeyond">
+  <title>Meet in the Middle（中点）- 最適な集合地点アプリ | ToMoreBeyond</title>
+  <meta name="description" content="Meet in the Middleは、複数人の中間地点を自動計算し、最適な待ち合わせ場所を提案するアプリです。8ビット風デザインで友達との集合場所を楽しく決められます。">
+  <meta name="keywords" content="Meet in the Middle, 中間地点, 待ち合わせ, 集合地点, ToMoreBeyond, 8ビット">
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/design-system.css">
-  <link rel="stylesheet" href="/css/modern-design.css">
-  <link rel="stylesheet" href="/css/components.css">
+  <!-- 8-bit Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
   <style>
-    /* App-specific enhanced styles */
-    body {
-      background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f8f9fa 100%);
-      overflow-x: hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
-    /* Enhanced Hero Section */
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: #0f172a;
+      color: #ffffff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      image-rendering: pixelated;
+      -webkit-font-smoothing: none;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background: #0f172a;
+      border-bottom: 6px dashed #22c55e;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+    }
+    
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #22c55e;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    
+    .navbar-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    
+    .navbar-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.1s ease-out;
+      text-transform: uppercase;
+    }
+    
+    .navbar-link:hover {
+      color: #22c55e;
+    }
+    
+    .btn-primary {
+      background: #22c55e;
+      color: #0f172a;
+      padding: 12px 24px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
+      font-weight: 400;
+      text-transform: uppercase;
+      transition: all 0.1s ease-out;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    }
+    
+    /* Hero Section */
     .app-hero {
       min-height: 80vh;
       display: flex;
       align-items: center;
       position: relative;
-      background: 
-        linear-gradient(135deg, rgba(255, 179, 0, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
-      padding: calc(var(--space-20) + 80px) 0 var(--space-20);
+      background: #0f172a;
+      padding: 80px 0 32px;
     }
     
     .app-hero-content {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-16);
+      gap: 64px;
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 24px;
     }
     
     .app-hero-text {
-      padding-right: var(--space-8);
+      padding-right: 32px;
     }
     
     .app-title-large {
-      font-family: var(--font-display);
+      font-family: 'Orbitron', monospace;
       font-size: clamp(3rem, 8vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
-      margin-bottom: var(--space-4);
-      background: linear-gradient(135deg, #1a1a1a 0%, #FFB300 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 16px;
+      color: #22c55e;
+      text-shadow: 2px 2px 0px #0f172a, 4px 4px 0px #1e293b;
+      text-transform: uppercase;
     }
     
     .app-tagline {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
-      font-weight: 600;
-      color: var(--neutral-700);
-      margin-bottom: var(--space-6);
+      font-weight: 400;
+      color: #94a3b8;
+      margin-bottom: 24px;
       line-height: 1.4;
+      text-transform: uppercase;
     }
     
     .app-description-hero {
-      font-size: var(--text-lg);
-      color: var(--neutral-600);
+      font-size: 18px;
+      color: #ffffff;
       line-height: 1.7;
-      margin-bottom: var(--space-8);
+      margin-bottom: 32px;
     }
     
     .app-hero-visual {
@@ -84,101 +150,110 @@
     .app-mockup {
       width: 300px;
       height: 600px;
-      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-      border-radius: 2rem;
-      box-shadow: var(--shadow-large);
+      background: #1e293b;
+      border: 6px dashed #22c55e;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 4rem;
       position: relative;
       overflow: hidden;
-      border: 8px solid #1f2937;
     }
     
     .mockup-screen {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #FFB300 0%, #FF9E00 100%);
-      border-radius: 1.2rem;
+      background: #0f172a;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: #22c55e;
       font-size: 3rem;
+    }
+    
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* Section */
+    .section {
+      padding: 80px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #22c55e;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    
+    .section-subtitle {
+      font-size: 18px;
+      color: #94a3b8;
+      line-height: 1.6;
     }
     
     /* Features Section */
     .features-section {
-      padding: var(--space-20) 0;
-      background: white;
+      padding: 80px 0;
+      background: #1e293b;
     }
     
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-8);
-      margin-top: var(--space-12);
+      gap: 32px;
+      margin-top: 48px;
     }
     
     .feature-card-detailed {
-      background: white;
-      border-radius: var(--radius-2xl);
-      padding: var(--space-8);
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
+      background: #0f172a;
+      border: 6px dashed #3b82f6;
+      padding: 32px;
+      transition: all 0.3s ease-out;
       position: relative;
-      overflow: hidden;
-    }
-    
-    .feature-card-detailed::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #FFB300, #22C55E);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform var(--transition-base);
     }
     
     .feature-card-detailed:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-large);
-    }
-    
-    .feature-card-detailed:hover::before {
-      transform: scaleX(1);
+      transform: translateY(-2px);
+      border-color: #22c55e;
     }
     
     .feature-icon-large {
       width: 80px;
       height: 80px;
-      background: linear-gradient(135deg, #FFB300, #22C55E);
-      border-radius: var(--radius-2xl);
+      background: #22c55e;
+      border: 2px solid #1e293b;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 2.5rem;
-      margin-bottom: var(--space-6);
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 24px;
+      color: #0f172a;
     }
     
     .feature-title-large {
-      font-size: var(--text-2xl);
+      font-size: 24px;
       font-weight: 700;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-4);
+      color: #ffffff;
+      margin-bottom: 16px;
+      text-transform: uppercase;
     }
     
     .feature-description-large {
-      color: var(--neutral-600);
+      color: #94a3b8;
       line-height: 1.6;
-      margin-bottom: var(--space-4);
+      margin-bottom: 16px;
     }
     
     .feature-benefits {
@@ -188,175 +263,25 @@
     }
     
     .feature-benefits li {
-      padding: var(--space-2) 0;
-      padding-left: var(--space-6);
+      padding: 8px 0;
+      padding-left: 24px;
       position: relative;
-      color: var(--neutral-600);
+      color: #94a3b8;
     }
     
     .feature-benefits li::before {
-      content: '✓';
+      content: '[#]';
       position: absolute;
       left: 0;
-      color: #FFB300;
+      color: #22c55e;
       font-weight: bold;
-    }
-    
-    /* Technology Section */
-    .tech-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    }
-    
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-12);
-    }
-    
-    .tech-card {
-      background: white;
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
-    }
-    
-    .tech-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-medium);
-    }
-    
-    .tech-icon {
-      font-size: 3rem;
-      margin-bottom: var(--space-4);
-    }
-    
-    .tech-title {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-2);
-    }
-    
-    .tech-description {
-      font-size: var(--text-sm);
-      color: var(--neutral-600);
-      line-height: 1.5;
-    }
-    
-    /* Benefits Section */
-    .benefits-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-    }
-    
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-12);
-    }
-    
-    .benefit-card {
-      background: white;
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
-    }
-    
-    .benefit-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-medium);
-    }
-    
-    .benefit-icon {
-      font-size: 3rem;
-      margin-bottom: var(--space-4);
-    }
-    
-    .benefit-title {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-2);
-    }
-    
-    .benefit-description {
-      font-size: var(--text-sm);
-      color: var(--neutral-600);
-      line-height: 1.5;
-    }
-    
-    /* CTA Section */
-    .cta-section-app {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
-      color: white;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .cta-content-app {
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .cta-title-app {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      margin-bottom: var(--space-6);
-    }
-    
-    .cta-subtitle-app {
-      font-size: var(--text-lg);
-      opacity: 0.9;
-      margin-bottom: var(--space-8);
-      line-height: 1.6;
-    }
-    
-    .download-buttons {
-      display: flex;
-      gap: var(--space-4);
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
-    .download-button {
-      background: #FFB300;
-      color: white;
-      padding: var(--space-4) var(--space-8);
-      border-radius: var(--radius-lg);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all var(--transition-base);
-      box-shadow: var(--shadow-medium);
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-    }
-    
-    .download-button:hover {
-      background: #FF9E00;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-large);
     }
     
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .app-hero-content {
         grid-template-columns: 1fr;
-        gap: var(--space-8);
+        gap: 32px;
         text-align: center;
       }
       
@@ -371,70 +296,48 @@
       
       .features-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-6);
-      }
-      
-      .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .benefits-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .download-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .tech-grid {
-        grid-template-columns: 1fr;
+        gap: 24px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Modern Navigation -->
-  <nav class="navbar-modern">
-    <div class="container-fluid">
-      <div class="navbar-content">
-        <a href="/" class="navbar-brand-modern">ToMoreBeyond</a>
-        <div class="navbar-links-modern">
-          <a href="/#apps" class="navbar-link-modern">アプリ</a>
-          <a href="/#about" class="navbar-link-modern">会社概要</a>
-          <a href="/pages/contact.html" class="btn-modern btn-primary-modern">お問い合わせ</a>
-        </div>
+  <!-- 8-bit Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html?level=persist&from=detail" class="navbar-brand">ToMoreBeyond</a>
+      <div class="navbar-links">
+        <a href="../index.html#apps" class="navbar-link">アプリ</a>
+        <a href="../index.html#about" class="navbar-link">会社概要</a>
+        <a href="../detail/contact.html" class="btn-primary">お問い合わせ</a>
       </div>
     </div>
   </nav>
 
   <!-- App Hero Section -->
   <section class="app-hero">
-    <div class="container-fluid">
+    <div class="container">
       <div class="app-hero-content">
         <div class="app-hero-text">
           <h1 class="app-title-large">Meet in the Middle</h1>
-          <p class="app-tagline">みんなで集まる最適な場所を提案</p>
+          <p class="app-tagline">最適な集合地点を見つけよう</p>
           <p class="app-description-hero">
-            最大10名の出発地から公平な中間点を自動計算。カフェ・居酒屋・コワーキングスペースまで
-            目的に合わせて同時提案する、新時代の待ち合わせアプリです。
+            友達との待ち合わせ場所に迷ったことはありませんか？Meet in the Middleは複数人の位置から最適な中間地点を自動計算し、みんなが集まりやすい場所を提案します。8ビット風デザインで楽しく使えるアプリです。
           </p>
           <div class="download-buttons">
             <a href="#" class="download-button">
-              <span>📱</span>
-              App Store
+              <span>[APP]</span>
+              COMING SOON
             </a>
             <a href="#" class="download-button">
-              <span>🤖</span>
-              Google Play
+              <span>[WEB]</span>
+              BETA VERSION
             </a>
           </div>
         </div>
         <div class="app-hero-visual">
           <div class="app-mockup">
-            <div class="mockup-screen">📍</div>
+            <div class="mockup-screen">[MAP]</div>
           </div>
         </div>
       </div>
@@ -443,174 +346,63 @@
 
   <!-- Features Section -->
   <section class="features-section">
-    <div class="container-fluid">
+    <div class="container">
       <div class="section-header">
         <h2 class="section-title">主な機能</h2>
-        <p class="section-subtitle">Meet in the Middleが公平な待ち合わせを実現する理由</p>
+        <p class="section-subtitle">Meet in the Middleがあなたの集合を楽にする理由</p>
       </div>
       
       <div class="features-grid">
         <div class="feature-card-detailed">
           <div class="feature-icon-large">📍</div>
-          <h3 class="feature-title-large">リアルタイム中間点計算</h3>
+          <h3 class="feature-title-large">自動中間地点計算</h3>
           <p class="feature-description-large">
-            全員の出発地を入力するだけで、最適な集合場所を瞬時に算出。地図上で直感的に確認できます。
+            複数人の位置情報から数学的に最適な中間地点を自動計算します。
           </p>
           <ul class="feature-benefits">
-            <li>最大10名まで同時計算</li>
-            <li>公平性を重視した重み付け</li>
+            <li>最大10人まで同時計算</li>
             <li>リアルタイム位置更新</li>
+            <li>交通手段を考慮した計算</li>
           </ul>
         </div>
         
         <div class="feature-card-detailed">
-          <div class="feature-icon-large">🏪</div>
-          <h3 class="feature-title-large">おすすめスポット提案</h3>
+          <div class="feature-icon-large">🗺️</div>
+          <h3 class="feature-title-large">スマート提案機能</h3>
           <p class="feature-description-large">
-            カフェ・レストラン・コワーキングスペースなど、用途に合わせたスポットを自動でピックアップ。
+            中間地点周辺のカフェ、レストラン、公園などの最適な待ち合わせ場所を提案。
           </p>
           <ul class="feature-benefits">
-            <li>GPTベクトル検索で精度向上</li>
-            <li>目的別カテゴリ対応</li>
-            <li>評価・レビュー情報付き</li>
+            <li>カテゴリ別スポット検索</li>
+            <li>ユーザーレビュー連携</li>
+            <li>営業時間・混雑状況表示</li>
           </ul>
         </div>
         
         <div class="feature-card-detailed">
-          <div class="feature-icon-large">🔗</div>
-          <h3 class="feature-title-large">リンクで簡単シェア</h3>
+          <div class="feature-icon-large">📱</div>
+          <h3 class="feature-title-large">グループ共有</h3>
           <p class="feature-description-large">
-            計算結果はURLでシェア可能。誰でもワンタップで集合場所を確認できます。
+            決定した集合地点をグループメンバーと簡単共有。到着時間も自動通知。
           </p>
           <ul class="feature-benefits">
-            <li>一意URLの自動生成</li>
-            <li>SNS・メッセージアプリ対応</li>
-            <li>QRコードでの共有</li>
+            <li>リンク共有機能</li>
+            <li>到着予定時間表示</li>
+            <li>遅刻アラート機能</li>
           </ul>
         </div>
         
         <div class="feature-card-detailed">
-          <div class="feature-icon-large">🔒</div>
-          <h3 class="feature-title-large">プライバシー配慮</h3>
+          <div class="feature-icon-large">⚡</div>
+          <h3 class="feature-title-large">高速処理</h3>
           <p class="feature-description-large">
-            位置情報は暗号化して一時的に利用。個人情報の安全を最優先に設計しています。
+            独自のアルゴリズムにより、複雑な計算も瞬時に完了します。
           </p>
           <ul class="feature-benefits">
-            <li>一時的な位置情報利用</li>
-            <li>エンドツーエンド暗号化</li>
-            <li>データ自動削除機能</li>
+            <li>0.5秒以内の高速計算</li>
+            <li>オフライン対応</li>
+            <li>省電力設計</li>
           </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Technology Section -->
-  <section class="tech-section">
-    <div class="container-fluid">
-      <div class="section-header">
-        <h2 class="section-title">技術的特徴</h2>
-        <p class="section-subtitle">最先端アルゴリズムで公平性と利便性を両立</p>
-      </div>
-      
-      <div class="tech-grid">
-        <div class="tech-card">
-          <div class="tech-icon">🎯</div>
-          <h3 class="tech-title">グラフ探索（Dijkstra）</h3>
-          <p class="tech-description">
-            最短経路アルゴリズムで全員にとって最適な集合駅を算出
-          </p>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">🧠</div>
-          <h3 class="tech-title">GPTベクトル検索</h3>
-          <p class="tech-description">
-            目的に合う店舗をAIが理解し、最適なスポットを提案
-          </p>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">⚖️</div>
-          <h3 class="tech-title">公平性重み付け</h3>
-          <p class="tech-description">
-            移動時間・費用・乗り換え回数を総合的に評価し最適化
-          </p>
-        </div>
-        
-        <div class="tech-card">
-          <div class="tech-icon">🔐</div>
-          <h3 class="tech-title">セキュリティ設計</h3>
-          <p class="tech-description">
-            位置情報は計算時のみ利用し、完了後は自動削除
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Benefits Section -->
-  <section class="benefits-section">
-    <div class="container-fluid">
-      <div class="section-header">
-        <h2 class="section-title">誰のためのアプリ？</h2>
-        <p class="section-subtitle">Meet in the Middleが支援するシーン</p>
-      </div>
-      
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-icon">👥</div>
-          <h3 class="benefit-title">友人グループ</h3>
-          <p class="benefit-description">
-            みんなが納得できる公平な待ち合わせ場所を瞬時に決定
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">💼</div>
-          <h3 class="benefit-title">ハイブリッド勤務チーム</h3>
-          <p class="benefit-description">
-            地方×都市メンバーの最適な集合場所を効率的に計算
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">🎉</div>
-          <h3 class="benefit-title">イベント企画者</h3>
-          <p class="benefit-description">
-            参加者全員が集まりやすい会場選びをサポート
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">🏠</div>
-          <h3 class="benefit-title">多拠点生活者</h3>
-          <p class="benefit-description">
-            複数の拠点を持つ人同士の効率的な待ち合わせを実現
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta-section-app">
-    <div class="container-fluid">
-      <div class="cta-content-app">
-        <h2 class="cta-title-app">公平で便利な<br>待ち合わせ体験</h2>
-        <p class="cta-subtitle-app">
-          Meet in the Middleで、みんなが納得できる集合場所を見つけましょう。<br>
-          今すぐダウンロードして、新しい待ち合わせ体験を始めてください。
-        </p>
-        <div class="download-buttons">
-          <a href="#" class="download-button">
-            <span>📱</span>
-            App Store
-          </a>
-          <a href="#" class="download-button">
-            <span>🤖</span>
-            Google Play
-          </a>
         </div>
       </div>
     </div>
