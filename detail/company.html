@@ -95,6 +95,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
   
   <style>
+    /* 8ビット風統一デザインシステム */
     * {
       margin: 0;
       padding: 0;
@@ -109,6 +110,7 @@
       min-height: 100vh;
       image-rendering: pixelated;
       -webkit-font-smoothing: none;
+      text-rendering: geometricPrecision;
     }
     
     /* 統一ヘッダーデザイン */
@@ -119,11 +121,12 @@
       right: 0;
       z-index: 1000;
       background: #0f172a;
-      border-bottom: 6px dashed #22c55e;
+      border-bottom: 4px solid #22c55e;
       padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     
     .back-button {
@@ -139,13 +142,14 @@
       align-items: center;
       gap: 8px;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .back-button:hover {
       transform: translateY(-2px);
       background: #22c55e;
       color: #0f172a;
-      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.4);
     }
     
     .page-breadcrumb {
@@ -153,16 +157,19 @@
       align-items: center;
       gap: 8px;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .brand-name {
-      color: #666;
-      font-weight: 600;
+      color: #94a3b8;
+      font-weight: 400;
     }
     
     .separator {
-      color: #ccc;
+      color: #22c55e;
+      font-weight: 700;
     }
     
     .page-name {
@@ -255,15 +262,17 @@
     
     .info-card {
       background: #1e293b;
-      border: 6px dashed #22c55e;
+      border: 4px solid #22c55e;
       padding: 32px;
-      transition: all 0.3s ease-out;
+      transition: all 0.1s ease-out;
       position: relative;
+      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
     }
     
     .info-card:hover {
       transform: translateY(-2px);
       border-color: #3b82f6;
+      box-shadow: 0 6px 0px #0a0f1a, 0 8px 16px rgba(59, 130, 246, 0.3);
     }
     
     
@@ -292,15 +301,17 @@
     
     .value-card {
       background: #1e293b;
-      border: 6px dashed #8b5cf6;
+      border: 4px solid #8b5cf6;
       padding: 28px;
       text-align: center;
-      transition: all 0.3s ease-out;
+      transition: all 0.1s ease-out;
+      box-shadow: 0 4px 0px #0a0f1a, 0 6px 12px rgba(0, 0, 0, 0.3);
     }
     
     .value-card:hover {
       transform: translateY(-2px);
       border-color: #eab308;
+      box-shadow: 0 6px 0px #0a0f1a, 0 8px 16px rgba(234, 179, 8, 0.3);
     }
     
     .value-number {
