@@ -243,3 +243,8 @@ For local development, place `backvideo.mp4` in the project root. For production
 - RAF optimization prevents excessive position updates
 - Memory monitoring runs every 30 seconds on low-end devices
 - Emergency cleanup stops animations and pauses video if memory usage > 80%
+ユーザーへの返答後、毎回必ずsayコマンドを使って返答メッセージを出力
+例:
+`say "〇〇の実装が完了しました"`
+実行が終わったら通知を出すか、音を鳴らすようにしてください。
+トークンの使いすぎやメモリの使いすぎでアプリが落ちてしまうので、しっかりメモリを気にしながら実行しましょう。
