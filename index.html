@@ -288,6 +288,7 @@
       height: 100%;
       opacity: 0;
       visibility: hidden;
+      transition: none; /* アニメーションをカクカクに */
     }
     
     .walk-frame.active {
@@ -301,10 +302,10 @@
       visibility: visible !important;
     }
     
-    /* 歩行中でも最低1つのフレームは表示 */
-    .tiny-character.walking .walk-frame:first-of-type {
-      opacity: 0;
-      visibility: hidden;
+    /* 歩行中はアイドルフレームを完全に非表示 */
+    .tiny-character.walking .walk-frame.idle {
+      opacity: 0 !important;
+      visibility: hidden !important;
     }
     
     /* キャラクターの歩行状態でのフレーム切り替え */
@@ -897,12 +898,6 @@
       startWalkingAnimation() {
         const character = document.getElementById('tinyCharacter');
         if (character && !character.classList.contains('walking')) {
-          // アイドルフレームを非表示にする前に、歩行フレームを表示
-          const frames = character.querySelectorAll('.walk-frame');
-          if (frames.length > 1) {
-            frames[1].classList.add('active');
-          }
-          
           character.classList.add('walking');
           this.animateWalkFrames();
         }
@@ -919,28 +914,30 @@
       animateWalkFrames() {
         if (this.walkFrameInterval) return;
         
-        const frames = document.querySelectorAll('.walk-frame');
-        let currentFrame = 1; // Start with walking frame
+        const character = document.getElementById('tinyCharacter');
+        if (!character) return;
         
-        // Immediately show the first walking frame without hiding others first
-        if (frames[currentFrame]) {
-          frames[currentFrame].classList.add('active');
-        }
+        const frames = character.querySelectorAll('.walk-frame');
+        if (frames.length < 3) return;
         
+        // アイドルフレームを非表示
+        frames[0].classList.remove('active');
+        
+        // 最初の歩行フレームを表示
+        let currentFrame = 1;
+        frames[currentFrame].classList.add('active');
+        
+        // 歩行アニメーション開始（8bitゲーム風の速度）
         this.walkFrameInterval = setInterval(() => {
-          // Remove active from current frame
-          if (frames[currentFrame]) {
-            frames[currentFrame].classList.remove('active');
-          }
+          // 現在のフレームを非表示
+          frames[currentFrame].classList.remove('active');
           
-          // Move to next frame (skip idle frame at index 0)
+          // 次のフレームに切り替え（1と2を交互に）
           currentFrame = currentFrame === 1 ? 2 : 1;
           
-          // Add active to new frame
-          if (frames[currentFrame]) {
-            frames[currentFrame].classList.add('active');
-          }
-        }, 200);
+          // 新しいフレームを表示
+          frames[currentFrame].classList.add('active');
+        }, 150); // 8bitゲーム風の速度に調整
       }
       
       stopWalkFrames() {
@@ -988,14 +985,6 @@
           character.style.display = 'block';
           character.style.pointerEvents = 'auto';
           
-          // 歩行中でも最低1つのフレームが表示されることを保証
-          const activeFrame = character.querySelector('.walk-frame.active');
-          if (!activeFrame) {
-            const idleFrame = character.querySelector('.walk-frame.idle');
-            if (idleFrame) {
-              idleFrame.classList.add('active');
-            }
-          }
           
           // モバイルでの表示を強制
           character.style.transform = 'translateZ(0)';
