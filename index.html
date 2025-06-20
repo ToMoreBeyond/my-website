@@ -166,15 +166,16 @@
       transform: translateZ(0);
       width: 80px;
       height: 80px;
-      z-index: 800;
+      z-index: 10000;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
-      contain: layout style paint;
-      will-change: transform, left;
+      will-change: left;
       backface-visibility: hidden;
-      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease;
+      transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
       cursor: pointer;
     }
     
@@ -439,10 +440,6 @@
     <div class="video-overlay"></div>
   </div>
   
-  <!-- 動画状態表示 -->
-  <div id="videoStatus" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: rgba(0,0,0,0.85); color: #00ff00; padding: 12px 16px; border-radius: 8px; font-family: 'Share Tech Mono', monospace; font-size: 12px; max-width: 250px; word-wrap: break-word; border: 2px solid rgba(0,255,0,0.3); backdrop-filter: blur(5px); transition: opacity 0.3s ease;">
-    🔄 動画読み込み中...
-  </div>
   
   <!-- メインコンテンツ -->
   <div class="content-wrapper">
@@ -650,16 +647,15 @@
           character.style.opacity = '1';
           character.style.visibility = 'visible';
           character.style.display = 'block';
+          character.style.pointerEvents = 'auto';
+          character.style.transform = 'translateZ(0)';
+          character.style.webkitTransform = 'translateZ(0)';
           
           // 初期位置を設定
           character.style.left = '20px';
           
           // 最初のカード位置を更新
           this.updatePositions();
-          
-          setTimeout(() => {
-            character.style.transition = 'left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-          }, 100);
         }
       }
       
@@ -826,7 +822,6 @@
       
       initializeBackgroundVideo() {
         const video = document.getElementById('backgroundVideo');
-        const videoStatus = document.getElementById('videoStatus');
         
         if (!video) return;
         
@@ -839,13 +834,7 @@
         // 動画の読み込み完了を待つ
         video.addEventListener('loadeddata', () => {
           video.play().then(() => {
-            if (videoStatus) {
-              videoStatus.textContent = '🎥 動画再生中';
-            }
           }).catch(() => {
-            if (videoStatus) {
-              videoStatus.textContent = '🎯 クリックで再生';
-            }
             // ユーザーインタラクションで再生を試みる
             document.addEventListener('click', () => {
               video.play();
@@ -853,21 +842,9 @@
           });
         });
         
-        // 動画が再生開始したら状態表示を隠す
-        video.addEventListener('playing', () => {
-          if (videoStatus) {
-            setTimeout(() => {
-              videoStatus.style.opacity = '0';
-              setTimeout(() => videoStatus.style.display = 'none', 500);
-            }, 1000);
-          }
-        });
         
         // 動画エラー時のフォールバック
         video.addEventListener('error', () => {
-          if (videoStatus) {
-            videoStatus.textContent = '❌ 動画読み込み失敗';
-          }
         });
         
         // 即座に読み込み開始
@@ -966,6 +943,11 @@
           character.style.opacity = '1';
           character.style.visibility = 'visible';
           character.style.display = 'block';
+          character.style.pointerEvents = 'auto';
+          
+          // モバイルでの表示を強制
+          character.style.transform = 'translateZ(0)';
+          character.style.webkitTransform = 'translateZ(0)';
           
           // 改善されたキャラクター位置計算（線形で連続的）
           const minPosition = 50; // 最小位置（左端）
