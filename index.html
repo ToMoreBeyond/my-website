@@ -447,7 +447,7 @@
   <!-- メインコンテンツ -->
   <div class="content-wrapper">
     <!-- ロゴ -->
-    <a href="/" class="logo">ToMoreBeyond</a>
+    <a href="#" class="logo" id="logoButton">ToMoreBeyond</a>
     
     <!-- レベル表示 -->
     <div class="level-display">
@@ -765,6 +765,16 @@
           isTouching = false;
         };
         
+        // ロゴクリックでリセット
+        const logoButton = document.getElementById('logoButton');
+        const logoClickHandler = (e) => {
+          e.preventDefault();
+          if (confirm('レベルを1にリセットしますか？')) {
+            this.resetGame();
+          }
+        };
+        logoButton.addEventListener('click', logoClickHandler);
+        
         // イベントリスナーを登録
         document.addEventListener('wheel', wheelHandler, { passive: false });
         document.addEventListener('keydown', keyHandler);
@@ -774,6 +784,7 @@
         
         // クリーンアップ用に保存
         this.eventListeners.push(
+          { element: logoButton, type: 'click', handler: logoClickHandler },
           { element: document, type: 'wheel', handler: wheelHandler },
           { element: document, type: 'keydown', handler: keyHandler },
           { element: document, type: 'touchstart', handler: touchStartHandler },
@@ -1109,6 +1120,33 @@
         } catch (error) {
           console.error('ゲーム状態の読み込みに失敗:', error);
         }
+      }
+      
+      resetGame() {
+        // ゲーム状態をリセット
+        this.currentLevel = 1;
+        this.currentExp = 0;
+        this.characterPosition = 0;
+        this.viewedCards.clear();
+        
+        // LocalStorageをクリア
+        localStorage.removeItem('tomorebeyond_game_state');
+        
+        // キャラクターのクラスをリセット
+        const character = document.getElementById('tinyCharacter');
+        if (character) {
+          character.classList.remove('max-level-achieved');
+        }
+        
+        // UIを更新
+        this.updateUI();
+        this.updatePositions();
+        
+        // レベルリセットの効果音
+        this.play8BitSound('levelup');
+        
+        // リセット完了の通知
+        this.showNotification('レベルが1にリセットされました！');
       }
       
       activateMaxLevelEffect() {
