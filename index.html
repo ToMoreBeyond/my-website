@@ -173,8 +173,8 @@
       will-change: left;
       backface-visibility: hidden;
       transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      opacity: 1;
-      visibility: visible;
+      opacity: 1 !important;
+      visibility: visible !important;
       pointer-events: auto;
       cursor: pointer;
     }
@@ -250,6 +250,8 @@
       position: relative;
       width: 100%;
       height: 100%;
+      /* ピクセルキャラクターが常に表示されるように */
+      min-height: 80px;
     }
     
     .pixel-grid {
@@ -274,6 +276,9 @@
       position: relative;
       width: 100%;
       height: 100%;
+      /* コンテナが常に表示されるように */
+      opacity: 1 !important;
+      visibility: visible !important;
     }
     
     /* 歩行フレーム */
@@ -282,17 +287,28 @@
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity 0.1s ease;
+      visibility: hidden;
     }
     
     .walk-frame.active {
-      opacity: 1;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    
+    /* アイドル状態では必ずアイドルフレームを表示 */
+    .tiny-character:not(.walking) .walk-frame.idle {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    
+    /* 歩行中でも最低1つのフレームは表示 */
+    .tiny-character.walking .walk-frame:first-of-type {
+      opacity: 0;
+      visibility: hidden;
     }
     
     /* キャラクターの歩行状態でのフレーム切り替え */
-    .tiny-character.walking .walk-frame.idle {
-      opacity: 0;
-    }
+    /* Removed the rule that hides idle frame during walking to prevent character disappearing */
     
     /* レベル表示 */
     .level-display {
@@ -880,7 +896,13 @@
       
       startWalkingAnimation() {
         const character = document.getElementById('tinyCharacter');
-        if (character) {
+        if (character && !character.classList.contains('walking')) {
+          // アイドルフレームを非表示にする前に、歩行フレームを表示
+          const frames = character.querySelectorAll('.walk-frame');
+          if (frames.length > 1) {
+            frames[1].classList.add('active');
+          }
+          
           character.classList.add('walking');
           this.animateWalkFrames();
         }
@@ -898,12 +920,26 @@
         if (this.walkFrameInterval) return;
         
         const frames = document.querySelectorAll('.walk-frame');
-        let currentFrame = 0;
+        let currentFrame = 1; // Start with walking frame
+        
+        // Immediately show the first walking frame without hiding others first
+        if (frames[currentFrame]) {
+          frames[currentFrame].classList.add('active');
+        }
         
         this.walkFrameInterval = setInterval(() => {
-          frames.forEach(frame => frame.classList.remove('active'));
-          frames[currentFrame].classList.add('active');
-          currentFrame = (currentFrame + 1) % frames.length;
+          // Remove active from current frame
+          if (frames[currentFrame]) {
+            frames[currentFrame].classList.remove('active');
+          }
+          
+          // Move to next frame (skip idle frame at index 0)
+          currentFrame = currentFrame === 1 ? 2 : 1;
+          
+          // Add active to new frame
+          if (frames[currentFrame]) {
+            frames[currentFrame].classList.add('active');
+          }
         }, 200);
       }
       
@@ -914,8 +950,15 @@
         }
         
         const frames = document.querySelectorAll('.walk-frame');
-        frames.forEach(frame => frame.classList.remove('active'));
-        frames[0].classList.add('active'); // Reset to first frame
+        if (frames.length > 0) {
+          // Ensure idle frame is visible first
+          frames[0].classList.add('active');
+          
+          // Then remove active from walking frames
+          for (let i = 1; i < frames.length; i++) {
+            frames[i].classList.remove('active');
+          }
+        }
       }
       
       moveCharacter(amount) {
@@ -944,6 +987,15 @@
           character.style.visibility = 'visible';
           character.style.display = 'block';
           character.style.pointerEvents = 'auto';
+          
+          // 歩行中でも最低1つのフレームが表示されることを保証
+          const activeFrame = character.querySelector('.walk-frame.active');
+          if (!activeFrame) {
+            const idleFrame = character.querySelector('.walk-frame.idle');
+            if (idleFrame) {
+              idleFrame.classList.add('active');
+            }
+          }
           
           // モバイルでの表示を強制
           character.style.transform = 'translateZ(0)';
