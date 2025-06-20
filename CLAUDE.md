@@ -79,15 +79,19 @@ npx serve .
 - **Starting Position**: Character begins at position 0 (leftmost card)
 - **Card Interaction**: Only card clicks trigger level progression
 - **Jump Mechanics**: 0.6s animation, accessible via click/tap/spacebar
-- **Completion Trigger**: Level 12 triggers red character + notification
+  - Normal jump: 80px height with `jumpAnimation` keyframes
+  - Star state jump: 400px height with `maxLevelJumpAnimation` keyframes
+- **Completion Trigger**: Level 12 triggers red character color change and super jump
+- **Star State Features**: Red color with glow effect, 5x jump height, same walking animation
 - **Reset Function**: RESET button clears LocalStorage and returns to level 1
 
 ### 8bitcn Design Implementation
-- **Colors**: White theme (#ffffff, #f8f9fa), black borders and text (#000000)
-- **Fonts**: Orbitron (titles), Share Tech Mono (content)
-- **Card Design**: 4px solid black borders, pixel-perfect corners, 8-bit shadow effects
+- **Colors**: Dark theme (#0f172a, #1e293b), accent colors (#22c55e, #3b82f6, #eab308)
+- **Fonts**: Orbitron (headers), Share Tech Mono (content), pixelated rendering
+- **Card Design**: 6px dashed borders, pixel-perfect corners, 8-bit shadow effects
 - **Text Rendering**: `image-rendering: pixelated`, hard shadows
-- **Mobile Arrow Buttons**: 8-bit style with gradient backgrounds, positioned beside character
+- **Unified Design**: All detail pages follow consistent 8-bit aesthetic
+- **Navigation**: Consistent navbar with "← BACK TO GAME" button across all pages
 
 ### Responsive Breakpoints
 - Mobile: ≤768px (adjusted card sizes, smaller fonts, touch optimizations)
@@ -138,13 +142,15 @@ npx serve .
 
 ## Design System
 
-### 8bitcn Aesthetic
+### 8bitcn Aesthetic (Unified Across All Pages)
 - **Colors**: Dark theme (#0f172a, #1e293b), accent colors (#22c55e, #3b82f6, #eab308)
 - **Typography**: Orbitron (headers), Share Tech Mono (content), pixelated rendering
 - **Borders**: 6px dashed borders, pixel-perfect corners
 - **Interactions**: Instant feedback (0.1s-0.3s transitions), translateY hover effects
 - **Game Elements**: ASCII icons, uppercase descriptions, retro color palette
 - **Japanese content**: All UI text in Japanese
+- **Page Templates**: All detail pages follow tadataka.html design pattern
+- **Navigation Structure**: Consistent navbar across company, member, media, and contact pages
 
 ### Accessibility Standards
 - **WCAG 2.1 AA compliance**: Color contrast, keyboard navigation
@@ -201,7 +207,8 @@ For local development, place `backvideo.mp4` in the project root. For production
 - **Implementation**: 
   - Card clicks trigger level progression only (1 card = 1 level)
   - Character movement controlled exclusively by scroll/keyboard input
-  - Maximum level (12) triggers red character color + star effect animation
+  - Maximum level (12) triggers red character color + super jump ability
+  - Star state: Only visual changes (red color, glow) and enhanced jump height (400px)
 
 ### Level Persistence Across Pages
 - **Issue**: Level resetting when returning from detail pages
@@ -243,8 +250,35 @@ For local development, place `backvideo.mp4` in the project root. For production
 - RAF optimization prevents excessive position updates
 - Memory monitoring runs every 30 seconds on low-end devices
 - Emergency cleanup stops animations and pauses video if memory usage > 80%
-ユーザーへの返答後、毎回必ずsayコマンドを使って返答メッセージを出力
-例:
-`say "〇〇の実装が完了しました"`
-実行が終わったら通知を出すか、音を鳴らすようにしてください。
-トークンの使いすぎやメモリの使いすぎでアプリが落ちてしまうので、しっかりメモリを気にしながら実行しましょう。
+### Character Animation System
+- **Pixel Art Character**: 8-bit style stick figure with walking animation frames
+- **Walking States**: Idle, frame1 (left leg forward), frame2 (right leg forward)
+- **Jump Animation**: Two distinct animations based on character state:
+  - `jumpAnimation`: Normal jump (80px) for levels 1-11
+  - `maxLevelJumpAnimation`: Super jump (400px) for level 12+ star state
+- **Star State Mechanics**: 
+  - Visual only: Red color (#dc3545) with glow effect
+  - Enhanced jump height (5x normal)
+  - Walking animation remains unchanged
+  - No rotation or complex movement changes
+
+### CSS Animation Architecture
+- **Frame-based Walking**: Uses opacity switching between `.walk-frame` elements
+- **Hardware Acceleration**: All animations use `transform` properties for GPU acceleration
+- **Performance Optimization**: `will-change`, `transform: translateZ(0)`, `backface-visibility: hidden`
+- **State Management**: CSS classes control character states (`.walking`, `.jumping`, `.max-level-achieved`)
+
+### Page Design Unification
+All detail pages have been unified to follow the 8-bit design system:
+- `/detail/company.html`, `/detail/mission.html`, `/detail/contact.html`
+- `/detail/yamada.html`, `/detail/masadome.html`, `/detail/ando.html` (member profiles)
+- `/detail/blog.html`, `/detail/video.html`, `/detail/sns.html` (content pages)
+- `/pages/tadataka.html`, `/pages/toirun.html`, `/pages/midpoint.html` (product pages)
+
+Design template pattern includes:
+- Consistent navigation with logo and "BACK TO GAME" button
+- Dark theme color scheme with accent colors
+- 6px dashed borders on cards and sections
+- Orbitron/Share Tech Mono typography
+- Scroll animations and hover effects
+- Responsive grid layouts
