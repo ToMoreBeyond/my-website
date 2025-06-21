@@ -111,34 +111,6 @@
       -webkit-font-smoothing: none;
     }
     
-    /* Detail Header */
-    .detail-header {
-      background: #ffffff;
-      border-bottom: 6px dashed #22c55e;
-      padding: 16px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    
-    .back-button {
-      display: inline-block;
-      padding: 12px 24px;
-      font-family: 'Orbitron', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      color: #22c55e;
-      text-decoration: none;
-      text-transform: uppercase;
-      margin-left: 24px;
-      transition: all 0.2s ease;
-    }
-    
-    .back-button:hover {
-      transform: translateX(-4px);
-      color: #16a34a;
-    }
-    
     /* Navigation */
     .navbar {
       background: #ffffff;
@@ -202,44 +174,6 @@
     }
     
     /* Hero Section */
-    .hero {
-      background: #ffffff;
-      padding: 80px 0;
-      text-align: center;
-      border-bottom: 6px dashed #22c55e;
-    }
-    
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    
-    .hero-title {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(3rem, 8vw, 5rem);
-      font-weight: 900;
-      color: #22c55e;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      text-shadow: 2px 2px 0px #0f172a, 4px 4px 0px #1e293b;
-    }
-    
-    .hero-subtitle {
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      color: #64748b;
-      margin-bottom: 24px;
-      font-weight: 400;
-    }
-    
-    .hero-description {
-      font-size: 18px;
-      color: #0f172a;
-      line-height: 1.7;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
     .app-hero {
       min-height: 80vh;
       display: flex;
@@ -417,93 +351,85 @@
   </style>
 </head>
 <body>
-  <!-- 統一ヘッダー -->
-  <header class="detail-header">
-    <a href="../index.html?level=persist&from=detail" class="back-button">
-      ← ホームに戻る
-    </a>
-  </header>
+  <!-- 8-bit Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="../index.html?level=persist&from=detail" class="navbar-brand">← ホームに戻る</a>
+    </div>
+  </nav>
 
   <main>
-    <!-- ヒーローセクション -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="hero-title">ToMoreBeyond</h1>
-        <p class="hero-subtitle">技術と情熱で、人々の日常をより豊かに、より遠くへ</p>
-        <p class="hero-description">
-          8ビット風レトロゲームと最先端技術を融合した、革新的なデジタル体験の提供。ゲーミフィケーション要素でユーザーの成長をサポートし、日常をより楽しく豊かにします。
-        </p>
+    <!-- App Hero Section -->
+    <section class="app-hero">
+      <div class="container">
+        <div class="app-hero-content">
+          <div class="app-hero-text">
+            <h1 class="app-title-large">ToMoreBeyond</h1>
+            <p class="app-tagline">技術と情熱で、人々の日常をより豊かに、より遠くへ</p>
+            <p class="app-description-hero">
+              8ビット風レトロゲームと最先端技術を融合した、革新的なデジタル体験の提供。ゲーミフィケーション要素でユーザーの成長をサポートし、日常をより楽しく豊かにします。
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- 会社情報セクション -->
-    <article class="section">
+    <section class="features-section">
       <div class="container">
-        <header class="section-header">
+        <div class="section-header">
           <h2 class="section-title">会社情報</h2>
           <p class="section-subtitle">ToMoreBeyondの基本情報と事業領域</p>
-        </header>
+        </div>
         
-        <div class="info-grid">
-          <div class="info-card">
-            <div class="info-label">正式名称</div>
-            <div class="info-value">株式会社 ToMoreBeyond</div>
+        <div class="vision-grid">
+          <div class="vision-card">
+            <div class="vision-number">Co</div>
+            <h3 class="vision-title">会社概要</h3>
+            <p class="vision-description">株式会社ToMoreBeyond（2023年設立）は東京を拠点とするテクノロジー企業です。</p>
           </div>
           
-          <div class="info-card">
-            <div class="info-label">設立</div>
-            <div class="info-value">2023年</div>
+          <div class="vision-card">
+            <div class="vision-number">Tech</div>
+            <h3 class="vision-title">技術領域</h3>
+            <p class="vision-description">モバイル・Webアプリ開発、ゲーミフィケーション、位置情報サービス、ヘルスケア分野を専門としています。</p>
           </div>
           
-          <div class="info-card">
-            <div class="info-label">本社所在地</div>
-            <div class="info-value">東京都</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">事業領域</div>
-            <div class="info-value">モバイルアプリケーション開発<br>Webアプリケーション開発<br>ゲーミフィケーション技術<br>位置情報サービス<br>フィットネス・ヘルスケアアプリ</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">技術スタック</div>
-            <div class="info-value">Vanilla JavaScript, HTML5, CSS3<br>React Native, Flutter<br>Node.js, Python<br>PostgreSQL, Redis<br>AWS, Docker</div>
-          </div>
-          
-          <div class="info-card">
-            <div class="info-label">代表取締役CEO</div>
-            <div class="info-value">山田 隼大</div>
+          <div class="vision-card">
+            <div class="vision-number">Stack</div>
+            <h3 class="vision-title">技術スタック</h3>
+            <p class="vision-description">JavaScript, React Native, Flutter, Node.js, Python, AWS等の最新技術を駆使しています。</p>
           </div>
         </div>
       </div>
-    </article>
+    </section>
 
     <!-- バリューセクション -->
-    <section class="section" style="background: #ffffff;">
+    <section class="features-section">
       <div class="container">
-        <header class="section-header">
+        <div class="section-header">
           <h2 class="section-title">私たちの価値観</h2>
           <p class="section-subtitle">ToMoreBeyondが大切にする3つの価値観</p>
-        </header>
+        </div>
         
-        <div class="values-grid">
-          <article class="value-card">
-            <div class="value-number">1</div>
-            <h3 class="value-title">共創</h3>
-            <p class="value-description">常に"友と共に"作る。一人では越えられない道も、仲間と一緒なら必ず越えられる。</p>
-          </article>
+        <div class="vision-grid">
+          <div class="vision-card">
+            <div class="vision-number">1</div>
+            <h3 class="vision-title">共創</h3>
+            <p class="vision-description">常に"友と共に"作る。一人では越えられない道も、仲間と一緒なら必ず越えられる。</p>
+          </div>
           
-          <article class="value-card">
-            <div class="value-number">2</div>
-            <h3 class="value-title">冒険</h3>
-            <p class="value-description">人と違う道を選ぶ。安全な道より、まだ誰も歩いたことのない道を選んで進む。</p>
-          </article>
+          <div class="vision-card">
+            <div class="vision-number">2</div>
+            <h3 class="vision-title">冒険</h3>
+            <p class="vision-description">人と違う道を選ぶ。安全な道より、まだ誰も歩いたことのない道を選んで進む。</p>
+          </div>
           
-          <article class="value-card">
-            <div class="value-number">3</div>
-            <h3 class="value-title">遊び心</h3>
-            <p class="value-description">楽しませるUI/UXを最優先。使う人の心が躍るような体験を何よりも大切にする。</p>
-          </article>
+          <div class="vision-card">
+            <div class="vision-number">3</div>
+            <h3 class="vision-title">遊び心</h3>
+            <p class="vision-description">楽しませるUI/UXを最優先。使う人の心が躍るような体験を何よりも大切にする。</p>
+          </div>
         </div>
       </div>
     </section>
