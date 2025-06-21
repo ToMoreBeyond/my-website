@@ -322,7 +322,7 @@
       position: fixed;
       top: 20px;
       right: 20px;
-      background: #0f172a;
+      background: #ffffff;
       padding: 12px 20px;
       border: 4px solid #22c55e;
       border-style: dashed;
@@ -331,7 +331,7 @@
       font-weight: 700;
       text-transform: uppercase;
       box-shadow: 
-        inset 2px 2px 0px #1e293b,
+        inset 2px 2px 0px #f1f5f9,
         4px 4px 0px rgba(0, 0, 0, 0.3);
       image-rendering: pixelated;
       z-index: 1000;
@@ -348,7 +348,7 @@
     .exp-bar {
       width: 100%;
       height: 12px;
-      background: #1e293b;
+      background: #e2e8f0;
       border: 2px solid #22c55e;
       position: relative;
       image-rendering: pixelated;
@@ -359,7 +359,7 @@
       background: linear-gradient(90deg, #22c55e, #16a34a);
       transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       width: 0%;
-      border-right: 2px solid #0f172a;
+      border-right: 2px solid #ffffff;
       box-sizing: border-box;
     }
     
@@ -367,16 +367,17 @@
     .level-display.max-level {
       border-color: #dc3545;
       color: #dc3545;
-      background: #1a0506;
+      background: #ffffff;
       animation: levelPulse 2s ease-in-out infinite;
       box-shadow: 
-        inset 2px 2px 0px #2a0a0b,
+        inset 2px 2px 0px #fee2e2,
         4px 4px 0px rgba(220, 53, 69, 0.3),
         0 0 20px rgba(220, 53, 69, 0.5);
     }
     
     .level-display.max-level .exp-bar {
       border-color: #dc3545;
+      background: #fef2f2;
     }
     
     .level-display.max-level .exp-fill {
@@ -388,14 +389,14 @@
       0%, 100% { 
         transform: scale(1);
         box-shadow: 
-          inset 2px 2px 0px #2a0a0b,
+          inset 2px 2px 0px #fee2e2,
           4px 4px 0px rgba(220, 53, 69, 0.3),
           0 0 20px rgba(220, 53, 69, 0.5);
       }
       50% { 
         transform: scale(1.05);
         box-shadow: 
-          inset 2px 2px 0px #2a0a0b,
+          inset 2px 2px 0px #fee2e2,
           4px 4px 0px rgba(220, 53, 69, 0.5),
           0 0 30px rgba(220, 53, 69, 0.8);
       }
@@ -425,7 +426,7 @@
       text-shadow: 
         2px 2px 0px #0f172a,
         0 0 20px #22c55e;
-      animation: levelUpAnimation 2s ease-in-out forwards;
+      animation: levelUpAnimation 3s ease-in-out forwards;
       pointer-events: none;
     }
     
@@ -1197,10 +1198,12 @@
       }
       
       onCardClick(index) {
+        console.log('Card clicked:', index, 'Already viewed:', this.viewedCards.has(index));
         if (!this.viewedCards.has(index)) {
           this.viewedCards.add(index);
-          // カード1枚で1レベルアップ（経験値100%）
-          this.gainExp(100);
+          console.log('Level up triggered for card:', index);
+          // カード1枚で1レベルアップ（直接レベルアップ）
+          this.levelUp();
           // カードクリック時にゲーム状態保存
           this.saveGameState();
         }
@@ -1217,8 +1220,10 @@
       }
       
       levelUp() {
+        console.log('Level up called, current level:', this.currentLevel);
         this.currentLevel++;
         this.currentExp = 0;
+        console.log('New level:', this.currentLevel);
         
         // Level Upポップアップを表示
         this.showLevelUpPopup();
@@ -1247,6 +1252,8 @@
       }
       
       showLevelUpPopup() {
+        console.log('Showing level up popup for level:', this.currentLevel);
+        
         // 既存のポップアップを削除
         const existingPopup = document.querySelector('.level-up-popup');
         if (existingPopup) {
@@ -1265,15 +1272,18 @@
           popup.textContent = 'LEVEL UP!';
         }
         
+        console.log('Popup created and added to DOM');
+        
         // DOMに追加
         document.body.appendChild(popup);
         
-        // 2秒後に削除
+        // 3秒後に削除（視認性を高めるため）
         setTimeout(() => {
           if (popup.parentNode) {
             popup.remove();
+            console.log('Popup removed');
           }
-        }, 2000);
+        }, 3000);
       }
       
       updateUI() {
