@@ -892,8 +892,7 @@
           
           // カードクリックで詳細ページに遷移 + レベルアップ
           cardEl.addEventListener('click', () => {
-            this.onCardClick(index);
-            this.navigateToDetail(card, index);
+            this.onCardClick(index, card);
           });
           
           track.appendChild(cardEl);
@@ -1197,15 +1196,16 @@
         });
       }
       
-      onCardClick(index) {
-        console.log('Card clicked:', index, 'Already viewed:', this.viewedCards.has(index));
+      onCardClick(index, card) {
         if (!this.viewedCards.has(index)) {
           this.viewedCards.add(index);
-          console.log('Level up triggered for card:', index);
-          // カード1枚で1レベルアップ（直接レベルアップ）
-          this.levelUp();
+          // カード1枚で1レベルアップ（ポップアップ後に遷移）
+          this.levelUpWithNavigation(card, index);
           // カードクリック時にゲーム状態保存
           this.saveGameState();
+        } else {
+          // 既に見たカードは即座に遷移
+          this.navigateToDetail(card, index);
         }
       }
       
@@ -1251,6 +1251,39 @@
         this.saveGameState();
       }
       
+      levelUpWithNavigation(card, index) {
+        this.currentLevel++;
+        this.currentExp = 0;
+        
+        // Level Upポップアップを表示してから遷移
+        this.showLevelUpPopupWithNavigation(card, index);
+        
+        // 8bitレベルアップエフェクト
+        const character = document.getElementById('tinyCharacter');
+        if (character) {
+          character.classList.add('level-up');
+          setTimeout(() => {
+            character.classList.remove('level-up');
+          }, 2000);
+        }
+        
+        // 最大レベル時は赤色 + スター状態
+        if (this.currentLevel >= 10) {
+          setTimeout(() => {
+            this.activateMaxLevelEffect();
+          }, 2000);
+        }
+        
+        // レベルアップサウンド
+        this.play8BitSound('levelup');
+        
+        // UIを更新
+        this.updateUI();
+        
+        // ゲーム状態を保存
+        this.saveGameState();
+      }
+      
       showLevelUpPopup() {
         console.log('Showing level up popup for level:', this.currentLevel);
         
@@ -1283,6 +1316,38 @@
             popup.remove();
             console.log('Popup removed');
           }
+        }, 3000);
+      }
+      
+      showLevelUpPopupWithNavigation(card, index) {
+        // 既存のポップアップを削除
+        const existingPopup = document.querySelector('.level-up-popup');
+        if (existingPopup) {
+          existingPopup.remove();
+        }
+        
+        // 新しいポップアップを作成
+        const popup = document.createElement('div');
+        popup.className = 'level-up-popup';
+        
+        // スターレベル時は特別なスタイル
+        if (this.currentLevel >= 10) {
+          popup.classList.add('star-level');
+          popup.textContent = 'STAR LEVEL!';
+        } else {
+          popup.textContent = 'LEVEL UP!';
+        }
+        
+        // DOMに追加
+        document.body.appendChild(popup);
+        
+        // 3秒後に削除してから詳細画面に遷移
+        setTimeout(() => {
+          if (popup.parentNode) {
+            popup.remove();
+          }
+          // ポップアップが消えてから詳細画面に遷移
+          this.navigateToDetail(card, index);
         }, 3000);
       }
       
