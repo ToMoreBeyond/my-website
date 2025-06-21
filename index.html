@@ -109,8 +109,11 @@
     .cards-track {
       display: flex;
       gap: 24px;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: none;
       padding: 0 50px;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform;
     }
     
     /* カードスタイル */
@@ -131,10 +134,13 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform;
     }
     
     .card:hover {
-      transform: translateY(-10px) scale(1.02);
+      transform: translate3d(0, -10px, 0) scale(1.02);
       box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
     
@@ -582,8 +588,6 @@
           { icon: 'Y', title: '山田', description: 'CDO / DESIGNER', link: 'detail/yamada.html' },
           { icon: 'M', title: '正留', description: 'CEO / ENGINEER', link: 'detail/masadome.html' },
           { icon: 'A', title: '安藤', description: 'ARTIST', link: 'detail/ando.html' },
-          { icon: 'B', title: 'ブログ', description: 'KAIHATSU NO URA BANASHI', link: 'detail/blog.html' },
-          { icon: 'V', title: '動画', description: 'PRODUCT SHOUKAI', link: 'detail/video.html' },
           { icon: 'S', title: 'SNS', description: 'HIBI NO HASSHIN', link: 'detail/sns.html' },
           { icon: '@', title: 'お問い合わせ', description: 'OKI GARU NI DOUZO', link: 'detail/contact.html' }
         ];
@@ -1007,9 +1011,9 @@
           const containerPadding = 100; // 左右のパディング
           const maxScrollDistance = Math.max(0, totalCardsWidth - screenWidth + containerPadding * 2);
           
-          // キャラクター位置に完全同期したスクロール
+          // キャラクター位置に完全同期したスクロール（3D変換で最適化）
           const scrollX = -maxScrollDistance * this.characterPosition;
-          track.style.transform = `translateX(${scrollX}px) translateZ(0)`;
+          track.style.transform = `translate3d(${scrollX}px, 0, 0)`;
           
           // 現在のカードをハイライト
           const currentCardIndex = Math.round(this.characterPosition * (this.cards.length - 1));
@@ -1021,10 +1025,10 @@
         const cards = document.querySelectorAll('.card');
         cards.forEach((card, i) => {
           if (i === index) {
-            card.style.transform = 'translateY(-5px) scale(1.02)';
+            card.style.transform = 'translate3d(0, -5px, 0) scale(1.02)';
             card.style.boxShadow = '0 20px 40px rgba(0,0,0,0.4)';
           } else {
-            card.style.transform = '';
+            card.style.transform = 'translate3d(0, 0, 0)';
             card.style.boxShadow = '';
           }
         });
@@ -1064,7 +1068,7 @@
         }
         
         // 最大レベル時は赤色 + スター状態
-        if (this.currentLevel >= this.cards.length) {
+        if (this.currentLevel >= 10) {
           setTimeout(() => {
             this.activateMaxLevelEffect();
           }, 2000);
@@ -1136,7 +1140,7 @@
             this.updatePositions();
             
             // 最大レベル時のエフェクト適用
-            if (this.currentLevel >= this.cards.length) {
+            if (this.currentLevel >= 10) {
               this.activateMaxLevelEffect();
             }
           }
