@@ -21,10 +21,12 @@
     /* 基本スタイル */
     body {
       font-family: 'Share Tech Mono', monospace;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       position: relative;
-      height: 100vh;
       background: #ffffff;
+      margin: 0;
+      padding: 0;
     }
     
     /* 背景動画コンテナ */
@@ -1569,6 +1571,496 @@
         }
       }
     });
+
+    // スクロールインジケーターのクリックイベント
+    document.addEventListener('DOMContentLoaded', () => {
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      const companySection = document.querySelector('.company-section');
+      
+      if (scrollIndicator && companySection) {
+        scrollIndicator.addEventListener('click', () => {
+          companySection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        });
+      }
+
+      // 企業セクションが表示されたらインジケーターを非表示
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            scrollIndicator.style.opacity = '0';
+            scrollIndicator.style.pointerEvents = 'none';
+          } else {
+            scrollIndicator.style.opacity = '1';
+            scrollIndicator.style.pointerEvents = 'auto';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      if (companySection) {
+        observer.observe(companySection);
+      }
+    });
+
+    // トップに戻る関数
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   </script>
+
+  <!-- スクロールインジケーター -->
+  <div class="scroll-indicator">
+    <div class="scroll-text">SCROLL DOWN FOR MORE</div>
+    <div class="scroll-arrow">↓</div>
+  </div>
+
+  <!-- 企業情報セクション（ゲームエリアの下） -->
+  <section class="company-section">
+    <div class="section-container">
+      <!-- 会社概要 -->
+      <div class="company-intro">
+        <h2 class="section-title">ToMoreBeyond</h2>
+        <p class="section-subtitle">技術と情熱で、人々の日常をより豊かに</p>
+        <p class="company-description">
+          私たちは「面白いことだけをする。友と共に道なき道を越える」をミッションに、<br>
+          革新的なモバイルアプリケーション開発を通じて、人々の行動半径を広げ、<br>
+          日常をより楽しく豊かにするテクノロジー企業です。
+        </p>
+      </div>
+
+      <!-- サービス一覧 -->
+      <div class="services-grid">
+        <h3 class="grid-title">Our Services</h3>
+        <div class="service-cards">
+          <div class="service-card">
+            <div class="service-icon">📍</div>
+            <h4 class="service-name">TADATAKA</h4>
+            <p class="service-desc">移動がそのまま日記になる位置情報記録アプリ</p>
+            <a href="pages/tadataka.html" class="service-link">詳細を見る →</a>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🚻</div>
+            <h4 class="service-name">TOIRUN</h4>
+            <p class="service-desc">今すぐトイレを最短で見つけるナビゲーションアプリ</p>
+            <a href="pages/toirun.html" class="service-link">詳細を見る →</a>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎯</div>
+            <h4 class="service-name">MEET IN THE MIDDLE</h4>
+            <p class="service-desc">最適な集合地点を瞬時に提案するアプリ</p>
+            <a href="pages/midpoint.html" class="service-link">詳細を見る →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- チームメンバー -->
+      <div class="team-section">
+        <h3 class="grid-title">Our Team</h3>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="member-avatar">Y</div>
+            <h4 class="member-name">山田 隼大</h4>
+            <p class="member-role">CDO / Designer</p>
+            <a href="detail/yamada.html" class="member-link">プロフィール →</a>
+          </div>
+          <div class="team-card">
+            <div class="member-avatar">M</div>
+            <h4 class="member-name">正留 聖也</h4>
+            <p class="member-role">CEO / Engineer</p>
+            <a href="detail/masadome.html" class="member-link">プロフィール →</a>
+          </div>
+          <div class="team-card">
+            <div class="member-avatar">A</div>
+            <h4 class="member-name">安藤 俊平</h4>
+            <p class="member-role">Artist</p>
+            <a href="detail/ando.html" class="member-link">プロフィール →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <h3 class="cta-title">一緒に新しい価値を創造しませんか？</h3>
+        <p class="cta-description">
+          ToMoreBeyondは常に新しい挑戦を求めています。<br>
+          技術と創造性で世界を変えたい方、ぜひご連絡ください。
+        </p>
+        <a href="detail/contact.html" class="cta-button">お問い合わせ</a>
+      </div>
+
+      <!-- トップに戻るボタン -->
+      <div class="back-to-top">
+        <button class="back-to-top-btn" onclick="scrollToTop()">
+          <span>↑</span>
+          <span>BACK TO GAME</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 企業情報セクション用のCSS -->
+  <style>
+    /* スクロールインジケーター */
+    .scroll-indicator {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 1000;
+      color: #22c55e;
+      font-family: 'Share Tech Mono', monospace;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scroll-indicator:hover {
+      transform: translateX(-50%) translateY(-5px);
+    }
+
+    .scroll-text {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    .scroll-arrow {
+      font-size: 24px;
+      animation: bounce 2s infinite;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* モバイルでのスクロールインジケーター調整 */
+    @media (max-width: 768px) {
+      .scroll-indicator {
+        bottom: 20px;
+      }
+      
+      .scroll-text {
+        font-size: 12px;
+      }
+      
+      .scroll-arrow {
+        font-size: 20px;
+      }
+    }
+
+    /* 企業情報セクション */
+    .company-section {
+      position: relative;
+      background: #ffffff;
+      padding: 80px 0;
+      min-height: 100vh;
+      z-index: 10;
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* 会社紹介 */
+    .company-intro {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 3rem;
+      font-weight: 900;
+      color: #22c55e;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0px #0f172a;
+    }
+
+    .section-subtitle {
+      font-size: 1.5rem;
+      color: #64748b;
+      margin-bottom: 24px;
+    }
+
+    .company-description {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #0f172a;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* サービスグリッド */
+    .services-grid {
+      margin-bottom: 80px;
+    }
+
+    .grid-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 48px;
+      text-transform: uppercase;
+    }
+
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+
+    .service-card {
+      background: #ffffff;
+      border: 4px dashed #22c55e;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      border-color: #16a34a;
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .service-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    .service-desc {
+      color: #64748b;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .service-link {
+      display: inline-block;
+      color: #22c55e;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .service-link:hover {
+      color: #16a34a;
+      transform: translateX(4px);
+    }
+
+    /* チームセクション */
+    .team-section {
+      margin-bottom: 80px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .team-card {
+      background: #ffffff;
+      border: 4px solid #0f172a;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover {
+      border-color: #22c55e;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .member-avatar {
+      width: 80px;
+      height: 80px;
+      background: #22c55e;
+      color: #ffffff;
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      border: 4px solid #0f172a;
+    }
+
+    .member-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .member-role {
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .member-link {
+      display: inline-block;
+      color: #22c55e;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .member-link:hover {
+      color: #16a34a;
+      transform: translateX(4px);
+    }
+
+    /* CTA セクション */
+    .cta-section {
+      background: #0f172a;
+      padding: 60px;
+      text-align: center;
+      border: 6px dashed #22c55e;
+    }
+
+    /* トップに戻るボタン */
+    .back-to-top {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .back-to-top-btn {
+      background: #22c55e;
+      color: #0f172a;
+      border: 4px solid #22c55e;
+      padding: 20px 40px;
+      font-family: 'Orbitron', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 0 auto;
+    }
+
+    .back-to-top-btn:hover {
+      background: transparent;
+      color: #22c55e;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
+    }
+
+    .back-to-top-btn span:first-child {
+      font-size: 24px;
+      animation: bounce-up 2s infinite;
+    }
+
+    @keyframes bounce-up {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(5px);
+      }
+      60% {
+        transform: translateY(2px);
+      }
+    }
+
+    .cta-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #22c55e;
+      margin-bottom: 20px;
+    }
+
+    .cta-description {
+      color: #e2e8f0;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #22c55e;
+      color: #0f172a;
+      padding: 16px 48px;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      border: 4px solid #22c55e;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: transparent;
+      color: #22c55e;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .section-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .company-description {
+        font-size: 1rem;
+      }
+      
+      .service-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-section {
+        padding: 40px 20px;
+      }
+    }
+  </style>
 </body>
 </html>

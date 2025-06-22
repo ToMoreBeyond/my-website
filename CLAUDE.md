@@ -9,22 +9,30 @@ ToMoreBeyond is a Japanese technology company website featuring an interactive 8
 ## Architecture
 
 ### Core Structure
+- **Hybrid architecture**: 8-bit game (100vh) + traditional corporate website sections below
 - **Self-contained single-page application**: All code embedded in `index.html` for simplicity
 - **Horizontal scrolling game**: Character moves left-to-right through card collection
 - **Vanilla JavaScript**: No frameworks, pure JavaScript game engine
 - **8bitcn design system**: Pixel-perfect borders, dashed lines, retro typography
-- **Fixed viewport**: No vertical scrolling, 100vh height
+- **Vertical scrolling enabled**: Game area fixed at 100vh, corporate sections scroll below
 - **Background video system**: 8-bit retro game aesthetic with performance optimizations
 
 ### Key Components
 
 #### Main Game Engine (MinimalSite class in `index.html`)
-- **Level System**: Players gain 1 level per card click (max level 12)
+- **Level System**: Players gain 1 level per card click (max level 10 for star state)
 - **Character Controller**: Pixel art character with jump functionality
-- **Card System**: 12 simplified cards without section dividers
+- **Card System**: 10 cards total (blog and video cards removed for simplified UX)
 - **Audio System**: Web Audio API for 8-bit sound effects
-- **Notification System**: Completion notification when all cards are viewed
+- **Notification System**: Level up popups and completion effects
 - **LocalStorage**: Progress persistence across browser sessions
+
+#### Corporate Website Section
+- **Company Introduction**: Mission statement and company overview
+- **Services Grid**: Three main apps (TADATAKA, TOIRUN, MEET IN THE MIDDLE)
+- **Team Section**: Member profiles with links to detail pages
+- **Call-to-Action**: Contact section for business inquiries
+- **Navigation**: Smooth scroll between game and corporate sections
 
 #### Game Initialization System
 - **GameInitializer**: Loading sequence and DOM ready initialization
@@ -59,7 +67,8 @@ ToMoreBeyond is a Japanese technology company website featuring an interactive 8
 - **Monolithic Structure**: All game logic, styles, and data are embedded in `index.html`
 - **No Build Process**: Direct HTML/CSS/JS - no compilation or bundling required
 - **Static Hosting**: Can be served from any static file server
-- **Legacy Files**: External CSS/JS files exist but are not currently used
+- **Clean Dependencies**: All external JS references removed from detail pages for simplicity
+- **SEO Optimized**: Hybrid structure provides both interactive game experience and traditional corporate content
 
 ## Development Commands
 
@@ -81,9 +90,10 @@ npx serve .
 - **Jump Mechanics**: 0.6s animation, accessible via click/tap/spacebar
   - Normal jump: 80px height with `jumpAnimation` keyframes
   - Star state jump: 400px height with `maxLevelJumpAnimation` keyframes
-- **Completion Trigger**: Level 12 triggers red character color change and super jump
+- **Completion Trigger**: Level 10 triggers red character color change and super jump
 - **Star State Features**: Red color with glow effect, 5x jump height, same walking animation
-- **Reset Function**: RESET button clears LocalStorage and returns to level 1
+- **Reset Function**: Logo click shows confirmation dialog and resets to level 1
+- **Level Up Popups**: 3-second popup animations before navigating to detail pages
 
 ### 8bitcn Design Implementation
 - **Colors**: Dark theme (#0f172a, #1e293b), accent colors (#22c55e, #3b82f6, #eab308)
@@ -111,13 +121,13 @@ npx serve .
 ```
 
 ### Current Card Configuration
-- **Total Cards**: 12 (simplified from original 18)
+- **Total Cards**: 10 (blog and video cards removed)
 - **Sections**: company, apps, members, media, contact
 - **No Dividers**: Section divider cards removed for UX simplicity
 - **Embedded Data**: All card data is in `window.cardsData` array within index.html
 
 ### Adding Game Elements
-- **Levels**: Modify `this.maxLevel = 12` and adjust `cardsData` array length
+- **Levels**: Modify star level trigger (`this.currentLevel >= 10`) and adjust `cardsData` array length
 - **Cards**: Add entries to `cardsData` array in `loadGameData()` method
 - **Sounds**: Add cases to `play8BitSound()` method
 - **Animations**: Update character pixel divs in walk frames
@@ -127,7 +137,7 @@ npx serve .
 ### Core Web Vitals Implementation
 - **LCP Optimization**: Critical CSS inlined in `<head>`, main CSS in `<body>`
 - **FID Improvement**: Game initialization on `DOMContentLoaded`
-- **CLS Prevention**: Fixed viewport height (100vh), no vertical scrolling
+- **CLS Prevention**: Fixed game viewport height (100vh), controlled vertical scrolling for corporate sections
 - **Memory Management**: Complete cleanup system with `destroy()` methods
 
 ### Performance Features
@@ -272,13 +282,41 @@ For local development, place `backvideo.mp4` in the project root. For production
 All detail pages have been unified to follow the 8-bit design system:
 - `/detail/company.html`, `/detail/mission.html`, `/detail/contact.html`
 - `/detail/yamada.html`, `/detail/masadome.html`, `/detail/ando.html` (member profiles)
-- `/detail/blog.html`, `/detail/video.html`, `/detail/sns.html` (content pages)
+- `/detail/sns.html` (content pages, blog and video removed)
 - `/pages/tadataka.html`, `/pages/toirun.html`, `/pages/midpoint.html` (product pages)
 
 Design template pattern includes:
 - Consistent navigation with logo and "BACK TO GAME" button
-- Dark theme color scheme with accent colors
+- White background with dark text for improved readability
 - 6px dashed borders on cards and sections
 - Orbitron/Share Tech Mono typography
 - Scroll animations and hover effects
 - Responsive grid layouts
+- All external JS dependencies removed for clean architecture
+
+## Hybrid Structure Implementation
+
+### Navigation System
+- **Scroll Indicator**: Animated "SCROLL DOWN FOR MORE" indicator at bottom of game area
+- **Auto-hide**: Indicator disappears when corporate section becomes visible
+- **Smooth Scrolling**: Click events trigger smooth scroll to corporate sections
+- **Back to Top**: "BACK TO GAME" button in corporate section returns to game area
+
+### Corporate Section Layout
+- **Company Introduction**: Mission statement and overview
+- **Services Grid**: Three main applications with links to detail pages
+- **Team Section**: Member profiles with avatar placeholders and profile links
+- **Call-to-Action**: Contact section with business inquiry invitation
+- **Consistent Styling**: 8-bit aesthetic maintained throughout corporate sections
+
+### SEO Benefits
+- **Traditional Content**: Corporate sections provide crawlable content for search engines
+- **Structured Data**: Rich metadata and schema markup in detail pages
+- **Content Hierarchy**: Clear information architecture for both users and search bots
+- **Internal Linking**: Proper navigation between game elements and corporate pages
+
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
