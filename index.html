@@ -879,6 +879,11 @@
         
         // ローディング完了
         this.hideLoading();
+        
+        // 定期的に状態を保存
+        setInterval(() => {
+          this.saveGameState();
+        }, 5000);
       }
       
       showCharacter() {
@@ -1002,6 +1007,7 @@
         // タッチ操作（モバイル）- 改善版
         let touchStartX = 0;
         let touchStartY = 0;
+        let touchStartPosition = 0;
         let isTouching = false;
         let isHorizontalSwipe = null;
         
@@ -1015,17 +1021,18 @@
           if (gameArea && (gameArea === element || gameArea.contains(element))) {
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
+            touchStartPosition = this.characterPosition;
             isTouching = true;
             isHorizontalSwipe = null;
           }
         };
         
-        const touchMoveHandler = this.throttle((e) => {
+        const touchMoveHandler = (e) => {
           if (!isTouching) return;
           
           const touch = e.touches[0];
-          const diffX = touchStartX - touch.clientX;
-          const diffY = touchStartY - touch.clientY;
+          const diffX = touch.clientX - touchStartX;
+          const diffY = touch.clientY - touchStartY;
           
           // スワイプ方向を初回判定
           if (isHorizontalSwipe === null && (Math.abs(diffX) > 5 || Math.abs(diffY) > 5)) {
@@ -1035,16 +1042,38 @@
           // 横スワイプの場合のみゲーム操作
           if (isHorizontalSwipe) {
             e.preventDefault();
-            const sensitivity = 0.005;
-            this.handleScroll(diffX);
-            touchStartX = touch.clientX;
+            
+            // スワイプ距離に基づいて直接ポジションを計算
+            const screenWidth = window.innerWidth;
+            const swipeRatio = diffX / screenWidth;
+            const sensitivity = 1.5; // モバイル用の感度
+            
+            // 開始位置からの相対的な移動
+            const newPosition = touchStartPosition - (swipeRatio * sensitivity);
+            this.characterPosition = Math.max(0, Math.min(1, newPosition));
+            
+            // 即座に位置を更新
+            this.updatePositions();
+            
+            // 歩行アニメーション
+            if (Math.abs(diffX) > 2) {
+              this.startWalkingAnimation();
+              clearTimeout(this.walkingTimeout);
+              this.walkingTimeout = setTimeout(() => {
+                this.stopWalkingAnimation();
+              }, 200);
+            }
           }
           // 縦スワイプの場合は通常のスクロールを許可
-        }, 16);
+        };
         
         const touchEndHandler = () => {
           isTouching = false;
           isHorizontalSwipe = null;
+          // スワイプ終了時に状態を保存
+          if (this.characterPosition !== touchStartPosition) {
+            this.saveGameState();
+          }
         };
         
         // ロゴクリックでリセット
