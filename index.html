@@ -1058,15 +1058,13 @@
           if (isHorizontalSwipe) {
             e.preventDefault();
             
-            // カードの実際の移動距離を計算
-            const cardWidth = 280 + 24; // カード幅 + マージン
-            const totalCardsWidth = cardWidth * this.cards.length;
-            const viewportWidth = window.innerWidth;
+            // スワイプの移動量を画面幅に対する比率で計算
+            const screenWidth = window.innerWidth;
+            const swipeDistance = -diffX; // 右スワイプで正の値
+            const swipeRatio = swipeDistance / screenWidth;
             
-            // スワイプ距離をカードの移動距離に変換（1:1の関係）
-            const scrollableDistance = Math.max(0, totalCardsWidth - viewportWidth + 200);
-            const swipeRatio = -diffX / scrollableDistance;
-            const sensitivity = 0.8; // より直接的な操作感
+            // 標準的な感度設定（画面幅の約2倍でフルスクロール）
+            const sensitivity = 2.0;
             
             // 開始位置からの相対的な移動
             const newPosition = touchStartPosition + (swipeRatio * sensitivity);
@@ -1102,13 +1100,13 @@
           isTouching = false;
           
           // 横スワイプの場合のみ慣性スクロールを適用
-          if (isHorizontalSwipe && Math.abs(inertiaVelocity) > 0.2) {
+          if (isHorizontalSwipe && Math.abs(inertiaVelocity) > 0.3) {
             const applyInertia = () => {
-              // 摩擦を適用
-              inertiaVelocity *= 0.95;
+              // 摩擦を適用（より速く減速）
+              inertiaVelocity *= 0.92;
               
               // 速度が小さくなったら停止
-              if (Math.abs(inertiaVelocity) < 0.1) {
+              if (Math.abs(inertiaVelocity) < 0.05) {
                 cancelAnimationFrame(inertiaAnimationId);
                 inertiaAnimationId = null;
                 this.stopWalkingAnimation();
@@ -1116,15 +1114,10 @@
                 return;
               }
               
-              // カードの実際の移動距離を計算
-              const cardWidth = 280 + 24;
-              const totalCardsWidth = cardWidth * this.cards.length;
-              const viewportWidth = window.innerWidth;
-              const scrollableDistance = Math.max(0, totalCardsWidth - viewportWidth + 200);
-              
               // 速度に基づいて位置を更新
-              const deltaPosition = (inertiaVelocity * 16) / scrollableDistance * 0.8;
-              this.characterPosition = Math.max(0, Math.min(1, this.characterPosition - deltaPosition));
+              const screenWidth = window.innerWidth;
+              const deltaPosition = (inertiaVelocity * 16) / screenWidth * 2.0;
+              this.characterPosition = Math.max(0, Math.min(1, this.characterPosition + deltaPosition));
               this.updatePositions();
               
               inertiaAnimationId = requestAnimationFrame(applyInertia);
@@ -1133,6 +1126,7 @@
             inertiaAnimationId = requestAnimationFrame(applyInertia);
           } else {
             // 慣性なしの場合は即座に保存
+            this.stopWalkingAnimation();
             if (this.characterPosition !== touchStartPosition) {
               this.saveGameState();
             }
