@@ -799,6 +799,7 @@
         this.rafId = null;
         this.eventListeners = [];
         this.walkFrameInterval = null;
+        this.walkingTimeout = null;
         
         this.init();
       }
@@ -1058,16 +1059,19 @@
           if (isHorizontalSwipe) {
             e.preventDefault();
             
-            // スワイプの移動量を画面幅に対する比率で計算
-            const screenWidth = window.innerWidth;
-            const swipeDistance = -diffX; // 右スワイプで正の値
-            const swipeRatio = swipeDistance / screenWidth;
+            // カードの総幅と移動可能な距離を計算
+            const cardWidth = 280 + 24; // カード幅 + マージン
+            const totalCardsWidth = cardWidth * this.cards.length;
+            const viewportWidth = window.innerWidth;
+            const maxScrollDistance = Math.max(0, totalCardsWidth - viewportWidth + 200);
             
-            // 標準的な感度設定（画面幅の約2倍でフルスクロール）
-            const sensitivity = 2.0;
+            // タッチの移動距離を位置の変化に変換
+            // 左スワイプ（diffXが正）= 右へ移動（characterPositionが増加）
+            const pixelsMoved = -diffX; // 左スワイプで負、右スワイプで正
+            const positionDelta = pixelsMoved / maxScrollDistance;
             
             // 開始位置からの相対的な移動
-            const newPosition = touchStartPosition + (swipeRatio * sensitivity);
+            const newPosition = touchStartPosition + positionDelta;
             this.characterPosition = Math.max(0, Math.min(1, newPosition));
             
             // 即座に位置を更新
@@ -1115,8 +1119,12 @@
               }
               
               // 速度に基づいて位置を更新
-              const screenWidth = window.innerWidth;
-              const deltaPosition = (inertiaVelocity * 16) / screenWidth * 2.0;
+              const cardWidth = 280 + 24;
+              const totalCardsWidth = cardWidth * this.cards.length;
+              const viewportWidth = window.innerWidth;
+              const maxScrollDistance = Math.max(0, totalCardsWidth - viewportWidth + 200);
+              
+              const deltaPosition = -(inertiaVelocity * 16) / maxScrollDistance;
               this.characterPosition = Math.max(0, Math.min(1, this.characterPosition + deltaPosition));
               this.updatePositions();
               
