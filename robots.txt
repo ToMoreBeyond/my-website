@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Block access to development files
+Disallow: /css/
+Disallow: /js/components/
+Disallow: /.git/
+Disallow: /.gitignore
+Disallow: /CLAUDE.md
+Disallow: /VIDEO_SETUP.md
+Disallow: /README.md
+Disallow: /*.md$
+
+# Block large video files
+Disallow: /backvideo.mp4
+Disallow: /Timeline*
+
+# Allow specific important files
+Allow: /assets/
+Allow: /detail/
+Allow: /pages/
+Allow: /site.webmanifest
+Allow: /sitemap.xml
+
+# Sitemap location
+Sitemap: https://tomoebeyond.com/sitemap.xml
+
+# Crawl delay (optional - adjust based on server capacity)
+Crawl-delay: 1

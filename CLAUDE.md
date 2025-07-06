@@ -1,322 +1,347 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+このファイルは、このリポジトリでコードを扱う際のClaude Code (claude.ai/code) へのガイダンスを提供します。
 
-## Project Overview
+## プロジェクト概要
 
-ToMoreBeyond is a Japanese technology company website featuring an interactive 8-bit retro game with gamification elements. The site uses an 8bitcn.com-inspired design system with a walking pixel art character that gains experience by viewing cards.
+ToMoreBeyondは、ゲーミフィケーション要素を備えたインタラクティブな8ビットレトロゲームを特徴とする日本のテクノロジー企業のウェブサイトです。このサイトは8bitcn.comにインスパイアされたデザインシステムを使用し、カードを見ることで経験値を得る歩くピクセルアートキャラクターを採用しています。
 
-## Architecture
+## アーキテクチャ
 
-### Core Structure
-- **Hybrid architecture**: 8-bit game (100vh) + traditional corporate website sections below
-- **Self-contained single-page application**: All code embedded in `index.html` for simplicity
-- **Horizontal scrolling game**: Character moves left-to-right through card collection
-- **Vanilla JavaScript**: No frameworks, pure JavaScript game engine
-- **8bitcn design system**: Pixel-perfect borders, dashed lines, retro typography
-- **Vertical scrolling enabled**: Game area fixed at 100vh, corporate sections scroll below
-- **Background video system**: 8-bit retro game aesthetic with performance optimizations
+### コア構造
+- **ハイブリッドアーキテクチャ**: 8ビットゲーム (100vh) + 下部に従来型の企業ウェブサイトセクション
+- **自己完結型シングルページアプリケーション**: シンプルさのため、すべてのコードを`index.html`に埋め込み
+- **横スクロールゲーム**: キャラクターがカードコレクションを左から右に移動
+- **バニラJavaScript**: フレームワークなし、純粋なJavaScriptゲームエンジン
+- **8bitcnデザインシステム**: ピクセルパーフェクトなボーダー、破線、レトロタイポグラフィ
+- **縦スクロール有効**: ゲームエリアは100vhで固定、企業セクションは下にスクロール
+- **背景ビデオシステム**: パフォーマンス最適化を施した8ビットレトロゲーム美学
 
-### Key Components
+### 主要コンポーネント
 
-#### Main Game Engine (MinimalSite class in `index.html`)
-- **Level System**: Players gain 1 level per card click (max level 10 for star state)
-- **Character Controller**: Pixel art character with jump functionality
-- **Card System**: 10 cards total (blog and video cards removed for simplified UX)
-- **Audio System**: Web Audio API for 8-bit sound effects
-- **Notification System**: Level up popups and completion effects
-- **LocalStorage**: Progress persistence across browser sessions
+#### メインゲームエンジン (`index.html`内のMinimalSiteクラス)
+- **レベルシステム**: プレイヤーはカードクリックごとに1レベル獲得（スター状態の最大レベル10）
+- **キャラクターコントローラー**: ジャンプ機能付きピクセルアートキャラクター
+- **カードシステム**: 合計10枚のカード（UX簡素化のためブログとビデオカードは削除）
+- **オーディオシステム**: 8ビットサウンドエフェクト用のWeb Audio API
+- **通知システム**: レベルアップポップアップと完了エフェクト
+- **LocalStorage**: ブラウザセッション間での進行状況の永続化
 
-#### Corporate Website Section
-- **Company Introduction**: Mission statement and company overview
-- **Services Grid**: Three main apps (TADATAKA, TOIRUN, MEET IN THE MIDDLE)
-- **Team Section**: Member profiles with links to detail pages
-- **Call-to-Action**: Contact section for business inquiries
-- **Navigation**: Smooth scroll between game and corporate sections
+#### 企業ウェブサイトセクション
+- **会社紹介**: ミッションステートメントと会社概要
+- **サービスグリッド**: 3つの主要アプリ（TADATAKA、TOIRUN、MEET IN THE MIDDLE）
+- **チームセクション**: 詳細ページへのリンク付きメンバープロフィール
+- **コールトゥアクション**: ビジネスお問い合わせ用のコンタクトセクション
+- **ナビゲーション**: ゲームと企業セクション間のスムーズスクロール
 
-#### Game Initialization System
-- **GameInitializer**: Loading sequence and DOM ready initialization
-- **Critical CSS**: Inlined for fast rendering, non-critical CSS in `<style>` tags
-- **Card Creation**: Dynamic HTML generation from `cardsData` array
-- **Performance Optimization**: Hardware acceleration and memory management
+#### ゲーム初期化システム
+- **GameInitializer**: ローディングシーケンスとDOM準備完了時の初期化
+- **クリティカルCSS**: 高速レンダリングのためにインライン化、非クリティカルCSSは`<style>`タグ内
+- **カード作成**: `cardsData`配列からの動的HTML生成
+- **パフォーマンス最適化**: ハードウェアアクセラレーションとメモリ管理
 
-#### Game Features
-- **Leveling**: `currentLevel`, `viewedCards` Set, experience tracking with persistence
-- **Character States**: Walking animations, jumping, color change at max level
-- **Sound Effects**: Level up, jump, walk, completion sounds via Web Audio API
-- **Visual Feedback**: Level display UI, experience bar, completion effects
-- **Accessibility**: ARIA attributes, keyboard navigation, screen reader support
-- **Mobile Controls**: Touch-based drag controls for character movement, arrow buttons with long-press support
-- **Desktop Controls**: Vertical scroll for horizontal movement, keyboard navigation (arrow keys, space for jump)
+#### ゲーム機能
+- **レベリング**: `currentLevel`、`viewedCards` Set、永続化付き経験値トラッキング
+- **キャラクター状態**: 歩行アニメーション、ジャンプ、最大レベルでの色変更
+- **サウンドエフェクト**: Web Audio API経由のレベルアップ、ジャンプ、歩行、完了音
+- **視覚的フィードバック**: レベル表示UI、経験値バー、完了エフェクト
+- **アクセシビリティ**: ARIA属性、キーボードナビゲーション、スクリーンリーダーサポート
+- **モバイルコントロール**: キャラクター移動用のタッチベースドラッグコントロール、長押しサポート付き矢印ボタン
+- **デスクトップコントロール**: 横移動用の縦スクロール、キーボードナビゲーション（矢印キー、スペースでジャンプ）
 
-### File Organization
+### ファイル構成
 ```
-/index.html              - Main game interface (self-contained with embedded CSS/JS)
-/detail/                - Card detail pages for individual content
-/pages/                 - Product pages (tadataka.html, toirun.html, etc.)
-/css/                   - Legacy CSS files (currently unused)
-/js/components/         - Legacy JS modules (currently unused)
-/assets/                - Media content specifications and brand guidelines
-/metadata.json          - Site-wide metadata and SEO configuration
-/site.webmanifest       - PWA manifest file
-/VIDEO_SETUP.md         - Background video configuration guide
-/.gitignore             - Excludes large video files (backvideo.mp4)
+/index.html              - メインゲームインターフェース（埋め込みCSS/JSを含む自己完結型）
+/detail/                - 個別コンテンツ用のカード詳細ページ
+/pages/                 - 製品ページ（tadataka.html、toirun.htmlなど）
+/css/                   - レガシーCSSファイル（現在未使用）
+/js/components/         - レガシーJSモジュール（現在未使用）
+/assets/                - メディアコンテンツ仕様とブランドガイドライン
+/metadata.json          - サイト全体のメタデータとSEO設定
+/site.webmanifest       - PWAマニフェストファイル
+/VIDEO_SETUP.md         - 背景ビデオ設定ガイド
+/.gitignore             - 大きなビデオファイルを除外（backvideo.mp4）
 ```
 
-### Current Architecture Notes
-- **Monolithic Structure**: All game logic, styles, and data are embedded in `index.html`
-- **No Build Process**: Direct HTML/CSS/JS - no compilation or bundling required
-- **Static Hosting**: Can be served from any static file server
-- **Clean Dependencies**: All external JS references removed from detail pages for simplicity
-- **SEO Optimized**: Hybrid structure provides both interactive game experience and traditional corporate content
+### 現在のアーキテクチャに関する注記
+- **モノリシック構造**: すべてのゲームロジック、スタイル、データを`index.html`に埋め込み
+- **ビルドプロセスなし**: 直接的なHTML/CSS/JS - コンパイルやバンドルは不要
+- **静的ホスティング**: 任意の静的ファイルサーバーから提供可能
+- **クリーンな依存関係**: シンプルさのため、詳細ページからすべての外部JS参照を削除
+- **SEO最適化**: ハイブリッド構造により、インタラクティブなゲーム体験と従来型の企業コンテンツの両方を提供
 
-## Development Commands
+## 開発コマンド
 
-Static HTML site - no build process required:
+静的HTMLサイト - ビルドプロセス不要:
 
 ```bash
-# Local development
+# ローカル開発
 python -m http.server 8000
-# or
+# または
 npx serve .
 ```
 
-## Key Technical Details
+## 主要な技術的詳細
 
-### Game Mechanics
-- **Experience System**: Click-based leveling, 1 level per card click
-- **Starting Position**: Character begins at position 0 (leftmost card)
-- **Card Interaction**: Only card clicks trigger level progression
-- **Jump Mechanics**: 0.6s animation, accessible via click/tap/spacebar
-  - Normal jump: 80px height with `jumpAnimation` keyframes
-  - Star state jump: 400px height with `maxLevelJumpAnimation` keyframes
-- **Completion Trigger**: Level 10 triggers red character color change and super jump
-- **Star State Features**: Red color with glow effect, 5x jump height, same walking animation
-- **Reset Function**: Logo click shows confirmation dialog and resets to level 1
-- **Level Up Popups**: 3-second popup animations before navigating to detail pages
+### ゲームメカニクス
+- **経験値システム**: クリックベースのレベリング、カードクリックごとに1レベル
+- **開始位置**: キャラクターは位置0（最左のカード）から開始
+- **カードインタラクション**: カードクリックのみがレベル進行をトリガー
+- **ジャンプメカニクス**: 0.6秒のアニメーション、クリック/タップ/スペースバーでアクセス可能
+  - 通常ジャンプ: `jumpAnimation`キーフレームで80pxの高さ
+  - スター状態ジャンプ: `maxLevelJumpAnimation`キーフレームで400pxの高さ
+- **完了トリガー**: レベル10で赤いキャラクター色変更とスーパージャンプをトリガー
+- **スター状態機能**: グロー効果付き赤色、5倍のジャンプ高さ、同じ歩行アニメーション
+- **リセット機能**: ロゴクリックで確認ダイアログを表示し、レベル1にリセット
+- **レベルアップポップアップ**: 詳細ページへ移動する前の3秒間のポップアップアニメーション
+- **進行度の計算式**: `characterPosition = scrollX / maxScrollDistance` (0-1の範囲)
 
-### 8bitcn Design Implementation
-- **Colors**: Dark theme (#0f172a, #1e293b), accent colors (#22c55e, #3b82f6, #eab308)
-- **Fonts**: Orbitron (headers), Share Tech Mono (content), pixelated rendering
-- **Card Design**: 6px dashed borders, pixel-perfect corners, 8-bit shadow effects
-- **Text Rendering**: `image-rendering: pixelated`, hard shadows
-- **Unified Design**: All detail pages follow consistent 8-bit aesthetic
-- **Navigation**: Consistent navbar with "← BACK TO GAME" button across all pages
+### 8bitcnデザイン実装
+- **カラー**: ダークテーマ (#0f172a, #1e293b)、アクセントカラー (#22c55e, #3b82f6, #eab308)
+- **フォント**: Orbitron（ヘッダー）、Share Tech Mono（コンテンツ）、ピクセル化レンダリング
+- **カードデザイン**: 6pxの破線ボーダー、ピクセルパーフェクトなコーナー、8ビットシャドウ効果
+- **テキストレンダリング**: `image-rendering: pixelated`、ハードシャドウ
+- **統一デザイン**: すべての詳細ページが一貫した8ビット美学に従う
+- **ナビゲーション**: すべてのページで「← BACK TO GAME」ボタンを含む一貫したナビゲーションバー
 
-### Responsive Breakpoints
-- Mobile: ≤768px (adjusted card sizes, smaller fonts, touch optimizations)
-- Desktop: >768px (full-size cards, hover effects)
+### レスポンシブブレークポイント
+- モバイル: ≤768px（調整されたカードサイズ、小さいフォント、タッチ最適化）
+- デスクトップ: >768px（フルサイズカード、ホバーエフェクト）
 
-## Content Management
+## コンテンツ管理
 
-### Card Data Structure (embedded in index.html)
+### カードデータ構造 (index.html内に埋め込み)
 ```javascript
 {
-  icon: '[]',         // ASCII icon
-  title: '会社概要',  // Japanese title
-  description: 'MICHI NAKI MICHI WO KIRU', // Uppercase description
-  section: 'company', // Section grouping
+  icon: '[]',         // ASCIIアイコン
+  title: '会社概要',  // 日本語タイトル
+  description: 'MICHI NAKI MICHI WO KIRU', // 大文字説明
+  section: 'company', // セクショングループ
   link: 'detail/company.html'
 }
 ```
 
-### Current Card Configuration
-- **Total Cards**: 10 (blog and video cards removed)
-- **Sections**: company, apps, members, media, contact
-- **No Dividers**: Section divider cards removed for UX simplicity
-- **Embedded Data**: All card data is in `window.cardsData` array within index.html
+### 現在のカード設定
+- **カード総数**: 10枚（ブログとビデオカードは削除）
+- **セクション**: company, apps, members, media, contact
+- **仕切りなし**: UXの簡素化のためセクション仕切りカードを削除
+- **埋め込みデータ**: すべてのカードデータはindex.html内の`window.cardsData`配列に格納
 
-### Adding Game Elements
-- **Levels**: Modify star level trigger (`this.currentLevel >= 10`) and adjust `cardsData` array length
-- **Cards**: Add entries to `cardsData` array in `loadGameData()` method
-- **Sounds**: Add cases to `play8BitSound()` method
-- **Animations**: Update character pixel divs in walk frames
+### ゲーム要素の追加
+- **レベル**: スターレベルトリガー (`this.currentLevel >= 10`) を変更し、`cardsData`配列の長さを調整
+- **カード**: `loadGameData()`メソッド内の`cardsData`配列にエントリを追加
+- **サウンド**: `play8BitSound()`メソッドにケースを追加
+- **アニメーション**: 歩行フレーム内のキャラクターピクセルdivを更新
 
-## Performance Architecture
+## パフォーマンスアーキテクチャ
 
-### Core Web Vitals Implementation
-- **LCP Optimization**: Critical CSS inlined in `<head>`, main CSS in `<body>`
-- **FID Improvement**: Game initialization on `DOMContentLoaded`
-- **CLS Prevention**: Fixed game viewport height (100vh), controlled vertical scrolling for corporate sections
-- **Memory Management**: Complete cleanup system with `destroy()` methods
+### Core Web Vitalsの実装
+- **LCP最適化**: クリティカルCSSを`<head>`にインライン化、メインCSSを`<body>`に配置
+- **FID改善**: `DOMContentLoaded`でゲーム初期化
+- **CLS防止**: 固定ゲームビューポート高さ (100vh)、企業セクションの制御された縦スクロール
+- **メモリ管理**: `destroy()`メソッドを使用した完全なクリーンアップシステム
 
-### Performance Features
-- **Hardware acceleration**: `translateZ(0)`, `will-change: transform`
-- **Monolithic loading**: Single HTML file reduces HTTP requests
-- **Event delegation**: Optimized card interactions
-- **Device detection**: Low-end device optimizations
-- **Memory limits**: Auto-cleanup for `viewedCards` Set
-- **Background video**: Auto-disabled on low-end devices, reduced opacity on mobile
-- **Progress persistence**: Multiple save points (beforeunload, pagehide, visibility change)
-- **Auto-save interval**: 5-second periodic saves for level progress
+### パフォーマンス機能
+- **ハードウェアアクセラレーション**: `translateZ(0)`、`will-change: transform`
+- **モノリシックローディング**: 単一HTMLファイルによりHTTPリクエストを削減
+- **イベント委譲**: 最適化されたカードインタラクション
+- **デバイス検出**: 低スペックデバイスの最適化
+- **メモリ制限**: `viewedCards` Setの自動クリーンアップ
+- **背景ビデオ**: 低スペックデバイスで自動無効化、モバイルで不透明度を低減
+- **進行状況の永続化**: 複数の保存ポイント (beforeunload, pagehide, visibility change)
+- **自動保存間隔**: レベル進行の5秒ごとの定期保存
 
-## Design System
+## デザインシステム
 
-### 8bitcn Aesthetic (Unified Across All Pages)
-- **Colors**: Dark theme (#0f172a, #1e293b), accent colors (#22c55e, #3b82f6, #eab308)
-- **Typography**: Orbitron (headers), Share Tech Mono (content), pixelated rendering
-- **Borders**: 6px dashed borders, pixel-perfect corners
-- **Interactions**: Instant feedback (0.1s-0.3s transitions), translateY hover effects
-- **Game Elements**: ASCII icons, uppercase descriptions, retro color palette
-- **Japanese content**: All UI text in Japanese
-- **Page Templates**: All detail pages follow tadataka.html design pattern
-- **Navigation Structure**: Consistent navbar across company, member, media, and contact pages
+### 8bitcn美学（すべてのページで統一）
+- **カラー**: ダークテーマ (#0f172a, #1e293b)、アクセントカラー (#22c55e, #3b82f6, #eab308)
+- **タイポグラフィ**: Orbitron（ヘッダー）、Share Tech Mono（コンテンツ）、ピクセル化レンダリング
+- **ボーダー**: 6pxの破線ボーダー、ピクセルパーフェクトなコーナー
+- **インタラクション**: 即座のフィードバック (0.1s-0.3sのトランジション)、translateYホバー効果
+- **ゲーム要素**: ASCIIアイコン、大文字説明、レトロカラーパレット
+- **日本語コンテンツ**: すべてのUIテキストが日本語
+- **ページテンプレート**: すべての詳細ページがtadataka.htmlのデザインパターンに従う
+- **ナビゲーション構造**: company、member、media、contactページ全体で一貫したナビゲーションバー
 
-### Accessibility Standards
-- **WCAG 2.1 AA compliance**: Color contrast, keyboard navigation
-- **ARIA attributes**: Labels, roles, live regions for screen readers
-- **Keyboard support**: Tab navigation, Enter/Space activation, Arrow key movement
-- **High contrast mode**: Windows and browser high contrast support
-- **Reduced motion**: `prefers-reduced-motion` media query support
+### アクセシビリティ基準
+- **WCAG 2.1 AA準拠**: カラーコントラスト、キーボードナビゲーション
+- **ARIA属性**: スクリーンリーダー用のラベル、ロール、ライブリージョン
+- **キーボードサポート**: Tabナビゲーション、Enter/Spaceアクティベーション、矢印キー移動
+- **ハイコントラストモード**: Windowsとブラウザのハイコントラストサポート
+- **モーション削減**: `prefers-reduced-motion`メディアクエリサポート
 
-### Brand Guidelines
-Reference `/assets/brand-guidelines.md` for complete design specifications including:
-- Color palette definitions and usage rules
-- Typography hierarchy and font specifications  
-- UI component patterns and responsive breakpoints
-- Asset requirements in `/assets/media-content-specifications.md`
+### ブランドガイドライン
+以下を含む完全なデザイン仕様については`/assets/brand-guidelines.md`を参照:
+- カラーパレットの定義と使用規則
+- タイポグラフィ階層とフォント仕様  
+- UIコンポーネントパターンとレスポンシブブレークポイント
+- `/assets/media-content-specifications.md`内のアセット要件
 
-## Data Management
+## データ管理
 
-### Metadata System
-- **Central configuration**: `/metadata.json` contains all site metadata
-- **SEO data**: Page titles, descriptions, keywords, OGP settings
-- **Team information**: Member profiles, roles, specialties
-- **Product data**: Application features, descriptions, status
-- **Technology stack**: Frontend, backend, mobile, and tooling specs
+### メタデータシステム
+- **中央設定**: `/metadata.json`にすべてのサイトメタデータを格納
+- **SEOデータ**: ページタイトル、説明、キーワード、OGP設定
+- **チーム情報**: メンバープロフィール、役割、専門分野
+- **製品データ**: アプリケーション機能、説明、ステータス
+- **技術スタック**: フロントエンド、バックエンド、モバイル、ツールの仕様
 
-### Content Structure
-- **Modular content**: Each page references metadata for consistent information
-- **Multilingual ready**: Japanese primary with English alternate names
-- **Asset management**: Organized media specifications for required images/videos
+### コンテンツ構造
+- **モジュラーコンテンツ**: 各ページが一貫した情報のためにメタデータを参照
+- **多言語対応**: 日本語プライマリで英語の代替名付き
+- **アセット管理**: 必要な画像/ビデオの整理されたメディア仕様
 
-## Video Background Setup
+## 背景ビデオのセットアップ
 
-For local development, place `backvideo.mp4` in the project root. For production, use external hosting (see VIDEO_SETUP.md for details). The video file is excluded from git via `.gitignore` due to size constraints (>100MB).
+ローカル開発の場合、`backvideo.mp4`をプロジェクトルートに配置します。プロダクションの場合、外部ホスティングを使用します（詳細はVIDEO_SETUP.mdを参照）。ビデオファイルはサイズ制約 (>100MB) のため`.gitignore`経由でgitから除外されています。
 
-## Recent Critical Fixes
+## 最近の重要な修正
 
-### Background Video System
-- **Issue**: Complex device detection and fallback systems causing playback failures
-- **Solution**: Simplified to basic HTML5 video with `autoplay`, `muted`, `loop`, `playsinline`
-- **Implementation**: Single `initializeBackgroundVideo()` method with multiple play attempt strategies
-- **Current Video**: Uses `Timeline 1.mp4` as background video file
+### 背景ビデオシステム
+- **問題**: 複雑なデバイス検出とフォールバックシステムが再生失敗を引き起こしていた
+- **解決策**: `autoplay`、`muted`、`loop`、`playsinline`を使用した基本的なHTML5ビデオに簡素化
+- **実装**: 複数の再生試行戦略を持つ単一の`initializeBackgroundVideo()`メソッド
+- **現在のビデオ**: 背景ビデオファイルとして`Timeline 1.mp4`を使用
 
-### Character Movement & Positioning System
-- **Issue**: Character stopping midway and disappearing during scroll
-- **Solution**: Completely rewritten `updatePositions()` method with linear interpolation
-- **Implementation**: 
-  - Simplified position calculation: `charX = minPosition + (travelDistance * this.characterPosition)`
-  - Added explicit visibility properties in each RAF update
-  - Removed complex three-phase positioning logic (start/middle/end)
-  - Perfect synchronization between character position and card scrolling
+### キャラクター移動と位置システム
+- **問題**: キャラクターが途中で停止し、スクロール中に消えていた
+- **解決策**: 線形補間を使用して`updatePositions()`メソッドを完全に書き直し
+- **実装**: 
+  - 位置計算の簡素化: `charX = minPosition + (travelDistance * this.characterPosition)`
+  - 各RAF更新で明示的な可視性プロパティを追加
+  - 複雑な3フェーズ位置ロジック（開始/中間/終了）を削除
+  - キャラクター位置とカードスクロールの完璧な同期
 
-### Card Interaction & Level System
-- **Issue**: Card clicks causing unwanted character position changes
-- **Solution**: Separated card viewing from character movement
-- **Implementation**: 
-  - Card clicks trigger level progression only (1 card = 1 level)
-  - Character movement controlled exclusively by scroll/keyboard input
-  - Maximum level (12) triggers red character color + super jump ability
-  - Star state: Only visual changes (red color, glow) and enhanced jump height (400px)
+### カードインタラクションとレベルシステム
+- **問題**: カードクリックが望ましくないキャラクター位置変更を引き起こしていた
+- **解決策**: カード表示とキャラクター移動を分離
+- **実装**: 
+  - カードクリックはレベル進行のみをトリガー（1カード = 1レベル）
+  - キャラクター移動はスクロール/キーボード入力のみで制御
+  - 最大レベル（12）で赤いキャラクター色+スーパージャンプ能力をトリガー
+  - スター状態: 視覚的変化（赤色、グロー）と強化されたジャンプ高さ（400px）のみ
 
-### Level Persistence Across Pages
-- **Issue**: Level resetting when returning from detail pages
-- **Solution**: Added URL parameter system and LocalStorage backup
-- **Implementation**: 
-  - URL parameters: `?level=persist&from=detail&cardIndex=N`
-  - LocalStorage key: `tomorebeyond_game_state`
-  - Auto-save on card view, page unload, and every 5 seconds
+### ページ間のレベル永続化
+- **問題**: 詳細ページから戻ったときにレベルがリセットされていた
+- **解決策**: URLパラメーターシステムとLocalStorageバックアップを追加
+- **実装**: 
+  - URLパラメーター: `?level=persist&from=detail&cardIndex=N`
+  - LocalStorageキー: `tomorebeyond_game_state`
+  - カード表示、ページアンロード、5秒ごとに自動保存
 
-### Scroll Direction & Natural Controls
-- **Issue**: Unnatural scroll direction (left scroll = right movement)
-- **Solution**: Inverted scroll handling for intuitive controls
-- **Implementation**: Right scroll = right movement, works on both mobile and desktop
+### スクロール方向と自然なコントロール
+- **問題**: 不自然なスクロール方向（左スクロール = 右移動）
+- **解決策**: 直感的なコントロールのためにスクロール処理を反転
+- **実装**: 右スクロール = 右移動、モバイルとデスクトップの両方で動作
 
-## Troubleshooting Common Issues
+## 一般的な問題のトラブルシューティング
 
-### Background Video Not Playing
-1. Verify `Timeline 1.mp4` exists in project root (current video file)
-2. Check browser autoplay policies (modern browsers require user interaction)
-3. Ensure video attributes: `autoplay muted loop playsinline`
-4. Video status indicator shows in top-right corner during development
-5. Video initialization happens in `initializeBackgroundVideo()` method
+### 背景ビデオが再生されない
+1. `Timeline 1.mp4`がプロジェクトルートに存在することを確認（現在のビデオファイル）
+2. ブラウザの自動再生ポリシーを確認（最新のブラウザはユーザーインタラクションが必要）
+3. ビデオ属性を確認: `autoplay muted loop playsinline`
+4. 開発中は右上隅にビデオステータスインジケーターが表示
+5. ビデオ初期化は`initializeBackgroundVideo()`メソッドで実行
 
-### Character Position Issues
-- Character movement is controlled by `updatePositions()` with linear interpolation
-- Character should move smoothly from `minPosition` (50px) to `maxPosition` (screenWidth - 100px)
-- If character disappears: Check that `opacity: '1'`, `visibility: 'visible'`, `display: 'block'` are set
-- Card clicks should NOT move character - they only trigger level progression
-- Scroll-based movement uses `characterPosition` (0-1 range) for precise synchronization
+### キャラクター位置の問題
+- キャラクター移動は線形補間を使用した`updatePositions()`で制御
+- キャラクターは`minPosition` (50px) から`maxPosition` (screenWidth - 100px) までスムーズに移動する必要がある
+- キャラクターが消える場合: `opacity: '1'`、`visibility: 'visible'`、`display: 'block'`が設定されていることを確認
+- カードクリックはキャラクターを移動させるべきではない - レベル進行のみをトリガー
+- スクロールベースの移動は正確な同期のために`characterPosition` (0-1の範囲) を使用
 
-### Level/Progress Loss
-- Check LocalStorage for `tomorebeyond_game_state`
-- Verify URL parameters are preserved when navigating between pages  
-- Progress saves occur: on card view, before page unload, every 5 seconds, on visibility change
-- Ensure `saveGameState()` is called after level changes
+### レベル/進行状況の喪失
+- LocalStorageで`tomorebeyond_game_state`を確認
+- ページ間を移動するときにURLパラメーターが保持されていることを確認  
+- 進行状況の保存: カード表示時、ページアンロード前、5秒ごと、可視性変更時
+- レベル変更後に`saveGameState()`が呼ばれていることを確認
 
-### Performance Issues
-- Low-end devices automatically get `.low-performance-mode` class
-- RAF optimization prevents excessive position updates
-- Memory monitoring runs every 30 seconds on low-end devices
-- Emergency cleanup stops animations and pauses video if memory usage > 80%
-### Character Animation System
-- **Pixel Art Character**: 8-bit style stick figure with walking animation frames
-- **Walking States**: Idle, frame1 (left leg forward), frame2 (right leg forward)
-- **Jump Animation**: Two distinct animations based on character state:
-  - `jumpAnimation`: Normal jump (80px) for levels 1-11
-  - `maxLevelJumpAnimation`: Super jump (400px) for level 12+ star state
-- **Star State Mechanics**: 
-  - Visual only: Red color (#dc3545) with glow effect
-  - Enhanced jump height (5x normal)
-  - Walking animation remains unchanged
-  - No rotation or complex movement changes
+### パフォーマンスの問題
+- 低スペックデバイスは自動的に`.low-performance-mode`クラスを取得
+- RAF最適化により過剰な位置更新を防止
+- 低スペックデバイスでは30秒ごとにメモリ監視を実行
+- メモリ使用率 > 80%の場合、緊急クリーンアップがアニメーションを停止しビデオを一時停止
 
-### CSS Animation Architecture
-- **Frame-based Walking**: Uses opacity switching between `.walk-frame` elements
-- **Hardware Acceleration**: All animations use `transform` properties for GPU acceleration
-- **Performance Optimization**: `will-change`, `transform: translateZ(0)`, `backface-visibility: hidden`
-- **State Management**: CSS classes control character states (`.walking`, `.jumping`, `.max-level-achieved`)
+## キャラクターアニメーションシステム
+- **ピクセルアートキャラクター**: 歩行アニメーションフレーム付き8ビットスタイルの棒人間
+- **歩行状態**: アイドル、フレーム1（左足前）、フレーム2（右足前）
+- **ジャンプアニメーション**: キャラクター状態に基づく2つの異なるアニメーション:
+  - `jumpAnimation`: レベル1-11用の通常ジャンプ (80px)
+  - `maxLevelJumpAnimation`: レベル12+スター状態用のスーパージャンプ (400px)
+- **スター状態メカニクス**: 
+  - 視覚のみ: グロー効果付き赤色 (#dc3545)
+  - 強化されたジャンプ高さ（通常の5倍）
+  - 歩行アニメーションは変更なし
+  - 回転や複雑な動きの変更なし
 
-### Page Design Unification
-All detail pages have been unified to follow the 8-bit design system:
-- `/detail/company.html`, `/detail/mission.html`, `/detail/contact.html`
-- `/detail/yamada.html`, `/detail/masadome.html`, `/detail/ando.html` (member profiles)
-- `/detail/sns.html` (content pages, blog and video removed)
-- `/pages/tadataka.html`, `/pages/toirun.html`, `/pages/midpoint.html` (product pages)
+### CSSアニメーションアーキテクチャ
+- **フレームベースの歩行**: `.walk-frame`要素間の不透明度切り替えを使用
+- **ハードウェアアクセラレーション**: すべてのアニメーションがGPUアクセラレーションのために`transform`プロパティを使用
+- **パフォーマンス最適化**: `will-change`、`transform: translateZ(0)`、`backface-visibility: hidden`
+- **状態管理**: CSSクラスがキャラクター状態を制御 (`.walking`、`.jumping`、`.max-level-achieved`)
 
-Design template pattern includes:
-- Consistent navigation with logo and "BACK TO GAME" button
-- White background with dark text for improved readability
-- 6px dashed borders on cards and sections
-- Orbitron/Share Tech Mono typography
-- Scroll animations and hover effects
-- Responsive grid layouts
-- All external JS dependencies removed for clean architecture
+### ページデザインの統一
+すべての詳細ページが8ビットデザインシステムに従うよう統一:
+- `/detail/company.html`、`/detail/mission.html`、`/detail/contact.html`
+- `/detail/yamada.html`、`/detail/masadome.html`、`/detail/ando.html`（メンバープロフィール）
+- `/detail/sns.html`（コンテンツページ、ブログとビデオは削除）
+- `/pages/tadataka.html`、`/pages/toirun.html`、`/pages/midpoint.html`（製品ページ）
 
-## Hybrid Structure Implementation
+デザインテンプレートパターンに含まれるもの:
+- ロゴと「BACK TO GAME」ボタンを含む一貫したナビゲーション
+- 読みやすさを向上させるための暗いテキスト付き白背景
+- カードとセクションの6px破線ボーダー
+- Orbitron/Share Tech Monoタイポグラフィ
+- スクロールアニメーションとホバー効果
+- レスポンシブグリッドレイアウト
+- クリーンなアーキテクチャのためにすべての外部JS依存関係を削除
 
-### Navigation System
-- **Scroll Indicator**: Animated "SCROLL DOWN FOR MORE" indicator at bottom of game area
-- **Auto-hide**: Indicator disappears when corporate section becomes visible
-- **Smooth Scrolling**: Click events trigger smooth scroll to corporate sections
-- **Back to Top**: "BACK TO GAME" button in corporate section returns to game area
+## ハイブリッド構造の実装
 
-### Corporate Section Layout
-- **Company Introduction**: Mission statement and overview
-- **Services Grid**: Three main applications with links to detail pages
-- **Team Section**: Member profiles with avatar placeholders and profile links
-- **Call-to-Action**: Contact section with business inquiry invitation
-- **Consistent Styling**: 8-bit aesthetic maintained throughout corporate sections
+### ナビゲーションシステム
+- **スクロールインジケーター**: ゲームエリア下部に「SCROLL DOWN FOR MORE」のアニメーション付きインジケーター
+- **自動非表示**: 企業セクションが表示されるとインジケーターが消える
+- **スムーズスクロール**: クリックイベントが企業セクションへのスムーズスクロールをトリガー
+- **トップに戻る**: 企業セクションの「BACK TO GAME」ボタンでゲームエリアに戻る
 
-### SEO Benefits
-- **Traditional Content**: Corporate sections provide crawlable content for search engines
-- **Structured Data**: Rich metadata and schema markup in detail pages
-- **Content Hierarchy**: Clear information architecture for both users and search bots
-- **Internal Linking**: Proper navigation between game elements and corporate pages
+### 企業セクションレイアウト
+- **会社紹介**: ミッションステートメントと概要
+- **サービスグリッド**: 詳細ページへのリンク付き3つの主要アプリケーション
+- **チームセクション**: アバタープレースホルダーとプロフィールリンク付きメンバープロフィール
+- **コールトゥアクション**: ビジネスお問い合わせの招待付きコンタクトセクション
+- **一貫したスタイリング**: 企業セクション全体で維持される8ビット美学
 
-# important-instruction-reminders
-Do what has been asked; nothing more, nothing less.
-NEVER create files unless they're absolutely necessary for achieving your goal.
-ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+### SEOの利点
+- **従来型コンテンツ**: 企業セクションが検索エンジン用のクロール可能なコンテンツを提供
+- **構造化データ**: 詳細ページのリッチメタデータとスキーママークアップ
+- **コンテンツ階層**: ユーザーと検索ボットの両方に対する明確な情報アーキテクチャ
+- **内部リンク**: ゲーム要素と企業ページ間の適切なナビゲーション
+
+## 一般的な開発ワークフロー
+
+### ローカルで変更をテスト
+1. ローカルサーバーを起動: `python -m http.server 8000` または `npx serve .`
+2. ブラウザで `http://localhost:8000` を開く
+3. ブラウザのDevToolsを使用してコンソールエラーとネットワークリクエストを監視
+4. デスクトップとモバイルの両方のビューポートでテスト
+
+### ゲームロジックの変更
+1. すべてのゲームコードは`index.html`内の`MinimalSite`クラスにある
+2. 変更する主要メソッド:
+   - `handleCardView()`: カードクリックロジックとレベル進行
+   - `updatePositions()`: キャラクター移動と同期
+   - `play8BitSound()`: オーディオフィードバックシステム
+   - `checkLevelCompletion()`: スター状態トリガーロジック
+
+### 新しいカードの追加
+1. `loadGameData()`メソッド内の`window.cardsData`配列にエントリを追加
+2. `/detail/`ディレクトリに対応する詳細ページを作成
+3. アイコン、タイトル、説明、セクション、リンクを含む既存のカード構造に従う
+4. カードインタラクションとレベル進行をテスト
+
+### デバッグのヒント
+- 現在のゲーム状態を検査するには`console.log(this.gameState)`を使用
+- 移動の問題には`characterPosition`値 (0-1) を監視
+- 進行追跡の問題には`viewedCards` Setを確認
+- ブラウザのDevToolsでLocalStorageの内容を確認
+- 追加ログのために`?debug=true` URLパラメーターでテスト
