@@ -331,21 +331,177 @@
       font-weight: bold;
     }
     
+    /* Vision Grid */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    
+    .vision-card {
+      background: #ffffff;
+      border: 6px dashed #22c55e;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease-out;
+      position: relative;
+    }
+    
+    .vision-card:hover {
+      transform: translateY(-2px);
+      border-color: #3b82f6;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+    }
+    
+    .vision-number {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #22c55e;
+      margin-bottom: 16px;
+      text-shadow: 2px 2px 0px #0f172a;
+    }
+    
+    .vision-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    
+    .vision-description {
+      color: #64748b;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    
     /* Responsive Adjustments */
     @media (max-width: 768px) {
-      .app-hero-content {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        text-align: center;
+      .navbar-content {
+        padding: 0 16px;
       }
       
-      .app-hero-text {
-        padding-right: 0;
+      .navbar-brand {
+        font-size: 18px;
+      }
+      
+      .app-hero {
+        min-height: 60vh;
+        padding: 60px 0 24px;
+      }
+      
+      .app-hero-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        text-align: center;
+        padding: 0 16px;
+      }
+      
+      .app-title-large {
+        font-size: clamp(2rem, 8vw, 3rem);
+        margin-bottom: 12px;
+      }
+      
+      .app-tagline {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        margin-bottom: 16px;
+      }
+      
+      .app-description-hero {
+        font-size: 16px;
+        margin-bottom: 24px;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
+      
+      .section-header {
+        margin-bottom: 48px;
+      }
+      
+      .section-title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+      }
+      
+      .section-subtitle {
+        font-size: 16px;
+      }
+      
+      .container {
+        padding: 0 16px;
+      }
+      
+      .vision-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-top: 32px;
+      }
+      
+      .vision-card {
+        padding: 24px;
+      }
+      
+      .vision-number {
+        font-size: 2rem;
+        margin-bottom: 12px;
+      }
+      
+      .vision-title {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+      }
+      
+      .vision-description {
+        font-size: 14px;
       }
       
       .features-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+      }
+      
+      .feature-card-detailed {
+        padding: 24px;
+      }
+    }
+    
+    /* Extra small screens */
+    @media (max-width: 480px) {
+      .navbar-content {
+        padding: 0 12px;
+      }
+      
+      .navbar-brand {
+        font-size: 16px;
+      }
+      
+      .app-hero-content {
+        padding: 0 12px;
+      }
+      
+      .container {
+        padding: 0 12px;
+      }
+      
+      .vision-card {
+        padding: 20px;
+        border-width: 4px;
+      }
+      
+      .vision-number {
+        font-size: 1.8rem;
+      }
+      
+      .vision-title {
+        font-size: 1.1rem;
+      }
+      
+      .vision-description {
+        font-size: 13px;
       }
     }
   </style>
