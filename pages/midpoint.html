@@ -277,6 +277,33 @@
       font-weight: bold;
     }
     
+    .download-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    
+    .download-button {
+      background: #22c55e;
+      color: #0f172a;
+      padding: 16px 32px;
+      border: 2px solid #22c55e;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.1s ease-out;
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
+    
+    .download-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.4);
+    }
+    
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .app-hero-content {
@@ -297,6 +324,11 @@
       .features-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+      }
+      
+      .download-buttons {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -398,6 +430,50 @@
             <li>オフライン対応</li>
             <li>省電力設計</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">技術的特徴</h2>
+        <p class="section-subtitle">最新技術でユーザビリティとアクセシビリティを両立</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🧠</div>
+          <h3 class="feature-title-large">機械学習フロアマップ</h3>
+          <p class="feature-description-large">
+            施設の構造を自動学習し、常に最新のレイアウト情報を維持します。
+          </p>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">📡</div>
+          <h3 class="feature-title-large">リアルタイム状況把握</h3>
+          <p class="feature-description-large">
+            IoTセンサーと連携して各メンバーの位置状況をリアルタイムで把握します。
+          </p>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🔒</div>
+          <h3 class="feature-title-large">プライバシー保護</h3>
+          <p class="feature-description-large">
+            位置情報は端末内で処理し、個人データを外部送信しない設計です。
+          </p>
+        </div>
+        
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🌐</div>
+          <h3 class="feature-title-large">クラウド連携</h3>
+          <p class="feature-description-large">
+            全国の施設情報をクラウドで管理し、常に最新情報を提供します。
+          </p>
         </div>
       </div>
     </div>

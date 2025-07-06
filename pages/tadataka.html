@@ -279,82 +279,6 @@
       font-weight: bold;
     }
     
-    /* Technology Section */
-    .tech-section {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    }
-    
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-12);
-    }
-    
-    .tech-card {
-      background: white;
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      text-align: center;
-      box-shadow: var(--shadow-soft);
-      transition: all var(--transition-base);
-      border: 1px solid var(--neutral-200);
-    }
-    
-    .tech-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-medium);
-    }
-    
-    .tech-icon {
-      font-size: 3rem;
-      margin-bottom: var(--space-4);
-    }
-    
-    .tech-title {
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--neutral-900);
-      margin-bottom: var(--space-2);
-    }
-    
-    .tech-description {
-      font-size: var(--text-sm);
-      color: var(--neutral-600);
-      line-height: 1.5;
-    }
-    
-    /* CTA Section */
-    .cta-section-app {
-      padding: var(--space-20) 0;
-      background: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-800) 100%);
-      color: #0f172a;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .cta-content-app {
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .cta-title-app {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      margin-bottom: var(--space-6);
-    }
-    
-    .cta-subtitle-app {
-      font-size: var(--text-lg);
-      opacity: 0.9;
-      margin-bottom: var(--space-8);
-      line-height: 1.6;
-    }
     
     .download-buttons {
       display: flex;
@@ -402,22 +326,12 @@
       
       .features-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-6);
-      }
-      
-      .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
       }
       
       .download-buttons {
         flex-direction: column;
         align-items: center;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .tech-grid {
-        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -462,7 +376,7 @@
 
   <!-- Features Section -->
   <section class="features-section">
-    <div class="container-fluid">
+    <div class="container">
       <div class="section-header">
         <h2 class="section-title">主な機能</h2>
         <p class="section-subtitle">TADATAKAがあなたの移動体験を変える理由</p>
@@ -525,71 +439,49 @@
   </section>
 
   <!-- Technology Section -->
-  <section class="tech-section">
-    <div class="container-fluid">
+  <section class="section">
+    <div class="container">
       <div class="section-header">
         <h2 class="section-title">技術的特徴</h2>
         <p class="section-subtitle">最先端技術でプライバシーと利便性を両立</p>
       </div>
       
-      <div class="tech-grid">
-        <div class="tech-card">
-          <div class="tech-icon">🧠</div>
-          <h3 class="tech-title">オンデバイスAI</h3>
-          <p class="tech-description">
-            スマホ内で機械学習処理を完結し、位置データを外部送信せずプライバシーを保護
+      <div class="features-grid">
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🧠</div>
+          <h3 class="feature-title-large">オンデバイスAI</h3>
+          <p class="feature-description-large">
+            スマホ内で機械学習処理を完結し、位置データを外部送信せずプライバシーを保護します。
           </p>
         </div>
         
-        <div class="tech-card">
-          <div class="tech-icon">🔋</div>
-          <h3 class="tech-title">省電力設計</h3>
-          <p class="tech-description">
-            独自のアルゴリズムでバッテリー消費を最小限に抑えながら高精度な記録を実現
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🔋</div>
+          <h3 class="feature-title-large">省電力設計</h3>
+          <p class="feature-description-large">
+            独自のアルゴリズムでバッテリー消費を最小限に抑えながら高精度な記録を実現します。
           </p>
         </div>
         
-        <div class="tech-card">
-          <div class="tech-icon">📡</div>
-          <h3 class="tech-title">マルチセンサー</h3>
-          <p class="tech-description">
-            GPS、BLE、加速度センサーを組み合わせて屋内外問わず正確な位置を記録
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">📡</div>
+          <h3 class="feature-title-large">マルチセンサー</h3>
+          <p class="feature-description-large">
+            GPS、BLE、加速度センサーを組み合わせて屋内外問わず正確な位置を記録します。
           </p>
         </div>
         
-        <div class="tech-card">
-          <div class="tech-icon">🔒</div>
-          <h3 class="tech-title">データ暗号化</h3>
-          <p class="tech-description">
-            すべてのデータを暗号化して保存し、第三者からの不正アクセスを防止
+        <div class="feature-card-detailed">
+          <div class="feature-icon-large">🔒</div>
+          <h3 class="feature-title-large">データ暗号化</h3>
+          <p class="feature-description-large">
+            すべてのデータを暗号化して保存し、第三者からの不正アクセスを防止します。
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section-app">
-    <div class="container-fluid">
-      <div class="cta-content-app">
-        <h2 class="cta-title-app">あなたの移動を<br>特別な思い出に</h2>
-        <p class="cta-subtitle-app">
-          TADATAKAで、日常の移動が価値ある記録に変わります。<br>
-          今すぐダウンロードして、新しいライフログ体験を始めましょう。
-        </p>
-        <div class="download-buttons">
-          <a href="#" class="download-button">
-            <span>📱</span>
-            App Store
-          </a>
-          <a href="#" class="download-button">
-            <span>🤖</span>
-            Google Play
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- JavaScript -->
   <script>
