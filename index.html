@@ -188,10 +188,17 @@
       font-family: 'Orbitron', monospace;
       font-size: 24px;
       font-weight: 700;
-      color: #fff;
+      color: #ffffff;
       text-decoration: none;
       letter-spacing: 2px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.9),
+                   0 0 8px rgba(0,0,0,0.7),
+                   0 0 12px rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 8px 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
     
     /* メインゲームエリア */
@@ -254,7 +261,8 @@
     .card-icon {
       font-size: 48px;
       margin-bottom: 20px;
-      color: #000;
+      color: #1a1a1a;
+      font-weight: 700;
     }
     
     .card-title {
@@ -262,13 +270,16 @@
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 12px;
-      color: #000;
+      color: #1a1a1a;
+      letter-spacing: 0.5px;
     }
     
     .card-description {
       font-size: 14px;
-      color: #666;
+      color: #333333;
       line-height: 1.5;
+      font-weight: 500;
+      letter-spacing: 0.3px;
     }
     
     /* 8bit ドット絵風棒人間（元のサイズ） */
@@ -378,7 +389,7 @@
     /* 個別ピクセル */
     .pixel {
       position: absolute;
-      background: #000;
+      background: #1a1a1a;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
@@ -433,13 +444,14 @@
       padding: 12px 20px;
       border: 4px solid #22c55e;
       border-style: dashed;
-      color: #22c55e;
+      color: #16a34a;
       font-family: 'Orbitron', monospace;
       font-weight: 700;
       text-transform: uppercase;
       box-shadow: 
         inset 2px 2px 0px #f1f5f9,
-        4px 4px 0px rgba(0, 0, 0, 0.3);
+        4px 4px 0px rgba(0, 0, 0, 0.4),
+        0 0 12px rgba(255, 255, 255, 0.8);
       image-rendering: pixelated;
       z-index: 1000;
       min-width: 120px;
@@ -2071,13 +2083,17 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       margin-bottom: 8px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9),
+                   0 0 8px rgba(0, 0, 0, 0.7);
+      color: #22c55e;
     }
 
     .scroll-arrow {
       font-size: 24px;
       animation: bounce 2s infinite;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9),
+                   0 0 8px rgba(0, 0, 0, 0.7);
+      color: #22c55e;
     }
 
     @keyframes bounce {
@@ -2140,16 +2156,18 @@
 
     .section-subtitle {
       font-size: 1.5rem;
-      color: #64748b;
+      color: #334155;
       margin-bottom: 24px;
+      font-weight: 500;
     }
 
     .company-description {
       font-size: 1.1rem;
       line-height: 1.8;
-      color: #0f172a;
+      color: #1e293b;
       max-width: 800px;
       margin: 0 auto;
+      font-weight: 500;
     }
 
     /* サービスグリッド */
@@ -2202,9 +2220,10 @@
     }
 
     .service-desc {
-      color: #64748b;
+      color: #334155;
       margin-bottom: 20px;
       line-height: 1.6;
+      font-weight: 500;
     }
 
     .service-link {
@@ -2268,8 +2287,9 @@
     }
 
     .member-role {
-      color: #64748b;
+      color: #334155;
       margin-bottom: 16px;
+      font-weight: 500;
     }
 
     .member-link {
@@ -2315,6 +2335,7 @@
       align-items: center;
       gap: 8px;
       margin: 0 auto;
+      letter-spacing: 1px;
     }
 
     .back-to-top-btn:hover {
@@ -2350,10 +2371,11 @@
     }
 
     .cta-description {
-      color: #e2e8f0;
+      color: #f1f5f9;
       font-size: 1.1rem;
       line-height: 1.8;
       margin-bottom: 32px;
+      font-weight: 500;
     }
 
     .cta-button {
@@ -2368,6 +2390,7 @@
       text-transform: uppercase;
       border: 4px solid #22c55e;
       transition: all 0.3s ease;
+      letter-spacing: 1px;
     }
 
     .cta-button:hover {
