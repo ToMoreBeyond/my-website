@@ -279,33 +279,33 @@
       font-weight: bold;
     }
     
-    
     .download-buttons {
       display: flex;
-      gap: var(--space-4);
-      justify-content: center;
+      gap: 16px;
+      justify-content: flex-start;
       flex-wrap: wrap;
     }
     
     .download-button {
-      background: var(--primary-orange);
+      background: #22c55e;
       color: #0f172a;
-      padding: var(--space-4) var(--space-8);
-      border-radius: var(--radius-lg);
+      padding: 16px 32px;
+      border: 2px solid #22c55e;
       text-decoration: none;
       font-weight: 600;
-      transition: all var(--transition-base);
-      box-shadow: var(--shadow-medium);
+      transition: all 0.1s ease-out;
+      box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
       display: flex;
       align-items: center;
-      gap: var(--space-2);
+      gap: 8px;
+      text-transform: uppercase;
     }
     
     .download-button:hover {
-      background: var(--primary-orange-hover);
       transform: translateY(-2px);
-      box-shadow: var(--shadow-large);
+      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.4);
     }
+    
     
     /* Responsive Adjustments */
     @media (max-width: 768px) {
