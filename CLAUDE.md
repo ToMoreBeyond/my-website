@@ -184,6 +184,21 @@ Reference `/assets/brand-guidelines.md` for complete design specifications inclu
 
 For local development, place `backvideo.mp4` in the project root. For production, use external hosting (see VIDEO_SETUP.md for details). The video file is excluded from git via `.gitignore` due to size constraints (>100MB).
 
+## Deployment & SEO
+
+### Netlify Configuration
+- **Static Site Hosting**: Deployed via Netlify with custom domain `tomorebeyond.co`
+- **Form Handling**: Contact form uses Netlify Forms with `data-netlify="true"` attribute
+- **Form Notifications**: Configured to send submissions to `contact@tomorebeyond.co`
+- **DNS Management**: Uses Netlify DNS with Google Workspace MX records for email
+- **SSL/TLS**: Automatic Let's Encrypt certificates for HTTPS
+
+### SEO & Search Console
+- **Sitemap**: `/sitemap.xml` with 12 pages, proper priorities and change frequencies
+- **Search Console**: Registered with Google Search Console for `tomorebeyond.co`
+- **Meta Tags**: All pages include comprehensive OGP, Twitter Cards, and Schema.org markup
+- **Canonical URLs**: Proper canonical tags to prevent duplicate content issues
+
 ## Recent Critical Fixes
 
 ### Background Video System
@@ -282,4 +297,16 @@ Design template pattern includes:
 - Orbitron/Share Tech Mono typography
 - Scroll animations and hover effects
 - Responsive grid layouts
-詳細画面を修正する際データ量が多くなりすぎてしまってアプリがよく落ちてしまう。細かくステップを踏んで進めよう。
+
+## Development Best Practices
+
+### Performance Considerations
+- **Detail Page Editing**: When modifying detail pages, work in small increments to prevent application crashes due to large data processing
+- **Profile Images**: Member profile images (yamada.jpg, masadome.jpg, ando.jpg) are located in project root and referenced via `../filename.jpg` in detail pages
+- **Memory Management**: Use TodoWrite tool for complex multi-step tasks to track progress and prevent incomplete implementations
+
+### Contact Form Integration
+- **Netlify Forms**: Contact form in `/detail/contact.html` uses Netlify's native form handling
+- **Spam Protection**: Honeypot field (`bot-field`) included for spam prevention
+- **Success Page**: Form redirects to `/contact-success.html` after successful submission
+- **Email Notifications**: Configure in Netlify dashboard: Forms → Settings → Add Email notification to `contact@tomorebeyond.co`
