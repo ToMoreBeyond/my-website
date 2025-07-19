@@ -3,7 +3,7 @@
     "name": "ToMoreBeyond",
     "url": "https://tomoebeyond.com",
     "description": "技術と情熱で、人々の日常をより豊かに、より遠くへ。8ビット風レトロゲームと最先端技術を融合した革新的なテクノロジー会社です。",
-    "keywords": ["テクノロジー", "アプリ開発", "8ビット", "ゲーミフィケーション", "地図アプリ", "忠嵩", "TOI-RUN", "モバイルアプリ"],
+    "keywords": ["テクノロジー", "アプリ開発", "8ビット", "ゲーミフィケーション", "地図アプリ", "忠嵩", "TADATAKA", "TOI-RUN", "モバイルアプリ", "ともびと", "トモビ", "ToMoreBeyond"],
     "author": "ToMoreBeyond Inc.",
     "language": "ja",
     "charset": "UTF-8",
@@ -181,7 +181,7 @@
     "github": "https://github.com/tomoebeyond",
     "twitter": "https://twitter.com/tomoebeyond",
     "linkedin": "https://linkedin.com/company/tomoebeyond",
-    "email": "contact@tomoebeyond.com"
+    "email": "contact@tomorebeyond.co"
   },
   "analytics": {
     "google_analytics": "GA_MEASUREMENT_ID",
