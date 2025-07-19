@@ -592,7 +592,7 @@
           </p>
         </div>
         
-        <form class="contact-form" name="contact" method="POST" netlify-honeypot="bot-field" data-netlify="true" action="/contact-success.html">
+        <form class="contact-form" name="contact" method="POST" netlify-honeypot="bot-field" data-netlify="true" data-netlify-recaptcha="true" action="/contact-success.html">
           <!-- スパム対策用の隠しフィールド -->
           <p style="display: none;">
             <label>このフィールドは空にしておいてください: <input name="bot-field" /></label>
@@ -636,6 +636,8 @@
             <label for="message" class="form-label">お問い合わせ内容</label>
             <textarea id="message" name="message" class="form-textarea" rows="6" placeholder="具体的なご相談内容をお書きください" required></textarea>
           </div>
+          
+          <div data-netlify-recaptcha="true"></div>
           
           <button type="submit" class="form-submit">
             送信する

@@ -1,12 +1,8 @@
 [build]
   publish = "."
 
-[form]
-  [form.settings]
-    name = "contact"
-    notification = true
-    honeypot = true
-    notification_email = "contact@tomorebeyond.co"
+[[plugins]]
+  package = "@netlify/plugin-forms"
 
 [[headers]]
   for = "/*"
