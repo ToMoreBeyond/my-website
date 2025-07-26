@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://tomorebeyond.co/</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,21 +15,21 @@
   <!-- Company Pages -->
   <url>
     <loc>https://tomorebeyond.co/detail/company.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/detail/mission.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/detail/contact.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -37,21 +37,21 @@
   <!-- Team Member Pages -->
   <url>
     <loc>https://tomorebeyond.co/detail/yamada.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/detail/masadome.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/detail/ando.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -59,21 +59,21 @@
   <!-- Media Pages -->
   <url>
     <loc>https://tomorebeyond.co/detail/blog.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/detail/video.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/detail/sns.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
@@ -81,21 +81,21 @@
   <!-- Product Pages -->
   <url>
     <loc>https://tomorebeyond.co/pages/tadataka.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/pages/toirun.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://tomorebeyond.co/pages/midpoint.html</loc>
-    <lastmod>2025-07-19</lastmod>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
