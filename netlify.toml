@@ -11,3 +11,24 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# HTTPからHTTPSへのリダイレクト
+[[redirects]]
+  from = "http://tomorebeyond.co/*"
+  to = "https://tomorebeyond.co/:splat"
+  status = 301
+  force = true
+
+# www付きURLからwww無しへのリダイレクト
+[[redirects]]
+  from = "https://www.tomorebeyond.co/*"
+  to = "https://tomorebeyond.co/:splat"
+  status = 301
+  force = true
+
+# http://www.からhttps://へのリダイレクト
+[[redirects]]
+  from = "http://www.tomorebeyond.co/*"
+  to = "https://tomorebeyond.co/:splat"
+  status = 301
+  force = true
