@@ -90,6 +90,17 @@
   }
   </script>
   
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  
+  <!-- SplitType for text animations -->
+  <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+  
   <!-- Website Schema -->
   <script type="application/ld+json">
   {
@@ -736,6 +747,55 @@
     
     .card {
       will-change: transform;
+    }
+    
+    /* セクションアニメーション用 */
+    .section {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* 文字分割アニメーション */
+    .split-text .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    
+    /* パララックス要素 */
+    .parallax-element {
+      will-change: transform;
+    }
+    
+    /* フェードイン要素 */
+    .fade-element {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    
+    /* パーティクルコンテナ */
+    .particles-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #22c55e;
+      border-radius: 50%;
+      opacity: 0;
       transform: translateZ(0);
     }
     
@@ -775,6 +835,8 @@
     <div class="video-overlay"></div>
   </div>
   
+  <!-- パーティクルエフェクト -->
+  <div class="particles-container" id="particlesContainer"></div>
   
   <!-- メインコンテンツ -->
   <div class="content-wrapper">
@@ -998,6 +1060,9 @@
         // キャラクターを表示
         this.showCharacter();
         
+        // GSAPアニメーション初期化
+        this.initGSAPAnimations();
+        
         // ローディング完了
         this.hideLoading();
         
@@ -1005,6 +1070,278 @@
         setInterval(() => {
           this.saveGameState();
         }, 5000);
+      }
+      
+      initGSAPAnimations() {
+        // GSAPプラグイン登録
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+        
+        // Lenisスムーズスクロール初期化
+        this.initLenisScroll();
+        
+        // パーティクルエフェクト初期化
+        this.createParticles();
+        
+        // タイトルの文字分割アニメーション
+        const titleElement = document.querySelector('.game-title');
+        if (titleElement) {
+          const splitTitle = new SplitType(titleElement, { types: 'chars' });
+          gsap.from(splitTitle.chars, {
+            duration: 0.8,
+            y: 100,
+            opacity: 0,
+            rotation: 10,
+            stagger: {
+              amount: 0.8,
+              from: "random"
+            },
+            ease: "back.out(2)",
+            delay: 0.3,
+            onComplete: () => {
+              // タイトルグロー効果
+              gsap.to(titleElement, {
+                duration: 2,
+                textShadow: "0 0 30px rgba(34, 197, 94, 0.8)",
+                repeat: -1,
+                yoyo: true,
+                ease: "power2.inOut"
+              });
+            }
+          });
+        }
+        
+        // サブタイトルのタイピングアニメーション改善
+        const subtitleElement = document.querySelector('.game-subtitle');
+        if (subtitleElement) {
+          const originalText = subtitleElement.textContent;
+          subtitleElement.textContent = '';
+          gsap.to(subtitleElement, {
+            duration: 3,
+            text: {
+              value: originalText,
+              delimiter: ""
+            },
+            ease: "none",
+            delay: 1.5,
+            onUpdate: function() {
+              subtitleElement.style.opacity = '1';
+            }
+          });
+        }
+        
+        // レベル表示の3Dグロー効果
+        gsap.to(".level-display", {
+          duration: 2,
+          boxShadow: "0 0 40px rgba(34, 197, 94, 0.9), inset 0 0 20px rgba(34, 197, 94, 0.3)",
+          scale: 1.05,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut"
+        });
+        
+        // カードの高度な出現アニメーション
+        ScrollTrigger.batch(".card", {
+          onEnter: batch => gsap.from(batch, {
+            duration: 1,
+            y: 150,
+            opacity: 0,
+            scale: 0.8,
+            rotation: 5,
+            stagger: {
+              each: 0.15,
+              grid: "auto"
+            },
+            ease: "power3.out",
+            overwrite: "auto"
+          }),
+          onLeave: batch => gsap.to(batch, {
+            duration: 0.5,
+            opacity: 0.3,
+            scale: 0.9,
+            stagger: 0.15,
+            overwrite: "auto"
+          }),
+          onEnterBack: batch => gsap.to(batch, {
+            duration: 0.5,
+            opacity: 1,
+            scale: 1,
+            stagger: 0.15,
+            overwrite: "auto"
+          }),
+          onLeaveBack: batch => gsap.to(batch, {
+            duration: 0.5,
+            opacity: 0.3,
+            scale: 0.9,
+            stagger: 0.15,
+            overwrite: "auto"
+          })
+        });
+        
+        // カードのホバーアニメーション強化
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+          // 3Dホバー効果
+          card.addEventListener('mouseenter', () => {
+            gsap.to(card, {
+              duration: 0.4,
+              scale: 1.08,
+              y: -15,
+              rotationY: 5,
+              boxShadow: "0 30px 60px rgba(34, 197, 94, 0.5)",
+              ease: "power3.out"
+            });
+            
+            // アイコンのスピン
+            gsap.to(card.querySelector('.card-icon'), {
+              duration: 0.6,
+              rotation: 360,
+              scale: 1.2,
+              ease: "power2.inOut"
+            });
+            
+            // 説明文のスライドイン
+            gsap.to(card.querySelector('.card-description'), {
+              duration: 0.3,
+              x: 5,
+              opacity: 1,
+              ease: "power2.out"
+            });
+          });
+          
+          card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+              duration: 0.3,
+              scale: 1,
+              y: 0,
+              rotationY: 0,
+              boxShadow: "none",
+              ease: "power2.inOut"
+            });
+            
+            gsap.to(card.querySelector('.card-icon'), {
+              duration: 0.3,
+              rotation: 0,
+              scale: 1,
+              ease: "power2.out"
+            });
+            
+            gsap.to(card.querySelector('.card-description'), {
+              duration: 0.3,
+              x: 0,
+              opacity: 0.8,
+              ease: "power2.out"
+            });
+          });
+        });
+        
+        // 多層パララックス効果
+        gsap.to(".video-background", {
+          scrollTrigger: {
+            trigger: ".game-area",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1
+          },
+          y: 300,
+          scale: 1.3,
+          ease: "none"
+        });
+        
+        // キャラクターの複雑な浮遊アニメーション
+        const characterTimeline = gsap.timeline({ repeat: -1 });
+        characterTimeline
+          .to("#tinyCharacter", {
+            duration: 2,
+            y: -8,
+            rotation: 2,
+            ease: "sine.inOut"
+          })
+          .to("#tinyCharacter", {
+            duration: 2,
+            y: 0,
+            rotation: -2,
+            ease: "sine.inOut"
+          });
+        
+        // スクロールインジケーター
+        gsap.to(".scroll-indicator", {
+          duration: 1.5,
+          y: 10,
+          opacity: 0.3,
+          repeat: -1,
+          yoyo: true,
+          ease: "power2.inOut"
+        });
+        
+        // リセットボタンの高度なアニメーション
+        const resetBtn = document.getElementById("resetButton");
+        if (resetBtn) {
+          gsap.to(resetBtn, {
+            duration: 2,
+            scale: 1.1,
+            boxShadow: "0 0 30px rgba(239, 68, 68, 0.6)",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+          });
+        }
+      }
+      
+      initLenisScroll() {
+        // Lenisスムーズスクロール設定
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 1,
+          touchMultiplier: 2,
+          infinite: false
+        });
+        
+        // GSAPとLenisを同期
+        lenis.on('scroll', ScrollTrigger.update);
+        
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        
+        gsap.ticker.lagSmoothing(0);
+        
+        this.lenis = lenis;
+      }
+      
+      createParticles() {
+        const container = document.getElementById('particlesContainer');
+        if (!container) return;
+        
+        // パーティクル生成
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          container.appendChild(particle);
+          
+          // ランダムな初期位置
+          gsap.set(particle, {
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            scale: Math.random() * 0.5 + 0.5
+          });
+          
+          // 浮遊アニメーション
+          gsap.to(particle, {
+            duration: Math.random() * 20 + 10,
+            x: `+=${Math.random() * 200 - 100}`,
+            y: `-=${Math.random() * 200 + 100}`,
+            opacity: Math.random() * 0.5 + 0.2,
+            scale: Math.random() * 1.5 + 0.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: Math.random() * 5
+          });
+        }
       }
       
       showCharacter() {
@@ -1454,6 +1791,8 @@
       }
       
       moveCharacter(amount) {
+        // GSAPを使用した滑らかな移動
+        const oldPosition = this.characterPosition;
         // キャラクター位置を更新（0〜1の範囲）
         this.characterPosition = Math.max(0, Math.min(1, this.characterPosition + amount));
         
@@ -1462,65 +1801,69 @@
       }
       
       updatePositions() {
-        // RAFでパフォーマンス最適化
-        if (this.rafId) {
-          cancelAnimationFrame(this.rafId);
-        }
+        const character = document.getElementById('tinyCharacter');
+        const track = document.getElementById('cardsTrack');
+        const screenWidth = window.innerWidth;
         
-        this.rafId = requestAnimationFrame(() => {
-          const character = document.getElementById('tinyCharacter');
-          const track = document.getElementById('cardsTrack');
-          const screenWidth = window.innerWidth;
-          
-          if (!character || !track) return;
-          
-          // 確実に表示状態を維持
-          character.style.opacity = '1';
-          character.style.visibility = 'visible';
-          character.style.display = 'block';
-          character.style.pointerEvents = 'auto';
-          
-          
-          // モバイルでの表示を強制
-          character.style.transform = 'translateZ(0)';
-          character.style.webkitTransform = 'translateZ(0)';
-          
-          // 改善されたキャラクター位置計算（線形で連続的）
-          const minPosition = 50; // 最小位置（左端）
-          const maxPosition = screenWidth - 100; // 最大位置（右端）
-          const travelDistance = maxPosition - minPosition;
-          
-          // 線形補間で連続的な位置計算
-          const charX = minPosition + (travelDistance * this.characterPosition);
-          
-          // キャラクター位置を更新
-          character.style.left = charX + 'px';
-          
-          // カードスクロール計算（キャラクター位置と同期）
-          const cardWidth = 280 + 24; // カード幅 + マージン
-          const totalCardsWidth = cardWidth * this.cards.length;
-          const containerPadding = 100; // 左右のパディング
-          const maxScrollDistance = Math.max(0, totalCardsWidth - screenWidth + containerPadding * 2);
-          
-          // キャラクター位置に完全同期したスクロール（3D変換で最適化）
-          const scrollX = -maxScrollDistance * this.characterPosition;
-          track.style.transform = `translate3d(${scrollX}px, 0, 0)`;
-          
-          // 現在のカードをハイライト
-          const currentCardIndex = Math.round(this.characterPosition * (this.cards.length - 1));
-          this.highlightCard(currentCardIndex);
+        if (!character || !track) return;
+        
+        // 改善されたキャラクター位置計算（線形で連続的）
+        const minPosition = 50; // 最小位置（左端）
+        const maxPosition = screenWidth - 100; // 最大位置（右端）
+        const travelDistance = maxPosition - minPosition;
+        
+        // 線形補間で連続的な位置計算
+        const charX = minPosition + (travelDistance * this.characterPosition);
+        
+        // GSAPでキャラクターを滑らかに移動
+        gsap.to(character, {
+          duration: 0.3,
+          left: charX,
+          ease: "power2.out",
+          overwrite: "auto"
         });
+        
+        // カードスクロール計算（キャラクター位置と同期）
+        const cardWidth = 280 + 24; // カード幅 + マージン
+        const totalCardsWidth = cardWidth * this.cards.length;
+        const containerPadding = 100; // 左右のパディング
+        const maxScrollDistance = Math.max(0, totalCardsWidth - screenWidth + containerPadding * 2);
+        
+        // GSAPでカードトラックを滑らかにスクロール
+        const scrollX = -maxScrollDistance * this.characterPosition;
+        gsap.to(track, {
+          duration: 0.3,
+          x: scrollX,
+          ease: "power2.out",
+          overwrite: "auto"
+        });
+        
+        // 現在のカードをハイライト
+        const currentCardIndex = Math.round(this.characterPosition * (this.cards.length - 1));
+        this.highlightCard(currentCardIndex);
       }
       
       highlightCard(index) {
         const cards = document.querySelectorAll('.card');
         cards.forEach((card, i) => {
           if (i === index) {
-            card.style.transform = 'translate3d(0, -5px, 0) scale(1.02)';
-            card.style.boxShadow = '0 20px 40px rgba(0,0,0,0.4)';
+            // GSAPで滑らかにハイライト
+            gsap.to(card, {
+              duration: 0.4,
+              y: -8,
+              scale: 1.03,
+              boxShadow: '0 25px 50px rgba(34, 197, 94, 0.3)',
+              ease: "power2.out"
+            });
           } else {
-            card.style.transform = 'translate3d(0, 0, 0)';
-            card.style.boxShadow = '';
+            // 他のカードを元に戻す
+            gsap.to(card, {
+              duration: 0.3,
+              y: 0,
+              scale: 1,
+              boxShadow: 'none',
+              ease: "power2.out"
+            });
           }
         });
       }
