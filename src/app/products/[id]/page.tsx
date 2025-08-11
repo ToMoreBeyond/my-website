@@ -19,6 +19,13 @@ import {
 import { products, Product } from '@/data/products';
 import { clsx } from 'clsx';
 
+// Generate static params for all products
+export async function generateStaticParams() {
+  return products.map((product) => ({
+    id: product.id,
+  }));
+}
+
 const statusConfig = {
   'in-development': {
     icon: <ClockIcon className="w-5 h-5" />,

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { ChevronDownIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState, useRef } from 'react';
 
 export function HeroSection() {
@@ -62,16 +62,51 @@ export function HeroSection() {
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden cursor-none"
     >
-      {/* Background with Parallax */}
+      {/* Enhanced Background with Parallax */}
       <motion.div 
         className="absolute inset-0 z-0"
         style={{
           background: `
             radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, 
-              rgba(34, 197, 94, 0.1) 0%, 
-              transparent 50%),
-            linear-gradient(135deg, #0f172a 0%, #1e293b 100%)
+              rgba(16, 185, 129, 0.25) 0%, 
+              rgba(14, 165, 233, 0.15) 25%,
+              rgba(217, 70, 239, 0.1) 50%,
+              transparent 70%),
+            linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%)
           `
+        }}
+        animate={{
+          background: [
+            `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, 
+              rgba(16, 185, 129, 0.25) 0%, 
+              rgba(14, 165, 233, 0.15) 25%,
+              rgba(217, 70, 239, 0.1) 50%,
+              transparent 70%),
+            linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%)`,
+            `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, 
+              rgba(14, 165, 233, 0.25) 0%, 
+              rgba(217, 70, 239, 0.15) 25%,
+              rgba(16, 185, 129, 0.1) 50%,
+              transparent 70%),
+            linear-gradient(135deg, #0c4a6e 0%, #1e293b 50%, #701a75 100%)`,
+            `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, 
+              rgba(217, 70, 239, 0.25) 0%, 
+              rgba(16, 185, 129, 0.15) 25%,
+              rgba(14, 165, 233, 0.1) 50%,
+              transparent 70%),
+            linear-gradient(135deg, #701a75 0%, #1e293b 50%, #0f172a 100%)`,
+            `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, 
+              rgba(16, 185, 129, 0.25) 0%, 
+              rgba(14, 165, 233, 0.15) 25%,
+              rgba(217, 70, 239, 0.1) 50%,
+              transparent 70%),
+            linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%)`,
+          ]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
       >
         {/* Animated Grid Background */}
@@ -88,8 +123,8 @@ export function HeroSection() {
           }}
           style={{
             backgroundImage: `
-              linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px)
+              linear-gradient(rgba(16, 185, 129, 0.15) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(14, 165, 233, 0.1) 1px, transparent 1px)
             `,
             backgroundSize: '50px 50px',
           }}
@@ -264,33 +299,6 @@ export function HeroSection() {
             </motion.button>
           </motion.div>
 
-          {/* Scroll Indicator with Physics */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 2 }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          >
-            <motion.button
-              onClick={scrollToAbout}
-              className="p-3 rounded-full border-2 border-white/20 backdrop-blur-sm hover:border-primary-400 hover:bg-primary-400/10 transition-all duration-300"
-              animate={{ 
-                y: [0, 15, 0],
-                rotate: [0, 5, -5, 0]
-              }}
-              transition={{ 
-                duration: 3, 
-                repeat: Infinity, 
-                ease: 'easeInOut' 
-              }}
-              whileHover={{ 
-                scale: 1.2,
-                backgroundColor: 'rgba(34, 197, 94, 0.2)'
-              }}
-            >
-              <ChevronDownIcon className="w-6 h-6 text-white" />
-            </motion.button>
-          </motion.div>
         </motion.div>
       </div>
 

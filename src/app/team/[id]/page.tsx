@@ -18,6 +18,13 @@ import {
 import { teamMembers, TeamMember } from '@/data/team';
 import { clsx } from 'clsx';
 
+// Generate static params for all team members
+export async function generateStaticParams() {
+  return teamMembers.map((member) => ({
+    id: member.id,
+  }));
+}
+
 interface PageProps {
   params: {
     id: string;
