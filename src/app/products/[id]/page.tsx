@@ -26,13 +26,14 @@ export async function generateStaticParams() {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function ProductDetail({ params }: PageProps) {
-  const product = products.find(p => p.id === params.id);
+export default async function ProductDetail({ params }: PageProps) {
+  const resolvedParams = await params;
+  const product = products.find(p => p.id === resolvedParams.id);
   
   if (!product) {
     return (

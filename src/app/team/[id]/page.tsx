@@ -11,13 +11,14 @@ export async function generateStaticParams() {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function TeamMemberDetail({ params }: PageProps) {
-  const member = teamMembers.find(m => m.id === params.id);
+export default async function TeamMemberDetail({ params }: PageProps) {
+  const resolvedParams = await params;
+  const member = teamMembers.find(m => m.id === resolvedParams.id);
 
   if (!member) {
     return (
