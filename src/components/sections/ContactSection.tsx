@@ -31,27 +31,27 @@ export function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    alert('お問い合わせありがとうございます。後日担当者よりご連絡させていただきます。');
-    setFormData({ name: '', email: '', company: '', message: '' });
-    setIsSubmitting(false);
+    try {
+      // Netlify Forms submission
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+      
+      alert('お問い合わせありがとうございます。後日担当者よりご連絡させていただきます。');
+      setFormData({ name: '', email: '', company: '', message: '' });
+    } catch (error) {
+      alert('送信中にエラーが発生しました。もう一度お試しください。');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
-    {
-      icon: <EnvelopeIcon className="w-6 h-6" />,
-      title: 'Email',
-      info: 'contact@tomorebeyond.co',
-      href: 'mailto:contact@tomorebeyond.co'
-    },
-    {
-      icon: <PhoneIcon className="w-6 h-6" />,
-      title: '電話',
-      info: '+81-3-1234-5678',
-      href: 'tel:+81-3-1234-5678'
-    },
     {
       icon: <MapPinIcon className="w-6 h-6" />,
       title: '所在地',
@@ -149,7 +149,14 @@ export function ContactSection() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form 
+              name="contact" 
+              method="POST" 
+              data-netlify="true"
+              onSubmit={handleSubmit} 
+              className="space-y-6"
+            >
+              <input type="hidden" name="form-name" value="contact" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

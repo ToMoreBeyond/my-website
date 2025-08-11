@@ -19,8 +19,8 @@ export interface TeamMember {
 export const teamMembers: TeamMember[] = [
   {
     id: 'yamada',
-    name: '山田 隼大',
-    nameEn: 'Jundai Yamada',
+    name: '山田',
+    nameEn: 'Yamada',
     position: 'Chief Design Officer',
     positionEn: 'CDO',
     bio: 'ユーザーエクスペリエンス設計のエキスパート。人間中心設計の哲学に基づき、直感的で美しいインターフェースを創造します。デザイン思考とテクノロジーを融合させ、革新的なプロダクト体験を提供します。',
@@ -34,10 +34,8 @@ export const teamMembers: TeamMember[] = [
     ],
     image: '/images/team/yamada.jpg',
     social: {
-      linkedin: 'https://linkedin.com/in/jundai-yamada',
       twitter: 'https://twitter.com/jundai_yamada',
-      github: 'https://github.com/jundai-yamada',
-      email: 'yamada@tomorebeyond.co'
+      github: 'https://github.com/jundai-yamada'
     },
     achievements: [
       'Good Design Award 2023 受賞',
@@ -63,9 +61,7 @@ export const teamMembers: TeamMember[] = [
     ],
     image: '/images/team/masadome.jpg',
     social: {
-      linkedin: 'https://linkedin.com/in/masadome',
-      twitter: 'https://twitter.com/masadome_ceo',
-      email: 'masadome@tomorebeyond.co'
+      twitter: 'https://twitter.com/masadome_ceo'
     },
     achievements: [
       'スタートアップ経営経験 5年以上',
@@ -91,10 +87,8 @@ export const teamMembers: TeamMember[] = [
     ],
     image: '/images/team/ando.jpg',
     social: {
-      linkedin: 'https://linkedin.com/in/ando-cto',
       github: 'https://github.com/ando-dev',
-      twitter: 'https://twitter.com/ando_tech',
-      email: 'ando@tomorebeyond.co'
+      twitter: 'https://twitter.com/ando_tech'
     },
     achievements: [
       '大規模システム設計・運用経験 10年以上',

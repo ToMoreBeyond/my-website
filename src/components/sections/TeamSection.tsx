@@ -104,20 +104,22 @@ export function TeamSection() {
 
                     {/* Contact */}
                     <div className="flex justify-center space-x-2">
-                      {member.social.email && (
+                      {member.social.github && (
                         <motion.a
-                          href={`mailto:${member.social.email}`}
+                          href={member.social.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <EnvelopeIcon className="w-5 h-5" />
+                          <LinkIcon className="w-5 h-5" />
                         </motion.a>
                       )}
-                      {member.social.linkedin && (
+                      {member.social.twitter && (
                         <motion.a
-                          href={member.social.linkedin}
+                          href={member.social.twitter}
                           target="_blank"
                           rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
@@ -265,20 +267,9 @@ export function TeamSection() {
 
               {/* Social Links */}
               <div className="flex space-x-4">
-                {selectedMember.social.email && (
+                {selectedMember.social.github && (
                   <motion.a
-                    href={`mailto:${selectedMember.social.email}`}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="flex items-center px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
-                  >
-                    <EnvelopeIcon className="w-4 h-4 mr-2" />
-                    連絡する
-                  </motion.a>
-                )}
-                {selectedMember.social.linkedin && (
-                  <motion.a
-                    href={selectedMember.social.linkedin}
+                    href={selectedMember.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
@@ -286,7 +277,20 @@ export function TeamSection() {
                     className="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                   >
                     <LinkIcon className="w-4 h-4 mr-2" />
-                    LinkedIn
+                    GitHub
+                  </motion.a>
+                )}
+                {selectedMember.social.twitter && (
+                  <motion.a
+                    href={selectedMember.social.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <LinkIcon className="w-4 h-4 mr-2" />
+                    Twitter
                   </motion.a>
                 )}
               </div>
