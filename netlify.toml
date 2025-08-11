@@ -1,9 +1,6 @@
 [build]
   publish = "."
 
-[[plugins]]
-  package = "@netlify/plugin-forms"
-
 [[headers]]
   for = "/*"
   [headers.values]
