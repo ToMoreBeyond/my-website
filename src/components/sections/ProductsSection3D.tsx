@@ -2,6 +2,7 @@
 
 import { motion, useInView, useMotionValue, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowRightIcon, CodeBracketIcon, PlayIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
@@ -29,6 +30,7 @@ const statusColors = {
 };
 
 export function ProductsSection() {
+  const router = useRouter();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -72,7 +74,7 @@ export function ProductsSection() {
           </motion.div>
           
           <motion.h2 
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6"
             style={{
               background: 'linear-gradient(135deg, #fff 0%, #22c55e 50%, #3b82f6 100%)',
               WebkitBackgroundClip: 'text',
@@ -95,13 +97,13 @@ export function ProductsSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
             最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーションを開発しています。
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
           {products.map((product, index) => (
             <motion.div
               key={product.id}
@@ -136,7 +138,7 @@ export function ProductsSection() {
                 />
 
                 {/* Product Image with Parallax */}
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-48 sm:h-56 overflow-hidden">
                   <motion.div
                     className="absolute inset-0"
                     style={{
@@ -200,7 +202,7 @@ export function ProductsSection() {
 
                 {/* Content with 3D Transform */}
                 <motion.div
-                  className="p-6 relative"
+                  className="p-4 sm:p-6 relative"
                   style={{
                     transform: hoveredCard === product.id ? 'translateZ(20px)' : 'translateZ(0px)',
                   }}
@@ -209,7 +211,7 @@ export function ProductsSection() {
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-3">
                       <motion.h3 
-                        className="text-2xl font-bold text-white"
+                        className="text-xl sm:text-2xl font-bold text-white"
                         whileHover={{ scale: 1.05 }}
                       >
                         {product.name}
@@ -331,6 +333,7 @@ export function ProductsSection() {
                       className="flex items-center text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors"
                       whileHover={{ scale: 1.05, x: 5 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => router.push(`/products/${product.id}`)}
                     >
                       詳細を見る
                       <ArrowRightIcon className="ml-1 w-4 h-4" />
@@ -362,7 +365,7 @@ export function ProductsSection() {
           className="text-center mt-20"
         >
           <motion.p 
-            className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
+            className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
             whileHover={{ scale: 1.02 }}
           >
             これらのプロダクトに興味がございましたら、お気軽にお問い合わせください。
@@ -376,7 +379,7 @@ export function ProductsSection() {
                 window.scrollTo({ top: offsetTop, behavior: 'smooth' });
               }
             }}
-            className="group relative px-12 py-4 text-lg font-semibold text-white bg-gradient-to-r from-primary-600 to-secondary-600 rounded-full overflow-hidden"
+            className="group relative px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-gradient-to-r from-primary-600 to-secondary-600 rounded-full overflow-hidden"
             whileHover={{ 
               scale: 1.05,
               boxShadow: '0 20px 40px rgba(34, 197, 94, 0.3)',

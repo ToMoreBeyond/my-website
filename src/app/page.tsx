@@ -18,8 +18,13 @@ export default function Home() {
       </main>
       
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container-custom">
+      <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-12 relative overflow-hidden">
+        {/* Subtle background effect */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 via-transparent to-secondary-500/20" />
+        </div>
+        
+        <div className="container-custom relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4">ToMoreBeyond</h3>

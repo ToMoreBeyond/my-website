@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { 
   EnvelopeIcon, 
@@ -15,14 +16,34 @@ import { clsx } from 'clsx';
 import { teamMembers } from '@/data/team';
 
 export function TeamSection() {
+  const router = useRouter();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
 
   return (
     <>
-      <section id="team" className="py-20 lg:py-32 bg-white dark:bg-gray-800">
-        <div className="container-custom">
+      <section id="team" className="py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-850 relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 opacity-20">
+          <motion.div
+            className="absolute inset-0"
+            animate={{
+              background: [
+                'radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
+                'radial-gradient(circle at 70% 60%, rgba(34, 197, 94, 0.1) 0%, transparent 50%)',
+                'radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
+              ],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+          />
+        </div>
+        
+        <div className="container-custom relative z-10">
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 50 }}
@@ -39,7 +60,7 @@ export function TeamSection() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {teamMembers.map((member, index) => (
               <motion.div
                 key={member.id}
@@ -47,12 +68,12 @@ export function TeamSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="group cursor-pointer"
-                onClick={() => setSelectedMember(member)}
+                onClick={() => router.push(`/team/${member.id}`)}
               >
                 <div className="card text-center overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
                   {/* Member Image */}
                   <div className="relative">
-                    <div className="relative h-64 overflow-hidden">
+                    <div className="relative h-56 sm:h-64 overflow-hidden">
                       <Image
                         src={member.image}
                         alt={member.name}
@@ -73,7 +94,7 @@ export function TeamSection() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6">
                     <h3 className="heading-4 text-gray-900 dark:text-white mb-1">
                       {member.name}
                     </h3>
@@ -178,7 +199,7 @@ export function TeamSection() {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -205,7 +226,7 @@ export function TeamSection() {
             </div>
 
             {/* Modal Content */}
-            <div className="pt-16 p-8">
+            <div className="pt-16 p-4 sm:p-8">
               <div className="mb-6">
                 <h3 className="heading-3 text-gray-900 dark:text-white mb-2">
                   {selectedMember.name}
@@ -233,7 +254,7 @@ export function TeamSection() {
                     専門分野
                   </h4>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {selectedMember.expertise.map((skill) => (
                     <div
                       key={skill}

@@ -61,8 +61,27 @@ export function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-gray-50 dark:bg-gray-900">
-      <div className="container-custom">
+    <section id="contact" className="py-20 lg:py-32 bg-gradient-to-br from-gray-100 via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-850 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 opacity-30">
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              'radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 90% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)',
+            ],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: 'easeInOut'
+          }}
+        />
+      </div>
+      
+      <div className="container-custom relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
@@ -75,13 +94,13 @@ export function ContactSection() {
             <span className="text-gradient"> お問い合わせ</span>
             ください
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             プロジェクトのご相談、採用に関するお問い合わせ、その他ご質問がございましたら、
             お気軽にご連絡ください。
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -128,7 +147,7 @@ export function ContactSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-12 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+              className="mt-8 lg:mt-12 p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
             >
               <h4 className="font-semibold text-gray-900 dark:text-white mb-4">
                 営業時間

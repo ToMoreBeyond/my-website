@@ -37,8 +37,27 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="company" className="py-20 lg:py-32 bg-white dark:bg-gray-800">
-      <div className="container-custom">
+    <section id="company" className="py-20 lg:py-32 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-850 dark:to-gray-900 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 opacity-30">
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              'radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)',
+              'radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%)',
+              'radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)',
+            ],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: 'easeInOut'
+          }}
+        />
+      </div>
+      
+      <div className="container-custom relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
