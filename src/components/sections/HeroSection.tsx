@@ -41,6 +41,14 @@ export function HeroSection() {
     }
   };
 
+  const scrollToAbout = () => {
+    const element = document.getElementById('company');
+    if (element) {
+      const offsetTop = element.offsetTop - 80;
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+    }
+  };
+
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     if (element) {
@@ -261,11 +269,11 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 2 }}
-            className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           >
             <motion.button
-              onClick={scrollToProducts}
-              className="p-4 rounded-full border-2 border-white/20 backdrop-blur-sm hover:border-primary-400 hover:bg-primary-400/10 transition-all duration-300"
+              onClick={scrollToAbout}
+              className="p-3 rounded-full border-2 border-white/20 backdrop-blur-sm hover:border-primary-400 hover:bg-primary-400/10 transition-all duration-300"
               animate={{ 
                 y: [0, 15, 0],
                 rotate: [0, 5, -5, 0]
