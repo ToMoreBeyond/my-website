@@ -116,27 +116,13 @@ export default function Home() {
                 <Image
                   src="/images/logos/tomorebeyond-logo.png"
                   alt="ToMoreBeyond Logo"
-                  width={300}
-                  height={120}
+                  width={500}
+                  height={200}
                   className="max-w-full h-auto"
                   unoptimized
                 />
               </motion.div>
 
-              {/* Subtitle Box */}
-              <motion.div
-                className="bg-white/90 backdrop-blur-sm border-4 border-gray-300 px-6 py-3 transform rotate-1 mb-12"
-                initial={{ scale: 0, rotate: 10 }}
-                animate={{ scale: 1, rotate: 1 }}
-                transition={{ duration: 1.2, delay: 1.2, type: "spring", stiffness: 100 }}
-                style={{
-                  boxShadow: '15px 15px 40px rgba(0,0,0,0.2)'
-                }}
-              >
-                <p className="text-xl md:text-2xl text-gray-800 font-semibold">
-                  モバイルアプリケーション開発企業
-                </p>
-              </motion.div>
 
               {/* Main Title */}
               <motion.h2
@@ -301,28 +287,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Stats Section */}
-            <motion.div 
-              className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 stagger-container"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              {[
-                { label: 'Projects', value: '50', suffix: '+' },
-                { label: 'Clients', value: '100', suffix: '+' },
-                { label: 'Years', value: '5', suffix: '+' },
-                { label: 'Awards', value: '15', suffix: '+' },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
-                    <span className="counter">{stat.value}</span>{stat.suffix}
-                  </div>
-                  <div className="text-neutral-600 font-medium">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
           </div>
         </section>
 
