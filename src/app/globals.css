@@ -187,6 +187,15 @@
     }
   }
 
+  @keyframes fadeInOut {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
