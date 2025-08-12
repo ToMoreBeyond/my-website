@@ -12,6 +12,8 @@ const Logo3D = () => {
   const y = useSpring(useMotionValue(0), { stiffness: 150, damping: 15 });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
@@ -58,6 +60,14 @@ const Logo3D = () => {
 
 // Floating Elements Background
 const FloatingElements = () => {
+  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    }
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {[...Array(20)].map((_, i) => (
@@ -65,12 +75,12 @@ const FloatingElements = () => {
           key={i}
           className="absolute w-4 h-4 bg-gradient-to-r from-blue-400/20 to-emerald-400/20 rounded-full"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
           }}
           animate={{
-            y: [null, Math.random() * window.innerHeight],
-            x: [null, Math.random() * window.innerWidth],
+            y: [null, Math.random() * dimensions.height],
+            x: [null, Math.random() * dimensions.width],
           }}
           transition={{
             duration: Math.random() * 20 + 10,
@@ -464,7 +474,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Team Section - Enhanced */}
       <motion.section 
@@ -584,7 +594,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
       
       {/* Contact Section - Enhanced */}
       <motion.section 
@@ -772,7 +782,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
       
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12">
