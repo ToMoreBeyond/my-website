@@ -217,7 +217,7 @@ export default function Home() {
 
         {/* About Section */}
         <section id="about" className="section relative overflow-hidden scroll-section curtain-section skew-element" style={{
-          background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)'
+          background: 'linear-gradient(180deg, #1e40af 0%, #3b82f6 15%, #60a5fa 35%, #93c5fd 55%, #dbeafe 75%, #f1f5f9 100%)'
         }}>
           {/* Background Elements */}
           <div className="absolute inset-0 opacity-5">
@@ -326,7 +326,7 @@ export default function Home() {
 
         {/* Products Section */}
         <section id="products" className="section relative overflow-hidden scroll-section curtain-section" style={{
-          background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%)'
+          background: 'linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 15%, #cbd5e1 35%, #94a3b8 55%, #10b981 75%, #059669 100%)'
         }}>
           <div className="container">
             <div className="text-center mb-16">
@@ -433,7 +433,7 @@ export default function Home() {
 
         {/* Team Section */}
         <section id="team" className="section relative overflow-hidden scroll-section skew-element" style={{
-          background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%)'
+          background: 'linear-gradient(180deg, #059669 0%, #10b981 15%, #34d399 35%, #6ee7b7 55%, #a7f3d0 75%, #fbbf24 100%)'
         }}>
           <div className="container">
             <div className="text-center mb-16">
@@ -540,7 +540,7 @@ export default function Home() {
 
         {/* Contact Section */}
         <section id="contact" className="section text-white relative overflow-hidden" style={{
-          background: 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)'
+          background: 'linear-gradient(180deg, #fbbf24 0%, #f59e0b 15%, #d97706 35%, #92400e 55%, #451a03 75%, #1c1917 100%)'
         }}>
           <ParticleField 
             particleCount={60} 
@@ -656,7 +656,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="text-white py-12 relative overflow-hidden" style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
+          background: 'linear-gradient(180deg, #1c1917 0%, #292524 25%, #44403c 50%, #78716c 75%, #0c0a09 100%)'
         }}>
           <div className="container relative z-10">
             <div className="grid md:grid-cols-3 gap-8">
