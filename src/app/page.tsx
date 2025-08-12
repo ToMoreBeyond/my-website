@@ -125,7 +125,7 @@ export default function Home() {
 
 
               {/* Main Title */}
-              <motion.h2
+              <motion.h1
                 className="text-7xl md:text-8xl lg:text-9xl font-extrabold text-white mb-8 leading-none tracking-tight"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -143,7 +143,14 @@ export default function Home() {
                 }}>
                   より遠くへ
                 </span>
-              </motion.h2>
+              </motion.h1>
+
+              {/* Hidden SEO Keywords */}
+              <div className="sr-only">
+                <h2>ToMoreBeyond（トモビ・TMB）について</h2>
+                <p>忠嵩（TADATAKA）地図アプリ、TOI-RUNランニングアプリ、Meet in the middle出会いアプリを開発</p>
+                <p>東京のモバイルアプリ開発会社、スマートフォンアプリ制作、ゲーミフィケーション</p>
+              </div>
 
               {/* Description */}
               <motion.p

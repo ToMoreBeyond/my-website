@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tomorebeyond.co/sitemap.xml
+
+# Specific crawling instructions for better indexing
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Enhanced indexing for key pages
+Allow: /products/
+Allow: /team/
+
+# Block sensitive areas (if any)
+Disallow: /admin/
+Disallow: /api/
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
