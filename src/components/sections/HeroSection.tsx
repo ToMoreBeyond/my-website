@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState, useRef } from 'react';
+import { DragElement } from '@/components/common/DragElement';
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false);
@@ -59,6 +60,7 @@ export function HeroSection() {
 
   return (
     <section 
+      id="hero"
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden cursor-none"
     >
@@ -185,26 +187,37 @@ export function HeroSection() {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="mb-8"
           >
-            <motion.h1 
-              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white mb-6"
-              style={{
-                textShadow: '0 0 20px rgba(34, 197, 94, 0.5)',
-                background: 'linear-gradient(135deg, #fff 0%, #22c55e 50%, #3b82f6 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+            <DragElement
+              dragConstraints={{
+                top: -100,
+                left: -200,
+                right: 200,
+                bottom: 100,
               }}
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: 'easeInOut'
-              }}
+              resetOnRelease={true}
+              elastic={true}
             >
-              ToMoreBeyond
-            </motion.h1>
+              <motion.h1 
+                className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white mb-6 select-none"
+                style={{
+                  textShadow: '0 0 20px rgba(34, 197, 94, 0.5)',
+                  background: 'linear-gradient(135deg, #fff 0%, #22c55e 50%, #3b82f6 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+              >
+                ToMoreBeyond
+              </motion.h1>
+            </DragElement>
             
             <motion.div
               initial={{ opacity: 0, y: 30 }}

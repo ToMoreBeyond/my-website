@@ -2,10 +2,13 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowRightIcon, CodeBracketIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
 import { products } from '@/data/products';
+import { DragElement } from '@/components/common/DragElement';
+import { AnimatedElement } from '@/components/common/AnimatedElement';
 
 const statusColors = {
   'in-development': {
@@ -28,6 +31,7 @@ const statusColors = {
 export function ProductsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const router = useRouter();
 
   return (
     <section id="products" className="py-20 lg:py-32 bg-gray-50 dark:bg-gray-900">
@@ -39,10 +43,21 @@ export function ProductsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="heading-2 text-gray-900 dark:text-white mb-6">
-            革新的な
-            <span className="text-gradient"> プロダクト</span>
-          </h2>
+          <DragElement
+            dragConstraints={{
+              top: -80,
+              left: -120,
+              right: 120,
+              bottom: 80,
+            }}
+            resetOnRelease={true}
+            elastic={true}
+          >
+            <h2 className="heading-2 text-gray-900 dark:text-white mb-6 select-none">
+              革新的な
+              <span className="text-gradient"> プロダクト</span>
+            </h2>
+          </DragElement>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーションを開発しています。
           </p>
@@ -50,14 +65,19 @@ export function ProductsSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
           {products.map((product, index) => (
-            <motion.div
+            <AnimatedElement
               key={product.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="group"
+              animation="scaleIn"
+              delay={index * 0.2}
+              duration={1.0}
             >
-              <div className="card h-full flex flex-col">
+              <motion.div
+                className="group cursor-pointer"
+                onClick={() => router.push(`/products/${product.id}`)}
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
+              >
+              <div className="card h-full flex flex-col hover:shadow-xl transition-shadow duration-300">
                 {/* Product Image */}
                 <div className="relative h-48 overflow-hidden">
                   <Image
@@ -170,6 +190,7 @@ export function ProductsSection() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => router.push(`/products/${product.id}`)}
                       className="flex items-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
                     >
                       詳細を見る
@@ -178,7 +199,8 @@ export function ProductsSection() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            </AnimatedElement>
           ))}
         </div>
 

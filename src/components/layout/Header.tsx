@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
+import { DragElement } from '@/components/common/DragElement';
 
 const navigation = [
   { name: 'Company', href: '#company', id: 'company' },
@@ -75,9 +76,15 @@ export function Header() {
       <nav className="container-custom">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <DragElement
+            dragConstraints={{
+              top: -50,
+              left: -100,
+              right: 100,
+              bottom: 50,
+            }}
+            resetOnRelease={true}
+            elastic={true}
           >
             <Link href="/" className="flex items-center space-x-3">
               <div className="relative w-10 h-10 lg:w-12 lg:h-12">
@@ -95,7 +102,7 @@ export function Header() {
                 ToMoreBeyond
               </span>
             </Link>
-          </motion.div>
+          </DragElement>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">

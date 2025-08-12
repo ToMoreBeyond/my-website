@@ -41,47 +41,6 @@ export function GlobalMouseTracker() {
 
   return (
     <>
-      {/* Main cursor */}
-      <motion.div
-        className="fixed pointer-events-none z-[9999] mix-blend-difference"
-        style={{
-          left: mousePosition.x - 6,
-          top: mousePosition.y - 6,
-        }}
-        animate={{
-          scale: isMoving ? 1.5 : 1,
-          opacity: isMoving ? 0.8 : 0.6,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
-        }}
-      >
-        <div className="w-3 h-3 bg-white rounded-full shadow-lg" />
-      </motion.div>
-
-      {/* Outer ring */}
-      <motion.div
-        className="fixed pointer-events-none z-[9998] mix-blend-difference"
-        style={{
-          left: mousePosition.x - 20,
-          top: mousePosition.y - 20,
-        }}
-        animate={{
-          scale: isMoving ? 1.2 : 1,
-          opacity: isMoving ? 0.4 : 0.2,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 150,
-          damping: 20,
-          mass: 0.8,
-        }}
-      >
-        <div className="w-10 h-10 border-2 border-white rounded-full" />
-      </motion.div>
 
       {/* Global gradient following cursor */}
       <motion.div

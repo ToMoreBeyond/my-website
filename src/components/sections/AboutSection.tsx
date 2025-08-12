@@ -14,6 +14,8 @@ import {
   CpuChipIcon,
   DevicePhoneMobileIcon
 } from '@heroicons/react/24/outline';
+import { DragElement } from '@/components/common/DragElement';
+import { AnimatedElement } from '@/components/common/AnimatedElement';
 
 export function AboutSection() {
   const ref = useRef<HTMLElement>(null);
@@ -215,18 +217,28 @@ export function AboutSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mb-20"
         >
-          <motion.div
-            className="relative bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-900/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 border border-gray-200/50 dark:border-gray-700/50"
-            whileHover={{
-              rotateY: 2,
-              rotateX: -2,
-              scale: 1.02,
+          <DragElement
+            dragConstraints={{
+              top: -100,
+              left: -150,
+              right: 150,
+              bottom: 100,
             }}
-            style={{
-              transformStyle: 'preserve-3d',
-            }}
-            transition={{ duration: 0.3 }}
+            resetOnRelease={true}
+            elastic={true}
           >
+            <motion.div
+              className="relative bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-900/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 border border-gray-200/50 dark:border-gray-700/50 select-none"
+              whileHover={{
+                rotateY: 2,
+                rotateX: -2,
+                scale: 1.02,
+              }}
+              style={{
+                transformStyle: 'preserve-3d',
+              }}
+              transition={{ duration: 0.3 }}
+            >
             {/* Glowing border effect */}
             <motion.div
               className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100"
@@ -266,31 +278,29 @@ export function AboutSection() {
               </motion.p>
             </div>
           </motion.div>
+          </DragElement>
         </motion.div>
 
         {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
-        >
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {stats.map((stat, index) => (
-            <motion.div
+            <AnimatedElement
               key={stat.label}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-              whileHover={{ 
-                scale: 1.05, 
-                y: -10,
-                rotateY: 5,
-              }}
-              className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 text-center border border-gray-200/30 dark:border-gray-700/30"
-              style={{
-                transformStyle: 'preserve-3d',
-              }}
+              animation="bounceIn"
+              delay={0.2 + index * 0.1}
+              duration={1.2}
             >
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -10,
+                  rotateY: 5,
+                }}
+                className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 text-center border border-gray-200/30 dark:border-gray-700/30"
+                style={{
+                  transformStyle: 'preserve-3d',
+                }}
+              >
               <motion.div
                 className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/50 dark:to-secondary-900/50 rounded-xl flex items-center justify-center"
                 animate={{
@@ -324,9 +334,10 @@ export function AboutSection() {
               <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                 {stat.label}
               </div>
-            </motion.div>
+              </motion.div>
+            </AnimatedElement>
           ))}
-        </motion.div>
+        </div>
 
         {/* Values Section with 3D Cards */}
         <motion.div
@@ -345,22 +356,24 @@ export function AboutSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {values.map((value, index) => (
-            <motion.div
+            <AnimatedElement
               key={value.title}
-              initial={{ opacity: 0, y: 50, rotateX: 45 }}
-              animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : { opacity: 0, y: 50, rotateX: 45 }}
-              transition={{ duration: 0.8, delay: 1.0 + index * 0.2 }}
-              whileHover={{
-                rotateY: 10,
-                rotateX: -10,
-                scale: 1.05,
-                y: -20,
-              }}
-              className="group perspective-1000"
-              style={{
-                transformStyle: 'preserve-3d',
-              }}
+              animation="flipIn"
+              delay={0.3 + index * 0.2}
+              duration={1.2}
             >
+              <motion.div
+                whileHover={{
+                  rotateY: 10,
+                  rotateX: -10,
+                  scale: 1.05,
+                  y: -20,
+                }}
+                className="group perspective-1000"
+                style={{
+                  transformStyle: 'preserve-3d',
+                }}
+              >
               <div className="relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/50 dark:border-gray-700/50 h-full">
                 {/* Glowing background */}
                 <motion.div
@@ -436,7 +449,8 @@ export function AboutSection() {
                   ))}
                 </motion.div>
               </div>
-            </motion.div>
+              </motion.div>
+            </AnimatedElement>
           ))}
         </div>
 

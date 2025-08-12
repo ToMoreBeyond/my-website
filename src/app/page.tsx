@@ -1,20 +1,41 @@
 import { Header } from '@/components/layout/Header';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
-import { ProductsSection } from '@/components/sections/ProductsSection3D';
+import { ProductsSection } from '@/components/sections/ProductsSection';
 import { TeamSection } from '@/components/sections/TeamSection';
 import { ContactSection } from '@/components/sections/ContactSection';
+import { ScrollAnimationProvider } from '@/components/common/ScrollAnimationProvider';
+import { ParticleSystem } from '@/components/common/ParticleSystem';
+import { GlobalMouseTracker } from '@/components/common/GlobalMouseTracker';
+import { SectionTransition } from '@/components/common/SectionTransition';
 
 export default function Home() {
   return (
-    <>
+    <ScrollAnimationProvider>
+      <GlobalMouseTracker />
+      <ParticleSystem particleCount={40} className="z-[1]" />
+      
       <Header />
       <main>
-        <HeroSection />
-        <AboutSection />
-        <ProductsSection />
-        <TeamSection />
-        <ContactSection />
+        <SectionTransition sectionId="hero" transitionType="fade">
+          <HeroSection />
+        </SectionTransition>
+        
+        <SectionTransition sectionId="company" transitionType="slide" direction="up">
+          <AboutSection />
+        </SectionTransition>
+        
+        <SectionTransition sectionId="products" transitionType="split">
+          <ProductsSection />
+        </SectionTransition>
+        
+        <SectionTransition sectionId="team" transitionType="spiral">
+          <TeamSection />
+        </SectionTransition>
+        
+        <SectionTransition sectionId="contact" transitionType="wave">
+          <ContactSection />
+        </SectionTransition>
       </main>
       
       {/* Footer */}
@@ -60,6 +81,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </>
+    </ScrollAnimationProvider>
   );
 }
