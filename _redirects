@@ -1,6 +1,0 @@
-# HTTPからHTTPSへのリダイレクト
-http://tomorebeyond.co/* https://tomorebeyond.co/:splat 301!
-
-# www付きURLからwww無しへのリダイレクト
-https://www.tomorebeyond.co/* https://tomorebeyond.co/:splat 301!
-http://www.tomorebeyond.co/* https://tomorebeyond.co/:splat 301!
