@@ -89,13 +89,14 @@ export const createMagneticHover = (selector: string, strength: number = 0.3) =>
   const elements = document.querySelectorAll(selector)
   
   elements.forEach(element => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: Event) => {
+      const mouseEvent = e as MouseEvent
       const rect = element.getBoundingClientRect()
       const centerX = rect.left + rect.width / 2
       const centerY = rect.top + rect.height / 2
       
-      const deltaX = (e.clientX - centerX) * strength
-      const deltaY = (e.clientY - centerY) * strength
+      const deltaX = (mouseEvent.clientX - centerX) * strength
+      const deltaY = (mouseEvent.clientY - centerY) * strength
       
       gsap.to(element, {
         x: deltaX,

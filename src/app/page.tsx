@@ -685,13 +685,13 @@ export default function Home() {
                     { label: 'お問い合わせ', target: '#contact' },
                   ].map((link) => (
                     <motion.li key={link.label}>
-                      <button
+                      <motion.button
                         onClick={() => smoothScrollTo(link.target)}
                         className="hover:text-white transition-colors magnetic"
                         whileHover={{ x: 5 }}
                       >
                         {link.label}
-                      </button>
+                      </motion.button>
                     </motion.li>
                   ))}
                 </ul>
