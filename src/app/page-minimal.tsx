@@ -4,38 +4,17 @@ import { AboutSection } from '@/components/sections/AboutSection';
 import { ProductsSection } from '@/components/sections/ProductsSection';
 import { TeamSection } from '@/components/sections/TeamSection';
 import { ContactSection } from '@/components/sections/ContactSection';
-import { GlobalMouseTracker } from '@/components/common/GlobalMouseTracker';
-import { ScrollAnimationProvider } from '@/components/common/ScrollAnimationProvider';
-import { ParticleSystem } from '@/components/common/ParticleSystem';
-import { SafeSectionTransition } from '@/components/common/SafeSectionTransition';
 
 export default function Home() {
   return (
-    <ScrollAnimationProvider>
-      <GlobalMouseTracker />
-      <ParticleSystem particleCount={40} className="z-[1]" />
-      
+    <>
       <Header />
       <main>
-        <SafeSectionTransition sectionId="hero">
-          <HeroSection />
-        </SafeSectionTransition>
-        
-        <SafeSectionTransition sectionId="company">
-          <AboutSection />
-        </SafeSectionTransition>
-        
-        <SafeSectionTransition sectionId="products">
-          <ProductsSection />
-        </SafeSectionTransition>
-        
-        <SafeSectionTransition sectionId="team">
-          <TeamSection />
-        </SafeSectionTransition>
-        
-        <SafeSectionTransition sectionId="contact">
-          <ContactSection />
-        </SafeSectionTransition>
+        <HeroSection />
+        <AboutSection />
+        <ProductsSection />
+        <TeamSection />
+        <ContactSection />
       </main>
       
       {/* Footer */}
@@ -81,6 +60,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </ScrollAnimationProvider>
+    </>
   );
 }

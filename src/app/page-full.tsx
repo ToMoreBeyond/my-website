@@ -4,10 +4,10 @@ import { AboutSection } from '@/components/sections/AboutSection';
 import { ProductsSection } from '@/components/sections/ProductsSection';
 import { TeamSection } from '@/components/sections/TeamSection';
 import { ContactSection } from '@/components/sections/ContactSection';
-import { GlobalMouseTracker } from '@/components/common/GlobalMouseTracker';
 import { ScrollAnimationProvider } from '@/components/common/ScrollAnimationProvider';
 import { ParticleSystem } from '@/components/common/ParticleSystem';
-import { SafeSectionTransition } from '@/components/common/SafeSectionTransition';
+import { GlobalMouseTracker } from '@/components/common/GlobalMouseTracker';
+import { SectionTransition } from '@/components/common/SectionTransition';
 
 export default function Home() {
   return (
@@ -17,25 +17,25 @@ export default function Home() {
       
       <Header />
       <main>
-        <SafeSectionTransition sectionId="hero">
+        <SectionTransition sectionId="hero" transitionType="fade">
           <HeroSection />
-        </SafeSectionTransition>
+        </SectionTransition>
         
-        <SafeSectionTransition sectionId="company">
+        <SectionTransition sectionId="company" transitionType="slide" direction="up">
           <AboutSection />
-        </SafeSectionTransition>
+        </SectionTransition>
         
-        <SafeSectionTransition sectionId="products">
+        <SectionTransition sectionId="products" transitionType="split">
           <ProductsSection />
-        </SafeSectionTransition>
+        </SectionTransition>
         
-        <SafeSectionTransition sectionId="team">
+        <SectionTransition sectionId="team" transitionType="spiral">
           <TeamSection />
-        </SafeSectionTransition>
+        </SectionTransition>
         
-        <SafeSectionTransition sectionId="contact">
+        <SectionTransition sectionId="contact" transitionType="wave">
           <ContactSection />
-        </SafeSectionTransition>
+        </SectionTransition>
       </main>
       
       {/* Footer */}
