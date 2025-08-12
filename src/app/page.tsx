@@ -707,15 +707,6 @@ export default function Home() {
               </div>
             </div>
             
-            <motion.div 
-              className="border-t border-neutral-700 mt-8 pt-8 text-center text-neutral-400 text-sm"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
-            >
-              <p>&copy; 2024 ToMoreBeyond Inc. All rights reserved.</p>
-            </motion.div>
           </div>
         </footer>
       </div>
