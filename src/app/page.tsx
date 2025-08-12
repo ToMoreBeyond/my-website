@@ -101,7 +101,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 2, delay: 0.5 }}
             >
-              {/* Company Name Box */}
+              {/* Company Logo Box */}
               <motion.div
                 className="bg-white/95 backdrop-blur-sm border-4 border-gray-300 p-8 mb-8 transform -rotate-2"
                 initial={{ scale: 0, rotate: -10 }}
@@ -111,9 +111,14 @@ export default function Home() {
                   boxShadow: '20px 20px 60px rgba(0,0,0,0.3)'
                 }}
               >
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-emerald-600 tracking-tight">
-                  TMB
-                </h1>
+                <Image
+                  src="/images/logos/tomorebeyond-logo.png"
+                  alt="ToMoreBeyond Logo"
+                  width={300}
+                  height={120}
+                  className="max-w-full h-auto"
+                  unoptimized
+                />
               </motion.div>
 
               {/* Subtitle Box */}
@@ -133,16 +138,21 @@ export default function Home() {
 
               {/* Main Title */}
               <motion.h2
-                className="text-7xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-none"
+                className="text-7xl md:text-8xl lg:text-9xl font-extrabold text-white mb-8 leading-none tracking-tight"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
                 style={{
-                  textShadow: '4px 4px 20px rgba(0,0,0,0.5)'
+                  fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                  textShadow: '0 0 40px rgba(255,255,255,0.3), 0 0 80px rgba(16,185,129,0.4), 0 8px 32px rgba(0,0,0,0.8)',
+                  filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.2))'
                 }}
               >
                 技術と情熱で、
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-white animate-pulse" style={{
+                  textShadow: 'none',
+                  filter: 'drop-shadow(0 0 30px rgba(16,185,129,0.6))'
+                }}>
                   より遠くへ
                 </span>
               </motion.h2>
@@ -206,7 +216,9 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="section bg-white relative overflow-hidden scroll-section curtain-section skew-element">
+        <section id="about" className="section relative overflow-hidden scroll-section curtain-section skew-element" style={{
+          background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)'
+        }}>
           {/* Background Elements */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl parallax-layer-2" />
@@ -313,7 +325,9 @@ export default function Home() {
         </section>
 
         {/* Products Section */}
-        <section id="products" className="section bg-neutral-50 relative overflow-hidden scroll-section curtain-section">
+        <section id="products" className="section relative overflow-hidden scroll-section curtain-section" style={{
+          background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%)'
+        }}>
           <div className="container">
             <div className="text-center mb-16">
               <motion.h2 
@@ -418,7 +432,9 @@ export default function Home() {
         </section>
 
         {/* Team Section */}
-        <section id="team" className="section bg-white relative overflow-hidden scroll-section skew-element">
+        <section id="team" className="section relative overflow-hidden scroll-section skew-element" style={{
+          background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%)'
+        }}>
           <div className="container">
             <div className="text-center mb-16">
               <motion.h2 
@@ -523,7 +539,9 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="section bg-neutral-900 text-white relative overflow-hidden">
+        <section id="contact" className="section text-white relative overflow-hidden" style={{
+          background: 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)'
+        }}>
           <ParticleField 
             particleCount={60} 
             colors={['#10b981', '#34d399', '#6ee7b7']}
@@ -637,7 +655,9 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-neutral-800 text-white py-12 relative overflow-hidden">
+        <footer className="text-white py-12 relative overflow-hidden" style={{
+          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
+        }}>
           <div className="container relative z-10">
             <div className="grid md:grid-cols-3 gap-8">
               <motion.div
