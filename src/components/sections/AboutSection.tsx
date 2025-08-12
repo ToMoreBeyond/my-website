@@ -16,14 +16,14 @@ import {
 } from '@heroicons/react/24/outline';
 
 export function AboutSection() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (ref.current) {
-        const rect = (ref.current as HTMLElement).getBoundingClientRect();
+        const rect = ref.current.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
         setMousePosition({ x, y });
