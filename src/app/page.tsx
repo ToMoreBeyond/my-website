@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { CustomCursor } from '@/components/ui/CustomCursor'
+import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
@@ -16,6 +16,13 @@ import {
   createCounterAnimation,
   cleanupScrollTriggers
 } from '@/lib/scroll-animations'
+import {
+  createSectionScroll,
+  createCurtainReveal,
+  createSkewEffect,
+  createLayeredParallax,
+  createZoomEffect
+} from '@/lib/scroll-sections'
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
@@ -41,6 +48,13 @@ export default function Home() {
       
       // Counter animations
       createCounterAnimation('.counter')
+      
+      // Section scroll effects
+      createSectionScroll()
+      createCurtainReveal('.curtain-section')
+      createSkewEffect()
+      createLayeredParallax()
+      createZoomEffect('.zoom-element', 1.5)
     }, 100)
 
     return () => {
@@ -51,7 +65,7 @@ export default function Home() {
 
   return (
     <>
-      <CustomCursor />
+      <FallingTextCursor />
       
       <div className="min-h-screen overflow-hidden" style={{ cursor: 'none' }}>
         {/* Navigation */}
@@ -103,10 +117,10 @@ export default function Home() {
         {/* Hero Section */}
         <section 
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden scroll-section"
         >
           {/* Animated Background */}
-          <div className="absolute inset-0 parallax-bg">
+          <div className="absolute inset-0 parallax-bg parallax-layer-1">
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" />
             <ParticleField particleCount={80} />
           </div>
@@ -144,7 +158,7 @@ export default function Home() {
               className="max-w-5xl mx-auto"
             >
               <motion.h1 
-                className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight reveal-text"
+                className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight reveal-text zoom-element"
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2, delay: 0.3 }}
@@ -219,11 +233,11 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="section bg-white relative overflow-hidden">
+        <section id="about" className="section bg-white relative overflow-hidden scroll-section curtain-section skew-element">
           {/* Background Elements */}
           <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl parallax-slow" />
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl parallax-slow" />
+            <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl parallax-layer-2" />
+            <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl parallax-layer-3" />
           </div>
 
           <div className="container relative z-10">
@@ -326,7 +340,7 @@ export default function Home() {
         </section>
 
         {/* Products Section */}
-        <section id="products" className="section bg-neutral-50 relative overflow-hidden">
+        <section id="products" className="section bg-neutral-50 relative overflow-hidden scroll-section curtain-section">
           <div className="container">
             <div className="text-center mb-16">
               <motion.h2 
@@ -431,7 +445,7 @@ export default function Home() {
         </section>
 
         {/* Team Section */}
-        <section id="team" className="section bg-white relative overflow-hidden">
+        <section id="team" className="section bg-white relative overflow-hidden scroll-section skew-element">
           <div className="container">
             <div className="text-center mb-16">
               <motion.h2 
@@ -463,7 +477,7 @@ export default function Home() {
                   position: 'Chief Design Officer',
                   positionShort: 'CDO',
                   bio: 'ユーザーエクスペリエンス設計のエキスパート。革新的なプロダクト体験を提供します。',
-                  image: '/yamada.jpg',
+                  image: '/images/team/yamada.jpg',
                   color: 'from-blue-500 to-purple-500'
                 },
                 {
@@ -473,7 +487,7 @@ export default function Home() {
                   position: 'Chief Executive Officer',
                   positionShort: 'CEO',
                   bio: 'テクノロジーベンチャー経営のスペシャリスト。戦略的ビジョンと実行力を兼ね備えます。',
-                  image: '/masadome.jpg',
+                  image: '/images/team/masadome.jpg',
                   color: 'from-emerald-500 to-blue-500'
                 },
                 {
@@ -483,7 +497,7 @@ export default function Home() {
                   position: 'Chief Technology Officer',
                   positionShort: 'CTO',
                   bio: 'フルスタック開発の専門家。スケーラブルで堅牢なシステムアーキテクチャを設計・構築します。',
-                  image: '/ando.jpg',
+                  image: '/images/team/ando.jpg',
                   color: 'from-yellow-500 to-emerald-500'
                 }
               ].map((member, index) => (

@@ -247,6 +247,70 @@ body {
   }
 }
 
+/* Scroll Section Animations */
+.scroll-section {
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+.section-active {
+  z-index: 10;
+}
+
+.section-active .reveal-on-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-on-active {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+/* Curtain reveal overlay */
+.curtain-overlay {
+  pointer-events: none;
+}
+
+/* Skew element styles */
+.skew-element {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+/* Parallax layers */
+.parallax-layer-1,
+.parallax-layer-2,
+.parallax-layer-3,
+.parallax-layer-4 {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Zoom element */
+.zoom-element {
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+/* Horizontal scroll container */
+.horizontal-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.horizontal-section {
+  flex: 0 0 100vw;
+  height: 100vh;
+}
+
+/* Sticky progress bar */
+.sticky-progress {
+  pointer-events: none;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.5);
+}
+
 @keyframes scale-bounce {
   0% { transform: scale(0.9); }
   50% { transform: scale(1.05); }
