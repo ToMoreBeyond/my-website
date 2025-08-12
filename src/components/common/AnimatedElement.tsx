@@ -209,7 +209,7 @@ export function AnimatedElement({
       variants={getAnimationVariants()}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: true, margin: '-10%' }}
     >
       {children}
     </motion.div>

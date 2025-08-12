@@ -319,9 +319,9 @@ export function AboutSection() {
               </motion.div>
               <motion.div
                 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2"
-                animate={isInView ? {
-                  scale: [1, 1.1, 1],
-                } : {}}
+                animate={{
+                  scale: isInView ? [1, 1.1, 1] : [1, 1, 1],
+                }}
                 transition={{
                   duration: 2,
                   repeat: Infinity,

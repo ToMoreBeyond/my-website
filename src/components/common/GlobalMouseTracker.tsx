@@ -13,12 +13,15 @@ export function GlobalMouseTracker() {
   }, []);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    setMousePosition({ x: e.clientX, y: e.clientY });
-    setIsMoving(true);
+    try {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      setIsMoving(true);
 
-    // Clear the moving state after a delay
-    const timeout = setTimeout(() => setIsMoving(false), 150);
-    return () => clearTimeout(timeout);
+      // Clear the moving state after a delay
+      setTimeout(() => setIsMoving(false), 150);
+    } catch (error) {
+      console.warn('Error in handleMouseMove:', error);
+    }
   }, []);
 
   const handleMouseLeave = useCallback(() => {

@@ -45,21 +45,25 @@ export function ScrollAnimationProvider({ children }: ScrollAnimationProviderPro
     let currentSection = '';
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      try {
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
 
-      for (const section of sections) {
-        const element = document.getElementById(section === 'hero' ? 'hero' : section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            currentSection = section;
-            break;
+        for (const section of sections) {
+          const element = document.getElementById(section === 'hero' ? 'hero' : section);
+          if (element) {
+            const { offsetTop, offsetHeight } = element;
+            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+              currentSection = section;
+              break;
+            }
           }
         }
-      }
 
-      if (currentSection !== activeSection) {
-        setActiveSection(currentSection);
+        if (currentSection !== activeSection) {
+          setActiveSection(currentSection);
+        }
+      } catch (error) {
+        console.warn('Error in handleScroll:', error);
       }
     };
 

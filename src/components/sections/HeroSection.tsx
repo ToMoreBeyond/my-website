@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState, useRef } from 'react';
 import { DragElement } from '@/components/common/DragElement';
@@ -13,8 +13,6 @@ export function HeroSection() {
   // Mouse tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
 
   useEffect(() => {
     setMounted(true);
@@ -62,7 +60,7 @@ export function HeroSection() {
     <section 
       id="hero"
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden cursor-none"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Enhanced Background with Parallax */}
       <motion.div 
@@ -159,18 +157,6 @@ export function HeroSection() {
         ))}
       </motion.div>
 
-      {/* Custom Cursor */}
-      {mounted && (
-        <motion.div
-          className="fixed w-6 h-6 bg-primary-500/50 rounded-full pointer-events-none z-50 mix-blend-difference"
-          style={{
-            left: springX,
-            top: springY,
-            translateX: '-50%',
-            translateY: '-50%',
-          }}
-        />
-      )}
 
       {/* Content */}
       <div className="relative z-20 container-custom text-center">

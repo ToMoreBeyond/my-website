@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useAnimation, useScroll, useTransform } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { useEffect, useState, useMemo } from 'react';
 
 interface Particle {
@@ -20,7 +20,6 @@ interface ParticleSystemProps {
 }
 
 export function ParticleSystem({ particleCount = 50, className = '' }: ParticleSystemProps) {
-  const { scrollY } = useScroll();
   const controls = useAnimation();
   const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -106,9 +105,6 @@ export function ParticleSystem({ particleCount = 50, className = '' }: ParticleS
     <motion.div
       className={`fixed inset-0 pointer-events-none overflow-hidden ${className}`}
       animate={controls}
-      style={{
-        opacity: useTransform(scrollY, [0, 100], [1, 0.8])
-      }}
     >
       {particles.map((particle) => (
         <motion.div
