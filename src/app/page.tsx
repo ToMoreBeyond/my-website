@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
-import { CompanyLogo } from '@/components/ui/CompanyLogo'
+import { GeometricShapes } from '@/components/ui/GeometricShapes'
+import { HamburgerMenu } from '@/components/ui/HamburgerMenu'
 import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
 import {
@@ -75,159 +76,114 @@ export default function Home() {
       <FallingTextCursor />
       
       <div className="min-h-screen overflow-hidden">
-        {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-green-900/20 backdrop-blur-xl border-b border-green-400/20">
-          <div className="container flex items-center justify-between py-4">
-            <motion.div 
-              className="font-semibold text-xl text-emerald-300 magnetic"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              ToMoreBeyond
-            </motion.div>
-            
-            <div className="hidden md:flex items-center gap-8">
-              {[
-                { label: '私たちについて', target: '#about' },
-                { label: 'プロダクト', target: '#products' },
-                { label: 'チーム', target: '#team' },
-              ].map((item, index) => (
-                <motion.button
-                  key={item.label}
-                  onClick={() => smoothScrollTo(item.target)}
-                  className="text-green-100 hover:text-emerald-300 transition-colors magnetic"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ y: 0 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + index * 0.15, duration: 0.8, ease: "easeOut" }}
-                >
-                  {item.label}
-                </motion.button>
-              ))}
-              
-              <motion.button
-                onClick={() => smoothScrollTo('#contact')}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 magnetic"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-              >
-                お問い合わせ
-              </motion.button>
-            </div>
-          </div>
-        </nav>
+        {/* Navigation - Hamburger Menu Only */}
+        <HamburgerMenu />
 
         {/* Hero Section */}
         <section 
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden scroll-section"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
-          {/* Animated Background */}
-          <div className="absolute inset-0 parallax-bg parallax-layer-1">
-            <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-emerald-800 to-teal-900" />
-            <ParticleField particleCount={80} />
+          {/* Animated Background - internfes style */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-800 to-emerald-600" />
+            <div className="absolute inset-0 bg-gradient-to-t from-pink-500/30 via-transparent to-cyan-400/20" />
           </div>
 
-          {/* Floating Geometric Shapes */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-32 h-32 border border-white/10 rounded-lg"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  rotate: [0, 180, 360],
-                  scale: [1, 1.2, 1],
-                  opacity: [0.1, 0.3, 0.1],
-                }}
-                transition={{
-                  duration: 10 + i * 2,
-                  repeat: Infinity,
-                  ease: 'linear',
-                  delay: i * 0.5,
-                }}
-              />
-            ))}
-          </div>
+          {/* 3D Geometric Shapes */}
+          <GeometricShapes />
           
           <div className="container text-center relative z-10">
-            {/* Company Logo */}
+            {/* Large Typography like internfes */}
             <motion.div
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, delay: 0.2, ease: [0.43, 0.13, 0.23, 0.96] }}
-              className="mb-8"
+              className="flex flex-col items-center justify-center min-h-screen"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2, delay: 0.5 }}
             >
-              <CompanyLogo />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }}
-              className="max-w-5xl mx-auto"
-            >
-              <motion.h1 
-                className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight reveal-text zoom-element drop-shadow-2xl"
-                initial={{ opacity: 0, y: 80 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.8, delay: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
+              {/* Company Name Box */}
+              <motion.div
+                className="bg-white/95 backdrop-blur-sm border-4 border-gray-300 p-8 mb-8 transform -rotate-2"
+                initial={{ scale: 0, rotate: -10 }}
+                animate={{ scale: 1, rotate: -2 }}
+                transition={{ duration: 1.2, delay: 0.8, type: "spring", stiffness: 100 }}
+                style={{
+                  boxShadow: '20px 20px 60px rgba(0,0,0,0.3)'
+                }}
+              >
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-emerald-600 tracking-tight">
+                  TMB
+                </h1>
+              </motion.div>
+
+              {/* Subtitle Box */}
+              <motion.div
+                className="bg-white/90 backdrop-blur-sm border-4 border-gray-300 px-6 py-3 transform rotate-1 mb-12"
+                initial={{ scale: 0, rotate: 10 }}
+                animate={{ scale: 1, rotate: 1 }}
+                transition={{ duration: 1.2, delay: 1.2, type: "spring", stiffness: 100 }}
+                style={{
+                  boxShadow: '15px 15px 40px rgba(0,0,0,0.2)'
+                }}
+              >
+                <p className="text-xl md:text-2xl text-gray-800 font-semibold">
+                  モバイルアプリケーション開発企業
+                </p>
+              </motion.div>
+
+              {/* Main Title */}
+              <motion.h2
+                className="text-7xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-none"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
+                style={{
+                  textShadow: '4px 4px 20px rgba(0,0,0,0.5)'
+                }}
               >
                 技術と情熱で、
-                <motion.span 
-                  className="block gradient-text"
-                  animate={{
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                  }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                  style={{
-                    background: 'linear-gradient(-45deg, #10b981, #34d399, #6ee7b7, #86efac)',
-                    backgroundSize: '400% 400%',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
-                  }}
-                >
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
                   より遠くへ
-                </motion.span>
-              </motion.h1>
-              
+                </span>
+              </motion.h2>
+
+              {/* Description */}
               <motion.p
-                className="text-xl md:text-2xl text-green-50 mb-12 max-w-4xl mx-auto leading-relaxed reveal-text drop-shadow-md"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
+                className="text-xl md:text-2xl text-white/90 max-w-4xl leading-relaxed mb-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.5, delay: 2.2 }}
+                style={{
+                  textShadow: '2px 2px 10px rgba(0,0,0,0.5)'
+                }}
               >
-                ToMoreBeyondは、革新的なモバイルアプリケーションの開発を通じて、
+                革新的なモバイルアプリケーションの開発を通じて、<br />
                 社会に新たな価値を創造する東京発のテクノロジー企業です。
               </motion.p>
-              
+
+              {/* Action Buttons */}
               <motion.div
-                className="flex flex-col sm:flex-row gap-6 justify-center"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 1.6, ease: "easeOut" }}
+                className="flex flex-col sm:flex-row gap-6"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 2.8 }}
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 magnetic shadow-lg"
-                  whileHover={{ scale: 1.05, y: -3 }}
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white px-12 py-6 text-xl font-bold rounded-2xl shadow-2xl"
+                  whileHover={{ scale: 1.05, y: -5 }}
                   whileTap={{ scale: 0.95 }}
+                  style={{
+                    boxShadow: '0 15px 35px rgba(16, 185, 129, 0.4)'
+                  }}
                 >
                   製品を見る
                 </motion.button>
                 
                 <motion.button
                   onClick={() => smoothScrollTo('#about')}
-                  className="bg-transparent border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-green-900 px-8 py-4 rounded-lg font-semibold transition-all duration-300 magnetic shadow-lg"
-                  whileHover={{ scale: 1.05, y: -3 }}
+                  className="bg-white/20 border-3 border-white text-white hover:bg-white hover:text-gray-900 px-12 py-6 text-xl font-bold rounded-2xl backdrop-blur-md shadow-2xl"
+                  whileHover={{ scale: 1.05, y: -5 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   詳しく知る
