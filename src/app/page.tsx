@@ -76,10 +76,10 @@ export default function Home() {
       
       <div className="min-h-screen overflow-hidden">
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-xl border-b border-white/10">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-green-900/20 backdrop-blur-xl border-b border-green-400/20">
           <div className="container flex items-center justify-between py-4">
             <motion.div 
-              className="font-semibold text-xl gradient-text magnetic"
+              className="font-semibold text-xl text-emerald-300 magnetic"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -95,7 +95,7 @@ export default function Home() {
                 <motion.button
                   key={item.label}
                   onClick={() => smoothScrollTo(item.target)}
-                  className="text-neutral-600 hover:text-neutral-900 transition-colors magnetic"
+                  className="text-green-100 hover:text-emerald-300 transition-colors magnetic"
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
                   initial={{ opacity: 0, y: -20 }}
@@ -108,7 +108,7 @@ export default function Home() {
               
               <motion.button
                 onClick={() => smoothScrollTo('#contact')}
-                className="btn btn-primary magnetic"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 magnetic"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: -20 }}
@@ -128,7 +128,7 @@ export default function Home() {
         >
           {/* Animated Background */}
           <div className="absolute inset-0 parallax-bg parallax-layer-1">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-teal-900 to-green-950" />
+            <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-emerald-800 to-teal-900" />
             <ParticleField particleCount={80} />
           </div>
 
@@ -175,7 +175,7 @@ export default function Home() {
               className="max-w-5xl mx-auto"
             >
               <motion.h1 
-                className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight reveal-text zoom-element"
+                className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight reveal-text zoom-element drop-shadow-2xl"
                 initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.8, delay: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
@@ -200,7 +200,7 @@ export default function Home() {
               </motion.h1>
               
               <motion.p
-                className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed reveal-text"
+                className="text-xl md:text-2xl text-green-50 mb-12 max-w-4xl mx-auto leading-relaxed reveal-text drop-shadow-md"
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
@@ -217,7 +217,7 @@ export default function Home() {
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
-                  className="btn btn-primary magnetic"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 magnetic shadow-lg"
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -226,7 +226,7 @@ export default function Home() {
                 
                 <motion.button
                   onClick={() => smoothScrollTo('#about')}
-                  className="btn btn-secondary magnetic"
+                  className="bg-transparent border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-green-900 px-8 py-4 rounded-lg font-semibold transition-all duration-300 magnetic shadow-lg"
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -668,7 +668,7 @@ export default function Home() {
                   
                   <motion.button
                     type="submit"
-                    className="btn btn-primary w-full magnetic"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 magnetic"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
