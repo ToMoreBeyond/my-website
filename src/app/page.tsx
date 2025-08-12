@@ -1,14 +1,104 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import Image from 'next/image';
+
+// 3D Logo Component
+const Logo3D = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const x = useSpring(useMotionValue(0), { stiffness: 150, damping: 15 });
+  const y = useSpring(useMotionValue(0), { stiffness: 150, damping: 15 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const { innerWidth, innerHeight } = window;
+      setMousePosition({
+        x: (clientX - innerWidth / 2) / innerWidth,
+        y: (clientY - innerHeight / 2) / innerHeight,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    x.set(mousePosition.x * 20);
+    y.set(mousePosition.y * 20);
+  }, [mousePosition, x, y]);
+
+  return (
+    <motion.div
+      className="relative w-32 h-32 mx-auto mb-8"
+      style={{
+        rotateY: x,
+        rotateX: y,
+        transformStyle: 'preserve-3d',
+      }}
+      whileHover={{ scale: 1.1 }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-600 to-emerald-500 rounded-2xl shadow-2xl transform-gpu" 
+           style={{ transform: 'translateZ(20px)' }}>
+        <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl">
+          TMB
+        </div>
+      </div>
+      <div className="absolute inset-2 bg-gradient-to-br from-blue-600 via-purple-700 to-emerald-600 rounded-xl shadow-xl"
+           style={{ transform: 'translateZ(10px)' }}>
+      </div>
+      <div className="absolute inset-4 bg-gradient-to-br from-blue-700 via-purple-800 to-emerald-700 rounded-lg shadow-lg"
+           style={{ transform: 'translateZ(0px)' }}>
+      </div>
+    </motion.div>
+  );
+};
+
+// Floating Elements Background
+const FloatingElements = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-4 h-4 bg-gradient-to-r from-blue-400/20 to-emerald-400/20 rounded-full"
+          initial={{
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+          }}
+          animate={{
+            y: [null, Math.random() * window.innerHeight],
+            x: [null, Math.random() * window.innerWidth],
+          }}
+          transition={{
+            duration: Math.random() * 20 + 10,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const yHero = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  
+  // Section-specific animations
+  const companyRef = useRef(null);
+  const productsRef = useRef(null);
+  const teamRef = useRef(null);
+  const contactRef = useRef(null);
+  
+  const companyInView = useInView(companyRef, { once: false, amount: 0.3 });
+  const productsInView = useInView(productsRef, { once: false, amount: 0.2 });
+  const teamInView = useInView(teamRef, { once: false, amount: 0.2 });
+  const contactInView = useInView(contactRef, { once: false, amount: 0.3 });
 
   return (
     <>
@@ -99,22 +189,77 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* About Section - Professional */}
-      <section id="company" className="py-20 lg:py-32 bg-white relative overflow-hidden">
-        <div className="container-custom">
+      {/* About Section - Enhanced with 3D and Animations */}
+      <motion.section 
+        ref={companyRef}
+        id="company" 
+        className="py-20 lg:py-32 relative overflow-hidden"
+        style={{
+          background: companyInView 
+            ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+            : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        }}
+        animate={{
+          background: companyInView 
+            ? ['linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)']
+            : ['linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)'],
+        }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+      >
+        <FloatingElements />
+        
+        {/* Animated Background Shapes */}
+        <motion.div 
+          className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-10 right-10 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            rotate: [360, 180, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        />
+        
+        <div className="container-custom relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 100, scale: 0.8 }}
+            animate={companyInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 100, scale: 0.8 }}
+            transition={{ duration: 1, ease: "easeOut" }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            {/* 3D Interactive Logo */}
+            <Logo3D />
+            
+            <motion.h2 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6"
+              animate={companyInView ? {
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              } : {}}
+              style={{
+                background: 'linear-gradient(-45deg, #fff, #e0e7ff, #ddd6fe, #fff)',
+                backgroundSize: '400% 400%',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
               私たちについて
-            </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+            </motion.h2>
+            
+            <motion.p
+              className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed font-light"
+              animate={companyInView ? { opacity: [0.7, 1, 0.7] } : { opacity: 0.7 }}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            >
               ToMoreBeyondは、テクノロジーの力で人々の生活をより豊かにすることを使命とする東京発のテクノロジー企業です。
-            </p>
+            </motion.p>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -122,39 +267,110 @@ export default function Home() {
               {
                 title: "ミッション",
                 content: "技術と情熱で、より遠くへ。革新的なソリューションを提供します。",
-                icon: "🚀"
+                icon: "🚀",
+                color: "from-pink-500 to-rose-500"
               },
               {
                 title: "ビジョン", 
                 content: "人々の可能性を最大限に引き出すテクノロジーを創造します。",
-                icon: "💡"
+                icon: "💡",
+                color: "from-yellow-400 to-orange-500"
               },
               {
                 title: "価値観",
                 content: "革新性、情熱、挑戦、品質を大切にしています。",
-                icon: "⭐"
+                icon: "⭐",
+                color: "from-green-400 to-blue-500"
               }
             ].map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="bg-gray-50 rounded-xl p-8 text-center hover:shadow-lg transition-shadow duration-300"
+                initial={{ opacity: 0, y: 100, rotateX: -90 }}
+                animate={companyInView ? { 
+                  opacity: 1, 
+                  y: 0, 
+                  rotateX: 0,
+                  rotateY: [0, 5, -5, 0],
+                } : { opacity: 0, y: 100, rotateX: -90 }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: index * 0.3,
+                  rotateY: { duration: 2, repeat: Infinity, repeatType: "reverse" }
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: 15,
+                  rotateX: 10,
+                  z: 50,
+                  transition: { duration: 0.3 }
+                }}
+                className="relative group perspective-1000"
+                style={{ transformStyle: 'preserve-3d' }}
               >
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                <p className="text-gray-600">{item.content}</p>
+                <div className={`bg-gradient-to-br ${item.color} rounded-2xl p-8 text-center shadow-2xl backdrop-blur-sm bg-white/10 border border-white/20 transform-gpu`}>
+                  <motion.div 
+                    className="text-6xl mb-6"
+                    animate={{ 
+                      rotate: [0, 10, -10, 0],
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                  >
+                    {item.icon}
+                  </motion.div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{item.title}</h3>
+                  <p className="text-white/90 text-lg leading-relaxed">{item.content}</p>
+                  
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+        
+        {/* Section transition effect */}
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-900 to-transparent"
+          animate={companyInView ? { opacity: [0, 0.5, 0] } : { opacity: 0 }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
+      </motion.section>
       
-      {/* Products Section - Professional */}
-      <section id="products" className="py-20 lg:py-32 bg-gray-50">
-        <div className="container-custom">
+      {/* Products Section - Enhanced */}
+      <motion.section 
+        ref={productsRef}
+        id="products" 
+        className="py-20 lg:py-32 relative overflow-hidden"
+        style={{
+          background: productsInView 
+            ? 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)'
+            : 'linear-gradient(135deg, #2196F3 0%, #21CBF3 100%)',
+        }}
+        animate={{
+          background: productsInView 
+            ? ['linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)', 'linear-gradient(135deg, #2a5298 0%, #1e3c72 100%)']
+            : ['linear-gradient(135deg, #2196F3 0%, #21CBF3 100%)', 'linear-gradient(135deg, #21CBF3 0%, #2196F3 100%)'],
+        }}
+        transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
+      >
+        {/* Animated grid background */}
+        <motion.div 
+          className="absolute inset-0 opacity-10"
+          animate={{ 
+            backgroundPosition: ['0px 0px', '50px 50px'],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+        
+        <div className="container-custom relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -162,12 +378,22 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <motion.h2 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
+              animate={productsInView ? {
+                color: ['#ffffff', '#60a5fa', '#34d399', '#ffffff'],
+              } : {}}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
               プロダクト
-            </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+            </motion.h2>
+            <motion.p
+              className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed"
+              animate={productsInView ? { y: [0, -10, 0] } : {}}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            >
               最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーション
-            </p>
+            </motion.p>
           </motion.div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -240,9 +466,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Team Section - Professional */}
-      <section id="team" className="py-20 lg:py-32 bg-white">
-        <div className="container-custom">
+      {/* Team Section - Enhanced */}
+      <motion.section 
+        ref={teamRef}
+        id="team" 
+        className="py-20 lg:py-32 relative overflow-hidden"
+        style={{
+          background: teamInView 
+            ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        }}
+        animate={{
+          background: teamInView 
+            ? ['linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)']
+            : ['linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)'],
+        }}
+        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+      >
+        <div className="container-custom relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -250,12 +491,26 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <motion.h2 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6"
+              animate={teamInView ? {
+                textShadow: [
+                  '0 0 20px rgba(255,255,255,0.5)',
+                  '0 0 40px rgba(59,130,246,0.5)',
+                  '0 0 20px rgba(255,255,255,0.5)'
+                ],
+              } : {}}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            >
               チーム
-            </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+            </motion.h2>
+            <motion.p
+              className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed"
+              animate={teamInView ? { scale: [1, 1.05, 1] } : {}}
+              transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
+            >
               ToMoreBeyondの優秀なチームメンバー
-            </p>
+            </motion.p>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -331,9 +586,53 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Contact Section - Professional */}
-      <section id="contact" className="py-20 lg:py-32 bg-gray-900 text-white">
-        <div className="container-custom">
+      {/* Contact Section - Enhanced */}
+      <motion.section 
+        ref={contactRef}
+        id="contact" 
+        className="py-20 lg:py-32 relative overflow-hidden text-white"
+        style={{
+          background: contactInView 
+            ? 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)'
+            : 'linear-gradient(135deg, #16213e 0%, #1a1a2e 50%, #0f0f23 100%)',
+        }}
+        animate={{
+          background: contactInView 
+            ? [
+                'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
+                'linear-gradient(135deg, #16213e 0%, #1a1a2e 50%, #0f0f23 100%)',
+              ]
+            : [
+                'linear-gradient(135deg, #16213e 0%, #1a1a2e 50%, #0f0f23 100%)',
+                'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
+              ],
+        }}
+        transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }}
+      >
+        {/* Starfield background */}
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0],
+              }}
+              transition={{
+                duration: Math.random() * 3 + 1,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+        
+        <div className="container-custom relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -341,12 +640,36 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+            <motion.h2 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
+              animate={contactInView ? {
+                background: [
+                  'linear-gradient(-45deg, #fff, #60a5fa, #34d399, #fff)',
+                  'linear-gradient(-45deg, #34d399, #fff, #60a5fa, #34d399)',
+                  'linear-gradient(-45deg, #60a5fa, #34d399, #fff, #60a5fa)',
+                  'linear-gradient(-45deg, #fff, #60a5fa, #34d399, #fff)',
+                ],
+              } : {}}
+              style={{
+                backgroundSize: '400% 400%',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
               お問い合わせ
-            </h2>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+            </motion.h2>
+            <motion.p
+              className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+              animate={contactInView ? { 
+                y: [0, -5, 0],
+                opacity: [0.7, 1, 0.7],
+              } : {}}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            >
               ご質問・ご相談はお気軽にお問い合わせください
-            </p>
+            </motion.p>
           </motion.div>
           
           <div className="max-w-4xl mx-auto">
