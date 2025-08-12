@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
-import { DragElement } from '@/components/common/DragElement';
 
 const navigation = [
   { name: 'Company', href: '#company', id: 'company' },
@@ -76,33 +75,22 @@ export function Header() {
       <nav className="container-custom">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <DragElement
-            dragConstraints={{
-              top: -50,
-              left: -100,
-              right: 100,
-              bottom: 50,
-            }}
-            resetOnRelease={true}
-            elastic={true}
-          >
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="relative w-10 h-10 lg:w-12 lg:h-12">
-                <Image
-                  src="/images/logos/tomorebeyond-logo.png"
-                  alt="ToMoreBeyond"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className={clsx(
-                'font-bold text-xl lg:text-2xl transition-colors',
-                isScrolled ? 'text-gray-900' : 'text-white'
-              )}>
-                ToMoreBeyond
-              </span>
-            </Link>
-          </DragElement>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-10 h-10 lg:w-12 lg:h-12">
+              <Image
+                src="/images/logos/tomorebeyond-logo.png"
+                alt="ToMoreBeyond"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <span className={clsx(
+              'font-bold text-xl lg:text-2xl transition-colors',
+              isScrolled ? 'text-gray-900' : 'text-white'
+            )}>
+              ToMoreBeyond
+            </span>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
