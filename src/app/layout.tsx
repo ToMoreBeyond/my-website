@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GlobalMouseTracker } from "@/components/common/GlobalMouseTracker";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,9 +25,8 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-none`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GlobalMouseTracker />
         {children}
       </body>
     </html>
