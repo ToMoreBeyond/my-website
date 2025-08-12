@@ -86,8 +86,10 @@ export default function Home() {
         >
           {/* Animated Background - internfes style */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-800 to-emerald-600" />
-            <div className="absolute inset-0 bg-gradient-to-t from-pink-500/30 via-transparent to-cyan-400/20" />
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-blue-800 via-blue-700 to-blue-600" style={{
+              background: 'linear-gradient(180deg, #581c87 0%, #7c3aed 20%, #1e40af 60%, #1e40af 100%)'
+            }} />
+            <div className="absolute inset-0 bg-gradient-to-t from-blue-600/30 via-transparent to-cyan-400/20" />
           </div>
 
           {/* 3D Geometric Shapes */}
