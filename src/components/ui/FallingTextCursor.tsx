@@ -97,20 +97,7 @@ export const FallingTextCursor = () => {
 
   return (
     <div ref={containerRef} className="fixed inset-0 pointer-events-none z-[9999]">
-      {/* Trailing effect */}
-      <div 
-        className="absolute w-8 h-8 rounded-full"
-        style={{
-          left: mousePos.x - 16,
-          top: mousePos.y - 16,
-          background: `radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent)`,
-          filter: 'blur(10px)',
-          opacity: isActive ? 0.5 : 0,
-          transition: 'opacity 0.3s ease'
-        }}
-      />
-      
-      {/* Falling characters */}
+      {/* Falling characters only - no custom cursor */}
       {chars.map(char => (
         <div
           key={char.id}
@@ -134,18 +121,6 @@ export const FallingTextCursor = () => {
           {char.char}
         </div>
       ))}
-
-      {/* Main cursor dot */}
-      <div
-        className="absolute w-3 h-3 rounded-full bg-white mix-blend-difference"
-        style={{
-          left: mousePos.x - 6,
-          top: mousePos.y - 6,
-          boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
-          opacity: isActive ? 1 : 0,
-          transition: 'opacity 0.3s ease'
-        }}
-      />
     </div>
   )
 }

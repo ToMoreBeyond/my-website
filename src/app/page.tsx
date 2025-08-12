@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
+import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
 import {
@@ -28,34 +29,34 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    // Initialize scroll animations after component mount
+    // Initialize scroll animations after component mount with proper delays
     const timer = setTimeout(() => {
-      // Text reveal animations
-      createTextReveal('.reveal-text')
+      // Text reveal animations with smooth timing
+      setTimeout(() => createTextReveal('.reveal-text'), 300)
       
-      // Parallax backgrounds
-      createParallax('.parallax-bg', 0.5)
-      createParallax('.parallax-slow', 0.3)
+      // Parallax backgrounds - subtle movement
+      createParallax('.parallax-bg', 0.3)
+      createParallax('.parallax-slow', 0.15)
       
-      // Magnetic hover effects
-      createMagneticHover('.magnetic', 0.2)
+      // Magnetic hover effects - reduced strength
+      createMagneticHover('.magnetic', 0.1)
       
-      // Stagger animations for card grids
-      createStaggerAnimation('.stagger-container')
+      // Stagger animations for card grids with delay
+      setTimeout(() => createStaggerAnimation('.stagger-container'), 500)
       
       // Image reveals
       createImageReveal('.image-reveal', 'right')
       
-      // Counter animations
-      createCounterAnimation('.counter')
+      // Counter animations with delay
+      setTimeout(() => createCounterAnimation('.counter'), 800)
       
-      // Section scroll effects
-      createSectionScroll()
-      createCurtainReveal('.curtain-section')
-      createSkewEffect()
-      createLayeredParallax()
-      createZoomEffect('.zoom-element', 1.5)
-    }, 100)
+      // Section scroll effects - run once per section
+      // createSectionScroll() // Too heavy, removing snap scroll
+      // createCurtainReveal('.curtain-section') // Run once on enter
+      // createSkewEffect() // Too much movement
+      // createLayeredParallax() // Keep subtle parallax
+      // createZoomEffect('.zoom-element', 1.5) // Too dramatic
+    }, 500) // Increased initial delay for smoother load
 
     return () => {
       clearTimeout(timer)
@@ -67,7 +68,7 @@ export default function Home() {
     <>
       <FallingTextCursor />
       
-      <div className="min-h-screen overflow-hidden" style={{ cursor: 'none' }}>
+      <div className="min-h-screen overflow-hidden">
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-xl border-b border-white/10">
           <div className="container flex items-center justify-between py-4">
@@ -93,7 +94,7 @@ export default function Home() {
                   whileTap={{ y: 0 }}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: 0.5 + index * 0.15, duration: 0.8, ease: "easeOut" }}
                 >
                   {item.label}
                 </motion.button>
@@ -106,7 +107,7 @@ export default function Home() {
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
               >
                 お問い合わせ
               </motion.button>
@@ -151,17 +152,27 @@ export default function Home() {
           </div>
           
           <div className="container text-center relative z-10">
+            {/* Company Logo */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5, delay: 0.2, ease: [0.43, 0.13, 0.23, 0.96] }}
+              className="mb-12"
+            >
+              <AnimatedLogo />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
+              transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
               className="max-w-5xl mx-auto"
             >
               <motion.h1 
                 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight reveal-text zoom-element"
-                initial={{ opacity: 0, y: 100 }}
+                initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 0.3 }}
+                transition={{ duration: 1.8, delay: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }}
               >
                 技術と情熱で、
                 <motion.span 
@@ -184,9 +195,9 @@ export default function Home() {
               
               <motion.p
                 className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed reveal-text"
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6 }}
+                transition={{ duration: 1.5, delay: 1.8, ease: "easeOut" }}
               >
                 ToMoreBeyondは、革新的なモバイルアプリケーションの開発を通じて、
                 社会に新たな価値を創造する東京発のテクノロジー企業です。
@@ -196,7 +207,7 @@ export default function Home() {
                 className="flex flex-col sm:flex-row gap-6 justify-center"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.9 }}
+                transition={{ duration: 1.2, delay: 2.2, ease: "easeOut" }}
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
@@ -508,7 +519,7 @@ export default function Home() {
                   intensity={1.3}
                 >
                   <div className="card-content">
-                    <div className="relative w-32 h-32 mx-auto mb-6 image-reveal">
+                    <div className="relative w-32 h-32 mx-auto mb-6">
                       <div className="relative w-full h-full rounded-full overflow-hidden">
                         <Image
                           src={member.image}
