@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
-import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
+import { CompanyLogo } from '@/components/ui/CompanyLogo'
 import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
 import {
@@ -18,12 +18,14 @@ import {
   cleanupScrollTriggers
 } from '@/lib/scroll-animations'
 import {
-  createSectionScroll,
-  createCurtainReveal,
-  createSkewEffect,
-  createLayeredParallax,
-  createZoomEffect
-} from '@/lib/scroll-sections'
+  createSmoothEntrance,
+  createFloatingCards,
+  createRotatingElements,
+  createWaveAnimation,
+  create3DTilt,
+  createBounceEntrance,
+  createTextScramble
+} from '@/lib/interactive-scroll'
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
@@ -50,12 +52,16 @@ export default function Home() {
       // Counter animations with delay
       setTimeout(() => createCounterAnimation('.counter'), 800)
       
-      // Section scroll effects - run once per section
-      // createSectionScroll() // Too heavy, removing snap scroll
-      // createCurtainReveal('.curtain-section') // Run once on enter
-      // createSkewEffect() // Too much movement
-      // createLayeredParallax() // Keep subtle parallax
-      // createZoomEffect('.zoom-element', 1.5) // Too dramatic
+      // Interactive scroll animations
+      setTimeout(() => {
+        createSmoothEntrance()
+        createFloatingCards()
+        createRotatingElements()
+        createWaveAnimation()
+        create3DTilt()
+        createBounceEntrance()
+        createTextScramble()
+      }, 1000)
     }, 500) // Increased initial delay for smoother load
 
     return () => {
@@ -122,7 +128,7 @@ export default function Home() {
         >
           {/* Animated Background */}
           <div className="absolute inset-0 parallax-bg parallax-layer-1">
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" />
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-teal-900 to-green-950" />
             <ParticleField particleCount={80} />
           </div>
 
@@ -157,22 +163,22 @@ export default function Home() {
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.5, delay: 0.2, ease: [0.43, 0.13, 0.23, 0.96] }}
-              className="mb-12"
+              className="mb-8"
             >
-              <AnimatedLogo />
+              <CompanyLogo />
             </motion.div>
             
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
+              transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }}
               className="max-w-5xl mx-auto"
             >
               <motion.h1 
                 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight reveal-text zoom-element"
                 initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.8, delay: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }}
+                transition={{ duration: 1.8, delay: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
               >
                 技術と情熱で、
                 <motion.span 
@@ -182,7 +188,7 @@ export default function Home() {
                   }}
                   transition={{ duration: 5, repeat: Infinity }}
                   style={{
-                    background: 'linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c)',
+                    background: 'linear-gradient(-45deg, #10b981, #34d399, #6ee7b7, #86efac)',
                     backgroundSize: '400% 400%',
                     backgroundClip: 'text',
                     WebkitBackgroundClip: 'text',
@@ -197,7 +203,7 @@ export default function Home() {
                 className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed reveal-text"
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5, delay: 1.8, ease: "easeOut" }}
+                transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
               >
                 ToMoreBeyondは、革新的なモバイルアプリケーションの開発を通じて、
                 社会に新たな価値を創造する東京発のテクノロジー企業です。
@@ -207,7 +213,7 @@ export default function Home() {
                 className="flex flex-col sm:flex-row gap-6 justify-center"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 2.2, ease: "easeOut" }}
+                transition={{ duration: 1.2, delay: 1.6, ease: "easeOut" }}
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
@@ -564,7 +570,7 @@ export default function Home() {
         <section id="contact" className="section bg-neutral-900 text-white relative overflow-hidden">
           <ParticleField 
             particleCount={60} 
-            colors={['#3b82f6', '#10b981', '#f59e0b']}
+            colors={['#10b981', '#34d399', '#6ee7b7']}
             className="opacity-30"
           />
           
