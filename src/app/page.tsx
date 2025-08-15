@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
+import { SmoothCursor } from '@/components/effects/SmoothCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { GeometricShapes } from '@/components/ui/GeometricShapes'
 import { HamburgerMenu } from '@/components/ui/HamburgerMenu'
@@ -27,6 +28,10 @@ import {
   createSmoothCounter,
   initPremiumAnimations
 } from '@/lib/premium-animations'
+import {
+  initSmoothScroll,
+  createEnhancedParallax
+} from '@/lib/smooth-scroll'
 import {
   createSmoothEntrance,
   createFloatingCards,
@@ -68,8 +73,10 @@ export default function Home() {
       createStaggerAnimation('.stagger-container')
       createImageReveal('.image-reveal', 'right')
       
-      // Interactive scroll animations
+      // Enhanced scroll and parallax effects
       setTimeout(() => {
+        createEnhancedParallax()
+        initSmoothScroll()
         createSmoothEntrance()
         createFloatingCards()
         createRotatingElements()
@@ -88,6 +95,7 @@ export default function Home() {
 
   return (
     <>
+      <SmoothCursor />
       <FallingTextCursor />
       
       <div className="min-h-screen overflow-hidden">
@@ -99,16 +107,25 @@ export default function Home() {
           ref={heroRef}
           className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
-          {/* Animated Background - internfes style */}
+          {/* Enhanced Animated Background with Parallax Layers */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-blue-800 via-blue-700 to-blue-600" style={{
+            <div className="parallax-slow absolute inset-0 bg-gradient-to-b from-purple-900 via-blue-800 via-blue-700 to-blue-600" style={{
               background: 'linear-gradient(180deg, #581c87 0%, #7c3aed 20%, #1e40af 60%, #1e40af 100%)'
             }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-blue-600/30 via-transparent to-cyan-400/20" />
+            <div className="parallax-medium absolute inset-0 bg-gradient-to-t from-blue-600/30 via-transparent to-cyan-400/20" />
+            
+            {/* Floating decorative elements */}
+            <div className="absolute inset-0">
+              <div className="floating absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-xl" />
+              <div className="floating absolute top-1/2 right-1/3 w-24 h-24 bg-emerald-400/10 rounded-full blur-lg" />
+              <div className="floating absolute bottom-1/3 left-1/2 w-40 h-40 bg-cyan-400/5 rounded-full blur-2xl" />
+            </div>
           </div>
 
-          {/* 3D Geometric Shapes */}
-          <GeometricShapes />
+          {/* 3D Geometric Shapes with Parallax */}
+          <div className="parallax-slow">
+            <GeometricShapes />
+          </div>
           
           <div className="container text-center relative z-10">
             {/* Large Typography like internfes */}
@@ -118,14 +135,15 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 2, delay: 0.5 }}
             >
-              {/* Company Logo Box */}
+              {/* Company Logo Box with Enhanced Animation */}
               <motion.div
-                className="bg-white/95 backdrop-blur-sm border-4 border-gray-300 p-8 mb-8 transform -rotate-2"
-                initial={{ scale: 0, rotate: -10 }}
-                animate={{ scale: 1, rotate: -2 }}
+                className="bg-white/95 backdrop-blur-md border-4 border-white/30 p-8 mb-8 cursor-hover"
+                initial={{ scale: 0, rotate: -10, y: 100 }}
+                animate={{ scale: 1, rotate: -2, y: 0 }}
+                whileHover={{ rotate: 0, scale: 1.05 }}
                 transition={{ duration: 1.2, delay: 0.8, type: "spring", stiffness: 100 }}
                 style={{
-                  boxShadow: '20px 20px 60px rgba(0,0,0,0.3)'
+                  boxShadow: '20px 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(16,185,129,0.2)'
                 }}
               >
                 <Image
@@ -175,7 +193,7 @@ export default function Home() {
                 社会に新たな価値を創造する東京発のテクノロジー企業です。
               </motion.p>
 
-              {/* Action Buttons */}
+              {/* Enhanced Action Buttons */}
               <motion.div
                 className="flex flex-col sm:flex-row gap-6"
                 initial={{ y: 50, opacity: 0 }}
@@ -184,23 +202,29 @@ export default function Home() {
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white px-12 py-6 text-xl font-bold rounded-2xl shadow-2xl"
+                  className="cursor-hover bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white px-12 py-6 text-xl font-bold rounded-2xl shadow-2xl relative overflow-hidden"
                   whileHover={{ scale: 1.05, y: -5 }}
                   whileTap={{ scale: 0.95 }}
                   style={{
                     boxShadow: '0 15px 35px rgba(16, 185, 129, 0.4)'
                   }}
                 >
-                  製品を見る
+                  <span className="relative z-10">製品を見る</span>
+                  <motion.div 
+                    className="absolute inset-0 bg-white/20"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.6 }}
+                  />
                 </motion.button>
                 
                 <motion.button
                   onClick={() => smoothScrollTo('#about')}
-                  className="bg-white/20 border-3 border-white text-white hover:bg-white hover:text-gray-900 px-12 py-6 text-xl font-bold rounded-2xl backdrop-blur-md shadow-2xl"
+                  className="cursor-hover bg-white/20 border-2 border-white text-white hover:bg-white hover:text-gray-900 px-12 py-6 text-xl font-bold rounded-2xl backdrop-blur-md shadow-2xl relative overflow-hidden"
                   whileHover={{ scale: 1.05, y: -5 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  詳しく知る
+                  <span className="relative z-10">詳しく知る</span>
                 </motion.button>
               </motion.div>
             </motion.div>
@@ -219,14 +243,15 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* About Section - Minimal Design */}
-        <section id="about" className="section-minimal relative overflow-hidden" style={{
-          background: 'var(--gradient-subtle)'
+        {/* About Section with Gradient Transition */}
+        <section id="about" className="section relative overflow-hidden" style={{
+          background: 'linear-gradient(180deg, #1e40af 0%, #3b82f6 20%, #60a5fa 40%, #93c5fd 60%, #dbeafe 80%, #f0f9ff 100%)'
         }}>
-          {/* Background Elements */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl parallax-layer-2" />
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl parallax-layer-3" />
+          {/* Enhanced Background Elements with Parallax */}
+          <div className="absolute inset-0">
+            <div className="parallax-slow absolute top-20 left-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
+            <div className="parallax-medium absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+            <div className="floating absolute top-1/2 left-1/3 w-32 h-32 bg-white/5 rounded-full blur-xl" />
           </div>
 
           <div className="container relative z-10">
@@ -252,7 +277,7 @@ export default function Home() {
               </motion.p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 stagger-container">
+            <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
                   title: 'ミッション',
@@ -273,41 +298,55 @@ export default function Home() {
                   gradient: 'from-yellow-500 to-emerald-500'
                 }
               ].map((item, index) => (
-                <InteractiveCard
+                <motion.div
                   key={item.title}
-                  className="text-center"
-                  intensity={1.2}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  className="group"
                 >
-                  <div className="card-content relative">
+                  <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 p-8 h-full border border-white/50">
                     <motion.div 
-                      className="text-6xl mb-6"
-                      whileHover={{ 
-                        scale: 1.2, 
-                        rotate: [0, -10, 10, 0],
+                      className="text-6xl mb-6 text-center"
+                      animate={{ 
+                        rotate: [0, 5, -5, 0],
                       }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ 
+                        duration: 4,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        delay: index * 0.3
+                      }}
                     >
                       {item.icon}
                     </motion.div>
-                    <h3 className="text-2xl font-semibold text-neutral-900 mb-4">
+                    <h3 className="text-2xl font-bold text-neutral-900 mb-4 text-center">
                       {item.title}
                     </h3>
-                    <p className="text-neutral-600 leading-relaxed">
+                    <p className="text-neutral-600 leading-relaxed text-center">
                       {item.description}
                     </p>
                     
-                    {/* Gradient Border */}
-                    <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-xl -z-10`} />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-2xl`} />
                   </div>
-                </InteractiveCard>
+                </motion.div>
               ))}
             </div>
 
           </div>
         </section>
 
-        {/* Products Section - Clean Layout */}
-        <section id="products" className="section-minimal relative overflow-hidden bg-white">
+        {/* Products Section with Gradient Flow */}
+        <section id="products" className="section relative overflow-hidden" style={{
+          background: 'linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 20%, #bae6fd 40%, #38bdf8 60%, #0284c7 80%, #075985 100%)'
+        }}>
           <div className="container">
             <div className="text-center mb-20">
               <motion.h2 
@@ -330,7 +369,7 @@ export default function Home() {
               </motion.p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 stagger-container">
+            <div className="grid lg:grid-cols-3 gap-8">
               {[
                 {
                   id: 'tadataka',
@@ -360,33 +399,44 @@ export default function Home() {
                   color: 'from-purple-500 to-pink-500'
                 }
               ].map((product, index) => (
-                <InteractiveCard
+                <motion.div
                   key={product.id}
+                  initial={{ opacity: 0, y: 100, rotateX: -15 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  whileHover={{ y: -15, scale: 1.03 }}
+                  transition={{ 
+                    duration: 0.7, 
+                    delay: index * 0.15,
+                    type: "spring",
+                    stiffness: 80
+                  }}
+                  viewport={{ once: true, margin: "-50px" }}
                   onClick={() => window.location.href = `/products/${product.id}`}
-                  className="group overflow-hidden bg-white rounded-xl"
-                  intensity={1.5}
+                  className="group cursor-pointer transform-gpu"
+                  style={{ perspective: "1000px" }}
                 >
-                  <div className="relative h-64 overflow-hidden image-reveal">
+                  <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-white/60">
+                    <div className="relative h-64 overflow-hidden">
                     <Image
                       src={product.image}
                       alt={product.name}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="object-cover transition-transform duration-700 group-hover:scale-115"
                       unoptimized
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${product.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${product.color} opacity-0 group-hover:opacity-30 transition-opacity duration-700`} />
                     
                     <motion.div 
                       className="absolute top-4 right-4"
                       whileHover={{ scale: 1.1 }}
                     >
-                      <span className="px-3 py-1 bg-primary text-white text-sm rounded-full font-medium">
+                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-neutral-800 text-sm rounded-full font-medium shadow-lg">
                         {product.status}
                       </span>
                     </motion.div>
-                  </div>
-                  
-                  <div className="p-6">
+                    </div>
+                    
+                    <div className="p-6">
                     <h3 className="text-2xl font-semibold text-neutral-900 mb-2 magnetic">
                       {product.name}
                     </h3>
@@ -397,23 +447,24 @@ export default function Home() {
                       {product.description}
                     </p>
                     
-                    <motion.div
-                      className="btn btn-ghost w-full magnetic"
-                      whileHover={{ y: -2 }}
-                      whileTap={{ y: 0 }}
-                    >
-                      詳細を見る →
-                    </motion.div>
+                      <motion.div
+                        className="btn btn-ghost w-full"
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        詳細を見る →
+                      </motion.div>
+                    </div>
                   </div>
-                </InteractiveCard>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Team Section */}
-        <section id="team" className="section relative overflow-hidden scroll-section skew-element" style={{
-          background: 'linear-gradient(180deg, #059669 0%, #10b981 15%, #34d399 35%, #6ee7b7 55%, #a7f3d0 75%, #fbbf24 100%)'
+        {/* Team Section with Smooth Gradient */}
+        <section id="team" className="section relative overflow-hidden" style={{
+          background: 'linear-gradient(180deg, #075985 0%, #0891b2 20%, #06b6d4 40%, #67e8f9 60%, #a5f3fc 80%, #f0fdfa 100%)'
         }}>
           <div className="container">
             <div className="text-center mb-16">
@@ -437,7 +488,7 @@ export default function Home() {
               </motion.p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 stagger-container">
+            <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
                   id: 'yamada',
@@ -470,13 +521,22 @@ export default function Home() {
                   color: 'from-yellow-500 to-emerald-500'
                 }
               ].map((member, index) => (
-                <InteractiveCard
+                <motion.div
                   key={member.id}
+                  initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                  whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                  whileHover={{ y: -10, rotate: 2 }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: index * 0.12,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  viewport={{ once: true, margin: "-80px" }}
                   onClick={() => window.location.href = `/team/${member.id}`}
-                  className="text-center group"
-                  intensity={1.3}
+                  className="group cursor-pointer"
                 >
-                  <div className="card-content">
+                  <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 p-8 text-center border border-white/50">
                     <div className="relative w-32 h-32 mx-auto mb-6">
                       <div className="relative w-full h-full rounded-full overflow-hidden">
                         <Image
@@ -512,15 +572,15 @@ export default function Home() {
                       {member.bio}
                     </p>
                   </div>
-                </InteractiveCard>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Contact Section */}
+        {/* Contact Section with Dark Gradient */}
         <section id="contact" className="section text-white relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #fbbf24 0%, #f59e0b 15%, #d97706 35%, #92400e 55%, #451a03 75%, #1c1917 100%)'
+          background: 'linear-gradient(180deg, #f0fdfa 0%, #cffafe 10%, #5eead4 30%, #10b981 50%, #047857 70%, #064e3b 90%, #022c22 100%)'
         }}>
           <ParticleField 
             particleCount={60} 
