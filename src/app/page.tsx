@@ -19,6 +19,15 @@ import {
   cleanupScrollTriggers
 } from '@/lib/scroll-animations'
 import {
+  createPremiumTextReveal,
+  createSmoothParallax,
+  createMagneticCursor,
+  createFloatingAnimation,
+  createStaggerFade,
+  createSmoothCounter,
+  initPremiumAnimations
+} from '@/lib/premium-animations'
+import {
   createSmoothEntrance,
   createFloatingCards,
   createRotatingElements,
@@ -32,26 +41,32 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    // Initialize scroll animations after component mount with proper delays
+    // Initialize premium animations after component mount
     const timer = setTimeout(() => {
-      // Text reveal animations with smooth timing
-      setTimeout(() => createTextReveal('.reveal-text'), 300)
+      // Premium text animations
+      createPremiumTextReveal('.reveal-chars', { splitBy: 'chars', stagger: 0.02 })
+      createPremiumTextReveal('.reveal-words', { splitBy: 'words', stagger: 0.08 })
       
-      // Parallax backgrounds - subtle movement
-      createParallax('.parallax-bg', 0.3)
-      createParallax('.parallax-slow', 0.15)
+      // Enhanced parallax
+      createSmoothParallax('.parallax-slow', 0.2)
+      createSmoothParallax('.parallax-medium', 0.4)
+      createSmoothParallax('.parallax-fast', 0.6)
       
-      // Magnetic hover effects - reduced strength
-      createMagneticHover('.magnetic', 0.1)
+      // Magnetic interactions
+      createMagneticCursor('.magnetic', 0.15)
       
-      // Stagger animations for card grids with delay
-      setTimeout(() => createStaggerAnimation('.stagger-container'), 500)
+      // Floating elements
+      createFloatingAnimation('.floating', { distance: 15, duration: 4 })
       
-      // Image reveals
+      // Stagger fade animations
+      createStaggerFade('.stagger-fade')
+      
+      // Counter animations
+      createSmoothCounter('.counter')
+      
+      // Legacy animations
+      createStaggerAnimation('.stagger-container')
       createImageReveal('.image-reveal', 'right')
-      
-      // Counter animations with delay
-      setTimeout(() => createCounterAnimation('.counter'), 800)
       
       // Interactive scroll animations
       setTimeout(() => {
@@ -62,8 +77,8 @@ export default function Home() {
         create3DTilt()
         createBounceEntrance()
         createTextScramble()
-      }, 1000)
-    }, 500) // Increased initial delay for smoother load
+      }, 800)
+    }, 300)
 
     return () => {
       clearTimeout(timer)
@@ -124,26 +139,20 @@ export default function Home() {
               </motion.div>
 
 
-              {/* Main Title */}
-              <motion.h1
-                className="text-7xl md:text-8xl lg:text-9xl font-extrabold text-white mb-8 leading-none tracking-tight"
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1.5, delay: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
-                style={{
-                  fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                  textShadow: '0 0 40px rgba(255,255,255,0.3), 0 0 80px rgba(16,185,129,0.4), 0 8px 32px rgba(0,0,0,0.8)',
-                  filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.2))'
-                }}
+              {/* Main Title with Premium Typography */}
+              <motion.div
+                className="mb-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.2 }}
               >
-                技術と情熱で、
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-white animate-pulse" style={{
-                  textShadow: 'none',
-                  filter: 'drop-shadow(0 0 30px rgba(16,185,129,0.6))'
-                }}>
-                  より遠くへ
-                </span>
-              </motion.h1>
+                <h1 className="font-display text-6xl md:text-hero font-black text-white leading-none tracking-tight reveal-chars jp-optimized">
+                  <span className="block mb-4">技術と情熱で、</span>
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-white">
+                    より遠くへ
+                  </span>
+                </h1>
+              </motion.div>
 
               {/* Hidden SEO Keywords */}
               <div className="sr-only">
@@ -210,9 +219,9 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="section relative overflow-hidden scroll-section curtain-section skew-element" style={{
-          background: 'linear-gradient(180deg, #1e40af 0%, #3b82f6 15%, #60a5fa 35%, #93c5fd 55%, #dbeafe 75%, #f1f5f9 100%)'
+        {/* About Section - Minimal Design */}
+        <section id="about" className="section-minimal relative overflow-hidden" style={{
+          background: 'var(--gradient-subtle)'
         }}>
           {/* Background Elements */}
           <div className="absolute inset-0 opacity-5">
@@ -221,12 +230,12 @@ export default function Home() {
           </div>
 
           <div className="container relative z-10">
-            <div className="text-center mb-16">
+            <div className="text-center mb-20">
               <motion.h2 
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6 reveal-text"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                className="font-display text-5xl md:text-6xl lg:text-hero font-black text-neutral-900 mb-8 reveal-words"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
                 viewport={{ once: true }}
               >
                 私たちについて
@@ -297,17 +306,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Products Section */}
-        <section id="products" className="section relative overflow-hidden scroll-section curtain-section" style={{
-          background: 'linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 15%, #cbd5e1 35%, #94a3b8 55%, #10b981 75%, #059669 100%)'
-        }}>
+        {/* Products Section - Clean Layout */}
+        <section id="products" className="section-minimal relative overflow-hidden bg-white">
           <div className="container">
-            <div className="text-center mb-16">
+            <div className="text-center mb-20">
               <motion.h2 
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6 reveal-text"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                className="font-display text-5xl md:text-6xl lg:text-hero font-black text-neutral-900 mb-8 reveal-words"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
                 viewport={{ once: true }}
               >
                 プロダクト
