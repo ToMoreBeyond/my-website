@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
-import { SmoothCursor } from '@/components/effects/SmoothCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { GeometricShapes } from '@/components/ui/GeometricShapes'
 import { HamburgerMenu } from '@/components/ui/HamburgerMenu'
@@ -28,10 +27,6 @@ import {
   createSmoothCounter,
   initPremiumAnimations
 } from '@/lib/premium-animations'
-import {
-  initSmoothScroll,
-  createEnhancedParallax
-} from '@/lib/smooth-scroll'
 import {
   createSmoothEntrance,
   createFloatingCards,
@@ -73,10 +68,17 @@ export default function Home() {
       createStaggerAnimation('.stagger-container')
       createImageReveal('.image-reveal', 'right')
       
-      // Enhanced scroll and parallax effects
+      // Standard animations with parallax
       setTimeout(() => {
-        createEnhancedParallax()
-        initSmoothScroll()
+        // Basic parallax effects
+        createSmoothParallax('.parallax-slow', 0.2)
+        createSmoothParallax('.parallax-medium', 0.4)
+        createSmoothParallax('.parallax-fast', 0.6)
+        
+        // Floating elements
+        createFloatingAnimation('.floating', { distance: 15, duration: 4 })
+        
+        // Interactive animations
         createSmoothEntrance()
         createFloatingCards()
         createRotatingElements()
@@ -84,7 +86,7 @@ export default function Home() {
         create3DTilt()
         createBounceEntrance()
         createTextScramble()
-      }, 800)
+      }, 500)
     }, 300)
 
     return () => {
@@ -95,10 +97,9 @@ export default function Home() {
 
   return (
     <>
-      <SmoothCursor />
       <FallingTextCursor />
       
-      <div className="min-h-screen overflow-hidden">
+      <div className="min-h-screen">
         {/* Navigation - Hamburger Menu Only */}
         <HamburgerMenu />
 
@@ -695,8 +696,8 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="text-white py-12 relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #1c1917 0%, #292524 25%, #44403c 50%, #78716c 75%, #0c0a09 100%)'
+        <footer className="text-white py-16 relative overflow-hidden -mt-1" style={{
+          background: 'linear-gradient(180deg, #022c22 0%, #064e3b 25%, #065f46 50%, #047857 75%, #10b981 90%, #134e4a 100%)'
         }}>
           <div className="container relative z-10">
             <div className="grid md:grid-cols-3 gap-8">
