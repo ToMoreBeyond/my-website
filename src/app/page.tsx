@@ -9,6 +9,8 @@ import { GeometricShapes } from '@/components/ui/GeometricShapes'
 import { HamburgerMenu } from '@/components/ui/HamburgerMenu'
 import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
+import { products } from '@/data/products'
+import { teamMembers } from '@/data/team'
 import {
   createTextReveal,
   createParallax,
@@ -371,35 +373,14 @@ export default function Home() {
             </div>
 
             <div className="grid lg:grid-cols-3 gap-8">
-              {[
-                {
-                  id: 'tadataka',
-                  name: '忠嵩',
-                  nameEn: 'TADATAKA',
-                  description: '歴史と現代を繋ぐ、革新的な地図アプリケーション',
-                  status: '開発中',
-                  image: '/images/products/tadataka.jpg',
-                  color: 'from-blue-500 to-cyan-500'
-                },
-                {
-                  id: 'toirun',
-                  name: 'TOI-RUN',
-                  nameEn: 'TOI-RUN',
-                  description: 'ランニングを楽しく継続するためのゲーミフィケーション・プラットフォーム',
-                  status: 'ベータ版',
-                  image: '/images/products/toirun.jpg',
-                  color: 'from-emerald-500 to-green-500'
-                },
-                {
-                  id: 'meet-in-the-middle',
-                  name: 'Meet in the middle',
-                  nameEn: 'MEET IN THE MIDDLE',
-                  description: '人と人を繋ぐ、新しい出会いのプラットフォーム',
-                  status: '開発中',
-                  image: '/images/products/meet-in-the-middle.jpg',
-                  color: 'from-purple-500 to-pink-500'
+              {products.map((product, index) => {
+                const productColors = {
+                  'tadataka': 'from-blue-500 to-cyan-500',
+                  'toirun': 'from-emerald-500 to-green-500',
+                  'meet-in-the-middle': 'from-purple-500 to-pink-500'
                 }
-              ].map((product, index) => (
+                const productColor = productColors[product.id as keyof typeof productColors] || 'from-gray-500 to-gray-600'
+                return (
                 <motion.div
                   key={product.id}
                   initial={{ opacity: 0, y: 100, rotateX: -15 }}
@@ -425,14 +406,14 @@ export default function Home() {
                       className="object-cover transition-transform duration-700 group-hover:scale-115"
                       unoptimized
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${product.color} opacity-0 group-hover:opacity-30 transition-opacity duration-700`} />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${productColor} opacity-0 group-hover:opacity-30 transition-opacity duration-700`} />
                     
                     <motion.div 
                       className="absolute top-4 right-4"
                       whileHover={{ scale: 1.1 }}
                     >
                       <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-neutral-800 text-sm rounded-full font-medium shadow-lg">
-                        {product.status}
+                        {product.status === 'in-development' ? '開発中' : product.status === 'beta' ? 'ベータ版' : 'リリース済'}
                       </span>
                     </motion.div>
                     </div>
@@ -445,7 +426,7 @@ export default function Home() {
                       {product.nameEn}
                     </p>
                     <p className="text-neutral-600 mb-6 leading-relaxed">
-                      {product.description}
+                      {product.tagline}
                     </p>
                     
                       <motion.div
@@ -458,7 +439,8 @@ export default function Home() {
                     </div>
                   </div>
                 </motion.div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>
@@ -490,38 +472,7 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  id: 'yamada',
-                  name: '山田',
-                  nameEn: 'Yamada',
-                  position: 'Chief Design Officer',
-                  positionShort: 'CDO',
-                  bio: 'ユーザーエクスペリエンス設計のエキスパート。革新的なプロダクト体験を提供します。',
-                  image: '/images/team/yamada.jpg',
-                  color: 'from-blue-500 to-purple-500'
-                },
-                {
-                  id: 'masadome',
-                  name: '正留',
-                  nameEn: 'Masadome',
-                  position: 'Chief Executive Officer',
-                  positionShort: 'CEO',
-                  bio: 'テクノロジーベンチャー経営のスペシャリスト。戦略的ビジョンと実行力を兼ね備えます。',
-                  image: '/images/team/masadome.jpg',
-                  color: 'from-emerald-500 to-blue-500'
-                },
-                {
-                  id: 'ando',
-                  name: '安藤',
-                  nameEn: 'Ando',
-                  position: 'Chief Technology Officer',
-                  positionShort: 'CTO',
-                  bio: 'フルスタック開発の専門家。スケーラブルで堅牢なシステムアーキテクチャを設計・構築します。',
-                  image: '/images/team/ando.jpg',
-                  color: 'from-yellow-500 to-emerald-500'
-                }
-              ].map((member, index) => (
+              {teamMembers.map((member, index) => (
                 <motion.div
                   key={member.id}
                   initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
@@ -547,7 +498,7 @@ export default function Home() {
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                           unoptimized
                         />
-                        <div className={`absolute inset-0 bg-gradient-to-t ${member.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-emerald-500 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
                       </div>
                     </div>
                     
@@ -555,8 +506,8 @@ export default function Home() {
                       className="mb-4"
                       whileHover={{ scale: 1.05 }}
                     >
-                      <span className={`px-4 py-2 bg-gradient-to-r ${member.color} text-white text-sm font-medium rounded-full`}>
-                        {member.positionShort}
+                      <span className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-blue-500 text-white text-sm font-medium rounded-full">
+                        {member.positionEn}
                       </span>
                     </motion.div>
                     

@@ -160,33 +160,6 @@ export function ProductsSection() {
 
                   {/* Actions */}
                   <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <div className="flex space-x-2">
-                      {product.links?.github && (
-                        <motion.a
-                          href={product.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                        >
-                          <CodeBracketIcon className="w-5 h-5" />
-                        </motion.a>
-                      )}
-                      {product.links?.website && (
-                        <motion.a
-                          href={product.links.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                        >
-                          <PlayIcon className="w-5 h-5" />
-                        </motion.a>
-                      )}
-                    </div>
-
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}

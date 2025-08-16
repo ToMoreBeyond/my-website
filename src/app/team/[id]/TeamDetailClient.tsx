@@ -162,7 +162,7 @@ export function TeamDetailClient({ member }: TeamDetailClientProps) {
                 animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
-                {member.social.github && (
+                {member.social?.github && (
                   <motion.a
                     href={member.social.github}
                     target="_blank"
@@ -176,7 +176,7 @@ export function TeamDetailClient({ member }: TeamDetailClientProps) {
                   </motion.a>
                 )}
                 
-                {member.social.twitter && (
+                {member.social?.twitter && (
                   <motion.a
                     href={member.social.twitter}
                     target="_blank"

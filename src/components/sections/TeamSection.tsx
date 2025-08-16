@@ -125,7 +125,7 @@ export function TeamSection() {
 
                     {/* Contact */}
                     <div className="flex justify-center space-x-2">
-                      {member.social.github && (
+                      {member.social?.github && (
                         <motion.a
                           href={member.social.github}
                           target="_blank"
@@ -138,7 +138,7 @@ export function TeamSection() {
                           <LinkIcon className="w-5 h-5" />
                         </motion.a>
                       )}
-                      {member.social.twitter && (
+                      {member.social?.twitter && (
                         <motion.a
                           href={member.social.twitter}
                           target="_blank"
@@ -288,7 +288,7 @@ export function TeamSection() {
 
               {/* Social Links */}
               <div className="flex space-x-4">
-                {selectedMember.social.github && (
+                {selectedMember.social?.github && (
                   <motion.a
                     href={selectedMember.social.github}
                     target="_blank"
@@ -301,7 +301,7 @@ export function TeamSection() {
                     GitHub
                   </motion.a>
                 )}
-                {selectedMember.social.twitter && (
+                {selectedMember.social?.twitter && (
                   <motion.a
                     href={selectedMember.social.twitter}
                     target="_blank"

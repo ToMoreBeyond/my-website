@@ -179,33 +179,14 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
-                {product.links?.website && (
-                  <motion.a
-                    href={product.links.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-8 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-semibold"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <PlayIcon className="w-5 h-5 mr-2" />
-                    アプリを試す
-                  </motion.a>
-                )}
-                
-                {product.links?.github && (
-                  <motion.a
-                    href={product.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-8 py-3 border border-gray-600 text-gray-300 rounded-lg hover:border-primary-500 hover:text-primary-400 transition-colors font-semibold"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <CodeBracketIcon className="w-5 h-5 mr-2" />
-                    コードを見る
-                  </motion.a>
-                )}
+                <motion.div
+                  className="inline-flex items-center px-8 py-3 bg-primary-600 text-white rounded-lg font-semibold"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <PlayIcon className="w-5 h-5 mr-2" />
+                  リリース予定: {product.releaseSchedule}
+                </motion.div>
                 
                 <motion.button
                   className="inline-flex items-center px-8 py-3 border border-gray-600 text-gray-300 rounded-lg hover:border-gray-500 hover:text-white transition-colors font-semibold"
