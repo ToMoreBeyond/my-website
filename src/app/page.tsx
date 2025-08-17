@@ -349,7 +349,8 @@ export default function Home() {
                       </p>
                     </div>
                   </motion.div>
-                  ))}
+                  )
+                })}
               </div>
             </div>
 
