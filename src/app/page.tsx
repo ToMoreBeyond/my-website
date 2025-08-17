@@ -108,7 +108,10 @@ export default function Home() {
         {/* Hero Section */}
         <section 
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-olive-50 via-olive-100 to-olive-200"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          style={{
+            background: 'linear-gradient(180deg, #f8f9f4 0%, #eef0e5 25%, #d9dfc8 50%, #b8c39f 75%, #8e9c78 100%)'
+          }}
         >
           {/* Enhanced Organic Background */}
           <div className="absolute inset-0">
@@ -204,15 +207,15 @@ export default function Home() {
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
-                  className="cursor-hover bg-olive-700 hover:bg-olive-800 text-white px-16 py-5 text-lg font-bold relative overflow-hidden shadow-lg"
+                  className="cursor-hover bg-white/95 backdrop-blur-sm border-2 border-olive-600 text-olive-800 hover:bg-olive-600 hover:text-white px-16 py-5 text-lg font-bold relative overflow-hidden shadow-lg transition-all duration-300"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   style={{
                     borderRadius: 'var(--radius-pill)',
-                    boxShadow: '0 8px 32px rgba(72, 92, 17, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 8px 32px rgba(72, 92, 17, 0.2), 0 2px 8px rgba(0, 0, 0, 0.05)'
                   }}
                 >
-                  <span className="relative z-10 text-white">製品を見る</span>
+                  <span className="relative z-10 font-bold">製品を見る</span>
                 </motion.button>
                 
                 <motion.button
@@ -245,7 +248,7 @@ export default function Home() {
 
         {/* About Section with Organic Flow */}
         <section id="about" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #b8c39f 0%, #d9dfc8 15%, #eef0e5 30%, #f8f9f4 50%, #ffffff 70%, #f8f9f4 85%, #eef0e5 100%)',
+          background: 'linear-gradient(180deg, #8e9c78 0%, #b8c39f 10%, #d9dfc8 25%, #eef0e5 40%, #f8f9f4 55%, #ffffff 70%, #f8f9f4 85%, #eef0e5 100%)',
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
