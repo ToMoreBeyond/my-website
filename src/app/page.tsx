@@ -197,27 +197,27 @@ export default function Home() {
 
               {/* Refined Action Buttons */}
               <motion.div
-                className="flex flex-col sm:flex-row gap-8"
+                className="flex flex-col sm:flex-row gap-8 mb-20"
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1, delay: 2.6 }}
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
-                  className="cursor-hover bg-olive-600 hover:bg-olive-700 text-white px-16 py-5 text-lg font-semibold relative overflow-hidden"
+                  className="cursor-hover bg-olive-700 hover:bg-olive-800 text-white px-16 py-5 text-lg font-bold relative overflow-hidden shadow-lg"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   style={{
                     borderRadius: 'var(--radius-pill)',
-                    boxShadow: '0 8px 32px rgba(72, 92, 17, 0.3)'
+                    boxShadow: '0 8px 32px rgba(72, 92, 17, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1)'
                   }}
                 >
-                  <span className="relative z-10">製品を見る</span>
+                  <span className="relative z-10 text-white">製品を見る</span>
                 </motion.button>
                 
                 <motion.button
                   onClick={() => smoothScrollTo('#about')}
-                  className="cursor-hover bg-transparent border-2 border-olive-600 text-olive-700 hover:bg-olive-600 hover:text-white px-16 py-5 text-lg font-semibold transition-all duration-300"
+                  className="cursor-hover bg-white/90 backdrop-blur-sm border-2 border-olive-600 text-olive-700 hover:bg-olive-600 hover:text-white px-16 py-5 text-lg font-semibold transition-all duration-300 shadow-md"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   style={{
@@ -230,9 +230,9 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Scroll Indicator */}
+          {/* Scroll Indicator - moved down to avoid button overlap */}
           <motion.div
-            className="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-olive-600/80"
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-olive-600/80"
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -245,9 +245,9 @@ export default function Home() {
 
         {/* About Section with Organic Flow */}
         <section id="about" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #b8c39f 0%, #eef0e5 20%, #f8f9f4 40%, #ffffff 60%, #f8f9f4 80%, #eef0e5 100%)',
-          paddingTop: 'clamp(6rem, 12vw, 10rem)',
-          paddingBottom: 'clamp(6rem, 12vw, 10rem)'
+          background: 'linear-gradient(180deg, #b8c39f 0%, #d9dfc8 15%, #eef0e5 30%, #f8f9f4 50%, #ffffff 70%, #f8f9f4 85%, #eef0e5 100%)',
+          paddingTop: 'clamp(4rem, 8vw, 8rem)',
+          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
           {/* Organic Background Elements */}
           <div className="absolute inset-0">
@@ -297,18 +297,26 @@ export default function Home() {
                     description: '革新性、情熱、挑戦、品質を大切にしています。',
                     icon: '⭐'
                   }
-                ].map((item, index) => (
+                ].map((item, index) => {
+                  const animations = [
+                    { initial: { opacity: 0, x: -60, rotate: -5 }, animate: { opacity: 1, x: 0, rotate: 0 } },
+                    { initial: { opacity: 0, scale: 0.7, y: 40 }, animate: { opacity: 1, scale: 1, y: 0 } },
+                    { initial: { opacity: 0, x: 60, rotate: 5 }, animate: { opacity: 1, x: 0, rotate: 0 } }
+                  ];
+                  const animation = animations[index % animations.length];
+                  
+                  return (
                   <motion.div
                     key={item.title}
-                    initial={{ opacity: 0, y: 60 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    whileHover={{ y: -8, scale: 1.01 }}
+                    initial={animation.initial}
+                    whileInView={animation.animate}
+                    whileHover={{ y: -8, scale: 1.02, rotate: index === 1 ? 0 : (index === 0 ? 2 : -2) }}
                     transition={{ 
                       duration: 0.8, 
-                      delay: index * 0.15,
+                      delay: index * 0.2,
                       type: "spring",
-                      stiffness: 60,
-                      damping: 15
+                      stiffness: 70,
+                      damping: 12
                     }}
                     viewport={{ once: true, margin: "-80px" }}
                     className="group text-center"
@@ -341,16 +349,18 @@ export default function Home() {
                       </p>
                     </div>
                   </motion.div>
-                ))}
+                  ))}
               </div>
             </div>
 
           </div>
         </section>
 
-        {/* Products Section with Gradient Flow */}
+        {/* Products Section with Seamless Flow */}
         <section id="products" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 20%, #bae6fd 40%, #38bdf8 60%, #0284c7 80%, #075985 100%)'
+          background: 'linear-gradient(180deg, #eef0e5 0%, #f8f9f4 10%, #ffffff 25%, #f8f9f4 40%, #eef0e5 55%, #d9dfc8 70%, #b8c39f 85%, #8e9c78 100%)',
+          paddingTop: 'clamp(4rem, 8vw, 8rem)',
+          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
           <div className="container">
             <div className="text-center mb-20">
@@ -377,22 +387,43 @@ export default function Home() {
             <div className="grid lg:grid-cols-3 gap-8">
               {products.map((product, index) => {
                 const productColors = {
-                  'tadataka': 'from-blue-500 to-cyan-500',
-                  'toirun': 'from-emerald-500 to-green-500',
-                  'meet-in-the-middle': 'from-purple-500 to-pink-500'
+                  'tadataka': 'from-olive-500 to-olive-600',
+                  'toirun': 'from-olive-400 to-olive-500',
+                  'meet-in-the-middle': 'from-olive-600 to-olive-700'
                 }
-                const productColor = productColors[product.id as keyof typeof productColors] || 'from-gray-500 to-gray-600'
+                const productColor = productColors[product.id as keyof typeof productColors] || 'from-olive-500 to-olive-600'
+                
+                const cardAnimations = [
+                  { 
+                    initial: { opacity: 0, x: -100, rotateY: -30 }, 
+                    animate: { opacity: 1, x: 0, rotateY: 0 },
+                    hover: { x: 8, rotateY: 5 }
+                  },
+                  { 
+                    initial: { opacity: 0, y: 80, scale: 0.8 }, 
+                    animate: { opacity: 1, y: 0, scale: 1 },
+                    hover: { y: -12, scale: 1.04 }
+                  },
+                  { 
+                    initial: { opacity: 0, x: 100, rotateY: 30 }, 
+                    animate: { opacity: 1, x: 0, rotateY: 0 },
+                    hover: { x: -8, rotateY: -5 }
+                  }
+                ];
+                const animation = cardAnimations[index % cardAnimations.length];
+                
                 return (
                 <motion.div
                   key={product.id}
-                  initial={{ opacity: 0, y: 100, rotateX: -15 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  whileHover={{ y: -15, scale: 1.03 }}
+                  initial={animation.initial}
+                  whileInView={animation.animate}
+                  whileHover={animation.hover}
                   transition={{ 
-                    duration: 0.7, 
-                    delay: index * 0.15,
+                    duration: 0.8, 
+                    delay: index * 0.2,
                     type: "spring",
-                    stiffness: 80
+                    stiffness: 60,
+                    damping: 15
                   }}
                   viewport={{ once: true, margin: "-50px" }}
                   onClick={() => window.location.href = `/products/${product.id}`}
@@ -447,9 +478,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Team Section with Smooth Gradient */}
+        {/* Team Section with Continuous Flow */}
         <section id="team" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #075985 0%, #0891b2 20%, #06b6d4 40%, #67e8f9 60%, #a5f3fc 80%, #f0fdfa 100%)'
+          background: 'linear-gradient(180deg, #8e9c78 0%, #b8c39f 15%, #d9dfc8 30%, #eef0e5 45%, #f8f9f4 60%, #ffffff 75%, #f8f9f4 90%, #eef0e5 100%)',
+          paddingTop: 'clamp(4rem, 8vw, 8rem)',
+          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
           <div className="container">
             <div className="text-center mb-16">
@@ -474,17 +507,38 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {teamMembers.map((member, index) => (
+              {teamMembers.map((member, index) => {
+                const teamAnimations = [
+                  { 
+                    initial: { opacity: 0, y: -60, rotateX: 45 }, 
+                    animate: { opacity: 1, y: 0, rotateX: 0 },
+                    hover: { y: -8, rotateX: -5 }
+                  },
+                  { 
+                    initial: { opacity: 0, scale: 0.5, rotate: 15 }, 
+                    animate: { opacity: 1, scale: 1, rotate: 0 },
+                    hover: { scale: 1.05, rotate: -2 }
+                  },
+                  { 
+                    initial: { opacity: 0, y: 80, x: 40 }, 
+                    animate: { opacity: 1, y: 0, x: 0 },
+                    hover: { y: -6, x: -4 }
+                  }
+                ];
+                const animation = teamAnimations[index % teamAnimations.length];
+                
+                return (
                 <motion.div
                   key={member.id}
-                  initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                  whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                  whileHover={{ y: -10, rotate: 2 }}
+                  initial={animation.initial}
+                  whileInView={animation.animate}
+                  whileHover={animation.hover}
                   transition={{ 
-                    duration: 0.6, 
-                    delay: index * 0.12,
+                    duration: 0.7, 
+                    delay: index * 0.15,
                     type: "spring",
-                    stiffness: 100
+                    stiffness: 80,
+                    damping: 12
                   }}
                   viewport={{ once: true, margin: "-80px" }}
                   onClick={() => window.location.href = `/team/${member.id}`}
@@ -527,14 +581,17 @@ export default function Home() {
                     </p>
                   </div>
                 </motion.div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>
 
-        {/* Contact Section with Dark Gradient */}
-        <section id="contact" className="section text-white relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #f0fdfa 0%, #cffafe 10%, #5eead4 30%, #10b981 50%, #047857 70%, #064e3b 90%, #022c22 100%)'
+        {/* Contact Section with Rich Gradient */}
+        <section id="contact" className="section relative overflow-hidden" style={{
+          background: 'linear-gradient(180deg, #eef0e5 0%, #d9dfc8 15%, #b8c39f 30%, #8e9c78 45%, #6b7b5a 60%, #485c11 75%, #3a4a0e 90%, #2f3b0c 100%)',
+          paddingTop: 'clamp(4rem, 8vw, 8rem)',
+          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
           <ParticleField 
             particleCount={60} 
@@ -551,10 +608,10 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                お問い合わせ
+                <span className="text-white">お問い合わせ</span>
               </motion.h2>
               <motion.p 
-                className="text-xl text-neutral-300 max-w-3xl mx-auto reveal-text"
+                className="text-xl text-white/90 max-w-3xl mx-auto reveal-text"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -591,10 +648,10 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-medium">{item.label}</p>
-                        <p className="text-neutral-300">{item.value}</p>
+                        <p className="text-white/80">{item.value}</p>
                       </div>
                     </motion.div>
-                  ))}
+                    ))}
                 </div>
               </motion.div>
               
@@ -620,7 +677,7 @@ export default function Home() {
                         whileFocus={{ scale: 1.02 }}
                       />
                     </div>
-                  ))}
+                    ))}
                   
                   <div>
                     <label className="block text-sm font-medium mb-2">メッセージ *</label>
@@ -649,8 +706,8 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="text-white py-16 relative overflow-hidden -mt-1" style={{
-          background: 'linear-gradient(180deg, #022c22 0%, #064e3b 25%, #065f46 50%, #047857 75%, #10b981 90%, #134e4a 100%)'
+        <footer className="text-white py-16 relative overflow-hidden" style={{
+          background: 'linear-gradient(180deg, #2f3b0c 0%, #252e0a 50%, #1a2008 100%)'
         }}>
           <div className="container relative z-10">
             <div className="grid md:grid-cols-3 gap-8">
@@ -673,7 +730,7 @@ export default function Home() {
                     >
                       {product}
                     </motion.li>
-                  ))}
+                    ))}
                 </ul>
               </div>
               
@@ -694,7 +751,7 @@ export default function Home() {
                         {link.label}
                       </motion.button>
                     </motion.li>
-                  ))}
+                    ))}
                 </ul>
               </div>
             </div>
