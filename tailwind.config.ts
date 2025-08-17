@@ -11,6 +11,20 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        // オーガニックなオリーブグリーン系
+        olive: {
+          50: '#f8f9f4',
+          100: '#eef0e5',
+          200: '#d9dfc8',
+          300: '#b8c39f',
+          400: '#8e9c78',
+          500: '#6b7b5a',
+          600: '#485c11',
+          700: '#3a4a0e',
+          800: '#2f3b0c',
+          900: '#252e0a',
+        },
+        // 既存のエメラルドグリーン
         primary: {
           50: '#ecfdf5',
           100: '#d1fae5',
@@ -76,6 +90,7 @@ export default {
       },
       fontFamily: {
         sans: [
+          'DM Sans',
           'Inter',
           'Noto Sans JP',
           'system-ui',
@@ -87,6 +102,40 @@ export default {
           'Arial',
           'sans-serif',
         ],
+        serif: [
+          'Crimson Text',
+          'Georgia',
+          'serif',
+        ],
+        mono: [
+          'Roboto Mono',
+          'monospace',
+        ],
+        display: [
+          'DM Sans',
+          'Inter',
+          'Noto Sans JP',
+          'sans-serif',
+        ],
+      },
+      fontSize: {
+        'hero': ['clamp(3rem, 10vw, 10rem)', { lineHeight: '0.9', letterSpacing: '-0.02em' }],
+        'display': ['clamp(2.5rem, 7vw, 7rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        'headline': ['clamp(2rem, 5vw, 4rem)', { lineHeight: '1.1' }],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '120': '30rem',
+        '144': '36rem',
+      },
+      maxWidth: {
+        'screen-3xl': '1800px',
+      },
+      borderRadius: {
+        'blob': '60% 40% 30% 70% / 60% 30% 70% 40%',
+        '4xl': '2rem',
+        '5xl': '2.5rem',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
@@ -95,6 +144,10 @@ export default {
         'scale-in': 'scaleIn 0.35s ease-out',
         'slide-in-right': 'slideInRight 0.5s ease-out',
         'slide-in-left': 'slideInLeft 0.5s ease-out',
+        'gradient-flow': 'gradientFlow 8s ease infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-soft': 'pulseSoft 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'morph': 'morph 8s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -120,6 +173,23 @@ export default {
         slideInLeft: {
           '0%': { opacity: '0', transform: 'translateX(-100px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        gradientFlow: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
+        morph: {
+          '0%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+          '100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
         },
       },
     },
