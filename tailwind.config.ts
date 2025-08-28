@@ -11,81 +11,40 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // オーガニックなオリーブグリーン系
-        olive: {
-          50: '#f8f9f4',
-          100: '#eef0e5',
-          200: '#d9dfc8',
-          300: '#b8c39f',
-          400: '#8e9c78',
-          500: '#6b7b5a',
-          600: '#485c11',
-          700: '#3a4a0e',
-          800: '#2f3b0c',
-          900: '#252e0a',
-        },
-        // 既存のエメラルドグリーン
+        // メインカラー：洗練されたダークグリーン（1色のみ）
         primary: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
+          50: '#f0f4f3',
+          100: '#d9e2df',
+          200: '#b3c5be',
+          300: '#8ca89d',
+          400: '#668b7c',
+          500: '#406e5b',  // メインカラー
+          600: '#335849',
+          700: '#264237',
+          800: '#1a2c25',
+          900: '#0d1613',
+          950: '#060b09',
         },
-        secondary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+        // グレースケール（モノトーン）
+        gray: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          850: '#1a1a1a',
+          900: '#171717',
+          950: '#0a0a0a',
         },
+        // アクセントカラー（極めて限定的に使用）
         accent: {
-          50: '#fdf4ff',
-          100: '#fae8ff',
-          200: '#f5d0fe',
-          300: '#f0abfc',
-          400: '#e879f9',
-          500: '#d946ef',
-          600: '#c026d3',
-          700: '#a21caf',
-          800: '#86198f',
-          900: '#701a75',
-        },
-        warm: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
-        },
-        slate: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          850: '#0f172a',
-          900: '#0f172a',
-          950: '#020617',
+          light: '#e8f4f0',  // 薄い緑（背景用）
+          DEFAULT: '#406e5b', // プライマリと同じ
+          dark: '#1a2c25',   // ダークグリーン
         },
       },
       fontFamily: {
@@ -119,15 +78,26 @@ export default {
         ],
       },
       fontSize: {
-        'hero': ['clamp(3rem, 10vw, 10rem)', { lineHeight: '0.9', letterSpacing: '-0.02em' }],
-        'display': ['clamp(2.5rem, 7vw, 7rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
-        'headline': ['clamp(2rem, 5vw, 4rem)', { lineHeight: '1.1' }],
+        // より洗練されたタイポグラフィ階層
+        'hero': ['clamp(4rem, 12vw, 12rem)', { lineHeight: '0.85', letterSpacing: '-0.04em', fontWeight: '300' }],
+        'display-lg': ['clamp(3rem, 8vw, 8rem)', { lineHeight: '0.9', letterSpacing: '-0.03em', fontWeight: '400' }],
+        'display': ['clamp(2.5rem, 6vw, 6rem)', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '500' }],
+        'headline': ['clamp(2rem, 4vw, 4rem)', { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '600' }],
+        'title': ['clamp(1.5rem, 3vw, 2.5rem)', { lineHeight: '1.2', fontWeight: '500' }],
+        'subtitle': ['clamp(1.125rem, 2vw, 1.5rem)', { lineHeight: '1.4', fontWeight: '400' }],
       },
       spacing: {
+        // 増やした余白サイズ
         '18': '4.5rem',
+        '22': '5.5rem',
+        '30': '7.5rem',
         '88': '22rem',
+        '100': '25rem',
         '120': '30rem',
         '144': '36rem',
+        '160': '40rem',
+        '180': '45rem',
+        '200': '50rem',
       },
       maxWidth: {
         'screen-3xl': '1800px',
@@ -138,16 +108,13 @@ export default {
         '5xl': '2.5rem',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'fade-in-up': 'fadeInUp 0.5s ease-out',
-        'fade-in-down': 'fadeInDown 0.5s ease-out',
-        'scale-in': 'scaleIn 0.35s ease-out',
-        'slide-in-right': 'slideInRight 0.5s ease-out',
-        'slide-in-left': 'slideInLeft 0.5s ease-out',
-        'gradient-flow': 'gradientFlow 8s ease infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-soft': 'pulseSoft 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'morph': 'morph 8s ease-in-out infinite',
+        // シンプルで洗練されたアニメーション（控えめ）
+        'fade-in': 'fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+        'fade-in-down': 'fadeInDown 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+        'scale-in': 'scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        'subtle-float': 'subtleFloat 10s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'gentle-pulse': 'gentlePulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         fadeIn: {
@@ -155,41 +122,24 @@ export default {
           '100%': { opacity: '1' },
         },
         fadeInUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '0%': { opacity: '0', transform: 'translateY(10px)' },  // 控えめな移動量
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         fadeInDown: {
-          '0%': { opacity: '0', transform: 'translateY(-20px)' },
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },  // 控えめな移動量
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.9)' },
+          '0%': { opacity: '0', transform: 'scale(0.95)' },  // より微細なスケール
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
-        slideInRight: {
-          '0%': { opacity: '0', transform: 'translateX(100px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        slideInLeft: {
-          '0%': { opacity: '0', transform: 'translateX(-100px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        gradientFlow: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-        },
-        float: {
+        subtleFloat: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '50%': { transform: 'translateY(-8px)' },  // 控えめな浮遊
         },
-        pulseSoft: {
+        gentlePulse: {
           '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.5' },
-        },
-        morph: {
-          '0%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
-          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
-          '100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+          '50%': { opacity: '0.85' },  // より控えめなパルス
         },
       },
     },
