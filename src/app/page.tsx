@@ -584,11 +584,7 @@ export default function Home() {
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
-          <ParticleField 
-            particleCount={60} 
-            colors={['#10b981', '#34d399', '#6ee7b7']}
-            className="opacity-30"
-          />
+          {/* Decorative particle background removed to reduce load */}
           
           <div className="container relative z-10">
             <div className="text-center mb-16">
