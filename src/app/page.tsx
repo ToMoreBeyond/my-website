@@ -1,56 +1,25 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
-import { GeometricShapes } from '@/components/ui/GeometricShapes'
 import { HamburgerMenu } from '@/components/ui/HamburgerMenu'
 // import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
 import { products } from '@/data/products'
 import { teamMembers } from '@/data/team'
-import {
-  createTextReveal,
-  createParallax,
-  createMagneticHover,
-  createStaggerAnimation,
-  createImageReveal,
-  createCounterAnimation,
-  cleanupScrollTriggers
-} from '@/lib/scroll-animations'
-import {
-  createPremiumTextReveal,
-  createSmoothParallax,
-  createMagneticCursor,
-  createFloatingAnimation,
-  createStaggerFade,
-  createSmoothCounter,
-  initPremiumAnimations
-} from '@/lib/premium-animations'
-import {
-  createSmoothEntrance,
-  createFloatingCards,
-  createRotatingElements,
-  createWaveAnimation,
-  create3DTilt,
-  createBounceEntrance,
-  createTextScramble
-} from '@/lib/interactive-scroll'
+import { cleanupScrollTriggers } from '@/lib/scroll-animations'
+import { createPremiumTextReveal, createSmoothParallax } from '@/lib/premium-animations'
+import { createSmoothEntrance, createFloatingCards, create3DTilt, createTextScramble } from '@/lib/interactive-scroll'
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
-  const [enableDecor, setEnableDecor] = useState(false)
 
   useEffect(() => {
     const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-
-    // Soften initial impression: enable decorative motion after brief delay on non-mobile and non-reduced-motion
-    const enableTimer = setTimeout(() => {
-      if (!prefersReduced && !isMobile) setEnableDecor(true)
-    }, 1000)
 
     // Initialize lightweight animations with guards
     const timer = setTimeout(() => {
@@ -61,11 +30,10 @@ export default function Home() {
       // Skip heavy effects on mobile or when reduced motion
       if (prefersReduced || isMobile) return
 
-      // Parallax and floating (single init)
+      // Parallax (single init)
       createSmoothParallax('.parallax-slow', 0.2)
       createSmoothParallax('.parallax-medium', 0.35)
       createSmoothParallax('.parallax-fast', 0.5)
-      createFloatingAnimation('.floating', { distance: 12, duration: 5 })
 
       // Interactive animations (subset)
       createSmoothEntrance()
@@ -76,7 +44,6 @@ export default function Home() {
 
     return () => {
       clearTimeout(timer)
-      clearTimeout(enableTimer)
       cleanupScrollTriggers()
     }
   }, [])
@@ -93,33 +60,8 @@ export default function Home() {
         <section 
           ref={heroRef}
           className="relative min-h-screen flex items-center justify-center overflow-hidden"
-          style={{
-            background: 'linear-gradient(180deg, #f8f9f4 0%, #eef0e5 25%, #d9dfc8 50%, #b8c39f 75%, #8e9c78 100%)'
-          }}
         >
-          {/* Enhanced Organic Background */}
-          <div className="absolute inset-0">
-            <div className="parallax-slow absolute inset-0" style={{
-              // Static gradient at first paint to reduce distraction
-              background: 'linear-gradient(135deg, #f8f9f4 0%, #eef0e5 25%, #d9dfc8 50%, #b8c39f 75%, #8e9c78 100%)',
-              backgroundSize: '200% 200%'
-            }} />
-            
-            {/* Organic floating elements (delayed, fewer) */}
-            {enableDecor && (
-              <div className="absolute inset-0">
-                <div className="floating absolute top-1/4 left-1/4 w-32 h-32 bg-olive-600/10 rounded-blob blur-xl" />
-                <div className="floating absolute bottom-1/3 right-1/3 w-44 h-44 bg-olive-500/8 rounded-blob blur-2xl" />
-              </div>
-            )}
-          </div>
-
-          {/* 3D Geometric Shapes with Parallax */}
-          {enableDecor && (
-            <div className="parallax-slow">
-              <GeometricShapes />
-            </div>
-          )}
+          {/* No floating decorations for a cleaner, static hero background */}
           
           <div className="container text-center relative z-10">
             {/* Large Typography like internfes */}
@@ -235,16 +177,10 @@ export default function Home() {
 
         {/* About Section with Organic Flow */}
         <section id="about" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #8e9c78 0%, #b8c39f 10%, #d9dfc8 25%, #eef0e5 40%, #f8f9f4 55%, #ffffff 70%, #f8f9f4 85%, #eef0e5 100%)',
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
-          {/* Organic Background Elements */}
-          <div className="absolute inset-0">
-            <div className="parallax-slow absolute top-20 left-10 w-80 h-80 bg-olive-400/8 rounded-blob blur-3xl animate-morph" />
-            <div className="parallax-medium absolute bottom-20 right-10 w-96 h-96 bg-olive-300/6 rounded-blob blur-3xl animate-float" />
-            <div className="floating absolute top-1/2 left-1/2 w-64 h-64 bg-olive-500/5 rounded-blob blur-2xl animate-pulse-soft" />
-          </div>
+          {/* Decorative floating elements removed for a flat, seamless look */}
 
           <div className="container relative z-10">
             <div className="text-center mb-24">
@@ -349,7 +285,6 @@ export default function Home() {
 
         {/* Products Section with Seamless Flow */}
         <section id="products" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #eef0e5 0%, #f8f9f4 10%, #ffffff 25%, #f8f9f4 40%, #eef0e5 55%, #d9dfc8 70%, #b8c39f 85%, #8e9c78 100%)',
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
@@ -471,7 +406,6 @@ export default function Home() {
 
         {/* Team Section with Continuous Flow */}
         <section id="team" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #8e9c78 0%, #b8c39f 15%, #d9dfc8 30%, #eef0e5 45%, #f8f9f4 60%, #ffffff 75%, #f8f9f4 90%, #eef0e5 100%)',
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
@@ -580,7 +514,6 @@ export default function Home() {
 
         {/* Contact Section with Rich Gradient */}
         <section id="contact" className="section relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #eef0e5 0%, #d9dfc8 15%, #b8c39f 30%, #8e9c78 45%, #6b7b5a 60%, #485c11 75%, #3a4a0e 90%, #2f3b0c 100%)',
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
@@ -589,16 +522,16 @@ export default function Home() {
           <div className="container relative z-10">
             <div className="text-center mb-16">
               <motion.h2 
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 reveal-text"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6 reveal-text"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <span className="text-white">お問い合わせ</span>
+                <span>お問い合わせ</span>
               </motion.h2>
               <motion.p 
-                className="text-xl text-white/90 max-w-3xl mx-auto reveal-text"
+                className="text-xl text-neutral-700 max-w-3xl mx-auto reveal-text"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -635,7 +568,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-medium">{item.label}</p>
-                        <p className="text-white/80">{item.value}</p>
+                        <p className="text-neutral-600">{item.value}</p>
                       </div>
                     </motion.div>
                     ))}
@@ -693,9 +626,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="text-white py-16 relative overflow-hidden" style={{
-          background: 'linear-gradient(180deg, #2f3b0c 0%, #252e0a 50%, #1a2008 100%)'
-        }}>
+        <footer className="text-neutral-800 py-16 relative overflow-hidden">
           <div className="container relative z-10">
             <div className="grid md:grid-cols-3 gap-8">
               <motion.div
@@ -703,19 +634,19 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
               >
                 <h3 className="text-xl font-semibold mb-4 magnetic">ToMoreBeyond</h3>
-                <p className="text-neutral-400">技術と情熱で、より遠くへ。</p>
+                <p className="text-neutral-600">技術と情熱で、より遠くへ。</p>
               </motion.div>
               
               <div>
                 <h4 className="font-medium mb-4">プロダクト</h4>
-                <ul className="space-y-2 text-neutral-400 text-sm">
+                <ul className="space-y-2 text-neutral-600 text-sm">
                   {['忠嵩 (TADATAKA)', 'TOI-RUN', 'Meet in the middle'].map((product) => (
                     <motion.li 
                       key={product}
                       className="magnetic"
                       whileHover={{ x: 5 }}
                     >
-                      {product}
+                      <span className="hover:text-neutral-800 transition-colors">{product}</span>
                     </motion.li>
                     ))}
                 </ul>
@@ -723,7 +654,7 @@ export default function Home() {
               
               <div>
                 <h4 className="font-medium mb-4">リンク</h4>
-                <ul className="space-y-2 text-neutral-400 text-sm">
+                <ul className="space-y-2 text-neutral-600 text-sm">
                   {[
                     { label: '会社概要', target: '#about' },
                     { label: 'チーム', target: '#team' },
@@ -732,7 +663,7 @@ export default function Home() {
                     <motion.li key={link.label}>
                       <motion.button
                         onClick={() => smoothScrollTo(link.target)}
-                        className="hover:text-white transition-colors magnetic"
+                        className="hover:text-neutral-800 transition-colors magnetic"
                         whileHover={{ x: 5 }}
                       >
                         {link.label}

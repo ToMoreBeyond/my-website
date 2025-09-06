@@ -105,6 +105,18 @@
   --radius-blob: 60% 40% 30% 70% / 60% 30% 70% 40%;
   --radius-pill: 1000px;
   --radius-full: 9999px;
+
+  /* Global vertical page gradient */
+  --bg-gradient: linear-gradient(
+    180deg,
+    #f8f9f4 0%,
+    #eef0e5 18%,
+    #ffffff 36%,
+    #eef0e5 54%,
+    #d9dfc8 72%,
+    #b8c39f 88%,
+    #8e9c78 100%
+  );
 }
 
 /* ============================================
@@ -129,7 +141,7 @@ body {
   font-size: var(--text-base);
   line-height: 1.7;
   color: var(--color-neutral-700);
-  background-color: var(--color-neutral-0);
+  background: var(--bg-gradient);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
