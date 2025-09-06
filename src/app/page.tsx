@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { GeometricShapes } from '@/components/ui/GeometricShapes'
 import { HamburgerMenu } from '@/components/ui/HamburgerMenu'
-import { ParticleField } from '@/components/effects/ParticleField'
+// import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
 import { products } from '@/data/products'
 import { teamMembers } from '@/data/team'
@@ -41,58 +41,42 @@ import {
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
+  const [enableDecor, setEnableDecor] = useState(false)
 
   useEffect(() => {
-    // Initialize premium animations after component mount
+    const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
+    // Soften initial impression: enable decorative motion after brief delay on non-mobile and non-reduced-motion
+    const enableTimer = setTimeout(() => {
+      if (!prefersReduced && !isMobile) setEnableDecor(true)
+    }, 1000)
+
+    // Initialize lightweight animations with guards
     const timer = setTimeout(() => {
-      // Premium text animations
+      // Text animations are light; keep them
       createPremiumTextReveal('.reveal-chars', { splitBy: 'chars', stagger: 0.02 })
-      createPremiumTextReveal('.reveal-words', { splitBy: 'words', stagger: 0.08 })
-      
-      // Enhanced parallax
+      createPremiumTextReveal('.reveal-words', { splitBy: 'words', stagger: 0.06 })
+
+      // Skip heavy effects on mobile or when reduced motion
+      if (prefersReduced || isMobile) return
+
+      // Parallax and floating (single init)
       createSmoothParallax('.parallax-slow', 0.2)
-      createSmoothParallax('.parallax-medium', 0.4)
-      createSmoothParallax('.parallax-fast', 0.6)
-      
-      // Magnetic interactions
-      createMagneticCursor('.magnetic', 0.15)
-      
-      // Floating elements
-      createFloatingAnimation('.floating', { distance: 15, duration: 4 })
-      
-      // Stagger fade animations
-      createStaggerFade('.stagger-fade')
-      
-      // Counter animations
-      createSmoothCounter('.counter')
-      
-      // Legacy animations
-      createStaggerAnimation('.stagger-container')
-      createImageReveal('.image-reveal', 'right')
-      
-      // Standard animations with parallax
-      setTimeout(() => {
-        // Basic parallax effects
-        createSmoothParallax('.parallax-slow', 0.2)
-        createSmoothParallax('.parallax-medium', 0.4)
-        createSmoothParallax('.parallax-fast', 0.6)
-        
-        // Floating elements
-        createFloatingAnimation('.floating', { distance: 15, duration: 4 })
-        
-        // Interactive animations
-        createSmoothEntrance()
-        createFloatingCards()
-        createRotatingElements()
-        createWaveAnimation()
-        create3DTilt()
-        createBounceEntrance()
-        createTextScramble()
-      }, 500)
+      createSmoothParallax('.parallax-medium', 0.35)
+      createSmoothParallax('.parallax-fast', 0.5)
+      createFloatingAnimation('.floating', { distance: 12, duration: 5 })
+
+      // Interactive animations (subset)
+      createSmoothEntrance()
+      createFloatingCards()
+      create3DTilt()
+      createTextScramble()
     }, 300)
 
     return () => {
       clearTimeout(timer)
+      clearTimeout(enableTimer)
       cleanupScrollTriggers()
     }
   }, [])
@@ -116,23 +100,26 @@ export default function Home() {
           {/* Enhanced Organic Background */}
           <div className="absolute inset-0">
             <div className="parallax-slow absolute inset-0" style={{
+              // Static gradient at first paint to reduce distraction
               background: 'linear-gradient(135deg, #f8f9f4 0%, #eef0e5 25%, #d9dfc8 50%, #b8c39f 75%, #8e9c78 100%)',
-              backgroundSize: '400% 400%',
-              animation: 'gradientFlow 12s ease infinite'
+              backgroundSize: '200% 200%'
             }} />
             
-            {/* Organic floating elements */}
-            <div className="absolute inset-0">
-              <div className="floating absolute top-1/4 left-1/4 w-40 h-40 bg-olive-600/10 rounded-blob blur-2xl animate-morph" />
-              <div className="floating absolute top-1/2 right-1/3 w-32 h-32 bg-olive-400/15 rounded-blob blur-xl animate-float" />
-              <div className="floating absolute bottom-1/3 left-1/2 w-56 h-56 bg-olive-500/8 rounded-blob blur-3xl animate-pulse-soft" />
-            </div>
+            {/* Organic floating elements (delayed, fewer) */}
+            {enableDecor && (
+              <div className="absolute inset-0">
+                <div className="floating absolute top-1/4 left-1/4 w-32 h-32 bg-olive-600/10 rounded-blob blur-xl" />
+                <div className="floating absolute bottom-1/3 right-1/3 w-44 h-44 bg-olive-500/8 rounded-blob blur-2xl" />
+              </div>
+            )}
           </div>
 
           {/* 3D Geometric Shapes with Parallax */}
-          <div className="parallax-slow">
-            <GeometricShapes />
-          </div>
+          {enableDecor && (
+            <div className="parallax-slow">
+              <GeometricShapes />
+            </div>
+          )}
           
           <div className="container text-center relative z-10">
             {/* Large Typography like internfes */}
