@@ -14,12 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ToMoreBeyond (トモビ・TMB) | 忠嵩・TOI-RUN・Meet in the middle | モバイルアプリ開発",
-  description: "ToMoreBeyond（トモビ・TMB）は忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業です。技術と情熱で、より遠くへ。",
+  title: "ToMoreBeyond（トモビ）｜革新的モバイルアプリ開発企業｜忠嵩・TOI-RUN・Meet in the middle",
+  description: "ToMoreBeyond（トモビ・TMB）は、忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業です。最先端技術で社会課題を解決し、人々の生活を豊かにするアプリケーションを提供しています。",
   keywords: [
-    "ToMoreBeyond", "トモビ", "TMB", "忠嵩", "TADATAKA", "TOI-RUN", "Meet in the middle",
-    "モバイルアプリ開発", "アプリ開発", "スマートフォンアプリ", "東京", "テクノロジー企業",
-    "ソフトウェア開発", "地図アプリ", "ランニングアプリ", "出会いアプリ", "ゲーミフィケーション"
+    "ToMoreBeyond", "トモビ", "TMB", "株式会社トモビ", "忠嵩", "TADATAKA", "TOI-RUN", "Meet in the middle",
+    "モバイルアプリ開発", "アプリ開発会社", "スマートフォンアプリ", "iOS開発", "Android開発", "東京", "テクノロジー企業",
+    "ソフトウェア開発", "地図アプリ", "ランニングアプリ", "フィットネスアプリ", "出会いアプリ", "ゲーミフィケーション",
+    "React Native", "Flutter", "Swift", "Kotlin", "TypeScript", "モバイルUI/UX", "アプリ制作", "カスタムアプリ開発"
   ],
   authors: [{ name: "ToMoreBeyond Inc." }],
   creator: "ToMoreBeyond Inc.",
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "ToMoreBeyond (トモビ・TMB) | 革新的モバイルアプリ開発",
-    description: "忠嵩・TOI-RUN・Meet in the middleを開発するモバイルアプリ企業",
+    title: "ToMoreBeyond｜革新的モバイルアプリ開発企業｜東京",
+    description: "ToMoreBeyondは、忠嵩・TOI-RUN・Meet in the middleなど革新的なモバイルアプリを開発。最先端技術で社会課題を解決するテクノロジー企業です。",
     url: 'https://tomorebeyond.co',
     siteName: 'ToMoreBeyond',
     locale: 'ja_JP',
@@ -46,8 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "ToMoreBeyond (トモビ・TMB) | モバイルアプリ開発",
-    description: "忠嵩・TOI-RUN・Meet in the middleを開発",
+    title: "ToMoreBeyond｜革新的モバイルアプリ開発｜東京",
+    description: "忠嵩・TOI-RUN・Meet in the middle - 最先端技術で社会課題を解決するアプリケーション開発",
     images: ['/images/logos/tomorebeyond-logo.png'],
   },
   robots: {
@@ -81,7 +82,7 @@ export default function RootLayout({
               "alternateName": ["トモビ", "TMB"],
               "url": "https://tomorebeyond.co",
               "logo": "https://tomorebeyond.co/images/logos/tomorebeyond-logo.png",
-              "description": "ToMoreBeyond（トモビ・TMB）は忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業です。",
+              "description": "ToMoreBeyond（トモビ・TMB）は、忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業。最先端技術で社会課題を解決し、人々の生活を豊かにするアプリケーションを提供しています。",
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Tokyo",
@@ -89,7 +90,7 @@ export default function RootLayout({
               },
               "foundingDate": "2019",
               "industry": "Software Development",
-              "keywords": "モバイルアプリ開発, スマートフォンアプリ, ゲーミフィケーション, 地図アプリ, ランニングアプリ",
+              "keywords": "モバイルアプリ開発, iOS開発, Android開発, スマートフォンアプリ, React Native, Flutter, ゲーミフィケーション, 地図アプリ, ランニングアプリ, フィットネスアプリ, 東京, アプリ開発会社",
               "sameAs": [],
               "makesOffer": [
                 {

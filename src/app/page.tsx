@@ -8,6 +8,7 @@ import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { HamburgerMenu } from '@/components/ui/HamburgerMenu'
 // import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
+import { Rocket, Lightbulb, Star, Mail, Globe, Zap } from 'lucide-react'
 import { products } from '@/data/products'
 import { teamMembers } from '@/data/team'
 import { cleanupScrollTriggers } from '@/lib/scroll-animations'
@@ -211,17 +212,17 @@ export default function Home() {
                   {
                     title: 'ミッション',
                     description: '技術と情熱で、より遠くへ。革新的なソリューションを提供します。',
-                    icon: '🚀'
+                    Icon: Rocket
                   },
                   {
                     title: 'ビジョン',
                     description: '人々の可能性を最大限に引き出すテクノロジーを創造します。',
-                    icon: '💡'
+                    Icon: Lightbulb
                   },
                   {
                     title: '価値観',
                     description: '革新性、情熱、挑戦、品質を大切にしています。',
-                    icon: '⭐'
+                    Icon: Star
                   }
                 ].map((item, index) => {
                   const animations = [
@@ -265,12 +266,12 @@ export default function Home() {
                           delay: index * 0.5
                         }}
                       >
-                        {item.icon}
+                        <item.Icon className="w-16 h-16 text-black" strokeWidth={2} />
                       </motion.div>
-                      <h3 className="text-2xl font-serif font-semibold text-olive-800 mb-6">
+                      <h3 className="text-2xl font-serif font-bold text-black mb-6">
                         {item.title}
                       </h3>
-                      <p className="text-olive-600 leading-loose font-sans text-lg">
+                      <p className="text-black font-semibold leading-loose font-sans text-lg">
                         {item.description}
                       </p>
                     </div>
@@ -553,9 +554,9 @@ export default function Home() {
                 
                 <div className="space-y-4">
                   {[
-                    { icon: '📧', label: 'Email', value: 'contact@tomorebeyond.co' },
-                    { icon: '🌍', label: 'Location', value: 'Tokyo, Japan' },
-                    { icon: '⚡', label: 'Response Time', value: '24時間以内' },
+                    { Icon: Mail, label: 'Email', value: 'contact@tomorebeyond.co' },
+                    { Icon: Globe, label: 'Location', value: 'Tokyo, Japan' },
+                    { Icon: Zap, label: 'Response Time', value: '24時間以内' },
                   ].map((item, index) => (
                     <motion.div 
                       key={item.label}
@@ -564,11 +565,11 @@ export default function Home() {
                       transition={{ duration: 0.3 }}
                     >
                       <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                        <span className="text-white text-lg">{item.icon}</span>
+                        <item.Icon className="w-6 h-6 text-white" strokeWidth={2} />
                       </div>
                       <div>
-                        <p className="font-medium">{item.label}</p>
-                        <p className="text-neutral-600">{item.value}</p>
+                        <p className="font-bold text-black">{item.label}</p>
+                        <p className="font-bold text-black">{item.value}</p>
                       </div>
                     </motion.div>
                     ))}
