@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
@@ -17,6 +17,7 @@ import { createSmoothEntrance, createFloatingCards, create3DTilt, createTextScra
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
+  const [headerSolid, setHeaderSolid] = useState(false)
 
   useEffect(() => {
     const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -49,11 +50,18 @@ export default function Home() {
     }
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => setHeaderSolid(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll)
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <>
       <FallingTextCursor />
       {/* Simple solid header with small logo on the left */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-b border-neutral-200/60">
+      <header className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${headerSolid ? 'bg-white/90 backdrop-blur border-b border-neutral-200/60 shadow-sm' : 'bg-transparent border-transparent'}`}>
         <div className="container flex items-center h-16">
           <a href="/" className="flex items-center gap-3">
             <span className="relative inline-block w-28 h-8">
