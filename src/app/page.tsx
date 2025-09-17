@@ -52,6 +52,42 @@ export default function Home() {
   return (
     <>
       <FallingTextCursor />
+      {/* FAQPage JSON-LD to reinforce "トモビ" queries */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "トモビとは何ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "\u300Cトモビ\u300DはToMoreBeyond（トモアビヨンド）の愛称・略称で、当社のブランド名です。東京を拠点にモバイルアプリの企画・開発・運用を行っています。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "ToMoreBeyondとトモビは同じですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "はい、同じ企業を指します。表記はToMoreBeyond（トモビ）として併記することがあります。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "トモビ（ToMoreBeyond）の主なプロダクトは？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "忠嵩（TADATAKA）、TOI-RUN、Meet in the middle など、社会に新たな価値をもたらすモバイルアプリを開発しています。"
+                }
+              }
+            ]
+          })
+        }}
+      />
       
       <div className="min-h-screen">
         {/* Navigation - Hamburger Menu Only */}
@@ -627,6 +663,30 @@ export default function Home() {
           </div>
         </section>
 
+        {/* FAQ Section (lightweight, SEO friendly) */}
+        <section id="faq" className="section relative overflow-hidden" style={{
+          paddingTop: 'clamp(3rem, 6vw, 6rem)',
+          paddingBottom: 'clamp(3rem, 6vw, 6rem)'
+        }}>
+          <div className="container max-w-4xl">
+            <h2 className="text-3xl md:text-4xl font-serif font-semibold text-neutral-900 mb-8">よくある質問（トモビ）</h2>
+            <div className="space-y-4">
+              {[ 
+                { q: 'トモビとは何ですか？', a: '「トモビ」はToMoreBeyond（トモアビヨンド）の愛称・略称です。当社のブランド名として使用しています。' },
+                { q: 'ToMoreBeyondとトモビの違いは？', a: '同じ企業を指します。正式表記は ToMoreBeyond、一般向けには「トモビ」と表記する場合があります。' },
+                { q: '主なプロダクトは？', a: '忠嵩（TADATAKA）、TOI-RUN、Meet in the middle などを開発しています。' },
+              ].map((item) => (
+                <details key={item.q} className="group bg-white/80 backdrop-blur-sm border border-neutral-200 rounded-xl px-5 py-4">
+                  <summary className="cursor-pointer list-none font-semibold text-neutral-900">
+                    {item.q}
+                  </summary>
+                  <div className="mt-2 text-neutral-700">{item.a}</div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Footer */}
         <footer className="text-neutral-800 py-16 relative overflow-hidden">
           <div className="container relative z-10">
@@ -635,8 +695,8 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-xl font-semibold mb-4 magnetic">ToMoreBeyond</h3>
-                <p className="text-neutral-600">技術と情熱で、より遠くへ。</p>
+                <h3 className="text-xl font-semibold mb-4 magnetic">ToMoreBeyond（トモビ）</h3>
+                <p className="text-neutral-600">東京拠点のモバイルアプリ開発企業。技術と情熱で、より遠くへ。</p>
               </motion.div>
               
               <div>
