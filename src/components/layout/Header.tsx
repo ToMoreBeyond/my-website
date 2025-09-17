@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,18 +15,10 @@ const navigation = [
 ];
 
 export function Header() {
-  const [tint, setTint] = useState(0); // 0: white, 1: light olive
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
-    const handleScroll = () => {
-      const max = 900;
-      const y = typeof window !== 'undefined' ? window.scrollY : 0;
-      const t = Math.max(0, Math.min(1, y / max));
-      setTint(t);
-    };
-
     const handleSectionInView = () => {
       const sections = navigation.map(nav => nav.id);
       const currentSection = sections.find(section => {
@@ -42,47 +34,26 @@ export function Header() {
         setActiveSection(currentSection);
       }
     };
-
-    window.addEventListener('scroll', handleScroll);
     window.addEventListener('scroll', handleSectionInView);
     
-    handleScroll();
     handleSectionInView();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('scroll', handleSectionInView);
     };
   }, []);
 
   const scrollToSection = (href: string) => {
     const element = document.getElementById(href.substring(1));
-    if (element) {
-      const offsetTop = element.offsetTop - 80;
-      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-    }
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setIsMobileMenuOpen(false);
   };
-
-  const styles = useMemo(() => {
-    const from = { r: 255, g: 255, b: 255 };
-    const to = { r: 236, g: 242, b: 232 }; // light olive
-    const r = Math.round(from.r + (to.r - from.r) * tint);
-    const g = Math.round(from.g + (to.g - from.g) * tint);
-    const b = Math.round(from.b + (to.b - from.b) * tint);
-    return {
-      backgroundColor: `rgba(${r}, ${g}, ${b}, 0.92)`,
-      borderColor: `rgba(200, 210, 195, ${0.5 * tint})`,
-      boxShadow: tint > 0.05 ? '0 2px 8px rgba(0,0,0,0.04)' : 'none',
-    } as React.CSSProperties;
-  }, [tint]);
 
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={clsx('fixed top-0 left-0 right-0 z-50 backdrop-blur transition-all duration-300 border-b')}
-      style={styles}
+      className={clsx('sticky top-0 z-50 bg-transparent')}
     >
       <nav className="container">
         <div className="flex items-center justify-between h-16 lg:h-20">

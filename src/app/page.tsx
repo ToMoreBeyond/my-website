@@ -96,7 +96,7 @@ export default function Home() {
         {/* Hero Section */}
         <section 
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
           {/* No floating decorations for a cleaner, static hero background */}
           
@@ -195,7 +195,7 @@ export default function Home() {
         </section>
 
         {/* About Section with Organic Flow */}
-        <section id="about" className="section relative overflow-hidden" style={{
+        <section id="about" className="section relative overflow-hidden scroll-mt-24" style={{
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
@@ -304,7 +304,7 @@ export default function Home() {
         </section>
 
         {/* Products Section with Seamless Flow */}
-        <section id="products" className="section relative overflow-hidden" style={{
+        <section id="products" className="section relative overflow-hidden scroll-mt-24" style={{
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
@@ -425,7 +425,7 @@ export default function Home() {
         </section>
 
         {/* Team Section with Continuous Flow */}
-        <section id="team" className="section relative overflow-hidden" style={{
+        <section id="team" className="section relative overflow-hidden scroll-mt-24" style={{
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
@@ -533,7 +533,7 @@ export default function Home() {
         </section>
 
         {/* Contact Section with Rich Gradient */}
-        <section id="contact" className="section relative overflow-hidden" style={{
+        <section id="contact" className="section relative overflow-hidden scroll-mt-24" style={{
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
