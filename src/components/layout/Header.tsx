@@ -51,9 +51,9 @@ export function Header() {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={clsx('sticky top-0 z-50 bg-transparent')}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className={clsx('relative bg-transparent')}
     >
       <nav className="container">
         <div className="flex items-center justify-between h-16 lg:h-20">
