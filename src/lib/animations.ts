@@ -246,17 +246,16 @@ export const createTypingEffect = (
 
 // Smooth scroll to element
 export const smoothScrollTo = (target: string | HTMLElement, offset = 0) => {
-  const element = typeof target === 'string' 
-    ? document.querySelector(target) as HTMLElement
+  if (typeof window === 'undefined') return;
+  const element = typeof target === 'string'
+    ? (document.querySelector(target) as HTMLElement | null)
     : target;
-    
-  if (element) {
-    const targetPosition = element.offsetTop - offset;
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
-    });
-  }
+
+  if (!element) return;
+
+  const rect = element.getBoundingClientRect();
+  const targetY = rect.top + window.pageYOffset - offset;
+  window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
 };
 
 // Cleanup function for React components

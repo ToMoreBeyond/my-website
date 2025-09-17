@@ -705,13 +705,14 @@ export default function Home() {
                     { label: 'お問い合わせ', target: '#contact' },
                   ].map((link) => (
                     <motion.li key={link.label}>
-                      <motion.button
-                        onClick={() => smoothScrollTo(link.target)}
-                        className="hover:text-neutral-800 transition-colors magnetic"
+                      <motion.a
+                        href={link.target}
+                        onClick={(e) => { e.preventDefault(); smoothScrollTo(link.target); }}
+                        className="hover:text-neutral-800 transition-colors magnetic inline-block"
                         whileHover={{ x: 5 }}
                       >
                         {link.label}
-                      </motion.button>
+                      </motion.a>
                     </motion.li>
                     ))}
                 </ul>
