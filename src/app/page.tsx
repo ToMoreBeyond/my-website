@@ -673,26 +673,40 @@ export default function Home() {
         <footer className="text-neutral-800 py-16 relative overflow-hidden">
           <div className="container relative z-10">
             <div className="grid md:grid-cols-3 gap-8">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
-                <h3 className="text-xl font-semibold mb-4 magnetic">ToMoreBeyond（トモビ）</h3>
-                <p className="text-neutral-600">東京拠点のモバイルアプリ開発企業。技術と情熱で、より遠くへ。</p>
+              <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
+                <motion.a
+                  href="#about"
+                  onClick={(e) => { e.preventDefault(); smoothScrollTo('#about'); }}
+                  className="block group"
+                >
+                  <h3 className="text-xl font-semibold mb-2 magnetic group-hover:text-neutral-900 transition-colors">ToMoreBeyond（トモビ）</h3>
+                  <p className="text-neutral-600 group-hover:text-neutral-800 transition-colors">東京拠点のモバイルアプリ開発企業。技術と情熱で、より遠くへ。</p>
+                </motion.a>
               </motion.div>
               
               <div>
-                <h4 className="font-medium mb-4">プロダクト</h4>
+                <h4 className="font-medium mb-4">
+                  <motion.a
+                    href="#products"
+                    onClick={(e) => { e.preventDefault(); smoothScrollTo('#products'); }}
+                    className="hover:text-neutral-900 transition-colors"
+                    whileHover={{ x: 4 }}
+                  >
+                    プロダクト
+                  </motion.a>
+                </h4>
                 <ul className="space-y-2 text-neutral-600 text-sm">
-                  {['忠嵩 (TADATAKA)', 'TOI-RUN', 'Meet in the middle'].map((product) => (
-                    <motion.li 
-                      key={product}
-                      className="magnetic"
-                      whileHover={{ x: 5 }}
-                    >
-                      <span className="hover:text-neutral-800 transition-colors">{product}</span>
+                  {[
+                    { label: '忠嵩 (TADATAKA)', href: '/products/tadataka' },
+                    { label: 'TOI-RUN', href: '/products/toirun' },
+                    { label: 'Meet in the middle', href: '/products/meet-in-the-middle' },
+                  ].map((product) => (
+                    <motion.li key={product.href} className="magnetic" whileHover={{ x: 5 }}>
+                      <a href={product.href} className="hover:text-neutral-800 transition-colors">
+                        {product.label}
+                      </a>
                     </motion.li>
-                    ))}
+                  ))}
                 </ul>
               </div>
               
