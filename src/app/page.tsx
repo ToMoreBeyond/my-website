@@ -52,6 +52,23 @@ export default function Home() {
   return (
     <>
       <FallingTextCursor />
+      {/* Simple solid header with small logo on the left */}
+      <header className="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-b border-neutral-200/60">
+        <div className="container flex items-center h-16">
+          <a href="/" className="flex items-center gap-3">
+            <span className="relative inline-block w-28 h-8">
+              <Image
+                src="/images/logos/tomorebeyond-logo.png"
+                alt="ToMoreBeyond（トモビ）"
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </span>
+            <span className="text-sm font-semibold text-neutral-900 hidden sm:inline">ToMoreBeyond（トモビ）</span>
+          </a>
+        </div>
+      </header>
       {/* FAQPage JSON-LD to reinforce "トモビ" queries */}
       <script
         type="application/ld+json"
@@ -96,7 +113,7 @@ export default function Home() {
         {/* Hero Section */}
         <section 
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24"
         >
           {/* No floating decorations for a cleaner, static hero background */}
           
@@ -108,27 +125,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 2, delay: 0.5 }}
             >
-              {/* Company Logo Box with Refined Animation */}
-              <motion.div
-                className="bg-white/98 backdrop-blur-sm border border-olive-200/40 px-12 py-8 mb-12 cursor-hover"
-                initial={{ scale: 0.8, opacity: 0, y: 60 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02, y: -4 }}
-                transition={{ duration: 1.5, delay: 0.6, type: "spring", stiffness: 60, damping: 15 }}
-                style={{
-                  borderRadius: 'var(--radius-pill)',
-                  boxShadow: '0 20px 60px rgba(107, 123, 90, 0.12), 0 8px 30px rgba(107, 123, 90, 0.08)'
-                }}
-              >
-                <Image
-                  src="/images/logos/tomorebeyond-logo.png"
-                  alt="ToMoreBeyond Logo"
-                  width={500}
-                  height={200}
-                  className="max-w-full h-auto"
-                  unoptimized
-                />
-              </motion.div>
+              {/* Large centered logo removed; focus on bold typography */}
 
 
               {/* Main Title with Serif Typography */}
@@ -151,6 +148,7 @@ export default function Home() {
                 <h2>ToMoreBeyond（トモビ・TMB）について</h2>
                 <p>忠嵩（TADATAKA）地図アプリ、TOI-RUNランニングアプリ、Meet in the middle出会いアプリを開発</p>
                 <p>東京のモバイルアプリ開発会社、スマートフォンアプリ制作、ゲーミフィケーション</p>
+                <p>トモビはToMoreBeyondの略称であり、「共に超える」「友と超える」というビジョンを体現した社名です。</p>
               </div>
 
               {/* Description */}
@@ -161,7 +159,8 @@ export default function Home() {
                 transition={{ duration: 1.2, delay: 2.0 }}
               >
                 革新的なモバイルアプリケーションの開発を通じて、<br />
-                社会に新たな価値を創造する東京発のテクノロジー企業です。
+                社会に新たな価値を創造する東京発のテクノロジー企業です。<br />
+                ToMoreBeyond（トモビ）は「ともに超える／友と超える」という想いを社名に込めています。
               </motion.p>
 
               {/* Refined Action Buttons */}

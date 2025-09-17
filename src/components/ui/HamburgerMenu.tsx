@@ -23,13 +23,13 @@ export const HamburgerMenu = () => {
     <>
       {/* Hamburger Button */}
       <motion.button
-        className="fixed top-6 right-6 z-50 w-12 h-12 flex flex-col justify-center items-center bg-white/10 backdrop-blur-md rounded-lg border border-white/20"
+        className="fixed top-6 right-6 z-50 w-12 h-12 flex flex-col justify-center items-center bg-white/95 backdrop-blur-md rounded-lg border border-neutral-200 shadow"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
         <motion.span
-          className="block w-6 h-0.5 bg-white mb-1"
+          className={`block w-6 h-0.5 ${isOpen ? 'bg-white' : 'bg-neutral-900'} mb-1`}
           animate={{
             rotate: isOpen ? 45 : 0,
             y: isOpen ? 6 : 0,
@@ -37,14 +37,14 @@ export const HamburgerMenu = () => {
           transition={{ duration: 0.3 }}
         />
         <motion.span
-          className="block w-6 h-0.5 bg-white mb-1"
+          className={`block w-6 h-0.5 ${isOpen ? 'bg-white' : 'bg-neutral-900'} mb-1`}
           animate={{
             opacity: isOpen ? 0 : 1,
           }}
           transition={{ duration: 0.3 }}
         />
         <motion.span
-          className="block w-6 h-0.5 bg-white"
+          className={`block w-6 h-0.5 ${isOpen ? 'bg-white' : 'bg-neutral-900'}`}
           animate={{
             rotate: isOpen ? -45 : 0,
             y: isOpen ? -6 : 0,
