@@ -1,0 +1,16 @@
+{
+  "name": "ToMoreBeyond（トモビ）",
+  "short_name": "ToMoreBeyond",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#406e5b",
+  "icons": [
+    {
+      "src": "/images/logos/tomorebeyond-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

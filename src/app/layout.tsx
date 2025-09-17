@@ -58,6 +58,17 @@ export const metadata: Metadata = {
     description: "忠嵩・TOI-RUN・Meet in the middle - 最先端技術で社会課題を解決するアプリケーション開発",
     images: ['/images/logos/tomorebeyond-logo.png'],
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/images/logos/tomorebeyond-logo.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/images/logos/tomorebeyond-logo.png' },
+    ],
+    shortcut: ['/favicon.ico'],
+  },
+  manifest: '/site.webmanifest',
   robots: {
     index: true,
     follow: true,
