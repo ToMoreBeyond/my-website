@@ -14,7 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ToMoreBeyond（トモビ）｜革新的モバイルアプリ開発企業｜忠嵩・TOI-RUN・Meet in the middle",
+  title: {
+    default: "ToMoreBeyond（トモビ）｜革新的モバイルアプリ開発企業｜忠嵩・TOI-RUN・Meet in the middle",
+    template: "%s｜ToMoreBeyond（トモビ）",
+  },
+  applicationName: "ToMoreBeyond（トモビ）",
   description: "ToMoreBeyond（トモビ・TMB）は、忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業です。最先端技術で社会課題を解決し、人々の生活を豊かにするアプリケーションを提供しています。",
   keywords: [
     "ToMoreBeyond", "トモビ", "TMB", "株式会社トモビ", "忠嵩", "TADATAKA", "TOI-RUN", "Meet in the middle",
@@ -28,12 +32,15 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://tomorebeyond.co'),
   alternates: {
     canonical: '/',
+    languages: {
+      'ja': 'https://tomorebeyond.co/',
+    },
   },
   openGraph: {
-    title: "ToMoreBeyond｜革新的モバイルアプリ開発企業｜東京",
+    title: "ToMoreBeyond（トモビ）｜革新的モバイルアプリ開発企業｜東京",
     description: "ToMoreBeyondは、忠嵩・TOI-RUN・Meet in the middleなど革新的なモバイルアプリを開発。最先端技術で社会課題を解決するテクノロジー企業です。",
     url: 'https://tomorebeyond.co',
-    siteName: 'ToMoreBeyond',
+    siteName: 'ToMoreBeyond（トモビ）',
     locale: 'ja_JP',
     type: 'website',
     images: [
@@ -47,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "ToMoreBeyond｜革新的モバイルアプリ開発｜東京",
+    title: "ToMoreBeyond（トモビ）｜革新的モバイルアプリ開発｜東京",
     description: "忠嵩・TOI-RUN・Meet in the middle - 最先端技術で社会課題を解決するアプリケーション開発",
     images: ['/images/logos/tomorebeyond-logo.png'],
   },
@@ -123,6 +130,26 @@ export default function RootLayout({
                   "description": "人と人を繋ぐ、新しい出会いのプラットフォーム"
                 }
               ]
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "ToMoreBeyond（トモビ）",
+              "alternateName": ["トモビ", "TMB", "ToMoreBeyond"],
+              "url": "https://tomorebeyond.co/",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.google.com/search?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
             })
           }}
         />

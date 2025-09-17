@@ -254,10 +254,10 @@ export default function Home() {
                       boxShadow: '0 8px 32px rgba(107, 123, 90, 0.08)'
                     }}>
                       <motion.div 
-                        className="text-5xl mb-8"
+                        className="mb-8 mx-auto w-20 h-20 rounded-2xl flex items-center justify-center bg-olive-50 border border-olive-200/60 shadow-sm"
                         animate={{ 
                           rotate: [0, 3, -3, 0],
-                          scale: [1, 1.05, 1]
+                          scale: [1, 1.04, 1]
                         }}
                         transition={{ 
                           duration: 6,
@@ -265,8 +265,9 @@ export default function Home() {
                           repeatType: "reverse",
                           delay: index * 0.5
                         }}
+                        aria-hidden="true"
                       >
-                        <item.Icon className="w-16 h-16 text-black" strokeWidth={2} />
+                        <item.Icon className="w-10 h-10 text-olive-700 shrink-0 align-middle" strokeWidth={1.75} />
                       </motion.div>
                       <h3 className="text-2xl font-serif font-bold text-black mb-6">
                         {item.title}
@@ -564,8 +565,8 @@ export default function Home() {
                       whileHover={{ x: 10 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                        <item.Icon className="w-6 h-6 text-white" strokeWidth={2} />
+                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center shrink-0">
+                        <item.Icon className="w-6 h-6 text-white align-middle" strokeWidth={1.9} />
                       </div>
                       <div>
                         <p className="font-bold text-black">{item.label}</p>
