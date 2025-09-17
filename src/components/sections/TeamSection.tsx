@@ -43,7 +43,7 @@ export function TeamSection() {
           />
         </div>
         
-        <div className="container-custom relative z-10">
+        <div className="container relative z-10">
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 50 }}

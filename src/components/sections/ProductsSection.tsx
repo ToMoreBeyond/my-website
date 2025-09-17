@@ -35,7 +35,7 @@ export function ProductsSection() {
 
   return (
     <section id="products" className="py-20 lg:py-32 bg-gray-50 dark:bg-gray-900">
-      <div className="container-custom">
+      <div className="container">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}

@@ -158,7 +158,7 @@ export function HeroSection() {
 
 
       {/* Content */}
-      <div className="relative z-20 container-custom text-center">
+      <div className="relative z-20 container text-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

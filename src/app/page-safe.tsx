@@ -7,7 +7,7 @@ export default function Home() {
       
       {/* Hero Section - シンプル版 */}
       <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-gray-900 to-blue-950">
-        <div className="container-custom text-center text-white">
+        <div className="container text-center text-white">
           <h1 className="text-6xl font-bold mb-6">ToMoreBeyond</h1>
           <p className="text-2xl mb-8 text-gray-300">技術と情熱で、より遠くへ</p>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
@@ -19,7 +19,7 @@ export default function Home() {
 
       {/* About Section - シンプル版 */}
       <section id="company" className="py-20 bg-white">
-        <div className="container-custom">
+        <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">私たちについて</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -46,7 +46,7 @@ export default function Home() {
 
       {/* Products Section - シンプル版 */}
       <section id="products" className="py-20 bg-gray-50">
-        <div className="container-custom">
+        <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">プロダクト</h2>
             <p className="text-lg text-gray-600">最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーション</p>
@@ -74,7 +74,7 @@ export default function Home() {
 
       {/* Team Section - シンプル版 */}
       <section id="team" className="py-20 bg-white">
-        <div className="container-custom">
+        <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">チーム</h2>
             <p className="text-lg text-gray-600">ToMoreBeyondの優秀なチームメンバー</p>
@@ -102,7 +102,7 @@ export default function Home() {
 
       {/* Contact Section - シンプル版 */}
       <section id="contact" className="py-20 bg-gray-900 text-white">
-        <div className="container-custom">
+        <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6">お問い合わせ</h2>
             <p className="text-lg text-gray-300">ご質問・ご相談はお気軽にお問い合わせください</p>
@@ -135,7 +135,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12">
-        <div className="container-custom">
+        <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4">ToMoreBeyond</h3>
