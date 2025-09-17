@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,20 +8,23 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
 
 const navigation = [
-  { name: 'Company', href: '#company', id: 'company' },
-  { name: 'Products', href: '#products', id: 'products' },
-  { name: 'Team', href: '#team', id: 'team' },
-  { name: 'Contact', href: '#contact', id: 'contact' },
+  { name: '私たちについて', href: '#about', id: 'about' },
+  { name: 'プロダクト', href: '#products', id: 'products' },
+  { name: 'チーム', href: '#team', id: 'team' },
+  { name: 'お問い合わせ', href: '#contact', id: 'contact' },
 ];
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [tint, setTint] = useState(0); // 0: white, 1: light olive
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const max = 900;
+      const y = typeof window !== 'undefined' ? window.scrollY : 0;
+      const t = Math.max(0, Math.min(1, y / max));
+      setTint(t);
     };
 
     const handleSectionInView = () => {
@@ -61,18 +64,27 @@ export function Header() {
     setIsMobileMenuOpen(false);
   };
 
+  const styles = useMemo(() => {
+    const from = { r: 255, g: 255, b: 255 };
+    const to = { r: 236, g: 242, b: 232 }; // light olive
+    const r = Math.round(from.r + (to.r - from.r) * tint);
+    const g = Math.round(from.g + (to.g - from.g) * tint);
+    const b = Math.round(from.b + (to.b - from.b) * tint);
+    return {
+      backgroundColor: `rgba(${r}, ${g}, ${b}, 0.92)`,
+      borderColor: `rgba(200, 210, 195, ${0.5 * tint})`,
+      boxShadow: tint > 0.05 ? '0 2px 8px rgba(0,0,0,0.04)' : 'none',
+    } as React.CSSProperties;
+  }, [tint]);
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={clsx(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md border-b border-gray-200/20 shadow-sm'
-          : 'bg-transparent'
-      )}
+      className={clsx('fixed top-0 left-0 right-0 z-50 backdrop-blur transition-all duration-300 border-b')}
+      style={styles}
     >
-      <nav className="container-custom">
+      <nav className="container">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
@@ -84,12 +96,7 @@ export function Header() {
                 className="object-contain"
               />
             </div>
-            <span className={clsx(
-              'font-bold text-xl lg:text-2xl transition-colors',
-              isScrolled ? 'text-gray-900' : 'text-white'
-            )}>
-              ToMoreBeyond
-            </span>
+            <span className="font-bold text-xl lg:text-2xl text-neutral-900">ToMoreBeyond（トモビ）</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -98,25 +105,14 @@ export function Header() {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={clsx(
-                  'relative px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105',
-                  activeSection === item.id
-                    ? isScrolled
-                      ? 'text-primary-600'
-                      : 'text-white'
-                    : isScrolled
-                      ? 'text-gray-600 hover:text-primary-600'
-                      : 'text-white/80 hover:text-white'
-                )}
+                className={clsx('relative px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105',
+                  activeSection === item.id ? 'text-primary-700' : 'text-neutral-700 hover:text-primary-700')}
               >
                 {item.name}
                 {activeSection === item.id && (
                   <motion.div
                     layoutId="activeSection"
-                    className={clsx(
-                      'absolute bottom-0 left-0 right-0 h-0.5 rounded-full',
-                      isScrolled ? 'bg-primary-600' : 'bg-white'
-                    )}
+                    className={clsx('absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-primary-600')}
                   />
                 )}
               </button>
@@ -127,12 +123,7 @@ export function Header() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={clsx(
-                'p-2 rounded-lg transition-colors',
-                isScrolled
-                  ? 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  : 'text-white hover:text-white/80 hover:bg-white/10'
-              )}
+              className={clsx('p-2 rounded-lg transition-colors text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100')}
             >
               {isMobileMenuOpen ? (
                 <XMarkIcon className="w-6 h-6" />
@@ -150,19 +141,15 @@ export function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-gray-200/20"
+              className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-neutral-200/60"
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
                 {navigation.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className={clsx(
-                      'block w-full text-left px-3 py-2 text-base font-medium rounded-lg transition-colors',
-                      activeSection === item.id
-                        ? 'text-primary-600 bg-primary-50'
-                        : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
-                    )}
+                    className={clsx('block w-full text-left px-3 py-2 text-base font-medium rounded-lg transition-colors',
+                      activeSection === item.id ? 'text-primary-700 bg-primary-50' : 'text-neutral-700 hover:text-primary-700 hover:bg-neutral-50')}
                   >
                     {item.name}
                   </button>
