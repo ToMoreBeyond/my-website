@@ -19,6 +19,7 @@ interface DetailHeroProps {
   imageAlt: string
   imagePosition?: 'left' | 'right'
   actions?: ReactNode
+  eager?: boolean
 }
 
 export function DetailHero({
@@ -31,9 +32,11 @@ export function DetailHero({
   imageAlt,
   imagePosition = 'right',
   actions,
+  eager = false,
 }: DetailHeroProps) {
   const heroRef = useRef(null)
   const isInView = useInView(heroRef, { once: true, margin: '-100px' })
+  const active = eager || isInView
 
   return (
     <section className="section relative overflow-hidden">
@@ -63,7 +66,7 @@ export function DetailHero({
           {/* Media */}
           <motion.div
             initial={{ opacity: 0, x: imagePosition === 'left' ? -50 : 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: imagePosition === 'left' ? -50 : 50 }}
+            animate={active ? { opacity: 1, x: 0 } : { opacity: 0, x: imagePosition === 'left' ? -50 : 50 }}
             transition={{ duration: 0.8 }}
             className={imagePosition === 'left' ? 'order-2 lg:order-1' : 'order-1 lg:order-2'}
           >
@@ -88,14 +91,14 @@ export function DetailHero({
           <motion.div
             ref={heroRef}
             initial={{ opacity: 0, x: imagePosition === 'left' ? 50 : -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: imagePosition === 'left' ? 50 : -50 }}
+            animate={active ? { opacity: 1, x: 0 } : { opacity: 0, x: imagePosition === 'left' ? 50 : -50 }}
             transition={{ duration: 0.8, delay: 0.1 }}
             className={imagePosition === 'left' ? 'order-1 lg:order-2' : 'order-2 lg:order-1'}
           >
             {badge && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6 }}
                 className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-neutral-200 text-olive-700 mb-6"
               >
@@ -107,7 +110,7 @@ export function DetailHero({
             <motion.h1
               className="font-serif text-display md:text-hero font-semibold text-neutral-900 mb-2"
               initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               {title}
@@ -117,7 +120,7 @@ export function DetailHero({
               <motion.p
                 className="text-xl text-neutral-500 mb-2"
                 initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
                 {subtitle}
@@ -128,7 +131,7 @@ export function DetailHero({
               <motion.p
                 className="text-2xl text-olive-700 font-medium mb-6"
                 initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.35 }}
               >
                 {tagline}
@@ -139,7 +142,7 @@ export function DetailHero({
               <motion.p
                 className="text-lg text-neutral-600 leading-relaxed mb-6"
                 initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 {description}
@@ -150,7 +153,7 @@ export function DetailHero({
               <motion.div
                 className="flex flex-col sm:flex-row gap-4"
                 initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
                 {actions}
@@ -162,4 +165,3 @@ export function DetailHero({
     </section>
   )
 }
-

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
+import { usePathname, useRouter } from 'next/navigation';
 
 const navigation = [
   { name: '私たちについて', href: '#about', id: 'about' },
@@ -17,6 +18,8 @@ const navigation = [
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleSectionInView = () => {
@@ -44,8 +47,18 @@ export function Header() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.getElementById(href.substring(1));
-    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const id = href.startsWith('#') ? href.substring(1) : href;
+    const onHome = pathname === '/';
+    if (onHome) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        router.push('/#' + id);
+      }
+    } else {
+      router.push('/#' + id);
+    }
     setIsMobileMenuOpen(false);
   };
 

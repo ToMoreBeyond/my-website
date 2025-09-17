@@ -35,6 +35,7 @@ export function TeamDetailClient({ member }: TeamDetailClientProps) {
         imageSrc={member.image}
         imageAlt={member.name}
         imagePosition="left"
+        eager
         actions={
           <>
             {member.social?.github && (
