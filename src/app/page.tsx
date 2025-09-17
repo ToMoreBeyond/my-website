@@ -17,7 +17,8 @@ import { createSmoothEntrance, createFloatingCards, create3DTilt, createTextScra
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
-  const [headerSolid, setHeaderSolid] = useState(false)
+  // 0 = white, 1 = light olive tint
+  const [headerTint, setHeaderTint] = useState(0)
 
   useEffect(() => {
     const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -51,7 +52,12 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const onScroll = () => setHeaderSolid(window.scrollY > 40)
+    const onScroll = () => {
+      const max = 900 // scroll px to reach full tint
+      const y = typeof window !== 'undefined' ? window.scrollY : 0
+      const t = Math.max(0, Math.min(1, y / max))
+      setHeaderTint(t)
+    }
     window.addEventListener('scroll', onScroll)
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
@@ -61,7 +67,37 @@ export default function Home() {
     <>
       <FallingTextCursor />
       {/* Simple solid header with small logo on the left */}
-      <header className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${headerSolid ? 'bg-white/90 backdrop-blur border-b border-neutral-200/60 shadow-sm' : 'bg-transparent border-transparent'}`}>
+      {(() => {
+        // Blend from white (255,255,255) to a light olive tint (236,242,232)
+        const from = { r: 255, g: 255, b: 255 }
+        const to = { r: 236, g: 242, b: 232 }
+        const r = Math.round(from.r + (to.r - from.r) * headerTint)
+        const g = Math.round(from.g + (to.g - from.g) * headerTint)
+        const b = Math.round(from.b + (to.b - from.b) * headerTint)
+        const bg = `rgba(${r}, ${g}, ${b}, 0.92)`
+        const border = `rgba(200, 210, 195, ${0.5 * headerTint})` // subtle olive border as we scroll
+        return (
+          <header
+            className={"fixed top-0 left-0 right-0 z-40 backdrop-blur transition-all duration-300 border-b"}
+            style={{ backgroundColor: bg, borderColor: border, boxShadow: headerTint > 0.05 ? '0 2px 8px rgba(0,0,0,0.04)' : 'none' }}
+          >
+            <div className="container flex items-center h-16">
+              <a href="/" className="flex items-center gap-3">
+                <span className="relative inline-block w-28 h-8">
+                  <Image
+                    src="/images/logos/tomorebeyond-logo.png"
+                    alt="ToMoreBeyond（トモビ）"
+                    fill
+                    className="object-contain"
+                    unoptimized
+                  />
+                </span>
+                <span className="text-sm font-semibold text-neutral-900 hidden sm:inline">ToMoreBeyond（トモビ）</span>
+              </a>
+            </div>
+          </header>
+        )
+      })()}
         <div className="container flex items-center h-16">
           <a href="/" className="flex items-center gap-3">
             <span className="relative inline-block w-28 h-8">
