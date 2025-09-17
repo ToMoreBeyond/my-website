@@ -93,9 +93,6 @@ export default function Home() {
       />
       
       <div className="min-h-screen">
-        {/* Navigation - Hamburger Menu Only */}
-        <HamburgerMenu />
-
         {/* Hero Section */}
         <section 
           ref={heroRef}
