@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FallingTextCursor } from '@/components/ui/FallingTextCursor'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { Header } from '@/components/layout/Header'
 // import { ParticleField } from '@/components/effects/ParticleField'
@@ -17,6 +16,7 @@ import { createSmoothEntrance, createFloatingCards, create3DTilt, createTextScra
 import { MarqueeText } from '@/components/effects/MarqueeText'
 import { VisionSection } from '@/components/sections/VisionSection'
 import { FullBleedBand } from '@/components/sections/FullBleedBand'
+import { AngledDivider } from '@/components/sections/AngledDivider'
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
@@ -56,44 +56,7 @@ export default function Home() {
 
   return (
     <>
-      <FallingTextCursor />
       <Header />
-      {/* FAQPage JSON-LD to reinforce "トモビ" queries */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "トモビとは何ですか？",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "\u300Cトモビ\u300DはToMoreBeyond（トモアビヨンド）の愛称・略称で、当社のブランド名です。東京を拠点にモバイルアプリの企画・開発・運用を行っています。"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "ToMoreBeyondとトモビは同じですか？",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "はい、同じ企業を指します。表記はToMoreBeyond（トモビ）として併記することがあります。"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "トモビ（ToMoreBeyond）の主なプロダクトは？",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "忠嵩（TADATAKA）、TOI-RUN、Meet in the middle など、社会に新たな価値をもたらすモバイルアプリを開発しています。"
-                }
-              }
-            ]
-          })
-        }}
-      />
       
       <div className="min-h-screen">
         {/* Hero Section */}
@@ -141,13 +104,7 @@ export default function Home() {
                 separator=" ⸻ "
               />
 
-              {/* Hidden SEO Keywords */}
-              <div className="sr-only">
-                <h2>ToMoreBeyond（トモビ・TMB）について</h2>
-                <p>忠嵩（TADATAKA）地図アプリ、TOI-RUNランニングアプリ、Meet in the middle出会いアプリを開発</p>
-                <p>東京のモバイルアプリ開発会社、スマートフォンアプリ制作、ゲーミフィケーション</p>
-                <p>トモビはToMoreBeyondの略称であり、「共に超える」「友と超える」というビジョンを体現した社名です。</p>
-              </div>
+              {/* Hidden SEO block removed for cleaner corporate tone */}
 
               {/* Description replaced by the Vision tagline above */}
               <div className="mb-8" />
@@ -202,12 +159,17 @@ export default function Home() {
 
         {/* Full-bleed flowing band to guide scroll */}
         <FullBleedBand text="ToMoreBeyond Vision — 埋もれた記録と眠る資源を、一生続く面白さの循環へ。" speed={85} />
+        {/* Light angled divider into Vision */}
+        <AngledDivider direction="down" tone="light" height={96} />
 
         {/* Vision Section (replaces previous About) */}
         <VisionSection />
 
+        {/* Exit Vision with angled divider */}
+        <AngledDivider direction="up" tone="light" height={96} />
         {/* Bridging band before products */}
         <FullBleedBand text="Products — プロダクト — 最先端と人間中心設計" speed={80} />
+        <AngledDivider direction="down" tone="light" height={96} />
 
         {/* Products Section with Seamless Flow */}
         <section id="products" className="section relative overflow-hidden" style={{
@@ -215,7 +177,12 @@ export default function Home() {
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
           <div className="container">
-            <div className="text-center mb-20">
+            <div className="text-center mb-20 relative">
+              <div className="hidden md:block absolute -top-6 left-1/2 -translate-x-1/2 pointer-events-none select-none">
+                <div className="text-[64px] lg:text-[104px] font-black tracking-tight text-neutral-900/5">
+                  PRODUCTS
+                </div>
+              </div>
               <motion.h2 
                 className="font-display text-5xl md:text-6xl lg:text-hero font-black text-neutral-900 mb-8 reveal-words"
                 initial={{ opacity: 0 }}
@@ -225,6 +192,15 @@ export default function Home() {
               >
                 プロダクト
               </motion.h2>
+              <motion.p
+                className="text-2xl text-neutral-700 max-w-4xl mx-auto mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                日常に“続く面白さ”を実装するためのプロダクト群
+              </motion.p>
               <motion.p 
                 className="text-xl text-neutral-600 max-w-3xl mx-auto reveal-text"
                 initial={{ opacity: 0, y: 30 }}
@@ -330,13 +306,23 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Transition from Products to Team */}
+        <AngledDivider direction="up" tone="light" height={96} />
+        <FullBleedBand text="Team — チーム — 多様な視点で面白さを育てる" speed={80} />
+        <AngledDivider direction="down" tone="light" height={96} />
+
         {/* Team Section with Continuous Flow */}
         <section id="team" className="section relative overflow-hidden" style={{
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
           paddingBottom: 'clamp(4rem, 8vw, 8rem)'
         }}>
           <div className="container">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 relative">
+              <div className="hidden md:block absolute -top-6 left-1/2 -translate-x-1/2 pointer-events-none select-none">
+                <div className="text-[64px] lg:text-[104px] font-black tracking-tight text-neutral-900/5">
+                  TEAM
+                </div>
+              </div>
               <motion.h2 
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6 reveal-text"
                 initial={{ opacity: 0, y: 50 }}
@@ -346,6 +332,15 @@ export default function Home() {
               >
                 チーム
               </motion.h2>
+              <motion.p 
+                className="text-2xl text-neutral-700 max-w-4xl mx-auto mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                日常に“続く面白さ”を実装する、フルスタックな少数精鋭チーム
+              </motion.p>
               <motion.p 
                 className="text-xl text-neutral-600 max-w-3xl mx-auto reveal-text"
                 initial={{ opacity: 0, y: 30 }}
@@ -438,6 +433,11 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Transition from Team to Contact */}
+        <AngledDivider direction="up" tone="light" height={96} />
+        <FullBleedBand text="Contact — お問い合わせ — Let’s talk" speed={78} />
+        <AngledDivider direction="down" tone="light" height={96} />
+
         {/* Contact Section with Rich Gradient */}
         <section id="contact" className="section relative overflow-hidden" style={{
           paddingTop: 'clamp(4rem, 8vw, 8rem)',
@@ -446,7 +446,12 @@ export default function Home() {
           {/* Decorative particle background removed to reduce load */}
           
           <div className="container relative z-10">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 relative">
+              <div className="hidden md:block absolute -top-6 left-1/2 -translate-x-1/2 pointer-events-none select-none">
+                <div className="text-[64px] lg:text-[104px] font-black tracking-tight text-neutral-900/5">
+                  CONTACT
+                </div>
+              </div>
               <motion.h2 
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6 reveal-text"
                 initial={{ opacity: 0, y: 50 }}
@@ -456,6 +461,15 @@ export default function Home() {
               >
                 <span>お問い合わせ</span>
               </motion.h2>
+              <motion.p 
+                className="text-2xl text-neutral-700 max-w-4xl mx-auto mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                プロダクト・採用・コラボなど、お気軽にご連絡ください
+              </motion.p>
               <motion.p 
                 className="text-xl text-neutral-700 max-w-3xl mx-auto reveal-text"
                 initial={{ opacity: 0, y: 30 }}
@@ -551,29 +565,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ Section (lightweight, SEO friendly) */}
-        <section id="faq" className="section relative overflow-hidden" style={{
-          paddingTop: 'clamp(3rem, 6vw, 6rem)',
-          paddingBottom: 'clamp(3rem, 6vw, 6rem)'
-        }}>
-          <div className="container max-w-4xl">
-            <h2 className="text-3xl md:text-4xl font-serif font-semibold text-neutral-900 mb-8">よくある質問（トモビ）</h2>
-            <div className="space-y-4">
-              {[ 
-                { q: 'トモビとは何ですか？', a: '「トモビ」はToMoreBeyond（トモアビヨンド）の愛称・略称です。当社のブランド名として使用しています。' },
-                { q: 'ToMoreBeyondとトモビの違いは？', a: '同じ企業を指します。正式表記は ToMoreBeyond、一般向けには「トモビ」と表記する場合があります。' },
-                { q: '主なプロダクトは？', a: '忠嵩（TADATAKA）、TOI-RUN、Meet in the middle などを開発しています。' },
-              ].map((item) => (
-                <details key={item.q} className="group bg-white/80 backdrop-blur-sm border border-neutral-200 rounded-xl px-5 py-4">
-                  <summary className="cursor-pointer list-none font-semibold text-neutral-900">
-                    {item.q}
-                  </summary>
-                  <div className="mt-2 text-neutral-700">{item.a}</div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* FAQ section removed: keep home concise and editorial */}
 
         {/* Footer */}
         <footer className="text-neutral-800 py-16 relative overflow-hidden">
