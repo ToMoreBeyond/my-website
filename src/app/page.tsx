@@ -8,12 +8,15 @@ import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { Header } from '@/components/layout/Header'
 // import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
-import { Rocket, Lightbulb, Star, Mail, Globe, Zap } from 'lucide-react'
+import { Mail, Globe, Zap } from 'lucide-react'
 import { products } from '@/data/products'
 import { teamMembers } from '@/data/team'
 import { cleanupScrollTriggers } from '@/lib/scroll-animations'
 import { createPremiumTextReveal, createSmoothParallax } from '@/lib/premium-animations'
 import { createSmoothEntrance, createFloatingCards, create3DTilt, createTextScramble } from '@/lib/interactive-scroll'
+import { MarqueeText } from '@/components/effects/MarqueeText'
+import { VisionSection } from '@/components/sections/VisionSection'
+import { FullBleedBand } from '@/components/sections/FullBleedBand'
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
@@ -113,18 +116,30 @@ export default function Home() {
 
               {/* Main Title with Serif Typography */}
               <motion.div
-                className="mb-16"
+                className="mb-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
+                transition={{ duration: 0.8, delay: 1.0 }}
               >
-                <h1 className="font-serif text-hero font-normal text-olive-800 leading-none tracking-tight reveal-chars jp-optimized text-center">
-                  <span className="block mb-6 text-olive-900">技術と情熱で、</span>
-                  <span className="block font-semibold text-transparent bg-clip-text bg-gradient-to-r from-olive-600 via-olive-500 to-olive-700">
-                    より遠くへ
+                <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold text-olive-900 leading-tight tracking-tight reveal-chars jp-optimized text-center">
+                  埋もれた記録と眠る資源を、
+                  <br className="hidden md:block" />
+                  <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 via-olive-700 to-emerald-600">
+                    一生続く面白さの循環へ。
                   </span>
                 </h1>
+                <p className="mt-6 text-xl md:text-2xl text-olive-700 max-w-4xl mx-auto leading-relaxed">
+                  デジタル（アプリ）とリアル（拠点・家具）を横断し、日常に“続く面白さ”を研究・実装する会社です。
+                </p>
               </motion.div>
+
+              {/* Flowing marquee tagline */}
+              <MarqueeText 
+                text="埋もれた記録と眠る資源を、一生続く面白さの循環へ。"
+                speed={90}
+                className="text-olive-700/80 font-semibold text-lg md:text-xl"
+                separator=" ⸻ "
+              />
 
               {/* Hidden SEO Keywords */}
               <div className="sr-only">
@@ -134,17 +149,8 @@ export default function Home() {
                 <p>トモビはToMoreBeyondの略称であり、「共に超える」「友と超える」というビジョンを体現した社名です。</p>
               </div>
 
-              {/* Description */}
-              <motion.p
-                className="text-xl md:text-2xl text-olive-700 max-w-5xl leading-relaxed mb-16 font-sans"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 2.0 }}
-              >
-                革新的なモバイルアプリケーションの開発を通じて、<br />
-                社会に新たな価値を創造する東京発のテクノロジー企業です。<br />
-                ToMoreBeyond（トモビ）は「ともに超える／友と超える」という想いを社名に込めています。
-              </motion.p>
+              {/* Description replaced by the Vision tagline above */}
+              <div className="mb-8" />
 
               {/* Refined Action Buttons */}
               <motion.div
@@ -194,114 +200,14 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* About Section with Organic Flow */}
-        <section id="about" className="section relative overflow-hidden" style={{
-          paddingTop: 'clamp(4rem, 8vw, 8rem)',
-          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
-        }}>
-          {/* Decorative floating elements removed for a flat, seamless look */}
+        {/* Full-bleed flowing band to guide scroll */}
+        <FullBleedBand text="ToMoreBeyond Vision — 埋もれた記録と眠る資源を、一生続く面白さの循環へ。" speed={85} />
 
-          <div className="container relative z-10">
-            <div className="text-center mb-24">
-              <motion.h2 
-                className="font-serif text-display md:text-hero font-semibold text-olive-800 mb-12 reveal-words"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                viewport={{ once: true }}
-              >
-                私たちについて
-              </motion.h2>
-              <motion.p 
-                className="text-2xl text-olive-600 max-w-4xl mx-auto leading-relaxed font-sans"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                人々の可能性を最大限に引き出すテクノロジーを創造し、<br />
-                より良い未来の実現に貢献します。
-              </motion.p>
-            </div>
+        {/* Vision Section (replaces previous About) */}
+        <VisionSection />
 
-            <div className="max-w-6xl mx-auto">
-              <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
-                {[
-                  {
-                    title: 'ミッション',
-                    description: '技術と情熱で、より遠くへ。革新的なソリューションを提供します。',
-                    Icon: Rocket
-                  },
-                  {
-                    title: 'ビジョン',
-                    description: '人々の可能性を最大限に引き出すテクノロジーを創造します。',
-                    Icon: Lightbulb
-                  },
-                  {
-                    title: '価値観',
-                    description: '革新性、情熱、挑戦、品質を大切にしています。',
-                    Icon: Star
-                  }
-                ].map((item, index) => {
-                  const animations = [
-                    { initial: { opacity: 0, x: -60, rotate: -5 }, animate: { opacity: 1, x: 0, rotate: 0 } },
-                    { initial: { opacity: 0, scale: 0.7, y: 40 }, animate: { opacity: 1, scale: 1, y: 0 } },
-                    { initial: { opacity: 0, x: 60, rotate: 5 }, animate: { opacity: 1, x: 0, rotate: 0 } }
-                  ];
-                  const animation = animations[index % animations.length];
-                  
-                  return (
-                  <motion.div
-                    key={item.title}
-                    initial={animation.initial}
-                    whileInView={animation.animate}
-                    whileHover={{ y: -8, scale: 1.02, rotate: index === 1 ? 0 : (index === 0 ? 2 : -2) }}
-                    transition={{ 
-                      duration: 0.8, 
-                      delay: index * 0.2,
-                      type: "spring",
-                      stiffness: 70,
-                      damping: 12
-                    }}
-                    viewport={{ once: true, margin: "-80px" }}
-                    className="group text-center"
-                  >
-                    <div className="bg-white/70 backdrop-blur-sm border border-olive-200/50 hover:border-olive-300/60 transition-all duration-500 h-full" style={{
-                      borderRadius: 'var(--radius-3xl)',
-                      padding: 'clamp(2rem, 4vw, 3rem)',
-                      boxShadow: '0 8px 32px rgba(107, 123, 90, 0.08)'
-                    }}>
-                      <motion.div 
-                        className="mb-8 mx-auto w-20 h-20 rounded-2xl flex items-center justify-center bg-olive-50 border border-olive-200/60 shadow-sm"
-                        animate={{ 
-                          rotate: [0, 3, -3, 0],
-                          scale: [1, 1.04, 1]
-                        }}
-                        transition={{ 
-                          duration: 6,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          delay: index * 0.5
-                        }}
-                        aria-hidden="true"
-                      >
-                        <item.Icon className="w-10 h-10 text-olive-700 shrink-0 align-middle" strokeWidth={1.75} />
-                      </motion.div>
-                      <h3 className="text-2xl font-serif font-bold text-black mb-6">
-                        {item.title}
-                      </h3>
-                      <p className="text-black font-semibold leading-loose font-sans text-lg">
-                        {item.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                  )
-                })}
-              </div>
-            </div>
-
-          </div>
-        </section>
+        {/* Bridging band before products */}
+        <FullBleedBand text="Products — プロダクト — 最先端と人間中心設計" speed={80} />
 
         {/* Products Section with Seamless Flow */}
         <section id="products" className="section relative overflow-hidden" style={{
