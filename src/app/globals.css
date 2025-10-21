@@ -1,23 +1,23 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800;900&family=Zen+Maru+Gothic:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap');
 
 /* ============================================
    Design System - studio.design/ja inspired
    ============================================ */
 
 :root {
-  /* === Minimalist Color System === */
-  /* Primary - Sophisticated Dark Green */
-  --color-primary-50: #f0f4f3;
-  --color-primary-100: #d9e2df;
-  --color-primary-200: #b3c5be;
-  --color-primary-300: #8ca89d;
-  --color-primary-400: #668b7c;
-  --color-primary-500: #406e5b;  /* Main brand color */
-  --color-primary-600: #335849;
-  --color-primary-700: #264237;
-  --color-primary-800: #1a2c25;
-  --color-primary-900: #0d1613;
+  /* === Warm & Friendly Color System === */
+  /* Primary - Warm Orange (from logo) */
+  --color-primary-50: #fef5f0;
+  --color-primary-100: #fde8db;
+  --color-primary-200: #fbd0b7;
+  --color-primary-300: #f9b893;
+  --color-primary-400: #e8956a;
+  --color-primary-500: #D77A4F;  /* Main orange from logo */
+  --color-primary-600: #c2653f;
+  --color-primary-700: #a04f2f;
+  --color-primary-800: #7d3b1f;
+  --color-primary-900: #5a2710;
 
   /* Neutral Palette - True grayscale */
   --color-neutral-0: #ffffff;
@@ -33,17 +33,38 @@
   --color-neutral-900: #171717;
   --color-neutral-950: #0a0a0a;
 
-  /* Accent - Very limited use */
-  --color-accent-light: #e8f4f0;
-  --color-accent-default: #406e5b;
-  --color-accent-dark: #1a2c25;
+  /* Secondary Colors - From logo */
+  --color-blue-50: #edf7fc;
+  --color-blue-100: #d6eef8;
+  --color-blue-200: #aeddf1;
+  --color-blue-300: #85cceb;
+  --color-blue-400: #5dbbe4;
+  --color-blue-500: #4BA7CC;  /* Main blue from logo */
+  --color-blue-600: #3a8fb5;
+  --color-blue-700: #2e7091;
+  --color-blue-800: #22526d;
+  --color-blue-900: #163349;
 
-  /* === Typography === */
-  --font-primary: 'DM Sans', 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'DM Sans', 'Inter', 'Noto Sans JP', sans-serif;
-  --font-serif: 'Crimson Text', 'Georgia', serif;
-  --font-mono: 'Roboto Mono', monospace;
-  --font-sans: 'DM Sans', 'Inter', 'Noto Sans JP', sans-serif;
+  --color-green-50: #f0f8f1;
+  --color-green-100: #d9eedb;
+  --color-green-200: #b3ddb7;
+  --color-green-300: #8dcc93;
+  --color-green-400: #71ba78;
+  --color-green-500: #5EA75D;  /* Main green from logo */
+  --color-green-600: #4d8f4c;
+  --color-green-700: #3d713c;
+  --color-green-800: #2d542c;
+  --color-green-900: #1d371c;
+
+  /* Accent - Very limited use */
+  --color-accent-light: #fef5f0;
+  --color-accent-default: #D77A4F;
+  --color-accent-dark: #7d3b1f;
+
+  /* === Typography - Warm & Rounded === */
+  --font-primary: 'M PLUS Rounded 1c', 'Zen Maru Gothic', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'M PLUS Rounded 1c', 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+  --font-sans: 'M PLUS Rounded 1c', 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
 
   /* Font Sizes - Refined Typography Scale */
   --text-xs: clamp(0.75rem, 0.7rem + 0.15vw, 0.825rem);
@@ -106,16 +127,16 @@
   --radius-pill: 1000px;
   --radius-full: 9999px;
 
-  /* Global vertical page gradient */
+  /* Global vertical page gradient - Warm tones */
   --bg-gradient: linear-gradient(
     180deg,
-    #f8f9f4 0%,
-    #eef0e5 18%,
+    #fef9f5 0%,
+    #fef5f0 18%,
     #ffffff 36%,
-    #eef0e5 54%,
-    #d9dfc8 72%,
-    #b8c39f 88%,
-    #8e9c78 100%
+    #edf7fc 54%,
+    #f0f8f1 72%,
+    #fde8db 88%,
+    #f9e5d8 100%
   );
 }
 

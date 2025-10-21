@@ -11,19 +11,45 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // メインカラー：洗練されたダークグリーン（1色のみ）
+        // メインカラー：温かみのあるオレンジ（ロゴから）
         primary: {
-          50: '#f0f4f3',
-          100: '#d9e2df',
-          200: '#b3c5be',
-          300: '#8ca89d',
-          400: '#668b7c',
-          500: '#406e5b',  // メインカラー
-          600: '#335849',
-          700: '#264237',
-          800: '#1a2c25',
-          900: '#0d1613',
-          950: '#060b09',
+          50: '#fef5f0',
+          100: '#fde8db',
+          200: '#fbd0b7',
+          300: '#f9b893',
+          400: '#e8956a',
+          500: '#D77A4F',  // メインカラー（ロゴのオレンジ）
+          600: '#c2653f',
+          700: '#a04f2f',
+          800: '#7d3b1f',
+          900: '#5a2710',
+          950: '#3d1a0a',
+        },
+        // セカンダリカラー：ブルー（ロゴから）
+        blue: {
+          50: '#edf7fc',
+          100: '#d6eef8',
+          200: '#aeddf1',
+          300: '#85cceb',
+          400: '#5dbbe4',
+          500: '#4BA7CC',
+          600: '#3a8fb5',
+          700: '#2e7091',
+          800: '#22526d',
+          900: '#163349',
+        },
+        // セカンダリカラー：グリーン（ロゴから）
+        green: {
+          50: '#f0f8f1',
+          100: '#d9eedb',
+          200: '#b3ddb7',
+          300: '#8dcc93',
+          400: '#71ba78',
+          500: '#5EA75D',
+          600: '#4d8f4c',
+          700: '#3d713c',
+          800: '#2d542c',
+          900: '#1d371c',
         },
         // グレースケール（モノトーン）
         gray: {
@@ -42,15 +68,15 @@ export default {
         },
         // アクセントカラー（極めて限定的に使用）
         accent: {
-          light: '#e8f4f0',  // 薄い緑（背景用）
-          DEFAULT: '#406e5b', // プライマリと同じ
-          dark: '#1a2c25',   // ダークグリーン
+          light: '#fef5f0',
+          DEFAULT: '#D77A4F',
+          dark: '#7d3b1f',
         },
       },
       fontFamily: {
         sans: [
-          'DM Sans',
-          'Inter',
+          'M PLUS Rounded 1c',
+          'Zen Maru Gothic',
           'Noto Sans JP',
           'system-ui',
           '-apple-system',
@@ -61,18 +87,9 @@ export default {
           'Arial',
           'sans-serif',
         ],
-        serif: [
-          'Crimson Text',
-          'Georgia',
-          'serif',
-        ],
-        mono: [
-          'Roboto Mono',
-          'monospace',
-        ],
         display: [
-          'DM Sans',
-          'Inter',
+          'M PLUS Rounded 1c',
+          'Zen Maru Gothic',
           'Noto Sans JP',
           'sans-serif',
         ],

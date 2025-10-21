@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import RootClient from "./RootClient";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -45,9 +34,9 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/logos/tomorebeyond-logo.png',
-        width: 500,
-        height: 200,
+        url: '/images/logos/tomorebeyond-logo.jpg',
+        width: 1200,
+        height: 630,
         alt: 'ToMoreBeyond Logo',
       },
     ],
@@ -56,15 +45,15 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "ToMoreBeyond（トモビ）｜革新的モバイルアプリ開発｜東京",
     description: "忠嵩・TOI-RUN・Meet in the middle - 最先端技術で社会課題を解決するアプリケーション開発",
-    images: ['/images/logos/tomorebeyond-logo.png'],
+    images: ['/images/logos/tomorebeyond-logo.jpg'],
   },
   icons: {
     icon: [
       { url: '/favicon.ico' },
-      { url: '/images/logos/tomorebeyond-logo.png', type: 'image/png' },
+      { url: '/images/logos/tomorebeyond-logo.jpg', type: 'image/jpeg' },
     ],
     apple: [
-      { url: '/images/logos/tomorebeyond-logo.png' },
+      { url: '/images/logos/tomorebeyond-logo.jpg' },
     ],
     shortcut: ['/favicon.ico'],
   },
@@ -99,7 +88,7 @@ export default function RootLayout({
               "name": "ToMoreBeyond",
               "alternateName": ["トモビ", "TMB"],
               "url": "https://tomorebeyond.co",
-              "logo": "https://tomorebeyond.co/images/logos/tomorebeyond-logo.png",
+              "logo": "https://tomorebeyond.co/images/logos/tomorebeyond-logo.jpg",
               "description": "ToMoreBeyond（トモビ・TMB）は、忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業。最先端技術で社会課題を解決し、人々の生活を豊かにするアプリケーションを提供しています。",
               "address": {
                 "@type": "PostalAddress",
@@ -165,9 +154,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <RootClient>
           {children}
         </RootClient>
