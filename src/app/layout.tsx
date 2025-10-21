@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/logos/tomorebeyond-logo.jpg',
+        url: '/images/logos/tomorebeyond-logo.png',
         width: 1200,
         height: 630,
         alt: 'ToMoreBeyond Logo',
@@ -45,15 +45,15 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "ToMoreBeyond（トモビ）｜革新的モバイルアプリ開発｜東京",
     description: "忠嵩・TOI-RUN・Meet in the middle - 最先端技術で社会課題を解決するアプリケーション開発",
-    images: ['/images/logos/tomorebeyond-logo.jpg'],
+    images: ['/images/logos/tomorebeyond-logo.png'],
   },
   icons: {
     icon: [
       { url: '/favicon.ico' },
-      { url: '/images/logos/tomorebeyond-logo.jpg', type: 'image/jpeg' },
+      { url: '/images/logos/tomorebeyond-logo.png', type: 'image/png' },
     ],
     apple: [
-      { url: '/images/logos/tomorebeyond-logo.jpg' },
+      { url: '/images/logos/tomorebeyond-logo.png' },
     ],
     shortcut: ['/favicon.ico'],
   },
@@ -88,7 +88,7 @@ export default function RootLayout({
               "name": "ToMoreBeyond",
               "alternateName": ["トモビ", "TMB"],
               "url": "https://tomorebeyond.co",
-              "logo": "https://tomorebeyond.co/images/logos/tomorebeyond-logo.jpg",
+              "logo": "https://tomorebeyond.co/images/logos/tomorebeyond-logo.png",
               "description": "ToMoreBeyond（トモビ・TMB）は、忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業。最先端技術で社会課題を解決し、人々の生活を豊かにするアプリケーションを提供しています。",
               "address": {
                 "@type": "PostalAddress",

@@ -18,14 +18,11 @@ const navigation = [
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-
       const sections = navigation.map(nav => nav.id);
       const currentSection = sections.find(section => {
         const element = document.getElementById(section);
@@ -69,12 +66,7 @@ export function Header() {
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className={clsx(
-        'sticky top-0 z-50 transition-all duration-300',
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md'
-          : 'bg-transparent'
-      )}
+      className="sticky top-0 z-50 bg-transparent"
     >
       <nav className="container">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -82,7 +74,7 @@ export function Header() {
           <Link href="/" className="flex items-center">
             <div className="relative w-40 h-12 lg:w-48 lg:h-14">
               <Image
-                src="/images/logos/tomorebeyond-logo.jpg"
+                src="/images/logos/tomorebeyond-logo.png"
                 alt="ToMoreBeyond"
                 fill
                 className="object-contain object-left"
