@@ -18,11 +18,14 @@ const navigation = [
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
-    const handleSectionInView = () => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+
       const sections = navigation.map(nav => nav.id);
       const currentSection = sections.find(section => {
         const element = document.getElementById(section);
@@ -32,17 +35,17 @@ export function Header() {
         }
         return false;
       });
-      
+
       if (currentSection) {
         setActiveSection(currentSection);
       }
     };
-    window.addEventListener('scroll', handleSectionInView);
-    
-    handleSectionInView();
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', handleSectionInView);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -66,7 +69,12 @@ export function Header() {
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className={clsx('relative bg-transparent')}
+      className={clsx(
+        'sticky top-0 z-50 transition-all duration-300',
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-md'
+          : 'bg-transparent'
+      )}
     >
       <nav className="container">
         <div className="flex items-center justify-between h-16 lg:h-20">
