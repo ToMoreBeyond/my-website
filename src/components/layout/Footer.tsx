@@ -52,13 +52,13 @@ export function Footer() {
               whileTap={{ scale: 0.95 }}
               aria-label="トップへ戻る"
             >
-              <div className="relative w-40 h-12">
+              <div className="relative w-32 h-12">
                 <Image
                   src="/images/logos/tomorebeyond-logo.png"
                   alt="ToMoreBeyond"
                   fill
-                  className="object-contain object-left"
-                  sizes="160px"
+                  className="object-contain object-center"
+                  sizes="128px"
                   loading="lazy"
                   quality={90}
                 />
