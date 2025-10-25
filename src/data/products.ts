@@ -15,6 +15,7 @@ export interface Product {
   supportedDevices: string[];
   minimumOS: string;
   targetRegion: string;
+  roadmapUrl?: string;
 }
 
 export const products: Product[] = [
@@ -63,7 +64,8 @@ export const products: Product[] = [
     releaseSchedule: 'ベータ版：2025年Q3（東京都内限定）、正式版：2025年Q4（日本全国）',
     supportedDevices: ['iPhone（初期リリース）', 'iPad（将来対応予定）'],
     minimumOS: 'iOS 16.0以降',
-    targetRegion: '簡易ベータ版：東京都内のみ、将来的：全国、そしてグローバル展開予定'
+    targetRegion: '簡易ベータ版：東京都内のみ、将来的：全国、そしてグローバル展開予定',
+    roadmapUrl: '/products/tadataka#roadmap'
   },
   {
     id: 'toirun',

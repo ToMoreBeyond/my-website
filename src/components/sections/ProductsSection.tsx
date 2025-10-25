@@ -169,6 +169,20 @@ export function ProductsSection() {
                       詳細を見る
                       <ArrowRightIcon className="ml-1 w-4 h-4" />
                     </motion.button>
+                    {product.roadmapUrl && (
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push(product.roadmapUrl!);
+                        }}
+                        className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+                      >
+                        ロードマップ
+                        <ArrowRightIcon className="ml-1 w-4 h-4" />
+                      </motion.button>
+                    )}
                   </div>
                 </div>
               </div>
