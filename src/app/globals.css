@@ -779,11 +779,28 @@ html {
 /* モバイル (デフォルト): 320px - 639px */
 /* タッチ最適化: タップターゲット最低44×44px */
 
+/* Minimum touch target size for mobile accessibility */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Responsive visibility utilities */
+.mobile-only { display: block; }
+.desktop-only { display: none; }
+
+@media (min-width: 768px) {
+  .mobile-only { display: none; }
+  .desktop-only { display: block; }
+}
+
 /* Small (sm): 640px - 767px */
 @media (min-width: 640px) {
   .sm\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
   .sm\:text-lg { font-size: var(--text-lg); }
   .sm\:text-2xl { font-size: var(--text-2xl); }
+  .sm\:flex-row { flex-direction: row; }
+  .sm\:gap-6 { gap: var(--space-6); }
 
   :root {
     --container-padding: clamp(2rem, 4vw, 3rem);
@@ -794,9 +811,13 @@ html {
 @media (min-width: 768px) {
   .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
   .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
   .md\:text-xl { font-size: var(--text-xl); }
   .md\:text-3xl { font-size: var(--text-3xl); }
   .md\:text-4xl { font-size: var(--text-4xl); }
+  .md\:flex-row { flex-direction: row; }
+  .md\:gap-8 { gap: var(--space-8); }
+  .md\:gap-12 { gap: var(--space-12); }
 
   :root {
     --container-padding: clamp(3rem, 5vw, 4rem);
@@ -811,6 +832,8 @@ html {
   .lg\:text-2xl { font-size: var(--text-2xl); }
   .lg\:text-4xl { font-size: var(--text-4xl); }
   .lg\:text-5xl { font-size: var(--text-5xl); }
+  .lg\:gap-10 { gap: var(--space-10); }
+  .lg\:gap-16 { gap: var(--space-16); }
 
   :root {
     --container-padding: 4rem;
@@ -820,10 +843,55 @@ html {
 
 /* Extra Large (xl): 1280px+ */
 @media (min-width: 1280px) {
+  .xl\:text-5xl { font-size: var(--text-5xl); }
+  .xl\:text-6xl { font-size: var(--text-6xl); }
+  .xl\:gap-20 { gap: var(--space-20); }
+
   :root {
     --container-max-width: 1200px;
     --section-gap: 10rem;  /* 160px */
   }
+}
+
+/* ============================================
+   Responsive Layout Utilities
+   ============================================ */
+
+/* Smooth layout transitions when resizing */
+* {
+  transition-property: none;
+}
+
+/* Re-enable transitions after initial page load */
+body.loaded * {
+  transition-property: all;
+}
+
+/* Container query for modern responsive design */
+@supports (container-type: inline-size) {
+  .container-responsive {
+    container-type: inline-size;
+  }
+}
+
+/* Aspect ratio utilities for responsive media */
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ============================================
