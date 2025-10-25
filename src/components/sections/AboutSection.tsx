@@ -196,7 +196,7 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-5xl mx-auto leading-relaxed"
+            className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-100 max-w-5xl mx-auto leading-relaxed"
           >
             <span className="font-semibold text-primary-600 dark:text-primary-400">ToMoreBeyond</span>は、テクノロジーの力で人々の生活をより豊かにすることを使命とする
             <br className="hidden md:block" />
@@ -262,7 +262,7 @@ export function AboutSection() {
                 ミッション
               </motion.h3>
               <motion.p
-                className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed"
+                className="text-lg sm:text-xl text-gray-600 dark:text-gray-100 max-w-4xl mx-auto leading-relaxed"
                 whileHover={{ scale: 1.02 }}
               >
                 <span className="text-primary-600 dark:text-primary-400 font-semibold">「技術と情熱で、より遠くへ」</span>
@@ -343,7 +343,7 @@ export function AboutSection() {
           <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             提供価値
           </h3>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-100 max-w-3xl mx-auto">
             ToMoreBeyondが提供する3つの主要な価値
           </p>
         </motion.div>
@@ -403,7 +403,7 @@ export function AboutSection() {
                   {value.title}
                 </motion.h4>
                 
-                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-100 text-sm leading-relaxed">
                   {value.description}
                 </p>
 
@@ -477,7 +477,7 @@ export function AboutSection() {
             </motion.div>
           </motion.div>
           
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-100 max-w-2xl mx-auto">
             React Native、Flutter、AI/MLを駆使した次世代モバイルアプリケーションで、
             ユーザーエクスペリエンスの新たな地平を切り拓いています。
           </p>

@@ -58,7 +58,7 @@ export function ProductsSection() {
               <span className="text-gradient"> プロダクト</span>
             </h2>
           </DragElement>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-100 max-w-3xl mx-auto">
             最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーションを開発しています。
           </p>
         </motion.div>
@@ -116,7 +116,7 @@ export function ProductsSection() {
                       {product.tagline}
                     </p>
 
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+                    <p className="text-gray-600 dark:text-gray-100 text-sm mb-4 line-clamp-3">
                       {product.description}
                     </p>
 
@@ -125,7 +125,7 @@ export function ProductsSection() {
                       <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
                         主な機能
                       </h4>
-                      <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+                      <ul className="text-xs text-gray-600 dark:text-gray-100 space-y-1">
                         {product.features.slice(0, 3).map((feature, idx) => (
                           <li key={idx} className="flex items-center">
                             <div className="w-1 h-1 bg-primary-500 rounded-full mr-2" />
@@ -144,7 +144,7 @@ export function ProductsSection() {
                         {product.technologies.slice(0, 4).map((tech) => (
                           <span
                             key={tech}
-                            className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded"
+                            className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded"
                           >
                             {tech}
                           </span>
@@ -198,7 +198,7 @@ export function ProductsSection() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="text-center mt-16"
         >
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+          <p className="text-lg text-gray-600 dark:text-gray-100 mb-6">
             これらのプロダクトに興味がございましたら、お気軽にお問い合わせください。
           </p>
           <motion.button

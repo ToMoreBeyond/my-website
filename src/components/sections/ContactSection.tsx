@@ -92,7 +92,7 @@ export function ContactSection() {
             <span className="text-gradient"> お問い合わせ</span>
             ください
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-100 max-w-3xl mx-auto">
             プロジェクトのご相談、採用に関するお問い合わせ、その他ご質問がございましたら、
             お気軽にご連絡ください。
           </p>
@@ -128,12 +128,12 @@ export function ContactSection() {
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                        className="text-gray-600 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                       >
                         {item.info}
                       </a>
                     ) : (
-                      <p className="text-gray-600 dark:text-gray-300">{item.info}</p>
+                      <p className="text-gray-600 dark:text-gray-100">{item.info}</p>
                     )}
                   </div>
                 </motion.div>
@@ -150,7 +150,7 @@ export function ContactSection() {
               <h4 className="font-semibold text-gray-900 dark:text-white mb-4">
                 営業時間
               </h4>
-              <div className="text-gray-600 dark:text-gray-300 space-y-2">
+              <div className="text-gray-600 dark:text-gray-100 space-y-2">
                 <p>平日: 9:00 - 18:00</p>
                 <p>土日祝: 休業</p>
               </div>
@@ -176,7 +176,7 @@ export function ContactSection() {
               <input type="hidden" name="form-name" value="contact" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
                     お名前 *
                   </label>
                   <input
@@ -192,7 +192,7 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
                     メールアドレス *
                   </label>
                   <input
@@ -209,7 +209,7 @@ export function ContactSection() {
               </div>
 
               <div>
-                <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
                   会社名・組織名
                 </label>
                 <input
@@ -224,7 +224,7 @@ export function ContactSection() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
                   お問い合わせ内容 *
                 </label>
                 <textarea

@@ -109,7 +109,7 @@ export function DetailHero({
                 initial={{ opacity: 0, y: 20 }}
                 animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6 }}
-                className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-neutral-200 text-olive-700 mb-6"
+                className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-neutral-200 dark:border-gray-700 text-olive-700 dark:text-emerald-400 mb-6"
               >
                 {badge.icon}
                 <span className="text-sm font-semibold">{badge.label}</span>
@@ -117,7 +117,7 @@ export function DetailHero({
             )}
 
             <motion.h1
-              className="font-serif text-display md:text-hero font-semibold text-neutral-900 mb-2"
+              className="font-serif text-display md:text-hero font-semibold text-neutral-900 dark:text-white mb-2"
               initial={{ opacity: 0, y: 30 }}
               animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -127,7 +127,7 @@ export function DetailHero({
 
             {subtitle && (
               <motion.p
-                className="text-xl text-neutral-500 mb-2"
+                className="text-xl text-neutral-500 dark:text-gray-300 mb-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
@@ -138,7 +138,7 @@ export function DetailHero({
 
             {tagline && (
               <motion.p
-                className="text-2xl text-olive-700 font-medium mb-6"
+                className="text-2xl text-olive-700 dark:text-emerald-400 font-medium mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.35 }}
@@ -149,7 +149,7 @@ export function DetailHero({
 
             {description && (
               <motion.p
-                className="text-lg text-neutral-600 leading-relaxed mb-6"
+                className="text-lg text-neutral-600 dark:text-gray-100 leading-relaxed mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
