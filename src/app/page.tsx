@@ -504,7 +504,7 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                こんにちは、からでも構いません。お気軽にどうぞ。
+                気軽にお問い合わせください！
               </motion.p>
               <motion.p
                 className="text-xl text-neutral-700 max-w-3xl mx-auto reveal-text"
@@ -590,7 +590,7 @@ export default function Home() {
                       required
                       aria-required="true"
                       className="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:outline-none focus:border-primary transition-all duration-300 resize-none"
-                      placeholder="こんにちは、から始めても大丈夫です。気軽にメッセージをどうぞ。"
+                      placeholder="お気軽にご相談内容をお書きください"
                       whileFocus={{ scale: 1.02 }}
                     />
                   </div>
