@@ -1,15 +1,34 @@
-import type { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'プライバシーポリシー | ToMoreBeyond株式会社',
-  description: 'ToMoreBeyond株式会社のプライバシーポリシーです。個人情報の取り扱いについてご説明します。',
-};
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ArrowLeftIcon, HomeIcon } from '@heroicons/react/24/outline';
 
 export default function PrivacyPage() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-850 dark:to-gray-900">
       <div className="container py-20 lg:py-32">
         <div className="max-w-4xl mx-auto">
+          {/* Navigation Buttons */}
+          <div className="flex items-center gap-4 mb-8">
+            <button
+              onClick={() => router.back()}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <ArrowLeftIcon className="w-4 h-4" />
+              戻る
+            </button>
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <HomeIcon className="w-4 h-4" />
+              トップページ
+            </Link>
+          </div>
+
           <h1 className="heading-1 text-gray-900 dark:text-white mb-8">
             プライバシーポリシー
           </h1>
