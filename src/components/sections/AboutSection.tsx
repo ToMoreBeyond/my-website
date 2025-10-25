@@ -2,17 +2,17 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
-import { 
+import {
   SparklesIcon,
-  RocketLaunchIcon,
-  HeartIcon,
-  LightBulbIcon,
   ChartBarIcon,
   UsersIcon,
   GlobeAltIcon,
   CodeBracketIcon,
   CpuChipIcon,
-  DevicePhoneMobileIcon
+  DevicePhoneMobileIcon,
+  MapIcon,
+  ShieldCheckIcon,
+  BuildingStorefrontIcon
 } from '@heroicons/react/24/outline';
 import { DragElement } from '@/components/common/DragElement';
 import { AnimatedElement } from '@/components/common/AnimatedElement';
@@ -41,28 +41,22 @@ export function AboutSection() {
 
   const values = [
     {
-      icon: <LightBulbIcon className="w-8 h-8" />,
-      title: "革新性",
-      description: "最先端の技術と創造性を融合し、業界に新たな価値を提供します。",
-      color: "from-yellow-400 to-orange-500"
+      icon: <MapIcon className="w-8 h-8" />,
+      title: "未活用資源の活用",
+      description: "埋もれた地域資源や個人の経験を再発見し、足跡を残していくサービスを提供します。",
+      color: "from-emerald-400 to-green-500"
     },
     {
-      icon: <HeartIcon className="w-8 h-8" />,
-      title: "情熱",
-      description: "プロダクト開発への深い情熱が、質の高いソリューションを生み出します。",
-      color: "from-red-400 to-pink-500"
+      icon: <ShieldCheckIcon className="w-8 h-8" />,
+      title: "プライバシーの保護",
+      description: "オンデバイス処理による利用者の行動データの安全な記録・活用を実現します。",
+      color: "from-blue-400 to-cyan-500"
     },
     {
-      icon: <RocketLaunchIcon className="w-8 h-8" />,
-      title: "挑戦",
-      description: "困難な課題にも恐れず立ち向かい、限界を突破し続けます。",
-      color: "from-blue-400 to-purple-500"
-    },
-    {
-      icon: <SparklesIcon className="w-8 h-8" />,
-      title: "品質",
-      description: "妥協のない品質へのこだわりが、信頼できるプロダクトを実現します。",
-      color: "from-green-400 to-emerald-500"
+      icon: <BuildingStorefrontIcon className="w-8 h-8" />,
+      title: "デジタルとリアルの融合",
+      description: "アプリやサービスだけでなく、拠点・家具などのリアル側も重視した体験を提供します。",
+      color: "from-orange-400 to-amber-500"
     }
   ];
 
@@ -347,14 +341,14 @@ export function AboutSection() {
           className="text-center mb-16"
         >
           <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            私たちの価値観
+            提供価値
           </h3>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            ToMoreBeyondを支える4つの核となる価値観
+            ToMoreBeyondが提供する3つの主要な価値
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {values.map((value, index) => (
             <AnimatedElement
               key={value.title}
