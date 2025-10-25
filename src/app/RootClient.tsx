@@ -2,6 +2,7 @@
 
 import { PropsWithChildren, useEffect } from 'react'
 import LoadingOverlay from '@/components/common/LoadingOverlay'
+import { SkipLink } from '@/components/common/SkipLink'
 
 export default function RootClient({ children }: PropsWithChildren) {
   // Optional: lock scroll during loading for visual stability
@@ -19,6 +20,7 @@ export default function RootClient({ children }: PropsWithChildren) {
 
   return (
     <>
+      <SkipLink href="#main-content">メインコンテンツへスキップ</SkipLink>
       <LoadingOverlay />
       {children}
     </>

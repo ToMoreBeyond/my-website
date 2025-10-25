@@ -60,7 +60,8 @@ export default function Home() {
       
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section 
+        <section
+          id="main-content"
           ref={heroRef}
           className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
