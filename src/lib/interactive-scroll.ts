@@ -214,7 +214,7 @@ export const createTextScramble = () => {
         const interval = setInterval(() => {
           element.textContent = originalText
             .split('')
-            .map((char, index) => {
+            .map((_char, index) => {
               if (index < iteration) return originalText[index]
               return chars[Math.floor(Math.random() * chars.length)]
             })

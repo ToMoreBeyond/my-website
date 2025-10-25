@@ -5,7 +5,6 @@ import {
   generateMetadata,
   generateOrganizationStructuredData,
   generateWebSiteStructuredData,
-  generateSoftwareApplicationStructuredData,
 } from "@/lib/seo";
 import { env } from "@/lib/env";
 

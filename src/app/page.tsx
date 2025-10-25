@@ -505,7 +505,7 @@ export default function Home() {
                     { Icon: Mail, label: 'Email', value: 'contact@tomorebeyond.co' },
                     { Icon: Globe, label: 'Location', value: 'Tokyo, Japan' },
                     { Icon: Zap, label: 'Response Time', value: '24時間以内' },
-                  ].map((item, index) => (
+                  ].map((item) => (
                     <motion.div 
                       key={item.label}
                       className="flex items-center gap-4 magnetic"

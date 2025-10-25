@@ -170,11 +170,3 @@ export function VisionSection() {
     </section>
   )
 }
-
-function Divider() {
-  return (
-    <div className="my-10 flex items-center justify-center" aria-hidden>
-      <div className="text-2xl md:text-3xl text-neutral-400">⸻</div>
-    </div>
-  )
-}

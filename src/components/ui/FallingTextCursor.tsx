@@ -21,8 +21,8 @@ const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'
 export const FallingTextCursor = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [chars, setChars] = useState<FallingChar[]>([])
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [isActive, setIsActive] = useState(false)
+  const [_mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [_isActive, setIsActive] = useState(false)
   const charIdRef = useRef(0)
   const lastSpawnTimeRef = useRef(0)
 

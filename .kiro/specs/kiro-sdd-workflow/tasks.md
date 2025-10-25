@@ -29,7 +29,7 @@
   - カノニカルURL管理機能を追加
   - _Requirements: 7.5, 7.7_
 
-- [ ] 2.2 構造化データとサイトマップの実装
+- [x] 2.2 構造化データとサイトマップの実装
   - Organization型の構造化データ（JSON-LD）を生成
   - WebSite型の構造化データ（JSON-LD）を生成
   - SoftwareApplication型の構造化データをプロダクトごとに生成

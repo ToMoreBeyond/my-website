@@ -136,7 +136,7 @@ export const ParticleField = ({
   }
 
   // Animation loop
-  const animate = (currentTime: number) => {
+  const animate = (_currentTime: number) => {
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d')
     if (!canvas || !ctx) return

@@ -39,14 +39,6 @@ export function HeroSection() {
     }
   };
 
-  const scrollToAbout = () => {
-    const element = document.getElementById('company');
-    if (element) {
-      const offsetTop = element.offsetTop - 80;
-      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-    }
-  };
-
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     if (element) {

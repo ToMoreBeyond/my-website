@@ -26,7 +26,7 @@ export const createTextReveal = (selector: string, options: Partial<ScrollAnimat
 
   const elements = document.querySelectorAll(selector)
   
-  elements.forEach((element, index) => {
+  elements.forEach((element) => {
     // Split text into spans
     const text = element.textContent || ''
     element.innerHTML = text
@@ -69,7 +69,7 @@ export const createParallax = (selector: string, speed: number = 0.5, options: P
   
   elements.forEach(element => {
     gsap.to(element, {
-      y: (i, target) => -ScrollTrigger.maxScroll(window) * speed,
+      y: (_i, _target) => -ScrollTrigger.maxScroll(window) * speed,
       ease: 'none',
       scrollTrigger: {
         trigger: element,

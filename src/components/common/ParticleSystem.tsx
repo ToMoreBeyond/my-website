@@ -22,10 +22,10 @@ interface ParticleSystemProps {
 export function ParticleSystem({ particleCount = 50, className = '' }: ParticleSystemProps) {
   const controls = useAnimation();
   const [mounted, setMounted] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection] = useState('hero');
 
   // Generate particles
-  const particles = useMemo(() => {
+  const particles = useMemo<Particle[]>(() => {
     const colors = [
       'rgba(16, 185, 129, 0.6)', // emerald
       'rgba(14, 165, 233, 0.6)', // sky

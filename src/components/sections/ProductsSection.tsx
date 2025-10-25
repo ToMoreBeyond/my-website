@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowRightIcon, CodeBracketIcon, PlayIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
 import { products } from '@/data/products';
 import { DragElement } from '@/components/common/DragElement';

@@ -2,11 +2,9 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { 
-  EnvelopeIcon, 
-  PhoneIcon, 
+import {
   MapPinIcon,
-  PaperAirplaneIcon 
+  PaperAirplaneIcon
 } from '@heroicons/react/24/outline';
 
 export function ContactSection() {

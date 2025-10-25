@@ -1,23 +1,8 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
-import { 
-  ArrowLeftIcon, 
-  CodeBracketIcon, 
-  PlayIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  BeakerIcon,
-  SparklesIcon,
-  ArrowRightIcon,
-  ShareIcon
-} from '@heroicons/react/24/outline';
-import { products, Product } from '@/data/products';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { products } from '@/data/products';
 import { DetailLayout } from '@/components/layout/DetailLayout';
 import { productBreadcrumbs } from '@/lib/breadcrumbs';
-import { clsx } from 'clsx';
 import { ProductDetailClient } from './ProductDetailClient';
 
 // Generate static params for all products

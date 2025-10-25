@@ -4,15 +4,13 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { 
-  EnvelopeIcon, 
+import {
   LinkIcon,
   XMarkIcon,
   BuildingOfficeIcon,
   AcademicCapIcon,
   TrophyIcon
 } from '@heroicons/react/24/outline';
-import { clsx } from 'clsx';
 import { teamMembers } from '@/data/team';
 
 export function TeamSection() {

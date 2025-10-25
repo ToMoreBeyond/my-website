@@ -1,7 +1,5 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-
 /**
  * Premium text reveal animation with character splitting
  * Inspired by Diana's Seafood site animations
