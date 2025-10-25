@@ -74,6 +74,8 @@ export class StaticDataAdapter implements CMSAdapter {
       if (roadmap?.lastUpdated) {
         return new Date(roadmap.lastUpdated);
       }
+      // ロードマップが存在しない場合はnullを返す
+      return null;
     }
 
     // 静的データの場合、ビルド時刻を返す
