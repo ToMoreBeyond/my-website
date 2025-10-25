@@ -118,6 +118,9 @@ export function Header() {
                 alt="ToMoreBeyond"
                 fill
                 className="object-contain object-left"
+                sizes="(max-width: 1024px) 160px, 192px"
+                priority
+                quality={95}
               />
             </div>
           </Link>

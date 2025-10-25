@@ -58,6 +58,9 @@ export function Footer() {
                   alt="ToMoreBeyond"
                   fill
                   className="object-contain object-left"
+                  sizes="192px"
+                  loading="lazy"
+                  quality={90}
                 />
               </div>
             </motion.button>

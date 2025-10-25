@@ -71,7 +71,16 @@ export function DetailHero({
             className={imagePosition === 'left' ? 'order-2 lg:order-1' : 'order-1 lg:order-2'}
           >
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100 border border-neutral-200 max-w-md mx-auto">
-              <Image src={imageSrc} alt={imageAlt} fill className="object-cover" />
+              <Image
+                src={imageSrc}
+                alt={imageAlt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 448px"
+                priority={eager}
+                loading={eager ? undefined : 'lazy'}
+                quality={85}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
             </div>
             {/* Floating soft accents */}

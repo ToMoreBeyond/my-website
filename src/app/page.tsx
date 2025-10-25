@@ -276,7 +276,9 @@ export default function Home() {
                       alt={product.name}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-115"
-                      unoptimized
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
+                      quality={85}
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${productColor} opacity-0 group-hover:opacity-30 transition-opacity duration-700`} />
                     
@@ -419,7 +421,9 @@ export default function Home() {
                           alt={member.name}
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          unoptimized
+                          sizes="128px"
+                          loading="lazy"
+                          quality={90}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-emerald-500 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
                       </div>
