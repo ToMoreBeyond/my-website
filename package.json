@@ -15,7 +15,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "test:e2e:chrome": "playwright test --project=chromium"
+    "test:e2e:chrome": "playwright test --project=chromium",
+    "test:perf": "lhci autorun",
+    "test:perf:mobile": "lhci autorun --collect.settings.preset=mobile"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -34,6 +36,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
     "@next/bundle-analyzer": "^16.0.0",
     "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
