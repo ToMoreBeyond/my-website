@@ -58,13 +58,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      
-      <div className="min-h-screen">
+
+      <main className="min-h-screen" role="main" aria-label="メインコンテンツ">
         {/* Hero Section */}
         <section
           id="main-content"
           ref={heroRef}
           className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          aria-label="ヒーローセクション"
         >
           {/* No floating decorations for a cleaner, static hero background */}
           
@@ -177,10 +178,15 @@ export default function Home() {
         <AngledDivider direction="down" tone="light" height={96} />
 
         {/* Products Section with Seamless Flow */}
-        <section id="products" className="section relative overflow-hidden" style={{
-          paddingTop: 'clamp(4rem, 8vw, 8rem)',
-          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
-        }}>
+        <section
+          id="products"
+          className="section relative overflow-hidden"
+          aria-label="プロダクト一覧"
+          style={{
+            paddingTop: 'clamp(4rem, 8vw, 8rem)',
+            paddingBottom: 'clamp(4rem, 8vw, 8rem)'
+          }}
+        >
           <div className="container">
             <div className="text-center mb-20 relative">
               <div className="hidden md:block absolute -top-6 left-1/2 -translate-x-1/2 pointer-events-none select-none">
@@ -322,10 +328,15 @@ export default function Home() {
         <AngledDivider direction="down" tone="light" height={96} />
 
         {/* Team Section with Continuous Flow */}
-        <section id="team" className="section relative overflow-hidden" style={{
-          paddingTop: 'clamp(4rem, 8vw, 8rem)',
-          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
-        }}>
+        <section
+          id="team"
+          className="section relative overflow-hidden"
+          aria-label="チームメンバー紹介"
+          style={{
+            paddingTop: 'clamp(4rem, 8vw, 8rem)',
+            paddingBottom: 'clamp(4rem, 8vw, 8rem)'
+          }}
+        >
           <div className="container">
             <div className="text-center mb-16 relative">
               <div className="hidden md:block absolute -top-6 left-1/2 -translate-x-1/2 pointer-events-none select-none">
@@ -449,10 +460,15 @@ export default function Home() {
         <AngledDivider direction="down" tone="light" height={96} />
 
         {/* Contact Section with Rich Gradient */}
-        <section id="contact" className="section relative overflow-hidden" style={{
-          paddingTop: 'clamp(4rem, 8vw, 8rem)',
-          paddingBottom: 'clamp(4rem, 8vw, 8rem)'
-        }}>
+        <section
+          id="contact"
+          className="section relative overflow-hidden"
+          aria-label="お問い合わせフォーム"
+          style={{
+            paddingTop: 'clamp(4rem, 8vw, 8rem)',
+            paddingBottom: 'clamp(4rem, 8vw, 8rem)'
+          }}
+        >
           {/* Decorative particle background removed to reduce load */}
           
           <div className="container relative z-10">
@@ -525,23 +541,27 @@ export default function Home() {
                 </div>
               </motion.div>
               
-              <InteractiveCard 
+              <InteractiveCard
                 className="bg-neutral-800 rounded-xl p-6"
                 intensity={0.8}
               >
-                <form className="space-y-4" name="contact" method="POST" data-netlify="true">
+                <form className="space-y-4" name="contact" method="POST" data-netlify="true" aria-label="お問い合わせフォーム">
                   <input type="hidden" name="form-name" value="contact" />
-                  
+
                   {[
                     { label: 'お名前', type: 'text', name: 'name', placeholder: 'お名前を教えてください' },
                     { label: 'メールアドレス', type: 'email', name: 'email', placeholder: 'your@email.com' },
                   ].map((field) => (
                     <div key={field.name}>
-                      <label className="block text-sm font-medium mb-2">{field.label} *</label>
+                      <label htmlFor={field.name} className="block text-sm font-medium mb-2">
+                        {field.label} <span aria-label="必須項目">*</span>
+                      </label>
                       <motion.input
+                        id={field.name}
                         type={field.type}
                         name={field.name}
                         required
+                        aria-required="true"
                         className="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:outline-none focus:border-primary transition-all duration-300"
                         placeholder={field.placeholder}
                         whileFocus={{ scale: 1.02 }}
@@ -550,11 +570,15 @@ export default function Home() {
                     ))}
                   
                   <div>
-                    <label className="block text-sm font-medium mb-2">メッセージ *</label>
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                      メッセージ <span aria-label="必須項目">*</span>
+                    </label>
                     <motion.textarea
+                      id="message"
                       name="message"
                       rows={4}
                       required
+                      aria-required="true"
                       className="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:outline-none focus:border-primary transition-all duration-300 resize-none"
                       placeholder="こんにちは、から始めても大丈夫です。気軽にメッセージをどうぞ。"
                       whileFocus={{ scale: 1.02 }}
@@ -576,7 +600,7 @@ export default function Home() {
         </section>
 
         {/* FAQ section removed: keep home concise and editorial */}
-      </div>
+      </main>
 
       {/* Footer */}
       <Footer />
