@@ -45,6 +45,30 @@
   --color-blue-800: #22526d;
   --color-blue-900: #163349;
 
+  /* Olive - 研究所的な温かみ × テクノロジー */
+  --color-olive-50: #f8f9f5;
+  --color-olive-100: #eef1e8;
+  --color-olive-200: #dde3d1;
+  --color-olive-300: #c4cfb3;
+  --color-olive-400: #a8b891;
+  --color-olive-500: #8ca070;
+  --color-olive-600: #758a5c;
+  --color-olive-700: #5d6e49;
+  --color-olive-800: #485c11;
+  --color-olive-900: #0f1e14;  /* Deep olive for text */
+
+  /* Emerald - テクノロジーアクセント */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;  /* Main tech accent */
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+
   --color-green-50: #f0f8f1;
   --color-green-100: #d9eedb;
   --color-green-200: #b3ddb7;
@@ -55,6 +79,18 @@
   --color-green-700: #3d713c;
   --color-green-800: #2d542c;
   --color-green-900: #1d371c;
+
+  /* Sand - 温かみのあるニュートラル */
+  --color-sand-50: #f8f7f5;   /* Background warm */
+  --color-sand-100: #e5e3df;  /* Light neutral */
+  --color-sand-200: #d4d1ca;
+  --color-sand-300: #c4b9a6;  /* Mid neutral */
+  --color-sand-400: #aea396;
+  --color-sand-500: #978d80;
+  --color-sand-600: #7d7166;
+  --color-sand-700: #635a50;
+  --color-sand-800: #4a443c;
+  --color-sand-900: #312d28;
 
   /* Accent - Very limited use */
   --color-accent-light: #fef5f0;
@@ -98,11 +134,11 @@
   --space-56: 14rem;    /* 224px */
   --space-64: 16rem;    /* 256px */
 
-  /* === Layout - More breathing room === */
-  --container-max-width: 1400px;
-  --container-padding: clamp(2rem, 6vw, 4rem);
-  --section-padding: clamp(6rem, 12vw, 10rem);
-  --section-gap: clamp(10rem, 18vw, 14rem);
+  /* === Layout - 8pxグリッド / セクション間120-160px === */
+  --container-max-width: 1200px;  /* 改善方針: 1200px */
+  --container-padding: clamp(2rem, 6vw, 4rem);  /* 32-64px (4-8 × 8px) */
+  --section-padding: clamp(7.5rem, 12vw, 10rem);  /* 120-160px (15-20 × 8px) */
+  --section-gap: clamp(7.5rem, 12vw, 10rem);  /* 120-160px (15-20 × 8px) */
 
   /* === Shadows === */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -529,29 +565,57 @@ body {
 .shadow-xl { box-shadow: var(--shadow-xl); }
 
 /* ============================================
-   Responsive Design
+   Responsive Design - Mobile-First Approach
    ============================================ */
 
+/* モバイル (デフォルト): 320px - 639px */
+/* タッチ最適化: タップターゲット最低44×44px */
+
+/* Small (sm): 640px - 767px */
 @media (min-width: 640px) {
   .sm\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
   .sm\:text-lg { font-size: var(--text-lg); }
   .sm\:text-2xl { font-size: var(--text-2xl); }
+
+  :root {
+    --container-padding: clamp(2rem, 4vw, 3rem);
+  }
 }
 
+/* Medium (md): 768px - 1023px */
 @media (min-width: 768px) {
   .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
   .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
   .md\:text-xl { font-size: var(--text-xl); }
   .md\:text-3xl { font-size: var(--text-3xl); }
   .md\:text-4xl { font-size: var(--text-4xl); }
+
+  :root {
+    --container-padding: clamp(3rem, 5vw, 4rem);
+    --section-padding: clamp(8rem, 10vw, 10rem);
+  }
 }
 
+/* Large (lg): 1024px - 1279px */
 @media (min-width: 1024px) {
   .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
   .lg\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
   .lg\:text-2xl { font-size: var(--text-2xl); }
   .lg\:text-4xl { font-size: var(--text-4xl); }
   .lg\:text-5xl { font-size: var(--text-5xl); }
+
+  :root {
+    --container-padding: 4rem;
+    --section-padding: 10rem;  /* 160px */
+  }
+}
+
+/* Extra Large (xl): 1280px+ */
+@media (min-width: 1280px) {
+  :root {
+    --container-max-width: 1200px;
+    --section-gap: 10rem;  /* 160px */
+  }
 }
 
 /* ============================================
