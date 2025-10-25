@@ -1,8 +1,8 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800;900&family=Zen+Maru+Gothic:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap');
 
 /* ============================================
    Design System - studio.design/ja inspired
+   Font loading optimized with next/font in layout.tsx
    ============================================ */
 
 :root {
@@ -98,9 +98,9 @@
   --color-accent-dark: #7d3b1f;
 
   /* === Typography - Warm & Rounded === */
-  --font-primary: 'M PLUS Rounded 1c', 'Zen Maru Gothic', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'M PLUS Rounded 1c', 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
-  --font-sans: 'M PLUS Rounded 1c', 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+  --font-primary: var(--font-m-plus-rounded), var(--font-zen-maru), var(--font-noto-sans-jp), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: var(--font-m-plus-rounded), var(--font-zen-maru), var(--font-noto-sans-jp), sans-serif;
+  --font-sans: var(--font-m-plus-rounded), var(--font-zen-maru), var(--font-noto-sans-jp), sans-serif;
 
   /* Font Sizes - Refined Typography Scale */
   --text-xs: clamp(0.75rem, 0.7rem + 0.15vw, 0.825rem);
@@ -887,16 +887,52 @@ body.loaded * {
   aspect-ratio: 3 / 4;
 }
 
-/* Responsive images */
+/* Responsive images - Prevent CLS */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
+/* Next.js Image component optimization */
+img[data-nimg] {
+  /* Prevent layout shift by reserving space */
+  object-fit: cover;
+}
+
+/* Prevent CLS for lazy-loaded images */
+img[loading="lazy"] {
+  /* Browser will reserve space based on aspect-ratio or dimensions */
+  content-visibility: auto;
+}
+
 /* ============================================
    Performance Optimizations
    ============================================ */
+
+/* CSS Containment for better rendering performance */
+.card,
+.product-card,
+.team-card {
+  contain: layout style paint;
+}
+
+section {
+  contain: layout style;
+}
+
+/* Reduce paint areas for animations */
+.animate-fade-in,
+.animate-scale-in,
+[class*="animate-"] {
+  will-change: opacity, transform;
+  contain: layout style paint;
+}
+
+/* Remove will-change after animation completes */
+.animate-complete {
+  will-change: auto;
+}
 
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
@@ -914,6 +950,15 @@ img {
 .will-change-transform { will-change: transform; }
 .transform-gpu { transform: translateZ(0); }
 .backface-hidden { backface-visibility: hidden; }
+
+/* Optimize rendering for interactive elements */
+button,
+a,
+.interactive {
+  /* Promote to own layer for smoother interactions */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 
 /* Hover lift effect */
 .hover-lift {

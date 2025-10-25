@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { M_PLUS_Rounded_1c, Zen_Maru_Gothic, Noto_Sans_JP } from 'next/font/google';
 import "./globals.css";
 import RootClient from "./RootClient";
 import {
@@ -7,6 +8,34 @@ import {
   generateWebSiteStructuredData,
 } from "@/lib/seo";
 import { env } from "@/lib/env";
+
+// Optimized font loading with next/font
+const mPlusRounded = M_PLUS_Rounded_1c({
+  weight: ['300', '400', '500', '700', '800', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-m-plus-rounded',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const zenMaruGothic = Zen_Maru_Gothic({
+  weight: ['300', '400', '500', '700', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-zen-maru',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const notoSansJP = Noto_Sans_JP({
+  weight: ['300', '400', '500', '600', '700', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans-jp',
+  preload: true,
+  fallback: ['-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -96,8 +125,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={`${mPlusRounded.variable} ${zenMaruGothic.variable} ${notoSansJP.variable}`}>
       <head>
+        {/* Resource hints for performance */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+        {/* Preload critical assets */}
+        <link
+          rel="preload"
+          href="/images/logos/tomorebeyond-logo.png"
+          as="image"
+          type="image/png"
+        />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -111,7 +152,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className={`${mPlusRounded.className} antialiased`}>
         <RootClient>
           {children}
         </RootClient>
