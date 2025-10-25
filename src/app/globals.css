@@ -178,6 +178,116 @@
 }
 
 /* ============================================
+   Dark Mode Color Palette
+   ============================================ */
+
+:root[data-theme="dark"],
+.dark {
+  /* Primary - Warm Orange (slightly muted for dark mode) */
+  --color-primary-50: #2d1f18;
+  --color-primary-100: #3d2a1f;
+  --color-primary-200: #5a2710;
+  --color-primary-300: #7d3b1f;
+  --color-primary-400: #a04f2f;
+  --color-primary-500: #D77A4F;
+  --color-primary-600: #e8956a;
+  --color-primary-700: #f9b893;
+  --color-primary-800: #fbd0b7;
+  --color-primary-900: #fde8db;
+
+  /* Neutral Palette - Inverted for dark mode */
+  --color-neutral-0: #0a0a0a;
+  --color-neutral-50: #171717;
+  --color-neutral-100: #262626;
+  --color-neutral-200: #404040;
+  --color-neutral-300: #525252;
+  --color-neutral-400: #737373;
+  --color-neutral-500: #a3a3a3;
+  --color-neutral-600: #d4d4d4;
+  --color-neutral-700: #e5e5e5;
+  --color-neutral-800: #f5f5f5;
+  --color-neutral-900: #fafafa;
+  --color-neutral-950: #ffffff;
+
+  /* Olive - Adjusted for dark mode */
+  --color-olive-50: #0f1e14;
+  --color-olive-100: #1a2e1f;
+  --color-olive-200: #2d4532;
+  --color-olive-300: #485c11;
+  --color-olive-400: #5d6e49;
+  --color-olive-500: #758a5c;
+  --color-olive-600: #8ca070;
+  --color-olive-700: #a8b891;
+  --color-olive-800: #c4cfb3;
+  --color-olive-900: #eef1e8;
+
+  /* Blue - Enhanced for dark mode */
+  --color-blue-50: #0d1f2d;
+  --color-blue-100: #163349;
+  --color-blue-200: #22526d;
+  --color-blue-300: #2e7091;
+  --color-blue-400: #3a8fb5;
+  --color-blue-500: #4BA7CC;
+  --color-blue-600: #5dbbe4;
+  --color-blue-700: #85cceb;
+  --color-blue-800: #aeddf1;
+  --color-blue-900: #d6eef8;
+
+  /* Emerald - Vibrant for dark mode */
+  --color-emerald-50: #022818;
+  --color-emerald-100: #064e3b;
+  --color-emerald-200: #065f46;
+  --color-emerald-300: #047857;
+  --color-emerald-400: #059669;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #34d399;
+  --color-emerald-700: #6ee7b7;
+  --color-emerald-800: #a7f3d0;
+  --color-emerald-900: #d1fae5;
+
+  /* Green - Adjusted */
+  --color-green-50: #0d1f0d;
+  --color-green-100: #1d371c;
+  --color-green-200: #2d542c;
+  --color-green-300: #3d713c;
+  --color-green-400: #4d8f4c;
+  --color-green-500: #5EA75D;
+  --color-green-600: #71ba78;
+  --color-green-700: #8dcc93;
+  --color-green-800: #b3ddb7;
+  --color-green-900: #d9eedb;
+
+  /* Sand - Dark neutral warm */
+  --color-sand-50: #1a1815;
+  --color-sand-100: #312d28;
+  --color-sand-200: #4a443c;
+  --color-sand-300: #635a50;
+  --color-sand-400: #7d7166;
+  --color-sand-500: #978d80;
+  --color-sand-600: #aea396;
+  --color-sand-700: #c4b9a6;
+  --color-sand-800: #d4d1ca;
+  --color-sand-900: #e5e3df;
+
+  /* Accent */
+  --color-accent-light: #2d1f18;
+  --color-accent-default: #D77A4F;
+  --color-accent-dark: #fde8db;
+
+  /* Dark mode background gradient */
+  --bg-gradient: linear-gradient(
+    180deg,
+    #0a0a0a 0%,
+    #121212 18%,
+    #1a1a1a 36%,
+    #141b1f 54%,
+    #141f1a 72%,
+    #1f1612 88%,
+    #1a1410 100%
+  );
+}
+
+/* ============================================
    Base Styles
    ============================================ */
 
