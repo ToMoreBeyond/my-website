@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 // import { ParticleField } from '@/components/effects/ParticleField'
@@ -18,6 +18,12 @@ import { MarqueeText } from '@/components/effects/MarqueeText'
 import { VisionSection } from '@/components/sections/VisionSection'
 import { FullBleedBand } from '@/components/sections/FullBleedBand'
 import { AngledDivider } from '@/components/sections/AngledDivider'
+
+// Dynamic import for InteractiveCard (used only in contact section)
+const InteractiveCard = dynamic(
+  () => import('@/components/ui/InteractiveCard').then(mod => ({ default: mod.InteractiveCard })),
+  { ssr: false }
+)
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)

@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // Performance optimizations
+  compress: true,
+  poweredByHeader: false,
+  productionBrowserSourceMaps: false,
+  // Experimental features for performance
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react', '@heroicons/react'],
+  },
 };
 
 export default nextConfig;
