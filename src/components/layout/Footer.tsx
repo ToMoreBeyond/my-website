@@ -124,14 +124,25 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.label}>
-                  <motion.a
-                    href={link.href}
-                    onClick={(e) => handleLinkClick(e, link.href)}
-                    className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors inline-block"
-                    whileHover={{ x: 4 }}
-                  >
-                    {link.label}
-                  </motion.a>
+                  {link.href.startsWith('#') ? (
+                    <motion.a
+                      href={link.href}
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                      className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors inline-block"
+                      whileHover={{ x: 4 }}
+                    >
+                      {link.label}
+                    </motion.a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors inline-block"
+                    >
+                      <motion.span whileHover={{ x: 4 }} className="inline-block">
+                        {link.label}
+                      </motion.span>
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
