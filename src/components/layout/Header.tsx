@@ -112,14 +112,14 @@ export function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <div className="relative w-32 h-auto lg:w-40">
+            <div className="relative w-14 h-auto lg:w-20">
               <Image
                 src="/images/logos/tomorebeyond-logo.png"
                 alt="ToMoreBeyond"
-                width={400}
-                height={100}
+                width={200}
+                height={50}
                 className="w-full h-auto object-contain"
-                sizes="(max-width: 1024px) 128px, 160px"
+                sizes="(max-width: 1024px) 56px, 80px"
                 priority
                 quality={95}
               />
