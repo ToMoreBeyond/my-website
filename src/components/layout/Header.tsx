@@ -89,13 +89,13 @@ export function Header() {
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
                 className={clsx('relative px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105',
-                  activeSection === item.id ? 'text-primary-700' : 'text-neutral-700 hover:text-primary-700')}
+                  activeSection === item.id ? 'text-primary-700 dark:text-primary-400' : 'text-neutral-700 dark:text-neutral-300 hover:text-primary-700 dark:hover:text-primary-400')}
               >
                 {item.name}
                 {activeSection === item.id && (
                   <motion.div
                     layoutId="activeSection"
-                    className={clsx('absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-primary-600')}
+                    className={clsx('absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-primary-600 dark:bg-primary-400')}
                   />
                 )}
               </button>
@@ -106,7 +106,7 @@ export function Header() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={clsx('p-2 rounded-lg transition-colors text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100')}
+              className={clsx('p-2 rounded-lg transition-colors text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800')}
             >
               {isMobileMenuOpen ? (
                 <XMarkIcon className="w-6 h-6" />
@@ -124,7 +124,7 @@ export function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-neutral-200/60"
+              className="md:hidden overflow-hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-neutral-200/60 dark:border-gray-700/60"
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
                 {navigation.map((item) => (
@@ -132,7 +132,7 @@ export function Header() {
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
                     className={clsx('block w-full text-left px-3 py-2 text-base font-medium rounded-lg transition-colors',
-                      activeSection === item.id ? 'text-primary-700 bg-primary-50' : 'text-neutral-700 hover:text-primary-700 hover:bg-neutral-50')}
+                      activeSection === item.id ? 'text-primary-700 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30' : 'text-neutral-700 dark:text-neutral-300 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-neutral-50 dark:hover:bg-gray-800')}
                   >
                     {item.name}
                   </button>
