@@ -84,23 +84,26 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 1.0 }}
               >
+                {/* English tagline */}
+                <p className="text-lg md:text-xl text-olive-600/80 font-light mb-4 tracking-wide">
+                  Making hidden traces a lasting wonder
+                </p>
+
                 <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold text-olive-900 leading-tight tracking-tight reveal-chars jp-optimized text-center">
-                  埋もれた記録と眠る資源を、
-                  <br className="hidden md:block" />
                   <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 via-olive-700 to-emerald-600">
-                    一生続く面白さの循環へ。
+                    埋もれた記録を、続く面白さへ
                   </span>
                 </h1>
                 <p className="mt-6 text-xl md:text-2xl text-olive-700 max-w-4xl mx-auto leading-relaxed">
-                  デジタル（アプリ）とリアル（拠点・家具）を横断し、日常に“続く面白さ”を研究・実装する会社です。
+                  研究所のような温かみ × テクノロジー企業の透明感
                 </p>
               </motion.div>
 
               {/* Flowing marquee tagline */}
-              <MarqueeText 
-                text="埋もれた記録と眠る資源を、一生続く面白さの循環へ。"
+              <MarqueeText
+                text="Making hidden traces a lasting wonder"
                 speed={90}
-                className="text-olive-700/80 font-semibold text-lg md:text-xl"
+                className="text-olive-700/80 font-light text-base md:text-lg tracking-wide"
                 separator=" ⸻ "
               />
 
@@ -199,16 +202,16 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                日常に“続く面白さ”を実装するためのプロダクト群
+                同一世界観の一部として設計された、プロダクトシリーズ
               </motion.p>
-              <motion.p 
+              <motion.p
                 className="text-xl text-neutral-600 max-w-3xl mx-auto reveal-text"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーション
+                日常に"続く面白さ"を実装する、iOS専用アプリケーション
               </motion.p>
             </div>
 
@@ -286,16 +289,21 @@ export default function Home() {
                     <p className="text-sm text-neutral-500 mb-4 font-medium">
                       {product.nameEn}
                     </p>
-                    <p className="text-neutral-600 mb-6 leading-relaxed">
+                    <p className="text-neutral-600 mb-4 leading-relaxed">
                       {product.tagline}
                     </p>
-                    
+                    <p className="text-neutral-500 text-sm mb-6 leading-relaxed">
+                      {product.description}
+                    </p>
+
                       <motion.div
-                        className="btn btn-ghost w-full"
+                        className="btn btn-ghost w-full text-sm font-semibold"
                         whileHover={{ x: 5 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        詳細を見る →
+                        {product.status === 'released' ? '今すぐダウンロード →' :
+                         product.status === 'beta' ? 'TestFlightで試す →' :
+                         'ロードマップを見る →'}
                       </motion.div>
                     </div>
                   </div>
@@ -461,23 +469,23 @@ export default function Home() {
               >
                 <span>お問い合わせ</span>
               </motion.h2>
-              <motion.p 
+              <motion.p
                 className="text-2xl text-neutral-700 max-w-4xl mx-auto mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                プロダクト・採用・コラボなど、お気軽にご連絡ください
+                こんにちは、からでも構いません。お気軽にどうぞ。
               </motion.p>
-              <motion.p 
+              <motion.p
                 className="text-xl text-neutral-700 max-w-3xl mx-auto reveal-text"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                ご質問・ご相談はお気軽にお問い合わせください
+                プロダクト・採用・コラボレーション、何でもご相談ください
               </motion.p>
             </div>
 
@@ -489,7 +497,7 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-2xl font-semibold mb-6">お気軽にご連絡ください</h3>
+                <h3 className="text-2xl font-semibold mb-6">どんな話でも歓迎します</h3>
                 
                 <div className="space-y-4">
                   {[
@@ -523,8 +531,8 @@ export default function Home() {
                   <input type="hidden" name="form-name" value="contact" />
                   
                   {[
-                    { label: 'お名前', type: 'text', name: 'name', placeholder: '山田太郎' },
-                    { label: 'メールアドレス', type: 'email', name: 'email', placeholder: 'example@company.com' },
+                    { label: 'お名前', type: 'text', name: 'name', placeholder: 'お名前を教えてください' },
+                    { label: 'メールアドレス', type: 'email', name: 'email', placeholder: 'your@email.com' },
                   ].map((field) => (
                     <div key={field.name}>
                       <label className="block text-sm font-medium mb-2">{field.label} *</label>
@@ -546,7 +554,7 @@ export default function Home() {
                       rows={4}
                       required
                       className="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:outline-none focus:border-primary transition-all duration-300 resize-none"
-                      placeholder="お気軽にお聞かせください..."
+                      placeholder="こんにちは、から始めても大丈夫です。気軽にメッセージをどうぞ。"
                       whileFocus={{ scale: 1.02 }}
                     />
                   </div>
@@ -578,7 +586,8 @@ export default function Home() {
                   className="block group"
                 >
                   <h3 className="text-xl font-semibold mb-2 magnetic group-hover:text-neutral-900 transition-colors">ToMoreBeyond（トモビ）</h3>
-                  <p className="text-neutral-600 group-hover:text-neutral-800 transition-colors">東京拠点のモバイルアプリ開発企業。技術と情熱で、より遠くへ。</p>
+                  <p className="text-neutral-600 group-hover:text-neutral-800 transition-colors">Creating sustainable fun through digital & real.</p>
+                  <p className="text-neutral-500 text-sm mt-2">Tokyo, Japan – 東京から、面白さの循環を。</p>
                 </motion.a>
               </motion.div>
               
@@ -630,7 +639,13 @@ export default function Home() {
                 </ul>
               </div>
             </div>
-            
+
+            {/* Copyright */}
+            <div className="mt-12 pt-8 border-t border-neutral-300">
+              <p className="text-center text-neutral-600 text-sm">
+                © 2025 ToMoreBeyond Inc. Tokyo, Japan – Creating sustainable fun through digital & real.
+              </p>
+            </div>
           </div>
         </footer>
       </div>
