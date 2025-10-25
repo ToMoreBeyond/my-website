@@ -164,7 +164,7 @@ export function HeroSection() {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="mb-8"
           >
-            <motion.h1 
+            <motion.h1
               className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white mb-6"
               style={{
                 textShadow: '0 0 20px rgba(34, 197, 94, 0.5)',
@@ -182,16 +182,21 @@ export function HeroSection() {
                 ease: 'easeInOut'
               }}
             >
-              ToMoreBeyond
+              ToMoreBeyond<span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">（トモビ）</span>
             </motion.h1>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-gray-300 font-light tracking-wide"
+              className="space-y-2"
             >
-              技術と情熱で、より遠くへ
+              <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-200 font-light tracking-wide">
+                Making hidden traces a lasting wonder
+              </p>
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 font-light tracking-wide">
+                埋もれた記録を、続く面白さへ
+              </p>
             </motion.div>
           </motion.div>
 
