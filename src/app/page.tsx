@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { InteractiveCard } from '@/components/ui/InteractiveCard'
 import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
 // import { ParticleField } from '@/components/effects/ParticleField'
 import { smoothScrollTo } from '@/lib/animations'
 import { Mail, Globe, Zap } from 'lucide-react'
@@ -575,81 +576,10 @@ export default function Home() {
         </section>
 
         {/* FAQ section removed: keep home concise and editorial */}
-
-        {/* Footer */}
-        <footer className="text-neutral-800 py-16 relative overflow-hidden">
-          <div className="container relative z-10">
-            <div className="grid md:grid-cols-3 gap-8">
-              <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
-                <motion.a
-                  href="#about"
-                  onClick={(e) => { e.preventDefault(); smoothScrollTo('#about'); }}
-                  className="block group"
-                >
-                  <h3 className="text-xl font-semibold mb-2 magnetic group-hover:text-neutral-900 transition-colors">ToMoreBeyond（トモビ）</h3>
-                  <p className="text-neutral-600 group-hover:text-neutral-800 transition-colors">Creating sustainable fun through digital & real.</p>
-                  <p className="text-neutral-500 text-sm mt-2">Tokyo, Japan – 東京から、面白さの循環を。</p>
-                </motion.a>
-              </motion.div>
-              
-              <div>
-                <h4 className="font-medium mb-4">
-                  <motion.a
-                    href="#products"
-                    onClick={(e) => { e.preventDefault(); smoothScrollTo('#products'); }}
-                    className="hover:text-neutral-900 transition-colors"
-                    whileHover={{ x: 4 }}
-                  >
-                    プロダクト
-                  </motion.a>
-                </h4>
-                <ul className="space-y-2 text-neutral-600 text-sm">
-                  {[
-                    { label: '忠嵩 (TADATAKA)', href: '/products/tadataka' },
-                    { label: 'TOI-RUN', href: '/products/toirun' },
-                    { label: 'Meet in the middle', href: '/products/meet-in-the-middle' },
-                  ].map((product) => (
-                    <motion.li key={product.href} className="magnetic" whileHover={{ x: 5 }}>
-                      <a href={product.href} className="hover:text-neutral-800 transition-colors">
-                        {product.label}
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div>
-                <h4 className="font-medium mb-4">リンク</h4>
-                <ul className="space-y-2 text-neutral-600 text-sm">
-                  {[
-                    { label: '会社概要', target: '#about' },
-                    { label: 'チーム', target: '#team' },
-                    { label: 'お問い合わせ', target: '#contact' },
-                  ].map((link) => (
-                    <motion.li key={link.label}>
-                      <motion.a
-                        href={link.target}
-                        onClick={(e) => { e.preventDefault(); smoothScrollTo(link.target); }}
-                        className="hover:text-neutral-800 transition-colors magnetic inline-block"
-                        whileHover={{ x: 5 }}
-                      >
-                        {link.label}
-                      </motion.a>
-                    </motion.li>
-                    ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Copyright */}
-            <div className="mt-12 pt-8 border-t border-neutral-300">
-              <p className="text-center text-neutral-600 text-sm">
-                © 2025 ToMoreBeyond Inc. Tokyo, Japan – Creating sustainable fun through digital & real.
-              </p>
-            </div>
-          </div>
-        </footer>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </>
   )
 }
