@@ -16,6 +16,8 @@ export interface Product {
   minimumOS: string;
   targetRegion: string;
   roadmapUrl?: string;
+  createdDate: string;
+  updatedDate?: string;
 }
 
 export const products: Product[] = [
@@ -65,7 +67,9 @@ export const products: Product[] = [
     supportedDevices: ['iPhone（初期リリース）', 'iPad（将来対応予定）'],
     minimumOS: 'iOS 16.0以降',
     targetRegion: '簡易ベータ版：東京都内のみ、将来的：全国、そしてグローバル展開予定',
-    roadmapUrl: '/products/tadataka#roadmap'
+    roadmapUrl: '/products/tadataka#roadmap',
+    createdDate: '2024-11-01',
+    updatedDate: '2025-01-15',
   },
   {
     id: 'toirun',
@@ -106,7 +110,9 @@ export const products: Product[] = [
     releaseSchedule: 'ベータ版：千代田区限定、正式版：東京都全域',
     supportedDevices: ['iPhone（初期リリースのみ）'],
     minimumOS: 'iOS 18.0以降',
-    targetRegion: '簡易ベータ版：千代田区のみ、将来的：東京都から全国に展開予定'
+    targetRegion: '簡易ベータ版：千代田区のみ、将来的：東京都から全国に展開予定',
+    createdDate: '2024-12-01',
+    updatedDate: '2025-01-10',
   },
   {
     id: 'meet-in-the-middle',
@@ -144,6 +150,7 @@ export const products: Product[] = [
     releaseSchedule: '未定（開発中）',
     supportedDevices: ['未定'],
     minimumOS: '未定',
-    targetRegion: '都市部（東京圏を想定）'
+    targetRegion: '都市部（東京圏を想定）',
+    createdDate: '2024-10-01',
   }
 ];

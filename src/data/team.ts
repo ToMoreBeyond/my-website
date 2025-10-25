@@ -17,6 +17,8 @@ export interface TeamMember {
     github?: string;
     email?: string;
   };
+  createdDate: string;
+  updatedDate?: string;
 }
 
 export const teamMembers: TeamMember[] = [
@@ -45,7 +47,8 @@ export const teamMembers: TeamMember[] = [
       'UI/UXデザインシステム構築',
       'ブランドアイデンティティデザイン'
     ],
-    social: {}
+    social: {},
+    createdDate: '2024-09-01',
   },
   {
     id: 'masadome',
@@ -72,7 +75,8 @@ export const teamMembers: TeamMember[] = [
       'プロダクト開発全体の技術統括',
       'AI・機械学習技術の実用化研究'
     ],
-    social: {}
+    social: {},
+    createdDate: '2024-09-01',
   },
   {
     id: 'ando',
@@ -99,6 +103,7 @@ export const teamMembers: TeamMember[] = [
       'チーム運営における俯瞰的分析力',
       'リスクマネジメント体制構築'
     ],
-    social: {}
+    social: {},
+    createdDate: '2024-09-01',
   }
 ];
