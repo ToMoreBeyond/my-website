@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { PlayIcon, CheckCircleIcon, ClockIcon, BeakerIcon, SparklesIcon, ShareIcon } from '@heroicons/react/24/outline';
 import { Product } from '@/data/products';
 import { DetailHero } from '@/components/layout/DetailHero';
+import { RoadmapTimeline } from '@/components/roadmap/RoadmapTimeline';
+import { getRoadmapByProductId } from '@/data/roadmaps';
 
 const statusConfig = {
   'in-development': {
@@ -35,6 +37,7 @@ interface ProductDetailClientProps {
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const status = statusConfig[product.status];
+  const roadmap = getRoadmapByProductId(product.id);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
@@ -147,108 +150,80 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       </section>
 
       {/* Roadmap Section */}
-      {product.roadmapUrl && (
+      {roadmap && (
         <section id="roadmap" className="section bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
           <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-6">開発ロードマップ</h2>
-              <p className="text-xl text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto">
-                {product.name}の開発予定と将来のビジョンをご紹介します
-              </p>
-            </motion.div>
-
-            <div className="max-w-4xl mx-auto">
-              {/* Development Phase */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6 }}
-                className="mb-12"
-              >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-neutral-200 dark:border-gray-700 shadow-sm">
-                  <div className="flex items-center mb-4">
-                    <div className={`w-3 h-3 rounded-full ${status.color.replace('text-', 'bg-')} mr-3`} />
-                    <h3 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">現在のフェーズ</h3>
-                  </div>
-                  <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-4">
-                    {product.developmentPhase}
-                  </p>
-                  <div className="flex items-center text-neutral-600 dark:text-neutral-400">
-                    <ClockIcon className="w-5 h-5 mr-2" />
-                    <span>{product.releaseSchedule}</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Target Users */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="mb-12"
-              >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-neutral-200 dark:border-gray-700 shadow-sm">
-                  <h3 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-6">ターゲットユーザー</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {product.targetUsers.map((user, index) => (
-                      <motion.div
-                        key={user}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                        className="flex items-center space-x-3 p-4 bg-olive-50 dark:bg-olive-900/20 rounded-lg border border-olive-200/40 dark:border-olive-700/40"
-                      >
-                        <CheckCircleIcon className="w-5 h-5 text-olive-700 dark:text-olive-400 flex-shrink-0" />
-                        <span className="text-neutral-800 dark:text-neutral-200">{user}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Platform Details */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-neutral-200 dark:border-gray-700 shadow-sm">
-                  <h3 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-6">対応プラットフォーム</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-3">対応デバイス</h4>
-                      <ul className="space-y-2">
-                        {product.supportedDevices.map((device) => (
-                          <li key={device} className="flex items-center text-neutral-700 dark:text-neutral-300">
-                            <div className="w-1.5 h-1.5 bg-olive-600 dark:bg-olive-400 rounded-full mr-3" />
-                            {device}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-3">システム要件</h4>
-                      <p className="text-neutral-700 dark:text-neutral-300 mb-4">{product.minimumOS}</p>
-                      <h4 className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-3">対象地域</h4>
-                      <p className="text-neutral-700 dark:text-neutral-300">{product.targetRegion}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+            <RoadmapTimeline roadmap={roadmap} />
           </div>
         </section>
       )}
+
+      {/* Additional Info Section */}
+      <section className="section">
+        <div className="container">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Target Users */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-neutral-200 dark:border-gray-700 shadow-sm h-full">
+                <h3 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-6">ターゲットユーザー</h3>
+                <div className="space-y-3">
+                  {product.targetUsers.map((user, index) => (
+                    <motion.div
+                      key={user}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      className="flex items-center space-x-3 p-4 bg-olive-50 dark:bg-olive-900/20 rounded-lg border border-olive-200/40 dark:border-olive-700/40"
+                    >
+                      <CheckCircleIcon className="w-5 h-5 text-olive-700 dark:text-olive-400 flex-shrink-0" />
+                      <span className="text-neutral-800 dark:text-neutral-200">{user}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Platform Details */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-neutral-200 dark:border-gray-700 shadow-sm h-full">
+                <h3 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-6">対応プラットフォーム</h3>
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-3">対応デバイス</h4>
+                    <ul className="space-y-2">
+                      {product.supportedDevices.map((device) => (
+                        <li key={device} className="flex items-center text-neutral-700 dark:text-neutral-300">
+                          <div className="w-1.5 h-1.5 bg-olive-600 dark:bg-olive-400 rounded-full mr-3" />
+                          {device}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-3">システム要件</h4>
+                    <p className="text-neutral-700 dark:text-neutral-300 mb-4">{product.minimumOS}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-3">対象地域</h4>
+                    <p className="text-neutral-700 dark:text-neutral-300">{product.targetRegion}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
       {/* CTA moved to DetailLayout */}
     </div>
