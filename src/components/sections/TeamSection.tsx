@@ -54,7 +54,7 @@ export function TeamSection() {
               <span className="text-gradient"> チーム</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              多様な専門分野のエキスパートが集結し、革新的なソリューションを創造しています。
+              多様な視点で面白さを育てる
             </p>
           </motion.div>
 
