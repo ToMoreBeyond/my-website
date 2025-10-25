@@ -24,9 +24,7 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { label: 'X (Twitter)', href: 'https://twitter.com/tomorebeyond', icon: 'X' },
-  { label: 'GitHub', href: 'https://github.com/tomorebeyond', icon: 'GitHub' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/company/tomorebeyond', icon: 'LinkedIn' },
+  { label: 'X (Twitter)', href: 'https://x.com/ToMoreBeyond', icon: 'X' },
 ];
 
 export function Footer() {
