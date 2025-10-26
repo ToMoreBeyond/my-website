@@ -14,15 +14,15 @@ interface RoadmapPhaseCardProps {
 
 export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseCardProps) {
   const cardColors = {
-    completed: 'border-emerald-300 dark:border-emerald-700 bg-emerald-50/50 dark:bg-emerald-900/10',
-    'in-progress': 'border-primary-300 dark:border-primary-700 bg-primary-50/50 dark:bg-primary-900/10',
-    planned: 'border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50',
+    completed: 'border-emerald-300 bg-emerald-50/50',
+    'in-progress': 'border-primary-300 bg-primary-50/50',
+    planned: 'border-neutral-200 bg-white',
   };
 
   const timelineColors = {
     completed: 'bg-emerald-500',
     'in-progress': 'bg-primary-500',
-    planned: 'bg-neutral-300 dark:bg-neutral-600',
+    planned: 'bg-neutral-300',
   };
 
   return (
@@ -67,12 +67,12 @@ export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseC
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
           <div>
-            <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            <h3 className="text-2xl font-bold text-neutral-900 mb-2">
               {phase.name}
             </h3>
-            <div className="flex items-center gap-3 text-sm text-neutral-600 dark:text-neutral-400">
+            <div className="flex items-center gap-3 text-sm text-neutral-600">
               <span className="font-semibold">{phase.stage}</span>
-              <span className="text-neutral-400 dark:text-neutral-600">•</span>
+              <span className="text-neutral-400">•</span>
               <span>{formatRoadmapQuarter(phase.targetDate)}</span>
             </div>
           </div>
@@ -81,7 +81,7 @@ export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseC
 
         {/* Description */}
         {phase.description && (
-          <p className="text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed">
+          <p className="text-neutral-700 mb-4 leading-relaxed">
             {phase.description}
           </p>
         )}
@@ -89,7 +89,7 @@ export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseC
         {/* Features */}
         {phase.features && phase.features.length > 0 && (
           <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-3 uppercase tracking-wider">
+            <h4 className="text-sm font-semibold text-neutral-900 mb-3 uppercase tracking-wider">
               主な機能
             </h4>
             <ul className="grid gap-2">
@@ -100,9 +100,9 @@ export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseC
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 + idx * 0.05 }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-2 text-sm text-neutral-700 dark:text-neutral-300"
+                  className="flex items-start gap-2 text-sm text-neutral-700"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
                   <span>{feature}</span>
                 </motion.li>
               ))}
@@ -112,8 +112,8 @@ export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseC
 
         {/* Completed date */}
         {phase.completedDate && (
-          <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700">
-            <p className="text-sm text-emerald-700 dark:text-emerald-400 font-semibold">
+          <div className="mt-4 pt-4 border-t border-neutral-200">
+            <p className="text-sm text-emerald-700 font-semibold">
               完了日: {formatRoadmapQuarter(phase.completedDate)}
             </p>
           </div>

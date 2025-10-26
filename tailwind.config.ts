@@ -6,7 +6,6 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: ['class', '[data-theme="dark"]'],
   theme: {
     // レスポンシブブレークポイント（モバイルファースト）
     screens: {

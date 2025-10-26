@@ -40,7 +40,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-white dark:bg-gray-900 border-t border-neutral-200 dark:border-gray-800 py-16 relative overflow-hidden">
+    <footer className="bg-white border-t border-neutral-200 py-16 relative overflow-hidden">
       <div className="container relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info with Logo */}
@@ -65,18 +65,18 @@ export function Footer() {
                 />
               </div>
             </motion.button>
-            <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-4">
+            <p className="text-neutral-600 text-sm leading-relaxed mb-4">
               埋もれた記録を、続く面白さへ。<br />
               Making hidden traces a lasting wonder.
             </p>
-            <p className="text-neutral-500 dark:text-neutral-500 text-xs">
+            <p className="text-neutral-500 text-xs">
               Tokyo, Japan – 東京から、面白さの循環を。
             </p>
           </div>
 
           {/* Company Links */}
           <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-4 uppercase tracking-wider">
+            <h4 className="text-sm font-semibold text-neutral-900 mb-4 uppercase tracking-wider">
               会社情報
             </h4>
             <ul className="space-y-3">
@@ -85,7 +85,7 @@ export function Footer() {
                   <motion.a
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
-                    className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors inline-block"
+                    className="text-neutral-600 hover:text-primary-600 text-sm transition-colors inline-block"
                     whileHover={{ x: 4 }}
                   >
                     {link.label}
@@ -97,7 +97,7 @@ export function Footer() {
 
           {/* Product Links */}
           <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-4 uppercase tracking-wider">
+            <h4 className="text-sm font-semibold text-neutral-900 mb-4 uppercase tracking-wider">
               プロダクト
             </h4>
             <ul className="space-y-3">
@@ -105,7 +105,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors inline-block"
+                    className="text-neutral-600 hover:text-primary-600 text-sm transition-colors inline-block"
                   >
                     <motion.span whileHover={{ x: 4 }} className="inline-block">
                       {link.label}
@@ -118,7 +118,7 @@ export function Footer() {
 
           {/* Support Links */}
           <div>
-            <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-4 uppercase tracking-wider">
+            <h4 className="text-sm font-semibold text-neutral-900 mb-4 uppercase tracking-wider">
               サポート
             </h4>
             <ul className="space-y-3">
@@ -128,7 +128,7 @@ export function Footer() {
                     <motion.a
                       href={link.href}
                       onClick={(e) => handleLinkClick(e, link.href)}
-                      className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors inline-block"
+                      className="text-neutral-600 hover:text-primary-600 text-sm transition-colors inline-block"
                       whileHover={{ x: 4 }}
                     >
                       {link.label}
@@ -136,7 +136,7 @@ export function Footer() {
                   ) : (
                     <Link
                       href={link.href}
-                      className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors inline-block"
+                      className="text-neutral-600 hover:text-primary-600 text-sm transition-colors inline-block"
                     >
                       <motion.span whileHover={{ x: 4 }} className="inline-block">
                         {link.label}
@@ -150,14 +150,14 @@ export function Footer() {
         </div>
 
         {/* Social Links */}
-        <div className="flex flex-wrap items-center justify-center gap-6 mb-8 pb-8 border-b border-neutral-200 dark:border-gray-800">
+        <div className="flex flex-wrap items-center justify-center gap-6 mb-8 pb-8 border-b border-neutral-200">
           {socialLinks.map((social) => (
             <motion.a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm font-medium transition-colors"
+              className="text-neutral-600 hover:text-primary-600 text-sm font-medium transition-colors"
               whileHover={{ y: -2, scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               aria-label={social.label}
@@ -169,7 +169,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="text-center">
-          <p className="text-neutral-500 dark:text-neutral-500 text-sm">
+          <p className="text-neutral-500 text-sm">
             © {new Date().getFullYear()} ToMoreBeyond Inc. All rights reserved.
           </p>
         </div>

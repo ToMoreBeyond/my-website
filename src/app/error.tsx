@@ -18,7 +18,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-orange-50 flex items-center justify-center px-4">
       <div className="max-w-2xl w-full text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -26,8 +26,8 @@ export default function Error({
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <div className="inline-flex items-center justify-center w-24 h-24 bg-red-100 dark:bg-red-900/30 rounded-full mb-6">
-            <ExclamationTriangleIcon className="w-12 h-12 text-red-600 dark:text-red-400" />
+          <div className="inline-flex items-center justify-center w-24 h-24 bg-red-100 rounded-full mb-6">
+            <ExclamationTriangleIcon className="w-12 h-12 text-red-600" />
           </div>
         </motion.div>
 
@@ -36,10 +36,10 @@ export default function Error({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
             エラーが発生しました
           </h1>
-          <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
+          <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
             申し訳ございません。予期しないエラーが発生しました。<br />
             一時的な問題の可能性がありますので、ページを再読み込みしてみてください。
           </p>
@@ -50,9 +50,9 @@ export default function Error({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg"
+            className="mb-8 p-4 bg-red-50 border border-red-200 rounded-lg"
           >
-            <p className="text-sm text-red-800 dark:text-red-300 font-mono text-left">
+            <p className="text-sm text-red-800 font-mono text-left">
               {error.message}
             </p>
           </motion.div>
@@ -66,7 +66,7 @@ export default function Error({
         >
           <motion.button
             onClick={reset}
-            className="flex items-center gap-2 px-6 py-3 bg-primary-600 dark:bg-primary-700 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg"
+            className="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors shadow-lg"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -76,7 +76,7 @@ export default function Error({
 
           <Link href="/">
             <motion.button
-              className="flex items-center gap-2 px-6 py-3 border-2 border-neutral-300 dark:border-gray-600 text-neutral-700 dark:text-neutral-300 rounded-lg hover:border-neutral-400 dark:hover:border-gray-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+              className="flex items-center gap-2 px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:border-neutral-400 hover:text-neutral-900 transition-colors"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -92,11 +92,11 @@ export default function Error({
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-16"
         >
-          <p className="text-sm text-neutral-500 dark:text-neutral-500">
+          <p className="text-sm text-neutral-500">
             問題が解決しない場合は、
             <Link
               href="/#contact"
-              className="text-primary-600 dark:text-primary-400 hover:underline ml-1"
+              className="text-primary-600 hover:underline ml-1"
             >
               お問い合わせ
             </Link>

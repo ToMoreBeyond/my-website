@@ -71,7 +71,7 @@ export function AboutSection() {
     <section 
       ref={ref}
       id="company" 
-      className="py-20 lg:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-gray-900 dark:to-blue-950 relative overflow-hidden"
+      className="py-20 lg:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden"
     >
       {/* Interactive Background Effects */}
       <div className="absolute inset-0">
@@ -95,7 +95,7 @@ export function AboutSection() {
           {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute rounded-full bg-gradient-to-r from-primary-200/30 to-secondary-200/30 dark:from-primary-800/30 dark:to-secondary-800/30"
+              className="absolute rounded-full bg-gradient-to-r from-primary-200/30 to-secondary-200/30"
               style={{
                 width: Math.random() * 80 + 40,
                 height: Math.random() * 80 + 40,
@@ -196,9 +196,9 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-100 max-w-5xl mx-auto leading-relaxed"
+            className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed"
           >
-            <span className="font-semibold text-primary-600 dark:text-primary-400">ToMoreBeyond</span>は、テクノロジーの力で人々の生活をより豊かにすることを使命とする
+            <span className="font-semibold text-primary-600">ToMoreBeyond</span>は、テクノロジーの力で人々の生活をより豊かにすることを使命とする
             <br className="hidden md:block" />
             <span className="text-gradient">東京発のテクノロジー企業</span>です。
           </motion.p>
@@ -222,7 +222,7 @@ export function AboutSection() {
             elastic={true}
           >
             <motion.div
-              className="relative bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-900/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 border border-gray-200/50 dark:border-gray-700/50 select-none"
+              className="relative bg-gradient-to-br from-white/80 to-gray-100/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 border border-gray-200/50 select-none"
               whileHover={{
                 rotateY: 2,
                 rotateX: -2,
@@ -245,7 +245,7 @@ export function AboutSection() {
             
             <div className="relative z-10 text-center">
               <motion.h3 
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6"
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6"
                 animate={isInView ? {
                   textShadow: [
                     '0 0 20px rgba(34, 197, 94, 0.3)',
@@ -262,10 +262,10 @@ export function AboutSection() {
                 ミッション
               </motion.h3>
               <motion.p
-                className="text-lg sm:text-xl text-gray-600 dark:text-gray-100 max-w-4xl mx-auto leading-relaxed"
+                className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
                 whileHover={{ scale: 1.02 }}
               >
-                <span className="text-primary-600 dark:text-primary-400 font-semibold">「技術と情熱で、より遠くへ」</span>
+                <span className="text-primary-600 font-semibold">「技術と情熱で、より遠くへ」</span>
                 <br className="hidden sm:block" />
                 革新的なモバイルアプリケーションの開発を通じて、社会に新たな価値を創造し、
                 人々の可能性を最大限に引き出すテクノロジーソリューションを提供します。
@@ -290,13 +290,13 @@ export function AboutSection() {
                   y: -10,
                   rotateY: 5,
                 }}
-                className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 text-center border border-gray-200/30 dark:border-gray-700/30"
+                className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 text-center border border-gray-200/30"
                 style={{
                   transformStyle: 'preserve-3d',
                 }}
               >
               <motion.div
-                className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/50 dark:to-secondary-900/50 rounded-xl flex items-center justify-center"
+                className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center"
                 animate={{
                   rotate: [0, 5, -5, 0],
                 }}
@@ -307,12 +307,12 @@ export function AboutSection() {
                   delay: index * 0.5,
                 }}
               >
-                <span className="text-primary-600 dark:text-primary-400">
+                <span className="text-primary-600">
                   {stat.icon}
                 </span>
               </motion.div>
               <motion.div
-                className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2"
+                className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2"
                 animate={{
                   scale: isInView ? [1, 1.1, 1] : [1, 1, 1],
                 }}
@@ -325,7 +325,7 @@ export function AboutSection() {
               >
                 {stat.number}
               </motion.div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+              <div className="text-sm text-gray-600 font-medium">
                 {stat.label}
               </div>
               </motion.div>
@@ -340,10 +340,10 @@ export function AboutSection() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mb-16"
         >
-          <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
             提供価値
           </h3>
-          <p className="text-lg text-gray-600 dark:text-gray-100 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             ToMoreBeyondが提供する3つの主要な価値
           </p>
         </motion.div>
@@ -368,7 +368,7 @@ export function AboutSection() {
                   transformStyle: 'preserve-3d',
                 }}
               >
-              <div className="relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/50 dark:border-gray-700/50 h-full">
+              <div className="relative bg-white/70 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/50 h-full">
                 {/* Glowing background */}
                 <motion.div
                   className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 bg-gradient-to-br ${value.color}`}
@@ -397,13 +397,13 @@ export function AboutSection() {
                 </motion.div>
                 
                 <motion.h4 
-                  className="text-xl font-bold text-gray-900 dark:text-white mb-4"
+                  className="text-xl font-bold text-gray-900 mb-4"
                   whileHover={{ scale: 1.05 }}
                 >
                   {value.title}
                 </motion.h4>
                 
-                <p className="text-gray-600 dark:text-gray-100 text-sm leading-relaxed">
+                <p className="text-gray-600 text-sm leading-relaxed">
                   {value.description}
                 </p>
 
@@ -456,11 +456,11 @@ export function AboutSection() {
           className="mt-20 text-center"
         >
           <motion.div
-            className="inline-flex items-center space-x-4 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-full px-8 py-4 mb-8"
+            className="inline-flex items-center space-x-4 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-full px-8 py-4 mb-8"
             whileHover={{ scale: 1.05, y: -5 }}
           >
-            <DevicePhoneMobileIcon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-            <span className="text-primary-700 dark:text-primary-300 font-semibold">
+            <DevicePhoneMobileIcon className="w-6 h-6 text-primary-600" />
+            <span className="text-primary-700 font-semibold">
               モバイルファースト × 最先端技術
             </span>
             <motion.div
@@ -473,11 +473,11 @@ export function AboutSection() {
                 ease: 'linear'
               }}
             >
-              <SparklesIcon className="w-5 h-5 text-secondary-600 dark:text-secondary-400" />
+              <SparklesIcon className="w-5 h-5 text-secondary-600" />
             </motion.div>
           </motion.div>
           
-          <p className="text-gray-600 dark:text-gray-100 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto">
             React Native、Flutter、AI/MLを駆使した次世代モバイルアプリケーションで、
             ユーザーエクスペリエンスの新たな地平を切り拓いています。
           </p>

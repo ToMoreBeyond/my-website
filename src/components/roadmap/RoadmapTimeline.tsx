@@ -23,21 +23,21 @@ export function RoadmapTimeline({ roadmap }: RoadmapTimelineProps) {
         className="mb-12"
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100">
+          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">
             開発ロードマップ
           </h2>
           <div className="text-right">
-            <div className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">
+            <div className="text-sm text-neutral-600 mb-1">
               進捗状況
             </div>
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">
+            <div className="text-3xl font-bold text-primary-600">
               {progress}%
             </div>
           </div>
         </div>
 
         {/* Progress bar */}
-        <div className="relative w-full h-3 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
+        <div className="relative w-full h-3 bg-neutral-200 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: `${progress}%` }}
@@ -47,7 +47,7 @@ export function RoadmapTimeline({ roadmap }: RoadmapTimelineProps) {
           />
         </div>
 
-        <div className="mt-2 text-xs text-neutral-500 dark:text-neutral-400 text-right">
+        <div className="mt-2 text-xs text-neutral-500 text-right">
           最終更新: {new Date(roadmap.lastUpdated).toLocaleDateString('ja-JP', {
             year: 'numeric',
             month: 'long',
@@ -74,10 +74,10 @@ export function RoadmapTimeline({ roadmap }: RoadmapTimelineProps) {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.3 }}
         viewport={{ once: true }}
-        className="mt-8 p-6 bg-neutral-50 dark:bg-neutral-800/50 rounded-xl border border-neutral-200 dark:border-neutral-700"
+        className="mt-8 p-6 bg-neutral-50 rounded-xl border border-neutral-200"
       >
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-          <strong className="text-neutral-900 dark:text-neutral-100">注意:</strong>{' '}
+        <p className="text-sm text-neutral-600 leading-relaxed">
+          <strong className="text-neutral-900">注意:</strong>{' '}
           このロードマップは現時点での計画であり、開発状況やユーザーフィードバックに応じて変更される可能性があります。
           最新情報は随時更新いたします。
         </p>

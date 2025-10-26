@@ -30,8 +30,8 @@ export function ContentBadge({
 
   const isNew = updateInfo.badgeType === 'new';
   const bgColor = isNew
-    ? 'bg-emerald-500 dark:bg-emerald-600'
-    : 'bg-primary-500 dark:bg-primary-600';
+    ? 'bg-emerald-500'
+    : 'bg-primary-500';
   const icon = isNew ? (
     <Sparkles className="w-3 h-3" />
   ) : (
@@ -96,7 +96,7 @@ export function ContentBadgeWithTime({
         animate={animate}
       />
       {showTime && updateInfo.showNewBadge && (
-        <span className="text-xs text-neutral-500 dark:text-neutral-400">
+        <span className="text-xs text-neutral-500">
           {updateInfo.relativeTime}
         </span>
       )}

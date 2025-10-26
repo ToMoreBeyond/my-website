@@ -54,7 +54,7 @@ export function VisionSection() {
       <div className="container">
         {/* Header */}
         <motion.h2
-          className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4 leading-tight"
+          className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-neutral-900 mb-4 leading-tight"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -63,7 +63,7 @@ export function VisionSection() {
           ToMoreBeyond Vision
         </motion.h2>
         <motion.p
-          className="text-neutral-700 dark:text-neutral-200 text-lg md:text-xl mb-10 max-w-3xl"
+          className="text-neutral-700 text-lg md:text-xl mb-10 max-w-3xl"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -84,7 +84,7 @@ export function VisionSection() {
                   <a
                     key={sec.title}
                     href={`#${id}`}
-                    className={`block pl-3 border-l-2 transition-colors ${isActive ? 'text-neutral-900 dark:text-neutral-100 border-neutral-900 dark:border-neutral-100' : 'text-neutral-600 dark:text-neutral-400 border-transparent hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+                    className={`block pl-3 border-l-2 transition-colors ${isActive ? 'text-neutral-900 border-neutral-900' : 'text-neutral-600 border-transparent hover:text-neutral-900'}`}
                     aria-current={isActive ? 'true' : undefined}
                   >
                     {sec.title}
@@ -98,7 +98,7 @@ export function VisionSection() {
           <div className="md:col-span-3 space-y-16">
             {/* Big English sticky label at the top */}
             <div className="hidden md:block sticky top-20 z-[1] pointer-events-none select-none">
-              <div className="text-[56px] lg:text-[88px] font-black tracking-tight text-neutral-900/6 dark:text-neutral-100/6">
+              <div className="text-[56px] lg:text-[88px] font-black tracking-tight text-neutral-900/6">
                 {(() => {
                   const active = visionCopy.sections.find(s => slug(s.title) === activeId)
                   return (active ? (englishMap[active.title] || 'SECTION') : 'SECTION')
@@ -106,7 +106,7 @@ export function VisionSection() {
               </div>
             </div>
             <section className="space-y-4">
-              <p className="text-neutral-800 dark:text-neutral-200 text-lg leading-relaxed">{visionCopy.intro}</p>
+              <p className="text-neutral-800 text-lg leading-relaxed">{visionCopy.intro}</p>
             </section>
             {visionCopy.sections.map((sec, i) => (
               <motion.section
@@ -116,33 +116,33 @@ export function VisionSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.6, delay: 0.03 * i }}
-                className={`snap-section scroll-mt-28 relative ${i % 2 === 1 ? 'bg-white/70 dark:bg-neutral-800/70 backdrop-blur-sm border border-neutral-200/60 dark:border-neutral-700/60 rounded-2xl p-6 md:p-8' : ''}`}
+                className={`snap-section scroll-mt-28 relative ${i % 2 === 1 ? 'bg-white/70 backdrop-blur-sm border border-neutral-200/60 rounded-2xl p-6 md:p-8' : ''}`}
               >
-                <div className="pointer-events-none select-none absolute -top-6 -left-2 md:-left-4 text-[64px] md:text-[96px] font-black leading-none text-neutral-900/5 dark:text-neutral-100/5">
+                <div className="pointer-events-none select-none absolute -top-6 -left-2 md:-left-4 text-[64px] md:text-[96px] font-black leading-none text-neutral-900/5">
                   {(i + 1).toString().padStart(2, '0')}
                 </div>
                 {/* Sticky heading for desktop */}
                 <div className="hidden md:block sticky top-28 bg-transparent z-[1]">
-                  <div className="text-xs tracking-widest uppercase text-neutral-500 dark:text-neutral-400 mb-1">
+                  <div className="text-xs tracking-widest uppercase text-neutral-500 mb-1">
                     {englishMap[sec.title] || 'SECTION'}
                   </div>
-                  <h3 className="font-serif text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">{sec.title}</h3>
+                  <h3 className="font-serif text-3xl font-bold text-neutral-900 mb-4">{sec.title}</h3>
                 </div>
                 {/* Non-sticky for mobile */}
                 <div className="md:hidden">
-                  <div className="text-xs tracking-widest uppercase text-neutral-500 dark:text-neutral-400 mb-2">
+                  <div className="text-xs tracking-widest uppercase text-neutral-500 mb-2">
                     {englishMap[sec.title] || 'SECTION'}
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">{sec.title}</h3>
+                  <h3 className="font-serif text-2xl font-bold text-neutral-900 mb-4">{sec.title}</h3>
                 </div>
                 {sec.body && (
-                  <div className="space-y-4 text-neutral-800 dark:text-neutral-200 leading-relaxed">
+                  <div className="space-y-4 text-neutral-800 leading-relaxed">
                     {sec.body.map((p, idx) => (
                       <p key={idx}>
                         {sec.emphasis && p.includes(sec.emphasis) ? (
                           <>
                             {p.split(sec.emphasis)[0]}
-                            <mark className="bg-yellow-100 dark:bg-yellow-900/50 text-neutral-900 dark:text-neutral-100 px-1 rounded">{sec.emphasis}</mark>
+                            <mark className="bg-yellow-100 text-neutral-900 px-1 rounded">{sec.emphasis}</mark>
                             {p.split(sec.emphasis)[1]}
                           </>
                         ) : (
@@ -155,7 +155,7 @@ export function VisionSection() {
                 {sec.bullets && (
                   <ul className="mt-4 space-y-3">
                     {sec.bullets.map((b) => (
-                      <li key={b.label} className="text-neutral-800 dark:text-neutral-200">
+                      <li key={b.label} className="text-neutral-800">
                         <span className="font-semibold">・{b.label}：</span>
                         <span>{b.text}</span>
                       </li>

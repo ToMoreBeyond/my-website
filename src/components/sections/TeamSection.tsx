@@ -21,7 +21,7 @@ export function TeamSection() {
 
   return (
     <>
-      <section id="team" className="py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-850 relative overflow-hidden">
+      <section id="team" className="py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 opacity-20">
           <motion.div
@@ -49,11 +49,11 @@ export function TeamSection() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="heading-2 text-gray-900 dark:text-white mb-6">
+            <h2 className="heading-2 text-gray-900 mb-6">
               経験豊富な
               <span className="text-gradient"> チーム</span>
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-100 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               多様な視点で面白さを育てる
             </p>
           </motion.div>
@@ -83,8 +83,8 @@ export function TeamSection() {
                     
                     {/* Position Badge */}
                     <div className="absolute bottom-4 left-4 right-4">
-                      <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-1 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <span className="text-xs font-semibold text-primary-600 dark:text-primary-400">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <span className="text-xs font-semibold text-primary-600">
                           {member.positionEn}
                         </span>
                       </div>
@@ -93,14 +93,14 @@ export function TeamSection() {
 
                   {/* Content */}
                   <div className="p-4 sm:p-6">
-                    <h3 className="heading-4 text-gray-900 dark:text-white mb-1">
+                    <h3 className="heading-4 text-gray-900 mb-1">
                       {member.name}
                     </h3>
-                    <p className="text-primary-600 dark:text-primary-400 font-medium mb-3">
+                    <p className="text-primary-600 font-medium mb-3">
                       {member.position}
                     </p>
                     
-                    <p className="text-gray-600 dark:text-gray-100 text-sm mb-4 line-clamp-3">
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                       {member.bio}
                     </p>
 
@@ -109,13 +109,13 @@ export function TeamSection() {
                       {member.expertise.slice(0, 3).map((skill) => (
                         <span
                           key={skill}
-                          className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-full"
+                          className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
                         >
                           {skill}
                         </span>
                       ))}
                       {member.expertise.length > 3 && (
-                        <span className="px-2 py-1 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="px-2 py-1 text-xs text-gray-500">
                           +{member.expertise.length - 3}
                         </span>
                       )}
@@ -130,7 +130,7 @@ export function TeamSection() {
                           rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                          className="p-2 text-gray-600 hover:text-primary-600 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <LinkIcon className="w-5 h-5" />
@@ -143,7 +143,7 @@ export function TeamSection() {
                           rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                          className="p-2 text-gray-600 hover:text-primary-600 transition-colors"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <LinkIcon className="w-5 h-5" />
@@ -163,7 +163,7 @@ export function TeamSection() {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="text-center mt-16"
           >
-            <p className="text-lg text-gray-600 dark:text-gray-100 mb-6">
+            <p className="text-lg text-gray-600 mb-6">
               私たちと一緒に働きませんか？
             </p>
             <motion.button
@@ -197,7 +197,7 @@ export function TeamSection() {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-4"
+            className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -212,7 +212,7 @@ export function TeamSection() {
               
               {/* Profile Image */}
               <div className="absolute -bottom-12 left-8">
-                <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white dark:border-gray-800">
+                <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white">
                   <Image
                     src={selectedMember.image}
                     alt={selectedMember.name}
@@ -226,21 +226,21 @@ export function TeamSection() {
             {/* Modal Content */}
             <div className="pt-16 p-4 sm:p-8">
               <div className="mb-6">
-                <h3 className="heading-3 text-gray-900 dark:text-white mb-2">
+                <h3 className="heading-3 text-gray-900 mb-2">
                   {selectedMember.name}
                 </h3>
                 <div className="flex items-center space-x-2 mb-4">
                   <BuildingOfficeIcon className="w-5 h-5 text-primary-600" />
-                  <span className="text-primary-600 dark:text-primary-400 font-medium">
+                  <span className="text-primary-600 font-medium">
                     {selectedMember.position}
                   </span>
-                  <span className="text-gray-500 dark:text-gray-400">
+                  <span className="text-gray-500">
                     ({selectedMember.positionEn})
                   </span>
                 </div>
               </div>
 
-              <p className="text-gray-600 dark:text-gray-100 mb-8 leading-relaxed">
+              <p className="text-gray-600 mb-8 leading-relaxed">
                 {selectedMember.bio}
               </p>
 
@@ -248,7 +248,7 @@ export function TeamSection() {
               <div className="mb-8">
                 <div className="flex items-center mb-4">
                   <AcademicCapIcon className="w-5 h-5 text-primary-600 mr-2" />
-                  <h4 className="font-semibold text-gray-900 dark:text-white">
+                  <h4 className="font-semibold text-gray-900">
                     専門分野
                   </h4>
                 </div>
@@ -256,7 +256,7 @@ export function TeamSection() {
                   {selectedMember.expertise.map((skill) => (
                     <div
                       key={skill}
-                      className="px-3 py-2 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-lg"
+                      className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg"
                     >
                       {skill}
                     </div>
@@ -268,7 +268,7 @@ export function TeamSection() {
               <div className="mb-8">
                 <div className="flex items-center mb-4">
                   <TrophyIcon className="w-5 h-5 text-primary-600 mr-2" />
-                  <h4 className="font-semibold text-gray-900 dark:text-white">
+                  <h4 className="font-semibold text-gray-900">
                     実績・経験
                   </h4>
                 </div>
@@ -276,7 +276,7 @@ export function TeamSection() {
                   {selectedMember.achievements.map((achievement, idx) => (
                     <li key={idx} className="flex items-start">
                       <div className="w-1.5 h-1.5 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0" />
-                      <span className="text-gray-600 dark:text-gray-100 text-sm">
+                      <span className="text-gray-600 text-sm">
                         {achievement}
                       </span>
                     </li>
@@ -293,7 +293,7 @@ export function TeamSection() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                    className="flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
                   >
                     <LinkIcon className="w-4 h-4 mr-2" />
                     GitHub
@@ -306,7 +306,7 @@ export function TeamSection() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                    className="flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
                   >
                     <LinkIcon className="w-4 h-4 mr-2" />
                     Twitter

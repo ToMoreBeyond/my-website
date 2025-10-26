@@ -22,22 +22,22 @@ export function RoadmapStatusBadge({ status, className = '' }: RoadmapStatusBadg
   };
 
   const textColor = status === 'completed'
-    ? 'text-emerald-700 dark:text-emerald-300'
+    ? 'text-emerald-700'
     : status === 'in-progress'
-    ? 'text-primary-700 dark:text-primary-300'
-    : 'text-neutral-700 dark:text-neutral-300';
+    ? 'text-primary-700'
+    : 'text-neutral-700';
 
   const bgColor = status === 'completed'
-    ? 'bg-emerald-100 dark:bg-emerald-900/30'
+    ? 'bg-emerald-100'
     : status === 'in-progress'
-    ? 'bg-primary-100 dark:bg-primary-900/30'
-    : 'bg-neutral-100 dark:bg-neutral-800';
+    ? 'bg-primary-100'
+    : 'bg-neutral-100';
 
   const borderColor = status === 'completed'
-    ? 'border-emerald-300 dark:border-emerald-700'
+    ? 'border-emerald-300'
     : status === 'in-progress'
-    ? 'border-primary-300 dark:border-primary-700'
-    : 'border-neutral-300 dark:border-neutral-600';
+    ? 'border-primary-300'
+    : 'border-neutral-300';
 
   return (
     <div

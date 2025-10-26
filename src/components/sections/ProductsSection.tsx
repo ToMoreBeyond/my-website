@@ -12,18 +12,18 @@ import { AnimatedElement } from '@/components/common/AnimatedElement';
 
 const statusColors = {
   'in-development': {
-    bg: 'bg-yellow-100 dark:bg-yellow-900/30',
-    text: 'text-yellow-800 dark:text-yellow-300',
+    bg: 'bg-yellow-100',
+    text: 'text-yellow-800',
     label: '開発中'
   },
   'beta': {
-    bg: 'bg-blue-100 dark:bg-blue-900/30',
-    text: 'text-blue-800 dark:text-blue-300',
+    bg: 'bg-blue-100',
+    text: 'text-blue-800',
     label: 'ベータ版'
   },
   'released': {
-    bg: 'bg-green-100 dark:bg-green-900/30',
-    text: 'text-green-800 dark:text-green-300',
+    bg: 'bg-green-100',
+    text: 'text-green-800',
     label: 'リリース済み'
   }
 };
@@ -34,7 +34,7 @@ export function ProductsSection() {
   const router = useRouter();
 
   return (
-    <section id="products" className="py-20 lg:py-32 bg-gray-50 dark:bg-gray-900">
+    <section id="products" className="py-20 lg:py-32 bg-gray-50">
       <div className="container">
         <motion.div
           ref={ref}
@@ -53,12 +53,12 @@ export function ProductsSection() {
             resetOnRelease={true}
             elastic={true}
           >
-            <h2 className="heading-2 text-gray-900 dark:text-white mb-6 select-none">
+            <h2 className="heading-2 text-gray-900 mb-6 select-none">
               革新的な
               <span className="text-gradient"> プロダクト</span>
             </h2>
           </DragElement>
-          <p className="text-lg text-gray-600 dark:text-gray-100 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーションを開発しています。
           </p>
         </motion.div>
@@ -104,28 +104,28 @@ export function ProductsSection() {
                 <div className="p-6 flex-1 flex flex-col">
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="heading-4 text-gray-900 dark:text-white">
+                      <h3 className="heading-4 text-gray-900">
                         {product.name}
                       </h3>
-                      <span className="text-sm text-gray-500 dark:text-gray-400 font-mono">
+                      <span className="text-sm text-gray-500 font-mono">
                         {product.nameEn}
                       </span>
                     </div>
 
-                    <p className="text-primary-600 dark:text-primary-400 font-medium mb-3">
+                    <p className="text-primary-600 font-medium mb-3">
                       {product.tagline}
                     </p>
 
-                    <p className="text-gray-600 dark:text-gray-100 text-sm mb-4 line-clamp-3">
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                       {product.description}
                     </p>
 
                     {/* Features */}
                     <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                      <h4 className="text-sm font-semibold text-gray-900 mb-2">
                         主な機能
                       </h4>
-                      <ul className="text-xs text-gray-600 dark:text-gray-100 space-y-1">
+                      <ul className="text-xs text-gray-600 space-y-1">
                         {product.features.slice(0, 3).map((feature, idx) => (
                           <li key={idx} className="flex items-center">
                             <div className="w-1 h-1 bg-primary-500 rounded-full mr-2" />
@@ -137,20 +137,20 @@ export function ProductsSection() {
 
                     {/* Technologies */}
                     <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                      <h4 className="text-sm font-semibold text-gray-900 mb-2">
                         技術スタック
                       </h4>
                       <div className="flex flex-wrap gap-1">
                         {product.technologies.slice(0, 4).map((tech) => (
                           <span
                             key={tech}
-                            className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded"
+                            className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded"
                           >
                             {tech}
                           </span>
                         ))}
                         {product.technologies.length > 4 && (
-                          <span className="px-2 py-1 text-xs text-gray-500 dark:text-gray-400">
+                          <span className="px-2 py-1 text-xs text-gray-500">
                             +{product.technologies.length - 4}
                           </span>
                         )}
@@ -159,12 +159,12 @@ export function ProductsSection() {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => router.push(`/products/${product.id}`)}
-                      className="flex items-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                      className="flex items-center text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
                     >
                       詳細を見る
                       <ArrowRightIcon className="ml-1 w-4 h-4" />
@@ -177,7 +177,7 @@ export function ProductsSection() {
                           e.stopPropagation();
                           router.push(product.roadmapUrl!);
                         }}
-                        className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+                        className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
                       >
                         ロードマップ
                         <ArrowRightIcon className="ml-1 w-4 h-4" />
@@ -198,7 +198,7 @@ export function ProductsSection() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="text-center mt-16"
         >
-          <p className="text-lg text-gray-600 dark:text-gray-100 mb-6">
+          <p className="text-lg text-gray-600 mb-6">
             これらのプロダクトに興味がございましたら、お気軽にお問い合わせください。
           </p>
           <motion.button

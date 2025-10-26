@@ -59,7 +59,7 @@ export function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-gradient-to-br from-gray-100 via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-850 relative overflow-hidden">
+    <section id="contact" className="py-20 lg:py-32 bg-gradient-to-br from-gray-100 via-gray-50 to-white relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 opacity-30">
         <motion.div
@@ -87,12 +87,12 @@ export function ContactSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="heading-2 text-gray-900 dark:text-white mb-6">
+          <h2 className="heading-2 text-gray-900 mb-6">
             お気軽に
             <span className="text-gradient"> お問い合わせ</span>
             ください
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-100 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             プロジェクトのご相談、採用に関するお問い合わせ、その他ご質問がございましたら、
             お気軽にご連絡ください。
           </p>
@@ -105,7 +105,7 @@ export function ContactSection() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h3 className="heading-3 text-gray-900 dark:text-white mb-8">
+            <h3 className="heading-3 text-gray-900 mb-8">
               コンタクト情報
             </h3>
             
@@ -118,22 +118,22 @@ export function ContactSection() {
                   transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
                   className="flex items-center space-x-4"
                 >
-                  <div className="flex-shrink-0 p-3 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-lg">
+                  <div className="flex-shrink-0 p-3 bg-primary-100 text-primary-600 rounded-lg">
                     {item.icon}
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                    <h4 className="font-semibold text-gray-900 mb-1">
                       {item.title}
                     </h4>
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="text-gray-600 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                        className="text-gray-600 hover:text-primary-600 transition-colors"
                       >
                         {item.info}
                       </a>
                     ) : (
-                      <p className="text-gray-600 dark:text-gray-100">{item.info}</p>
+                      <p className="text-gray-600">{item.info}</p>
                     )}
                   </div>
                 </motion.div>
@@ -145,16 +145,16 @@ export function ContactSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-8 lg:mt-12 p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+              className="mt-8 lg:mt-12 p-4 sm:p-6 bg-white rounded-xl shadow-lg"
             >
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-4">
+              <h4 className="font-semibold text-gray-900 mb-4">
                 営業時間
               </h4>
-              <div className="text-gray-600 dark:text-gray-100 space-y-2">
+              <div className="text-gray-600 space-y-2">
                 <p>平日: 9:00 - 18:00</p>
                 <p>土日祝: 休業</p>
               </div>
-              <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+              <div className="mt-4 text-sm text-gray-500">
                 <p>※緊急時は24時間対応可能です</p>
               </div>
             </motion.div>
@@ -176,7 +176,7 @@ export function ContactSection() {
               <input type="hidden" name="form-name" value="contact" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     お名前 *
                   </label>
                   <input
@@ -186,13 +186,13 @@ export function ContactSection() {
                     required
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                     placeholder="山田太郎"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     メールアドレス *
                   </label>
                   <input
@@ -202,14 +202,14 @@ export function ContactSection() {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                     placeholder="yamada@example.com"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
+                <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
                   会社名・組織名
                 </label>
                 <input
@@ -218,13 +218,13 @@ export function ContactSection() {
                   name="company"
                   value={formData.company}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                   placeholder="株式会社サンプル"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                   お問い合わせ内容 *
                 </label>
                 <textarea
@@ -234,7 +234,7 @@ export function ContactSection() {
                   rows={6}
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-colors resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
                   placeholder="お問い合わせ内容をご記入ください..."
                 />
               </div>
@@ -259,7 +259,7 @@ export function ContactSection() {
                 )}
               </motion.button>
 
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+              <p className="text-sm text-gray-500 text-center">
                 送信いただいた情報は、お問い合わせ対応のみに使用いたします。
               </p>
             </form>
