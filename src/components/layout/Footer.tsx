@@ -7,7 +7,6 @@ import { smoothScrollTo } from '@/lib/animations';
 
 const footerLinks = {
   company: [
-    { label: '会社概要', href: '#about' },
     { label: 'ビジョン', href: '#about' },
     { label: 'チーム', href: '#team' },
   ],

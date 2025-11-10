@@ -122,7 +122,6 @@ export function Header() {
                 sizes="(max-width: 1024px) 48px, 64px"
                 priority
                 quality={95}
-                style={{ mixBlendMode: 'multiply' }}
               />
             </div>
           </Link>

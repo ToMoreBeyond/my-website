@@ -76,10 +76,7 @@ export default function LoadingOverlay() {
                   height={512}
                   priority
                   className="w-full h-full"
-                  style={{
-                    objectFit: 'contain',
-                    mixBlendMode: 'multiply'
-                  }}
+                  style={{ objectFit: 'contain' }}
                 />
               </motion.div>
             </motion.div>

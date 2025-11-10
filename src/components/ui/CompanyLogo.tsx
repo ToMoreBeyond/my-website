@@ -53,7 +53,6 @@ export const CompanyLogo = () => {
           height={512}
           className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain"
           priority
-          style={{ mixBlendMode: 'multiply' }}
         />
       </motion.div>
       
