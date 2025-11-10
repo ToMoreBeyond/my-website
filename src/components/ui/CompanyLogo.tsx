@@ -49,10 +49,11 @@ export const CompanyLogo = () => {
         <Image
           src="/images/logos/tomorebeyond-logo.png"
           alt="ToMoreBeyond"
-          width={200}
-          height={80}
-          className="w-auto h-16 md:h-20 lg:h-24"
+          width={512}
+          height={512}
+          className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain"
           priority
+          style={{ mixBlendMode: 'multiply' }}
         />
       </motion.div>
       

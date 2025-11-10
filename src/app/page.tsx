@@ -18,6 +18,7 @@ import { MarqueeText } from '@/components/effects/MarqueeText'
 import { VisionSection } from '@/components/sections/VisionSection'
 import { FullBleedBand } from '@/components/sections/FullBleedBand'
 import { AngledDivider } from '@/components/sections/AngledDivider'
+import { StatusBadge, CategoryBadge } from '@/components/ui/StatusBadge'
 
 // Dynamic import for InteractiveCard (used only in contact section)
 const InteractiveCard = dynamic(
@@ -130,7 +131,7 @@ export default function Home() {
               >
                 <motion.button
                   onClick={() => smoothScrollTo('#products')}
-                  className="cursor-hover bg-white/95 backdrop-blur-sm border-2 border-olive-600 text-olive-800 hover:bg-olive-600 hover:text-white px-16 py-5 text-lg font-bold relative overflow-hidden shadow-lg transition-all duration-300"
+                  className="cursor-hover bg-white backdrop-blur-sm border-2 border-olive-600 hover:bg-olive-50 hover:border-olive-700 text-olive-800 px-16 py-5 text-lg font-bold relative overflow-hidden shadow-lg transition-all duration-300"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   style={{
@@ -140,10 +141,10 @@ export default function Home() {
                 >
                   <span className="relative z-10 font-bold">製品を見る</span>
                 </motion.button>
-                
+
                 <motion.button
                   onClick={() => smoothScrollTo('#about')}
-                  className="cursor-hover bg-white/90 backdrop-blur-sm border-2 border-olive-600 text-olive-700 hover:bg-olive-600 hover:text-white px-16 py-5 text-lg font-semibold transition-all duration-300 shadow-md"
+                  className="cursor-hover bg-white backdrop-blur-sm border-2 border-olive-600 hover:bg-olive-50 hover:border-olive-700 text-olive-700 px-16 py-5 text-lg font-semibold transition-all duration-300 shadow-md"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   style={{
@@ -287,15 +288,11 @@ export default function Home() {
                       quality={85}
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${productColor} opacity-0 group-hover:opacity-30 transition-opacity duration-700`} />
-                    
-                    <motion.div 
-                      className="absolute top-4 right-4"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-neutral-800 text-sm rounded-full font-medium shadow-lg">
-                        {product.status === 'in-development' ? '開発中' : product.status === 'beta' ? 'ベータ版' : 'リリース済'}
-                      </span>
-                    </motion.div>
+
+                    <div className="absolute top-4 right-4 flex flex-col gap-2">
+                      <StatusBadge status={product.status as any} variant="compact" />
+                      <CategoryBadge category="iOS" className="ml-auto" />
+                    </div>
                     </div>
                     
                     <div className="p-6">

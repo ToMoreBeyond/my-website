@@ -112,16 +112,17 @@ export function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <div className="relative w-14 h-auto lg:w-20">
+            <div className="relative w-12 h-12 lg:w-16 lg:h-16">
               <Image
                 src="/images/logos/tomorebeyond-logo.png"
                 alt="ToMoreBeyond"
-                width={200}
-                height={50}
-                className="w-full h-auto object-contain"
-                sizes="(max-width: 1024px) 56px, 80px"
+                width={512}
+                height={512}
+                className="w-full h-full object-contain"
+                sizes="(max-width: 1024px) 48px, 64px"
                 priority
                 quality={95}
+                style={{ mixBlendMode: 'multiply' }}
               />
             </div>
           </Link>
