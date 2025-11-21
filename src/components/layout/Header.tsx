@@ -3,48 +3,28 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { clsx } from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
 
 const navigation = [
-  { name: '私たちについて', href: '#about', id: 'about' },
-  { name: 'プロダクト', href: '#products', id: 'products' },
-  { name: 'チーム', href: '#team', id: 'team' },
-  { name: 'お問い合わせ', href: '#contact', id: 'contact' },
+  { name: 'PRODUCTS', href: '#products', id: 'products' },
+  { name: 'TEAM', href: '#team', id: 'team' },
+  { name: 'CONTACT', href: '#contact', id: 'contact' },
 ];
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navigation.map(nav => nav.id);
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 150 && rect.bottom >= 150;
-        }
-        return false;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Close mobile menu when clicking outside
@@ -103,25 +83,25 @@ export function Header() {
   };
 
   return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="sticky top-0 z-50 bg-transparent"
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white/90 backdrop-blur-md shadow-sm'
+          : 'bg-transparent'
+      }`}
     >
-      <nav className="container">
+      <nav className="max-w-5xl mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <div className="relative w-12 h-12 lg:w-16 lg:h-16">
+            <div className="text-xl font-bold tracking-tighter leading-none text-[#1a1a1a]">
               <Image
                 src="/images/logos/tomorebeyond-logo.png"
                 alt="ToMoreBeyond"
-                width={512}
-                height={512}
-                className="w-full h-full object-contain"
-                sizes="(max-width: 1024px) 48px, 64px"
+                width={48}
+                height={48}
+                className="w-10 h-10 lg:w-12 lg:h-12"
                 priority
-                quality={95}
               />
             </div>
           </Link>
@@ -132,16 +112,9 @@ export function Header() {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={clsx('relative px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105',
-                  activeSection === item.id ? 'text-primary-700' : 'text-neutral-700 hover:text-primary-700')}
+                className="text-sm font-bold text-[#1a1a1a] hover:opacity-60 transition-opacity tracking-wide"
               >
                 {item.name}
-                {activeSection === item.id && (
-                  <motion.div
-                    layoutId="activeSection"
-                    className={clsx('absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-primary-600')}
-                  />
-                )}
               </button>
             ))}
           </div>
@@ -152,43 +125,41 @@ export function Header() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
-              className={clsx('p-2 rounded-lg transition-colors text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100')}
+              className="p-2 text-[#1a1a1a]"
             >
               {isMobileMenuOpen ? (
-                <XMarkIcon className="w-6 h-6" />
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               ) : (
-                <Bars3Icon className="w-6 h-6" />
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
               )}
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              ref={mobileMenuRef}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-neutral-200/60"
-            >
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                {navigation.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => scrollToSection(item.href)}
-                    className={clsx('block w-full text-left px-3 py-2 text-base font-medium rounded-lg transition-colors',
-                      activeSection === item.id ? 'text-primary-700 bg-primary-50' : 'text-neutral-700 hover:text-primary-700 hover:bg-neutral-50')}
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isMobileMenuOpen && (
+          <div
+            ref={mobileMenuRef}
+            className="md:hidden bg-white border-t border-gray-200"
+          >
+            <div className="px-2 pt-2 pb-4 space-y-1">
+              {navigation.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="block w-full text-left px-4 py-3 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 transition-colors"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
-    </motion.header>
+    </header>
   );
 }

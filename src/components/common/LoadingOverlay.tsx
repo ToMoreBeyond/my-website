@@ -1,135 +1,112 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import gsap from 'gsap'
 
 export default function LoadingOverlay() {
   const [visible, setVisible] = useState(true)
-  const [progress, setProgress] = useState(0)
-  const [textIndex, setTextIndex] = useState(0)
-
-  const loadingTexts = [
-    'Loading experience...',
-    'Preparing innovation...',
-    'Making hidden traces...',
-    'A lasting wonder...'
-  ]
+  const loaderRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLDivElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
+  const logoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Text rotation
-    const textInterval = setInterval(() => {
-      setTextIndex((prev) => (prev + 1) % loadingTexts.length)
-    }, 600)
+    if (!loaderRef.current || !textRef.current || !barRef.current || !logoRef.current) return
 
-    // Progress animation
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval)
-          // Start hiding when progress reaches 100
-          setTimeout(() => setVisible(false), 500)
-          return 100
-        }
-        return prev + 2
-      })
-    }, 30)
+    // Prevent scroll during loading
+    document.body.style.overflow = 'hidden'
+
+    const tl = gsap.timeline()
+
+    // 1. Logo fade in with float
+    tl.fromTo(logoRef.current,
+      { opacity: 0, y: 30, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out" }
+    )
+    // 2. Text fade in
+    .fromTo(textRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      "-=0.3"
+    )
+    // 3. Progress bar animation
+    .fromTo(barRef.current,
+      { width: "0%" },
+      { width: "100%", duration: 1.2, ease: "power1.inOut" },
+      "-=0.2"
+    )
+    // 4. Fade out elements
+    .to([logoRef.current, textRef.current, barRef.current], {
+      opacity: 0,
+      y: -20,
+      duration: 0.4,
+      stagger: 0.05,
+      ease: "power2.in",
+      delay: 0.3
+    })
+    // 5. Curtain rises (height to 0)
+    .to(loaderRef.current, {
+      height: 0,
+      duration: 0.8,
+      ease: "power4.inOut",
+      onComplete: () => {
+        document.body.style.overflow = 'auto'
+        setVisible(false)
+      }
+    })
 
     return () => {
-      clearInterval(textInterval)
-      clearInterval(progressInterval)
+      tl.kill()
+      document.body.style.overflow = 'auto'
     }
   }, [])
 
+  if (!visible) return null
+
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-olive-50 via-white to-emerald-50"
-          aria-hidden
-        >
-          <div className="flex flex-col items-center gap-8 px-4">
-            {/* Logo with animation */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="w-64 h-64"
-              >
-                <Image
-                  src="/images/logos/tomorebeyond-logo.png"
-                  alt="ToMoreBeyond"
-                  width={512}
-                  height={512}
-                  priority
-                  className="w-full h-full"
-                  style={{ objectFit: 'contain' }}
-                />
-              </motion.div>
-            </motion.div>
+    <div
+      ref={loaderRef}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1a1a1a] overflow-hidden"
+      style={{ transformOrigin: 'top' }}
+      aria-hidden
+    >
+      {/* Logo */}
+      <div ref={logoRef} className="mb-8 opacity-0">
+        <div className="w-40 h-40 md:w-48 md:h-48">
+          <Image
+            src="/images/logos/tomorebeyond-logo.png"
+            alt="ToMoreBeyond"
+            width={256}
+            height={256}
+            priority
+            className="w-full h-full invert"
+            style={{ objectFit: 'contain' }}
+          />
+        </div>
+      </div>
 
-            {/* Progress bar */}
-            <div className="w-64 h-1 bg-olive-200/50 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-gradient-to-r from-emerald-600 via-olive-600 to-emerald-500"
-                initial={{ width: "0%" }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.1 }}
-              />
-            </div>
+      {/* Loading text */}
+      <div
+        ref={textRef}
+        className="text-white text-2xl md:text-3xl font-bold tracking-wider opacity-0"
+      >
+        TOMOREBEYOND
+      </div>
 
-            {/* Animated text */}
-            <div className="h-8 flex items-center">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={textIndex}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-lg font-medium text-olive-700 tracking-wide"
-                >
-                  {loadingTexts[textIndex]}
-                </motion.p>
-              </AnimatePresence>
-            </div>
+      {/* Progress bar */}
+      <div className="w-48 md:w-64 h-[2px] bg-white/20 mt-6 rounded-full overflow-hidden">
+        <div
+          ref={barRef}
+          className="h-full bg-white rounded-full"
+          style={{ width: '0%' }}
+        />
+      </div>
 
-            {/* Tagline */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-sm text-olive-600/70 italic tracking-wider"
-            >
-              Making hidden traces a lasting wonder
-            </motion.p>
-
-            {/* Percentage */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-2xl font-bold text-olive-800"
-            >
-              {Math.round(progress)}%
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      {/* Tagline */}
+      <p className="text-white/50 text-sm mt-4 tracking-wide">
+        Making hidden traces a lasting wonder
+      </p>
+    </div>
   )
 }
-
