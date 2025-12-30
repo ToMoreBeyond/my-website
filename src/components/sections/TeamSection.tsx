@@ -1,322 +1,131 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import {
-  LinkIcon,
-  XMarkIcon,
-  BuildingOfficeIcon,
-  AcademicCapIcon,
-  TrophyIcon
-} from '@heroicons/react/24/outline';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { teamMembers } from '@/data/team';
 
 export function TeamSection() {
   const router = useRouter();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
 
   return (
-    <>
-      <section id="team" className="py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 opacity-20">
-          <motion.div
-            className="absolute inset-0"
-            animate={{
-              background: [
-                'radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
-                'radial-gradient(circle at 70% 60%, rgba(34, 197, 94, 0.1) 0%, transparent 50%)',
-                'radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
-              ],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
-          />
-        </div>
-        
-        <div className="container relative z-10">
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="heading-2 text-gray-900 mb-6">
-              経験豊富な
-              <span className="text-gradient"> チーム</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              多様な視点で面白さを育てる
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {teamMembers.map((member, index) => (
-              <motion.div
-                key={member.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="group cursor-pointer"
-                onClick={() => router.push(`/team/${member.id}`)}
-              >
-                <div className="card text-center overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
-                  {/* Member Image */}
-                  <div className="relative">
-                    <div className="relative h-56 sm:h-64 overflow-hidden">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                    
-                    {/* Position Badge */}
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <span className="text-xs font-semibold text-primary-600">
-                          {member.positionEn}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-4 sm:p-6">
-                    <h3 className="heading-4 text-gray-900 mb-1">
-                      {member.name}
-                    </h3>
-                    <p className="text-primary-600 font-medium mb-3">
-                      {member.position}
-                    </p>
-                    
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {member.bio}
-                    </p>
-
-                    {/* Expertise Tags */}
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {member.expertise.slice(0, 3).map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                      {member.expertise.length > 3 && (
-                        <span className="px-2 py-1 text-xs text-gray-500">
-                          +{member.expertise.length - 3}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Contact */}
-                    <div className="flex justify-center space-x-2">
-                      {member.social?.github && (
-                        <motion.a
-                          href={member.social.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 text-gray-600 hover:text-primary-600 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <LinkIcon className="w-5 h-5" />
-                        </motion.a>
-                      )}
-                      {member.social?.twitter && (
-                        <motion.a
-                          href={member.social.twitter}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          className="p-2 text-gray-600 hover:text-primary-600 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <LinkIcon className="w-5 h-5" />
-                        </motion.a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-center mt-16"
-          >
-            <p className="text-lg text-gray-600 mb-6">
-              私たちと一緒に働きませんか？
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                const element = document.getElementById('contact');
-                if (element) {
-                  const offsetTop = element.offsetTop - 80;
-                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                }
-              }}
-              className="btn-secondary px-8 py-3 text-lg font-semibold"
-            >
-              採用情報を見る
-            </motion.button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Member Detail Modal */}
-      {selectedMember && (
+    <section id="team" className="py-24 lg:py-32 bg-gray-50">
+      <div className="container max-w-6xl mx-auto px-6 md:px-8">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-          onClick={() => setSelectedMember(null)}
+          ref={ref}
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 lg:mb-20"
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="relative">
-              <div className="h-32 bg-gradient-to-r from-primary-500 to-secondary-500" />
-              <button
-                onClick={() => setSelectedMember(null)}
-                className="absolute top-4 right-4 p-2 text-white hover:text-white/80 transition-colors"
-              >
-                <XMarkIcon className="w-6 h-6" />
-              </button>
-              
-              {/* Profile Image */}
-              <div className="absolute -bottom-12 left-8">
-                <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            チーム
+          </h2>
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            多様な視点で面白さを育てる
+          </p>
+        </motion.div>
+
+        {/* Team Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {teamMembers.map((member, index) => (
+            <motion.article
+              key={member.id}
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group cursor-pointer"
+              onClick={() => router.push(`/team/${member.id}`)}
+            >
+              <div className="h-full bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 hover:shadow-lg transition-all duration-200">
+                {/* Member Image */}
+                <div className="relative h-64 bg-gray-100 overflow-hidden">
                   <Image
-                    src={selectedMember.image}
-                    alt={selectedMember.name}
+                    src={member.image}
+                    alt={member.name}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-              </div>
-            </div>
 
-            {/* Modal Content */}
-            <div className="pt-16 p-4 sm:p-8">
-              <div className="mb-6">
-                <h3 className="heading-3 text-gray-900 mb-2">
-                  {selectedMember.name}
-                </h3>
-                <div className="flex items-center space-x-2 mb-4">
-                  <BuildingOfficeIcon className="w-5 h-5 text-primary-600" />
-                  <span className="text-primary-600 font-medium">
-                    {selectedMember.position}
-                  </span>
-                  <span className="text-gray-500">
-                    ({selectedMember.positionEn})
-                  </span>
-                </div>
-              </div>
+                {/* Content */}
+                <div className="p-6">
+                  {/* Name & Position */}
+                  <div className="mb-4">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {member.position}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      {member.positionEn}
+                    </p>
+                  </div>
 
-              <p className="text-gray-600 mb-8 leading-relaxed">
-                {selectedMember.bio}
-              </p>
+                  {/* Bio */}
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
+                    {member.bio}
+                  </p>
 
-              {/* Expertise */}
-              <div className="mb-8">
-                <div className="flex items-center mb-4">
-                  <AcademicCapIcon className="w-5 h-5 text-primary-600 mr-2" />
-                  <h4 className="font-semibold text-gray-900">
-                    専門分野
-                  </h4>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {selectedMember.expertise.map((skill) => (
-                    <div
-                      key={skill}
-                      className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg"
-                    >
-                      {skill}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Achievements */}
-              <div className="mb-8">
-                <div className="flex items-center mb-4">
-                  <TrophyIcon className="w-5 h-5 text-primary-600 mr-2" />
-                  <h4 className="font-semibold text-gray-900">
-                    実績・経験
-                  </h4>
-                </div>
-                <ul className="space-y-2">
-                  {selectedMember.achievements.map((achievement, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <div className="w-1.5 h-1.5 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0" />
-                      <span className="text-gray-600 text-sm">
-                        {achievement}
+                  {/* Expertise Tags */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {member.expertise.slice(0, 3).map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-md"
+                      >
+                        {skill}
                       </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    ))}
+                    {member.expertise.length > 3 && (
+                      <span className="px-2.5 py-1 text-xs text-gray-400">
+                        +{member.expertise.length - 3}
+                      </span>
+                    )}
+                  </div>
 
-              {/* Social Links */}
-              <div className="flex space-x-4">
-                {selectedMember.social?.github && (
-                  <motion.a
-                    href={selectedMember.social.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
-                  >
-                    <LinkIcon className="w-4 h-4 mr-2" />
-                    GitHub
-                  </motion.a>
-                )}
-                {selectedMember.social?.twitter && (
-                  <motion.a
-                    href={selectedMember.social.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
-                  >
-                    <LinkIcon className="w-4 h-4 mr-2" />
-                    Twitter
-                  </motion.a>
-                )}
+                  {/* Action */}
+                  <div className="flex items-center text-gray-900 font-medium group-hover:text-gray-600 transition-colors">
+                    <span className="text-sm">詳細を見る</span>
+                    <ArrowRightIcon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.article>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mt-16 lg:mt-20"
+        >
+          <p className="text-gray-600 mb-6">
+            私たちと一緒に働きませんか？
+          </p>
+          <button
+            onClick={() => {
+              const element = document.getElementById('contact');
+              if (element) {
+                const offsetTop = element.offsetTop - 80;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+              }
+            }}
+            className="inline-flex items-center px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200"
+          >
+            採用情報を見る
+            <ArrowRightIcon className="ml-2 w-4 h-4" />
+          </button>
         </motion.div>
-      )}
-    </>
+      </div>
+    </section>
   );
 }

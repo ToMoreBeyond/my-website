@@ -7,23 +7,21 @@ import Image from 'next/image';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { clsx } from 'clsx';
 import { products } from '@/data/products';
-import { DragElement } from '@/components/common/DragElement';
-import { AnimatedElement } from '@/components/common/AnimatedElement';
 
 const statusColors = {
   'in-development': {
-    bg: 'bg-yellow-100',
-    text: 'text-yellow-800',
+    bg: 'bg-gray-100',
+    text: 'text-gray-600',
     label: '開発中'
   },
   'beta': {
-    bg: 'bg-blue-100',
-    text: 'text-blue-800',
+    bg: 'bg-gray-100',
+    text: 'text-gray-600',
     label: 'ベータ版'
   },
   'released': {
-    bg: 'bg-green-100',
-    text: 'text-green-800',
+    bg: 'bg-gray-900',
+    text: 'text-white',
     label: 'リリース済み'
   }
 };
@@ -34,64 +32,51 @@ export function ProductsSection() {
   const router = useRouter();
 
   return (
-    <section id="products" className="py-20 lg:py-32 bg-gray-50">
-      <div className="container">
+    <section id="products" className="py-24 lg:py-32 bg-white">
+      <div className="container max-w-6xl mx-auto px-6 md:px-8">
+        {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 lg:mb-20"
         >
-          <DragElement
-            dragConstraints={{
-              top: -80,
-              left: -120,
-              right: 120,
-              bottom: 80,
-            }}
-            resetOnRelease={true}
-            elastic={true}
-          >
-            <h2 className="heading-2 text-gray-900 mb-6 select-none">
-              革新的な
-              <span className="text-gradient"> プロダクト</span>
-            </h2>
-          </DragElement>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            最先端技術と人間中心設計を融合した、次世代のモバイルアプリケーションを開発しています。
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            プロダクト
+          </h2>
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            最先端技術と人間中心設計を融合した、
+            <br className="hidden sm:block" />
+            次世代のモバイルアプリケーションを開発しています。
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {products.map((product, index) => (
-            <AnimatedElement
+            <motion.article
               key={product.id}
-              animation="scaleIn"
-              delay={index * 0.2}
-              duration={1.0}
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group cursor-pointer"
+              onClick={() => router.push(`/products/${product.id}`)}
             >
-              <motion.div
-                className="group cursor-pointer"
-                onClick={() => router.push(`/products/${product.id}`)}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-              <div className="card h-full flex flex-col hover:shadow-xl transition-shadow duration-300">
+              <div className="h-full bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 hover:shadow-lg transition-all duration-200">
                 {/* Product Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-48 bg-gray-100 overflow-hidden">
                   <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  
+
                   {/* Status Badge */}
                   <div className="absolute top-4 left-4">
                     <span className={clsx(
-                      'px-3 py-1 text-xs font-semibold rounded-full',
+                      'px-3 py-1.5 text-xs font-medium rounded-full',
                       statusColors[product.status].bg,
                       statusColors[product.status].text
                     )}>
@@ -101,109 +86,66 @@ export function ProductsSection() {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="heading-4 text-gray-900">
-                        {product.name}
-                      </h3>
-                      <span className="text-sm text-gray-500 font-mono">
-                        {product.nameEn}
-                      </span>
-                    </div>
-
-                    <p className="text-primary-600 font-medium mb-3">
-                      {product.tagline}
+                <div className="p-6">
+                  {/* Title */}
+                  <div className="mb-4">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {product.nameEn}
                     </p>
-
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {product.description}
-                    </p>
-
-                    {/* Features */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-gray-900 mb-2">
-                        主な機能
-                      </h4>
-                      <ul className="text-xs text-gray-600 space-y-1">
-                        {product.features.slice(0, 3).map((feature, idx) => (
-                          <li key={idx} className="flex items-center">
-                            <div className="w-1 h-1 bg-primary-500 rounded-full mr-2" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-900 mb-2">
-                        技術スタック
-                      </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {product.technologies.slice(0, 4).map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                        {product.technologies.length > 4 && (
-                          <span className="px-2 py-1 text-xs text-gray-500">
-                            +{product.technologies.length - 4}
-                          </span>
-                        )}
-                      </div>
-                    </div>
                   </div>
 
-                  {/* Actions */}
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => router.push(`/products/${product.id}`)}
-                      className="flex items-center text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
-                    >
-                      詳細を見る
-                      <ArrowRightIcon className="ml-1 w-4 h-4" />
-                    </motion.button>
-                    {product.roadmapUrl && (
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(product.roadmapUrl!);
-                        }}
-                        className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                  {/* Tagline */}
+                  <p className="text-gray-700 font-medium mb-3">
+                    {product.tagline}
+                  </p>
+
+                  {/* Description */}
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-2">
+                    {product.description}
+                  </p>
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {product.technologies.slice(0, 3).map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-md"
                       >
-                        ロードマップ
-                        <ArrowRightIcon className="ml-1 w-4 h-4" />
-                      </motion.button>
+                        {tech}
+                      </span>
+                    ))}
+                    {product.technologies.length > 3 && (
+                      <span className="px-2.5 py-1 text-xs text-gray-400">
+                        +{product.technologies.length - 3}
+                      </span>
                     )}
+                  </div>
+
+                  {/* Action */}
+                  <div className="flex items-center text-gray-900 font-medium group-hover:text-gray-600 transition-colors">
+                    <span className="text-sm">詳細を見る</span>
+                    <ArrowRightIcon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </div>
-              </motion.div>
-            </AnimatedElement>
+            </motion.article>
           ))}
         </div>
 
         {/* Call to Action */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-16"
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mt-16 lg:mt-20"
         >
-          <p className="text-lg text-gray-600 mb-6">
-            これらのプロダクトに興味がございましたら、お気軽にお問い合わせください。
+          <p className="text-gray-600 mb-6">
+            プロダクトに興味がございましたら、お気軽にお問い合わせください。
           </p>
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={() => {
               const element = document.getElementById('contact');
               if (element) {
@@ -211,11 +153,12 @@ export function ProductsSection() {
                 window.scrollTo({ top: offsetTop, behavior: 'smooth' });
               }
             }}
-            className="btn-primary px-8 py-3 text-lg font-semibold"
+            className="inline-flex items-center px-6 py-3 text-base font-medium rounded-lg hover:opacity-90 transition-opacity duration-200"
+            style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF' }}
           >
-            プロジェクトについて相談する
-            <ArrowRightIcon className="ml-2 w-5 h-5" />
-          </motion.button>
+            お問い合わせ
+            <ArrowRightIcon className="ml-2 w-4 h-4" />
+          </button>
         </motion.div>
       </div>
     </section>

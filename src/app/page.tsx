@@ -87,52 +87,50 @@ export default function Home() {
   }, [])
 
   const statusLabels: Record<string, { text: string; style: string }> = {
-    'in-development': { text: 'DEVELOPING', style: 'bg-amber-100 text-amber-800 border-amber-300' },
-    'beta': { text: 'BETA', style: 'bg-blue-100 text-blue-800 border-blue-300' },
-    'released': { text: 'RELEASED', style: 'bg-green-100 text-green-800 border-green-300' }
+    'in-development': { text: 'DEVELOPING', style: 'bg-gray-100 text-gray-700 border-gray-300' },
+    'beta': { text: 'BETA', style: 'bg-gray-100 text-gray-700 border-gray-300' },
+    'released': { text: 'RELEASED', style: 'bg-gray-900 text-white border-gray-900' }
   }
 
   return (
     <>
       <Header />
 
-      <main ref={mainRef} className="min-h-screen bg-[#f4f4f4]" role="main">
+      <main ref={mainRef} className="min-h-screen bg-white" role="main">
 
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-          <div className="container max-w-5xl mx-auto px-4 md:px-8 text-center">
-            <div className="mb-8">
+        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24 lg:pt-28">
+          <div className="container max-w-5xl mx-auto px-6 md:px-8 text-center">
+            <div className="mb-10">
               <Image
                 src="/images/logos/tomorebeyond-logo.png"
                 alt="ToMoreBeyond"
-                width={200}
-                height={200}
+                width={160}
+                height={160}
                 priority
-                className="mx-auto mb-8"
+                className="mx-auto"
               />
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-[#1a1a1a] mb-6 tracking-tight leading-tight">
-              埋もれた記録を、<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
-                続く面白さへ
-              </span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tight">
+              JUST DO IT!
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Making hidden traces a lasting wonder
+            <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+              革新的なモバイルアプリケーションで、人々の日常をより豊かに
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="#products"
-                className="bg-[#1a1a1a] text-white px-8 py-4 font-bold hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1"
+                style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
+                className="px-8 py-4 font-bold hover:opacity-90 transition-opacity duration-200"
               >
                 PRODUCTS
               </Link>
               <Link
                 href="#contact"
-                className="border-2 border-[#1a1a1a] text-[#1a1a1a] px-8 py-4 font-bold hover:bg-[#1a1a1a] hover:text-white transition-all duration-300 hover:-translate-y-1"
+                className="border-2 border-gray-900 text-gray-900 px-8 py-4 font-bold hover:bg-gray-100 transition-colors duration-200"
               >
                 CONTACT
               </Link>
@@ -147,13 +145,13 @@ export default function Home() {
         </section>
 
         {/* Products Section */}
-        <section id="products" className="py-24 md:py-32">
-          <div className="container max-w-5xl mx-auto px-4 md:px-8">
+        <section id="products" className="py-24 md:py-32 bg-gray-50">
+          <div className="container max-w-5xl mx-auto px-6 md:px-8">
             <div className="mb-16">
-              <h2 className="js-title text-5xl md:text-6xl lg:text-7xl font-black text-[#1a1a1a] mb-4 tracking-tight">
+              <h2 className="js-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
                 Products
               </h2>
-              <p className="text-lg text-gray-600">プロダクト紹介</p>
+              <p className="text-lg text-gray-500">プロダクト紹介</p>
             </div>
 
             <div className="js-card-group space-y-8">
@@ -164,11 +162,11 @@ export default function Home() {
                 return (
                   <div
                     key={product.id}
-                    className="js-card bg-white p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                    className="js-card bg-white p-6 md:p-8 rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-200"
                   >
                     <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 items-center`}>
                       {/* Image */}
-                      <div className="w-full md:w-1/3 aspect-square relative bg-gray-100 overflow-hidden">
+                      <div className="w-full md:w-1/3 aspect-square relative bg-gray-100 rounded-lg overflow-hidden">
                         <Image
                           src={product.image}
                           alt={product.name}
@@ -182,18 +180,18 @@ export default function Home() {
                       {/* Content */}
                       <div className="flex-1 w-full">
                         <div className="flex items-start justify-between mb-4">
-                          <span className={`px-3 py-1 text-xs font-bold border ${status.style}`}>
+                          <span className={`px-3 py-1 text-xs font-medium rounded-full border ${status.style}`}>
                             {status.text}
                           </span>
                         </div>
 
-                        <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] mb-2">
+                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                           {product.name}
                         </h3>
-                        <p className="text-sm text-gray-500 mb-4 font-medium tracking-wide">
+                        <p className="text-sm text-gray-500 mb-4 font-medium">
                           {product.nameEn}
                         </p>
-                        <p className="text-gray-600 leading-relaxed mb-6">
+                        <p className="text-gray-700 leading-relaxed mb-4">
                           {product.tagline}
                         </p>
                         <p className="text-gray-500 text-sm leading-relaxed mb-6">
@@ -202,7 +200,8 @@ export default function Home() {
 
                         <Link
                           href={`/products/${product.id}`}
-                          className="inline-block bg-[#1a1a1a] text-white px-6 py-3 font-bold hover:bg-gray-800 transition-colors"
+                          style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
+                          className="inline-block px-6 py-3 font-medium rounded-lg hover:opacity-90 transition-opacity"
                         >
                           VIEW DETAILS
                         </Link>
@@ -217,19 +216,19 @@ export default function Home() {
 
         {/* Team Section */}
         <section id="team" className="py-24 md:py-32 bg-white">
-          <div className="container max-w-5xl mx-auto px-4 md:px-8">
-            <div className="mb-16 text-right">
-              <h2 className="js-title text-5xl md:text-6xl lg:text-7xl font-black text-[#1a1a1a] mb-4 tracking-tight">
+          <div className="container max-w-5xl mx-auto px-6 md:px-8">
+            <div className="mb-16">
+              <h2 className="js-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
                 Team
               </h2>
-              <p className="text-lg text-gray-600">チームメンバー</p>
+              <p className="text-lg text-gray-500">チームメンバー</p>
             </div>
 
             <div className="js-card-group grid grid-cols-1 md:grid-cols-3 gap-6">
               {teamMembers.map((member) => (
                 <div
                   key={member.id}
-                  className="js-card bg-[#f4f4f4] p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                  className="js-card bg-gray-50 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-200"
                 >
                   {/* Avatar */}
                   <div className="w-32 h-32 mx-auto mb-6 relative rounded-full overflow-hidden bg-gray-200">
@@ -244,19 +243,19 @@ export default function Home() {
                   </div>
 
                   {/* Info */}
-                  <h3 className="text-xl font-bold text-[#1a1a1a] mb-1">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">
                     {member.name}
                   </h3>
-                  <p className="text-xs font-bold px-3 py-1 border border-[#1a1a1a] inline-block mb-4">
+                  <p className="text-xs font-medium text-gray-500 mb-4">
                     {member.positionEn}
                   </p>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-sm text-gray-600 leading-relaxed mb-4">
                     {member.bio}
                   </p>
 
                   <Link
                     href={`/team/${member.id}`}
-                    className="inline-block mt-4 text-sm font-bold text-[#1a1a1a] hover:underline"
+                    className="inline-block text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
                   >
                     詳しく見る →
                   </Link>
@@ -267,16 +266,16 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-24 md:py-32">
-          <div className="container max-w-5xl mx-auto px-4 md:px-8">
+        <section id="contact" className="py-24 md:py-32 bg-gray-50">
+          <div className="container max-w-5xl mx-auto px-6 md:px-8">
             <div className="mb-16 text-center">
-              <h2 className="js-title text-5xl md:text-6xl lg:text-7xl font-black text-[#1a1a1a] mb-4 tracking-tight">
+              <h2 className="js-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
                 Contact
               </h2>
-              <p className="text-lg text-gray-600">お問い合わせ</p>
+              <p className="text-lg text-gray-500">お問い合わせ</p>
             </div>
 
-            <div className="js-scroll-item max-w-2xl mx-auto bg-white p-8 md:p-12 shadow-lg">
+            <div className="js-scroll-item max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-xl border border-gray-200">
               {/* Contact Info */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                 {[
@@ -285,12 +284,15 @@ export default function Home() {
                   { Icon: Clock, label: 'Response', value: '24時間以内' },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-[#1a1a1a] rounded-full flex items-center justify-center shrink-0">
-                      <item.Icon className="w-5 h-5 text-white" />
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: '#1a1a1a' }}
+                    >
+                      <item.Icon className="w-5 h-5" style={{ color: '#ffffff' }} />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 font-medium">{item.label}</p>
-                      <p className="text-sm font-bold text-[#1a1a1a]">{item.value}</p>
+                      <p className="text-sm font-medium text-gray-900">{item.value}</p>
                     </div>
                   </div>
                 ))}
@@ -306,50 +308,51 @@ export default function Home() {
                 <input type="hidden" name="form-name" value="contact" />
 
                 <div>
-                  <label className="block text-xs font-bold mb-2 tracking-widest text-gray-700">
-                    NAME
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                    お名前
                   </label>
                   <input
                     type="text"
                     name="name"
                     required
-                    className="w-full border-b-2 border-[#1a1a1a] py-3 bg-transparent font-medium focus:outline-none focus:border-dashed transition-all"
-                    placeholder="お名前を入力してください"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white text-gray-900 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors"
+                    placeholder="山田太郎"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold mb-2 tracking-widest text-gray-700">
-                    EMAIL
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                    メールアドレス
                   </label>
                   <input
                     type="email"
                     name="email"
                     required
-                    className="w-full border-b-2 border-[#1a1a1a] py-3 bg-transparent font-medium focus:outline-none focus:border-dashed transition-all"
-                    placeholder="メールアドレスを入力してください"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white text-gray-900 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors"
+                    placeholder="yamada@example.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold mb-2 tracking-widest text-gray-700">
-                    MESSAGE
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                    お問い合わせ内容
                   </label>
                   <textarea
                     name="message"
                     required
                     rows={4}
-                    className="w-full border-b-2 border-[#1a1a1a] py-3 bg-transparent font-medium focus:outline-none focus:border-dashed transition-all resize-none"
-                    placeholder="お問い合わせ内容を入力してください"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white text-gray-900 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors resize-none"
+                    placeholder="お問い合わせ内容をご記入ください"
                   />
                 </div>
 
                 <div className="text-center pt-4">
                   <button
                     type="submit"
-                    className="bg-[#1a1a1a] text-white px-12 py-4 font-bold text-lg hover:bg-gray-800 transition-all duration-300 hover:scale-105"
+                    style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
+                    className="px-10 py-4 font-medium text-lg rounded-lg hover:opacity-90 transition-opacity duration-200"
                   >
-                    SEND MESSAGE
+                    送信する
                   </button>
                 </div>
               </form>

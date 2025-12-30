@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 const navigation = [
-  { name: 'PRODUCTS', href: '#products', id: 'products' },
-  { name: 'TEAM', href: '#team', id: 'team' },
-  { name: 'CONTACT', href: '#contact', id: 'contact' },
+  { name: 'Products', href: '#products', id: 'products' },
+  { name: 'Team', href: '#team', id: 'team' },
+  { name: 'Contact', href: '#contact', id: 'contact' },
 ];
 
 export function Header() {
@@ -27,7 +27,6 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -49,7 +48,6 @@ export function Header() {
     };
   }, [isMobileMenuOpen]);
 
-  // Close mobile menu when pressing Escape key
   useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMobileMenuOpen) {
@@ -84,35 +82,33 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-sm'
-          : 'bg-transparent'
+          ? 'bg-white/95 backdrop-blur-sm border-b border-gray-100'
+          : 'bg-white'
       }`}
     >
-      <nav className="max-w-5xl mx-auto px-4 md:px-8">
+      <nav className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <div className="text-xl font-bold tracking-tighter leading-none text-[#1a1a1a]">
-              <Image
-                src="/images/logos/tomorebeyond-logo.png"
-                alt="ToMoreBeyond"
-                width={48}
-                height={48}
-                className="w-10 h-10 lg:w-12 lg:h-12"
-                priority
-              />
-            </div>
+            <Image
+              src="/images/logos/tomorebeyond-logo.png"
+              alt="ToMoreBeyond"
+              width={44}
+              height={44}
+              className="w-10 h-10 lg:w-11 lg:h-11"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-8">
             {navigation.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="text-sm font-bold text-[#1a1a1a] hover:opacity-60 transition-opacity tracking-wide"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
               >
                 {item.name}
               </button>
@@ -125,15 +121,15 @@ export function Header() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
-              className="p-2 text-[#1a1a1a]"
+              className="p-2 -mr-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               {isMobileMenuOpen ? (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               )}
             </button>
@@ -144,14 +140,14 @@ export function Header() {
         {isMobileMenuOpen && (
           <div
             ref={mobileMenuRef}
-            className="md:hidden bg-white border-t border-gray-200"
+            className="md:hidden border-t border-gray-100 bg-white"
           >
-            <div className="px-2 pt-2 pb-4 space-y-1">
+            <div className="py-4 space-y-1">
               {navigation.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
-                  className="block w-full text-left px-4 py-3 text-sm font-bold text-[#1a1a1a] hover:bg-gray-50 transition-colors"
+                  className="block w-full text-left px-2 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
                 >
                   {item.name}
                 </button>

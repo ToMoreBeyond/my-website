@@ -1,16 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import {
-  AcademicCapIcon,
-  TrophyIcon,
-  LinkIcon,
-  UserIcon,
-  ShareIcon,
-  SparklesIcon
-} from '@heroicons/react/24/outline';
+import { LinkIcon, ShareIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { teamMembers, TeamMember } from '@/data/team';
 import { DetailHero } from '@/components/layout/DetailHero';
 
@@ -20,10 +14,15 @@ interface TeamDetailClientProps {
 
 export function TeamDetailClient({ member }: TeamDetailClientProps) {
   const router = useRouter();
+  const expertiseRef = useRef(null);
+  const achievementsRef = useRef(null);
+  const teamRef = useRef(null);
+  const expertiseInView = useInView(expertiseRef, { once: true, margin: '-100px' });
+  const achievementsInView = useInView(achievementsRef, { once: true, margin: '-100px' });
+  const teamInView = useInView(teamRef, { once: true, margin: '-100px' });
 
   return (
     <div className="min-h-screen bg-white">
-
       {/* Hero */}
       <DetailHero
         title={member.name}
@@ -37,57 +36,51 @@ export function TeamDetailClient({ member }: TeamDetailClientProps) {
         actions={
           <>
             {member.social?.github && (
-              <motion.a
+              <a
                 href={member.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center px-4 py-2 bg-olive-600 text-white rounded-lg hover:bg-olive-700 transition-colors"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF' }}
               >
                 <LinkIcon className="w-4 h-4 mr-2" />
                 GitHub
-              </motion.a>
+              </a>
             )}
             {member.social?.twitter && (
-              <motion.a
+              <a
                 href={member.social.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center px-4 py-2 bg-olive-600 text-white rounded-lg hover:bg-olive-700 transition-colors"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF' }}
               >
                 <LinkIcon className="w-4 h-4 mr-2" />
                 Twitter
-              </motion.a>
+              </a>
             )}
-            <motion.button
-              className="flex items-center px-4 py-2 border border-neutral-300 text-neutral-700 rounded-lg hover:border-neutral-400 hover:text-neutral-900 transition-colors"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+            <button
+              className="inline-flex items-center px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors"
               onClick={() => navigator.share?.({ title: `${member.name} - ToMoreBeyond`, url: window.location.href })}
             >
               <ShareIcon className="w-4 h-4 mr-2" />
               シェア
-            </motion.button>
+            </button>
           </>
         }
       />
 
       {/* Expertise Section */}
-      <section className="section bg-white">
-        <div className="container">
+      <section ref={expertiseRef} className="py-24 lg:py-32 bg-gray-50">
+        <div className="container max-w-6xl mx-auto px-6 md:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={expertiseInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <AcademicCapIcon className="w-12 h-12 text-olive-700 mx-auto mb-4" />
-            <h2 className="text-4xl font-serif font-semibold text-neutral-900 mb-6">専門分野</h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">専門分野</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
               {member.name}の専門知識と技術領域
             </p>
           </motion.div>
@@ -96,15 +89,12 @@ export function TeamDetailClient({ member }: TeamDetailClientProps) {
             {member.expertise.map((skill, index) => (
               <motion.div
                 key={skill}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="bg-white/90 backdrop-blur-sm border border-neutral-200 rounded-xl p-6 text-center hover:border-olive-600/40 transition-all duration-300"
+                initial={{ opacity: 0, y: 24 }}
+                animate={expertiseInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:border-gray-300 hover:shadow-lg transition-all duration-200"
               >
-                <SparklesIcon className="w-8 h-8 text-olive-700 mx-auto mb-3" />
-                <span className="text-neutral-900 font-semibold">{skill}</span>
+                <span className="text-gray-900 font-medium">{skill}</span>
               </motion.div>
             ))}
           </div>
@@ -112,97 +102,88 @@ export function TeamDetailClient({ member }: TeamDetailClientProps) {
       </section>
 
       {/* Achievements Section */}
-      <section className="section bg-gradient-to-b from-white to-gray-50">
-        <div className="container">
+      <section ref={achievementsRef} className="py-24 lg:py-32 bg-white">
+        <div className="container max-w-6xl mx-auto px-6 md:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={achievementsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <TrophyIcon className="w-12 h-12 text-olive-700 mx-auto mb-4" />
-            <h2 className="text-4xl font-serif font-semibold text-neutral-900 mb-6">実績・経験</h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              これまでの主な実績と経験をご紹介します
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">実績・経験</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              これまでの主な実績と経験
             </p>
           </motion.div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-6">
-              {member.achievements.map((achievement, index) => (
-                <motion.div
-                  key={achievement}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.02, x: 10 }}
-                  className="flex items-start space-x-4 bg-white/90 backdrop-blur-sm border border-neutral-200 rounded-xl p-6 hover:border-olive-600/40 transition-all duration-300"
-                >
-                  <div className="w-2 h-2 bg-olive-600 rounded-full mt-3 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-neutral-700 text-lg leading-relaxed">{achievement}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {member.achievements.map((achievement, index) => (
+              <motion.div
+                key={achievement}
+                initial={{ opacity: 0, y: 24 }}
+                animate={achievementsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="flex items-start gap-4 bg-gray-50 rounded-xl p-6"
+              >
+                <div className="w-2 h-2 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+                <p className="text-gray-700 leading-relaxed">{achievement}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Related Team Members */}
-      <section className="section bg-white">
-        <div className="container">
+      <section ref={teamRef} className="py-24 lg:py-32 bg-gray-50">
+        <div className="container max-w-6xl mx-auto px-6 md:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={teamInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <UserIcon className="w-12 h-12 text-olive-700 mx-auto mb-4" />
-            <h2 className="text-4xl font-serif font-semibold text-neutral-900 mb-6">他のチームメンバー</h2>
-            <p className="text-xl text-neutral-600">
-              ToMoreBeyondの優秀なチームメンバーをご紹介します
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">他のチームメンバー</h2>
+            <p className="text-gray-600">
+              ToMoreBeyondのチームメンバー
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
             {teamMembers
               .filter(m => m.id !== member.id)
               .map((otherMember, index) => (
-                <motion.div
+                <motion.article
                   key={otherMember.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  whileHover={{ scale: 1.02, y: -5 }}
-                  className="bg-white/90 backdrop-blur-sm border border-neutral-200 rounded-xl overflow-hidden hover:border-olive-600/40 transition-all duration-300 cursor-pointer"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={teamInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group cursor-pointer"
                   onClick={() => router.push(`/team/${otherMember.id}`)}
                 >
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={otherMember.image}
-                      alt={otherMember.name}
-                      fill
-                      className="object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                  <div className="h-full bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 hover:shadow-lg transition-all duration-200">
+                    <div className="relative h-64 bg-gray-100 overflow-hidden">
+                      <Image
+                        src={otherMember.image}
+                        alt={otherMember.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-1">{otherMember.name}</h3>
+                      <p className="text-gray-600 mb-3">{otherMember.position}</p>
+                      <p className="text-gray-500 text-sm line-clamp-2 mb-4">{otherMember.bio}</p>
+                      <div className="flex items-center text-gray-900 font-medium group-hover:text-gray-600 transition-colors">
+                        <span className="text-sm">詳細を見る</span>
+                        <ArrowRightIcon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-neutral-900 mb-2">{otherMember.name}</h3>
-                    <p className="text-olive-700 font-medium mb-3">{otherMember.position}</p>
-                    <p className="text-neutral-600 text-sm line-clamp-3">{otherMember.bio}</p>
-                  </div>
-                </motion.div>
+                </motion.article>
               ))}
           </div>
         </div>
       </section>
-
-      {/* CTA moved to DetailLayout */}
     </div>
   );
 }

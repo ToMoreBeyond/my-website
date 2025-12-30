@@ -2,10 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import {
-  MapPinIcon,
-  PaperAirplaneIcon
-} from '@heroicons/react/24/outline';
+import { MapPinIcon } from '@heroicons/react/24/outline';
 
 export function ContactSection() {
   const ref = useRef(null);
@@ -28,18 +25,17 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
-      // Netlify Forms submission
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
-      
+
       await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(formData as any).toString(),
       });
-      
+
       alert('お問い合わせありがとうございます。後日担当者よりご連絡させていただきます。');
       setFormData({ name: '', email: '', company: '', message: '' });
     } catch (error) {
@@ -49,135 +45,83 @@ export function ContactSection() {
     }
   };
 
-  const contactInfo = [
-    {
-      icon: <MapPinIcon className="w-6 h-6" />,
-      title: '所在地',
-      info: '東京都渋谷区',
-      href: null
-    }
-  ];
-
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-gradient-to-br from-gray-100 via-gray-50 to-white relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 opacity-30">
-        <motion.div
-          className="absolute inset-0"
-          animate={{
-            background: [
-              'radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)',
-              'radial-gradient(circle at 90% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%)',
-              'radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)',
-            ],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: 'easeInOut'
-          }}
-        />
-      </div>
-      
-      <div className="container relative z-10">
+    <section id="contact" className="py-24 lg:py-32 bg-white">
+      <div className="container max-w-6xl mx-auto px-6 md:px-8">
+        {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 lg:mb-20"
         >
-          <h2 className="heading-2 text-gray-900 mb-6">
-            お気軽に
-            <span className="text-gradient"> お問い合わせ</span>
-            ください
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            お問い合わせ
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-            プロジェクトのご相談、採用に関するお問い合わせ、その他ご質問がございましたら、
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            プロジェクトのご相談、採用に関するお問い合わせなど、
+            <br className="hidden sm:block" />
             お気軽にご連絡ください。
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="lg:col-span-2"
           >
-            <h3 className="heading-3 text-gray-900 mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-8">
               コンタクト情報
             </h3>
-            
-            <div className="space-y-6">
-              {contactInfo.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                  className="flex items-center space-x-4"
-                >
-                  <div className="flex-shrink-0 p-3 bg-primary-100 text-primary-600 rounded-lg">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      {item.title}
-                    </h4>
-                    {item.href ? (
-                      <a
-                        href={item.href}
-                        className="text-gray-600 hover:text-primary-600 transition-colors"
-                      >
-                        {item.info}
-                      </a>
-                    ) : (
-                      <p className="text-gray-600">{item.info}</p>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
+
+            {/* Location */}
+            <div className="flex items-start gap-4 mb-8">
+              <div className="flex-shrink-0 p-3 bg-gray-100 rounded-lg">
+                <MapPinIcon className="w-5 h-5 text-gray-600" />
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900 mb-1">所在地</h4>
+                <p className="text-gray-600">東京都渋谷区</p>
+              </div>
             </div>
 
-            {/* Additional Information */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-8 lg:mt-12 p-4 sm:p-6 bg-white rounded-xl shadow-lg"
-            >
-              <h4 className="font-semibold text-gray-900 mb-4">
-                営業時間
-              </h4>
-              <div className="text-gray-600 space-y-2">
+            {/* Business Hours */}
+            <div className="p-6 bg-gray-50 rounded-xl">
+              <h4 className="font-medium text-gray-900 mb-4">営業時間</h4>
+              <div className="text-gray-600 space-y-2 text-sm">
                 <p>平日: 9:00 - 18:00</p>
                 <p>土日祝: 休業</p>
               </div>
-              <div className="mt-4 text-sm text-gray-500">
-                <p>※緊急時は24時間対応可能です</p>
-              </div>
-            </motion.div>
+              <p className="mt-4 text-xs text-gray-500">
+                ※緊急時は24時間対応可能です
+              </p>
+            </div>
           </motion.div>
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="lg:col-span-3"
           >
-            <form 
-              name="contact" 
-              method="POST" 
+            <form
+              name="contact"
+              method="POST"
               data-netlify="true"
-              onSubmit={handleSubmit} 
+              onSubmit={handleSubmit}
               className="space-y-6"
             >
               <input type="hidden" name="form-name" value="contact" />
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    お名前 *
+                    お名前 <span className="text-gray-400">*</span>
                   </label>
                   <input
                     type="text"
@@ -186,14 +130,14 @@ export function ContactSection() {
                     required
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors"
                     placeholder="山田太郎"
                   />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    メールアドレス *
+                    メールアドレス <span className="text-gray-400">*</span>
                   </label>
                   <input
                     type="email"
@@ -202,7 +146,7 @@ export function ContactSection() {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors"
                     placeholder="yamada@example.com"
                   />
                 </div>
@@ -218,14 +162,14 @@ export function ContactSection() {
                   name="company"
                   value={formData.company}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors"
                   placeholder="株式会社サンプル"
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  お問い合わせ内容 *
+                  お問い合わせ内容 <span className="text-gray-400">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -234,30 +178,29 @@ export function ContactSection() {
                   rows={6}
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors resize-none"
                   placeholder="お問い合わせ内容をご記入ください..."
                 />
               </div>
 
-              <motion.button
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full btn-primary px-6 py-4 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-4 text-base font-medium rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity duration-200"
+                style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF' }}
               >
                 {isSubmitting ? (
-                  <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2" />
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                     送信中...
-                  </div>
+                  </span>
                 ) : (
-                  <div className="flex items-center justify-center">
-                    <PaperAirplaneIcon className="w-5 h-5 mr-2" />
-                    メッセージを送信
-                  </div>
+                  'メッセージを送信'
                 )}
-              </motion.button>
+              </button>
 
               <p className="text-sm text-gray-500 text-center">
                 送信いただいた情報は、お問い合わせ対応のみに使用いたします。
