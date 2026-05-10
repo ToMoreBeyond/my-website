@@ -1,75 +1,136 @@
 import type { ProductRoadmap } from '@/types/roadmap';
 
 /**
- * TADATAKA（忠嵩）のロードマップ
+ * Himap（ヒマップ）のロードマップ
  */
-export const tadatakaRoadmap: ProductRoadmap = {
-  productId: 'tadataka',
-  lastUpdated: '2025-01-15',
+export const himapRoadmap: ProductRoadmap = {
+  productId: 'himap',
+  lastUpdated: '2026-05-10',
   phases: [
     {
-      id: 'tadataka-phase-1',
+      id: 'himap-phase-1',
       name: 'Phase 1: MVP開発',
       stage: 'MVP',
-      status: 'in-progress',
-      targetDate: '2025-06',
-      features: [
-        'GPS/BLE/加速度センサーによる位置情報取得',
-        'バックグラウンド24時間自動記録',
-        '移動手段の自動判定（徒歩・自転車・車・電車）',
-        '足あと地図表示（カラフルな経路可視化）',
-        '写真の自動位置情報タグ付け',
-        '完全オンデバイス処理によるプライバシー保護',
-      ],
-      description: '基本機能の実装とコア体験の確立',
-    },
-    {
-      id: 'tadataka-phase-2',
-      name: 'Phase 2: ベータ版リリース',
-      stage: 'Beta',
-      status: 'planned',
-      targetDate: '2025-09',
-      features: [
-        '音声メモのワンタップ録音機能',
-        '感情スタンプの記録機能',
-        '今日のサマリー表示と振り返り',
-        'カレンダー連携による過去の振り返り',
-        'TestFlight配信開始（東京都内限定）',
-        'ユーザーフィードバック収集',
-      ],
-      description: '東京都内限定でのベータテスト実施',
-    },
-    {
-      id: 'tadataka-phase-3',
-      name: 'Phase 3: 正式版リリース',
-      stage: 'Release',
-      status: 'planned',
+      status: 'completed',
       targetDate: '2025-12',
       features: [
-        '週次・月次レポート自動生成',
-        'CloudKit同期によるエンドツーエンド暗号化',
-        'パフォーマンス最適化',
-        'バッテリー消費の最適化',
-        'App Store正式リリース（日本全国）',
-        '多言語対応準備',
+        'すごろく風ボードのコア体験実装',
+        'Google Places APIによる近隣スポット提案',
+        '訪問判定によるポイント・バッジ獲得',
+        'ブックマーク（後で行く）機能',
+        'ローカルファースト永続化（UserDefaults）',
       ],
-      description: '日本全国でのサービス展開',
+      description: 'コアとなるゲーミフィケーション体験の実装',
     },
     {
-      id: 'tadataka-phase-4',
+      id: 'himap-phase-2',
+      name: 'Phase 2: ベータ／リリース直前',
+      stage: 'Beta',
+      status: 'in-progress',
+      targetDate: '2026-06',
+      features: [
+        'チュートリアル・スプラッシュ最終調整',
+        'プライバシーマニフェスト整備（PrivacyInfo.xcprivacy）',
+        'App Store メタデータ準備',
+        'TestFlight配信とフィードバック収集',
+        'パフォーマンス・バッテリー最適化',
+      ],
+      description: 'App Storeリリースに向けた最終仕上げ',
+    },
+    {
+      id: 'himap-phase-3',
+      name: 'Phase 3: 正式リリース',
+      stage: 'Release',
+      status: 'planned',
+      targetDate: '2026-09',
+      features: [
+        'App Store正式公開',
+        '対応エリア拡大（主要都市部）',
+        'ペース調整可能な散歩ミッション拡張',
+        'ユーザーフィードバック反映',
+      ],
+      description: '日本国内での正式サービス展開',
+    },
+    {
+      id: 'himap-phase-4',
       name: 'Phase 4: 拡張機能',
       stage: 'Enhancement',
       status: 'planned',
+      targetDate: '2027-03',
+      features: [
+        'ウィジェット／ショートカット連携',
+        'iPad対応',
+        'ご褒美スポットのカテゴリ拡充',
+        '多言語対応（英語）',
+      ],
+      description: 'プラットフォーム横断とグローバル準備',
+    },
+  ],
+};
+
+/**
+ * KeyPet（キーペット）のロードマップ
+ */
+export const keypetRoadmap: ProductRoadmap = {
+  productId: 'keypet',
+  lastUpdated: '2026-05-10',
+  phases: [
+    {
+      id: 'keypet-phase-1',
+      name: 'Phase 1: 企画・プロトタイプ',
+      stage: 'Planning',
+      status: 'completed',
       targetDate: '2026-03',
       features: [
-        'iPad対応',
-        'Apple Watch連携',
-        'ウィジェット機能',
-        'ショートカット連携',
-        'データエクスポート機能',
-        'Core ML活用の高度な分析機能',
+        'コンセプト設計（キーボード×ペット）',
+        'キャラクターデザインの方向性決定',
+        'カスタムキーボード Extension の検証',
+        'タイピング連動アニメーションの試作',
       ],
-      description: 'エコシステム拡張とAI機能強化',
+      description: 'コンセプト検証とプロトタイプ構築',
+    },
+    {
+      id: 'keypet-phase-2',
+      name: 'Phase 2: MVP開発',
+      stage: 'MVP',
+      status: 'in-progress',
+      targetDate: '2026-08',
+      features: [
+        '複数キャラクターの実装',
+        'タイピング連動アニメーション',
+        'キャラクター切り替え／設定UI',
+        'お気に入り保存',
+        'キーボードテーマ（背景・配色）',
+      ],
+      description: 'コア機能の実装',
+    },
+    {
+      id: 'keypet-phase-3',
+      name: 'Phase 3: ベータ版リリース',
+      stage: 'Beta',
+      status: 'planned',
+      targetDate: '2026-11',
+      features: [
+        'TestFlight配信',
+        'タップによるミニインタラクション',
+        'パフォーマンス最適化（キーボード Extension のメモリ制約対応）',
+        'ユーザーフィードバック収集',
+      ],
+      description: 'クローズドベータでの検証',
+    },
+    {
+      id: 'keypet-phase-4',
+      name: 'Phase 4: 正式リリース',
+      stage: 'Release',
+      status: 'planned',
+      targetDate: '2027-02',
+      features: [
+        'App Store正式リリース',
+        'キャラクターラインナップの拡充',
+        'コラボキャラクター展開準備',
+        '多言語対応',
+      ],
+      description: '正式サービス開始',
     },
   ],
 };
@@ -145,82 +206,12 @@ export const toirunRoadmap: ProductRoadmap = {
 };
 
 /**
- * Meet in the middleのロードマップ
- */
-export const meetInTheMiddleRoadmap: ProductRoadmap = {
-  productId: 'meet-in-the-middle',
-  lastUpdated: '2025-01-15',
-  phases: [
-    {
-      id: 'mitm-phase-1',
-      name: 'Phase 1: 企画・設計',
-      stage: 'Planning',
-      status: 'in-progress',
-      targetDate: '2025-08',
-      features: [
-        'ユーザーリサーチとペルソナ定義',
-        'コンセプト設計とUI/UXデザイン',
-        'アルゴリズム設計（移動コスト最適化）',
-        '技術スタック選定',
-        'プロトタイプ作成',
-      ],
-      description: 'サービスの基礎設計と検証',
-    },
-    {
-      id: 'mitm-phase-2',
-      name: 'Phase 2: MVP開発',
-      stage: 'MVP',
-      status: 'planned',
-      targetDate: '2025-12',
-      features: [
-        'フレンド機能による最寄駅登録',
-        'グループ作成機能',
-        '基本的な集合場所提案アルゴリズム',
-        '電車・地下鉄路線データ統合',
-        '目的別集合場所タイプ選択',
-      ],
-      description: '基本機能の実装',
-    },
-    {
-      id: 'mitm-phase-3',
-      name: 'Phase 3: ベータ版リリース',
-      stage: 'Beta',
-      status: 'planned',
-      targetDate: '2026-03',
-      features: [
-        'お金の平等性を考慮したアルゴリズム',
-        '時間の平等性を考慮したアルゴリズム',
-        'リアルタイム交通情報対応',
-        'TestFlight配信（東京圏限定）',
-        'ユーザーフィードバック収集',
-      ],
-      description: '東京圏でのベータテスト',
-    },
-    {
-      id: 'mitm-phase-4',
-      name: 'Phase 4: 正式版リリース',
-      stage: 'Release',
-      status: 'planned',
-      targetDate: '2026-06',
-      features: [
-        'パフォーマンス最適化',
-        '都市部最適化された検索機能',
-        'プッシュ通知機能',
-        'App Store正式リリース',
-        '複数都市対応準備',
-      ],
-      description: '正式サービス開始',
-    },
-  ],
-};
-
-/**
  * すべてのロードマップデータ
  */
 export const roadmaps: ProductRoadmap[] = [
-  tadatakaRoadmap,
+  himapRoadmap,
+  keypetRoadmap,
   toirunRoadmap,
-  meetInTheMiddleRoadmap,
 ];
 
 /**

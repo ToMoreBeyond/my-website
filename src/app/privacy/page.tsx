@@ -35,7 +35,7 @@ export default function PrivacyPage() {
         <div className="space-y-10">
           <section>
             <p className="text-gray-600 leading-relaxed">
-              ToMoreBeyond株式会社（以下「当社」といいます）は、お客様の個人情報の保護を重要な責務と認識し、以下の方針に基づいて個人情報を適切に取り扱います。
+              ToMoreBeyond（以下「当方」といいます）は、お客様の個人情報の保護を重要な責務と認識し、以下の方針に基づいて個人情報を適切に取り扱います。
             </p>
           </section>
 
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
               2. 個人情報の収集方法
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              当社は、以下の方法により個人情報を収集することがあります。
+              当方は、以下の方法により個人情報を収集することがあります。
             </p>
             <ul className="list-disc list-inside space-y-2 text-gray-600 ml-4">
               <li>お問い合わせフォームからの送信</li>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
               3. 個人情報の利用目的
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              当社は、取得した個人情報を以下の目的で利用いたします。
+              当方は、取得した個人情報を以下の目的で利用いたします。
             </p>
             <ul className="list-disc list-inside space-y-2 text-gray-600 ml-4">
               <li>お問い合わせへの対応</li>
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
               4. 個人情報の第三者提供
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              当社は、以下の場合を除き、ご本人の同意を得ることなく第三者に個人情報を提供することはありません。
+              当方は、以下の場合を除き、ご本人の同意を得ることなく第三者に個人情報を提供することはありません。
             </p>
             <ul className="list-disc list-inside space-y-2 text-gray-600 ml-4">
               <li>法令に基づく場合</li>
@@ -102,7 +102,7 @@ export default function PrivacyPage() {
               5. 個人情報の管理
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              当社は、個人情報の正確性を保ち、これを安全に管理します。個人情報への不正アクセス、紛失、破壊、改ざん、漏洩などを防止するため、必要かつ適切な安全管理措置を講じます。また、個人情報を取り扱う従業員や委託先に対して、必要かつ適切な監督を行います。
+              当方は、個人情報の正確性を保ち、これを安全に管理します。個人情報への不正アクセス、紛失、破壊、改ざん、漏洩などを防止するため、必要かつ適切な安全管理措置を講じます。また、個人情報を取り扱う従業員や委託先に対して、必要かつ適切な監督を行います。
             </p>
           </section>
 
@@ -120,7 +120,7 @@ export default function PrivacyPage() {
               7. Cookie（クッキー）について
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              当社のウェブサイトでは、利便性の向上やアクセス解析のためにCookieを使用することがあります。Cookieの使用を望まない場合は、ブラウザの設定でCookieを無効にすることができますが、一部のサービスが利用できなくなる可能性があります。
+              当方のウェブサイトでは、利便性の向上やアクセス解析のためにCookieを使用することがあります。Cookieの使用を望まない場合は、ブラウザの設定でCookieを無効にすることができますが、一部のサービスが利用できなくなる可能性があります。
             </p>
           </section>
 
@@ -129,7 +129,7 @@ export default function PrivacyPage() {
               8. アクセス解析ツールについて
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              当社のウェブサイトでは、サービスの向上のためにGoogle Analyticsなどのアクセス解析ツールを使用することがあります。これらのツールは、Cookieを使用して訪問者のデータを収集しますが、個人を特定する情報は含まれません。
+              当方のウェブサイトでは、サービスの向上のためにGoogle Analyticsなどのアクセス解析ツールを使用することがあります。これらのツールは、Cookieを使用して訪問者のデータを収集しますが、個人を特定する情報は含まれません。
             </p>
           </section>
 
@@ -138,7 +138,7 @@ export default function PrivacyPage() {
               9. プライバシーポリシーの変更
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              当社は、法令の変更や事業内容の変更等に伴い、本プライバシーポリシーを予告なく変更することがあります。変更後のプライバシーポリシーは、本ページに掲載した時点から効力を生じるものとします。
+              当方は、法令の変更や事業内容の変更等に伴い、本プライバシーポリシーを予告なく変更することがあります。変更後のプライバシーポリシーは、本ページに掲載した時点から効力を生じるものとします。
             </p>
           </section>
 
@@ -151,13 +151,10 @@ export default function PrivacyPage() {
             </p>
             <div className="bg-gray-50 rounded-xl p-6">
               <p className="text-gray-900 font-medium mb-2">
-                ToMoreBeyond株式会社
+                ToMoreBeyond
               </p>
               <p className="text-gray-600 text-sm">
-                個人情報保護管理者：代表取締役 山田純大
-              </p>
-              <p className="text-gray-600 text-sm">
-                所在地：東京都渋谷区
+                所在地：Tokyo, Japan
               </p>
               <p className="text-gray-600 text-sm">
                 お問い合わせ：本サイトのお問い合わせフォームよりご連絡ください
@@ -167,10 +164,10 @@ export default function PrivacyPage() {
 
           <section className="pt-8 border-t border-gray-200">
             <p className="text-sm text-gray-500">
-              制定日：2025年1月1日
+              制定日：2026年5月10日
             </p>
             <p className="text-sm text-gray-500">
-              最終改定日：2025年1月1日
+              最終改定日：2026年5月10日
             </p>
           </section>
         </div>

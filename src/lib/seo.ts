@@ -25,11 +25,13 @@ export const defaultSEO: Omit<SEOConfig, "title" | "description" | "url"> = {
     "ToMoreBeyond",
     "トモビ",
     "TMB",
-    "忠嵩",
-    "TADATAKA",
+    "ヒマップ",
+    "Himap",
+    "キーペット",
+    "KeyPet",
     "TOI-RUN",
-    "Meet in the middle",
     "モバイルアプリ開発",
+    "iOSアプリ開発",
     "アプリ開発会社",
     "東京",
     "テクノロジー企業",
@@ -127,7 +129,7 @@ export function generateOrganizationStructuredData(): Record<string, unknown> {
     url: "https://tomorebeyond.co",
     logo: "https://tomorebeyond.co/images/logos/tomorebeyond-logo.png",
     description:
-      "ToMoreBeyond（トモビ・TMB）は、忠嵩（TADATAKA）、TOI-RUN、Meet in the middleなど革新的なモバイルアプリを開発する東京のテクノロジー企業。最先端技術で社会課題を解決し、人々の生活を豊かにするアプリケーションを提供しています。",
+      "ToMoreBeyond（トモビ・TMB）は、ヒマップ（Himap）、キーペット（KeyPet）、TOI-RUNなど革新的なモバイルアプリを開発する東京のテクノロジー企業。最先端技術で社会課題を解決し、人々の生活を豊かにするアプリケーションを提供しています。",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Tokyo",
@@ -150,22 +152,22 @@ export function generateOrganizationStructuredData(): Record<string, unknown> {
     ],
     hasProduct: [
       generateSoftwareApplicationStructuredData(
-        "忠嵩",
-        "TADATAKA",
-        "NavigationApplication",
-        "歴史と現代を繋ぐ、革新的な地図アプリケーション"
+        "ヒマップ",
+        "Himap",
+        "LifestyleApplication",
+        "暇な時間を冒険に変える、すごろく風ゲーミフィケーション×位置情報アプリ"
+      ),
+      generateSoftwareApplicationStructuredData(
+        "キーペット",
+        "KeyPet",
+        "EntertainmentApplication",
+        "キーボードにペットが現れる、毎日の入力時間を癒しに変えるカスタムキーボードアプリ"
       ),
       generateSoftwareApplicationStructuredData(
         "TOI-RUN",
         "TOI-RUN",
-        "HealthApplication",
-        "ランニングを楽しく継続するためのゲーミフィケーション・プラットフォーム"
-      ),
-      generateSoftwareApplicationStructuredData(
-        "Meet in the middle",
-        "Meet in the middle",
-        "SocialApplication",
-        "人と人を繋ぐ、新しい出会いのプラットフォーム"
+        "UtilitiesApplication",
+        "緊急時に最寄りのトイレを最速で見つける、位置情報ナビゲーションアプリ"
       ),
     ],
   });

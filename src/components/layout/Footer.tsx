@@ -6,12 +6,13 @@ import { useRouter, usePathname } from 'next/navigation';
 
 const footerLinks = {
   products: [
-    { label: '忠嵩 (TADATAKA)', href: '/products/tadataka' },
+    { label: 'ヒマップ (Himap)', href: '/products/himap' },
+    { label: 'キーペット (KeyPet)', href: '/products/keypet' },
     { label: 'TOI-RUN', href: '/products/toirun' },
-    { label: 'Meet in the middle', href: '/products/meet-in-the-middle' },
   ],
   legal: [
     { label: 'プライバシーポリシー', href: '/privacy' },
+    { label: 'プライバシーポリシー（ヒマップ）', href: '/privacy/himap' },
     { label: '利用規約', href: '/terms' },
   ],
 };

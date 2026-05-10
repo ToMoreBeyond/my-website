@@ -54,18 +54,18 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">忠嵩 (TADATAKA)</h3>
-              <p className="text-gray-600 mb-4">歴史と現代を繋ぐ、革新的な地図アプリケーション</p>
+              <h3 className="text-xl font-semibold mb-4">ヒマップ (Himap)</h3>
+              <p className="text-gray-600 mb-4">暇な時間を冒険に変える、すごろく風ゲーミフィケーション×位置情報アプリ</p>
+              <span className="inline-block px-3 py-1 text-sm bg-green-100 text-green-800 rounded-full">リリース版</span>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-4">キーペット (KeyPet)</h3>
+              <p className="text-gray-600 mb-4">キーボードにペットが現れる、毎日の入力を癒しに変えるカスタムキーボードアプリ</p>
               <span className="inline-block px-3 py-1 text-sm bg-yellow-100 text-yellow-800 rounded-full">開発中</span>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-4">TOI-RUN</h3>
-              <p className="text-gray-600 mb-4">ランニングを楽しく継続するためのゲーミフィケーション・プラットフォーム</p>
-              <span className="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">ベータ版</span>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Meet in the middle</h3>
-              <p className="text-gray-600 mb-4">人と人を繋ぐ、新しい出会いのプラットフォーム</p>
+              <p className="text-gray-600 mb-4">緊急時に最寄りのトイレを最速で見つける位置情報ナビゲーションアプリ</p>
               <span className="inline-block px-3 py-1 text-sm bg-yellow-100 text-yellow-800 rounded-full">開発中</span>
             </div>
           </div>
@@ -144,9 +144,9 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold mb-4">プロダクト</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>忠嵩 (TADATAKA)</li>
+                <li>ヒマップ (Himap)</li>
+                <li>キーペット (KeyPet)</li>
                 <li>TOI-RUN</li>
-                <li>Meet in the middle</li>
               </ul>
             </div>
             <div>

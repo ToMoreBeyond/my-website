@@ -36,12 +36,12 @@ describe('StaticDataAdapter', () => {
 
   describe('getProductById', () => {
     it('存在するIDでプロダクトを取得できる', async () => {
-      const result = await adapter.getProductById('tadataka');
+      const result = await adapter.getProductById('himap');
 
       expect(result).not.toBeNull();
-      expect(result?.id).toBe('tadataka');
-      expect(result?.name).toBe('忠嵩');
-      expect(result?.nameEn).toBe('TADATAKA');
+      expect(result?.id).toBe('himap');
+      expect(result?.name).toBe('ヒマップ');
+      expect(result?.nameEn).toBe('Himap');
     });
 
     it('存在しないIDでnullを返す', async () => {
@@ -51,7 +51,7 @@ describe('StaticDataAdapter', () => {
     });
 
     it('すべてのプロダクトIDで取得できる', async () => {
-      const productIds = ['tadataka', 'toirun', 'meet-in-the-middle'];
+      const productIds = ['himap', 'keypet', 'toirun'];
 
       for (const id of productIds) {
         const result = await adapter.getProductById(id);
@@ -150,10 +150,10 @@ describe('StaticDataAdapter', () => {
 
   describe('getRoadmapByProductId', () => {
     it('存在するプロダクトIDでロードマップを取得できる', async () => {
-      const result = await adapter.getRoadmapByProductId('tadataka');
+      const result = await adapter.getRoadmapByProductId('himap');
 
       expect(result).not.toBeNull();
-      expect(result?.productId).toBe('tadataka');
+      expect(result?.productId).toBe('himap');
       expect(result?.phases.length).toBeGreaterThan(0);
     });
 
@@ -164,7 +164,7 @@ describe('StaticDataAdapter', () => {
     });
 
     it('すべてのプロダクトIDでロードマップを取得できる', async () => {
-      const productIds = ['tadataka', 'toirun', 'meet-in-the-middle'];
+      const productIds = ['himap', 'keypet', 'toirun'];
 
       for (const id of productIds) {
         const result = await adapter.getRoadmapByProductId(id);
@@ -188,7 +188,7 @@ describe('StaticDataAdapter', () => {
     });
 
     it('ロードマップの最終更新日時を取得できる（IDあり）', async () => {
-      const result = await adapter.getLastUpdated('roadmap', 'tadataka');
+      const result = await adapter.getLastUpdated('roadmap', 'himap');
 
       expect(result).toBeInstanceOf(Date);
     });
@@ -201,9 +201,9 @@ describe('StaticDataAdapter', () => {
     });
 
     it('ロードマップのlastUpdatedフィールドを正しくパースする', async () => {
-      const roadmap = await adapter.getRoadmapByProductId('tadataka');
+      const roadmap = await adapter.getRoadmapByProductId('himap');
       if (roadmap) {
-        const result = await adapter.getLastUpdated('roadmap', 'tadataka');
+        const result = await adapter.getLastUpdated('roadmap', 'himap');
         expect(result).toBeInstanceOf(Date);
 
         const expectedDate = new Date(roadmap.lastUpdated);

@@ -20,7 +20,8 @@ describe('SEO Utilities', () => {
 
     it('デフォルトキーワードに主要な用語が含まれている', () => {
       expect(defaultSEO.keywords).toContain('ToMoreBeyond');
-      expect(defaultSEO.keywords).toContain('TADATAKA');
+      expect(defaultSEO.keywords).toContain('Himap');
+      expect(defaultSEO.keywords).toContain('KeyPet');
       expect(defaultSEO.keywords).toContain('TOI-RUN');
     });
   });
@@ -223,7 +224,7 @@ describe('SEO Utilities', () => {
       const data = generateOrganizationStructuredData();
 
       expect(data['description']).toContain('ToMoreBeyond');
-      expect(data['description']).toContain('TADATAKA');
+      expect(data['description']).toContain('Himap');
       expect(data['description']).toContain('TOI-RUN');
     });
 
@@ -242,9 +243,9 @@ describe('SEO Utilities', () => {
 
       expect(products).toBeInstanceOf(Array);
       expect(products.length).toBeGreaterThan(0);
-      expect(products.some((p) => p['name'] === '忠嵩')).toBe(true);
+      expect(products.some((p) => p['name'] === 'ヒマップ')).toBe(true);
+      expect(products.some((p) => p['name'] === 'キーペット')).toBe(true);
       expect(products.some((p) => p['name'] === 'TOI-RUN')).toBe(true);
-      expect(products.some((p) => p['name'] === 'Meet in the middle')).toBe(true);
     });
 
     it('サービス提供情報が含まれている', () => {
