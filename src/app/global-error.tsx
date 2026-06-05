@@ -2,7 +2,8 @@
 
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExclamationTriangleIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import { AlertTriangle, RotateCw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function GlobalError({
   error,
@@ -12,23 +13,22 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log error to error reporting service
     console.error('Global error boundary caught:', error);
   }, [error]);
 
   return (
     <html lang="ja">
       <body className="antialiased">
-        <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-orange-50 flex items-center justify-center px-4">
-          <div className="max-w-2xl w-full text-center">
+        <div className="flex min-h-screen items-center justify-center bg-background px-4">
+          <div className="w-full max-w-2xl text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
               className="mb-8"
             >
-              <div className="inline-flex items-center justify-center w-24 h-24 bg-red-100 rounded-full mb-6">
-                <ExclamationTriangleIcon className="w-12 h-12 text-red-600" />
+              <div className="mb-6 inline-flex size-24 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+                <AlertTriangle className="size-12" />
               </div>
             </motion.div>
 
@@ -37,11 +37,12 @@ export default function GlobalError({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+              <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
                 重大なエラーが発生しました
               </h1>
-              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-                申し訳ございません。アプリケーションで重大なエラーが発生しました。<br />
+              <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
+                申し訳ございません。アプリケーションで重大なエラーが発生しました。
+                <br />
                 ページを再読み込みして、もう一度お試しください。
               </p>
             </motion.div>
@@ -51,13 +52,11 @@ export default function GlobalError({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mb-8 p-4 bg-red-50 border border-red-200 rounded-lg"
+                className="mb-8 rounded-lg border border-destructive/20 bg-destructive/5 p-4"
               >
-                <p className="text-sm text-red-800 font-mono text-left">
-                  {error.message}
-                </p>
+                <p className="text-left font-mono text-sm text-destructive">{error.message}</p>
                 {error.stack && (
-                  <pre className="mt-2 text-xs text-red-700 overflow-auto text-left">
+                  <pre className="mt-2 overflow-auto text-left text-xs text-destructive/80">
                     {error.stack}
                   </pre>
                 )}
@@ -68,38 +67,30 @@ export default function GlobalError({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="flex flex-col items-center justify-center gap-4 sm:flex-row"
             >
-              <motion.button
-                onClick={reset}
-                className="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors shadow-lg"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ArrowPathIcon className="w-5 h-5" />
+              <Button size="lg" className="h-12 px-8 text-base" onClick={reset}>
+                <RotateCw data-icon="inline-start" />
                 再読み込み
-              </motion.button>
-
-              <motion.button
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-12 px-8 text-base"
                 onClick={() => (window.location.href = '/')}
-                className="flex items-center gap-2 px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:border-neutral-400 hover:text-neutral-900 transition-colors"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
               >
                 トップページへ戻る
-              </motion.button>
+              </Button>
             </motion.div>
 
-            <motion.div
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-16"
+              className="mt-16 text-sm text-muted-foreground"
             >
-              <p className="text-sm text-neutral-500">
-                問題が解決しない場合は、ブラウザのキャッシュをクリアしてお試しください。
-              </p>
-            </motion.div>
+              問題が解決しない場合は、ブラウザのキャッシュをクリアしてお試しください。
+            </motion.p>
           </div>
         </div>
       </body>

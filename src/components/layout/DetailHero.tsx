@@ -3,8 +3,9 @@
 import { ReactNode, useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
+import { Badge } from '@/components/ui/badge'
 
-interface Badge {
+interface HeroBadge {
   label: string
   icon?: ReactNode
 }
@@ -14,7 +15,7 @@ interface DetailHeroProps {
   subtitle?: string
   tagline?: string
   description?: string
-  badge?: Badge
+  badge?: HeroBadge
   imageSrc: string
   imageAlt: string
   imagePosition?: 'left' | 'right'
@@ -39,9 +40,9 @@ export function DetailHero({
   const active = eager || isInView
 
   return (
-    <section className="py-24 lg:py-32 bg-white">
-      <div className="container max-w-6xl mx-auto px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section className="py-16 lg:py-24">
+      <div className="container mx-auto max-w-6xl px-6 md:px-8">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Media */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -49,7 +50,7 @@ export function DetailHero({
             transition={{ duration: 0.5 }}
             className={imagePosition === 'left' ? 'order-1' : 'order-1 lg:order-2'}
           >
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 max-w-md mx-auto lg:max-w-none">
+            <div className="relative mx-auto aspect-square max-w-md overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10 lg:max-w-none">
               <Image
                 src={imageSrc}
                 alt={imageAlt}
@@ -72,39 +73,27 @@ export function DetailHero({
             className={imagePosition === 'left' ? 'order-2' : 'order-2 lg:order-1'}
           >
             {badge && (
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 text-gray-600 mb-6">
+              <Badge variant="secondary" className="mb-6 gap-1.5">
                 {badge.icon}
-                <span className="text-sm font-medium">{badge.label}</span>
-              </div>
+                {badge.label}
+              </Badge>
             )}
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
+            <h1 className="mb-2 text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
               {title}
             </h1>
 
-            {subtitle && (
-              <p className="text-lg text-gray-500 mb-3">
-                {subtitle}
-              </p>
-            )}
+            {subtitle && <p className="mb-3 text-lg text-muted-foreground">{subtitle}</p>}
 
             {tagline && (
-              <p className="text-xl text-gray-700 font-medium mb-6">
-                {tagline}
-              </p>
+              <p className="mb-6 text-xl font-medium text-foreground">{tagline}</p>
             )}
 
             {description && (
-              <p className="text-gray-600 leading-relaxed mb-8">
-                {description}
-              </p>
+              <p className="mb-8 leading-relaxed text-muted-foreground">{description}</p>
             )}
 
-            {actions && (
-              <div className="flex flex-wrap gap-3">
-                {actions}
-              </div>
-            )}
+            {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
           </motion.div>
         </div>
       </div>

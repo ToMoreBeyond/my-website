@@ -9,205 +9,227 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { products } from '@/data/products'
 import { teamMembers } from '@/data/team'
-import { Mail, MapPin, Clock } from 'lucide-react'
+import { Mail, MapPin, Clock, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
+const statusMap: Record<
+  string,
+  { text: string; variant: 'default' | 'secondary' | 'outline' }
+> = {
+  released: { text: 'RELEASED', variant: 'default' },
+  beta: { text: 'BETA', variant: 'secondary' },
+  'in-development': { text: 'IN DEVELOPMENT', variant: 'outline' },
+}
+
+const contactInfo = [
+  { Icon: Mail, label: 'Email', value: 'contact@tomorebeyond.co' },
+  { Icon: MapPin, label: 'Location', value: 'Tokyo, Japan' },
+  { Icon: Clock, label: 'Response', value: '24時間以内' },
+]
+
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    // Wait for loading overlay to complete
     const initTimeout = setTimeout(() => {
-      // Scroll-triggered fade-in animations
-      const scrollItems = document.querySelectorAll('.js-scroll-item')
-      scrollItems.forEach((item) => {
-        gsap.fromTo(item,
-          { opacity: 0, y: 50 },
+      const titles = document.querySelectorAll('.js-title')
+      titles.forEach((title) => {
+        gsap.fromTo(
+          title,
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 85%",
-              toggleActions: "play none none none"
-            }
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: title, start: 'top 85%' },
           }
         )
       })
 
-      // Section titles animation
-      const titles = document.querySelectorAll('.js-title')
-      titles.forEach((title) => {
-        gsap.fromTo(title,
-          { opacity: 0, x: -30 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: title,
-              start: "top 85%"
-            }
-          }
-        )
-      })
-
-      // Stagger animations for cards
       const cardGroups = document.querySelectorAll('.js-card-group')
       cardGroups.forEach((group) => {
         const cards = group.querySelectorAll('.js-card')
-        gsap.fromTo(cards,
-          { opacity: 0, y: 60 },
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 48 },
           {
             opacity: 1,
             y: 0,
             duration: 0.8,
-            stagger: 0.15,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: group,
-              start: "top 80%"
-            }
+            stagger: 0.12,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: group, start: 'top 80%' },
           }
         )
       })
-    }, 3500) // Wait for loading animation
+
+      const items = document.querySelectorAll('.js-scroll-item')
+      items.forEach((item) => {
+        gsap.fromTo(
+          item,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: item, start: 'top 85%' },
+          }
+        )
+      })
+    }, 800)
 
     return () => {
       clearTimeout(initTimeout)
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
   }, [])
-
-  const statusLabels: Record<string, { text: string; style: string }> = {
-    'in-development': { text: 'DEVELOPING', style: 'bg-gray-100 text-gray-700 border-gray-300' },
-    'beta': { text: 'BETA', style: 'bg-gray-100 text-gray-700 border-gray-300' },
-    'released': { text: 'RELEASED', style: 'bg-gray-900 text-white border-gray-900' }
-  }
 
   return (
     <>
       <Header />
 
-      <main ref={mainRef} className="min-h-screen bg-white" role="main">
-
+      <main ref={mainRef} id="main-content" className="min-h-screen bg-background" role="main">
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24 lg:pt-28">
-          <div className="container max-w-5xl mx-auto px-6 md:px-8 text-center">
-            <div className="mb-10">
+        <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-24 lg:pt-28">
+          {/* Subtle background grid */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,black,transparent)]"
+          />
+
+          <div className="container relative z-10 mx-auto max-w-5xl px-6 text-center md:px-8">
+            <div className="mb-8 flex justify-center">
+              <Badge variant="outline" className="rounded-full px-4 py-1.5 text-muted-foreground">
+                Mobile App Studio · Tokyo
+              </Badge>
+            </div>
+
+            <div className="mb-10 flex justify-center">
               <Image
                 src="/images/logos/tomorebeyond-logo.png"
                 alt="ToMoreBeyond"
-                width={160}
-                height={160}
+                width={140}
+                height={140}
                 priority
-                className="mx-auto"
+                className="size-28 md:size-32"
               />
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tight">
+            <h1 className="mb-8 text-5xl font-black tracking-tight text-foreground md:text-7xl lg:text-8xl">
               JUST DO IT!
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               革新的なモバイルアプリケーションで、人々の日常をより豊かに
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="#products"
-                style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
-                className="px-8 py-4 font-bold hover:opacity-90 transition-opacity duration-200"
-              >
-                PRODUCTS
-              </Link>
-              <Link
-                href="#contact"
-                className="border-2 border-gray-900 text-gray-900 px-8 py-4 font-bold hover:bg-gray-100 transition-colors duration-200"
-              >
-                CONTACT
-              </Link>
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <Button asChild size="lg" className="h-12 px-8 text-base">
+                <Link href="#products">
+                  PRODUCTS
+                  <ArrowRight data-icon="inline-end" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 px-8 text-base">
+                <Link href="#contact">CONTACT</Link>
+              </Button>
             </div>
           </div>
 
           {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400">
+          <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted-foreground">
             <span className="text-sm font-medium tracking-wide">Scroll</span>
-            <div className="w-[1px] h-12 bg-gradient-to-b from-gray-400 to-transparent" />
+            <div className="h-12 w-px bg-gradient-to-b from-border to-transparent" />
           </div>
         </section>
 
         {/* Products Section */}
-        <section id="products" className="py-24 md:py-32 bg-gray-50">
-          <div className="container max-w-5xl mx-auto px-6 md:px-8">
+        <section id="products" className="bg-muted/30 py-24 md:py-32">
+          <div className="container mx-auto max-w-5xl px-6 md:px-8">
             <div className="mb-16">
-              <h2 className="js-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
+              <p className="mb-3 text-sm font-medium uppercase tracking-widest text-muted-foreground">
                 Products
+              </p>
+              <h2 className="js-title text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
+                プロダクト
               </h2>
-              <p className="text-lg text-gray-500">プロダクト紹介</p>
             </div>
 
-            <div className="js-card-group space-y-8">
+            <div className="js-card-group flex flex-col gap-8">
               {products.map((product, index) => {
-                const status = statusLabels[product.status] || statusLabels['in-development']
+                const status = statusMap[product.status] ?? statusMap['in-development']
                 const isReversed = index % 2 === 1
 
                 return (
-                  <div
+                  <Card
                     key={product.id}
-                    className="js-card bg-white p-6 md:p-8 rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-200"
+                    className="js-card overflow-hidden p-0 transition-shadow duration-300 hover:shadow-lg"
                   >
-                    <div className={`flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 items-center`}>
+                    <div
+                      className={`flex flex-col ${
+                        isReversed ? 'md:flex-row-reverse' : 'md:flex-row'
+                      }`}
+                    >
                       {/* Image */}
-                      <div className="w-full md:w-1/3 aspect-square relative bg-gray-100 rounded-lg overflow-hidden">
+                      <div className="relative aspect-square w-full overflow-hidden bg-muted md:w-2/5">
                         <Image
                           src={product.image}
                           alt={product.name}
                           fill
-                          className="object-cover hover:scale-105 transition-transform duration-500"
-                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover transition-transform duration-500 hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 40vw"
                           loading="lazy"
                         />
                       </div>
 
                       {/* Content */}
-                      <div className="flex-1 w-full">
-                        <div className="flex items-start justify-between mb-4">
-                          <span className={`px-3 py-1 text-xs font-medium rounded-full border ${status.style}`}>
-                            {status.text}
+                      <div className="flex flex-1 flex-col justify-center p-6 md:p-10">
+                        <div className="mb-4 flex items-center gap-3">
+                          <Badge variant={status.variant}>{status.text}</Badge>
+                          <span className="text-sm font-medium text-muted-foreground">
+                            {product.nameEn}
                           </span>
                         </div>
 
-                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                        <CardTitle className="mb-3 text-2xl md:text-3xl">
                           {product.name}
-                        </h3>
-                        <p className="text-sm text-gray-500 mb-4 font-medium">
-                          {product.nameEn}
-                        </p>
-                        <p className="text-gray-700 leading-relaxed mb-4">
-                          {product.tagline}
-                        </p>
-                        <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                        </CardTitle>
+                        <p className="mb-3 font-medium text-foreground">{product.tagline}</p>
+                        <CardDescription className="mb-6 line-clamp-3 leading-relaxed">
                           {product.description}
-                        </p>
+                        </CardDescription>
 
-                        <Link
-                          href={`/products/${product.id}`}
-                          style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
-                          className="inline-block px-6 py-3 font-medium rounded-lg hover:opacity-90 transition-opacity"
-                        >
-                          VIEW DETAILS
-                        </Link>
+                        <div>
+                          <Button asChild variant="outline" size="lg">
+                            <Link href={`/products/${product.id}`}>
+                              VIEW DETAILS
+                              <ArrowRight data-icon="inline-end" />
+                            </Link>
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 )
               })}
             </div>
@@ -215,148 +237,119 @@ export default function Home() {
         </section>
 
         {/* Team Section */}
-        <section id="team" className="py-24 md:py-32 bg-white">
-          <div className="container max-w-5xl mx-auto px-6 md:px-8">
+        <section id="team" className="py-24 md:py-32">
+          <div className="container mx-auto max-w-5xl px-6 md:px-8">
             <div className="mb-16">
-              <h2 className="js-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
+              <p className="mb-3 text-sm font-medium uppercase tracking-widest text-muted-foreground">
                 Team
+              </p>
+              <h2 className="js-title text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
+                チームメンバー
               </h2>
-              <p className="text-lg text-gray-500">チームメンバー</p>
             </div>
 
-            <div className="js-card-group grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="js-card-group grid grid-cols-1 gap-6 md:grid-cols-3">
               {teamMembers.map((member) => (
-                <div
-                  key={member.id}
-                  className="js-card bg-gray-50 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-200"
-                >
-                  {/* Avatar */}
-                  <div className="w-32 h-32 mx-auto mb-6 relative rounded-full overflow-hidden bg-gray-200">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                      sizes="128px"
-                      loading="lazy"
-                    />
-                  </div>
-
-                  {/* Info */}
-                  <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-xs font-medium text-gray-500 mb-4">
-                    {member.positionEn}
-                  </p>
-                  <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                    {member.bio}
-                  </p>
-
-                  <Link
-                    href={`/team/${member.id}`}
-                    className="inline-block text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                  >
-                    詳しく見る →
-                  </Link>
-                </div>
+                <Card key={member.id} className="js-card text-center">
+                  <CardHeader className="items-center">
+                    <Avatar className="mx-auto mb-4 size-28">
+                      <AvatarImage src={member.image} alt={member.name} className="object-cover" />
+                      <AvatarFallback className="text-xl">
+                        {member.nameEn?.[0] ?? member.name[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                    <CardTitle className="text-xl">{member.name}</CardTitle>
+                    <Badge variant="secondary" className="mt-2">
+                      {member.positionEn}
+                    </Badge>
+                  </CardHeader>
+                  <CardContent className="flex flex-1 flex-col">
+                    <CardDescription className="mb-5 leading-relaxed">
+                      {member.bio}
+                    </CardDescription>
+                    <div className="mt-auto">
+                      <Button asChild variant="ghost" size="sm">
+                        <Link href={`/team/${member.id}`}>
+                          詳しく見る
+                          <ArrowUpRight data-icon="inline-end" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-24 md:py-32 bg-gray-50">
-          <div className="container max-w-5xl mx-auto px-6 md:px-8">
+        <section id="contact" className="bg-muted/30 py-24 md:py-32">
+          <div className="container mx-auto max-w-5xl px-6 md:px-8">
             <div className="mb-16 text-center">
-              <h2 className="js-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
+              <p className="mb-3 text-sm font-medium uppercase tracking-widest text-muted-foreground">
                 Contact
+              </p>
+              <h2 className="js-title text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
+                お問い合わせ
               </h2>
-              <p className="text-lg text-gray-500">お問い合わせ</p>
             </div>
 
-            <div className="js-scroll-item max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-xl border border-gray-200">
-              {/* Contact Info */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                {[
-                  { Icon: Mail, label: 'Email', value: 'contact@tomorebeyond.co' },
-                  { Icon: MapPin, label: 'Location', value: 'Tokyo, Japan' },
-                  { Icon: Clock, label: 'Response', value: '24時間以内' },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: '#1a1a1a' }}
-                    >
-                      <item.Icon className="w-5 h-5" style={{ color: '#ffffff' }} />
+            <Card className="js-scroll-item mx-auto max-w-2xl">
+              <CardContent className="p-2 md:p-6">
+                {/* Contact Info */}
+                <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+                  {contactInfo.map((item) => (
+                    <div key={item.label} className="flex items-center gap-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                        <item.Icon className="size-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-muted-foreground">{item.label}</p>
+                        <p className="text-sm font-medium text-foreground">{item.value}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium">{item.label}</p>
-                      <p className="text-sm font-medium text-gray-900">{item.value}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Contact Form */}
-              <form
-                className="space-y-6"
-                name="contact"
-                method="POST"
-                data-netlify="true"
-              >
-                <input type="hidden" name="form-name" value="contact" />
-
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700">
-                    お名前
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white text-gray-900 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors"
-                    placeholder="山田太郎"
-                  />
+                  ))}
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700">
-                    メールアドレス
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white text-gray-900 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors"
-                    placeholder="yamada@example.com"
-                  />
-                </div>
+                <Separator className="mb-8" />
 
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700">
-                    お問い合わせ内容
-                  </label>
-                  <textarea
-                    name="message"
-                    required
-                    rows={4}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white text-gray-900 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-colors resize-none"
-                    placeholder="お問い合わせ内容をご記入ください"
-                  />
-                </div>
-
-                <div className="text-center pt-4">
-                  <button
-                    type="submit"
-                    style={{ backgroundColor: '#1a1a1a', color: '#ffffff' }}
-                    className="px-10 py-4 font-medium text-lg rounded-lg hover:opacity-90 transition-opacity duration-200"
-                  >
-                    送信する
-                  </button>
-                </div>
-              </form>
-            </div>
+                {/* Contact Form */}
+                <form name="contact" method="POST" data-netlify="true">
+                  <input type="hidden" name="form-name" value="contact" />
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel htmlFor="name">お名前</FieldLabel>
+                      <Input id="name" name="name" required placeholder="山田太郎" />
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="email">メールアドレス</FieldLabel>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        placeholder="yamada@example.com"
+                      />
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="message">お問い合わせ内容</FieldLabel>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        required
+                        rows={4}
+                        placeholder="お問い合わせ内容をご記入ください"
+                      />
+                    </Field>
+                    <Field>
+                      <Button type="submit" size="lg" className="mx-auto mt-2 h-12 px-10 text-base">
+                        送信する
+                      </Button>
+                    </Field>
+                  </FieldGroup>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </section>
       </main>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { M_PLUS_Rounded_1c, Zen_Maru_Gothic, Noto_Sans_JP } from 'next/font/google';
+import { M_PLUS_Rounded_1c, Zen_Maru_Gothic, Noto_Sans_JP, Geist } from 'next/font/google';
 import "./globals.css";
 import RootClient from "./RootClient";
 import {
@@ -8,6 +8,10 @@ import {
   generateWebSiteStructuredData,
 } from "@/lib/seo";
 import { env } from "@/lib/env";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
 
 // Optimized font loading with next/font
 const mPlusRounded = M_PLUS_Rounded_1c({
@@ -121,7 +125,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${mPlusRounded.variable} ${zenMaruGothic.variable} ${notoSansJP.variable}`}>
+    <html lang="ja" className={cn(mPlusRounded.variable, zenMaruGothic.variable, notoSansJP.variable, "font-sans", geist.variable)}>
       <head>
         {/* Resource hints for performance */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

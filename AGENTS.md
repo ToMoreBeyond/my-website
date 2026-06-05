@@ -22,6 +22,16 @@
 - Imports: Use `@/` alias from `tsconfig` for absolute paths.
 - Keep components focused; split UI into `components/{ui|sections|effects|common}/`.
 
+## UI Components — shadcn/ui (REQUIRED)
+- **All UI must be built with [shadcn/ui](https://ui.shadcn.com) components.** Before writing a custom styled `div`, check for an existing shadcn component.
+- Config: `components.json` (style `radix-nova`, baseColor `neutral`, icons `lucide`). Installed components live in `src/components/ui/`.
+- Add components with `npx shadcn@latest add <name>`; never re-add an installed one.
+- Use **semantic color tokens** only (`bg-primary`, `text-muted-foreground`, `bg-card`) — no raw colors (`bg-blue-500`) or inline hex.
+- Prefer built-in variants (`variant`, `size`) over custom classes; `className` is for layout, not color/typography overrides.
+- Spacing via `gap-*` (not `space-x/y-*`); equal w/h via `size-*`; conditional classes via `cn()` from `@/lib/utils`.
+- Tone: refined monochrome (white-based, minimal). Don't introduce accent colors.
+- Skill reference: `.agents/skills/shadcn/` (`SKILL.md`, `rules/`). Use `npx shadcn@latest docs <component>` for current APIs.
+
 ## Testing Guidelines
 - No test suite yet. Prefer: Jest + React Testing Library for units; Playwright for e2e.
 - Place tests under `__tests__/` or alongside files: `ComponentName.test.tsx`.

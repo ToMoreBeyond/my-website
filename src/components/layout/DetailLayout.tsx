@@ -1,10 +1,19 @@
 'use client'
 
-import { PropsWithChildren, useMemo } from 'react'
+import { Fragment, PropsWithChildren, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ArrowLeft } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
+import { Button } from '@/components/ui/button'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 
 type Crumb = { label: string; href?: string }
 
@@ -41,7 +50,7 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
   }, [breadcrumbs])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header />
 
       {jsonLd && (
@@ -52,30 +61,36 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
       )}
 
       {/* Breadcrumbs + Back */}
-      <div className="container pt-6 pb-2">
-        <div className="flex items-center justify-between">
-          <nav className="flex items-center text-sm text-neutral-500">
-            {breadcrumbs.map((c, i) => (
-              <div key={i} className="flex items-center">
-                {i > 0 && <ChevronRightIcon className="w-4 h-4 mx-2 text-neutral-400" />}
-                {c.href ? (
-                  <Link href={c.href} className="hover:text-neutral-800 transition-colors">
-                    {c.label}
-                  </Link>
-                ) : (
-                  <span className="text-neutral-700">{c.label}</span>
-                )}
-              </div>
-            ))}
-          </nav>
+      <div className="container mx-auto max-w-6xl px-6 pb-2 pt-24 md:px-8 lg:pt-28">
+        <div className="flex items-center justify-between gap-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              {breadcrumbs.map((c, i) => (
+                <Fragment key={i}>
+                  {i > 0 && <BreadcrumbSeparator />}
+                  <BreadcrumbItem>
+                    {c.href ? (
+                      <BreadcrumbLink asChild>
+                        <Link href={c.href}>{c.label}</Link>
+                      </BreadcrumbLink>
+                    ) : (
+                      <BreadcrumbPage>{c.label}</BreadcrumbPage>
+                    )}
+                  </BreadcrumbItem>
+                </Fragment>
+              ))}
+            </BreadcrumbList>
+          </Breadcrumb>
+
           {parent?.href && (
-            <button
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => router.push(parent.href!)}
-              className="inline-flex items-center px-3 py-2 text-sm rounded-lg border border-neutral-300 text-neutral-700 hover:border-neutral-400 hover:text-neutral-900 transition-colors"
             >
-              <ArrowLeftIcon className="w-4 h-4 mr-1" />
+              <ArrowLeft data-icon="inline-start" />
               戻る
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -85,18 +100,23 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
 
       {/* Unified CTA */}
       {cta && (
-        <section className="section">
-          <div className="container text-center">
-            <h2 className="text-4xl font-serif font-semibold text-neutral-900 mb-6">{cta.title}</h2>
+        <section className="border-t border-border bg-muted/30 py-24 lg:py-32">
+          <div className="container mx-auto max-w-3xl px-6 text-center md:px-8">
+            <h2 className="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              {cta.title}
+            </h2>
             {cta.description && (
-              <p className="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">{cta.description}</p>
+              <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
+                {cta.description}
+              </p>
             )}
-            <button
+            <Button
+              size="lg"
+              className="h-12 px-10 text-base"
               onClick={() => router.push(cta.buttonHref || '/#contact')}
-              className="inline-flex items-center px-12 py-4 bg-olive-600 text-white rounded-full text-lg font-semibold hover:bg-olive-700 transition-colors"
             >
               {cta.buttonLabel || 'お問い合わせ'}
-            </button>
+            </Button>
           </div>
         </section>
       )}

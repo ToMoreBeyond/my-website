@@ -1,9 +1,10 @@
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeft } from 'lucide-react';
 import { teamMembers } from '@/data/team';
 import Link from 'next/link';
 import { TeamDetailClient } from './TeamDetailClient';
 import { DetailLayout } from '@/components/layout/DetailLayout';
 import { teamBreadcrumbs } from '@/lib/breadcrumbs';
+import { Button } from '@/components/ui/button';
 
 // Generate static params for all team members
 export async function generateStaticParams() {
@@ -24,17 +25,16 @@ export default async function TeamMemberDetail({ params }: PageProps) {
 
   if (!member) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="text-4xl font-serif font-semibold text-neutral-900 mb-4">メンバーが見つかりません</h1>
-          <p className="text-neutral-600 mb-8">指定されたチームメンバーは存在しません。</p>
-          <Link 
-            href="/#team"
-            className="inline-flex items-center px-6 py-3 bg-olive-600 text-white rounded-lg hover:bg-olive-700 transition-colors"
-          >
-            <ArrowLeftIcon className="w-5 h-5 mr-2" />
-            チーム一覧に戻る
-          </Link>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground">メンバーが見つかりません</h1>
+          <p className="mb-8 text-muted-foreground">指定されたチームメンバーは存在しません。</p>
+          <Button asChild size="lg">
+            <Link href="/#team">
+              <ArrowLeft data-icon="inline-start" />
+              チーム一覧に戻る
+            </Link>
+          </Button>
         </div>
       </div>
     );
