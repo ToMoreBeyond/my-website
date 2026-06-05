@@ -1,26 +1,20 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { CheckIcon, ClockIcon, BeakerIcon, CheckCircleIcon, ShareIcon } from '@heroicons/react/24/outline';
+import { useRef, type ReactNode } from 'react';
+import { Check, Clock, FlaskConical, CheckCircle2, Share2 } from 'lucide-react';
 import { Product } from '@/data/products';
 import { DetailHero } from '@/components/layout/DetailHero';
 import { RoadmapTimeline } from '@/components/roadmap/RoadmapTimeline';
 import { getRoadmapByProductId } from '@/data/roadmaps';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
-const statusConfig = {
-  'in-development': {
-    icon: <ClockIcon className="w-4 h-4" />,
-    label: '開発中',
-  },
-  'beta': {
-    icon: <BeakerIcon className="w-4 h-4" />,
-    label: 'ベータ版',
-  },
-  'released': {
-    icon: <CheckCircleIcon className="w-4 h-4" />,
-    label: 'リリース済み',
-  }
+const statusConfig: Record<Product['status'], { icon: ReactNode; label: string }> = {
+  'in-development': { icon: <Clock />, label: '開発中' },
+  beta: { icon: <FlaskConical />, label: 'ベータ版' },
+  released: { icon: <CheckCircle2 />, label: 'リリース済み' },
 };
 
 interface ProductDetailClientProps {
@@ -38,7 +32,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const infoInView = useInView(infoRef, { once: true, margin: '-100px' });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-background">
       <DetailHero
         title={product.name}
         subtitle={product.nameEn}
@@ -50,53 +44,55 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         imagePosition="right"
         actions={
           <>
-            <span
-              className="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium"
-              style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF' }}
-            >
+            <Badge variant="outline" className="h-9 gap-1.5 rounded-md px-4">
+              <Clock />
               リリース予定: {product.releaseSchedule}
-            </span>
-            <button
-              className="inline-flex items-center px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors"
+            </Badge>
+            <Button
+              variant="outline"
+              size="lg"
               onClick={() => navigator.share?.({ title: product.name, url: window.location.href })}
             >
-              <ShareIcon className="w-4 h-4 mr-2" />
+              <Share2 data-icon="inline-start" />
               シェア
-            </button>
+            </Button>
           </>
         }
       />
 
       {/* Features Section */}
-      <section ref={featuresRef} className="py-24 lg:py-32 bg-gray-50">
-        <div className="container max-w-6xl mx-auto px-6 md:px-8">
+      <section ref={featuresRef} className="bg-muted/30 py-24 lg:py-32">
+        <div className="container mx-auto max-w-6xl px-6 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-16"
+            className="mb-16 text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">主な機能</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              主な機能
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
               {product.name}が提供する機能
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {product.features.map((feature, index) => (
               <motion.div
                 key={feature}
                 initial={{ opacity: 0, y: 24 }}
                 animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="bg-white border border-gray-200 rounded-xl p-6 hover:border-gray-300 hover:shadow-lg transition-all duration-200"
               >
-                <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <CheckIcon className="w-4 h-4 text-gray-600" />
-                  </div>
-                  <span className="text-gray-900 font-medium">{feature}</span>
-                </div>
+                <Card className="h-full transition-shadow duration-200 hover:shadow-md">
+                  <CardContent className="flex items-center gap-3">
+                    <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                      <Check className="size-4" />
+                    </div>
+                    <span className="font-medium text-foreground">{feature}</span>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -104,18 +100,18 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       </section>
 
       {/* Tech Stack Section */}
-      <section ref={techRef} className="py-24 lg:py-32 bg-white">
-        <div className="container max-w-6xl mx-auto px-6 md:px-8">
+      <section ref={techRef} className="py-24 lg:py-32">
+        <div className="container mx-auto max-w-6xl px-6 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={techInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-16"
+            className="mb-16 text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">技術スタック</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              最新の技術を駆使して開発
-            </p>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              技術スタック
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">最新の技術を駆使して開発</p>
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-3">
@@ -125,9 +121,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={techInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
               >
-                {tech}
+                <Badge variant="secondary" className="rounded-full px-4 py-1.5 text-sm">
+                  {tech}
+                </Badge>
               </motion.div>
             ))}
           </div>
@@ -136,36 +133,39 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
       {/* Roadmap Section */}
       {roadmap && (
-        <section id="roadmap" className="py-24 lg:py-32 bg-gray-50">
-          <div className="container max-w-6xl mx-auto px-6 md:px-8">
+        <section id="roadmap" className="bg-muted/30 py-24 lg:py-32">
+          <div className="container mx-auto max-w-6xl px-6 md:px-8">
             <RoadmapTimeline roadmap={roadmap} />
           </div>
         </section>
       )}
 
       {/* Additional Info Section */}
-      <section ref={infoRef} className="py-24 lg:py-32 bg-white">
-        <div className="container max-w-6xl mx-auto px-6 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <section ref={infoRef} className="py-24 lg:py-32">
+        <div className="container mx-auto max-w-6xl px-6 md:px-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             {/* Target Users */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={infoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-50 rounded-2xl p-8"
             >
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">ターゲットユーザー</h3>
-              <div className="space-y-3">
-                {product.targetUsers.map((user) => (
-                  <div
-                    key={user}
-                    className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200"
-                  >
-                    <CheckIcon className="w-4 h-4 text-gray-600 flex-shrink-0" />
-                    <span className="text-gray-700">{user}</span>
+              <Card className="h-full">
+                <CardContent className="p-2 md:p-4">
+                  <h3 className="mb-6 text-xl font-semibold text-foreground">ターゲットユーザー</h3>
+                  <div className="flex flex-col gap-3">
+                    {product.targetUsers.map((user) => (
+                      <div
+                        key={user}
+                        className="flex items-center gap-3 rounded-lg border border-border bg-background p-4"
+                      >
+                        <Check className="size-4 shrink-0 text-muted-foreground" />
+                        <span className="text-foreground">{user}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </CardContent>
+              </Card>
             </motion.div>
 
             {/* Platform Details */}
@@ -173,30 +173,37 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               initial={{ opacity: 0, y: 24 }}
               animate={infoInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-gray-50 rounded-2xl p-8"
             >
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">対応プラットフォーム</h3>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">対応デバイス</h4>
-                  <ul className="space-y-2">
-                    {product.supportedDevices.map((device) => (
-                      <li key={device} className="flex items-center text-gray-700">
-                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-3" />
-                        {device}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">システム要件</h4>
-                  <p className="text-gray-700">{product.minimumOS}</p>
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">対象地域</h4>
-                  <p className="text-gray-700">{product.targetRegion}</p>
-                </div>
-              </div>
+              <Card className="h-full">
+                <CardContent className="flex flex-col gap-6 p-2 md:p-4">
+                  <h3 className="text-xl font-semibold text-foreground">対応プラットフォーム</h3>
+                  <div>
+                    <h4 className="mb-3 text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                      対応デバイス
+                    </h4>
+                    <ul className="flex flex-col gap-2">
+                      {product.supportedDevices.map((device) => (
+                        <li key={device} className="flex items-center text-foreground">
+                          <span className="mr-3 size-1.5 rounded-full bg-muted-foreground" />
+                          {device}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="mb-3 text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                      システム要件
+                    </h4>
+                    <p className="text-foreground">{product.minimumOS}</p>
+                  </div>
+                  <div>
+                    <h4 className="mb-3 text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                      対象地域
+                    </h4>
+                    <p className="text-foreground">{product.targetRegion}</p>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           </div>
         </div>

@@ -21,6 +21,21 @@ Kiro-style Spec Driven Development implementation using claude code slash comman
 ## Development Guidelines
 - Think in English, but generate responses in Japanese (思考は英語、回答の生成は日本語で行うように)
 
+## UI / Component Rules (MUST FOLLOW)
+**アプリケーションのUIは原則すべて [shadcn/ui](https://ui.shadcn.com) のコンポーネントで構築する。**
+独自の styled `div` を新規に作る前に、必ず該当する shadcn/ui コンポーネントが無いか確認すること。
+
+- **基盤**: Next.js 16 (App Router) + React 19 + Tailwind CSS v4。設定は `components.json`（style: `radix-nova`, baseColor: `neutral`, iconLibrary: `lucide`）。
+- **トーン**: 洗練されたモノトーン（白基調・ミニマル）。アクセントカラーは増やさない。
+- **コンポーネント追加**: `npx shadcn@latest add <name>`。導入済みは `src/components/ui/` を確認してから使う（再追加しない）。
+- **セマンティックカラーのみ**: `bg-primary` / `text-muted-foreground` / `bg-card` 等を使う。`bg-blue-500` 等の生の色や `#1a1a1a` のインラインstyleは禁止。
+- **className はレイアウト用**: コンポーネントの色・タイポgrafを上書きしない。バリアント（`variant="outline"`, `size="lg"` 等）を優先。
+- **間隔は `gap-*`**（`space-x/y-*` は使わない）。縦積みは `flex flex-col gap-*`。
+- **正方形は `size-*`**（`w-10 h-10` ではなく `size-10`）。
+- **条件付きクラスは `cn()`**（`@/lib/utils`）を使う。
+- **置き換えの指針**: ボタン→`Button`、カード→`Card`(+CardHeader/Title/Content/Footer)、バッジ→`Badge`、区切り線→`Separator`、フォーム→`Field`+`Input`/`Textarea`、モバイルメニュー→`Sheet`、ナビ→`NavigationMenu`、アバター→`Avatar`(+`AvatarFallback`)。
+- 詳細ルールは shadcn スキル（`.agents/skills/shadcn/`）の `SKILL.md` / `rules/` を参照。新規UI実装・修正時は `npx shadcn@latest docs <component>` で最新APIを確認する。
+
 ## Workflow
 
 ### Phase 0: Steering (Optional)

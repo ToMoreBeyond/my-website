@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeft } from 'lucide-react';
 import { products } from '@/data/products';
 import { DetailLayout } from '@/components/layout/DetailLayout';
 import { productBreadcrumbs } from '@/lib/breadcrumbs';
 import { ProductDetailClient } from './ProductDetailClient';
+import { Button } from '@/components/ui/button';
 
 // Generate static params for all products
 export async function generateStaticParams() {
@@ -24,17 +25,16 @@ export default async function ProductDetail({ params }: PageProps) {
   
   if (!product) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="text-4xl font-serif font-semibold text-neutral-900 mb-4">プロダクトが見つかりません</h1>
-          <p className="text-neutral-600 mb-8">指定されたプロダクトは存在しません。</p>
-          <Link 
-            href="/#products"
-            className="inline-flex items-center px-6 py-3 bg-olive-600 text-white rounded-lg hover:bg-olive-700 transition-colors"
-          >
-            <ArrowLeftIcon className="w-5 h-5 mr-2" />
-            プロダクト一覧に戻る
-          </Link>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground">プロダクトが見つかりません</h1>
+          <p className="mb-8 text-muted-foreground">指定されたプロダクトは存在しません。</p>
+          <Button asChild size="lg">
+            <Link href="/#products">
+              <ArrowLeft data-icon="inline-start" />
+              プロダクト一覧に戻る
+            </Link>
+          </Button>
         </div>
       </div>
     );

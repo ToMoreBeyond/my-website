@@ -1,9 +1,19 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { Menu } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+  SheetClose,
+} from '@/components/ui/sheet';
 
 const navigation = [
   { name: 'Products', href: '#products', id: 'products' },
@@ -12,62 +22,20 @@ const navigation = [
 ];
 
 export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        isMobileMenuOpen &&
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target as Node) &&
-        !(event.target as Element).closest('button[aria-label="Toggle menu"]')
-      ) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    if (isMobileMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    if (isMobileMenuOpen) {
-      document.addEventListener('keydown', handleEscapeKey);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
-  }, [isMobileMenuOpen]);
-
   const scrollToSection = (href: string) => {
     const id = href.startsWith('#') ? href.substring(1) : href;
-    const onHome = pathname === '/';
-    if (onHome) {
+    if (pathname === '/') {
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -77,84 +45,87 @@ export function Header() {
     } else {
       router.push('/#' + id);
     }
-    setIsMobileMenuOpen(false);
+    setOpen(false);
   };
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-200 ${
+      className={cn(
+        'fixed top-0 z-50 w-full transition-colors duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-sm border-b border-gray-100'
-          : 'bg-white'
-      }`}
+          ? 'border-b border-border/60 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60'
+          : 'border-b border-transparent bg-transparent'
+      )}
     >
-      <nav className="max-w-6xl mx-auto px-6 md:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/logos/tomorebeyond-logo.png"
-              alt="ToMoreBeyond"
-              width={44}
-              height={44}
-              className="w-10 h-10 lg:w-11 lg:h-11"
-              priority
-            />
-          </Link>
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8 lg:h-20">
+        {/* Logo */}
+        <Link href="/" className="flex items-center" aria-label="ToMoreBeyond ホーム">
+          <Image
+            src="/images/logos/tomorebeyond-logo.png"
+            alt="ToMoreBeyond"
+            width={44}
+            height={44}
+            className="size-10 lg:size-11"
+            priority
+          />
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navigation.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                {item.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-              aria-expanded={isMobileMenuOpen}
-              className="p-2 -mr-2 text-gray-600 hover:text-gray-900 transition-colors"
+        {/* Desktop Navigation */}
+        <div className="hidden items-center gap-1 md:flex">
+          {navigation.map((item) => (
+            <Button
+              key={item.name}
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={() => scrollToSection(item.href)}
             >
-              {isMobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
+              {item.name}
+            </Button>
+          ))}
+          <Button
+            size="sm"
+            className="ml-2"
+            onClick={() => scrollToSection('#contact')}
+          >
+            お問い合わせ
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div
-            ref={mobileMenuRef}
-            className="md:hidden border-t border-gray-100 bg-white"
-          >
-            <div className="py-4 space-y-1">
-              {navigation.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  className="block w-full text-left px-2 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
-                >
-                  {item.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="md:hidden">
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="メニューを開く">
+                <Menu />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-72">
+              <SheetTitle className="px-5 pt-5 text-base">Menu</SheetTitle>
+              <div className="flex flex-col gap-1 px-3 py-2">
+                {navigation.map((item) => (
+                  <SheetClose asChild key={item.name}>
+                    <Button
+                      variant="ghost"
+                      className="h-11 justify-start text-base text-muted-foreground hover:text-foreground"
+                      onClick={() => scrollToSection(item.href)}
+                    >
+                      {item.name}
+                    </Button>
+                  </SheetClose>
+                ))}
+                <SheetClose asChild>
+                  <Button
+                    className="mt-3 h-11 text-base"
+                    onClick={() => scrollToSection('#contact')}
+                  >
+                    お問い合わせ
+                  </Button>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </nav>
     </header>
   );

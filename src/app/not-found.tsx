@@ -2,32 +2,33 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { HomeIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { Home, ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4">
-      <div className="max-w-2xl w-full text-center">
-        <motion.div
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-2xl text-center">
+        <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="mb-4 text-8xl font-black tracking-tight text-foreground md:text-9xl"
         >
-          <h1 className="text-9xl font-bold text-primary-600 mb-4">
-            404
-          </h1>
-        </motion.div>
+          404
+        </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h2 className="text-3xl md:text-4xl font-semibold text-neutral-900 mb-6">
+          <h2 className="mb-6 text-3xl font-semibold text-foreground md:text-4xl">
             ページが見つかりません
           </h2>
-          <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-            お探しのページは存在しないか、移動または削除された可能性があります。<br />
+          <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
+            お探しのページは存在しないか、移動または削除された可能性があります。
+            <br />
             URLをご確認いただくか、トップページからお探しください。
           </p>
         </motion.div>
@@ -36,47 +37,37 @@ export default function NotFound() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
-          <Link href="/">
-            <motion.button
-              className="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors shadow-lg"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <HomeIcon className="w-5 h-5" />
+          <Button asChild size="lg" className="h-12 px-8 text-base">
+            <Link href="/">
+              <Home data-icon="inline-start" />
               トップページへ戻る
-            </motion.button>
-          </Link>
-
-          <motion.button
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="h-12 px-8 text-base"
             onClick={() => window.history.back()}
-            className="flex items-center gap-2 px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:border-neutral-400 hover:text-neutral-900 transition-colors"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
           >
-            <ArrowLeftIcon className="w-5 h-5" />
+            <ArrowLeft data-icon="inline-start" />
             前のページへ戻る
-          </motion.button>
+          </Button>
         </motion.div>
 
-        <motion.div
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16"
+          className="mt-16 text-sm text-muted-foreground"
         >
-          <p className="text-sm text-neutral-500">
-            引き続き問題が発生する場合は、
-            <Link
-              href="/#contact"
-              className="text-primary-600 hover:underline ml-1"
-            >
-              お問い合わせ
-            </Link>
-            ください。
-          </p>
-        </motion.div>
+          引き続き問題が発生する場合は、
+          <Link href="/#contact" className="ml-1 font-medium text-foreground hover:underline">
+            お問い合わせ
+          </Link>
+          ください。
+        </motion.p>
       </div>
     </div>
   );
