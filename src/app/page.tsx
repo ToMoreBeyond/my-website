@@ -139,27 +139,9 @@ export default function Home() {
               JUST DO IT!
             </h1>
 
-            <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               革新的なモバイルアプリケーションで、人々の日常をより豊かに
             </p>
-
-            <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg" className="h-12 px-8 text-base">
-                <Link href="#products">
-                  PRODUCTS
-                  <ArrowRight data-icon="inline-end" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="h-12 px-8 text-base">
-                <Link href="#contact">CONTACT</Link>
-              </Button>
-            </div>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted-foreground">
-            <span className="text-sm font-medium tracking-wide">Scroll</span>
-            <div className="h-12 w-px bg-gradient-to-b from-border to-transparent" />
           </div>
         </section>
 
