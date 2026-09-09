@@ -43,13 +43,13 @@ export interface ProductRoadmap {
 export function getRoadmapStatusColor(status: RoadmapStatus): string {
   switch (status) {
     case 'completed':
-      return 'bg-emerald-500';
+      return 'bg-foreground';
     case 'in-progress':
-      return 'bg-primary-500';
+      return 'bg-brand';
     case 'planned':
-      return 'bg-neutral-400';
+      return 'bg-muted-foreground';
     default:
-      return 'bg-neutral-400';
+      return 'bg-muted-foreground';
   }
 }
 

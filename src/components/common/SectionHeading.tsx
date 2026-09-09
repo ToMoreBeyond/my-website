@@ -46,7 +46,7 @@ export function SectionHeading({
       )}
       <Tag
         className={cn(
-          'palt text-4xl leading-[1.15] font-bold tracking-[-0.03em] md:text-5xl lg:text-6xl',
+          'palt text-4xl leading-[1.15] font-bold tracking-[-0.03em] text-balance md:text-5xl lg:text-6xl',
           inverted ? 'text-primary-foreground' : 'text-foreground'
         )}
       >

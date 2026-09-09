@@ -95,7 +95,7 @@ export default function LoadingOverlay() {
       {/* Logo tile */}
       <div
         ref={logoRef}
-        className="relative size-28 overflow-hidden rounded-[24%] opacity-0 shadow-lift md:size-32"
+        className="relative size-28 overflow-hidden rounded-[24%] bg-card opacity-0 shadow-lift md:size-32"
       >
         <Image
           src="/images/logos/tomorebeyond-logo.png"

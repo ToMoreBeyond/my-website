@@ -63,7 +63,7 @@ export function DetailHero({
           >
             {imageStyle === 'icon' ? (
               <div className="relative">
-                <div className="relative size-52 overflow-hidden rounded-[24%] shadow-lift ring-1 ring-foreground/10 sm:size-64 lg:size-80">
+                <div className="relative size-52 overflow-hidden rounded-[24%] bg-card shadow-lift ring-1 ring-foreground/10 sm:size-64 lg:size-80">
                   <Image
                     src={imageSrc}
                     alt={imageAlt}

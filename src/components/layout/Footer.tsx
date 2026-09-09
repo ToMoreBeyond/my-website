@@ -51,7 +51,7 @@ export function Footer() {
               variant="ghost"
               size="icon-lg"
               onClick={scrollToTop}
-              className="size-12 rounded-2xl hover:bg-primary-foreground/10"
+              className="size-12 rounded-[24%] bg-card hover:bg-card/90"
               aria-label="トップへ戻る"
             >
               <Image
@@ -59,7 +59,7 @@ export function Footer() {
                 alt="ToMoreBeyond"
                 width={48}
                 height={48}
-                className="size-12 rounded-[24%]"
+                className="size-10"
               />
             </Button>
             <p className="font-mincho text-base leading-relaxed text-primary-foreground/85">

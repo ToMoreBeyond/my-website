@@ -107,11 +107,11 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
         <section className="py-20 lg:py-28">
           <div className="mx-auto max-w-4xl px-5 md:px-8">
             <div className="flex flex-col items-center gap-6 rounded-[2.5rem] bg-primary px-6 py-12 text-center text-primary-foreground md:px-12 md:py-16">
-              <h2 className="palt text-2xl leading-snug font-bold tracking-[-0.02em] md:text-4xl">
+              <h2 className="palt text-2xl leading-snug font-bold tracking-[-0.02em] text-balance md:text-4xl">
                 {cta.title}
               </h2>
               {cta.description && (
-                <p className="max-w-2xl font-mincho text-primary-foreground/80 md:text-lg">
+                <p className="max-w-2xl font-mincho text-balance text-primary-foreground/80 md:text-lg">
                   {cta.description}
                 </p>
               )}

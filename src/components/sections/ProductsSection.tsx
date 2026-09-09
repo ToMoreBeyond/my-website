@@ -6,19 +6,13 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { SectionHeading } from '@/components/common/SectionHeading'
 import { StatusDot } from '@/components/common/StatusDot'
+import { productStickers } from '@/lib/stickers'
 import { cn } from '@/lib/utils'
 
 const statusMap: Record<string, { text: string; tone: 'lit' | 'solid' | 'hollow' }> = {
   released: { text: 'RELEASED', tone: 'lit' },
   beta: { text: 'BETA', tone: 'solid' },
   'in-development': { text: 'IN DEVELOPMENT', tone: 'hollow' },
-}
-
-/** 各アプリの顔。Hero のステッカーと同じ絵柄 */
-const stickerByProduct: Record<string, string> = {
-  himap: '🎲',
-  keypet: '🐾',
-  toirun: '🧭',
 }
 
 /**
@@ -34,7 +28,7 @@ export function ProductsSection() {
           {products.map((product, index) => {
             const status = statusMap[product.status] ?? statusMap['in-development']
             const reversed = index % 2 === 1
-            const sticker = stickerByProduct[product.id]
+            const sticker = productStickers[product.id]
 
             return (
               <article
@@ -44,7 +38,7 @@ export function ProductsSection() {
                 {/* App icon */}
                 <div className={cn('flex justify-center lg:col-span-5', reversed && 'lg:order-2')}>
                   <div className="relative">
-                    <div className="relative size-40 overflow-hidden rounded-[24%] shadow-lift ring-1 ring-foreground/10 sm:size-52 lg:size-64">
+                    <div className="relative size-40 overflow-hidden rounded-[24%] bg-card shadow-lift ring-1 ring-foreground/10 sm:size-52 lg:size-64">
                       <Image
                         src={product.image}
                         alt={product.name}

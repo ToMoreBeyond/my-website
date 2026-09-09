@@ -72,7 +72,7 @@ export function HeroSection() {
 
           <motion.p
             {...rise(0.32)}
-            className="max-w-2xl font-mincho text-lg leading-relaxed text-muted-foreground md:text-2xl"
+            className="max-w-2xl font-mincho text-lg leading-relaxed text-pretty text-muted-foreground md:text-2xl"
           >
             革新的なモバイルアプリケーションで、人々の日常をより豊かに
           </motion.p>
@@ -85,7 +85,7 @@ export function HeroSection() {
           animate={show ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.94 }}
           transition={{ duration: 0.8, delay: 0.45, ease }}
         >
-          <div className="relative size-44 overflow-hidden rounded-[24%] shadow-lift ring-1 ring-foreground/10 sm:size-56 md:size-64 lg:size-72">
+          <div className="relative size-44 overflow-hidden rounded-[24%] bg-card shadow-lift ring-1 ring-foreground/10 sm:size-56 md:size-64 lg:size-72">
             <Image
               src="/images/logos/tomorebeyond-logo.png"
               alt="ToMoreBeyond"

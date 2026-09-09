@@ -123,7 +123,7 @@ export function TeamDetailClient({ member }: TeamDetailClientProps) {
                         src={otherMember.image}
                         alt={otherMember.name}
                         fill
-                        className="object-cover object-top transition-transform duration-700 ease-out group-hover/other:scale-[1.03]"
+                        className="object-cover object-[50%_30%] transition-transform duration-700 ease-out group-hover/other:scale-[1.03]"
                         sizes="(max-width: 640px) 100vw, 50vw"
                       />
                     </div>
