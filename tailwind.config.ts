@@ -1,5 +1,10 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Tailwind v4 では色・フォント・角丸などのトークンは
+ * src/app/globals.css の @theme で定義する。
+ * ここには content の指定だけを残す。
+ */
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -7,159 +12,7 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
-    },
-    extend: {
-      colors: {
-        background: "var(--color-base)",
-        foreground: "var(--color-text)",
-        // Minimal 3-color palette
-        base: '#FFFFFF',
-        text: {
-          DEFAULT: '#1A1A1A',
-          secondary: '#4B5563',
-          muted: '#9CA3AF',
-        },
-        accent: {
-          DEFAULT: '#6B7280',
-          light: '#9CA3AF',
-          dark: '#4B5563',
-        },
-        border: {
-          DEFAULT: '#E5E7EB',
-          light: '#F3F4F6',
-        },
-        // Legacy compatibility
-        neutral: {
-          0: '#FFFFFF',
-          50: '#F9FAFB',
-          100: '#F3F4F6',
-          200: '#E5E7EB',
-          300: '#D1D5DB',
-          400: '#9CA3AF',
-          500: '#6B7280',
-          600: '#4B5563',
-          700: '#374151',
-          800: '#1F2937',
-          900: '#1A1A1A',
-          950: '#0F0F0F',
-        },
-        gray: {
-          50: '#F9FAFB',
-          100: '#F3F4F6',
-          200: '#E5E7EB',
-          300: '#D1D5DB',
-          400: '#9CA3AF',
-          500: '#6B7280',
-          600: '#4B5563',
-          700: '#374151',
-          800: '#1F2937',
-          850: '#1A1A1A',
-          900: '#111827',
-          950: '#0F0F0F',
-        },
-        // Minimal primary (same as accent for simplicity)
-        primary: {
-          50: '#F9FAFB',
-          100: '#F3F4F6',
-          200: '#E5E7EB',
-          300: '#D1D5DB',
-          400: '#9CA3AF',
-          500: '#6B7280',
-          600: '#4B5563',
-          700: '#374151',
-          800: '#1F2937',
-          900: '#1A1A1A',
-          DEFAULT: '#6B7280',
-        },
-      },
-      fontFamily: {
-        sans: [
-          'M PLUS Rounded 1c',
-          'Zen Maru Gothic',
-          'Noto Sans JP',
-          'system-ui',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-        ],
-        display: [
-          'M PLUS Rounded 1c',
-          'Zen Maru Gothic',
-          'Noto Sans JP',
-          'sans-serif',
-        ],
-      },
-      fontSize: {
-        'hero': ['clamp(3rem, 8vw, 6rem)', { lineHeight: '1', letterSpacing: '-0.03em', fontWeight: '700' }],
-        'display': ['clamp(2.25rem, 5vw, 4rem)', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
-        'headline': ['clamp(1.75rem, 3.5vw, 2.5rem)', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' }],
-        'title': ['clamp(1.25rem, 2.5vw, 1.75rem)', { lineHeight: '1.3', fontWeight: '600' }],
-        'subtitle': ['clamp(1.125rem, 2vw, 1.375rem)', { lineHeight: '1.4', fontWeight: '500' }],
-        'body-lg': ['clamp(1.0625rem, 1.25vw, 1.125rem)', { lineHeight: '1.7', fontWeight: '400' }],
-        'body': ['clamp(0.9375rem, 1vw, 1rem)', { lineHeight: '1.7', fontWeight: '400' }],
-        'body-sm': ['clamp(0.8125rem, 0.875vw, 0.875rem)', { lineHeight: '1.6', fontWeight: '400' }],
-        'caption': ['clamp(0.75rem, 0.8vw, 0.8125rem)', { lineHeight: '1.5', fontWeight: '400' }],
-      },
-      spacing: {
-        '18': '4.5rem',
-        '22': '5.5rem',
-        '30': '7.5rem',
-        '40': '10rem',
-        '88': '22rem',
-        '100': '25rem',
-        '120': '30rem',
-        '144': '36rem',
-        '160': '40rem',
-      },
-      maxWidth: {
-        'screen-3xl': '1800px',
-      },
-      borderRadius: {
-        '4xl': '2rem',
-        '5xl': '2.5rem',
-      },
-      boxShadow: {
-        'card': '0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04)',
-        'card-hover': '0 8px 24px -8px rgb(0 0 0 / 0.08)',
-        'minimal': '0 1px 2px 0 rgb(0 0 0 / 0.03)',
-        'soft': '0 4px 12px -2px rgb(0 0 0 / 0.06)',
-        'elevated': '0 12px 32px -8px rgb(0 0 0 / 0.08)',
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.4s ease forwards',
-        'fade-in-up': 'fadeInUp 0.5s ease forwards',
-        'fade-in-down': 'fadeInDown 0.5s ease forwards',
-        'scale-in': 'scaleIn 0.3s ease forwards',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        fadeInUp: {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeInDown: {
-          '0%': { opacity: '0', transform: 'translateY(-16px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.98)' },
-          '100%': { opacity: '1', transform: 'scale(1)' },
-        },
-      },
-    },
+    extend: {},
   },
   plugins: [],
 } satisfies Config;

@@ -29,7 +29,7 @@
 - Use **semantic color tokens** only (`bg-primary`, `text-muted-foreground`, `bg-card`) — no raw colors (`bg-blue-500`) or inline hex.
 - Prefer built-in variants (`variant`, `size`) over custom classes; `className` is for layout, not color/typography overrides.
 - Spacing via `gap-*` (not `space-x/y-*`); equal w/h via `size-*`; conditional classes via `cn()` from `@/lib/utils`.
-- Tone: refined monochrome (white-based, minimal). Don't introduce accent colors.
+- Tone: near-future (dark blue-black base, high contrast). The only glowing accent is `primary` (the logo's center blue). Glass (`glass` utility), fine grids and subtle grain for texture; restrained framer-motion / gsap motion that respects `prefers-reduced-motion`. Don't introduce additional accent colors.
 - Skill reference: `.agents/skills/shadcn/` (`SKILL.md`, `rules/`). Use `npx shadcn@latest docs <component>` for current APIs.
 
 ## Testing Guidelines

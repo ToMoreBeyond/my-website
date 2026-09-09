@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { M_PLUS_Rounded_1c, Zen_Maru_Gothic, Noto_Sans_JP, Geist } from 'next/font/google';
+import { Syne, Zen_Kaku_Gothic_New } from 'next/font/google';
 import "./globals.css";
 import RootClient from "./RootClient";
 import {
@@ -10,35 +10,24 @@ import {
 import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-
-// Optimized font loading with next/font
-const mPlusRounded = M_PLUS_Rounded_1c({
-  weight: ['300', '400', '500', '700', '800', '900'],
+// Display（英字の見出し）: 横に広く、癖のある Syne
+const syne = Syne({
+  weight: ['600', '700', '800'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-m-plus-rounded',
+  variable: '--font-syne',
   preload: true,
   fallback: ['system-ui', 'sans-serif'],
 });
 
-const zenMaruGothic = Zen_Maru_Gothic({
-  weight: ['300', '400', '500', '700', '900'],
+// 本文・日本語: 読みやすく少し幾何学的な Zen Kaku Gothic New
+const zenKaku = Zen_Kaku_Gothic_New({
+  weight: ['400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-zen-maru',
+  variable: '--font-zen-kaku',
   preload: true,
-  fallback: ['system-ui', 'sans-serif'],
-});
-
-const notoSansJP = Noto_Sans_JP({
-  weight: ['300', '400', '500', '600', '700', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-noto-sans-jp',
-  preload: true,
-  fallback: ['-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+  fallback: ['Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'system-ui', 'sans-serif'],
 });
 
 export const viewport: Viewport = {
@@ -46,6 +35,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
+  themeColor: '#0b0f16',
 };
 
 export const metadata: Metadata = {
@@ -125,12 +115,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={cn(mPlusRounded.variable, zenMaruGothic.variable, notoSansJP.variable, "font-sans", geist.variable)}>
+    <html
+      lang="ja"
+      className={cn(syne.variable, zenKaku.variable, "dark font-sans")}
+      suppressHydrationWarning
+    >
       <head>
-        {/* Resource hints for performance */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-
         {/* Preload critical assets */}
         <link
           rel="preload"
@@ -152,7 +142,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${mPlusRounded.className} antialiased`}>
+      <body className="font-sans antialiased">
         <RootClient>
           {children}
         </RootClient>

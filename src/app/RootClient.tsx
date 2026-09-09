@@ -20,11 +20,11 @@ export default function RootClient({ children }: PropsWithChildren) {
   }, [])
 
   return (
-    <ThemeProvider defaultTheme="system" storageKey="tomorebeyond-theme">
+    // サイトはダーク 1 テーマ。system の明暗に関わらず同じ地色にする
+    <ThemeProvider defaultTheme="dark" storageKey="tomorebeyond-theme">
       <SkipLink href="#main-content">メインコンテンツへスキップ</SkipLink>
       <LoadingOverlay />
       {children}
     </ThemeProvider>
   )
 }
-

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/button'
 import {
   Breadcrumb,
@@ -61,7 +62,7 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
       )}
 
       {/* Breadcrumbs + Back */}
-      <div className="container mx-auto max-w-6xl px-6 pb-2 pt-24 md:px-8 lg:pt-28">
+      <div className="mx-auto max-w-6xl px-5 pt-24 pb-2 md:px-8 lg:pt-28">
         <div className="flex items-center justify-between gap-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -71,7 +72,9 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
                   <BreadcrumbItem>
                     {c.href ? (
                       <BreadcrumbLink asChild>
-                        <Link href={c.href}>{c.label}</Link>
+                        <Link href={c.href} className="inline-flex min-h-9 items-center">
+                          {c.label}
+                        </Link>
                       </BreadcrumbLink>
                     ) : (
                       <BreadcrumbPage>{c.label}</BreadcrumbPage>
@@ -85,7 +88,8 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
           {parent?.href && (
             <Button
               variant="outline"
-              size="sm"
+              size="lg"
+              className="shrink-0"
               onClick={() => router.push(parent.href!)}
             >
               <ArrowLeft data-icon="inline-start" />
@@ -96,30 +100,35 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
       </div>
 
       {/* Page content */}
-      <main>{children}</main>
+      <main id="main-content">{children}</main>
 
       {/* Unified CTA */}
       {cta && (
-        <section className="border-t border-border bg-muted/30 py-24 lg:py-32">
-          <div className="container mx-auto max-w-3xl px-6 text-center md:px-8">
-            <h2 className="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              {cta.title}
-            </h2>
-            {cta.description && (
-              <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
-                {cta.description}
-              </p>
-            )}
-            <Button
-              size="lg"
-              className="h-12 px-10 text-base"
-              onClick={() => router.push(cta.buttonHref || '/#contact')}
-            >
-              {cta.buttonLabel || 'お問い合わせ'}
-            </Button>
+        <section className="relative overflow-hidden py-20 lg:py-28">
+          <div className="mx-auto max-w-4xl px-5 md:px-8">
+            <div className="glass relative overflow-hidden rounded-3xl px-6 py-12 text-center md:px-12 md:py-16">
+              <div aria-hidden className="bloom -top-1/2 left-1/2 size-[420px] -translate-x-1/2 opacity-70" />
+              <div className="relative flex flex-col items-center gap-6">
+                <h2 className="palt text-2xl font-bold tracking-tight text-foreground md:text-4xl">
+                  {cta.title}
+                </h2>
+                {cta.description && (
+                  <p className="max-w-2xl text-muted-foreground md:text-lg">{cta.description}</p>
+                )}
+                <Button
+                  size="lg"
+                  className="h-12 px-8 text-base hover:glow-ring"
+                  onClick={() => router.push(cta.buttonHref || '/#contact')}
+                >
+                  {cta.buttonLabel || 'お問い合わせ'}
+                </Button>
+              </div>
+            </div>
           </div>
         </section>
       )}
+
+      <Footer />
     </div>
   )
 }

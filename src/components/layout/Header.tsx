@@ -28,8 +28,9 @@ export function Header() {
   const router = useRouter();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -51,21 +52,28 @@ export function Header() {
   return (
     <header
       className={cn(
-        'fixed top-0 z-50 w-full transition-colors duration-300',
+        'fixed top-0 z-50 w-full transition-[background-color,border-color,box-shadow] duration-300',
         isScrolled
-          ? 'border-b border-border/60 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60'
+          ? 'glass border-x-0 border-t-0 border-b'
           : 'border-b border-transparent bg-transparent'
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8 lg:h-20">
+      <nav
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8 lg:h-[72px]"
+        aria-label="グローバルナビゲーション"
+      >
         {/* Logo */}
-        <Link href="/" className="flex items-center" aria-label="ToMoreBeyond ホーム">
+        <Link
+          href="/"
+          className="flex size-11 items-center justify-center rounded-lg"
+          aria-label="ToMoreBeyond ホーム"
+        >
           <Image
             src="/images/logos/tomorebeyond-logo.png"
             alt="ToMoreBeyond"
             width={44}
             height={44}
-            className="size-10 lg:size-11"
+            className="size-9 lg:size-10"
             priority
           />
         </Link>
@@ -76,16 +84,16 @@ export function Header() {
             <Button
               key={item.name}
               variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground"
+              size="lg"
+              className="px-3 text-muted-foreground hover:text-foreground"
               onClick={() => scrollToSection(item.href)}
             >
               {item.name}
             </Button>
           ))}
           <Button
-            size="sm"
-            className="ml-2"
+            size="lg"
+            className="ml-3 px-4 hover:glow-ring"
             onClick={() => scrollToSection('#contact')}
           >
             お問い合わせ
@@ -96,18 +104,26 @@ export function Header() {
         <div className="md:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="メニューを開く">
-                <Menu />
+              <Button
+                variant="ghost"
+                size="icon-lg"
+                className="size-11"
+                aria-label="メニューを開く"
+              >
+                <Menu className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72">
-              <SheetTitle className="px-5 pt-5 text-base">Menu</SheetTitle>
+            <SheetContent side="right" className="w-[82vw] max-w-xs">
+              <SheetTitle className="px-5 pt-5 font-display text-base tracking-wide">
+                Menu
+              </SheetTitle>
               <div className="flex flex-col gap-1 px-3 py-2">
                 {navigation.map((item) => (
                   <SheetClose asChild key={item.name}>
                     <Button
                       variant="ghost"
-                      className="h-11 justify-start text-base text-muted-foreground hover:text-foreground"
+                      size="lg"
+                      className="h-12 justify-start px-3 text-base text-muted-foreground hover:text-foreground"
                       onClick={() => scrollToSection(item.href)}
                     >
                       {item.name}
@@ -116,7 +132,8 @@ export function Header() {
                 ))}
                 <SheetClose asChild>
                   <Button
-                    className="mt-3 h-11 text-base"
+                    size="lg"
+                    className="mt-3 h-12 text-base"
                     onClick={() => scrollToSection('#contact')}
                   >
                     お問い合わせ

@@ -1,50 +1,48 @@
 import { CheckCircle2, Clock, Calendar } from 'lucide-react';
 import type { RoadmapStatus } from '@/types/roadmap';
 import { getRoadmapStatusText } from '@/types/roadmap';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 interface RoadmapStatusBadgeProps {
   status: RoadmapStatus;
   className?: string;
 }
 
-export function RoadmapStatusBadge({ status, className = '' }: RoadmapStatusBadgeProps) {
-  const getStatusIcon = (status: RoadmapStatus) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle2 className="w-4 h-4" />;
-      case 'in-progress':
-        return <Clock className="w-4 h-4" />;
-      case 'planned':
-        return <Calendar className="w-4 h-4" />;
-      default:
-        return null;
-    }
-  };
+const variantByStatus: Record<RoadmapStatus, 'secondary' | 'default' | 'outline'> = {
+  completed: 'secondary',
+  'in-progress': 'default',
+  planned: 'outline',
+};
 
-  const textColor = status === 'completed'
-    ? 'text-emerald-700'
-    : status === 'in-progress'
-    ? 'text-primary-700'
-    : 'text-neutral-700';
+function StatusIcon({ status }: { status: RoadmapStatus }) {
+  switch (status) {
+    case 'completed':
+      return <CheckCircle2 />;
+    case 'in-progress':
+      return <Clock />;
+    case 'planned':
+      return <Calendar />;
+    default:
+      return null;
+  }
+}
 
-  const bgColor = status === 'completed'
-    ? 'bg-emerald-100'
-    : status === 'in-progress'
-    ? 'bg-primary-100'
-    : 'bg-neutral-100';
-
-  const borderColor = status === 'completed'
-    ? 'border-emerald-300'
-    : status === 'in-progress'
-    ? 'border-primary-300'
-    : 'border-neutral-300';
-
+/**
+ * ロードマップの状態。灯りが点くのは「開発中」だけ。
+ */
+export function RoadmapStatusBadge({ status, className }: RoadmapStatusBadgeProps) {
   return (
-    <div
-      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border ${bgColor} ${textColor} ${borderColor} ${className}`}
+    <Badge
+      variant={variantByStatus[status]}
+      className={cn(
+        'h-7 gap-1.5 px-3 text-xs',
+        status === 'in-progress' && 'glow-ring',
+        className
+      )}
     >
-      {getStatusIcon(status)}
+      <StatusIcon status={status} />
       <span>{getRoadmapStatusText(status)}</span>
-    </div>
+    </Badge>
   );
 }

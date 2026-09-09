@@ -26,7 +26,7 @@ Kiro-style Spec Driven Development implementation using claude code slash comman
 独自の styled `div` を新規に作る前に、必ず該当する shadcn/ui コンポーネントが無いか確認すること。
 
 - **基盤**: Next.js 16 (App Router) + React 19 + Tailwind CSS v4。設定は `components.json`（style: `radix-nova`, baseColor: `neutral`, iconLibrary: `lucide`）。
-- **トーン**: 洗練されたモノトーン（白基調・ミニマル）。アクセントカラーは増やさない。
+- **トーン**: 近未来（暗い青黒のベース・高コントラスト）。発光するアクセントは `primary`（ロゴ中心の青）1 色だけ。ガラス（`glass`）・細いグリッド・微細なグレインで質感を出し、動きは framer-motion / gsap で控えめに、`prefers-reduced-motion` を必ず尊重する。アクセントカラーは増やさない。
 - **コンポーネント追加**: `npx shadcn@latest add <name>`。導入済みは `src/components/ui/` を確認してから使う（再追加しない）。
 - **セマンティックカラーのみ**: `bg-primary` / `text-muted-foreground` / `bg-card` 等を使う。`bg-blue-500` 等の生の色や `#1a1a1a` のインラインstyleは禁止。
 - **className はレイアウト用**: コンポーネントの色・タイポgrafを上書きしない。バリアント（`variant="outline"`, `size="lg"` 等）を優先。
