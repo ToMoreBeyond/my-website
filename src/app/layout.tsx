@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { M_PLUS_Rounded_1c, Zen_Maru_Gothic, Noto_Sans_JP, Geist } from 'next/font/google';
+import { Noto_Sans_JP, BIZ_UDPMincho, Bricolage_Grotesque } from 'next/font/google';
+import localFont from 'next/font/local';
 import "./globals.css";
 import RootClient from "./RootClient";
 import {
@@ -10,35 +11,43 @@ import {
 import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-
-// Optimized font loading with next/font
-const mPlusRounded = M_PLUS_Rounded_1c({
-  weight: ['300', '400', '500', '700', '800', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-m-plus-rounded',
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
-});
-
-const zenMaruGothic = Zen_Maru_Gothic({
-  weight: ['300', '400', '500', '700', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-zen-maru',
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
-});
-
+// 本文・日本語の見出し: Noto Sans JP（可変ウェイト）
 const notoSansJP = Noto_Sans_JP({
-  weight: ['300', '400', '500', '600', '700', '900'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-noto-sans-jp',
   preload: true,
-  fallback: ['-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+  fallback: ['Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'system-ui', 'sans-serif'],
+});
+
+// 明朝: 一言の言葉（タグライン・製品の一行・紹介の一言）に混ぜる
+const bizMincho = BIZ_UDPMincho({
+  weight: ['400'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-biz-mincho',
+  preload: false,
+  fallback: ['Hiragino Mincho ProN', 'Yu Mincho', 'serif'],
+});
+
+// 英字のディスプレイ: 大きな見出しと小さな英字ラベル
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-bricolage',
+  axes: ['opsz', 'wdth'],
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+// デジタル時計風の数字。小さな遊びとして数字にだけ使う
+const dseg7 = localFont({
+  src: '../fonts/DSEG7Classic-Bold.woff2',
+  weight: '700',
+  display: 'swap',
+  variable: '--font-dseg7',
+  preload: false,
+  fallback: ['ui-monospace', 'monospace'],
 });
 
 export const viewport: Viewport = {
@@ -46,6 +55,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
+  themeColor: '#f8f1df',
 };
 
 export const metadata: Metadata = {
@@ -125,12 +135,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={cn(mPlusRounded.variable, zenMaruGothic.variable, notoSansJP.variable, "font-sans", geist.variable)}>
+    <html
+      lang="ja"
+      className={cn(
+        notoSansJP.variable,
+        bizMincho.variable,
+        bricolage.variable,
+        dseg7.variable,
+        "light font-sans"
+      )}
+      suppressHydrationWarning
+    >
       <head>
-        {/* Resource hints for performance */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-
         {/* Preload critical assets */}
         <link
           rel="preload"
@@ -152,7 +168,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${mPlusRounded.className} antialiased`}>
+      <body className="font-sans antialiased">
         <RootClient>
           {children}
         </RootClient>

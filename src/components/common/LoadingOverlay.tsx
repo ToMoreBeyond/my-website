@@ -3,58 +3,80 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
+import { markSiteReady } from '@/lib/ready'
 
+/**
+ * 起動画面。紙の上にロゴのタイルが置かれ、短いバーが走り、紙がめくれる。
+ * 終わったら markSiteReady() で Hero に合図を送る。
+ * 動きを減らす設定の環境では即座に消える。
+ */
 export default function LoadingOverlay() {
   const [visible, setVisible] = useState(true)
   const loaderRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
+  const tagRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
-    if (!loaderRef.current || !textRef.current || !barRef.current || !logoRef.current) return
+    if (
+      !loaderRef.current ||
+      !textRef.current ||
+      !barRef.current ||
+      !logoRef.current ||
+      !tagRef.current
+    ) {
+      return
+    }
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) {
+      document.body.style.overflow = 'auto'
+      setVisible(false)
+      markSiteReady()
+      return
+    }
 
     // Prevent scroll during loading
     document.body.style.overflow = 'hidden'
 
     const tl = gsap.timeline()
 
-    // 1. Logo fade in with float
-    tl.fromTo(logoRef.current,
-      { opacity: 0, y: 30, scale: 0.9 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out" }
+    tl.fromTo(
+      logoRef.current,
+      { opacity: 0, y: 10, scale: 0.96 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: 'power2.out' }
     )
-    // 2. Text fade in
-    .fromTo(textRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      "-=0.3"
-    )
-    // 3. Progress bar animation
-    .fromTo(barRef.current,
-      { width: "0%" },
-      { width: "100%", duration: 1.2, ease: "power1.inOut" },
-      "-=0.2"
-    )
-    // 4. Fade out elements
-    .to([logoRef.current, textRef.current, barRef.current], {
-      opacity: 0,
-      y: -20,
-      duration: 0.4,
-      stagger: 0.05,
-      ease: "power2.in",
-      delay: 0.3
-    })
-    // 5. Curtain rises (height to 0)
-    .to(loaderRef.current, {
-      height: 0,
-      duration: 0.8,
-      ease: "power4.inOut",
-      onComplete: () => {
-        document.body.style.overflow = 'auto'
-        setVisible(false)
-      }
-    })
+      .fromTo(
+        [textRef.current, tagRef.current],
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power2.out' },
+        '-=0.25'
+      )
+      .fromTo(
+        barRef.current,
+        { width: '0%' },
+        { width: '100%', duration: 0.8, ease: 'power1.inOut' },
+        '-=0.2'
+      )
+      .to([logoRef.current, textRef.current, barRef.current, tagRef.current], {
+        opacity: 0,
+        y: -8,
+        duration: 0.3,
+        stagger: 0.04,
+        ease: 'power2.in',
+        delay: 0.1,
+      })
+      .to(loaderRef.current, {
+        yPercent: -100,
+        duration: 0.6,
+        ease: 'power4.inOut',
+        onComplete: () => {
+          document.body.style.overflow = 'auto'
+          setVisible(false)
+          markSiteReady()
+        },
+      })
 
     return () => {
       tl.kill()
@@ -67,44 +89,39 @@ export default function LoadingOverlay() {
   return (
     <div
       ref={loaderRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1a1a1a] overflow-hidden"
-      style={{ transformOrigin: 'top' }}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-6 overflow-hidden bg-background"
       aria-hidden
     >
-      {/* Logo */}
-      <div ref={logoRef} className="mb-8 opacity-0">
-        <div className="w-40 h-40 md:w-48 md:h-48">
-          <Image
-            src="/images/logos/tomorebeyond-logo.png"
-            alt="ToMoreBeyond"
-            width={256}
-            height={256}
-            priority
-            className="w-full h-full invert"
-            style={{ objectFit: 'contain' }}
-          />
-        </div>
+      {/* Logo tile */}
+      <div
+        ref={logoRef}
+        className="relative size-28 overflow-hidden rounded-[24%] bg-card opacity-0 shadow-lift md:size-32"
+      >
+        <Image
+          src="/images/logos/tomorebeyond-logo.png"
+          alt="ToMoreBeyond"
+          width={256}
+          height={256}
+          priority
+          className="size-full object-cover"
+        />
       </div>
 
       {/* Loading text */}
       <div
         ref={textRef}
-        className="text-white text-2xl md:text-3xl font-bold tracking-wider opacity-0"
+        className="font-display text-xl font-bold tracking-[0.12em] text-foreground opacity-0 md:text-2xl"
       >
         TOMOREBEYOND
       </div>
 
       {/* Progress bar */}
-      <div className="w-48 md:w-64 h-[2px] bg-white/20 mt-6 rounded-full overflow-hidden">
-        <div
-          ref={barRef}
-          className="h-full bg-white rounded-full"
-          style={{ width: '0%' }}
-        />
+      <div className="h-1 w-40 overflow-hidden rounded-full bg-secondary md:w-56">
+        <div ref={barRef} className="h-full rounded-full bg-brand" style={{ width: '0%' }} />
       </div>
 
       {/* Tagline */}
-      <p className="text-white/50 text-sm mt-4 tracking-wide">
+      <p ref={tagRef} className="font-mincho text-sm text-muted-foreground opacity-0">
         Making hidden traces a lasting wonder
       </p>
     </div>

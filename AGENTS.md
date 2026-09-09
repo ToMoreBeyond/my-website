@@ -29,7 +29,7 @@
 - Use **semantic color tokens** only (`bg-primary`, `text-muted-foreground`, `bg-card`) — no raw colors (`bg-blue-500`) or inline hex.
 - Prefer built-in variants (`variant`, `size`) over custom classes; `className` is for layout, not color/typography overrides.
 - Spacing via `gap-*` (not `space-x/y-*`); equal w/h via `size-*`; conditional classes via `cn()` from `@/lib/utils`.
-- Tone: refined monochrome (white-based, minimal). Don't introduce accent colors.
+- Tone: warm cream paper (inspired by teracy.io), deep warm-brown ink for text, and a single sky-blue accent `brand` (the logo's center dot). Buttons and dark blocks (footer, CTA) are ink with cream text. Headings: Noto Sans JP, bold, tight (-0.03em); one-line phrases in BIZ UDPMincho (`font-mincho`); Latin display in Bricolage Grotesque (`font-display`); playful digits in DSEG7 (`font-seg`). Generous whitespace, one message per block. Restrained framer-motion / gsap motion that respects `prefers-reduced-motion`. Don't introduce additional accent colors.
 - Skill reference: `.agents/skills/shadcn/` (`SKILL.md`, `rules/`). Use `npx shadcn@latest docs <component>` for current APIs.
 
 ## Testing Guidelines

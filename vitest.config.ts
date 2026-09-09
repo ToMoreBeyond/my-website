@@ -8,6 +8,9 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     setupFiles: ['./src/__tests__/setup.ts'],
+    // Playwright の e2e スペックは vitest では実行しない
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['node_modules', 'e2e', 'out', '.next'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

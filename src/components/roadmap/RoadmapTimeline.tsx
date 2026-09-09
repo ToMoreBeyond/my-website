@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { ProductRoadmap } from '@/types/roadmap';
 import { RoadmapPhaseCard } from './RoadmapPhaseCard';
 import { calculateRoadmapProgress } from '@/data/roadmaps';
@@ -9,52 +9,49 @@ interface RoadmapTimelineProps {
   roadmap: ProductRoadmap;
 }
 
+/**
+ * 開発ロードマップ。進捗の数字だけデジタル時計の書体で光らせる。
+ */
 export function RoadmapTimeline({ roadmap }: RoadmapTimelineProps) {
   const progress = calculateRoadmapProgress(roadmap);
+  const reduce = useReducedMotion();
 
   return (
-    <div className="w-full max-w-5xl mx-auto">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-10">
       {/* Header with progress */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="mb-12"
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-900">
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <h2 className="palt text-3xl leading-[1.15] font-bold tracking-[-0.03em] text-foreground md:text-4xl lg:text-5xl">
             開発ロードマップ
           </h2>
-          <div className="text-right">
-            <div className="text-sm text-neutral-600 mb-1">
-              進捗状況
-            </div>
-            <div className="text-3xl font-bold text-primary-600">
-              {progress}%
-            </div>
+          <div className="flex flex-col gap-1 sm:items-end">
+            <span className="text-sm text-muted-foreground">進捗状況</span>
+            <span className="flex items-baseline gap-1">
+              <span className="font-seg text-3xl text-brand md:text-4xl">{progress}</span>
+              <span className="text-xl font-bold text-foreground">%</span>
+            </span>
           </div>
         </div>
 
         {/* Progress bar */}
-        <div className="relative w-full h-3 bg-neutral-200 rounded-full overflow-hidden">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
           <motion.div
-            initial={{ width: 0 }}
+            className="h-full rounded-full bg-brand"
+            initial={reduce ? { width: `${progress}%` } : { width: 0 }}
             whileInView={{ width: `${progress}%` }}
-            transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
             viewport={{ once: true }}
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary-500 to-emerald-500 rounded-full"
+            transition={{ duration: 1, ease: 'easeOut' }}
           />
         </div>
 
-        <div className="mt-2 text-xs text-neutral-500 text-right">
+        <p className="text-xs text-muted-foreground sm:text-right">
           最終更新: {new Date(roadmap.lastUpdated).toLocaleDateString('ja-JP', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })}
-        </div>
-      </motion.div>
+        </p>
+      </div>
 
       {/* Timeline */}
       <div className="relative">
@@ -69,19 +66,13 @@ export function RoadmapTimeline({ roadmap }: RoadmapTimelineProps) {
       </div>
 
       {/* Footer note */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        viewport={{ once: true }}
-        className="mt-8 p-6 bg-neutral-50 rounded-xl border border-neutral-200"
-      >
-        <p className="text-sm text-neutral-600 leading-relaxed">
-          <strong className="text-neutral-900">注意:</strong>{' '}
+      <div className="rounded-2xl bg-secondary p-6">
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          <strong className="font-semibold text-foreground">注意:</strong>{' '}
           このロードマップは現時点での計画であり、開発状況やユーザーフィードバックに応じて変更される可能性があります。
           最新情報は随時更新いたします。
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

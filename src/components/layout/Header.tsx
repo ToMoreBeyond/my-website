@@ -21,6 +21,10 @@ const navigation = [
   { name: 'Contact', href: '#contact', id: 'contact' },
 ];
 
+/**
+ * 紙の上に浮かぶ丸いバー。スクロールすると影が少し濃くなる。
+ * スマホでは Sheet のメニューに畳む。
+ */
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -28,8 +32,9 @@ export function Header() {
   const router = useRouter();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -49,23 +54,26 @@ export function Header() {
   };
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 z-50 w-full transition-colors duration-300',
-        isScrolled
-          ? 'border-b border-border/60 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60'
-          : 'border-b border-transparent bg-transparent'
-      )}
-    >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8 lg:h-20">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
+      <nav
+        className={cn(
+          'mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full bg-card/85 pr-1.5 pl-1.5 ring-1 ring-border backdrop-blur-md transition-shadow duration-300 md:h-16 md:pr-2 md:pl-2',
+          isScrolled ? 'shadow-warm' : 'shadow-none'
+        )}
+        aria-label="グローバルナビゲーション"
+      >
         {/* Logo */}
-        <Link href="/" className="flex items-center" aria-label="ToMoreBeyond ホーム">
+        <Link
+          href="/"
+          className="flex size-11 items-center justify-center rounded-full md:size-12"
+          aria-label="ToMoreBeyond ホーム"
+        >
           <Image
             src="/images/logos/tomorebeyond-logo.png"
             alt="ToMoreBeyond"
             width={44}
             height={44}
-            className="size-10 lg:size-11"
+            className="size-9 rounded-[24%] md:size-10"
             priority
           />
         </Link>
@@ -76,16 +84,16 @@ export function Header() {
             <Button
               key={item.name}
               variant="ghost"
-              size="sm"
-              className="text-muted-foreground hover:text-foreground"
+              size="lg"
+              className="h-10 rounded-full px-4 font-display text-[0.95rem]"
               onClick={() => scrollToSection(item.href)}
             >
               {item.name}
             </Button>
           ))}
           <Button
-            size="sm"
-            className="ml-2"
+            size="lg"
+            className="ml-2 h-10 rounded-full px-5 text-[0.95rem]"
             onClick={() => scrollToSection('#contact')}
           >
             お問い合わせ
@@ -96,18 +104,26 @@ export function Header() {
         <div className="md:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="メニューを開く">
-                <Menu />
+              <Button
+                variant="ghost"
+                size="icon-lg"
+                className="size-11 rounded-full"
+                aria-label="メニューを開く"
+              >
+                <Menu className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72">
-              <SheetTitle className="px-5 pt-5 text-base">Menu</SheetTitle>
+            <SheetContent side="right" className="w-[82vw] max-w-xs bg-background">
+              <SheetTitle className="px-5 pt-5 font-display text-base font-semibold">
+                Menu
+              </SheetTitle>
               <div className="flex flex-col gap-1 px-3 py-2">
                 {navigation.map((item) => (
                   <SheetClose asChild key={item.name}>
                     <Button
                       variant="ghost"
-                      className="h-11 justify-start text-base text-muted-foreground hover:text-foreground"
+                      size="lg"
+                      className="h-12 justify-start rounded-xl px-3 font-display text-base"
                       onClick={() => scrollToSection(item.href)}
                     >
                       {item.name}
@@ -116,7 +132,8 @@ export function Header() {
                 ))}
                 <SheetClose asChild>
                   <Button
-                    className="mt-3 h-11 text-base"
+                    size="lg"
+                    className="mt-3 h-12 rounded-full text-base"
                     onClick={() => scrollToSection('#contact')}
                   >
                     お問い合わせ

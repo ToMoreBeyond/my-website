@@ -1,8 +1,9 @@
 'use client'
 
-import { ReactNode, useRef } from 'react'
+import { ReactNode } from 'react'
 import Image from 'next/image'
-import { motion, useInView } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 
 interface HeroBadge {
@@ -19,6 +20,10 @@ interface DetailHeroProps {
   imageSrc: string
   imageAlt: string
   imagePosition?: 'left' | 'right'
+  /** icon: アプリアイコンとして角丸タイルに収める。photo: 写真として縦長のタイルに敷く */
+  imageStyle?: 'icon' | 'photo'
+  /** アイコンの角に貼る絵文字のステッカー */
+  sticker?: string
   actions?: ReactNode
   eager?: boolean
 }
@@ -32,68 +37,109 @@ export function DetailHero({
   imageSrc,
   imageAlt,
   imagePosition = 'right',
+  imageStyle = 'photo',
+  sticker,
   actions,
   eager = false,
 }: DetailHeroProps) {
-  const heroRef = useRef(null)
-  const isInView = useInView(heroRef, { once: true, margin: '-100px' })
-  const active = eager || isInView
+  const reduce = useReducedMotion()
+  const fade = (delay: number) => ({
+    initial: reduce ? false : { opacity: 0, y: 14 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
+  })
 
   return (
-    <section className="py-16 lg:py-24">
-      <div className="container mx-auto max-w-6xl px-6 md:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+    <section className="relative overflow-hidden py-10 lg:py-16">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
           {/* Media */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.5 }}
-            className={imagePosition === 'left' ? 'order-1' : 'order-1 lg:order-2'}
+            {...fade(0.05)}
+            className={cn(
+              'flex justify-center lg:col-span-5',
+              imagePosition === 'left' ? 'order-1' : 'order-1 lg:order-2'
+            )}
           >
-            <div className="relative mx-auto aspect-square max-w-md overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10 lg:max-w-none">
-              <Image
-                src={imageSrc}
-                alt={imageAlt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 448px"
-                priority={eager}
-                loading={eager ? undefined : 'lazy'}
-                quality={85}
-              />
-            </div>
+            {imageStyle === 'icon' ? (
+              <div className="relative">
+                <div className="relative size-52 overflow-hidden rounded-[24%] bg-card shadow-lift ring-1 ring-foreground/10 sm:size-64 lg:size-80">
+                  <Image
+                    src={imageSrc}
+                    alt={imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 256px, 320px"
+                    priority={eager}
+                    loading={eager ? undefined : 'lazy'}
+                    quality={85}
+                  />
+                </div>
+                {sticker && (
+                  <span
+                    aria-hidden
+                    className="sticker absolute -top-4 -right-5 size-12 -rotate-6 text-2xl md:size-14 md:text-3xl"
+                  >
+                    {sticker}
+                  </span>
+                )}
+              </div>
+            ) : (
+              <div className="relative aspect-[4/5] w-full max-w-[380px] overflow-hidden rounded-3xl shadow-lift ring-1 ring-foreground/10">
+                <Image
+                  src={imageSrc}
+                  alt={imageAlt}
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 1024px) 90vw, 380px"
+                  priority={eager}
+                  loading={eager ? undefined : 'lazy'}
+                  quality={85}
+                />
+              </div>
+            )}
           </motion.div>
 
           {/* Content */}
           <motion.div
-            ref={heroRef}
-            initial={{ opacity: 0, y: 24 }}
-            animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={imagePosition === 'left' ? 'order-2' : 'order-2 lg:order-1'}
-          >
-            {badge && (
-              <Badge variant="secondary" className="mb-6 gap-1.5">
-                {badge.icon}
-                {badge.label}
-              </Badge>
+            {...fade(0.15)}
+            className={cn(
+              'flex flex-col gap-5 lg:col-span-7',
+              imagePosition === 'left' ? 'order-2' : 'order-2 lg:order-1'
             )}
+          >
+            <div className="flex flex-wrap items-center gap-3">
+              {badge && (
+                <Badge
+                  variant="secondary"
+                  className="h-7 gap-1.5 px-3 font-display text-xs font-semibold"
+                >
+                  {badge.icon}
+                  {badge.label}
+                </Badge>
+              )}
+              {subtitle && (
+                <span className="font-display text-sm font-medium text-muted-foreground">
+                  {subtitle}
+                </span>
+              )}
+            </div>
 
-            <h1 className="mb-2 text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+            <h1 className="palt text-4xl leading-[1.1] font-bold tracking-[-0.03em] text-foreground md:text-6xl lg:text-7xl">
               {title}
             </h1>
 
-            {subtitle && <p className="mb-3 text-lg text-muted-foreground">{subtitle}</p>}
-
             {tagline && (
-              <p className="mb-6 text-xl font-medium text-foreground">{tagline}</p>
+              <p className="font-mincho text-xl leading-snug text-foreground md:text-2xl lg:text-3xl">
+                {tagline}
+              </p>
             )}
 
             {description && (
-              <p className="mb-8 leading-relaxed text-muted-foreground">{description}</p>
+              <p className="max-w-prose leading-relaxed text-muted-foreground">{description}</p>
             )}
 
-            {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
+            {actions && <div className="mt-2 flex flex-wrap items-center gap-3">{actions}</div>}
           </motion.div>
         </div>
       </div>
