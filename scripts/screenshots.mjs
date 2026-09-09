@@ -1,6 +1,6 @@
 // out/ を配信中のローカルサーバーに対して、全ページを 3 幅で撮る確認用スクリプト。
 // 使い方: (cd out && python3 -m http.server 8787 --bind 127.0.0.1) を別に立ててから
-//         node scripts/screenshots.mjs
+//         node scripts/screenshots.mjs        （WIDTHS=375 で幅を絞れる）
 // 出力: screenshots/<page>-<width>.png（画面分）と <page>-<width>-full.png（ページ全体）
 // あわせて横はみ出しと小さすぎるタップ領域を報告する。
 import { chromium } from '@playwright/test'
@@ -24,11 +24,14 @@ const pages = [
   ['not-found', '/404.html'],
 ]
 
-const viewports = [
+// WIDTHS=375,1440 のように環境変数で幅を絞れる（省略時は 3 幅すべて）
+const allViewports = [
   { width: 375, height: 812 },
   { width: 768, height: 1024 },
   { width: 1440, height: 900 },
 ]
+const onlyWidths = process.env.WIDTHS?.split(',').map(Number)
+const viewports = onlyWidths ? allViewports.filter((v) => onlyWidths.includes(v.width)) : allViewports
 
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
 const problems = []
@@ -63,6 +66,10 @@ for (const vp of viewports) {
         if (r.width === 0 || r.height === 0) continue
         const cs = getComputedStyle(el)
         if (cs.visibility === 'hidden' || cs.display === 'none') continue
+        // sr-only（キーボード操作時だけ現れる 1px の要素）は対象外
+        if (r.width <= 1 && r.height <= 1) continue
+        // 本文の段落の中にある行内リンクは対象外（WCAG 2.5.8 の例外）
+        if (el.tagName === 'A' && el.closest('p')) continue
         if (r.height < 40 || r.width < 40) {
           small.push(`${el.tagName.toLowerCase()} "${(el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 24)}" ${Math.round(r.width)}x${Math.round(r.height)}`)
         }

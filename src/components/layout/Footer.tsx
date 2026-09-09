@@ -39,7 +39,7 @@ export function Footer() {
   };
 
   const linkClass =
-    'h-auto min-h-10 justify-start px-0 py-1.5 text-left text-sm whitespace-normal text-primary-foreground/80 hover:text-primary-foreground';
+    'h-auto min-h-10 w-full justify-start px-0 py-1.5 text-left text-sm whitespace-normal text-primary-foreground/80 hover:text-primary-foreground';
 
   return (
     <footer className="bg-primary text-primary-foreground">
