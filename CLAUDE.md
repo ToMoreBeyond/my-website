@@ -26,7 +26,7 @@ Kiro-style Spec Driven Development implementation using claude code slash comman
 独自の styled `div` を新規に作る前に、必ず該当する shadcn/ui コンポーネントが無いか確認すること。
 
 - **基盤**: Next.js 16 (App Router) + React 19 + Tailwind CSS v4。設定は `components.json`（style: `radix-nova`, baseColor: `neutral`, iconLibrary: `lucide`）。
-- **トーン**: 近未来（暗い青黒のベース・高コントラスト）。発光するアクセントは `primary`（ロゴ中心の青）1 色だけ。ガラス（`glass`）・細いグリッド・微細なグレインで質感を出し、動きは framer-motion / gsap で控えめに、`prefers-reduced-motion` を必ず尊重する。アクセントカラーは増やさない。
+- **トーン**: teracy.io 参考の温かいクリーム基調（紙）、深い焦げ茶の文字（インク）、水色系のアクセント `brand`（ロゴ中央の青）1 色。ボタンや暗い区画（フッター・CTA）はインクの地にクリームの文字。見出しは Noto Sans JP を太く詰め（字間 -0.03em）、一言の言葉に BIZ UDPMincho（`font-mincho`）を混ぜ、英字は Bricolage Grotesque（`font-display`）、数字の遊びに DSEG7（`font-seg`）。余白は広く 1 区画 1 メッセージ。動きは framer-motion / gsap で控えめに、`prefers-reduced-motion` を必ず尊重する。アクセントカラーは増やさない。
 - **コンポーネント追加**: `npx shadcn@latest add <name>`。導入済みは `src/components/ui/` を確認してから使う（再追加しない）。
 - **セマンティックカラーのみ**: `bg-primary` / `text-muted-foreground` / `bg-card` 等を使う。`bg-blue-500` 等の生の色や `#1a1a1a` のインラインstyleは禁止。
 - **className はレイアウト用**: コンポーネントの色・タイポgrafを上書きしない。バリアント（`variant="outline"`, `size="lg"` 等）を優先。

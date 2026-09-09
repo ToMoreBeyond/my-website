@@ -6,6 +6,7 @@ import { Product } from '@/data/products';
 import { DetailHero } from '@/components/layout/DetailHero';
 import { RoadmapTimeline } from '@/components/roadmap/RoadmapTimeline';
 import { getRoadmapByProductId } from '@/data/roadmaps';
+import { productStickers } from '@/lib/stickers';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,12 +39,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         imageAlt={product.name}
         imagePosition="right"
         imageStyle="icon"
+        sticker={productStickers[product.id]}
         eager
         actions={
           <>
             <Badge
               variant="outline"
-              className="h-auto min-h-9 gap-1.5 rounded-lg px-3 py-1.5 text-left text-sm whitespace-normal"
+              className="h-auto min-h-10 gap-1.5 rounded-full px-3.5 py-1.5 text-left text-sm whitespace-normal"
             >
               <Clock />
               リリース予定: {product.releaseSchedule}
@@ -51,7 +53,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             <Button
               variant="outline"
               size="lg"
-              className="h-10"
+              className="h-10 rounded-full"
               onClick={() => navigator.share?.({ title: product.name, url: window.location.href })}
             >
               <Share2 data-icon="inline-start" />
@@ -62,19 +64,19 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       />
 
       {/* Features Section */}
-      <section className="border-t border-border py-20 lg:py-28">
+      <section className="py-20 lg:py-28">
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-5 md:px-8">
           <SectionHeading title="主な機能" description={`${product.name}が提供する機能`} />
 
-          <Card className="gap-0 p-0">
-            <CardContent className="px-6 py-2 md:px-8">
+          <Card className="gap-0 rounded-3xl p-0 shadow-warm">
+            <CardContent className="px-6 py-3 md:px-8">
               <ul className="grid grid-cols-1 md:grid-cols-2 md:gap-x-10">
                 {product.features.map((feature) => (
                   <li
                     key={feature}
                     className="flex items-start gap-3 border-b border-border py-4 text-foreground last:border-b-0 md:[&:nth-last-child(-n+2)]:border-b-0"
                   >
-                    <Check className="mt-1 size-4 shrink-0 text-primary" />
+                    <Check className="mt-1.5 size-4 shrink-0 text-brand" />
                     <span className="leading-relaxed">{feature}</span>
                   </li>
                 ))}
@@ -85,7 +87,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       </section>
 
       {/* Tech Stack Section */}
-      <section className="border-t border-border py-20 lg:py-28">
+      <section className="py-20 lg:py-28">
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-5 md:px-8">
           <SectionHeading title="技術スタック" description="最新の技術を駆使して開発" />
 
@@ -105,7 +107,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
       {/* Roadmap Section */}
       {roadmap && (
-        <section id="roadmap" className="border-t border-border py-20 lg:py-28">
+        <section id="roadmap" className="py-20 lg:py-28">
           <div className="mx-auto max-w-6xl px-5 md:px-8">
             <RoadmapTimeline roadmap={roadmap} />
           </div>
@@ -113,11 +115,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       )}
 
       {/* Additional Info Section */}
-      <section className="border-t border-border py-20 lg:py-28">
+      <section className="py-20 lg:py-28">
         <div className="mx-auto max-w-6xl px-5 md:px-8">
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* Target Users */}
-            <Card className="gap-0 p-0">
+            <Card className="gap-0 rounded-3xl p-0 shadow-warm">
               <CardHeader className="p-6 pb-0 md:p-8 md:pb-0">
                 <CardTitle className="palt text-xl font-bold md:text-2xl">ターゲットユーザー</CardTitle>
               </CardHeader>
@@ -137,7 +139,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             </Card>
 
             {/* Platform Details */}
-            <Card className="gap-0 p-0">
+            <Card className="gap-0 rounded-3xl p-0 shadow-warm">
               <CardHeader className="p-6 pb-0 md:p-8 md:pb-0">
                 <CardTitle className="palt text-xl font-bold md:text-2xl">対応プラットフォーム</CardTitle>
               </CardHeader>

@@ -62,7 +62,7 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
       )}
 
       {/* Breadcrumbs + Back */}
-      <div className="mx-auto max-w-6xl px-5 pt-24 pb-2 md:px-8 lg:pt-28">
+      <div className="mx-auto max-w-6xl px-5 pt-28 pb-2 md:px-8 lg:pt-32">
         <div className="flex items-center justify-between gap-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -72,7 +72,7 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
                   <BreadcrumbItem>
                     {c.href ? (
                       <BreadcrumbLink asChild>
-                        <Link href={c.href} className="inline-flex min-h-9 items-center">
+                        <Link href={c.href} className="inline-flex min-h-10 items-center">
                           {c.label}
                         </Link>
                       </BreadcrumbLink>
@@ -89,7 +89,7 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
             <Button
               variant="outline"
               size="lg"
-              className="shrink-0"
+              className="h-10 shrink-0 rounded-full"
               onClick={() => router.push(parent.href!)}
             >
               <ArrowLeft data-icon="inline-start" />
@@ -102,27 +102,27 @@ export function DetailLayout({ breadcrumbs, cta, children }: DetailLayoutProps) 
       {/* Page content */}
       <main id="main-content">{children}</main>
 
-      {/* Unified CTA */}
+      {/* Unified CTA: 暗い区画 */}
       {cta && (
-        <section className="relative overflow-hidden py-20 lg:py-28">
+        <section className="py-20 lg:py-28">
           <div className="mx-auto max-w-4xl px-5 md:px-8">
-            <div className="glass relative overflow-hidden rounded-3xl px-6 py-12 text-center md:px-12 md:py-16">
-              <div aria-hidden className="bloom -top-1/2 left-1/2 size-[420px] -translate-x-1/2 opacity-70" />
-              <div className="relative flex flex-col items-center gap-6">
-                <h2 className="palt text-2xl font-bold tracking-tight text-foreground md:text-4xl">
-                  {cta.title}
-                </h2>
-                {cta.description && (
-                  <p className="max-w-2xl text-muted-foreground md:text-lg">{cta.description}</p>
-                )}
-                <Button
-                  size="lg"
-                  className="h-12 px-8 text-base hover:glow-ring"
-                  onClick={() => router.push(cta.buttonHref || '/#contact')}
-                >
-                  {cta.buttonLabel || 'お問い合わせ'}
-                </Button>
-              </div>
+            <div className="flex flex-col items-center gap-6 rounded-[2.5rem] bg-primary px-6 py-12 text-center text-primary-foreground md:px-12 md:py-16">
+              <h2 className="palt text-2xl leading-snug font-bold tracking-[-0.02em] md:text-4xl">
+                {cta.title}
+              </h2>
+              {cta.description && (
+                <p className="max-w-2xl font-mincho text-primary-foreground/80 md:text-lg">
+                  {cta.description}
+                </p>
+              )}
+              <Button
+                variant="secondary"
+                size="lg"
+                className="h-12 rounded-full px-8 text-base"
+                onClick={() => router.push(cta.buttonHref || '/#contact')}
+              >
+                {cta.buttonLabel || 'お問い合わせ'}
+              </Button>
             </div>
           </div>
         </section>

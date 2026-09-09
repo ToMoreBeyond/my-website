@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Zen_Kaku_Gothic_New } from 'next/font/google';
+import { Noto_Sans_JP, BIZ_UDPMincho, Bricolage_Grotesque } from 'next/font/google';
+import localFont from 'next/font/local';
 import "./globals.css";
 import RootClient from "./RootClient";
 import {
@@ -10,24 +11,43 @@ import {
 import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
-// Display（英字の見出し）: 横に広く、癖のある Syne
-const syne = Syne({
-  weight: ['600', '700', '800'],
+// 本文・日本語の見出し: Noto Sans JP（可変ウェイト）
+const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-syne',
+  variable: '--font-noto-sans-jp',
+  preload: true,
+  fallback: ['Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'system-ui', 'sans-serif'],
+});
+
+// 明朝: 一言の言葉（タグライン・製品の一行・紹介の一言）に混ぜる
+const bizMincho = BIZ_UDPMincho({
+  weight: ['400'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-biz-mincho',
+  preload: false,
+  fallback: ['Hiragino Mincho ProN', 'Yu Mincho', 'serif'],
+});
+
+// 英字のディスプレイ: 大きな見出しと小さな英字ラベル
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-bricolage',
+  axes: ['opsz', 'wdth'],
   preload: true,
   fallback: ['system-ui', 'sans-serif'],
 });
 
-// 本文・日本語: 読みやすく少し幾何学的な Zen Kaku Gothic New
-const zenKaku = Zen_Kaku_Gothic_New({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
+// デジタル時計風の数字。小さな遊びとして数字にだけ使う
+const dseg7 = localFont({
+  src: '../fonts/DSEG7Classic-Bold.woff2',
+  weight: '700',
   display: 'swap',
-  variable: '--font-zen-kaku',
-  preload: true,
-  fallback: ['Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'system-ui', 'sans-serif'],
+  variable: '--font-dseg7',
+  preload: false,
+  fallback: ['ui-monospace', 'monospace'],
 });
 
 export const viewport: Viewport = {
@@ -35,7 +55,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: '#0b0f16',
+  themeColor: '#f8f1df',
 };
 
 export const metadata: Metadata = {
@@ -117,7 +137,13 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={cn(syne.variable, zenKaku.variable, "dark font-sans")}
+      className={cn(
+        notoSansJP.variable,
+        bizMincho.variable,
+        bricolage.variable,
+        dseg7.variable,
+        "light font-sans"
+      )}
       suppressHydrationWarning
     >
       <head>

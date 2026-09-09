@@ -2,17 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { products } from '@/data/products'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { SectionHeading } from '@/components/common/SectionHeading'
 import { StatusDot } from '@/components/common/StatusDot'
+import { cn } from '@/lib/utils'
 
 const statusMap: Record<string, { text: string; tone: 'lit' | 'solid' | 'hollow' }> = {
   released: { text: 'RELEASED', tone: 'lit' },
@@ -20,61 +14,94 @@ const statusMap: Record<string, { text: string; tone: 'lit' | 'solid' | 'hollow'
   'in-development': { text: 'IN DEVELOPMENT', tone: 'hollow' },
 }
 
+/** 各アプリの顔。Hero のステッカーと同じ絵柄 */
+const stickerByProduct: Record<string, string> = {
+  himap: '🎲',
+  keypet: '🐾',
+  toirun: '🧭',
+}
+
+/**
+ * 1 区画 1 プロダクト。大きな紙のカードに、アプリアイコンと言葉を左右交互に置く。
+ */
 export function ProductsSection() {
   return (
-    <section id="products" className="scroll-mt-16 border-t border-border py-20 md:py-28">
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 md:px-8">
+    <section id="products" className="scroll-mt-24 py-24 md:py-32 lg:py-40">
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-5 md:gap-16 md:px-8">
         <SectionHeading label="Products" title="プロダクト" />
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-          {products.map((product) => {
+        <div className="flex flex-col gap-6 md:gap-8">
+          {products.map((product, index) => {
             const status = statusMap[product.status] ?? statusMap['in-development']
+            const reversed = index % 2 === 1
+            const sticker = stickerByProduct[product.id]
 
             return (
-              <Card
+              <article
                 key={product.id}
-                className="group/product gap-0 p-0 hover:glow-ring focus-within:glow-ring"
+                className="grid grid-cols-1 items-center gap-8 rounded-3xl bg-card p-6 shadow-warm sm:p-8 lg:grid-cols-12 lg:gap-12 lg:p-12"
               >
-                <CardHeader className="flex flex-row items-start justify-between gap-4 p-6 md:p-7">
-                  {/* アプリアイコンとして扱う */}
-                  <div className="relative size-20 shrink-0 overflow-hidden rounded-[22%] shadow-xl ring-1 ring-foreground/10">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover"
-                      sizes="80px"
-                      loading="lazy"
-                    />
+                {/* App icon */}
+                <div className={cn('flex justify-center lg:col-span-5', reversed && 'lg:order-2')}>
+                  <div className="relative">
+                    <div className="relative size-40 overflow-hidden rounded-[24%] shadow-lift ring-1 ring-foreground/10 sm:size-52 lg:size-64">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 208px, 256px"
+                        loading="lazy"
+                      />
+                    </div>
+                    {sticker && (
+                      <span
+                        aria-hidden
+                        className="sticker absolute -top-4 -right-4 size-11 -rotate-6 text-2xl"
+                      >
+                        {sticker}
+                      </span>
+                    )}
                   </div>
-                  <div className="flex h-7 items-center gap-2 text-xs font-medium tracking-wide text-muted-foreground">
-                    <StatusDot tone={status.tone} />
-                    {status.text}
-                  </div>
-                </CardHeader>
+                </div>
 
-                <CardContent className="flex flex-1 flex-col gap-3 px-6 pb-6 md:px-7">
-                  <p className="font-display text-sm font-semibold tracking-wide text-primary">
-                    {product.nameEn}
-                  </p>
-                  <CardTitle className="palt text-2xl font-bold tracking-tight md:text-3xl">
+                {/* Words */}
+                <div className={cn('flex flex-col gap-4 lg:col-span-7', reversed && 'lg:order-1')}>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Badge
+                      variant="secondary"
+                      className="h-7 gap-2 px-3 font-display text-xs font-semibold tracking-wide"
+                    >
+                      <StatusDot tone={status.tone} />
+                      {status.text}
+                    </Badge>
+                    <span className="font-display text-sm font-medium text-muted-foreground">
+                      {product.nameEn}
+                    </span>
+                  </div>
+
+                  <h3 className="palt text-3xl leading-tight font-bold tracking-[-0.03em] text-foreground md:text-4xl lg:text-5xl">
                     {product.name}
-                  </CardTitle>
-                  <p className="font-medium text-foreground">{product.tagline}</p>
-                  <CardDescription className="text-sm leading-relaxed">
-                    {product.description}
-                  </CardDescription>
-                </CardContent>
+                  </h3>
 
-                <CardFooter className="border-t-0 bg-transparent px-6 pb-6 pt-0 md:px-7 md:pb-7">
-                  <Button asChild variant="outline" size="lg" className="h-11 w-full px-5 sm:w-auto">
-                    <Link href={`/products/${product.id}`}>
-                      VIEW DETAILS
-                      <ArrowRight data-icon="inline-end" />
-                    </Link>
-                  </Button>
-                </CardFooter>
-              </Card>
+                  <p className="font-mincho text-xl leading-snug text-foreground md:text-2xl">
+                    {product.tagline}
+                  </p>
+
+                  <p className="max-w-prose leading-relaxed text-muted-foreground">
+                    {product.description}
+                  </p>
+
+                  <div className="pt-2">
+                    <Button asChild variant="outline" size="lg" className="h-11 rounded-full px-5">
+                      <Link href={`/products/${product.id}`}>
+                        VIEW DETAILS
+                        <ArrowRight data-icon="inline-end" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </article>
             )
           })}
         </div>

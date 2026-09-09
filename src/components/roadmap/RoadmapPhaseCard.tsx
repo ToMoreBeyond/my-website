@@ -1,4 +1,4 @@
-import { CheckCircle2 } from 'lucide-react';
+import { Check, CheckCircle2 } from 'lucide-react';
 import type { RoadmapPhase } from '@/types/roadmap';
 import { RoadmapStatusBadge } from './RoadmapStatusBadge';
 import { formatRoadmapQuarter } from '@/types/roadmap';
@@ -13,29 +13,25 @@ interface RoadmapPhaseCardProps {
 
 /**
  * ロードマップの 1 フェーズ。
- * 左の節: 完了は塗り、開発中は灯り、予定は中空。順序があるので番号を出す。
+ * 左の節: 完了はインクの塗り、開発中は光点、予定は中空。順序があるので番号を出す。
  */
 export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseCardProps) {
   const isActive = phase.status === 'in-progress';
 
   return (
-    <div className="relative flex gap-4 pb-8 md:gap-6 md:pb-10">
+    <div className="relative flex gap-4 pb-8 last:pb-0 md:gap-6 md:pb-10">
       {/* Timeline indicator */}
       <div className="flex flex-col items-center">
         <div
           className={cn(
-            'z-10 flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold',
+            'z-10 flex size-10 shrink-0 items-center justify-center rounded-full font-display text-sm font-bold',
             phase.status === 'completed' && 'bg-foreground text-background',
-            phase.status === 'in-progress' && 'bg-primary text-primary-foreground glow-ring',
-            phase.status === 'planned' && 'border border-muted-foreground text-muted-foreground'
+            phase.status === 'in-progress' && 'bg-brand text-brand-foreground ring-brand-glow',
+            phase.status === 'planned' && 'border-2 border-muted-foreground/60 text-muted-foreground'
           )}
           aria-hidden
         >
-          {phase.status === 'completed' ? (
-            <CheckCircle2 className="size-5" />
-          ) : (
-            <span className="font-display">{index + 1}</span>
-          )}
+          {phase.status === 'completed' ? <Check className="size-5" /> : index + 1}
         </div>
 
         {/* Connecting line */}
@@ -50,12 +46,17 @@ export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseC
       </div>
 
       {/* Card content */}
-      <Card className={cn('flex-1 gap-0 p-0', isActive && 'glow-ring')}>
+      <Card
+        className={cn(
+          'flex-1 gap-0 rounded-3xl p-0 shadow-warm',
+          isActive && 'ring-2 ring-brand'
+        )}
+      >
         <CardHeader className="flex flex-col gap-4 p-5 pb-0 sm:flex-row sm:items-start sm:justify-between md:p-7 md:pb-0">
           <div className="flex flex-col gap-1.5">
             <h3 className="palt text-xl font-bold text-foreground md:text-2xl">{phase.name}</h3>
             <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-              <span className="font-display font-semibold tracking-wide">{phase.stage}</span>
+              <span className="font-display font-semibold">{phase.stage}</span>
               <span aria-hidden>•</span>
               <span>{formatRoadmapQuarter(phase.targetDate)}</span>
             </div>
@@ -79,7 +80,7 @@ export function RoadmapPhaseCard({ phase, index, isLast = false }: RoadmapPhaseC
                     <CheckCircle2
                       className={cn(
                         'mt-0.5 size-4 shrink-0',
-                        phase.status === 'planned' ? 'text-muted-foreground' : 'text-primary'
+                        phase.status === 'planned' ? 'text-muted-foreground' : 'text-brand'
                       )}
                     />
                     <span>{feature}</span>

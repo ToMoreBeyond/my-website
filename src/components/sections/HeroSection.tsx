@@ -5,13 +5,21 @@ import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { READY_EVENT, isSiteReady } from '@/lib/ready'
+import { cn } from '@/lib/utils'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
+/** ロゴのタイルに貼る 3 枚のステッカー。3 つのアプリの顔（すごろく・ペット・方位磁針） */
+const stickers = [
+  { emoji: '🎲', className: '-top-5 -left-7', rotate: -12, delay: 0.85 },
+  { emoji: '🐾', className: 'top-10 -right-7', rotate: 8, delay: 0.95 },
+  { emoji: '🧭', className: '-bottom-5 -left-4', rotate: 6, delay: 1.05 },
+]
+
 /**
  * トップの Hero。
- * 起動画面の幕が上がった瞬間に「電源が入る」1 回だけの演出:
- * 床のグリッドが浮かび、ロゴの灯りが立ち上がり、見出しが結像する。
+ * 起動画面の紙がめくれた瞬間に 1 回だけ:
+ * 言葉が立ち上がり、ロゴのタイルが置かれ、ステッカーが貼られる。
  */
 export function HeroSection() {
   const reduce = useReducedMotion()
@@ -24,81 +32,87 @@ export function HeroSection() {
     }
     const onReady = () => setReady(true)
     window.addEventListener(READY_EVENT, onReady)
-    return () => window.removeEventListener(READY_EVENT, onReady)
+    // 合図が来なくても、待ちすぎずに出す
+    const fallback = window.setTimeout(() => setReady(true), 3200)
+    return () => {
+      window.removeEventListener(READY_EVENT, onReady)
+      window.clearTimeout(fallback)
+    }
   }, [])
 
   // 動きを減らす設定では最初から完成形を出す
   const show = reduce || ready
 
   const rise = (delay: number) => ({
-    initial: reduce ? false : { opacity: 0, y: 22 },
-    animate: show ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 },
-    transition: { duration: 0.8, delay, ease },
+    initial: reduce ? false : { opacity: 0, y: 18 },
+    animate: show ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
+    transition: { duration: 0.7, delay, ease },
   })
 
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-16 lg:pt-28">
-      {/* 床: 遠近のついたグリッドが地平線へ消える */}
-      <motion.div
-        aria-hidden
-        className="hero-floor"
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: show ? 1 : 0 }}
-        transition={{ duration: 1.6, delay: 0.1, ease: 'easeOut' }}
-      />
-
-      <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-5 md:px-8 lg:grid-cols-12 lg:gap-8">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-12 px-5 text-center md:gap-16 md:px-8">
         {/* Copy */}
-        <div className="order-2 flex flex-col items-start gap-6 lg:order-1 lg:col-span-7">
-          <motion.div {...rise(0.55)}>
+        <div className="flex flex-col items-center gap-6 md:gap-7">
+          <motion.div {...rise(0.1)}>
             <Badge
               variant="outline"
-              className="h-7 rounded-full px-3 text-xs text-muted-foreground"
+              className="h-7 rounded-full px-3 font-display text-xs font-medium text-muted-foreground"
             >
               Mobile App Studio · Tokyo
             </Badge>
           </motion.div>
 
           <motion.h1
-            {...rise(0.7)}
-            className="font-display text-glow text-[clamp(3.25rem,13vw,5.5rem)] leading-[0.95] font-extrabold tracking-[-0.04em] text-foreground md:text-[clamp(4.5rem,9vw,7.5rem)]"
+            {...rise(0.2)}
+            className="font-display text-[clamp(3.25rem,13vw,5.75rem)] leading-[0.95] font-extrabold tracking-[-0.03em] text-foreground md:text-[clamp(5rem,9.5vw,8rem)]"
           >
             JUST DO IT!
           </motion.h1>
 
           <motion.p
-            {...rise(0.85)}
-            className="max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl"
+            {...rise(0.32)}
+            className="max-w-2xl font-mincho text-lg leading-relaxed text-muted-foreground md:text-2xl"
           >
             革新的なモバイルアプリケーションで、人々の日常をより豊かに
           </motion.p>
         </div>
 
-        {/* Logo with bloom */}
-        <div className="order-1 flex justify-center lg:order-2 lg:col-span-5 lg:justify-end">
-          <motion.div
-            className="relative"
-            initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-            animate={show ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 1.1, delay: 0.2, ease }}
-          >
-            <motion.div
-              aria-hidden
-              className="bloom inset-[-35%]"
-              initial={reduce ? false : { opacity: 0 }}
-              animate={{ opacity: show ? 1 : 0 }}
-              transition={{ duration: 1.6, delay: 0.5, ease: 'easeOut' }}
-            />
+        {/* Logo tile with stickers */}
+        <motion.div
+          className="relative"
+          initial={reduce ? false : { opacity: 0, y: 24, scale: 0.94 }}
+          animate={show ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.94 }}
+          transition={{ duration: 0.8, delay: 0.45, ease }}
+        >
+          <div className="relative size-44 overflow-hidden rounded-[24%] shadow-lift ring-1 ring-foreground/10 sm:size-56 md:size-64 lg:size-72">
             <Image
               src="/images/logos/tomorebeyond-logo.png"
               alt="ToMoreBeyond"
-              width={360}
-              height={360}
+              fill
               priority
-              className="relative size-40 md:size-56 lg:size-80 xl:size-[22rem]"
+              sizes="(max-width: 768px) 224px, 288px"
+              className="object-cover"
             />
-          </motion.div>
-        </div>
+          </div>
+
+          {stickers.map((s) => (
+            <motion.span
+              key={s.emoji}
+              aria-hidden
+              className={cn('sticker absolute size-12 text-2xl md:size-14 md:text-3xl', s.className)}
+              initial={reduce ? false : { opacity: 0, scale: 0.6, rotate: s.rotate - 14 }}
+              animate={
+                show
+                  ? { opacity: 1, scale: 1, rotate: s.rotate }
+                  : { opacity: 0, scale: 0.6, rotate: s.rotate - 14 }
+              }
+              transition={{ type: 'spring', stiffness: 260, damping: 18, delay: s.delay }}
+            >
+              {s.emoji}
+            </motion.span>
+          ))}
+        </motion.div>
       </div>
     </section>
   )

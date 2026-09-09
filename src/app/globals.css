@@ -6,79 +6,87 @@
 @config "../../tailwind.config.ts";
 
 /* ============================================
-   ToMoreBeyond — 近未来トーン
-   ロゴ（黒地に光る 3 つの点）の中に立つサイト。
-   - 地: 青みの黒（ロゴ中心の点の色相）
-   - 灯り: ロゴ中心の青 1 色だけが発光する
-   - 素材: ガラス / 細いグリッド / 微細なグレイン
+   ToMoreBeyond — 紙とインクと、ひとつの光点
+   teracy.io の構造（クリーム地 × 深い文字色 × アクセント 1 色）を借り、
+   色は TMB 向けに調整している。
+   - 地: 温かいクリーム（紙）
+   - 文字: 深い焦げ茶のインク（木・土・拠点に通じる暖かさ）
+   - 光点: ロゴ中央の青を 1 色だけ（brand）
+   - 暗い区画（フッター・CTA）: インクの地にクリームの文字
    ============================================ */
 
 :root {
-  --background: oklch(0.14 0.012 255);
-  --foreground: oklch(0.96 0.006 255);
-  --card: oklch(0.19 0.012 255);
-  --card-foreground: oklch(0.96 0.006 255);
-  --popover: oklch(0.17 0.012 255);
-  --popover-foreground: oklch(0.96 0.006 255);
-  --primary: oklch(0.7 0.16 250);
-  --primary-foreground: oklch(0.13 0.03 255);
-  --secondary: oklch(0.25 0.014 255);
-  --secondary-foreground: oklch(0.96 0.006 255);
-  --muted: oklch(0.22 0.012 255);
-  --muted-foreground: oklch(0.72 0.014 255);
-  --accent: oklch(0.24 0.02 255);
-  --accent-foreground: oklch(0.96 0.006 255);
-  --destructive: oklch(0.68 0.19 25);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.7 0.16 250);
-  --chart-1: oklch(0.7 0.16 250);
-  --chart-2: oklch(0.6 0.12 250);
-  --chart-3: oklch(0.5 0.08 250);
-  --chart-4: oklch(0.4 0.04 255);
-  --chart-5: oklch(0.3 0.02 255);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.17 0.012 255);
-  --sidebar-foreground: oklch(0.96 0.006 255);
-  --sidebar-primary: oklch(0.7 0.16 250);
-  --sidebar-primary-foreground: oklch(0.13 0.03 255);
-  --sidebar-accent: oklch(0.24 0.02 255);
-  --sidebar-accent-foreground: oklch(0.96 0.006 255);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.7 0.16 250);
+  --background: oklch(0.967 0.026 88);
+  --foreground: oklch(0.25 0.035 45);
+  --card: oklch(0.99 0.012 92);
+  --card-foreground: oklch(0.25 0.035 45);
+  --popover: oklch(0.99 0.012 92);
+  --popover-foreground: oklch(0.25 0.035 45);
+  --primary: oklch(0.25 0.035 45);
+  --primary-foreground: oklch(0.975 0.02 88);
+  --secondary: oklch(0.93 0.036 88);
+  --secondary-foreground: oklch(0.25 0.035 45);
+  --muted: oklch(0.93 0.03 88);
+  --muted-foreground: oklch(0.49 0.035 45);
+  --accent: oklch(0.92 0.04 88);
+  --accent-foreground: oklch(0.25 0.035 45);
+  --destructive: oklch(0.55 0.2 27);
+  --border: oklch(0.25 0.035 45 / 12%);
+  --input: oklch(0.25 0.035 45 / 18%);
+  --ring: oklch(0.62 0.14 240);
+  --chart-1: oklch(0.62 0.14 240);
+  --chart-2: oklch(0.25 0.035 45);
+  --chart-3: oklch(0.49 0.035 45);
+  --chart-4: oklch(0.8 0.08 238);
+  --chart-5: oklch(0.9 0.05 235);
+  --radius: 1rem;
+  --sidebar: oklch(0.99 0.012 92);
+  --sidebar-foreground: oklch(0.25 0.035 45);
+  --sidebar-primary: oklch(0.25 0.035 45);
+  --sidebar-primary-foreground: oklch(0.975 0.02 88);
+  --sidebar-accent: oklch(0.92 0.04 88);
+  --sidebar-accent-foreground: oklch(0.25 0.035 45);
+  --sidebar-border: oklch(0.25 0.035 45 / 12%);
+  --sidebar-ring: oklch(0.62 0.14 240);
 
-  /* 発光（灯り）の強さ */
-  --glow: oklch(0.7 0.16 250 / 0.55);
-  --glow-soft: oklch(0.7 0.16 250 / 0.22);
+  /* 光点: ロゴ中央の青。塗り（brand）と、薄い地（brand-soft） */
+  --brand: oklch(0.62 0.14 240);
+  --brand-foreground: oklch(0.99 0.012 92);
+  --brand-soft: oklch(0.9 0.05 235);
 }
 
-/* テーマはダーク 1 つ。system が light でも同じ地色に留める */
+/* テーマは 1 つ。system や保存済み設定が dark でも同じ紙の色に留める */
 .dark,
 .light {
-  --background: oklch(0.14 0.012 255);
-  --foreground: oklch(0.96 0.006 255);
-  --card: oklch(0.19 0.012 255);
-  --card-foreground: oklch(0.96 0.006 255);
-  --popover: oklch(0.17 0.012 255);
-  --popover-foreground: oklch(0.96 0.006 255);
-  --primary: oklch(0.7 0.16 250);
-  --primary-foreground: oklch(0.13 0.03 255);
-  --secondary: oklch(0.25 0.014 255);
-  --secondary-foreground: oklch(0.96 0.006 255);
-  --muted: oklch(0.22 0.012 255);
-  --muted-foreground: oklch(0.72 0.014 255);
-  --accent: oklch(0.24 0.02 255);
-  --accent-foreground: oklch(0.96 0.006 255);
-  --destructive: oklch(0.68 0.19 25);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.7 0.16 250);
+  --background: oklch(0.967 0.026 88);
+  --foreground: oklch(0.25 0.035 45);
+  --card: oklch(0.99 0.012 92);
+  --card-foreground: oklch(0.25 0.035 45);
+  --popover: oklch(0.99 0.012 92);
+  --popover-foreground: oklch(0.25 0.035 45);
+  --primary: oklch(0.25 0.035 45);
+  --primary-foreground: oklch(0.975 0.02 88);
+  --secondary: oklch(0.93 0.036 88);
+  --secondary-foreground: oklch(0.25 0.035 45);
+  --muted: oklch(0.93 0.03 88);
+  --muted-foreground: oklch(0.49 0.035 45);
+  --accent: oklch(0.92 0.04 88);
+  --accent-foreground: oklch(0.25 0.035 45);
+  --destructive: oklch(0.55 0.2 27);
+  --border: oklch(0.25 0.035 45 / 12%);
+  --input: oklch(0.25 0.035 45 / 18%);
+  --ring: oklch(0.62 0.14 240);
 }
 
 @theme inline {
-  --font-sans: var(--font-zen-kaku), ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
-  --font-display: var(--font-syne), var(--font-zen-kaku), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-noto-sans-jp), ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-display: var(--font-bricolage), var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif;
+  --font-mincho: var(--font-biz-mincho), "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+  --font-seg: var(--font-dseg7), ui-monospace, monospace;
   --font-heading: var(--font-sans);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -110,13 +118,13 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl: calc(var(--radius) * 1.25);
+  --radius-2xl: calc(var(--radius) * 1.5);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 2.5);
 }
 
 /* ============================================
@@ -132,30 +140,18 @@
     @apply font-sans;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   body {
     @apply bg-background text-foreground;
     min-height: 100dvh;
-    line-height: 1.8;
+    line-height: 1.85;
     letter-spacing: 0.01em;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern" 1, "calt" 1;
-  }
-
-  /* 微細なグレイン。画面全体に薄く一枚のフィルムをかける */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    pointer-events: none;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
   }
 
   img {
@@ -164,7 +160,7 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklch, var(--primary) 38%, transparent);
+    background-color: color-mix(in oklch, var(--brand) 30%, transparent);
     color: var(--foreground);
   }
 
@@ -186,85 +182,46 @@
 }
 
 /* ============================================
-   素材ユーティリティ
+   ユーティリティ
    ============================================ */
-
-/* ガラス板。操作できる単位（カード・フォーム・ヘッダー）に使う */
-@utility glass {
-  background-color: color-mix(in oklch, var(--card) 70%, transparent);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid color-mix(in oklch, var(--foreground) 10%, transparent);
-  box-shadow: inset 0 1px 0 0 color-mix(in oklch, var(--foreground) 7%, transparent);
-}
-
-/* 灯りの縁。hover / focus / 選択中に応える */
-@utility glow-ring {
-  box-shadow:
-    0 0 0 1px color-mix(in oklch, var(--primary) 55%, transparent),
-    0 0 28px -6px var(--glow);
-}
-
-/* 灯りの後光。要素の背後に広がる */
-@utility glow {
-  box-shadow: 0 0 48px -10px var(--glow);
-}
-
-/* 光る文字 */
-@utility text-glow {
-  text-shadow: 0 0 28px color-mix(in oklch, var(--primary) 55%, transparent);
-}
 
 /* 日本語の詰め。見出しに使う */
 @utility palt {
   font-feature-settings: "palt" 1, "kern" 1;
 }
 
-/* 細いグリッド */
-@utility grid-lines {
-  background-image:
-    linear-gradient(to right, color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
+/* 紙の上に置いた物の影。カード・ヘッダー・タイルに使う */
+@utility shadow-warm {
+  box-shadow:
+    0 1px 2px color-mix(in oklch, var(--foreground) 6%, transparent),
+    0 18px 40px -22px color-mix(in oklch, var(--foreground) 28%, transparent);
+}
+
+/* 少し浮いた影。アプリアイコンのタイルに使う */
+@utility shadow-lift {
+  box-shadow:
+    0 2px 4px color-mix(in oklch, var(--foreground) 8%, transparent),
+    0 28px 60px -24px color-mix(in oklch, var(--foreground) 45%, transparent);
+}
+
+/* 光点の縁。今まさに進んでいるもの（開発中など）に使う */
+@utility ring-brand-glow {
+  box-shadow: 0 0 0 4px color-mix(in oklch, var(--brand) 22%, transparent);
 }
 
 @layer components {
-  /* Hero の床。遠近をつけたグリッドが地平線へ消える */
-  .hero-floor {
-    position: absolute;
-    left: -20%;
-    right: -20%;
-    bottom: -6%;
-    height: 52%;
-    pointer-events: none;
-    background-image:
-      linear-gradient(to right, color-mix(in oklch, var(--primary) 26%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in oklch, var(--primary) 26%, transparent) 1px, transparent 1px);
-    background-size: 64px 64px;
-    transform: perspective(720px) rotateX(64deg);
-    transform-origin: top center;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 78%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 78%, transparent 100%);
-  }
-
-  /* 灯りの霧。ロゴの背後に置く */
-  .bloom {
-    position: absolute;
-    pointer-events: none;
-    border-radius: 9999px;
-    background: radial-gradient(closest-side, var(--glow) 0%, var(--glow-soft) 40%, transparent 72%);
-    filter: blur(24px);
-  }
-
-  /* 区切りの光る線 */
-  .beam {
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      color-mix(in oklch, var(--primary) 70%, transparent) 50%,
-      transparent 100%
-    );
+  /* 絵文字のステッカー。少し傾けて紙に貼る */
+  .sticker {
+    display: inline-grid;
+    place-items: center;
+    background-color: var(--card);
+    border-radius: calc(var(--radius) * 1.25);
+    border: 1px solid var(--border);
+    line-height: 1;
+    user-select: none;
+    box-shadow:
+      0 1px 2px color-mix(in oklch, var(--foreground) 8%, transparent),
+      0 12px 24px -14px color-mix(in oklch, var(--foreground) 40%, transparent);
   }
 
   /* 長文（規約・ポリシー）の本文リスト */

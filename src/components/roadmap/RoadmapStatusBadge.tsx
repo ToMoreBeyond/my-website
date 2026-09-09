@@ -9,9 +9,9 @@ interface RoadmapStatusBadgeProps {
   className?: string;
 }
 
-const variantByStatus: Record<RoadmapStatus, 'secondary' | 'default' | 'outline'> = {
+const variantByStatus: Record<RoadmapStatus, 'secondary' | 'brand' | 'outline'> = {
   completed: 'secondary',
-  'in-progress': 'default',
+  'in-progress': 'brand',
   planned: 'outline',
 };
 
@@ -29,17 +29,13 @@ function StatusIcon({ status }: { status: RoadmapStatus }) {
 }
 
 /**
- * ロードマップの状態。灯りが点くのは「開発中」だけ。
+ * ロードマップの状態。光点色になるのは「開発中」だけ。
  */
 export function RoadmapStatusBadge({ status, className }: RoadmapStatusBadgeProps) {
   return (
     <Badge
       variant={variantByStatus[status]}
-      className={cn(
-        'h-7 gap-1.5 px-3 text-xs',
-        status === 'in-progress' && 'glow-ring',
-        className
-      )}
+      className={cn('h-7 gap-1.5 px-3 text-xs', className)}
     >
       <StatusIcon status={status} />
       <span>{getRoadmapStatusText(status)}</span>
